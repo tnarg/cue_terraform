@@ -1,0 +1,40 @@
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob([
+    "*.bzl",
+    "*.awk",
+] + ["cue-terraform-gen.bash.in"]))
+
+config_setting(
+    name = "linux_amd64",
+    values = {
+        "cpu": "k8",
+    },
+)
+
+config_setting(
+    name = "darwin_amd64",
+    values = {
+        "cpu": "darwin",
+    },
+)
+
+config_setting(
+    name = "windows_amd64",
+    values = {
+        "cpu": "x64_windows",
+    },
+)
+
+genrule(
+    name = "terraform",
+    output_to_bindir = 1,
+    srcs = select({
+        "//codegen:linux_amd64": ["@terraform_toolchain_linux_amd64//:terraform"],
+        "//codegen:darwin_amd64": ["@terraform_toolchain_darwin_amd64//:terraform"],
+        "//codegen:windows_amd64": ["@terraform_toolchain_windows_amd64//:terraform"],
+    }),
+    outs = ["bin/cue"],
+    cmd = "cp $(<) $(@)",
+    executable = True,
+)

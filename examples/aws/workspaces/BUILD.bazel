@@ -1,0 +1,8 @@
+load("@com_github_tnarg_rules_cue//cue:cue.bzl", "cue_export")
+
+cue_export(
+    name = "main",
+    src = "main.cue",
+    visibility = ["//visibility:public"],
+    deps = ["//providers/aws:cue_aws_library"],
+)

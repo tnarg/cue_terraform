@@ -1,0 +1,12 @@
+load("@com_github_tnarg_rules_cue//cue:cue.bzl", "cue_library")
+
+cue_library(
+    name = "cue_yandex_library",
+    srcs = [
+        "data_sources_gen.cue",
+        "provider_gen.cue",
+        "resources_gen.cue",
+    ],
+    importpath = "github.com/tnarg/cue_terraform/providers/yandex",
+    visibility = ["//visibility:public"],
+)
