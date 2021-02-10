@@ -4,11 +4,15 @@ package docker
 #DockerConfigResource: {
 	data: string
 	name: string
+	id?:  string
 }
 #DockerContainerResource: {
-	image:                  string
-	name:                   string
-	attach?:                bool
+	image:   string
+	name:    string
+	attach?: bool
+	bridge?: string
+	command?: [string, ...]
+	container_logs?:        string
 	cpu_set?:               string
 	cpu_shares?:            number
 	destroy_grace_seconds?: number
@@ -16,7 +20,16 @@ package docker
 	dns_opts?: [string, ...]
 	dns_search?: [string, ...]
 	domainname?: string
+	entrypoint?: [string, ...]
+	env?: [string, ...]
+	exit_code?: number
+	gateway?:   string
 	group_add?: [string, ...]
+	hostname?:         string
+	id?:               string
+	ip_address?:       string
+	ip_prefix_length?: number
+	ipc_mode?:         string
 	links?: [string, ...]
 	log_driver?: string
 	log_opts?: [_]: string
@@ -26,6 +39,12 @@ package docker
 	memory_swap?:     number
 	must_run?:        bool
 	network_alias?: [string, ...]
+	network_data?: [{
+		gateway:          string
+		ip_address:       string
+		ip_prefix_length: number
+		network_name:     string
+	}, ...]
 	network_mode?: string
 	networks?: [string, ...]
 	pid_mode?:          string
@@ -34,6 +53,7 @@ package docker
 	read_only?:         bool
 	restart?:           string
 	rm?:                bool
+	shm_size?:          number
 	start?:             bool
 	sysctls?: [_]: string
 	tmpfs?: [_]:   string
@@ -94,6 +114,7 @@ package docker
 	}, ...]
 	ports?: [{
 		internal:  number
+		external?: number
 		ip?:       string
 		protocol?: string
 	}, ...]
@@ -120,7 +141,9 @@ package docker
 }
 #DockerImageResource: {
 	name:          string
+	id?:           string
 	keep_locally?: bool
+	latest?:       string
 	pull_trigger?: string
 	pull_triggers?: [string, ...]
 }
@@ -128,9 +151,14 @@ package docker
 	name:             string
 	attachable?:      bool
 	check_duplicate?: bool
+	driver?:          string
+	id?:              string
 	ingress?:         bool
+	internal?:        bool
 	ipam_driver?:     string
 	ipv6?:            bool
+	options?: [_]: string
+	scope?: string
 	ipam_config?: [{
 		aux_address?: [_]: string
 		gateway?:  string
@@ -145,6 +173,7 @@ package docker
 #DockerSecretResource: {
 	data: string
 	name: string
+	id?:  string
 	labels?: [{
 		label: string
 		value: string
@@ -153,16 +182,19 @@ package docker
 #DockerServiceResource: {
 	name: string
 	auth?: [_]: string
+	id?: string
 	converge_config?: [{
 		delay?:   string
 		timeout?: string
 	}, ...]
 	endpoint_spec?: [{
+		mode?: string
 		ports?: [{
-			target_port:   number
-			name?:         string
-			protocol?:     string
-			publish_mode?: string
+			target_port:     number
+			name?:           string
+			protocol?:       string
+			publish_mode?:   string
+			published_port?: number
 		}, ...]
 	}, ...]
 	labels?: [{
@@ -184,7 +216,10 @@ package docker
 		parallelism?:       number
 	}, ...]
 	task_spec?: [{
+		force_update?: number
 		networks?: [string, ...]
+		restart_policy?: [_]: string
+		runtime?: string
 		container_spec?: [{
 			image: string
 			args?: [string, ...]
@@ -192,11 +227,12 @@ package docker
 			dir?: string
 			env?: [_]: string
 			groups?: [string, ...]
-			hostname?:    string
-			isolation?:   string
-			read_only?:   bool
-			stop_signal?: string
-			user?:        string
+			hostname?:          string
+			isolation?:         string
+			read_only?:         bool
+			stop_grace_period?: string
+			stop_signal?:       string
+			user?:              string
 			configs?: [{
 				config_id:    string
 				file_name:    string
@@ -310,7 +346,11 @@ package docker
 	}, ...]
 }
 #DockerVolumeResource: {
+	driver?: string
 	driver_opts?: [_]: string
+	id?:         string
+	mountpoint?: string
+	name?:       string
 	labels?: [{
 		label: string
 		value: string

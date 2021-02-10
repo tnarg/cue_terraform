@@ -2,6 +2,7 @@
 package dnsimple
 
 #Provider: dnsimple: {
-	account: string
-	token:   string
+	account:  string
+	token:    string
+	sandbox?: bool
 }

@@ -5,6 +5,7 @@ package vsphere
 	password:               string
 	user:                   string
 	allow_unverified_ssl?:  bool
+	api_timeout?:           number
 	client_debug?:          bool
 	client_debug_path?:     string
 	client_debug_path_run?: string

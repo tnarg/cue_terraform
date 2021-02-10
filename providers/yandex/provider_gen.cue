@@ -13,5 +13,8 @@ package yandex
 	storage_endpoint?:         string
 	storage_secret_key?:       string
 	token?:                    string
+	ymq_access_key?:           string
+	ymq_endpoint?:             string
+	ymq_secret_key?:           string
 	zone?:                     string
 }

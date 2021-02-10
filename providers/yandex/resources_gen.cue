@@ -2,13 +2,19 @@
 package yandex
 
 #YandexComputeDiskResource: {
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	image_id?:    string
 	labels?: [_]: string
-	name?:        string
+	name?: string
+	product_ids?: [string, ...]
 	size?:        number
 	snapshot_id?: string
+	status?:      string
 	type?:        string
+	zone?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -16,10 +22,23 @@ package yandex
 	}
 }
 #YandexComputeImageResource: {
+	created_at?:  string
 	description?: string
 	family?:      string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
-	name?: string
+	min_disk_size?: number
+	name?:          string
+	os_type?:       string
+	product_ids?: [string, ...]
+	size?:            number
+	source_disk?:     string
+	source_family?:   string
+	source_image?:    string
+	source_snapshot?: string
+	source_url?:      string
+	status?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -28,21 +47,49 @@ package yandex
 }
 #YandexComputeInstanceResource: {
 	allow_stopping_for_update?: bool
+	created_at?:                string
 	description?:               string
+	folder_id?:                 string
+	fqdn?:                      string
+	hostname?:                  string
+	id?:                        string
 	labels?: [_]:   string
 	metadata?: [_]: string
 	name?:                      string
 	network_acceleration_type?: string
 	platform_id?:               string
+	service_account_id?:        string
+	status?:                    string
+	zone?:                      string
 	boot_disk?: [{
 		auto_delete?: bool
+		device_name?: string
+		disk_id?:     string
+		mode?:        string
 		initialize_params?: [{
-			type?: string
+			description?: string
+			image_id?:    string
+			name?:        string
+			size?:        number
+			snapshot_id?: string
+			type?:        string
 		}, ...]
 	}, ...]
 	network_interface?: [{
-		subnet_id: string
-		ipv4?:     bool
+		subnet_id:       string
+		index?:          number
+		ip_address?:     string
+		ipv4?:           bool
+		ipv6?:           bool
+		ipv6_address?:   string
+		mac_address?:    string
+		nat?:            bool
+		nat_ip_address?: string
+		nat_ip_version?: string
+		security_group_ids?: [string, ...]
+	}, ...]
+	placement_policy?: [{
+		placement_group_id: string
 	}, ...]
 	resources?: [{
 		cores:          number
@@ -56,6 +103,7 @@ package yandex
 	secondary_disk?: [{
 		disk_id:      string
 		auto_delete?: bool
+		device_name?: string
 		mode?:        string
 	}, ...]
 	timeouts?: {
@@ -65,10 +113,36 @@ package yandex
 	}
 }
 #YandexComputeInstanceGroupResource: {
-	service_account_id: string
-	description?:       string
+	service_account_id:   string
+	created_at?:          string
+	deletion_protection?: bool
+	description?:         string
+	folder_id?:           string
+	id?:                  string
+	instances?: [{
+		fqdn:        string
+		instance_id: string
+		name:        string
+		network_interface: [{
+			index:          number
+			ip_address:     string
+			ipv4:           bool
+			ipv6:           bool
+			ipv6_address:   string
+			mac_address:    string
+			nat:            bool
+			nat_ip_address: string
+			nat_ip_version: string
+			subnet_id:      string
+		}, ...]
+		status:            string
+		status_changed_at: string
+		status_message:    string
+		zone_id:           string
+	}, ...]
 	labels?: [_]: string
-	name?: string
+	name?:   string
+	status?: string
 	variables?: [_]: string
 	allocation_policy?: [{
 		zones: [string, ...]
@@ -79,6 +153,7 @@ package yandex
 		max_creating?:     number
 		max_deleting?:     number
 		startup_duration?: number
+		strategy?:         string
 	}, ...]
 	health_check?: [{
 		healthy_threshold?:   number
@@ -102,19 +177,29 @@ package yandex
 		platform_id?:        string
 		service_account_id?: string
 		boot_disk?: [{
-			mode?: string
+			device_name?: string
+			mode?:        string
 			initialize_params?: [{
 				description?: string
+				image_id?:    string
+				size?:        number
+				snapshot_id?: string
 				type?:        string
 			}, ...]
 		}, ...]
 		network_interface?: [{
 			ipv4?:       bool
+			ipv6?:       bool
+			nat?:        bool
 			network_id?: string
+			security_group_ids?: [string, ...]
 			subnet_ids?: [string, ...]
 		}, ...]
 		network_settings?: [{
 			type?: string
+		}, ...]
+		placement_policy?: [{
+			placement_group_id: string
 		}, ...]
 		resources?: [{
 			cores:          number
@@ -138,7 +223,9 @@ package yandex
 		}, ...]
 	}, ...]
 	load_balancer?: [{
+		status_message?:           string
 		target_group_description?: string
+		target_group_id?:          string
 		target_group_labels?: [_]: string
 		target_group_name?: string
 	}, ...]
@@ -149,6 +236,8 @@ package yandex
 			cpu_utilization_target?: number
 			max_size?:               number
 			min_zone_size?:          number
+			stabilization_duration?: number
+			warmup_duration?:        number
 			custom_rule?: [{
 				metric_name: string
 				metric_type: string
@@ -160,6 +249,22 @@ package yandex
 		fixed_scale?: [{
 			size: number
 		}, ...]
+		test_auto_scale?: [{
+			initial_size:            number
+			measurement_duration:    number
+			cpu_utilization_target?: number
+			max_size?:               number
+			min_zone_size?:          number
+			stabilization_duration?: number
+			warmup_duration?:        number
+			custom_rule?: [{
+				metric_name: string
+				metric_type: string
+				rule_type:   string
+				target:      number
+				labels?: [_]: string
+			}, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -167,9 +272,11 @@ package yandex
 		update?: string
 	}
 }
-#YandexComputeSnapshotResource: {
-	source_disk_id: string
-	description?:   string
+#YandexComputePlacementGroupResource: {
+	created_at?:  string
+	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	name?: string
 	timeouts?: {
@@ -178,21 +285,55 @@ package yandex
 		update?: string
 	}
 }
-#YandexContainerRegistryResource: {
+#YandexComputeSnapshotResource: {
+	source_disk_id: string
+	created_at?:    string
+	description?:   string
+	disk_size?:     number
+	folder_id?:     string
+	id?:            string
 	labels?: [_]: string
+	name?:         string
+	storage_size?: number
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
+#YandexContainerRegistryResource: {
+	created_at?: string
+	folder_id?:  string
+	id?:         string
+	labels?: [_]: string
+	name?:   string
+	status?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#YandexContainerRegistryIamBindingResource: {
+	members: [string, ...]
+	registry_id:  string
+	role:         string
+	id?:          string
+	sleep_after?: number
+}
 #YandexDataprocClusterResource: {
 	name:               string
 	service_account_id: string
 	bucket?:            string
+	created_at?:        string
 	description?:       string
+	folder_id?:         string
+	id?:                string
 	labels?: [_]: string
+	ui_proxy?: bool
+	zone_id?:  string
 	cluster_config?: [{
+		version_id?: string
 		hadoop?: [{
 			properties?: [_]: string
 			services?: [string, ...]
@@ -203,6 +344,7 @@ package yandex
 			name:        string
 			role:        string
 			subnet_id:   string
+			id?:         string
 			resources?: [{
 				disk_size:          number
 				resource_preset_id: string
@@ -222,11 +364,18 @@ package yandex
 	name:         string
 	runtime:      string
 	user_hash:    string
+	created_at?:  string
 	description?: string
 	environment?: [_]: string
 	execution_timeout?: string
+	folder_id?:         string
+	id?:                string
+	image_size?:        number
 	labels?: [_]: string
+	loggroup_id?:        string
 	service_account_id?: string
+	tags?: [string, ...]
+	version?: string
 	content?: [{
 		zip_filename: string
 	}, ...]
@@ -245,11 +394,15 @@ package yandex
 	function_id: string
 	members: [string, ...]
 	role:         string
+	id?:          string
 	sleep_after?: number
 }
 #YandexFunctionTriggerResource: {
 	name:         string
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	dlq?: [{
 		queue_id:           string
@@ -292,7 +445,10 @@ package yandex
 	}, ...]
 }
 #YandexIamServiceAccountResource: {
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	name?:        string
 	timeouts?: {
 		create?: string
@@ -301,44 +457,66 @@ package yandex
 	}
 }
 #YandexIamServiceAccountApiKeyResource: {
-	service_account_id: string
-	description?:       string
-	pgp_key?:           string
+	service_account_id:    string
+	created_at?:           string
+	description?:          string
+	encrypted_secret_key?: string
+	id?:                   string
+	key_fingerprint?:      string
+	pgp_key?:              string
+	secret_key?:           string
 }
 #YandexIamServiceAccountIamBindingResource: {
 	members: [string, ...]
 	role:               string
 	service_account_id: string
+	id?:                string
 	sleep_after?:       number
 }
 #YandexIamServiceAccountIamMemberResource: {
 	member:             string
 	role:               string
 	service_account_id: string
+	id?:                string
 	sleep_after?:       number
 }
 #YandexIamServiceAccountIamPolicyResource: {
 	policy_data:        string
 	service_account_id: string
+	id?:                string
 }
 #YandexIamServiceAccountKeyResource: {
-	service_account_id: string
-	description?:       string
-	format?:            string
-	key_algorithm?:     string
-	pgp_key?:           string
+	service_account_id:     string
+	created_at?:            string
+	description?:           string
+	encrypted_private_key?: string
+	format?:                string
+	id?:                    string
+	key_algorithm?:         string
+	key_fingerprint?:       string
+	pgp_key?:               string
+	private_key?:           string
+	public_key?:            string
 }
 #YandexIamServiceAccountStaticAccessKeyResource: {
-	service_account_id: string
-	description?:       string
-	pgp_key?:           string
+	service_account_id:    string
+	access_key?:           string
+	created_at?:           string
+	description?:          string
+	encrypted_secret_key?: string
+	id?:                   string
+	key_fingerprint?:      string
+	pgp_key?:              string
+	secret_key?:           string
 }
 #YandexIotCoreDeviceResource: {
 	name:        string
 	registry_id: string
 	aliases?: [_]: string
 	certificates?: [string, ...]
+	created_at?:  string
 	description?: string
+	id?:          string
 	passwords?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -349,7 +527,10 @@ package yandex
 #YandexIotCoreRegistryResource: {
 	name: string
 	certificates?: [string, ...]
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	passwords?: [string, ...]
 	timeouts?: {
@@ -362,6 +543,8 @@ package yandex
 	key_id:       string
 	plaintext:    string
 	aad_context?: string
+	ciphertext?:  string
+	id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -369,11 +552,16 @@ package yandex
 	}
 }
 #YandexKmsSymmetricKeyResource: {
+	created_at?:        string
 	default_algorithm?: string
 	description?:       string
+	folder_id?:         string
+	id?:                string
 	labels?: [_]: string
 	name?:            string
+	rotated_at?:      string
 	rotation_period?: string
+	status?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -382,20 +570,46 @@ package yandex
 	}
 }
 #YandexKubernetesClusterResource: {
-	network_id:                string
-	node_service_account_id:   string
-	service_account_id:        string
+	network_id:              string
+	node_service_account_id: string
+	service_account_id:      string
+	cluster_ipv4_range?:     string
+	created_at?:             string
+	description?:            string
+	folder_id?:              string
+	health?:                 string
+	id?:                     string
+	labels?: [_]: string
+	name?:                     string
 	network_policy_provider?:  string
 	node_ipv4_cidr_mask_size?: number
+	release_channel?:          string
+	service_ipv4_range?:       string
+	status?:                   string
 	kms_provider?: [{
 		key_id?: string
 	}, ...]
 	master?: [{
+		cluster_ca_certificate?: string
+		external_v4_address?:    string
+		external_v4_endpoint?:   string
+		internal_v4_address?:    string
+		internal_v4_endpoint?:   string
+		public_ip?:              bool
+		security_group_ids?: [string, ...]
+		version?: string
+		version_info?: [{
+			current_version:        string
+			new_revision_available: bool
+			new_revision_summary:   string
+			version_deprecated:     bool
+		}, ...]
 		maintenance_policy?: [{
 			auto_upgrade: bool
 			maintenance_window?: [{
 				duration:   string
 				start_time: string
+				day?:       string
 			}, ...]
 		}, ...]
 		regional?: [{
@@ -407,6 +621,7 @@ package yandex
 		}, ...]
 		zonal?: [{
 			subnet_id?: string
+			zone?:      string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -419,19 +634,49 @@ package yandex
 #YandexKubernetesNodeGroupResource: {
 	cluster_id: string
 	allowed_unsafe_sysctls?: [string, ...]
+	created_at?:        string
+	description?:       string
+	id?:                string
+	instance_group_id?: string
+	labels?: [_]: string
+	name?: string
 	node_labels?: [_]: string
 	node_taints?: [string, ...]
+	status?:  string
+	version?: string
+	version_info?: [{
+		current_version:        string
+		new_revision_available: bool
+		new_revision_summary:   string
+		version_deprecated:     bool
+	}, ...]
 	allocation_policy?: [{
-		location?: [{}, ...]
+		location?: [{
+			subnet_id?: string
+			zone?:      string
+		}, ...]
 	}, ...]
 	deploy_policy?: [{
 		max_expansion:   number
 		max_unavailable: number
 	}, ...]
 	instance_template?: [{
-		boot_disk?: [{}, ...]
-		resources?: [{}, ...]
-		scheduling_policy?: [{}, ...]
+		metadata?: [_]: string
+		nat?:         bool
+		platform_id?: string
+		boot_disk?: [{
+			size?: number
+			type?: string
+		}, ...]
+		resources?: [{
+			core_fraction?: number
+			cores?:         number
+			gpus?:          number
+			memory?:        number
+		}, ...]
+		scheduling_policy?: [{
+			preemptible?: bool
+		}, ...]
 	}, ...]
 	maintenance_policy?: [{
 		auto_repair:  bool
@@ -439,6 +684,7 @@ package yandex
 		maintenance_window?: [{
 			duration:   string
 			start_time: string
+			day?:       string
 		}, ...]
 	}, ...]
 	scale_policy?: [{
@@ -447,7 +693,9 @@ package yandex
 			max:     number
 			min:     number
 		}, ...]
-		fixed_scale?: [{}, ...]
+		fixed_scale?: [{
+			size?: number
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -457,7 +705,10 @@ package yandex
 	}
 }
 #YandexLbNetworkLoadBalancerResource: {
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	name?:      string
 	region_id?: string
@@ -480,14 +731,17 @@ package yandex
 		}, ...]
 	}, ...]
 	listener?: [{
-		name:      string
-		port:      number
-		protocol?: string
+		name:         string
+		port:         number
+		protocol?:    string
+		target_port?: number
 		external_address_spec?: [{
+			address?:    string
 			ip_version?: string
 		}, ...]
 		internal_address_spec?: [{
 			subnet_id:   string
+			address?:    string
 			ip_version?: string
 		}, ...]
 	}, ...]
@@ -498,7 +752,10 @@ package yandex
 	}
 }
 #YandexLbTargetGroupResource: {
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	name?:      string
 	region_id?: string
@@ -513,11 +770,22 @@ package yandex
 	}
 }
 #YandexMdbClickhouseClusterResource: {
-	environment:  string
-	name:         string
-	network_id:   string
-	description?: string
+	environment:               string
+	name:                      string
+	network_id:                string
+	admin_password?:           string
+	copy_schema_on_new_hosts?: bool
+	created_at?:               string
+	description?:              string
+	folder_id?:                string
+	health?:                   string
+	id?:                       string
 	labels?: [_]: string
+	security_group_ids?: [string, ...]
+	sql_database_management?: bool
+	sql_user_management?:     bool
+	status?:                  string
+	version?:                 string
 	access?: [{
 		data_lens?:  bool
 		metrika?:    bool
@@ -529,6 +797,81 @@ package yandex
 		minutes?: number
 	}, ...]
 	clickhouse?: [{
+		config?: [{
+			background_pool_size?:            number
+			background_schedule_pool_size?:   number
+			geobase_uri?:                     string
+			keep_alive_timeout?:              number
+			log_level?:                       string
+			mark_cache_size?:                 number
+			max_concurrent_queries?:          number
+			max_connections?:                 number
+			max_partition_size_to_drop?:      number
+			max_table_size_to_drop?:          number
+			metric_log_enabled?:              bool
+			metric_log_retention_size?:       number
+			metric_log_retention_time?:       number
+			part_log_retention_size?:         number
+			part_log_retention_time?:         number
+			query_log_retention_size?:        number
+			query_log_retention_time?:        number
+			query_thread_log_enabled?:        bool
+			query_thread_log_retention_size?: number
+			query_thread_log_retention_time?: number
+			text_log_enabled?:                bool
+			text_log_level?:                  string
+			text_log_retention_size?:         number
+			text_log_retention_time?:         number
+			timezone?:                        string
+			trace_log_enabled?:               bool
+			trace_log_retention_size?:        number
+			trace_log_retention_time?:        number
+			uncompressed_cache_size?:         number
+			compression?: [{
+				method:              string
+				min_part_size:       number
+				min_part_size_ratio: number
+			}, ...]
+			graphite_rollup?: [{
+				name: string
+				pattern?: [{
+					function: string
+					regexp?:  string
+					retention?: [{
+						age:       number
+						precision: number
+					}, ...]
+				}, ...]
+			}, ...]
+			kafka?: [{
+				sasl_mechanism?:    string
+				sasl_password?:     string
+				sasl_username?:     string
+				security_protocol?: string
+			}, ...]
+			kafka_topic?: [{
+				name: string
+				settings?: [{
+					sasl_mechanism?:    string
+					sasl_password?:     string
+					sasl_username?:     string
+					security_protocol?: string
+				}, ...]
+			}, ...]
+			merge_tree?: [{
+				max_bytes_to_merge_at_min_space_in_pool?:                   number
+				max_replicated_merges_in_queue?:                            number
+				number_of_free_entries_in_pool_to_lower_max_size_of_merge?: number
+				parts_to_delay_insert?:                                     number
+				parts_to_throw_insert?:                                     number
+				replicated_deduplication_window?:                           number
+				replicated_deduplication_window_seconds?:                   number
+			}, ...]
+			rabbitmq?: [{
+				password?: string
+				username?: string
+			}, ...]
+		}, ...]
 		resources?: [{
 			disk_size:          number
 			disk_type_id:       string
@@ -538,10 +881,28 @@ package yandex
 	database?: [{
 		name: string
 	}, ...]
+	format_schema?: [{
+		name: string
+		type: string
+		uri:  string
+	}, ...]
 	host?: [{
 		type:              string
 		zone:              string
 		assign_public_ip?: bool
+		fqdn?:             string
+		shard_name?:       string
+		subnet_id?:        string
+	}, ...]
+	ml_model?: [{
+		name: string
+		type: string
+		uri:  string
+	}, ...]
+	shard_group?: [{
+		name: string
+		shard_names: [string, ...]
+		description?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -556,16 +917,113 @@ package yandex
 		}, ...]
 	}, ...]
 	zookeeper?: [{
-		resources?: [{}, ...]
+		resources?: [{
+			disk_size?:          number
+			disk_type_id?:       string
+			resource_preset_id?: string
+		}, ...]
+	}, ...]
+}
+#YandexMdbKafkaClusterResource: {
+	name:         string
+	network_id:   string
+	created_at?:  string
+	description?: string
+	environment?: string
+	folder_id?:   string
+	health?:      string
+	id?:          string
+	labels?: [_]: string
+	security_group_ids?: [string, ...]
+	status?: string
+	subnet_ids?: [string, ...]
+	config?: [{
+		version: string
+		zones: [string, ...]
+		assign_public_ip?: bool
+		brokers_count?:    number
+		kafka?: [{
+			kafka_config?: [{
+				compression_type?:                string
+				log_flush_interval_messages?:     number
+				log_flush_interval_ms?:           number
+				log_flush_scheduler_interval_ms?: number
+				log_preallocate?:                 bool
+				log_retention_bytes?:             number
+				log_retention_hours?:             number
+				log_retention_minutes?:           number
+				log_retention_ms?:                number
+				log_segment_bytes?:               number
+			}, ...]
+			resources?: [{
+				disk_size:          number
+				disk_type_id:       string
+				resource_preset_id: string
+			}, ...]
+		}, ...]
+		zookeeper?: [{
+			resources?: [{
+				disk_size:          number
+				disk_type_id:       string
+				resource_preset_id: string
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+	topic?: [{
+		name:               string
+		partitions:         number
+		replication_factor: number
+		topic_config?: [{
+			cleanup_policy?:        string
+			compression_type?:      string
+			delete_retention_ms?:   number
+			file_delete_delay_ms?:  number
+			flush_messages?:        number
+			flush_ms?:              number
+			max_message_bytes?:     number
+			min_compaction_lag_ms?: number
+			min_insync_replicas?:   number
+			preallocate?:           bool
+			retention_bytes?:       number
+			retention_ms?:          number
+			segment_bytes?:         number
+		}, ...]
+	}, ...]
+	user?: [{
+		name:     string
+		password: string
+		permission?: [{
+			role:       string
+			topic_name: string
+		}, ...]
 	}, ...]
 }
 #YandexMdbMongodbClusterResource: {
-	environment: string
-	name:        string
-	network_id:  string
+	environment:  string
+	name:         string
+	network_id:   string
+	cluster_id?:  string
+	created_at?:  string
+	description?: string
+	folder_id?:   string
+	health?:      string
+	id?:          string
+	labels?: [_]: string
+	security_group_ids?: [string, ...]
+	sharded?: bool
+	status?:  string
 	cluster_config?: [{
-		version: string
-		access?: [{}, ...]
+		version:                        string
+		feature_compatibility_version?: string
+		access?: [{
+			data_lens?: bool
+		}, ...]
 		backup_window_start?: [{
 			hours?:   number
 			minutes?: number
@@ -575,8 +1033,14 @@ package yandex
 		name: string
 	}, ...]
 	host?: [{
-		subnet_id: string
-		zone_id:   string
+		subnet_id:         string
+		zone_id:           string
+		assign_public_ip?: bool
+		health?:           string
+		name?:             string
+		role?:             string
+		shard_name?:       string
+		type?:             string
 	}, ...]
 	resources?: [{
 		disk_size:          number
@@ -602,8 +1066,19 @@ package yandex
 	name:         string
 	network_id:   string
 	version:      string
+	created_at?:  string
 	description?: string
-	labels?: [_]: string
+	folder_id?:   string
+	health?:      string
+	id?:          string
+	labels?: [_]:       string
+	mysql_config?: [_]: string
+	security_group_ids?: [string, ...]
+	status?: string
+	access?: [{
+		data_lens?: bool
+		web_sql?:   bool
+	}, ...]
 	backup_window_start?: [{
 		hours?:   number
 		minutes?: number
@@ -614,6 +1089,8 @@ package yandex
 	host?: [{
 		zone:              string
 		assign_public_ip?: bool
+		fqdn?:             string
+		subnet_id?:        string
 	}, ...]
 	resources?: [{
 		disk_size:          number
@@ -635,19 +1112,34 @@ package yandex
 	}, ...]
 }
 #YandexMdbPostgresqlClusterResource: {
-	environment:  string
-	name:         string
-	network_id:   string
-	description?: string
+	environment:       string
+	name:              string
+	network_id:        string
+	created_at?:       string
+	description?:      string
+	folder_id?:        string
+	health?:           string
+	host_master_name?: string
+	id?:               string
 	labels?: [_]: string
+	security_group_ids?: [string, ...]
+	status?: string
 	config?: [{
-		version: string
+		version:       string
+		autofailover?: bool
+		postgresql_config?: [_]: string
 		access?: [{
 			data_lens?: bool
+			web_sql?:   bool
 		}, ...]
 		backup_window_start?: [{
 			hours?:   number
 			minutes?: number
+		}, ...]
+		performance_diagnostics?: [{
+			sessions_sampling_interval:   number
+			statements_sampling_interval: number
+			enabled?:                     bool
 		}, ...]
 		pooler_config?: [{
 			pool_discard?: bool
@@ -670,8 +1162,15 @@ package yandex
 		}, ...]
 	}, ...]
 	host?: [{
-		zone:              string
-		assign_public_ip?: bool
+		zone:                     string
+		assign_public_ip?:        bool
+		fqdn?:                    string
+		name?:                    string
+		priority?:                number
+		replication_source?:      string
+		replication_source_name?: string
+		role?:                    string
+		subnet_id?:               string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -679,10 +1178,12 @@ package yandex
 		update?: string
 	}
 	user?: [{
-		name:     string
-		password: string
+		name:        string
+		password:    string
+		conn_limit?: number
 		grants?: [string, ...]
 		login?: bool
+		settings?: [_]: string
 		permission?: [{
 			database_name: string
 		}, ...]
@@ -692,14 +1193,26 @@ package yandex
 	environment:  string
 	name:         string
 	network_id:   string
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	health?:      string
+	id?:          string
 	labels?: [_]: string
+	security_group_ids?: [string, ...]
 	sharded?: bool
+	status?:  string
 	config?: [{
-		password: string
+		password:          string
+		version:           string
+		maxmemory_policy?: string
+		timeout?:          number
 	}, ...]
 	host?: [{
-		zone: string
+		zone:        string
+		fqdn?:       string
+		shard_name?: string
+		subnet_id?:  string
 	}, ...]
 	resources?: [{
 		disk_size:          number
@@ -711,40 +1224,66 @@ package yandex
 		update?: string
 	}
 }
+#YandexMessageQueueResource: {
+	access_key?:                  string
+	arn?:                         string
+	content_based_deduplication?: bool
+	delay_seconds?:               number
+	fifo_queue?:                  bool
+	id?:                          string
+	max_message_size?:            number
+	message_retention_seconds?:   number
+	name?:                        string
+	name_prefix?:                 string
+	receive_wait_time_seconds?:   number
+	redrive_policy?:              string
+	secret_key?:                  string
+	visibility_timeout_seconds?:  number
+}
 #YandexResourcemanagerCloudIamBindingResource: {
 	cloud_id: string
 	members: [string, ...]
 	role:         string
+	id?:          string
 	sleep_after?: number
 }
 #YandexResourcemanagerCloudIamMemberResource: {
 	cloud_id:     string
 	member:       string
 	role:         string
+	id?:          string
 	sleep_after?: number
 }
 #YandexResourcemanagerFolderIamBindingResource: {
 	folder_id: string
 	members: [string, ...]
 	role:         string
+	id?:          string
 	sleep_after?: number
 }
 #YandexResourcemanagerFolderIamMemberResource: {
 	folder_id:    string
 	member:       string
 	role:         string
+	id?:          string
 	sleep_after?: number
 }
 #YandexResourcemanagerFolderIamPolicyResource: {
 	folder_id:   string
 	policy_data: string
+	id?:         string
 }
 #YandexStorageBucketResource: {
-	access_key?:    string
-	acl?:           string
-	bucket_prefix?: string
-	force_destroy?: bool
-	secret_key?:    string
+	access_key?:         string
+	acl?:                string
+	bucket?:             string
+	bucket_domain_name?: string
+	bucket_prefix?:      string
+	force_destroy?:      bool
+	id?:                 string
+	secret_key?:         string
+	website_domain?:     string
+	website_endpoint?:   string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -758,6 +1297,44 @@ package yandex
 		id?:  string
 		uri?: string
 	}, ...]
+	lifecycle_rule?: [{
+		enabled:                                 bool
+		abort_incomplete_multipart_upload_days?: number
+		id?:                                     string
+		prefix?:                                 string
+		expiration?: [{
+			date?:                         string
+			days?:                         number
+			expired_object_delete_marker?: bool
+		}, ...]
+		noncurrent_version_expiration?: [{
+			days?: number
+		}, ...]
+		noncurrent_version_transition?: [{
+			storage_class: string
+			days?:         number
+		}, ...]
+		transition?: [{
+			storage_class: string
+			date?:         string
+			days?:         number
+		}, ...]
+	}, ...]
+	logging?: [{
+		target_bucket:  string
+		target_prefix?: string
+	}, ...]
+	server_side_encryption_configuration?: [{
+		rule?: [{
+			apply_server_side_encryption_by_default?: [{
+				kms_master_key_id: string
+				sse_algorithm:     string
+			}, ...]
+		}, ...]
+	}, ...]
+	versioning?: [{
+		enabled?: bool
+	}, ...]
 	website?: [{
 		error_document?: string
 		index_document?: string
@@ -770,12 +1347,40 @@ package yandex
 	acl?:            string
 	content?:        string
 	content_base64?: string
+	id?:             string
 	secret_key?:     string
 	source?:         string
 }
-#YandexVpcNetworkResource: {
+#YandexVpcAddressResource: {
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
+	name?:     string
+	reserved?: bool
+	used?:     bool
+	external_ipv4_address?: [{
+		address?:                  string
+		ddos_protection_provider?: string
+		outgoing_smtp_capability?: string
+		zone_id?:                  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#YandexVpcNetworkResource: {
+	created_at?:                string
+	default_security_group_id?: string
+	description?:               string
+	folder_id?:                 string
+	id?:                        string
+	labels?: [_]: string
+	name?: string
+	subnet_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -784,7 +1389,10 @@ package yandex
 }
 #YandexVpcRouteTableResource: {
 	network_id:   string
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
 	name?: string
 	static_route?: [{
@@ -799,16 +1407,23 @@ package yandex
 }
 #YandexVpcSecurityGroupResource: {
 	network_id:   string
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
-	name?: string
+	name?:   string
+	status?: string
 	egress?: [{
 		protocol:     string
 		description?: string
 		from_port?:   number
+		id?:          string
 		labels?: [_]: string
-		port?:    number
-		to_port?: number
+		port?:              number
+		predefined_target?: string
+		security_group_id?: string
+		to_port?:           number
 		v4_cidr_blocks?: [string, ...]
 		v6_cidr_blocks?: [string, ...]
 	}, ...]
@@ -816,9 +1431,12 @@ package yandex
 		protocol:     string
 		description?: string
 		from_port?:   number
+		id?:          string
 		labels?: [_]: string
-		port?:    number
-		to_port?: number
+		port?:              number
+		predefined_target?: string
+		security_group_id?: string
+		to_port?:           number
 		v4_cidr_blocks?: [string, ...]
 		v6_cidr_blocks?: [string, ...]
 	}, ...]
@@ -831,8 +1449,20 @@ package yandex
 #YandexVpcSubnetResource: {
 	network_id: string
 	v4_cidr_blocks: [string, ...]
+	created_at?:  string
 	description?: string
+	folder_id?:   string
+	id?:          string
 	labels?: [_]: string
+	name?:           string
+	route_table_id?: string
+	v6_cidr_blocks?: [string, ...]
+	zone?: string
+	dhcp_options?: [{
+		domain_name?: string
+		domain_name_servers?: [string, ...]
+		ntp_servers?: [string, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -844,8 +1474,10 @@ package yandex
 	yandex_compute_image?: [_]:                         #YandexComputeImageResource
 	yandex_compute_instance?: [_]:                      #YandexComputeInstanceResource
 	yandex_compute_instance_group?: [_]:                #YandexComputeInstanceGroupResource
+	yandex_compute_placement_group?: [_]:               #YandexComputePlacementGroupResource
 	yandex_compute_snapshot?: [_]:                      #YandexComputeSnapshotResource
 	yandex_container_registry?: [_]:                    #YandexContainerRegistryResource
+	yandex_container_registry_iam_binding?: [_]:        #YandexContainerRegistryIamBindingResource
 	yandex_dataproc_cluster?: [_]:                      #YandexDataprocClusterResource
 	yandex_function?: [_]:                              #YandexFunctionResource
 	yandex_function_iam_binding?: [_]:                  #YandexFunctionIamBindingResource
@@ -866,10 +1498,12 @@ package yandex
 	yandex_lb_network_load_balancer?: [_]:              #YandexLbNetworkLoadBalancerResource
 	yandex_lb_target_group?: [_]:                       #YandexLbTargetGroupResource
 	yandex_mdb_clickhouse_cluster?: [_]:                #YandexMdbClickhouseClusterResource
+	yandex_mdb_kafka_cluster?: [_]:                     #YandexMdbKafkaClusterResource
 	yandex_mdb_mongodb_cluster?: [_]:                   #YandexMdbMongodbClusterResource
 	yandex_mdb_mysql_cluster?: [_]:                     #YandexMdbMysqlClusterResource
 	yandex_mdb_postgresql_cluster?: [_]:                #YandexMdbPostgresqlClusterResource
 	yandex_mdb_redis_cluster?: [_]:                     #YandexMdbRedisClusterResource
+	yandex_message_queue?: [_]:                         #YandexMessageQueueResource
 	yandex_resourcemanager_cloud_iam_binding?: [_]:     #YandexResourcemanagerCloudIamBindingResource
 	yandex_resourcemanager_cloud_iam_member?: [_]:      #YandexResourcemanagerCloudIamMemberResource
 	yandex_resourcemanager_folder_iam_binding?: [_]:    #YandexResourcemanagerFolderIamBindingResource
@@ -877,6 +1511,7 @@ package yandex
 	yandex_resourcemanager_folder_iam_policy?: [_]:     #YandexResourcemanagerFolderIamPolicyResource
 	yandex_storage_bucket?: [_]:                        #YandexStorageBucketResource
 	yandex_storage_object?: [_]:                        #YandexStorageObjectResource
+	yandex_vpc_address?: [_]:                           #YandexVpcAddressResource
 	yandex_vpc_network?: [_]:                           #YandexVpcNetworkResource
 	yandex_vpc_route_table?: [_]:                       #YandexVpcRouteTableResource
 	yandex_vpc_security_group?: [_]:                    #YandexVpcSecurityGroupResource

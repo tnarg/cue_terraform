@@ -2,17 +2,27 @@
 package consul
 
 #ConsulAclAuthMethodResource: {
-	config: [_]: string
-	name:         string
-	type:         string
-	description?: string
-	namespace?:   string
+	name: string
+	type: string
+	config?: [_]: string
+	config_json?:    string
+	description?:    string
+	display_name?:   string
+	id?:             string
+	max_token_ttl?:  string
+	namespace?:      string
+	token_locality?: string
+	namespace_rule?: [{
+		bind_namespace: string
+		selector?:      string
+	}, ...]
 }
 #ConsulAclBindingRuleResource: {
 	auth_method:  string
 	bind_name:    string
 	bind_type:    string
 	description?: string
+	id?:          string
 	namespace?:   string
 	selector?:    string
 }
@@ -21,11 +31,13 @@ package consul
 	rules: string
 	datacenters?: [string, ...]
 	description?: string
+	id?:          string
 	namespace?:   string
 }
 #ConsulAclRoleResource: {
 	name:         string
 	description?: string
+	id?:          string
 	namespace?:   string
 	policies?: [string, ...]
 	service_identities?: [{
@@ -34,7 +46,9 @@ package consul
 	}, ...]
 }
 #ConsulAclTokenResource: {
+	accessor_id?: string
 	description?: string
+	id?:          string
 	local?:       bool
 	namespace?:   string
 	policies?: [string, ...]
@@ -43,16 +57,20 @@ package consul
 #ConsulAclTokenPolicyAttachmentResource: {
 	policy:   string
 	token_id: string
+	id?:      string
 }
 #ConsulAgentServiceResource: {
-	name:  string
-	port?: number
+	name:     string
+	address?: string
+	id?:      string
+	port?:    number
 	tags?: [string, ...]
 }
 #ConsulAutopilotConfigResource: {
 	cleanup_dead_servers?:      bool
 	datacenter?:                string
 	disable_upgrade_migration?: bool
+	id?:                        string
 	last_contact_threshold?:    string
 	max_trailing_logs?:         number
 	redundancy_zone_tag?:       string
@@ -60,32 +78,45 @@ package consul
 	upgrade_version_tag?:       string
 }
 #ConsulCatalogEntryResource: {
-	address: string
-	node:    string
-	token?:  string
+	address:     string
+	node:        string
+	datacenter?: string
+	id?:         string
+	token?:      string
 	service?: [{
 		name:     string
 		address?: string
+		id?:      string
 		port?:    number
 		tags?: [string, ...]
 	}, ...]
+}
+#ConsulCertificateAuthorityResource: {
+	config: [_]: string
+	connect_provider: string
+	id?:              string
 }
 #ConsulConfigEntryResource: {
 	kind:         string
 	name:         string
 	config_json?: string
+	id?:          string
 }
 #ConsulIntentionResource: {
 	action:                 string
 	destination_name:       string
 	source_name:            string
+	datacenter?:            string
 	description?:           string
 	destination_namespace?: string
+	id?:                    string
 	meta?: [_]: string
 	source_namespace?: string
 }
 #ConsulKeyPrefixResource: {
 	path_prefix: string
+	datacenter?: string
+	id?:         string
 	namespace?:  string
 	subkeys?: [_]: string
 	token?: string
@@ -96,36 +127,56 @@ package consul
 	}, ...]
 }
 #ConsulKeysResource: {
-	namespace?: string
-	token?:     string
+	datacenter?: string
+	id?:         string
+	namespace?:  string
+	token?:      string
+	var?: [_]: string
 	key?: [{
 		path:     string
 		default?: string
 		delete?:  bool
 		flags?:   number
 		name?:    string
+		value?:   string
 	}, ...]
 }
 #ConsulLicenseResource: {
-	license:     string
-	datacenter?: string
+	license:          string
+	customer_id?:     string
+	datacenter?:      string
+	expiration_time?: string
+	features?: [string, ...]
+	id?:              string
+	installation_id?: string
+	issue_time?:      string
+	license_id?:      string
+	product?:         string
+	start_time?:      string
+	valid?:           bool
+	warnings?: [string, ...]
 }
 #ConsulNamespaceResource: {
 	name:         string
 	description?: string
+	id?:          string
 	meta?: [_]: string
 	policy_defaults?: [string, ...]
 	role_defaults?: [string, ...]
 }
 #ConsulNetworkAreaResource: {
 	peer_datacenter: string
+	datacenter?:     string
+	id?:             string
 	retry_join?: [string, ...]
 	token?:   string
 	use_tls?: bool
 }
 #ConsulNodeResource: {
-	address: string
-	name:    string
+	address:     string
+	name:        string
+	datacenter?: string
+	id?:         string
 	meta?: [_]: string
 	token?: string
 }
@@ -134,6 +185,7 @@ package consul
 	service:     string
 	connect?:    bool
 	datacenter?: string
+	id?:         string
 	ignore_check_ids?: [string, ...]
 	near?: string
 	node_meta?: [_]: string
@@ -156,12 +208,17 @@ package consul
 	}, ...]
 }
 #ConsulServiceResource: {
-	name:      string
-	node:      string
-	external?: bool
+	name:                 string
+	node:                 string
+	address?:             string
+	datacenter?:          string
+	enable_tag_override?: bool
+	external?:            bool
+	id?:                  string
 	meta?: [_]: string
-	namespace?: string
-	port?:      number
+	namespace?:  string
+	port?:       number
+	service_id?: string
 	tags?: [string, ...]
 	check?: [{
 		check_id:                           string
@@ -172,6 +229,7 @@ package consul
 		http?:                              string
 		method?:                            string
 		notes?:                             string
+		status?:                            string
 		tcp?:                               string
 		tls_skip_verify?:                   bool
 		header?: [{
@@ -190,6 +248,7 @@ package consul
 	consul_agent_service?: [_]:               #ConsulAgentServiceResource
 	consul_autopilot_config?: [_]:            #ConsulAutopilotConfigResource
 	consul_catalog_entry?: [_]:               #ConsulCatalogEntryResource
+	consul_certificate_authority?: [_]:       #ConsulCertificateAuthorityResource
 	consul_config_entry?: [_]:                #ConsulConfigEntryResource
 	consul_intention?: [_]:                   #ConsulIntentionResource
 	consul_key_prefix?: [_]:                  #ConsulKeyPrefixResource

@@ -8,12 +8,14 @@ package logicmonitor
 	enable_collector_device_failover?: bool
 	enable_failback?:                  bool
 	escalation_chain_id?:              number
+	id?:                               string
 	properties?: [_]: string
 	resend_interval?:      number
 	suppress_alert_clear?: bool
 }
 #LogicmonitorCollectorGroupResource: {
 	description?: string
+	id?:          string
 	name?:        string
 	properties?: [_]: string
 }
@@ -21,6 +23,7 @@ package logicmonitor
 	name:         string
 	description?: string
 	group_id?:    number
+	id?:          string
 	public?:      bool
 	template?:    string
 	widget_tokens?: [_]: string
@@ -29,6 +32,7 @@ package logicmonitor
 	name:          string
 	description?:  string
 	force_delete?: bool
+	id?:           string
 	parent_id?:    number
 	template?:     string
 	widget_tokens?: [_]: string
@@ -40,6 +44,7 @@ package logicmonitor
 	disable_alerting?: bool
 	display_name?:     string
 	hostgroup_id?:     string
+	id?:               string
 	properties?: [_]: string
 }
 #LogicmonitorDeviceGroupResource: {
@@ -47,6 +52,7 @@ package logicmonitor
 	applies_to?:       string
 	description?:      string
 	disable_alerting?: bool
+	id?:               string
 	parent_id?:        number
 	properties?: [_]: string
 }

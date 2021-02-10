@@ -4,6 +4,7 @@ package rundeck
 #RundeckAclPolicyResource: {
 	name:   string
 	policy: string
+	id?:    string
 }
 #RundeckJobResource: {
 	description:                     string
@@ -14,10 +15,12 @@ package rundeck
 	continue_on_error?:              bool
 	execution_enabled?:              bool
 	group_name?:                     string
+	id?:                             string
 	log_level?:                      string
 	max_thread_count?:               number
 	node_filter_exclude_precedence?: bool
 	node_filter_query?:              string
+	preserve_options_order?:         bool
 	rank_attribute?:                 string
 	rank_order?:                     string
 	schedule?:                       string
@@ -76,6 +79,7 @@ package rundeck
 #RundeckPrivateKeyResource: {
 	key_material: string
 	path:         string
+	id?:          string
 }
 #RundeckProjectResource: {
 	name:                             string
@@ -83,15 +87,23 @@ package rundeck
 	default_node_file_copier_plugin?: string
 	description?:                     string
 	extra_config?: [_]: string
+	id?:                      string
 	ssh_authentication_type?: string
 	ssh_key_file_path?:       string
 	ssh_key_storage_path?:    string
+	ui_url?:                  string
 	resource_model_source?: [{
 		config: [_]: string
 		type: string
 	}, ...]
 }
-#RundeckPublicKeyResource: path: string
+#RundeckPublicKeyResource: {
+	path:          string
+	delete?:       bool
+	id?:           string
+	key_material?: string
+	url?:          string
+}
 #Resources: {
 	rundeck_acl_policy?: [_]:  #RundeckAclPolicyResource
 	rundeck_job?: [_]:         #RundeckJobResource

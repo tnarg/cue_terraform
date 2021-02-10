@@ -2,9 +2,11 @@
 package tls
 
 #TlsCertRequestResource: {
-	key_algorithm:   string
-	private_key_pem: string
+	key_algorithm:     string
+	private_key_pem:   string
+	cert_request_pem?: string
 	dns_names?: [string, ...]
+	id?: string
 	ip_addresses?: [string, ...]
 	uris?: [string, ...]
 	subject?: [{
@@ -26,26 +28,41 @@ package tls
 	ca_private_key_pem:    string
 	cert_request_pem:      string
 	validity_period_hours: number
+	cert_pem?:             string
 	early_renewal_hours?:  number
+	id?:                   string
 	is_ca_certificate?:    bool
+	ready_for_renewal?:    bool
 	set_subject_key_id?:   bool
+	validity_end_time?:    string
+	validity_start_time?:  string
 }
 #TlsPrivateKeyResource: {
-	algorithm:    string
-	ecdsa_curve?: string
-	rsa_bits?:    number
+	algorithm:                   string
+	ecdsa_curve?:                string
+	id?:                         string
+	private_key_pem?:            string
+	public_key_fingerprint_md5?: string
+	public_key_openssh?:         string
+	public_key_pem?:             string
+	rsa_bits?:                   number
 }
 #TlsSelfSignedCertResource: {
 	allowed_uses: [string, ...]
 	key_algorithm:         string
 	private_key_pem:       string
 	validity_period_hours: number
+	cert_pem?:             string
 	dns_names?: [string, ...]
 	early_renewal_hours?: number
+	id?:                  string
 	ip_addresses?: [string, ...]
 	is_ca_certificate?:  bool
+	ready_for_renewal?:  bool
 	set_subject_key_id?: bool
 	uris?: [string, ...]
+	validity_end_time?:   string
+	validity_start_time?: string
 	subject?: [{
 		common_name?:         string
 		country?:             string

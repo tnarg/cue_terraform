@@ -7,11 +7,14 @@ package powerdns
 	ttl:      number
 	type:     string
 	zone:     string
+	id?:      string
 	set_ptr?: bool
 }
 #PowerdnsZoneResource: {
-	kind: string
-	name: string
+	kind:     string
+	name:     string
+	account?: string
+	id?:      string
 	masters?: [string, ...]
 	nameservers?: [string, ...]
 	soa_edit_api?: string

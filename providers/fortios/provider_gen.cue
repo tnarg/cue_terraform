@@ -2,9 +2,14 @@
 package fortios
 
 #Provider: fortios: {
-	cabundlefile?: string
-	hostname?:     string
-	insecure?:     bool
-	token?:        string
-	vdom?:         string
+	cabundlefile?:     string
+	fmg_cabundlefile?: string
+	fmg_hostname?:     string
+	fmg_insecure?:     bool
+	fmg_passwd?:       string
+	fmg_username?:     string
+	hostname?:         string
+	insecure?:         bool
+	token?:            string
+	vdom?:             string
 }

@@ -8,6 +8,7 @@ package infoblox
 	vm_name:            string
 	zone:               string
 	dns_view?:          string
+	id?:                string
 	network_view_name?: string
 	vm_id?:             string
 }
@@ -17,6 +18,7 @@ package infoblox
 	tenant_id: string
 	zone:      string
 	dns_view?: string
+	id?:       string
 	vm_id?:    string
 }
 #InfobloxIpAllocationResource: {
@@ -25,6 +27,8 @@ package infoblox
 	vm_name:            string
 	dns_view?:          string
 	enable_dns?:        bool
+	id?:                string
+	ip_addr?:           string
 	mac_addr?:          string
 	network_view_name?: string
 	vm_id?:             string
@@ -36,6 +40,7 @@ package infoblox
 	mac_addr:           string
 	tenant_id:          string
 	dns_view?:          string
+	id?:                string
 	network_view_name?: string
 	vm_id?:             string
 	vm_name?:           string
@@ -44,6 +49,8 @@ package infoblox
 #InfobloxNetworkResource: {
 	cidr:               string
 	tenant_id:          string
+	gateway?:           string
+	id?:                string
 	network_name?:      string
 	network_view_name?: string
 	reserve_ip?:        number
@@ -51,6 +58,7 @@ package infoblox
 #InfobloxNetworkViewResource: {
 	network_view_name: string
 	tenant_id:         string
+	id?:               string
 }
 #InfobloxPtrRecordResource: {
 	cidr:               string
@@ -59,6 +67,7 @@ package infoblox
 	vm_name:            string
 	zone:               string
 	dns_view?:          string
+	id?:                string
 	network_view_name?: string
 	vm_id?:             string
 }

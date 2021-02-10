@@ -6,53 +6,92 @@ package gitlab
 	merge_access_level: string
 	project:            string
 	push_access_level:  string
+	id?:                string
 }
 #GitlabDeployKeyResource: {
 	key:       string
 	project:   string
 	title:     string
 	can_push?: bool
+	id?:       string
 }
 #GitlabDeployKeyEnableResource: {
-	key_id:  string
-	project: string
+	key_id:    string
+	project:   string
+	can_push?: bool
+	id?:       string
+	key?:      string
+	title?:    string
+}
+#GitlabDeployTokenResource: {
+	name: string
+	scopes: [string, ...]
+	expires_at?: string
+	group?:      string
+	id?:         string
+	project?:    string
+	token?:      string
+	username?:   string
 }
 #GitlabGroupResource: {
 	name:                    string
 	path:                    string
 	description?:            string
+	full_name?:              string
+	full_path?:              string
+	id?:                     string
 	lfs_enabled?:            bool
 	parent_id?:              number
 	request_access_enabled?: bool
+	runners_token?:          string
+	visibility_level?:       string
+	web_url?:                string
 }
 #GitlabGroupClusterResource: {
 	group:                          string
 	kubernetes_api_url:             string
 	kubernetes_token:               string
 	name:                           string
+	cluster_type?:                  string
+	created_at?:                    string
 	domain?:                        string
 	enabled?:                       bool
 	environment_scope?:             string
+	id?:                            string
 	kubernetes_authorization_type?: string
 	kubernetes_ca_cert?:            string
 	managed?:                       bool
+	management_project_id?:         string
+	platform_type?:                 string
+	provider_type?:                 string
 }
 #GitlabGroupLabelResource: {
 	color:        string
 	group:        string
 	name:         string
 	description?: string
+	id?:          string
+}
+#GitlabGroupLdapLinkResource: {
+	access_level:  string
+	cn:            string
+	group_id:      string
+	ldap_provider: string
+	force?:        bool
+	id?:           string
 }
 #GitlabGroupMembershipResource: {
 	access_level: string
 	group_id:     string
 	user_id:      number
 	expires_at?:  string
+	id?:          string
 }
 #GitlabGroupVariableResource: {
 	group:          string
 	key:            string
 	value:          string
+	id?:            string
 	masked?:        bool
 	protected?:     bool
 	variable_type?: string
@@ -62,6 +101,7 @@ package gitlab
 	name:         string
 	project:      string
 	description?: string
+	id?:          string
 }
 #GitlabPipelineScheduleResource: {
 	cron:           string
@@ -70,16 +110,20 @@ package gitlab
 	ref:            string
 	active?:        bool
 	cron_timezone?: string
+	id?:            string
 }
 #GitlabPipelineScheduleVariableResource: {
 	key:                  string
 	pipeline_schedule_id: number
 	project:              string
 	value:                string
+	id?:                  string
 }
 #GitlabPipelineTriggerResource: {
 	description: string
 	project:     string
+	id?:         string
+	token?:      string
 }
 #GitlabProjectResource: {
 	name:                                              string
@@ -88,23 +132,32 @@ package gitlab
 	container_registry_enabled?:                       bool
 	default_branch?:                                   string
 	description?:                                      string
+	http_url_to_repo?:                                 string
+	id?:                                               string
 	initialize_with_readme?:                           bool
 	issues_enabled?:                                   bool
 	lfs_enabled?:                                      bool
 	merge_method?:                                     string
 	merge_requests_enabled?:                           bool
+	namespace_id?:                                     number
 	only_allow_merge_if_all_discussions_are_resolved?: bool
 	only_allow_merge_if_pipeline_succeeds?:            bool
 	path?:                                             string
 	pipelines_enabled?:                                bool
+	remove_source_branch_after_merge?:                 bool
 	request_access_enabled?:                           bool
+	runners_token?:                                    string
+	shared_runners_enabled?:                           bool
 	snippets_enabled?:                                 bool
+	ssh_url_to_repo?:                                  string
 	tags?: [string, ...]
 	visibility_level?: string
+	web_url?:          string
 	wiki_enabled?:     bool
 	shared_with_groups?: [{
 		group_access_level: string
 		group_id:           number
+		group_name?:        string
 	}, ...]
 }
 #GitlabProjectClusterResource: {
@@ -112,18 +165,25 @@ package gitlab
 	kubernetes_token:               string
 	name:                           string
 	project:                        string
+	cluster_type?:                  string
+	created_at?:                    string
 	domain?:                        string
 	enabled?:                       bool
 	environment_scope?:             string
+	id?:                            string
 	kubernetes_authorization_type?: string
 	kubernetes_ca_cert?:            string
 	kubernetes_namespace?:          string
 	managed?:                       bool
+	management_project_id?:         string
+	platform_type?:                 string
+	provider_type?:                 string
 }
 #GitlabProjectHookResource: {
 	project:                  string
 	url:                      string
 	enable_ssl_verification?: bool
+	id?:                      string
 	issues_events?:           bool
 	job_events?:              bool
 	merge_requests_events?:   bool
@@ -138,6 +198,7 @@ package gitlab
 	access_level: string
 	project_id:   string
 	user_id:      number
+	id?:          string
 }
 #GitlabProjectPushRulesResource: {
 	project:               string
@@ -146,6 +207,7 @@ package gitlab
 	commit_message_regex?: string
 	deny_delete_tag?:      bool
 	file_name_regex?:      string
+	id?:                   string
 	max_file_size?:        number
 	member_check?:         bool
 	prevent_secrets?:      bool
@@ -154,50 +216,87 @@ package gitlab
 	access_level: string
 	group_id:     number
 	project_id:   string
+	id?:          string
 }
 #GitlabProjectVariableResource: {
 	key:                string
 	project:            string
 	value:              string
 	environment_scope?: string
+	id?:                string
 	masked?:            bool
 	protected?:         bool
 	variable_type?:     string
+}
+#GitlabServiceGithubResource: {
+	project:         string
+	repository_url:  string
+	token:           string
+	active?:         bool
+	created_at?:     string
+	id?:             string
+	static_context?: bool
+	title?:          string
+	updated_at?:     string
 }
 #GitlabServiceJiraResource: {
 	password:                  string
 	project:                   string
 	url:                       string
 	username:                  string
+	active?:                   bool
+	comment_on_event_enabled?: bool
+	commit_events?:            bool
+	created_at?:               string
+	id?:                       string
 	jira_issue_transition_id?: string
+	merge_requests_events?:    bool
 	project_key?:              string
+	title?:                    string
+	updated_at?:               string
 }
 #GitlabServiceSlackResource: {
-	project:                     string
-	webhook:                     string
-	confidential_issue_channel?: string
-	issue_channel?:              string
-	merge_request_channel?:      string
-	note_channel?:               string
-	pipeline_channel?:           string
-	push_channel?:               string
-	tag_push_channel?:           string
-	username?:                   string
-	wiki_page_channel?:          string
+	project:                       string
+	webhook:                       string
+	branches_to_be_notified?:      string
+	confidential_issue_channel?:   string
+	confidential_issues_events?:   bool
+	confidential_note_events?:     bool
+	id?:                           string
+	issue_channel?:                string
+	issues_events?:                bool
+	job_events?:                   bool
+	merge_request_channel?:        string
+	merge_requests_events?:        bool
+	note_channel?:                 string
+	note_events?:                  bool
+	notify_only_broken_pipelines?: bool
+	notify_only_default_branch?:   bool
+	pipeline_channel?:             string
+	pipeline_events?:              bool
+	push_channel?:                 string
+	push_events?:                  bool
+	tag_push_channel?:             string
+	tag_push_events?:              bool
+	username?:                     string
+	wiki_page_channel?:            string
+	wiki_page_events?:             bool
 }
 #GitlabTagProtectionResource: {
 	create_access_level: string
 	project:             string
 	tag:                 string
+	id?:                 string
 }
 #GitlabUserResource: {
 	email:              string
 	name:               string
-	password:           string
 	username:           string
 	can_create_group?:  bool
+	id?:                string
 	is_admin?:          bool
 	is_external?:       bool
+	password?:          string
 	projects_limit?:    number
 	reset_password?:    bool
 	skip_confirmation?: bool
@@ -206,9 +305,11 @@ package gitlab
 	gitlab_branch_protection?: [_]:          #GitlabBranchProtectionResource
 	gitlab_deploy_key?: [_]:                 #GitlabDeployKeyResource
 	gitlab_deploy_key_enable?: [_]:          #GitlabDeployKeyEnableResource
+	gitlab_deploy_token?: [_]:               #GitlabDeployTokenResource
 	gitlab_group?: [_]:                      #GitlabGroupResource
 	gitlab_group_cluster?: [_]:              #GitlabGroupClusterResource
 	gitlab_group_label?: [_]:                #GitlabGroupLabelResource
+	gitlab_group_ldap_link?: [_]:            #GitlabGroupLdapLinkResource
 	gitlab_group_membership?: [_]:           #GitlabGroupMembershipResource
 	gitlab_group_variable?: [_]:             #GitlabGroupVariableResource
 	gitlab_label?: [_]:                      #GitlabLabelResource
@@ -222,6 +323,7 @@ package gitlab
 	gitlab_project_push_rules?: [_]:         #GitlabProjectPushRulesResource
 	gitlab_project_share_group?: [_]:        #GitlabProjectShareGroupResource
 	gitlab_project_variable?: [_]:           #GitlabProjectVariableResource
+	gitlab_service_github?: [_]:             #GitlabServiceGithubResource
 	gitlab_service_jira?: [_]:               #GitlabServiceJiraResource
 	gitlab_service_slack?: [_]:              #GitlabServiceSlackResource
 	gitlab_tag_protection?: [_]:             #GitlabTagProtectionResource

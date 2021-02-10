@@ -2,7 +2,10 @@
 package http
 
 #HttpDataSource: {
-	url: string
-	request_headers?: [_]: string
+	url:   string
+	body?: string
+	id?:   string
+	request_headers?: [_]:  string
+	response_headers?: [_]: string
 }
 #DataSources: http?: [_]: #HttpDataSource

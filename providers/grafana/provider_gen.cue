@@ -2,6 +2,7 @@
 package grafana
 
 #Provider: grafana: {
-	auth: string
-	url:  string
+	auth:    string
+	url:     string
+	org_id?: number
 }

@@ -2,17 +2,28 @@
 package brightbox
 
 #BrightboxApiClientResource: {
+	account?:           string
 	description?:       string
+	id?:                string
 	name?:              string
 	permissions_group?: string
+	secret?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #BrightboxCloudipResource: {
-	name?:   string
-	target?: string
+	fqdn?:        string
+	id?:          string
+	locked?:      string
+	name?:        string
+	public_ip?:   string
+	public_ipv4?: string
+	public_ipv6?: string
+	reverse_dns?: string
+	status?:      string
+	target?:      string
 	port_translator?: [{
 		incoming: number
 		outgoing: number
@@ -23,12 +34,33 @@ package brightbox
 		delete?: string
 	}
 }
+#BrightboxConfigMapResource: {
+	data: [_]: string
+	id?:   string
+	name?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
 #BrightboxDatabaseServerResource: {
 	allow_access: [string, ...]
-	description?: string
-	locked?:      bool
-	name?:        string
-	snapshot?:    string
+	admin_password?:             string
+	admin_username?:             string
+	database_engine?:            string
+	database_type?:              string
+	database_version?:           string
+	description?:                string
+	id?:                         string
+	locked?:                     bool
+	maintenance_hour?:           number
+	maintenance_weekday?:        number
+	name?:                       string
+	snapshot?:                   string
+	snapshots_schedule?:         string
+	snapshots_schedule_next_at?: string
+	status?:                     string
+	zone?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -36,6 +68,7 @@ package brightbox
 }
 #BrightboxFirewallPolicyResource: {
 	description?:  string
+	id?:           string
 	name?:         string
 	server_group?: string
 	timeouts?: update?: string
@@ -46,6 +79,7 @@ package brightbox
 	destination?:      string
 	destination_port?: string
 	icmp_type_name?:   string
+	id?:               string
 	protocol?:         string
 	source?:           string
 	source_port?:      string
@@ -55,14 +89,24 @@ package brightbox
 	}
 }
 #BrightboxLoadBalancerResource: {
+	buffer_size?:             number
 	certificate_pem?:         string
 	certificate_private_key?: string
+	id?:                      string
 	locked?:                  bool
 	name?:                    string
-	sslv3?:                   bool
+	nodes?: [string, ...]
+	policy?: string
+	sslv3?:  bool
+	status?: string
 	healthcheck?: [{
-		port: number
-		type: string
+		port:            number
+		type:            string
+		interval?:       number
+		request?:        string
+		threshold_down?: number
+		threshold_up?:   number
+		timeout?:        number
 	}, ...]
 	listener?: [{
 		in:       number
@@ -76,13 +120,18 @@ package brightbox
 	}
 }
 #BrightboxOrbitContainerResource: {
-	name: string
+	name:        string
+	bytes_used?: number
 	container_read?: [string, ...]
 	container_sync_key?: string
 	container_sync_to?:  string
 	container_write?: [string, ...]
+	created_at?:       string
 	history_location?: string
+	id?:               string
 	metadata?: [_]: string
+	object_count?:      number
+	storage_policy?:    string
 	versions_location?: string
 	timeouts?: {
 		create?: string
@@ -92,17 +141,34 @@ package brightbox
 #BrightboxServerResource: {
 	image: string
 	server_groups: [string, ...]
-	locked?:           bool
-	name?:             string
-	user_data?:        string
-	user_data_base64?: string
+	disk_encrypted?:       bool
+	fqdn?:                 string
+	hostname?:             string
+	id?:                   string
+	interface?:            string
+	ipv4_address?:         string
+	ipv4_address_private?: string
+	ipv6_address?:         string
+	ipv6_hostname?:        string
+	locked?:               bool
+	name?:                 string
+	public_hostname?:      string
+	status?:               string
+	type?:                 string
+	user_data?:            string
+	user_data_base64?:     string
+	username?:             string
+	zone?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #BrightboxServerGroupResource: {
+	default?:     bool
 	description?: string
+	fqdn?:        string
+	id?:          string
 	name?:        string
 	timeouts?: {
 		create?: string
@@ -112,6 +178,7 @@ package brightbox
 #Resources: {
 	brightbox_api_client?: [_]:      #BrightboxApiClientResource
 	brightbox_cloudip?: [_]:         #BrightboxCloudipResource
+	brightbox_config_map?: [_]:      #BrightboxConfigMapResource
 	brightbox_database_server?: [_]: #BrightboxDatabaseServerResource
 	brightbox_firewall_policy?: [_]: #BrightboxFirewallPolicyResource
 	brightbox_firewall_rule?: [_]:   #BrightboxFirewallRuleResource

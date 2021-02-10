@@ -3,33 +3,65 @@ package ncloud
 
 #NcloudAccessControlGroupDataSource: {
 	configuration_no?: string
+	description?:      string
+	id?:               string
 	is_default_group?: bool
 	name?:             string
 }
 #NcloudAccessControlGroupsDataSource: {
 	access_control_groups?: [string, ...]
 	configuration_no_list?: [string, ...]
+	id?:               string
 	is_default_group?: bool
 	name?:             string
 	output_file?:      string
 }
 #NcloudAccessControlRuleDataSource: {
-	access_control_group_name?: string
-	is_default_group?:          bool
-	source_name_regex?:         string
+	access_control_group_configuration_no?: string
+	access_control_group_name?:             string
+	configuration_no?:                      string
+	description?:                           string
+	destination_port?:                      string
+	id?:                                    string
+	is_default_group?:                      bool
+	protocol_type?:                         string
+	source_configuration_no?:               string
+	source_ip?:                             string
+	source_name?:                           string
+	source_name_regex?:                     string
 }
 #NcloudAccessControlRulesDataSource: {
 	access_control_group_configuration_no: string
-	output_file?:                          string
-	source_name_regex?:                    string
+	access_control_rules?: [string, ...]
+	id?:                string
+	output_file?:       string
+	source_name_regex?: string
 }
 #NcloudMemberServerImageDataSource: {
-	name_regex?: string
+	block_storage_total_rows?: number
+	block_storage_total_size?: number
+	description?:              string
+	id?:                       string
+	name?:                     string
+	name_regex?:               string
+	no?:                       string
 	no_list?: [string, ...]
+	operation?:                             string
+	original_base_block_storage_disk_type?: string
+	original_os_information?:               string
+	original_server_image_name?:            string
+	original_server_image_product_code?:    string
+	original_server_instance_no?:           string
+	original_server_name?:                  string
+	original_server_product_code?:          string
+	platform_type?:                         string
 	platform_type_code_list?: [string, ...]
-	region?: string
+	region?:      string
+	status?:      string
+	status_name?: string
 }
 #NcloudMemberServerImagesDataSource: {
+	id?: string
 	member_server_images?: [string, ...]
 	name_regex?: string
 	no_list?: [string, ...]
@@ -37,80 +69,190 @@ package ncloud
 	platform_type_code_list?: [string, ...]
 	region?: string
 }
-#NcloudNasVolumeDataSource: {}
+#NcloudNasVolumeDataSource: {
+	description?: string
+	id?:          string
+	instance_custom_ip_list?: [string, ...]
+	instance_no?:               string
+	instance_status?:           string
+	is_event_configuration?:    bool
+	is_snapshot_configuration?: bool
+	no_list?: [string, ...]
+	region?:                              string
+	snapshot_volume_size?:                number
+	snapshot_volume_use_ratio?:           number
+	snapshot_volume_use_size?:            number
+	volume_allotment_protocol_type_code?: string
+	volume_name?:                         string
+	volume_size?:                         number
+	volume_total_size?:                   number
+	volume_use_ratio?:                    number
+	volume_use_size?:                     number
+	zone?:                                string
+}
 #NcloudNasVolumesDataSource: {
-	is_event_configuration?:              bool
-	is_snapshot_configuration?:           bool
+	id?:                        string
+	is_event_configuration?:    bool
+	is_snapshot_configuration?: bool
+	nas_volumes?: [string, ...]
+	no_list?: [string, ...]
 	output_file?:                         string
 	region?:                              string
 	volume_allotment_protocol_type_code?: string
 	zone?:                                string
 }
 #NcloudPortForwardingRuleDataSource: {
-	internet_line_type_code?: string
-	region?:                  string
-	zone?:                    string
+	id?:                               string
+	internet_line_type_code?:          string
+	port_forwarding_configuration_no?: string
+	port_forwarding_external_port?:    string
+	port_forwarding_internal_port?:    string
+	port_forwarding_public_ip?:        string
+	region?:                           string
+	server_instance_no?:               string
+	zone?:                             string
 }
 #NcloudPortForwardingRulesDataSource: {
-	internet_line_type_code?:       string
-	output_file?:                   string
-	port_forwarding_internal_port?: string
-	region?:                        string
-	zone?:                          string
+	id?:                               string
+	internet_line_type_code?:          string
+	output_file?:                      string
+	port_forwarding_configuration_no?: string
+	port_forwarding_internal_port?:    string
+	port_forwarding_rule_list?: [{
+		port_forwarding_external_port: string
+		port_forwarding_internal_port: string
+		port_forwarding_public_ip:     string
+		server_instance_no:            string
+	}, ...]
+	region?: string
+	zone?:   string
 }
 #NcloudPublicIpDataSource: {
+	description?: string
+	id?:          string
+	instance_no?: string
 	instance_no_list?: [string, ...]
-	is_associated?: bool
+	instance_operation?:   string
+	instance_status?:      string
+	instance_status_name?: string
+	internet_line_type?:   string
+	is_associated?:        bool
+	kind_type?:            string
 	list?: [string, ...]
+	public_ip?:           string
 	region?:              string
 	search_filter_name?:  string
 	search_filter_value?: string
-	sorted_by?:           string
-	sorting_order?:       string
-	zone?:                string
+	server_instance?: [_]: string
+	sorted_by?:     string
+	sorting_order?: string
+	zone?:          string
 }
 #NcloudRegionsDataSource: {
 	code?:        string
+	id?:          string
 	output_file?: string
-	regions?: [{}, ...]
+	regions?: [{
+		region_code?: string
+		region_name?: string
+		region_no?:   string
+	}, ...]
 }
 #NcloudRootPasswordDataSource: {
 	private_key:        string
 	server_instance_no: string
+	id?:                string
+	root_password?:     string
 }
 #NcloudServerImageDataSource: {
+	add_block_storage_size?:          number
+	base_block_storage_size?:         number
 	block_storage_size?:              number
+	cpu_count?:                       number
+	exclusion_product_code?:          string
+	id?:                              string
 	infra_resource_detail_type_code?: string
-	product_name_regex?:              string
-	region?:                          string
+	infra_resource_type?:             string
+	memory_size?:                     number
+	os_information?:                  string
+	platform_type?:                   string
+	platform_type_code_list?: [string, ...]
+	product_code?:        string
+	product_description?: string
+	product_name?:        string
+	product_name_regex?:  string
+	product_type?:        string
+	region?:              string
 }
 #NcloudServerImagesDataSource: {
 	block_storage_size?:              number
+	exclusion_product_code?:          string
+	id?:                              string
 	infra_resource_detail_type_code?: string
 	output_file?:                     string
-	product_name_regex?:              string
-	region?:                          string
+	platform_type_code_list?: [string, ...]
+	product_code?:       string
+	product_name_regex?: string
+	region?:             string
 	server_images?: [string, ...]
 }
 #NcloudServerProductDataSource: {
 	server_image_product_code: string
+	add_block_storage_size?:   number
+	base_block_storage_size?:  number
+	cpu_count?:                number
+	exclusion_product_code?:   string
+	id?:                       string
+	infra_resource_type?:      string
 	internet_line_type_code?:  string
+	memory_size?:              number
+	os_information?:           string
+	platform_type?:            string
+	product_code?:             string
+	product_description?:      string
+	product_name?:             string
 	product_name_regex?:       string
+	product_type?:             string
 	region?:                   string
 	zone?:                     string
 }
 #NcloudServerProductsDataSource: {
 	server_image_product_code: string
+	exclusion_product_code?:   string
+	id?:                       string
 	internet_line_type_code?:  string
 	output_file?:              string
+	product_code?:             string
 	product_name_regex?:       string
 	region?:                   string
 	server_products?: [string, ...]
 	zone?: string
 }
+#NcloudVpcDataSource: {
+	vpc_no:           string
+	id?:              string
+	ipv4_cidr_block?: string
+	name?:            string
+	status?:          string
+}
+#NcloudVpcsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	name?:   string
+	status?: string
+	vpc_no_list?: [string, ...]
+}
 #NcloudZonesDataSource: {
+	id?:          string
 	output_file?: string
 	region?:      string
+	zones?: [{
+		region_no:        string
+		zone_code:        string
+		zone_description: string
+		zone_name:        string
+		zone_no:          string
+	}, ...]
 }
 #DataSources: {
 	ncloud_access_control_group?: [_]:  #NcloudAccessControlGroupDataSource
@@ -130,5 +272,7 @@ package ncloud
 	ncloud_server_images?: [_]:         #NcloudServerImagesDataSource
 	ncloud_server_product?: [_]:        #NcloudServerProductDataSource
 	ncloud_server_products?: [_]:       #NcloudServerProductsDataSource
+	ncloud_vpc?: [_]:                   #NcloudVpcDataSource
+	ncloud_vpcs?: [_]:                  #NcloudVpcsDataSource
 	ncloud_zones?: [_]:                 #NcloudZonesDataSource
 }

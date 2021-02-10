@@ -12,8 +12,12 @@ package huaweicloud
 	cors?:                     bool
 	description?:              string
 	example_failure_response?: string
+	group_name?:               string
+	id?:                       string
+	region?:                   string
 	request_protocol?:         string
 	tags?: [string, ...]
+	version?:    string
 	visibility?: number
 	backend_parameter?: [{
 		location:     string
@@ -57,16 +61,21 @@ package huaweicloud
 #HuaweicloudApiGatewayGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
+	region?:      string
+	status?:      number
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudAsConfigurationV1Resource: {
+#HuaweicloudAsConfigurationResource: {
 	scaling_configuration_name: string
+	id?:                        string
+	region?:                    string
 	instance_config?: [{
+		flavor:       string
 		key_name:     string
-		flavor?:      string
 		image?:       string
 		instance_id?: string
 		metadata?: [_]: string
@@ -93,22 +102,61 @@ package huaweicloud
 		}, ...]
 	}, ...]
 }
-#HuaweicloudAsGroupV1Resource: {
+#HuaweicloudAsConfigurationV1Resource: {
+	scaling_configuration_name: string
+	id?:                        string
+	region?:                    string
+	instance_config?: [{
+		flavor:       string
+		key_name:     string
+		image?:       string
+		instance_id?: string
+		metadata?: [_]: string
+		user_data?: string
+		disk?: [{
+			disk_type:   string
+			size:        number
+			volume_type: string
+			kms_id?:     string
+		}, ...]
+		personality?: [{
+			content: string
+			path:    string
+		}, ...]
+		public_ip?: [{
+			eip?: [{
+				ip_type: string
+				bandwidth?: [{
+					charging_mode: string
+					share_type:    string
+					size:          number
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+}
+#HuaweicloudAsGroupResource: {
 	scaling_group_name: string
 	vpc_id:             string
 	available_zones?: [string, ...]
 	cool_down_time?:               number
+	current_instance_number?:      number
 	delete_instances?:             string
 	delete_publicip?:              bool
 	desire_instance_number?:       number
+	enable?:                       bool
 	health_periodic_audit_method?: string
 	health_periodic_audit_time?:   number
+	id?:                           string
 	instance_terminate_policy?:    string
 	instances?: [string, ...]
 	lb_listener_id?:      string
 	max_instance_number?: number
 	min_instance_number?: number
 	notifications?: [string, ...]
+	region?:                   string
+	scaling_configuration_id?: string
+	status?:                   string
 	tags?: [_]: string
 	lbaas_listeners?: [{
 		pool_id:       string
@@ -126,12 +174,73 @@ package huaweicloud
 		delete?: string
 	}
 }
+#HuaweicloudAsGroupV1Resource: {
+	scaling_group_name: string
+	vpc_id:             string
+	available_zones?: [string, ...]
+	cool_down_time?:               number
+	current_instance_number?:      number
+	delete_instances?:             string
+	delete_publicip?:              bool
+	desire_instance_number?:       number
+	enable?:                       bool
+	health_periodic_audit_method?: string
+	health_periodic_audit_time?:   number
+	id?:                           string
+	instance_terminate_policy?:    string
+	instances?: [string, ...]
+	lb_listener_id?:      string
+	max_instance_number?: number
+	min_instance_number?: number
+	notifications?: [string, ...]
+	region?:                   string
+	scaling_configuration_id?: string
+	status?:                   string
+	tags?: [_]: string
+	lbaas_listeners?: [{
+		pool_id:       string
+		protocol_port: number
+		weight?:       number
+	}, ...]
+	networks?: [{
+		id: string
+	}, ...]
+	security_groups?: [{
+		id: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudAsPolicyResource: {
+	scaling_group_id:    string
+	scaling_policy_name: string
+	scaling_policy_type: string
+	alarm_id?:           string
+	cool_down_time?:     number
+	id?:                 string
+	region?:             string
+	scaling_policy_action?: [{
+		instance_number?: number
+		operation?:       string
+	}, ...]
+	scheduled_policy?: [{
+		launch_time:       string
+		end_time?:         string
+		recurrence_type?:  string
+		recurrence_value?: string
+		start_time?:       string
+	}, ...]
+}
 #HuaweicloudAsPolicyV1Resource: {
 	scaling_group_id:    string
 	scaling_policy_name: string
 	scaling_policy_type: string
 	alarm_id?:           string
 	cool_down_time?:     number
+	id?:                 string
+	region?:             string
 	scaling_policy_action?: [{
 		instance_number?: number
 		operation?:       string
@@ -145,22 +254,48 @@ package huaweicloud
 	}, ...]
 }
 #HuaweicloudBlockstorageVolumeV2Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	cascade?:              bool
 	consistency_group_id?: string
 	description?:          string
+	id?:                   string
 	image_id?:             string
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
+	volume_type?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudCceClusterV3Resource: {
-	cluster_type:           string
+#HuaweicloudCceAddonResource: {
+	cluster_id:    string
+	template_name: string
+	version:       string
+	description?:  string
+	id?:           string
+	region?:       string
+	status?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+	values?: [{
+		basic: [_]:   string
+		custom?: [_]: string
+	}, ...]
+}
+#HuaweicloudCceClusterResource: {
 	container_network_type: string
 	flavor_id:              string
 	name:                   string
@@ -169,25 +304,118 @@ package huaweicloud
 	annotations?: [_]: string
 	authenticating_proxy_ca?: string
 	authentication_mode?:     string
-	eip?:                     string
+	billing_mode?:            number
+	certificate_clusters?: [{
+		certificate_authority_data: string
+		name:                       string
+		server:                     string
+	}, ...]
+	certificate_users?: [{
+		client_certificate_data: string
+		client_key_data:         string
+		name:                    string
+	}, ...]
+	cluster_type?:           string
+	cluster_version?:        string
+	container_network_cidr?: string
+	description?:            string
+	eip?:                    string
+	enterprise_project_id?:  string
 	extend_param?: [_]: string
-	labels?: [_]:       string
-	multi_az?: bool
+	highway_subnet_id?: string
+	id?:                string
+	kube_config_raw?:   string
+	kube_proxy_mode?:   string
+	labels?: [_]: string
+	multi_az?:          bool
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	masters?: [{
+		availability_zone?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudCceNodeV3Resource: {
+#HuaweicloudCceClusterV3Resource: {
+	container_network_type: string
+	flavor_id:              string
+	name:                   string
+	subnet_id:              string
+	vpc_id:                 string
+	annotations?: [_]: string
+	authenticating_proxy_ca?: string
+	authentication_mode?:     string
+	billing_mode?:            number
+	certificate_clusters?: [{
+		certificate_authority_data: string
+		name:                       string
+		server:                     string
+	}, ...]
+	certificate_users?: [{
+		client_certificate_data: string
+		client_key_data:         string
+		name:                    string
+	}, ...]
+	cluster_type?:           string
+	cluster_version?:        string
+	container_network_cidr?: string
+	description?:            string
+	eip?:                    string
+	enterprise_project_id?:  string
+	extend_param?: [_]: string
+	highway_subnet_id?: string
+	id?:                string
+	kube_config_raw?:   string
+	kube_proxy_mode?:   string
+	labels?: [_]: string
+	multi_az?:          bool
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	masters?: [{
+		availability_zone?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCceNodeResource: {
 	availability_zone: string
 	cluster_id:        string
 	flavor_id:         string
-	key_pair?:         string
+	annotations?: [_]: string
+	bandwidth_charge_mode?: string
+	bandwidth_size?:        number
+	billing_mode?:          number
+	ecs_performance_type?:  string
+	eip_id?:                string
+	eip_ids?: [string, ...]
+	extend_param_charging_mode?: number
+	id?:                         string
+	iptype?:                     string
+	key_pair?:                   string
 	labels?: [_]: string
+	max_pods?:    number
+	name?:        string
+	order_id?:    string
+	os?:          string
 	password?:    string
 	postinstall?: string
 	preinstall?:  string
+	private_ip?:  string
+	product_id?:  string
+	public_ip?:   string
+	public_key?:  string
+	region?:      string
+	server_id?:   string
+	sharetype?:   string
+	status?:      string
 	subnet_id?:   string
+	tags?: [_]: string
 	data_volumes?: [{
 		size:          number
 		volumetype:    string
@@ -198,6 +426,125 @@ package huaweicloud
 		volumetype:    string
 		extend_param?: string
 	}, ...]
+	taints?: [{
+		effect: string
+		key:    string
+		value:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCceNodePoolResource: {
+	cluster_id:         string
+	flavor_id:          string
+	initial_node_count: number
+	name:               string
+	availability_zone?: string
+	billing_mode?:      number
+	id?:                string
+	key_pair?:          string
+	labels?: [_]: string
+	max_node_count?:           number
+	min_node_count?:           number
+	os?:                       string
+	password?:                 string
+	postinstall?:              string
+	preinstall?:               string
+	priority?:                 number
+	region?:                   string
+	scale_down_cooldown_time?: number
+	scall_enable?:             bool
+	status?:                   string
+	subnet_id?:                string
+	type?:                     string
+	data_volumes?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	root_volume?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	taints?: [{
+		effect: string
+		key:    string
+		value:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCceNodeV3Resource: {
+	availability_zone: string
+	cluster_id:        string
+	flavor_id:         string
+	annotations?: [_]: string
+	bandwidth_charge_mode?: string
+	bandwidth_size?:        number
+	billing_mode?:          number
+	ecs_performance_type?:  string
+	eip_id?:                string
+	eip_ids?: [string, ...]
+	extend_param_charging_mode?: number
+	id?:                         string
+	iptype?:                     string
+	key_pair?:                   string
+	labels?: [_]: string
+	max_pods?:    number
+	name?:        string
+	order_id?:    string
+	os?:          string
+	password?:    string
+	postinstall?: string
+	preinstall?:  string
+	private_ip?:  string
+	product_id?:  string
+	public_ip?:   string
+	public_key?:  string
+	region?:      string
+	server_id?:   string
+	sharetype?:   string
+	status?:      string
+	subnet_id?:   string
+	tags?: [_]: string
+	data_volumes?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	root_volume?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	taints?: [{
+		effect: string
+		key:    string
+		value:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCciNetworkResource: {
+	available_zone: string
+	domain_id:      string
+	name:           string
+	namespace:      string
+	network_id:     string
+	project_id:     string
+	security_group: string
+	subnet_id:      string
+	vpc_id:         string
+	cidr?:          string
+	id?:            string
+	region?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -213,10 +560,41 @@ package huaweicloud
 	security_group: string
 	subnet_id:      string
 	vpc_id:         string
+	cidr?:          string
+	id?:            string
+	region?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
+}
+#HuaweicloudCdmClusterResource: {
+	availability_zone: string
+	flavor_id:         string
+	name:              string
+	security_group_id: string
+	subnet_id:         string
+	version:           string
+	vpc_id:            string
+	created?:          string
+	email?: [string, ...]
+	enterprise_project_id?: [string, ...]
+	id?: string
+	instances?: [{
+		id:         string
+		name:       string
+		public_ip:  string
+		role:       string
+		traffic_ip: string
+		type:       string
+	}, ...]
+	is_auto_off?: bool
+	phone_num?: [string, ...]
+	publid_ip?:          string
+	region?:             string
+	schedule_boot_time?: string
+	schedule_off_time?:  string
+	timeouts?: create?: string
 }
 #HuaweicloudCdmClusterV1Resource: {
 	availability_zone: string
@@ -226,18 +604,71 @@ package huaweicloud
 	subnet_id:         string
 	version:           string
 	vpc_id:            string
+	created?:          string
 	email?: [string, ...]
 	enterprise_project_id?: [string, ...]
+	id?: string
+	instances?: [{
+		id:         string
+		name:       string
+		public_ip:  string
+		role:       string
+		traffic_ip: string
+		type:       string
+	}, ...]
+	is_auto_off?: bool
 	phone_num?: [string, ...]
+	publid_ip?:          string
+	region?:             string
 	schedule_boot_time?: string
 	schedule_off_time?:  string
 	timeouts?: create?: string
+}
+#HuaweicloudCdnDomainResource: {
+	name:                   string
+	type:                   string
+	cname?:                 string
+	domain_status?:         string
+	enterprise_project_id?: string
+	id?:                    string
+	service_area?:          string
+	sources?: [{
+		origin:      string
+		origin_type: string
+		active?:     number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCdnDomainV1Resource: {
+	name:                   string
+	type:                   string
+	cname?:                 string
+	domain_status?:         string
+	enterprise_project_id?: string
+	id?:                    string
+	service_area?:          string
+	sources?: [{
+		origin:      string
+		origin_type: string
+		active?:     number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #HuaweicloudCesAlarmruleResource: {
 	alarm_name:            string
 	alarm_action_enabled?: bool
 	alarm_description?:    string
 	alarm_enabled?:        bool
+	alarm_state?:          string
+	id?:                   string
+	region?:               string
+	update_time?:          number
 	alarm_actions?: [{
 		notification_list: [string, ...]
 		type: string
@@ -272,36 +703,124 @@ package huaweicloud
 		update?: string
 	}
 }
-#HuaweicloudCloudtableClusterV2Resource: {
-	availability_zone: string
-	name:              string
-	rs_num:            number
-	security_group_id: string
-	storage_type:      string
-	subnet_id:         string
-	vpc_id:            string
+#HuaweicloudCloudtableClusterResource: {
+	availability_zone:         string
+	name:                      string
+	rs_num:                    number
+	security_group_id:         string
+	storage_type:              string
+	subnet_id:                 string
+	vpc_id:                    string
+	created?:                  string
+	enable_iam_auth?:          bool
+	hbase_public_endpoint?:    string
+	id?:                       string
+	lemon_link?:               string
+	lemon_num?:                number
+	open_tsdb_link?:           string
+	opentsdb_num?:             number
+	opentsdb_public_endpoint?: string
+	region?:                   string
+	storage_quota?:            string
+	used_storage_size?:        string
+	zookeeper_link?:           string
 	tags?: [{
 		key?:   string
 		value?: string
 	}, ...]
 	timeouts?: create?: string
 }
-#HuaweicloudComputeFloatingipAssociateV2Resource: {
-	floating_ip: string
-	instance_id: string
-	fixed_ip?:   string
+#HuaweicloudCloudtableClusterV2Resource: {
+	availability_zone:         string
+	name:                      string
+	rs_num:                    number
+	security_group_id:         string
+	storage_type:              string
+	subnet_id:                 string
+	vpc_id:                    string
+	created?:                  string
+	enable_iam_auth?:          bool
+	hbase_public_endpoint?:    string
+	id?:                       string
+	lemon_link?:               string
+	lemon_num?:                number
+	open_tsdb_link?:           string
+	opentsdb_num?:             number
+	opentsdb_public_endpoint?: string
+	region?:                   string
+	storage_quota?:            string
+	used_storage_size?:        string
+	zookeeper_link?:           string
+	tags?: [{
+		key?:   string
+		value?: string
+	}, ...]
+	timeouts?: create?: string
 }
-#HuaweicloudComputeFloatingipV2Resource: pool?: string
-#HuaweicloudComputeInstanceV2Resource: {
-	availability_zone: string
-	name:              string
-	admin_pass?:       string
-	config_drive?:     bool
-	floating_ip?:      string
-	key_pair?:         string
+#HuaweicloudComputeEipAssociateResource: {
+	instance_id:  string
+	fixed_ip?:    string
+	floating_ip?: string
+	id?:          string
+	public_ip?:   string
+	region?:      string
+	timeouts?: create?: string
+}
+#HuaweicloudComputeFloatingipAssociateV2Resource: {
+	instance_id:  string
+	fixed_ip?:    string
+	floating_ip?: string
+	id?:          string
+	public_ip?:   string
+	region?:      string
+	timeouts?: create?: string
+}
+#HuaweicloudComputeFloatingipV2Resource: {
+	address?:     string
+	fixed_ip?:    string
+	id?:          string
+	instance_id?: string
+	pool?:        string
+	region?:      string
+}
+#HuaweicloudComputeInstanceResource: {
+	availability_zone:            string
+	name:                         string
+	access_ip_v4?:                string
+	access_ip_v6?:                string
+	admin_pass?:                  string
+	agency_name?:                 string
+	auto_renew?:                  string
+	charging_mode?:               string
+	delete_disks_on_termination?: bool
+	enterprise_project_id?:       string
+	flavor_id?:                   string
+	flavor_name?:                 string
+	id?:                          string
+	image_id?:                    string
+	image_name?:                  string
+	key_pair?:                    string
 	metadata?: [_]: string
+	period?:      number
+	period_unit?: string
+	public_ip?:   string
+	region?:      string
+	security_groups?: [string, ...]
+	status?:              string
 	stop_before_destroy?: bool
-	user_data?:           string
+	system_disk_id?:      string
+	system_disk_size?:    number
+	system_disk_type?:    string
+	tags?: [_]: string
+	user_data?: string
+	user_id?:   string
+	volume_attached?: [{
+		boot_index:  number
+		pci_address: string
+		size:        number
+		type:        string
+		volume_id:   string
+	}, ...]
 	block_device?: [{
 		source_type:            string
 		boot_index?:            number
@@ -311,69 +830,244 @@ package huaweicloud
 		uuid?:                  string
 		volume_size?:           number
 	}, ...]
+	data_disks?: [{
+		size:         number
+		type:         string
+		snapshot_id?: string
+	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	scheduler_hints?: [{
-		build_near_host_ip?: string
-		deh_id?:             string
-		different_host?: [string, ...]
-		group?: string
-		query?: [string, ...]
-		same_host?: [string, ...]
-		target_cell?: string
-		tenancy?:     string
+		deh_id?:       string
+		fault_domain?: string
+		group?:        string
+		tenancy?:      string
 	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
-	volume?: [{
-		volume_id: string
-	}, ...]
 }
-#HuaweicloudComputeInterfaceAttachV2Resource: {
+#HuaweicloudComputeInstanceV2Resource: {
+	availability_zone:            string
+	name:                         string
+	access_ip_v4?:                string
+	access_ip_v6?:                string
+	admin_pass?:                  string
+	agency_name?:                 string
+	auto_renew?:                  string
+	charging_mode?:               string
+	delete_disks_on_termination?: bool
+	enterprise_project_id?:       string
+	flavor_id?:                   string
+	flavor_name?:                 string
+	id?:                          string
+	image_id?:                    string
+	image_name?:                  string
+	key_pair?:                    string
+	metadata?: [_]: string
+	period?:      number
+	period_unit?: string
+	public_ip?:   string
+	region?:      string
+	security_groups?: [string, ...]
+	status?:              string
+	stop_before_destroy?: bool
+	system_disk_id?:      string
+	system_disk_size?:    number
+	system_disk_type?:    string
+	tags?: [_]: string
+	user_data?: string
+	user_id?:   string
+	volume_attached?: [{
+		boot_index:  number
+		pci_address: string
+		size:        number
+		type:        string
+		volume_id:   string
+	}, ...]
+	block_device?: [{
+		source_type:            string
+		boot_index?:            number
+		delete_on_termination?: bool
+		destination_type?:      string
+		guest_format?:          string
+		uuid?:                  string
+		volume_size?:           number
+	}, ...]
+	data_disks?: [{
+		size:         number
+		type:         string
+		snapshot_id?: string
+	}, ...]
+	network?: [{
+		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
+	}, ...]
+	scheduler_hints?: [{
+		deh_id?:       string
+		fault_domain?: string
+		group?:        string
+		tenancy?:      string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudComputeInterfaceAttachResource: {
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	network_id?: string
+	port_id?:    string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#HuaweicloudComputeInterfaceAttachV2Resource: {
+	instance_id: string
+	fixed_ip?:   string
+	id?:         string
+	network_id?: string
+	port_id?:    string
+	region?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudComputeKeypairResource: {
+	name:        string
+	id?:         string
+	public_key?: string
+	region?:     string
+	value_specs?: [_]: string
+}
 #HuaweicloudComputeKeypairV2Resource: {
 	name:        string
+	id?:         string
 	public_key?: string
+	region?:     string
 	value_specs?: [_]: string
 }
 #HuaweicloudComputeSecgroupV2Resource: {
 	description: string
 	name:        string
+	id?:         string
+	region?:     string
 	rule?: [{
 		from_port:      number
 		ip_protocol:    string
 		to_port:        number
 		cidr?:          string
 		from_group_id?: string
+		id?:            string
 		self?:          bool
 	}, ...]
 	timeouts?: delete?: string
 }
-#HuaweicloudComputeServergroupV2Resource: {
+#HuaweicloudComputeServergroupResource: {
 	name: string
+	fault_domains?: [string, ...]
+	id?: string
+	members?: [string, ...]
 	policies?: [string, ...]
+	region?: string
 	value_specs?: [_]: string
 }
+#HuaweicloudComputeServergroupV2Resource: {
+	name: string
+	fault_domains?: [string, ...]
+	id?: string
+	members?: [string, ...]
+	policies?: [string, ...]
+	region?: string
+	value_specs?: [_]: string
+}
+#HuaweicloudComputeVolumeAttachResource: {
+	instance_id:  string
+	volume_id:    string
+	device?:      string
+	id?:          string
+	pci_address?: string
+	region?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
 #HuaweicloudComputeVolumeAttachV2Resource: {
-	instance_id: string
-	volume_id:   string
+	instance_id:  string
+	volume_id:    string
+	device?:      string
+	id?:          string
+	pci_address?: string
+	region?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCsClusterResource: {
+	name:                  string
+	created_at?:           string
+	description?:          string
+	id?:                   string
+	manager_node_spu_num?: number
+	max_spu_num?:          number
+	region?:               string
+	subnet_cidr?:          string
+	subnet_gateway?:       string
+	used_spu_num?:         number
+	vpc_cidr?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudCsClusterV1Resource: {
-	name: string
+	name:                  string
+	created_at?:           string
+	description?:          string
+	id?:                   string
+	manager_node_spu_num?: number
+	max_spu_num?:          number
+	region?:               string
+	subnet_cidr?:          string
+	subnet_gateway?:       string
+	used_spu_num?:         number
+	vpc_cidr?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCsPeeringConnectResource: {
+	cluster_id: string
+	name:       string
+	id?:        string
+	region?:    string
+	target_vpc_info?: [{
+		vpc_id:      string
+		project_id?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -382,24 +1076,81 @@ package huaweicloud
 #HuaweicloudCsPeeringConnectV1Resource: {
 	cluster_id: string
 	name:       string
+	id?:        string
+	region?:    string
 	target_vpc_info?: [{
-		vpc_id: string
+		vpc_id:      string
+		project_id?: string
 	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#HuaweicloudCsRouteResource: {
+	cluster_id:  string
+	destination: string
+	peering_id:  string
+	id?:         string
+	region?:     string
+}
 #HuaweicloudCsRouteV1Resource: {
 	cluster_id:  string
 	destination: string
 	peering_id:  string
+	id?:         string
+	region?:     string
 }
-#HuaweicloudCsbsBackupPolicyV1Resource: {
+#HuaweicloudCsbsBackupResource: {
+	resource_id:       string
+	auto_trigger?:     bool
+	backup_name?:      string
+	backup_record_id?: string
+	created_at?:       string
+	description?:      string
+	id?:               string
+	region?:           string
+	resource_type?:    string
+	status?:           string
+	vm_metadata?: [{
+		cloud_service_type: string
+		disk:               number
+		eip:                string
+		image_type:         string
+		name:               string
+		private_ip:         string
+		ram:                number
+		vcpus:              number
+	}, ...]
+	volume_backups?: [{
+		average_speed:      number
+		bootable:           bool
+		id:                 string
+		image_type:         string
+		incremental:        bool
+		name:               string
+		size:               number
+		snapshot_id:        string
+		source_volume_id:   string
+		source_volume_name: string
+		source_volume_size: number
+		space_saving_ratio: number
+		status:             string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCsbsBackupPolicyResource: {
 	name: string
 	common?: [_]: string
+	created_at?:  string
 	description?: string
+	id?:          string
 	provider_id?: string
+	region?:      string
+	status?:      string
 	resource?: [{
 		id:   string
 		name: string
@@ -410,8 +1161,47 @@ package huaweicloud
 		trigger_pattern:          string
 		description?:             string
 		enabled?:                 bool
+		id?:                      string
 		max_backups?:             number
+		name?:                    string
+		permanent?:               bool
 		retention_duration_days?: number
+		trigger_id?:              string
+		trigger_name?:            string
+		trigger_type?:            string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCsbsBackupPolicyV1Resource: {
+	name: string
+	common?: [_]: string
+	created_at?:  string
+	description?: string
+	id?:          string
+	provider_id?: string
+	region?:      string
+	status?:      string
+	resource?: [{
+		id:   string
+		name: string
+		type: string
+	}, ...]
+	scheduled_operation?: [{
+		operation_type:           string
+		trigger_pattern:          string
+		description?:             string
+		enabled?:                 bool
+		id?:                      string
+		max_backups?:             number
+		name?:                    string
+		permanent?:               bool
+		retention_duration_days?: number
+		trigger_id?:              string
+		trigger_name?:            string
+		trigger_type?:            string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -419,17 +1209,68 @@ package huaweicloud
 	}
 }
 #HuaweicloudCsbsBackupV1Resource: {
-	resource_id:    string
-	resource_type?: string
+	resource_id:       string
+	auto_trigger?:     bool
+	backup_name?:      string
+	backup_record_id?: string
+	created_at?:       string
+	description?:      string
+	id?:               string
+	region?:           string
+	resource_type?:    string
+	status?:           string
+	vm_metadata?: [{
+		cloud_service_type: string
+		disk:               number
+		eip:                string
+		image_type:         string
+		name:               string
+		private_ip:         string
+		ram:                number
+		vcpus:              number
+	}, ...]
+	volume_backups?: [{
+		average_speed:      number
+		bootable:           bool
+		id:                 string
+		image_type:         string
+		incremental:        bool
+		name:               string
+		size:               number
+		snapshot_id:        string
+		source_volume_id:   string
+		source_volume_name: string
+		source_volume_size: number
+		space_saving_ratio: number
+		status:             string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudCssClusterV1Resource: {
+#HuaweicloudCssClusterResource: {
 	engine_version:   string
 	name:             string
+	created?:         string
+	endpoint?:        string
+	engine_type?:     string
 	expect_node_num?: number
+	id?:              string
+	nodes?: [{
+		id:   string
+		name: string
+		type: string
+	}, ...]
+	password?:      string
+	region?:        string
+	security_mode?: bool
+	tags?: [_]: string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+		prefix?:    string
+	}, ...]
 	node_config?: [{
 		flavor:             string
 		availability_zone?: string
@@ -448,36 +1289,179 @@ package huaweicloud
 		update?: string
 	}
 }
-#HuaweicloudCtsTrackerV1Resource: {
-	bucket_name:               string
-	is_send_all_key_operation: bool
-	is_support_smn:            bool
-	operations: [string, ...]
-	topic_id: string
+#HuaweicloudCssClusterV1Resource: {
+	engine_version:   string
+	name:             string
+	created?:         string
+	endpoint?:        string
+	engine_type?:     string
+	expect_node_num?: number
+	id?:              string
+	nodes?: [{
+		id:   string
+		name: string
+		type: string
+	}, ...]
+	password?:      string
+	region?:        string
+	security_mode?: bool
+	tags?: [_]: string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+		prefix?:    string
+	}, ...]
+	node_config?: [{
+		flavor:             string
+		availability_zone?: string
+		network_info?: [{
+			security_group_id: string
+			subnet_id:         string
+			vpc_id:            string
+		}, ...]
+		volume?: [{
+			size:        number
+			volume_type: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#HuaweicloudCssSnapshotResource: {
+	cluster_id:    string
+	name:          string
+	backup_type?:  string
+	cluster_name?: string
+	description?:  string
+	id?:           string
+	index?:        string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#HuaweicloudCtsTrackerResource: {
+	bucket_name:               string
+	is_send_all_key_operation: bool
+	is_support_smn:            bool
+	operations: [string, ...]
+	file_prefix_name?: string
+	id?:               string
+	need_notify_user_list?: [string, ...]
+	region?:       string
+	status?:       string
+	topic_id?:     string
+	tracker_name?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudCtsTrackerV1Resource: {
+	bucket_name:               string
+	is_send_all_key_operation: bool
+	is_support_smn:            bool
+	operations: [string, ...]
+	file_prefix_name?: string
+	id?:               string
+	need_notify_user_list?: [string, ...]
+	region?:       string
+	status?:       string
+	topic_id?:     string
+	tracker_name?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudDcsInstanceResource: {
+	available_zones: [string, ...]
+	backup_at: [number, ...]
+	backup_type:              string
+	begin_at:                 string
+	capacity:                 number
+	engine:                   string
+	name:                     string
+	period_type:              string
+	product_id:               string
+	save_days:                number
+	subnet_id:                string
+	vpc_id:                   string
+	access_user?:             string
+	description?:             string
+	engine_version?:          string
+	enterprise_project_id?:   string
+	enterprise_project_name?: string
+	id?:                      string
+	internal_version?:        string
+	ip?:                      string
+	maintain_begin?:          string
+	maintain_end?:            string
+	max_memory?:              string
+	order_id?:                string
+	password?:                string
+	port?:                    number
+	region?:                  string
+	resource_spec_code?:      string
+	security_group_id?:       string
+	security_group_name?:     string
+	subnet_name?:             string
+	tags?: [_]: string
+	used_memory?:      number
+	user_id?:          string
+	vpc_name?:         string
+	whitelist_enable?: bool
+	whitelists?: [{
+		group_name: string
+		ip_address: [string, ...]
+	}, ...]
+}
 #HuaweicloudDcsInstanceV1Resource: {
 	available_zones: [string, ...]
 	backup_at: [number, ...]
-	backup_type:       string
-	begin_at:          string
-	capacity:          number
-	engine:            string
-	name:              string
-	period_type:       string
-	product_id:        string
-	save_days:         number
-	security_group_id: string
-	subnet_id:         string
-	vpc_id:            string
-	access_user?:      string
-	engine_version?:   string
-	password?:         string
+	backup_type:              string
+	begin_at:                 string
+	capacity:                 number
+	engine:                   string
+	name:                     string
+	period_type:              string
+	product_id:               string
+	save_days:                number
+	subnet_id:                string
+	vpc_id:                   string
+	access_user?:             string
+	description?:             string
+	engine_version?:          string
+	enterprise_project_id?:   string
+	enterprise_project_name?: string
+	id?:                      string
+	internal_version?:        string
+	ip?:                      string
+	maintain_begin?:          string
+	maintain_end?:            string
+	max_memory?:              string
+	order_id?:                string
+	password?:                string
+	port?:                    number
+	region?:                  string
+	resource_spec_code?:      string
+	security_group_id?:       string
+	security_group_name?:     string
+	subnet_name?:             string
+	tags?: [_]: string
+	used_memory?:      number
+	user_id?:          string
+	vpc_name?:         string
+	whitelist_enable?: bool
+	whitelists?: [{
+		group_name: string
+		ip_address: [string, ...]
+	}, ...]
 }
-#HuaweicloudDdsInstanceV3Resource: {
+#HuaweicloudDdsInstanceResource: {
 	availability_zone:   string
 	mode:                string
 	name:                string
@@ -485,7 +1469,23 @@ package huaweicloud
 	security_group_id:   string
 	subnet_id:           string
 	vpc_id:              string
+	db_username?:        string
 	disk_encryption_id?: string
+	id?:                 string
+	nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+		public_ip:  string
+		role:       string
+		status:     string
+		type:       string
+	}, ...]
+	port?:   number
+	region?: string
+	ssl?:    bool
+	status?: string
+	tags?: [_]: string
 	backup_strategy?: [{
 		keep_days:  number
 		start_time: string
@@ -507,44 +1507,277 @@ package huaweicloud
 		delete?: string
 	}
 }
+#HuaweicloudDdsInstanceV3Resource: {
+	availability_zone:   string
+	mode:                string
+	name:                string
+	password:            string
+	security_group_id:   string
+	subnet_id:           string
+	vpc_id:              string
+	db_username?:        string
+	disk_encryption_id?: string
+	id?:                 string
+	nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+		public_ip:  string
+		role:       string
+		status:     string
+		type:       string
+	}, ...]
+	port?:   number
+	region?: string
+	ssl?:    bool
+	status?: string
+	tags?: [_]: string
+	backup_strategy?: [{
+		keep_days:  number
+		start_time: string
+	}, ...]
+	datastore?: [{
+		type:            string
+		version:         string
+		storage_engine?: string
+	}, ...]
+	flavor?: [{
+		num:       number
+		spec_code: string
+		type:      string
+		size?:     number
+		storage?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudDisStreamResource: {
+	partition_count:                 number
+	stream_name:                     string
+	auto_scale_max_partition_count?: number
+	auto_scale_min_partition_count?: number
+	compression_format?:             string
+	created?:                        number
+	csv_delimiter?:                  string
+	data_schema?:                    string
+	data_type?:                      string
+	id?:                             string
+	readable_partition_count?:       number
+	region?:                         string
+	retention_period?:               number
+	stream_type?:                    string
+	writable_partition_count?:       number
+	tags?: [{
+		key?:   string
+		value?: string
+	}, ...]
+}
 #HuaweicloudDisStreamV2Resource: {
-	partition_count: number
-	stream_name:     string
-	tags?: [{}, ...]
+	partition_count:                 number
+	stream_name:                     string
+	auto_scale_max_partition_count?: number
+	auto_scale_min_partition_count?: number
+	compression_format?:             string
+	created?:                        number
+	csv_delimiter?:                  string
+	data_schema?:                    string
+	data_type?:                      string
+	id?:                             string
+	readable_partition_count?:       number
+	region?:                         string
+	retention_period?:               number
+	stream_type?:                    string
+	writable_partition_count?:       number
+	tags?: [{
+		key?:   string
+		value?: string
+	}, ...]
+}
+#HuaweicloudDliQueueResource: {
+	cu_count:                number
+	name:                    string
+	create_time?:            string
+	description?:            string
+	id?:                     string
+	management_subnet_cidr?: string
+	region?:                 string
+	subnet_cidr?:            string
+	vpc_cidr?:               string
 }
 #HuaweicloudDliQueueV1Resource: {
 	cu_count:                number
 	name:                    string
+	create_time?:            string
+	description?:            string
+	id?:                     string
 	management_subnet_cidr?: string
+	region?:                 string
 	subnet_cidr?:            string
 	vpc_cidr?:               string
 }
+#HuaweicloudDmsGroupResource: {
+	name:                   string
+	queue_id:               string
+	available_deadletters?: number
+	available_messages?:    number
+	consumed_messages?:     number
+	id?:                    string
+	produced_deadletters?:  number
+	produced_messages?:     number
+	region?:                string
+}
 #HuaweicloudDmsGroupV1Resource: {
-	name:     string
-	queue_id: string
+	name:                   string
+	queue_id:               string
+	available_deadletters?: number
+	available_messages?:    number
+	consumed_messages?:     number
+	id?:                    string
+	produced_deadletters?:  number
+	produced_messages?:     number
+	region?:                string
+}
+#HuaweicloudDmsInstanceResource: {
+	available_zones: [string, ...]
+	engine:               string
+	name:                 string
+	product_id:           string
+	security_group_id:    string
+	storage_space:        number
+	storage_spec_code:    string
+	subnet_id:            string
+	vpc_id:               string
+	access_user?:         string
+	connect_address?:     string
+	created_at?:          string
+	description?:         string
+	engine_version?:      string
+	id?:                  string
+	maintain_begin?:      string
+	maintain_end?:        string
+	order_id?:            string
+	partition_num?:       number
+	password?:            string
+	port?:                string
+	region?:              string
+	resource_spec_code?:  string
+	security_group_name?: string
+	specification?:       string
+	status?:              string
+	subnet_name?:         string
+	tags?: [_]: string
+	type?:               string
+	used_storage_space?: number
+	user_id?:            string
+	vpc_name?:           string
 }
 #HuaweicloudDmsInstanceV1Resource: {
 	available_zones: [string, ...]
-	engine:             string
-	name:               string
-	product_id:         string
-	security_group_id:  string
-	storage_space:      number
-	subnet_id:          string
-	vpc_id:             string
-	access_user?:       string
-	engine_version?:    string
-	partition_num?:     number
-	password?:          string
-	storage_spec_code?: string
+	engine:               string
+	name:                 string
+	product_id:           string
+	security_group_id:    string
+	storage_space:        number
+	storage_spec_code:    string
+	subnet_id:            string
+	vpc_id:               string
+	access_user?:         string
+	connect_address?:     string
+	created_at?:          string
+	description?:         string
+	engine_version?:      string
+	id?:                  string
+	maintain_begin?:      string
+	maintain_end?:        string
+	order_id?:            string
+	partition_num?:       number
+	password?:            string
+	port?:                string
+	region?:              string
+	resource_spec_code?:  string
+	security_group_name?: string
+	specification?:       string
+	status?:              string
+	subnet_name?:         string
+	tags?: [_]: string
+	type?:               string
+	used_storage_space?: number
+	user_id?:            string
+	vpc_name?:           string
 }
-#HuaweicloudDmsQueueV1Resource: name: string
+#HuaweicloudDmsQueueResource: {
+	name:               string
+	created?:           string
+	description?:       string
+	group_count?:       number
+	id?:                string
+	max_consume_count?: number
+	max_msg_size_byte?: number
+	produced_messages?: number
+	queue_mode?:        string
+	redrive_policy?:    string
+	region?:            string
+	reservation?:       number
+	retention_hours?:   number
+}
+#HuaweicloudDmsQueueV1Resource: {
+	name:               string
+	created?:           string
+	description?:       string
+	group_count?:       number
+	id?:                string
+	max_consume_count?: number
+	max_msg_size_byte?: number
+	produced_messages?: number
+	queue_mode?:        string
+	redrive_policy?:    string
+	region?:            string
+	reservation?:       number
+	retention_hours?:   number
+}
+#HuaweicloudDnsPtrrecordResource: {
+	floatingip_id: string
+	name:          string
+	address?:      string
+	description?:  string
+	id?:           string
+	region?:       string
+	tags?: [_]: string
+	ttl?: number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #HuaweicloudDnsPtrrecordV2Resource: {
 	floatingip_id: string
 	name:          string
+	address?:      string
 	description?:  string
+	id?:           string
+	region?:       string
 	tags?: [_]: string
 	ttl?: number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudDnsRecordsetResource: {
+	name: string
+	records: [string, ...]
+	type:         string
+	zone_id:      string
+	description?: string
+	id?:          string
+	region?:      string
+	tags?: [_]: string
+	ttl?: number
+	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -557,8 +1790,32 @@ package huaweicloud
 	type:         string
 	zone_id:      string
 	description?: string
-	ttl?:         number
+	id?:          string
+	region?:      string
+	tags?: [_]: string
+	ttl?: number
 	value_specs?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudDnsZoneResource: {
+	name:         string
+	description?: string
+	email?:       string
+	id?:          string
+	masters?: [string, ...]
+	region?: string
+	tags?: [_]: string
+	ttl?: number
+	value_specs?: [_]: string
+	zone_type?: string
+	router?: [{
+		router_id:      string
+		router_region?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -569,12 +1826,16 @@ package huaweicloud
 	name:         string
 	description?: string
 	email?:       string
-	ttl?:         number
+	id?:          string
+	masters?: [string, ...]
+	region?: string
+	tags?: [_]: string
+	ttl?: number
 	value_specs?: [_]: string
 	zone_type?: string
 	router?: [{
-		router_id:     string
-		router_region: string
+		router_id:      string
+		router_region?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -583,15 +1844,37 @@ package huaweicloud
 	}
 }
 #HuaweicloudDwsClusterResource: {
-	name:              string
-	network_id:        string
-	node_type:         string
-	number_of_node:    number
-	security_group_id: string
-	user_name:         string
-	user_pwd:          string
-	vpc_id:            string
-	public_ip?: [{}, ...]
+	name:               string
+	network_id:         string
+	node_type:          string
+	number_of_node:     number
+	security_group_id:  string
+	user_name:          string
+	user_pwd:           string
+	vpc_id:             string
+	availability_zone?: string
+	created?:           string
+	endpoints?: [{
+		connect_info: string
+		jdbc_url:     string
+	}, ...]
+	id?:   string
+	port?: number
+	public_endpoints?: [{
+		jdbc_url:            string
+		public_connect_info: string
+	}, ...]
+	recent_event?: number
+	region?:       string
+	status?:       string
+	sub_status?:   string
+	task_status?:  string
+	updated?:      string
+	version?:      string
+	public_ip?: [{
+		eip_id?:           string
+		public_bind_type?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -603,16 +1886,20 @@ package huaweicloud
 	image_id:                     string
 	name:                         string
 	vpc_id:                       string
+	auto_recovery?:               bool
+	auto_renew?:                  string
 	charging_mode?:               string
 	delete_disks_on_termination?: bool
 	enterprise_project_id?:       string
+	id?:                          string
 	key_name?:                    string
 	op_svc_userid?:               string
 	password?:                    string
 	period?:                      number
 	period_unit?:                 string
-	system_disk_size?:            number
-	system_disk_type?:            string
+	security_groups?: [string, ...]
+	system_disk_size?: number
+	system_disk_type?: string
 	tags?: [_]: string
 	user_data?: string
 	data_disks?: [{
@@ -621,7 +1908,10 @@ package huaweicloud
 		snapshot_id?: string
 	}, ...]
 	nics?: [{
-		network_id: string
+		network_id:   string
+		ip_address?:  string
+		mac_address?: string
+		port_id?:     string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -633,6 +1923,16 @@ package huaweicloud
 	listener_id:     string
 	private_address: string
 	server_id:       string
+	create_time?:    string
+	health_status?:  string
+	id?:             string
+	listeners?: [{
+		id: string
+	}, ...]
+	public_address?: string
+	server_name?:    string
+	status?:         string
+	update_time?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -640,7 +1940,17 @@ package huaweicloud
 	}
 }
 #HuaweicloudElbHealthcheckResource: {
-	listener_id: string
+	listener_id:               string
+	create_time?:              string
+	healthcheck_connect_port?: number
+	healthcheck_interval?:     number
+	healthcheck_protocol?:     string
+	healthcheck_timeout?:      number
+	healthcheck_uri?:          string
+	healthy_threshold?:        number
+	id?:                       string
+	unhealthy_threshold?:      number
+	update_time?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -655,7 +1965,25 @@ package huaweicloud
 	name:             string
 	port:             number
 	protocol:         string
-	ssl_protocols?:   string
+	admin_state_up?:  bool
+	certificate_id?:  string
+	certificates?: [string, ...]
+	cookie_timeout?:       number
+	create_time?:          string
+	description?:          string
+	healthcheck_id?:       string
+	id?:                   string
+	member_number?:        number
+	session_sticky?:       bool
+	ssl_ciphers?:          string
+	ssl_protocols?:        string
+	status?:               string
+	sticky_session_type?:  string
+	tcp_draining?:         bool
+	tcp_draining_timeout?: number
+	tcp_timeout?:          number
+	udp_timeout?:          number
+	update_time?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -663,14 +1991,23 @@ package huaweicloud
 	}
 }
 #HuaweicloudElbLoadbalancerResource: {
-	admin_state_up: number
-	name:           string
-	type:           string
-	vpc_id:         string
-	az?:            string
-	charge_mode?:   string
-	eip_type?:      string
-	tenantid?:      string
+	admin_state_up:     number
+	name:               string
+	type:               string
+	vpc_id:             string
+	az?:                string
+	bandwidth?:         number
+	charge_mode?:       string
+	create_time?:       string
+	description?:       string
+	eip_type?:          string
+	id?:                string
+	security_group_id?: string
+	status?:            string
+	tenantid?:          string
+	update_time?:       string
+	vip_address?:       string
+	vip_subnet_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -682,24 +2019,80 @@ package huaweicloud
 	volume_id:    string
 	description?: string
 	force?:       bool
+	id?:          string
+	region?:      string
+	size?:        number
+	status?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudEvsVolumeResource: {
+	availability_zone: string
+	volume_type:       string
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	backup_id?:   string
+	cascade?:     bool
+	description?: string
+	device_type?: string
+	id?:          string
+	image_id?:    string
+	kms_id?:      string
+	multiattach?: bool
+	name?:        string
+	region?:      string
+	size?:        number
+	snapshot_id?: string
+	tags?: [_]: string
+	wwn?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudFgsFunctionResource: {
+	code_type:      string
+	func_code:      string
+	handler:        string
+	memory_size:    number
+	name:           string
+	package:        string
+	runtime:        string
+	timeout:        number
+	code_filename?: string
+	code_url?:      string
+	description?:   string
+	id?:            string
+	region?:        string
+	user_data?:     string
+	xrole?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudFgsFunctionV2Resource: {
-	code_type:    string
-	func_code:    string
-	handler:      string
-	memory_size:  number
-	name:         string
-	package:      string
-	runtime:      string
-	timeout:      number
-	code_url?:    string
-	description?: string
-	user_data?:   string
-	xrole?:       string
+	code_type:      string
+	func_code:      string
+	handler:        string
+	memory_size:    number
+	name:           string
+	package:        string
+	runtime:        string
+	timeout:        number
+	code_filename?: string
+	code_url?:      string
+	description?:   string
+	id?:            string
+	region?:        string
+	user_data?:     string
+	xrole?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -709,8 +2102,12 @@ package huaweicloud
 	admin_state_up?:    bool
 	description?:       string
 	egress_policy_id?:  string
+	id?:                string
 	ingress_policy_id?: string
 	name?:              string
+	ports?: [string, ...]
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -721,9 +2118,12 @@ package huaweicloud
 #HuaweicloudFwPolicyV2Resource: {
 	audited?:     bool
 	description?: string
+	id?:          string
 	name?:        string
+	region?:      string
 	rules?: [string, ...]
-	shared?: bool
+	shared?:    bool
+	tenant_id?: string
 	value_specs?: [_]:  string
 	timeouts?: create?: string
 }
@@ -734,32 +2134,239 @@ package huaweicloud
 	destination_ip_address?: string
 	destination_port?:       string
 	enabled?:                bool
+	id?:                     string
 	ip_version?:             number
 	name?:                   string
+	region?:                 string
 	source_ip_address?:      string
 	source_port?:            string
 	tenant_id?:              string
 	value_specs?: [_]: string
 }
-#HuaweicloudGesGraphV1Resource: {
+#HuaweicloudGaussdbCassandraInstanceResource: {
+	availability_zone:      string
+	flavor:                 string
+	name:                   string
+	password:               string
+	subnet_id:              string
+	volume_size:            number
+	vpc_id:                 string
+	auto_renew?:            string
+	charging_mode?:         string
+	configuration_id?:      string
+	db_user_name?:          string
+	enterprise_project_id?: string
+	force_import?:          bool
+	id?:                    string
+	mode?:                  string
+	node_num?:              number
+	nodes?: [{
+		id:             string
+		name:           string
+		private_ip:     string
+		status:         string
+		support_reduce: bool
+	}, ...]
+	period?:      number
+	period_unit?: string
+	port?:        number
+	private_ips?: [string, ...]
+	region?:            string
+	security_group_id?: string
+	ssl?:               bool
+	status?:            string
+	tags?: [_]: string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+	}, ...]
+	datastore?: [{
+		engine:         string
+		storage_engine: string
+		version:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudGaussdbMysqlInstanceResource: {
+	flavor:                    string
+	name:                      string
+	password:                  string
+	subnet_id:                 string
+	vpc_id:                    string
+	auto_renew?:               string
+	availability_zone_mode?:   string
+	charging_mode?:            string
+	configuration_id?:         string
+	db_user_name?:             string
+	enterprise_project_id?:    string
+	force_import?:             bool
+	id?:                       string
+	master_availability_zone?: string
+	mode?:                     string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		private_read_ip:   string
+		status:            string
+		type:              string
+	}, ...]
+	period?:            number
+	period_unit?:       string
+	port?:              number
+	private_write_ip?:  string
+	read_replicas?:     number
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	time_zone?:         string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+	}, ...]
+	datastore?: [{
+		engine:  string
+		version: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudGaussdbOpengaussInstanceResource: {
+	availability_zone: string
+	flavor:            string
+	name:              string
+	password:          string
+	subnet_id:         string
+	vpc_id:            string
+	configuration_id?: string
+	coordinator_num?:  number
+	db_user_name?:     string
+	endpoints?: [string, ...]
+	enterprise_project_id?: string
+	force_import?:          bool
+	id?:                    string
+	maintenance_window?:    string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		role:              string
+		status:            string
+	}, ...]
+	port?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	region?:            string
+	security_group_id?: string
+	sharding_num?:      number
+	status?:            string
+	switch_strategy?:   string
+	time_zone?:         string
+	type?:              string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+	}, ...]
+	datastore?: [{
+		engine:  string
+		version: string
+	}, ...]
+	ha?: [{
+		mode:             string
+		replication_mode: string
+		consistency?:     string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	volume?: [{
+		size: number
+		type: string
+	}, ...]
+}
+#HuaweicloudGesGraphResource: {
 	availability_zone: string
 	graph_size_type:   string
 	name:              string
-	region:            string
 	security_group_id: string
 	subnet_id:         string
 	vpc_id:            string
 	auto_assign?:      bool
-	eip_id?:           string
+	created?:          string
+	edgeset_path?: [{
+		path:   string
+		status: string
+	}, ...]
+	eip_id?:     string
+	id?:         string
+	private_ip?: string
+	public_ip?:  string
+	region?:     string
+	schema_path?: [{
+		path:   string
+		status: string
+	}, ...]
+	version?: string
+	vertexset_path?: [{
+		path:   string
+		status: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudIamAgencyV3Resource: {
+#HuaweicloudGesGraphV1Resource: {
+	availability_zone: string
+	graph_size_type:   string
+	name:              string
+	security_group_id: string
+	subnet_id:         string
+	vpc_id:            string
+	auto_assign?:      bool
+	created?:          string
+	edgeset_path?: [{
+		path:   string
+		status: string
+	}, ...]
+	eip_id?:     string
+	id?:         string
+	private_ip?: string
+	public_ip?:  string
+	region?:     string
+	schema_path?: [{
+		path:   string
+		status: string
+	}, ...]
+	version?: string
+	vertexset_path?: [{
+		path:   string
+		status: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIamAgencyResource: {
 	delegated_domain_name: string
 	name:                  string
+	create_time?:          string
+	description?:          string
 	domain_roles?: [string, ...]
+	duration?:    string
+	expire_time?: string
+	id?:          string
+	region?:      string
 	project_role?: [{
 		project: string
 		roles: [string, ...]
@@ -770,57 +2377,430 @@ package huaweicloud
 		update?: string
 	}
 }
+#HuaweicloudIamAgencyV3Resource: {
+	delegated_domain_name: string
+	name:                  string
+	create_time?:          string
+	description?:          string
+	domain_roles?: [string, ...]
+	duration?:    string
+	expire_time?: string
+	id?:          string
+	region?:      string
+	project_role?: [{
+		project: string
+		roles: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudIdentityAgencyResource: {
+	delegated_domain_name: string
+	name:                  string
+	create_time?:          string
+	description?:          string
+	domain_roles?: [string, ...]
+	duration?:    string
+	expire_time?: string
+	id?:          string
+	region?:      string
+	project_role?: [{
+		project: string
+		roles: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudIdentityGroupResource: {
+	name:         string
+	description?: string
+	domain_id?:   string
+	id?:          string
+	region?:      string
+}
+#HuaweicloudIdentityGroupMembershipResource: {
+	group: string
+	users: [string, ...]
+	id?: string
+}
 #HuaweicloudIdentityGroupMembershipV3Resource: {
 	group: string
 	users: [string, ...]
+	id?: string
 }
 #HuaweicloudIdentityGroupV3Resource: {
 	name:         string
 	description?: string
+	domain_id?:   string
+	id?:          string
+	region?:      string
+}
+#HuaweicloudIdentityProjectResource: {
+	name:         string
+	description?: string
+	domain_id?:   string
+	id?:          string
+	parent_id?:   string
+	region?:      string
 }
 #HuaweicloudIdentityProjectV3Resource: {
 	name:         string
 	description?: string
+	domain_id?:   string
+	id?:          string
+	parent_id?:   string
+	region?:      string
 }
-#HuaweicloudIdentityRoleAssignmentV3Resource: {
+#HuaweicloudIdentityRoleResource: {
+	description: string
+	name:        string
+	policy:      string
+	type:        string
+	domain_id?:  string
+	id?:         string
+	references?: number
+}
+#HuaweicloudIdentityRoleAssignmentResource: {
+	group_id:    string
 	role_id:     string
 	domain_id?:  string
-	group_id?:   string
+	id?:         string
 	project_id?: string
-	user_id?:    string
+}
+#HuaweicloudIdentityRoleAssignmentV3Resource: {
+	group_id:    string
+	role_id:     string
+	domain_id?:  string
+	id?:         string
+	project_id?: string
+}
+#HuaweicloudIdentityUserResource: {
+	name:                string
+	default_project_id?: string
+	description?:        string
+	domain_id?:          string
+	enabled?:            bool
+	id?:                 string
+	password?:           string
+	region?:             string
 }
 #HuaweicloudIdentityUserV3Resource: {
+	name:                string
+	default_project_id?: string
+	description?:        string
+	domain_id?:          string
+	enabled?:            bool
+	id?:                 string
+	password?:           string
+	region?:             string
+}
+#HuaweicloudIecEipResource: {
+	site_id:               string
+	bandwidth_id?:         string
+	bandwidth_name?:       string
+	bandwidth_share_type?: string
+	bandwidth_size?:       number
+	id?:                   string
+	ip_version?:           number
+	port_id?:              string
+	private_ip?:           string
+	public_ip?:            string
+	region?:               string
+	site_info?:            string
+	status?:               string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIecKeypairResource: {
+	name:         string
+	fingerprint?: string
+	id?:          string
+	public_key?:  string
+	region?:      string
+}
+#HuaweicloudIecNetworkAclResource: {
 	name:         string
 	description?: string
-	enabled?:     bool
-	password?:    string
+	id?:          string
+	inbound_rules?: [string, ...]
+	outbound_rules?: [string, ...]
+	status?: string
+	networks?: [{
+		subnet_id: string
+		vpc_id:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudIecNetworkAclRuleResource: {
+	direction:               string
+	network_acl_id:          string
+	action?:                 string
+	description?:            string
+	destination_ip_address?: string
+	destination_port?:       string
+	enabled?:                bool
+	id?:                     string
+	ip_version?:             number
+	policy_id?:              string
+	protocol?:               string
+	source_ip_address?:      string
+	source_port?:            string
+}
+#HuaweicloudIecSecurityGroupResource: {
+	name:         string
+	description?: string
+	id?:          string
+	security_group_rules?: [{
+		description:       string
+		direction:         string
+		ethertype:         string
+		id:                string
+		port_range_max:    number
+		port_range_min:    number
+		protocol:          string
+		remote_group_id:   string
+		remote_ip_prefix:  string
+		security_group_id: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIecSecurityGroupRuleResource: {
+	direction:         string
+	protocol:          string
+	security_group_id: string
+	description?:      string
+	ethertype?:        string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIecServerResource: {
+	flavor_id: string
+	image_id:  string
+	name:      string
+	security_groups: [string, ...]
+	subnet_ids: [string, ...]
+	system_disk_size: number
+	system_disk_type: string
+	vpc_id:           string
+	admin_pass?:      string
+	bind_eip?:        bool
+	coverage_level?:  string
+	coverage_policy?: string
+	edgecloud_id?:    string
+	edgecloud_name?:  string
+	id?:              string
+	key_pair?:        string
+	nics?: [{
+		address: string
+		mac:     string
+		port:    string
+	}, ...]
+	origin_server_id?: string
+	status?:           string
+	user_data?:        string
+	coverage_sites?: [{
+		operator: string
+		site_id:  string
+	}, ...]
+	data_disks?: [{
+		size: number
+		type: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudIecVipResource: {
+	subnet_id: string
+	allowed_addresses?: [string, ...]
+	fixed_ips?: [string, ...]
+	id?:          string
+	mac_address?: string
+	port_ids?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIecVpcResource: {
+	cidr:        string
+	name:        string
+	id?:         string
+	mode?:       string
+	region?:     string
+	subnet_num?: number
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudIecVpcSubnetResource: {
+	cidr:         string
+	gateway_ip:   string
+	name:         string
+	site_id:      string
+	vpc_id:       string
+	dhcp_enable?: bool
+	dns_list?: [string, ...]
+	id?:        string
+	region?:    string
+	site_info?: string
+	status?:    string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudImagesImageResource: {
+	name:         string
+	cmk_id?:      string
+	data_origin?: string
+	description?: string
+	disk_format?: string
+	id?:          string
+	image_size?:  string
+	image_url?:   string
+	instance_id?: string
+	is_config?:   bool
+	max_ram?:     number
+	min_disk?:    number
+	min_ram?:     number
+	os_version?:  string
+	tags?: [_]: string
+	type?:       string
+	visibility?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #HuaweicloudImagesImageV2Resource: {
 	container_format:  string
 	disk_format:       string
 	name:              string
+	checksum?:         string
+	created_at?:       string
+	file?:             string
+	id?:               string
 	image_cache_path?: string
 	image_source_url?: string
 	local_file_path?:  string
-	min_disk_gb?:      number
-	min_ram_mb?:       number
-	protected?:        bool
+	metadata?: [_]: string
+	min_disk_gb?: number
+	min_ram_mb?:  number
+	owner?:       string
+	protected?:   bool
+	region?:      string
+	schema?:      string
+	size_bytes?:  number
+	status?:      string
 	tags?: [string, ...]
+	update_at?:  string
 	visibility?: string
 	timeouts?: create?: string
 }
+#HuaweicloudKmsKeyResource: {
+	key_alias:                string
+	creation_date?:           string
+	default_key_flag?:        string
+	domain_id?:               string
+	enterprise_project_id?:   string
+	expiration_time?:         string
+	id?:                      string
+	is_enabled?:              bool
+	key_description?:         string
+	key_id?:                  string
+	pending_days?:            string
+	region?:                  string
+	scheduled_deletion_date?: string
+	tags?: [_]: string
+}
 #HuaweicloudKmsKeyV1Resource: {
-	key_alias:        string
-	is_enabled?:      bool
-	key_description?: string
-	pending_days?:    string
+	key_alias:                string
+	creation_date?:           string
+	default_key_flag?:        string
+	domain_id?:               string
+	enterprise_project_id?:   string
+	expiration_time?:         string
+	id?:                      string
+	is_enabled?:              bool
+	key_description?:         string
+	key_id?:                  string
+	pending_days?:            string
+	region?:                  string
+	scheduled_deletion_date?: string
+	tags?: [_]: string
+}
+#HuaweicloudLbCertificateResource: {
+	certificate:  string
+	create_time?: string
+	description?: string
+	domain?:      string
+	id?:          string
+	name?:        string
+	private_key?: string
+	region?:      string
+	type?:        string
+	update_time?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #HuaweicloudLbCertificateV2Resource: {
 	certificate:  string
-	private_key:  string
+	create_time?: string
 	description?: string
 	domain?:      string
+	id?:          string
 	name?:        string
+	private_key?: string
+	region?:      string
+	type?:        string
+	update_time?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbL7PolicyResource: {
+	action:                string
+	listener_id:           string
+	admin_state_up?:       bool
+	description?:          string
+	id?:                   string
+	name?:                 string
+	position?:             number
+	redirect_listener_id?: string
+	redirect_pool_id?:     string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -832,9 +2812,30 @@ package huaweicloud
 	listener_id:           string
 	admin_state_up?:       bool
 	description?:          string
+	id?:                   string
 	name?:                 string
+	position?:             number
 	redirect_listener_id?: string
 	redirect_pool_id?:     string
+	region?:               string
+	tenant_id?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbL7RuleResource: {
+	compare_type:    string
+	l7policy_id:     string
+	type:            string
+	value:           string
+	admin_state_up?: bool
+	id?:             string
+	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -847,7 +2848,33 @@ package huaweicloud
 	type:            string
 	value:           string
 	admin_state_up?: bool
+	id?:             string
 	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbListenerResource: {
+	loadbalancer_id:            string
+	protocol:                   string
+	protocol_port:              number
+	admin_state_up?:            bool
+	connection_limit?:          number
+	default_pool_id?:           string
+	default_tls_container_ref?: string
+	description?:               string
+	http2_enable?:              bool
+	id?:                        string
+	name?:                      string
+	region?:                    string
+	sni_container_refs?: [string, ...]
+	tags?: [_]: string
+	tenant_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -859,10 +2886,37 @@ package huaweicloud
 	protocol:                   string
 	protocol_port:              number
 	admin_state_up?:            bool
+	connection_limit?:          number
+	default_pool_id?:           string
 	default_tls_container_ref?: string
 	description?:               string
 	http2_enable?:              bool
+	id?:                        string
+	name?:                      string
+	region?:                    string
 	sni_container_refs?: [string, ...]
+	tags?: [_]: string
+	tenant_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbLoadbalancerResource: {
+	vip_subnet_id:          string
+	admin_state_up?:        bool
+	description?:           string
+	flavor?:                string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	security_group_ids?: [string, ...]
+	tags?: [_]: string
+	tenant_id?:   string
+	vip_address?: string
+	vip_port_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -870,11 +2924,36 @@ package huaweicloud
 	}
 }
 #HuaweicloudLbLoadbalancerV2Resource: {
-	vip_subnet_id:   string
+	vip_subnet_id:          string
+	admin_state_up?:        bool
+	description?:           string
+	flavor?:                string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	security_group_ids?: [string, ...]
+	tags?: [_]: string
+	tenant_id?:   string
+	vip_address?: string
+	vip_port_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbMemberResource: {
+	address:         string
+	pool_id:         string
+	protocol_port:   number
+	subnet_id:       string
 	admin_state_up?: bool
-	description?:    string
-	flavor?:         string
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -887,7 +2966,31 @@ package huaweicloud
 	protocol_port:   number
 	subnet_id:       string
 	admin_state_up?: bool
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbMonitorResource: {
+	delay:           number
+	max_retries:     number
+	pool_id:         string
+	timeout:         number
+	type:            string
+	admin_state_up?: bool
+	expected_codes?: string
+	http_method?:    string
+	id?:             string
+	name?:           string
+	region?:         string
+	tenant_id?:      string
+	url_path?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -901,7 +3004,34 @@ package huaweicloud
 	timeout:         number
 	type:            string
 	admin_state_up?: bool
+	expected_codes?: string
+	http_method?:    string
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	url_path?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLbPoolResource: {
+	lb_method:        string
+	protocol:         string
+	admin_state_up?:  bool
+	description?:     string
+	id?:              string
+	listener_id?:     string
+	loadbalancer_id?: string
+	name?:            string
+	region?:          string
+	tenant_id?:       string
+	persistence?: [{
+		type:         string
+		cookie_name?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -913,9 +3043,12 @@ package huaweicloud
 	protocol:         string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	listener_id?:     string
 	loadbalancer_id?: string
 	name?:            string
+	region?:          string
+	tenant_id?:       string
 	persistence?: [{
 		type:         string
 		cookie_name?: string
@@ -926,9 +3059,12 @@ package huaweicloud
 		update?: string
 	}
 }
-#HuaweicloudLbWhitelistV2Resource: {
+#HuaweicloudLbWhitelistResource: {
 	listener_id:       string
 	enable_whitelist?: bool
+	id?:               string
+	region?:           string
+	tenant_id?:        string
 	whitelist?:        string
 	timeouts?: {
 		create?: string
@@ -936,10 +3072,70 @@ package huaweicloud
 		update?: string
 	}
 }
+#HuaweicloudLbWhitelistV2Resource: {
+	listener_id:       string
+	enable_whitelist?: bool
+	id?:               string
+	region?:           string
+	tenant_id?:        string
+	whitelist?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudLtsGroupResource: {
+	group_name:  string
+	ttl_in_days: number
+	id?:         string
+	region?:     string
+}
+#HuaweicloudLtsStreamResource: {
+	group_id:      string
+	stream_name:   string
+	filter_count?: string
+	id?:           string
+	region?:       string
+}
+#HuaweicloudMaasTaskResource: {
+	enable_kms:   bool
+	thread_num:   number
+	description?: string
+	id?:          string
+	name?:        string
+	region?:      string
+	status?:      number
+	dst_node?: [{
+		ak:         string
+		bucket:     string
+		object_key: string
+		region:     string
+		sk:         string
+	}, ...]
+	smn_info?: [{
+		topic_urn: string
+		trigger_conditions: [string, ...]
+		language?: string
+	}, ...]
+	src_node?: [{
+		ak:          string
+		bucket:      string
+		object_key:  string
+		region:      string
+		sk:          string
+		cloud_type?: string
+	}, ...]
+	timeouts?: create?: string
+}
 #HuaweicloudMaasTaskV1Resource: {
 	enable_kms:   bool
 	thread_num:   number
 	description?: string
+	id?:          string
+	name?:        string
+	region?:      string
+	status?:      number
 	dst_node?: [{
 		ak:         string
 		bucket:     string
@@ -963,21 +3159,31 @@ package huaweicloud
 	timeouts?: create?: string
 }
 #HuaweicloudMlsInstanceResource: {
-	flavor:  string
-	name:    string
-	version: string
-	agency?: string
+	flavor:           string
+	name:             string
+	version:          string
+	agency?:          string
+	created?:         string
+	current_task?:    string
+	id?:              string
+	inner_endpoint?:  string
+	public_endpoint?: string
+	region?:          string
+	status?:          string
+	updated?:         string
 	mrs_cluster?: [{
 		id:             string
 		user_name?:     string
 		user_password?: string
 	}, ...]
 	network?: [{
-		available_zone: string
-		network_id:     string
-		vpc_id:         string
+		available_zone:     string
+		network_id:         string
+		vpc_id:             string
+		security_group_id?: string
 		public_ip?: [{
 			bind_type: string
+			eip_id?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -985,44 +3191,206 @@ package huaweicloud
 		delete?: string
 	}
 }
-#HuaweicloudMrsClusterV1Resource: {
-	available_zone_id:     string
-	billing_type:          number
-	cluster_name:          string
-	core_node_num:         number
-	core_node_size:        string
-	master_node_num:       number
-	master_node_size:      string
-	node_public_cert_name: string
-	safe_mode:             number
-	subnet_id:             string
-	volume_size:           number
-	volume_type:           string
-	vpc_id:                string
+#HuaweicloudMrsClusterResource: {
+	available_zone_id:         string
+	billing_type:              number
+	cluster_admin_secret:      string
+	cluster_name:              string
+	core_node_num:             number
+	core_node_size:            string
+	master_node_num:           number
+	master_node_size:          string
+	safe_mode:                 number
+	subnet_id:                 string
+	volume_size:               number
+	volume_type:               string
+	vpc_id:                    string
+	available_zone_name?:      string
+	charging_start_time?:      string
+	cluster_state?:            string
+	cluster_type?:             number
+	cluster_version?:          string
+	core_node_product_id?:     string
+	core_node_spec_id?:        string
+	create_at?:                string
+	deployment_id?:            string
+	duration?:                 string
+	error_info?:               string
+	external_alternate_ip?:    string
+	external_ip?:              string
+	fee?:                      string
+	hadoop_version?:           string
+	id?:                       string
+	instance_id?:              string
+	internal_ip?:              string
+	log_collection?:           number
+	master_node_ip?:           string
+	master_node_product_id?:   string
+	master_node_spec_id?:      string
+	node_password?:            string
+	node_public_cert_name?:    string
+	order_id?:                 string
+	private_ip_first?:         string
+	region?:                   string
+	remark?:                   string
+	security_groups_id?:       string
+	slave_security_groups_id?: string
+	tags?: [_]: string
+	update_at?: string
+	vnc?:       string
 	add_jobs?: [{
 		jar_path:                    string
 		job_name:                    string
 		job_type:                    number
 		submit_job_once_cluster_run: bool
+		arguments?:                  string
+		file_action?:                string
+		hive_script_path?:           string
+		hql?:                        string
+		input?:                      string
+		job_log?:                    string
+		output?:                     string
+		shutdown_cluster?:           bool
 	}, ...]
 	component_list?: [{
-		component_name: string
+		component_name:     string
+		component_desc?:    string
+		component_id?:      string
+		component_version?: string
 	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudMrsJobV1Resource: {
-	cluster_id: string
-	jar_path:   string
-	job_name:   string
-	job_type:   number
+#HuaweicloudMrsClusterV1Resource: {
+	available_zone_id:         string
+	billing_type:              number
+	cluster_admin_secret:      string
+	cluster_name:              string
+	core_node_num:             number
+	core_node_size:            string
+	master_node_num:           number
+	master_node_size:          string
+	safe_mode:                 number
+	subnet_id:                 string
+	volume_size:               number
+	volume_type:               string
+	vpc_id:                    string
+	available_zone_name?:      string
+	charging_start_time?:      string
+	cluster_state?:            string
+	cluster_type?:             number
+	cluster_version?:          string
+	core_node_product_id?:     string
+	core_node_spec_id?:        string
+	create_at?:                string
+	deployment_id?:            string
+	duration?:                 string
+	error_info?:               string
+	external_alternate_ip?:    string
+	external_ip?:              string
+	fee?:                      string
+	hadoop_version?:           string
+	id?:                       string
+	instance_id?:              string
+	internal_ip?:              string
+	log_collection?:           number
+	master_node_ip?:           string
+	master_node_product_id?:   string
+	master_node_spec_id?:      string
+	node_password?:            string
+	node_public_cert_name?:    string
+	order_id?:                 string
+	private_ip_first?:         string
+	region?:                   string
+	remark?:                   string
+	security_groups_id?:       string
+	slave_security_groups_id?: string
+	tags?: [_]: string
+	update_at?: string
+	vnc?:       string
+	add_jobs?: [{
+		jar_path:                    string
+		job_name:                    string
+		job_type:                    number
+		submit_job_once_cluster_run: bool
+		arguments?:                  string
+		file_action?:                string
+		hive_script_path?:           string
+		hql?:                        string
+		input?:                      string
+		job_log?:                    string
+		output?:                     string
+		shutdown_cluster?:           bool
+	}, ...]
+	component_list?: [{
+		component_name:     string
+		component_desc?:    string
+		component_id?:      string
+		component_version?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudMrsJobResource: {
+	cluster_id:        string
+	jar_path:          string
+	job_name:          string
+	job_type:          number
+	arguments?:        string
+	hive_script_path?: string
+	id?:               string
+	input?:            string
+	is_protected?:     bool
+	is_public?:        bool
+	job_log?:          string
+	job_state?:        string
+	output?:           string
+	region?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
+}
+#HuaweicloudMrsJobV1Resource: {
+	cluster_id:        string
+	jar_path:          string
+	job_name:          string
+	job_type:          number
+	arguments?:        string
+	hive_script_path?: string
+	id?:               string
+	input?:            string
+	is_protected?:     bool
+	is_public?:        bool
+	job_log?:          string
+	job_state?:        string
+	output?:           string
+	region?:           string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudNatDnatRuleResource: {
+	external_service_port: number
+	floating_ip_id:        string
+	internal_service_port: number
+	nat_gateway_id:        string
+	protocol:              string
+	created_at?:           string
+	floating_ip_address?:  string
+	id?:                   string
+	port_id?:              string
+	private_ip?:           string
+	region?:               string
+	status?:               string
+	tenant_id?:            string
 }
 #HuaweicloudNatDnatRuleV2Resource: {
 	external_service_port: number
@@ -1030,34 +3398,131 @@ package huaweicloud
 	internal_service_port: number
 	nat_gateway_id:        string
 	protocol:              string
+	created_at?:           string
+	floating_ip_address?:  string
+	id?:                   string
 	port_id?:              string
 	private_ip?:           string
+	region?:               string
+	status?:               string
+	tenant_id?:            string
+}
+#HuaweicloudNatGatewayResource: {
+	internal_network_id:    string
+	name:                   string
+	router_id:              string
+	spec:                   string
+	description?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	status?:                string
+	tenant_id?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #HuaweicloudNatGatewayV2Resource: {
-	internal_network_id: string
-	name:                string
-	router_id:           string
-	spec:                string
+	internal_network_id:    string
+	name:                   string
+	router_id:              string
+	spec:                   string
+	description?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	status?:                string
+	tenant_id?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudNatSnatRuleResource: {
+	floating_ip_id:       string
+	nat_gateway_id:       string
+	cidr?:                string
+	floating_ip_address?: string
+	id?:                  string
+	network_id?:          string
+	region?:              string
+	source_type?:         number
+	status?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudNatSnatRuleV2Resource: {
-	floating_ip_id: string
-	nat_gateway_id: string
-	network_id:     string
+	floating_ip_id:       string
+	nat_gateway_id:       string
+	cidr?:                string
+	floating_ip_address?: string
+	id?:                  string
+	network_id?:          string
+	region?:              string
+	source_type?:         number
+	status?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#HuaweicloudNetworkAclResource: {
+	name:               string
+	description?:       string
+	id?:                string
+	inbound_policy_id?: string
+	inbound_rules?: [string, ...]
+	outbound_policy_id?: string
+	outbound_rules?: [string, ...]
+	ports?: [string, ...]
+	region?: string
+	status?: string
+	subnets?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudNetworkAclRuleResource: {
+	action:                  string
+	protocol:                string
+	description?:            string
+	destination_ip_address?: string
+	destination_port?:       string
+	enabled?:                bool
+	id?:                     string
+	ip_version?:             number
+	name?:                   string
+	region?:                 string
+	source_ip_address?:      string
+	source_port?:            string
+}
+#HuaweicloudNetworkingEipAssociateResource: {
+	port_id:      string
+	floating_ip?: string
+	id?:          string
+	public_ip?:   string
+	region?:      string
+}
 #HuaweicloudNetworkingFloatingipAssociateV2Resource: {
-	floating_ip: string
-	port_id:     string
+	port_id:      string
+	floating_ip?: string
+	id?:          string
+	public_ip?:   string
+	region?:      string
 }
 #HuaweicloudNetworkingFloatingipV2Resource: {
-	pool?: string
+	address?:   string
+	fixed_ip?:  string
+	id?:        string
+	pool?:      string
+	port_id?:   string
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1065,7 +3530,12 @@ package huaweicloud
 	}
 }
 #HuaweicloudNetworkingNetworkV2Resource: {
-	name?: string
+	admin_state_up?: string
+	id?:             string
+	name?:           string
+	region?:         string
+	shared?:         string
+	tenant_id?:      string
 	value_specs?: [_]: string
 	segments?: [{
 		network_type?:     string
@@ -1077,14 +3547,57 @@ package huaweicloud
 		delete?: string
 	}
 }
-#HuaweicloudNetworkingPortV2Resource: {
-	network_id:          string
+#HuaweicloudNetworkingPortResource: {
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	all_security_group_ids?: [string, ...]
+	device_id?:          string
+	device_owner?:       string
+	id?:                 string
+	mac_address?:        string
 	name?:               string
 	no_security_groups?: bool
+	region?:             string
 	security_group_ids?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	allowed_address_pairs?: [{
-		ip_address: string
+		ip_address:   string
+		mac_address?: string
+	}, ...]
+	extra_dhcp_option?: [{
+		name:        string
+		value:       string
+		ip_version?: number
+	}, ...]
+	fixed_ip?: [{
+		subnet_id:   string
+		ip_address?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudNetworkingPortV2Resource: {
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	all_security_group_ids?: [string, ...]
+	device_id?:          string
+	device_owner?:       string
+	id?:                 string
+	mac_address?:        string
+	name?:               string
+	no_security_groups?: bool
+	region?:             string
+	security_group_ids?: [string, ...]
+	tenant_id?: string
+	value_specs?: [_]: string
+	allowed_address_pairs?: [{
+		ip_address:   string
+		mac_address?: string
 	}, ...]
 	extra_dhcp_option?: [{
 		name:        string
@@ -1101,7 +3614,11 @@ package huaweicloud
 	}
 }
 #HuaweicloudNetworkingRouterInterfaceV2Resource: {
-	router_id: string
+	router_id:  string
+	id?:        string
+	port_id?:   string
+	region?:    string
+	subnet_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1111,9 +3628,18 @@ package huaweicloud
 	destination_cidr: string
 	next_hop:         string
 	router_id:        string
+	id?:              string
+	region?:          string
 }
 #HuaweicloudNetworkingRouterV2Resource: {
-	name?: string
+	admin_state_up?:      bool
+	distributed?:         bool
+	enable_snat?:         bool
+	external_network_id?: string
+	id?:                  string
+	name?:                string
+	region?:              string
+	tenant_id?:           string
 	value_specs?: [_]: string
 	external_fixed_ip?: [{
 		ip_address?: string
@@ -1124,25 +3650,68 @@ package huaweicloud
 		delete?: string
 	}
 }
+#HuaweicloudNetworkingSecgroupResource: {
+	name:                   string
+	delete_default_rules?:  bool
+	description?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	tenant_id?:             string
+	timeouts?: delete?: string
+}
+#HuaweicloudNetworkingSecgroupRuleResource: {
+	direction:         string
+	ethertype:         string
+	security_group_id: string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
+	timeouts?: delete?: string
+}
 #HuaweicloudNetworkingSecgroupRuleV2Resource: {
 	direction:         string
 	ethertype:         string
 	security_group_id: string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
 	timeouts?: delete?: string
 }
 #HuaweicloudNetworkingSecgroupV2Resource: {
-	name:                  string
-	delete_default_rules?: bool
+	name:                   string
+	delete_default_rules?:  bool
+	description?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	tenant_id?:             string
 	timeouts?: delete?: string
 }
 #HuaweicloudNetworkingSubnetV2Resource: {
 	cidr:       string
 	network_id: string
 	dns_nameservers?: [string, ...]
-	enable_dhcp?: bool
-	ip_version?:  number
-	name?:        string
-	no_gateway?:  bool
+	enable_dhcp?:       bool
+	gateway_ip?:        string
+	id?:                string
+	ip_version?:        number
+	ipv6_address_mode?: string
+	ipv6_ra_mode?:      string
+	name?:              string
+	no_gateway?:        bool
+	region?:            string
+	tenant_id?:         string
 	value_specs?: [_]: string
 	allocation_pools?: [{
 		end:   string
@@ -1157,19 +3726,60 @@ package huaweicloud
 		delete?: string
 	}
 }
+#HuaweicloudNetworkingVipResource: {
+	network_id:    string
+	device_owner?: string
+	id?:           string
+	ip_address?:   string
+	mac_address?:  string
+	name?:         string
+	region?:       string
+	status?:       string
+	subnet_id?:    string
+	tenant_id?:    string
+}
+#HuaweicloudNetworkingVipAssociateResource: {
+	port_ids: [string, ...]
+	vip_id: string
+	id?:    string
+	ip_addresses?: [string, ...]
+	region?:         string
+	vip_ip_address?: string
+	vip_subnet_id?:  string
+}
 #HuaweicloudNetworkingVipAssociateV2Resource: {
 	port_ids: [string, ...]
 	vip_id: string
+	id?:    string
+	ip_addresses?: [string, ...]
+	region?:         string
+	vip_ip_address?: string
+	vip_subnet_id?:  string
 }
 #HuaweicloudNetworkingVipV2Resource: {
-	network_id: string
-	subnet_id:  string
+	network_id:    string
+	device_owner?: string
+	id?:           string
+	ip_address?:   string
+	mac_address?:  string
+	name?:         string
+	region?:       string
+	status?:       string
+	subnet_id?:    string
+	tenant_id?:    string
 }
 #HuaweicloudObsBucketResource: {
-	bucket:         string
-	acl?:           string
-	force_destroy?: bool
-	storage_class?: string
+	bucket:                 string
+	acl?:                   string
+	bucket_domain_name?:    string
+	enterprise_project_id?: string
+	force_destroy?:         bool
+	id?:                    string
+	policy?:                string
+	policy_format?:         string
+	quota?:                 number
+	region?:                string
+	storage_class?:         string
 	tags?: [_]: string
 	versioning?: bool
 	cors_rule?: [{
@@ -1210,21 +3820,119 @@ package huaweicloud
 	}, ...]
 }
 #HuaweicloudObsBucketObjectResource: {
-	bucket:        string
-	key:           string
-	acl?:          string
-	content?:      string
-	content_type?: string
-	encryption?:   bool
-	kms_key_id?:   string
-	source?:       string
+	bucket:         string
+	key:            string
+	acl?:           string
+	content?:       string
+	content_type?:  string
+	encryption?:    bool
+	etag?:          string
+	id?:            string
+	kms_key_id?:    string
+	region?:        string
+	size?:          number
+	source?:        string
+	storage_class?: string
+	version_id?:    string
+}
+#HuaweicloudObsBucketPolicyResource: {
+	bucket:         string
+	policy:         string
+	id?:            string
+	policy_format?: string
+	region?:        string
+}
+#HuaweicloudOmsTaskResource: {
+	enable_kms:   bool
+	thread_num:   number
+	description?: string
+	id?:          string
+	name?:        string
+	region?:      string
+	status?:      number
+	dst_node?: [{
+		ak:         string
+		bucket:     string
+		object_key: string
+		region:     string
+		sk:         string
+	}, ...]
+	smn_info?: [{
+		topic_urn: string
+		trigger_conditions: [string, ...]
+		language?: string
+	}, ...]
+	src_node?: [{
+		ak:          string
+		bucket:      string
+		object_key:  string
+		region:      string
+		sk:          string
+		cloud_type?: string
+	}, ...]
+	timeouts?: create?: string
+}
+#HuaweicloudRdsInstanceResource: {
+	availability_zone: [string, ...]
+	flavor:                 string
+	name:                   string
+	security_group_id:      string
+	subnet_id:              string
+	vpc_id:                 string
+	created?:               string
+	enterprise_project_id?: string
+	fixed_ip?:              string
+	ha_replication_mode?:   string
+	id?:                    string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		role:              string
+		status:            string
+	}, ...]
+	param_group_id?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	region?: string
+	status?: string
+	tags?: [_]: string
+	time_zone?: string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+	}, ...]
+	db?: [{
+		password:   string
+		type:       string
+		version:    string
+		port?:      number
+		user_name?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+	volume?: [{
+		size:                number
+		type:                string
+		disk_encryption_id?: string
+	}, ...]
 }
 #HuaweicloudRdsInstanceV1Resource: {
 	availabilityzone: string
 	dbrtpd:           string
 	flavorref:        string
 	vpc:              string
+	created?:         string
 	dbport?:          string
+	hostname?:        string
+	id?:              string
+	name?:            string
+	region?:          string
+	status?:          string
+	type?:            string
+	updated?:         string
 	backupstrategy?: [{
 		keepdays?:  number
 		starttime?: string
@@ -1254,32 +3962,65 @@ package huaweicloud
 }
 #HuaweicloudRdsInstanceV3Resource: {
 	availability_zone: [string, ...]
-	flavor:            string
-	name:              string
-	security_group_id: string
-	subnet_id:         string
-	vpc_id:            string
-	param_group_id?:   string
+	flavor:                 string
+	name:                   string
+	security_group_id:      string
+	subnet_id:              string
+	vpc_id:                 string
+	created?:               string
+	enterprise_project_id?: string
+	fixed_ip?:              string
+	ha_replication_mode?:   string
+	id?:                    string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		role:              string
+		status:            string
+	}, ...]
+	param_group_id?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	region?: string
+	status?: string
+	tags?: [_]: string
+	time_zone?: string
 	backup_strategy?: [{
 		start_time: string
+		keep_days?: number
 	}, ...]
 	db?: [{
-		password: string
-		type:     string
-		version:  string
+		password:   string
+		type:       string
+		version:    string
+		port?:      number
+		user_name?: string
 	}, ...]
 	timeouts?: {
 		create?: string
 		update?: string
 	}
 	volume?: [{
-		size: number
-		type: string
+		size:                number
+		type:                string
+		disk_encryption_id?: string
 	}, ...]
 }
-#HuaweicloudRdsParametergroupV3Resource: {
-	name:         string
+#HuaweicloudRdsParametergroupResource: {
+	name: string
+	configuration_parameters?: [{
+		description:      string
+		name:             string
+		readonly:         bool
+		restart_required: bool
+		type:             string
+		value:            string
+		value_range:      string
+	}, ...]
 	description?: string
+	id?:          string
+	region?:      string
 	values?: [_]: string
 	datastore?: [{
 		type:    string
@@ -1290,10 +4031,67 @@ package huaweicloud
 		delete?: string
 	}
 }
+#HuaweicloudRdsParametergroupV3Resource: {
+	name: string
+	configuration_parameters?: [{
+		description:      string
+		name:             string
+		readonly:         bool
+		restart_required: bool
+		type:             string
+		value:            string
+		value_range:      string
+	}, ...]
+	description?: string
+	id?:          string
+	region?:      string
+	values?: [_]: string
+	datastore?: [{
+		type:    string
+		version: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudRdsReadReplicaInstanceResource: {
+	availability_zone:   string
+	flavor:              string
+	name:                string
+	primary_instance_id: string
+	db?: [{
+		port:      number
+		type:      string
+		user_name: string
+		version:   string
+	}, ...]
+	enterprise_project_id?: string
+	id?:                    string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	subnet_id?:         string
+	tags?: [_]: string
+	type?:   string
+	vpc_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+	volume?: [{
+		type:                string
+		disk_encryption_id?: string
+		size?:               number
+	}, ...]
+}
 #HuaweicloudRtsSoftwareConfigV1Resource: {
 	name:    string
 	config?: string
 	group?:  string
+	id?:     string
 	input_values?: [{
 		[_]: string
 	}, ...]
@@ -1301,16 +4099,28 @@ package huaweicloud
 	output_values?: [{
 		[_]: string
 	}, ...]
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudRtsStackV1Resource: {
-	name:         string
-	environment?: string
+	name: string
+	capabilities?: [string, ...]
+	disable_rollback?: bool
+	environment?:      string
 	files?: [_]: string
-	template_url?: string
+	id?: string
+	notification_topics?: [string, ...]
+	outputs?: [_]:    string
+	parameters?: [_]: string
+	region?:        string
+	status?:        string
+	status_reason?: string
+	template_body?: string
+	template_url?:  string
+	timeout_mins?:  number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1318,11 +4128,19 @@ package huaweicloud
 	}
 }
 #HuaweicloudS3BucketResource: {
-	acl?:           string
-	bucket_prefix?: string
-	force_destroy?: bool
-	policy?:        string
+	acl?:                string
+	arn?:                string
+	bucket?:             string
+	bucket_domain_name?: string
+	bucket_prefix?:      string
+	force_destroy?:      bool
+	hosted_zone_id?:     string
+	id?:                 string
+	policy?:             string
+	region?:             string
 	tags?: [_]: string
+	website_domain?:   string
+	website_endpoint?: string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -1333,6 +4151,7 @@ package huaweicloud
 	lifecycle_rule?: [{
 		enabled:                                 bool
 		abort_incomplete_multipart_upload_days?: number
+		id?:                                     string
 		prefix?:                                 string
 		expiration?: [{
 			date?:                         string
@@ -1359,52 +4178,235 @@ package huaweicloud
 	}, ...]
 }
 #HuaweicloudS3BucketObjectResource: {
-	bucket:               string
-	key:                  string
-	acl?:                 string
-	cache_control?:       string
-	content?:             string
-	content_disposition?: string
-	content_encoding?:    string
-	content_language?:    string
-	source?:              string
-	website_redirect?:    string
+	bucket:                  string
+	key:                     string
+	acl?:                    string
+	cache_control?:          string
+	content?:                string
+	content_disposition?:    string
+	content_encoding?:       string
+	content_language?:       string
+	content_type?:           string
+	etag?:                   string
+	id?:                     string
+	server_side_encryption?: string
+	source?:                 string
+	sse_kms_key_id?:         string
+	version_id?:             string
+	website_redirect?:       string
 }
 #HuaweicloudS3BucketPolicyResource: {
 	bucket: string
 	policy: string
+	id?:    string
 }
-#HuaweicloudSfsFileSystemV2Resource: {
-	access_level: string
-	access_to:    string
-	size:         number
-	access_type?: string
-	is_public?:   bool
-	metadata?: [_]: string
-	name?:        string
-	share_proto?: string
+#HuaweicloudSfsAccessRuleResource: {
+	access_to:     string
+	sfs_id:        string
+	access_level?: string
+	access_type?:  string
+	id?:           string
+	region?:       string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#HuaweicloudSfsAccessRuleV2Resource: {
+	access_to:     string
+	sfs_id:        string
+	access_level?: string
+	access_type?:  string
+	id?:           string
+	region?:       string
+	status?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudSfsFileSystemResource: {
+	size:                number
+	access_level?:       string
+	access_rule_status?: string
+	access_rules?: [{
+		access_level:   string
+		access_rule_id: string
+		access_to:      string
+		access_type:    string
+		status:         string
+	}, ...]
+	access_to?:             string
+	access_type?:           string
+	availability_zone?:     string
+	description?:           string
+	enterprise_project_id?: string
+	export_location?:       string
+	id?:                    string
+	is_public?:             bool
+	metadata?: [_]: string
+	name?:            string
+	region?:          string
+	share_access_id?: string
+	share_proto?:     string
+	status?:          string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudSfsFileSystemV2Resource: {
+	size:                number
+	access_level?:       string
+	access_rule_status?: string
+	access_rules?: [{
+		access_level:   string
+		access_rule_id: string
+		access_to:      string
+		access_type:    string
+		status:         string
+	}, ...]
+	access_to?:             string
+	access_type?:           string
+	availability_zone?:     string
+	description?:           string
+	enterprise_project_id?: string
+	export_location?:       string
+	id?:                    string
+	is_public?:             bool
+	metadata?: [_]: string
+	name?:            string
+	region?:          string
+	share_access_id?: string
+	share_proto?:     string
+	status?:          string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudSfsTurboResource: {
+	availability_zone:   string
+	name:                string
+	security_group_id:   string
+	size:                number
+	subnet_id:           string
+	vpc_id:              string
+	available_capacity?: string
+	crypt_key_id?:       string
+	enhanced?:           bool
+	export_location?:    string
+	id?:                 string
+	region?:             string
+	share_proto?:        string
+	share_type?:         string
+	status?:             string
+	version?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudSmnSubscriptionResource: {
+	endpoint:          string
+	protocol:          string
+	topic_urn:         string
+	id?:               string
+	owner?:            string
+	region?:           string
+	remark?:           string
+	status?:           number
+	subscription_urn?: string
+}
 #HuaweicloudSmnSubscriptionV2Resource: {
-	endpoint:  string
-	protocol:  string
-	topic_urn: string
-	remark?:   string
+	endpoint:          string
+	protocol:          string
+	topic_urn:         string
+	id?:               string
+	owner?:            string
+	region?:           string
+	remark?:           string
+	status?:           number
+	subscription_urn?: string
+}
+#HuaweicloudSmnTopicResource: {
+	name:          string
+	create_time?:  string
+	display_name?: string
+	id?:           string
+	push_policy?:  number
+	region?:       string
+	topic_urn?:    string
+	update_time?:  string
 }
 #HuaweicloudSmnTopicV2Resource: {
 	name:          string
+	create_time?:  string
 	display_name?: string
+	id?:           string
+	push_policy?:  number
+	region?:       string
+	topic_urn?:    string
+	update_time?:  string
+}
+#HuaweicloudVbsBackupResource: {
+	name:               string
+	volume_id:          string
+	availability_zone?: string
+	container?:         string
+	created_at?:        string
+	description?:       string
+	id?:                string
+	object_count?:      number
+	region?:            string
+	service_metadata?:  string
+	size?:              number
+	snapshot_id?:       string
+	status?:            string
+	tags?: [{
+		key:   string
+		value: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVbsBackupPolicyResource: {
+	name:                   string
+	retain_first_backup:    string
+	start_time:             string
+	frequency?:             number
+	id?:                    string
+	policy_resource_count?: number
+	region?:                string
+	rentention_day?:        number
+	rentention_num?:        number
+	resources?: [string, ...]
+	status?: string
+	week_frequency?: [string, ...]
+	tags?: [{
+		key:   string
+		value: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #HuaweicloudVbsBackupPolicyV2Resource: {
-	name:                string
-	retain_first_backup: string
-	start_time:          string
-	frequency?:          number
-	rentention_day?:     number
-	rentention_num?:     number
+	name:                   string
+	retain_first_backup:    string
+	start_time:             string
+	frequency?:             number
+	id?:                    string
+	policy_resource_count?: number
+	region?:                string
+	rentention_day?:        number
+	rentention_num?:        number
 	resources?: [string, ...]
 	status?: string
 	week_frequency?: [string, ...]
@@ -1418,9 +4420,19 @@ package huaweicloud
 	}
 }
 #HuaweicloudVbsBackupV2Resource: {
-	name:         string
-	volume_id:    string
-	description?: string
+	name:               string
+	volume_id:          string
+	availability_zone?: string
+	container?:         string
+	created_at?:        string
+	description?:       string
+	id?:                string
+	object_count?:      number
+	region?:            string
+	service_metadata?:  string
+	size?:              number
+	snapshot_id?:       string
+	status?:            string
 	tags?: [{
 		key:   string
 		value: string
@@ -1430,23 +4442,124 @@ package huaweicloud
 		delete?: string
 	}
 }
-#HuaweicloudVpcBandwidthV2Resource: {
-	name: string
-	size: number
+#HuaweicloudVpcResource: {
+	cidr:                   string
+	name:                   string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	routes?: [{
+		destination: string
+		nexthop:     string
+	}, ...]
+	status?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcBandwidthResource: {
+	name:                   string
+	size:                   number
+	bandwidth_type?:        string
+	charge_mode?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	share_type?:            string
+	status?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
-#HuaweicloudVpcEipV1Resource: {
+#HuaweicloudVpcBandwidthV2Resource: {
+	name:                   string
+	size:                   number
+	bandwidth_type?:        string
+	charge_mode?:           string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	share_type?:            string
+	status?:                string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudVpcEipResource: {
+	address?:               string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
 	value_specs?: [_]: string
 	bandwidth?: [{
-		share_type: string
+		share_type:   string
+		charge_mode?: string
+		id?:          string
+		name?:        string
+		size?:        number
 	}, ...]
 	publicip?: [{
-		type: string
+		type:        string
+		ip_address?: string
+		port_id?:    string
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcEipV1Resource: {
+	address?:               string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	value_specs?: [_]: string
+	bandwidth?: [{
+		share_type:   string
+		charge_mode?: string
+		id?:          string
+		name?:        string
+		size?:        number
+	}, ...]
+	publicip?: [{
+		type:        string
+		ip_address?: string
+		port_id?:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcPeeringConnectionResource: {
+	name:            string
+	peer_vpc_id:     string
+	vpc_id:          string
+	id?:             string
+	peer_tenant_id?: string
+	region?:         string
+	status?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcPeeringConnectionAccepterResource: {
+	vpc_peering_connection_id: string
+	accept?:                   bool
+	id?:                       string
+	name?:                     string
+	peer_tenant_id?:           string
+	peer_vpc_id?:              string
+	region?:                   string
+	status?:                   string
+	vpc_id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1455,15 +4568,39 @@ package huaweicloud
 #HuaweicloudVpcPeeringConnectionAccepterV2Resource: {
 	vpc_peering_connection_id: string
 	accept?:                   bool
+	id?:                       string
+	name?:                     string
+	peer_tenant_id?:           string
+	peer_vpc_id?:              string
+	region?:                   string
+	status?:                   string
+	vpc_id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudVpcPeeringConnectionV2Resource: {
-	name:        string
-	peer_vpc_id: string
+	name:            string
+	peer_vpc_id:     string
+	vpc_id:          string
+	id?:             string
+	peer_tenant_id?: string
+	region?:         string
+	status?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcRouteResource: {
+	destination: string
+	nexthop:     string
+	type:        string
 	vpc_id:      string
+	id?:         string
+	region?:     string
+	tenant_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1474,34 +4611,143 @@ package huaweicloud
 	nexthop:     string
 	type:        string
 	vpc_id:      string
+	id?:         string
+	region?:     string
+	tenant_id?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcSubnetResource: {
+	cidr:               string
+	gateway_ip:         string
+	name:               string
+	vpc_id:             string
+	availability_zone?: string
+	dhcp_enable?:       bool
+	dns_list?: [string, ...]
+	id?:            string
+	primary_dns?:   string
+	region?:        string
+	secondary_dns?: string
+	subnet_id?:     string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudVpcSubnetV1Resource: {
-	cidr:         string
-	gateway_ip:   string
-	name:         string
-	vpc_id:       string
-	dhcp_enable?: bool
+	cidr:               string
+	gateway_ip:         string
+	name:               string
+	vpc_id:             string
+	availability_zone?: string
+	dhcp_enable?:       bool
+	dns_list?: [string, ...]
+	id?:            string
+	primary_dns?:   string
+	region?:        string
+	secondary_dns?: string
+	subnet_id?:     string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudVpcV1Resource: {
-	cidr: string
-	name: string
+	cidr:                   string
+	name:                   string
+	enterprise_project_id?: string
+	id?:                    string
+	region?:                string
+	routes?: [{
+		destination: string
+		nexthop:     string
+	}, ...]
+	status?: string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#HuaweicloudVpnaasEndpointGroupV2Resource: {
+#HuaweicloudVpcepApprovalResource: {
+	endpoints: [string, ...]
+	service_id: string
+	connections?: [{
+		domain_id:   string
+		endpoint_id: string
+		packet_id:   number
+		status:      string
+	}, ...]
+	id?:     string
+	region?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcepEndpointResource: {
+	network_id:           string
+	service_id:           string
+	vpc_id:               string
+	enable_dns?:          bool
+	enable_whitelist?:    bool
+	id?:                  string
+	ip_address?:          string
+	packet_id?:           number
+	private_domain_name?: string
+	region?:              string
+	service_name?:        string
+	service_type?:        string
+	status?:              string
+	tags?: [_]: string
+	whitelist?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpcepServiceResource: {
+	port_id:     string
+	server_type: string
+	vpc_id:      string
+	approval?:   bool
+	connections?: [{
+		domain_id:   string
+		endpoint_id: string
+		packet_id:   number
+		status:      string
+	}, ...]
+	id?:   string
+	name?: string
+	permissions?: [string, ...]
+	region?:       string
+	service_name?: string
+	service_type?: string
+	status?:       string
+	tags?: [_]: string
+	port_mapping?: [{
+		protocol?:      string
+		service_port?:  number
+		terminal_port?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#HuaweicloudVpnaasEndpointGroupResource: {
 	description?: string
 	endpoints?: [string, ...]
-	name?: string
+	id?:        string
+	name?:      string
+	region?:    string
+	tenant_id?: string
+	type?:      string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1509,32 +4755,157 @@ package huaweicloud
 		update?: string
 	}
 }
-#HuaweicloudVpnaasIkePolicyV2Resource: {
+#HuaweicloudVpnaasEndpointGroupV2Resource: {
+	description?: string
+	endpoints?: [string, ...]
+	id?:        string
+	name?:      string
+	region?:    string
+	tenant_id?: string
+	type?:      string
+	value_specs?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudVpnaasIkePolicyResource: {
 	auth_algorithm?:          string
 	description?:             string
 	encryption_algorithm?:    string
+	id?:                      string
 	ike_version?:             string
 	name?:                    string
 	pfs?:                     string
 	phase1_negotiation_mode?: string
+	region?:                  string
+	tenant_id?:               string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
+	timeouts?: create?: string
+}
+#HuaweicloudVpnaasIkePolicyV2Resource: {
+	auth_algorithm?:          string
+	description?:             string
+	encryption_algorithm?:    string
+	id?:                      string
+	ike_version?:             string
+	name?:                    string
+	pfs?:                     string
+	phase1_negotiation_mode?: string
+	region?:                  string
+	tenant_id?:               string
+	value_specs?: [_]: string
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
+	timeouts?: create?: string
+}
+#HuaweicloudVpnaasIpsecPolicyResource: {
+	auth_algorithm?:       string
+	description?:          string
+	encapsulation_mode?:   string
+	encryption_algorithm?: string
+	id?:                   string
+	name?:                 string
+	pfs?:                  string
+	region?:               string
+	tenant_id?:            string
+	transform_protocol?:   string
+	value_specs?: [_]: string
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
 }
 #HuaweicloudVpnaasIpsecPolicyV2Resource: {
-	description?: string
-	name?:        string
+	auth_algorithm?:       string
+	description?:          string
+	encapsulation_mode?:   string
+	encryption_algorithm?: string
+	id?:                   string
+	name?:                 string
+	pfs?:                  string
+	region?:               string
+	tenant_id?:            string
+	transform_protocol?:   string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
+}
+#HuaweicloudVpnaasServiceResource: {
+	router_id:       string
+	admin_state_up?: bool
+	description?:    string
+	external_v4_ip?: string
+	external_v6_ip?: string
+	id?:             string
+	name?:           string
+	region?:         string
+	status?:         string
+	subnet_id?:      string
+	tenant_id?:      string
+	value_specs?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #HuaweicloudVpnaasServiceV2Resource: {
 	router_id:       string
 	admin_state_up?: bool
 	description?:    string
+	external_v4_ip?: string
+	external_v6_ip?: string
+	id?:             string
 	name?:           string
+	region?:         string
+	status?:         string
 	subnet_id?:      string
+	tenant_id?:      string
 	value_specs?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#HuaweicloudVpnaasSiteConnectionResource: {
+	ikepolicy_id:       string
+	ipsecpolicy_id:     string
+	peer_address:       string
+	peer_id:            string
+	psk:                string
+	vpnservice_id:      string
+	admin_state_up?:    bool
+	description?:       string
+	id?:                string
+	initiator?:         string
+	local_ep_group_id?: string
+	local_id?:          string
+	mtu?:               number
+	name?:              string
+	peer_cidrs?: [string, ...]
+	peer_ep_group_id?: string
+	region?:           string
+	tags?: [_]: string
+	tenant_id?: string
+	value_specs?: [_]: string
+	dpd?: [{
+		action?:   string
+		interval?: number
+		timeout?:  number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1550,13 +4921,23 @@ package huaweicloud
 	vpnservice_id:      string
 	admin_state_up?:    bool
 	description?:       string
+	id?:                string
+	initiator?:         string
 	local_ep_group_id?: string
 	local_id?:          string
+	mtu?:               number
 	name?:              string
 	peer_cidrs?: [string, ...]
 	peer_ep_group_id?: string
+	region?:           string
+	tags?: [_]: string
+	tenant_id?: string
 	value_specs?: [_]: string
-	dpd?: [{}, ...]
+	dpd?: [{
+		action?:   string
+		interval?: number
+		timeout?:  number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1566,40 +4947,76 @@ package huaweicloud
 #Resources: {
 	huaweicloud_api_gateway_api?: [_]:                    #HuaweicloudApiGatewayApiResource
 	huaweicloud_api_gateway_group?: [_]:                  #HuaweicloudApiGatewayGroupResource
+	huaweicloud_as_configuration?: [_]:                   #HuaweicloudAsConfigurationResource
 	huaweicloud_as_configuration_v1?: [_]:                #HuaweicloudAsConfigurationV1Resource
+	huaweicloud_as_group?: [_]:                           #HuaweicloudAsGroupResource
 	huaweicloud_as_group_v1?: [_]:                        #HuaweicloudAsGroupV1Resource
+	huaweicloud_as_policy?: [_]:                          #HuaweicloudAsPolicyResource
 	huaweicloud_as_policy_v1?: [_]:                       #HuaweicloudAsPolicyV1Resource
 	huaweicloud_blockstorage_volume_v2?: [_]:             #HuaweicloudBlockstorageVolumeV2Resource
+	huaweicloud_cce_addon?: [_]:                          #HuaweicloudCceAddonResource
+	huaweicloud_cce_cluster?: [_]:                        #HuaweicloudCceClusterResource
 	huaweicloud_cce_cluster_v3?: [_]:                     #HuaweicloudCceClusterV3Resource
+	huaweicloud_cce_node?: [_]:                           #HuaweicloudCceNodeResource
+	huaweicloud_cce_node_pool?: [_]:                      #HuaweicloudCceNodePoolResource
 	huaweicloud_cce_node_v3?: [_]:                        #HuaweicloudCceNodeV3Resource
+	huaweicloud_cci_network?: [_]:                        #HuaweicloudCciNetworkResource
 	huaweicloud_cci_network_v1?: [_]:                     #HuaweicloudCciNetworkV1Resource
+	huaweicloud_cdm_cluster?: [_]:                        #HuaweicloudCdmClusterResource
 	huaweicloud_cdm_cluster_v1?: [_]:                     #HuaweicloudCdmClusterV1Resource
+	huaweicloud_cdn_domain?: [_]:                         #HuaweicloudCdnDomainResource
+	huaweicloud_cdn_domain_v1?: [_]:                      #HuaweicloudCdnDomainV1Resource
 	huaweicloud_ces_alarmrule?: [_]:                      #HuaweicloudCesAlarmruleResource
+	huaweicloud_cloudtable_cluster?: [_]:                 #HuaweicloudCloudtableClusterResource
 	huaweicloud_cloudtable_cluster_v2?: [_]:              #HuaweicloudCloudtableClusterV2Resource
+	huaweicloud_compute_eip_associate?: [_]:              #HuaweicloudComputeEipAssociateResource
 	huaweicloud_compute_floatingip_associate_v2?: [_]:    #HuaweicloudComputeFloatingipAssociateV2Resource
 	huaweicloud_compute_floatingip_v2?: [_]:              #HuaweicloudComputeFloatingipV2Resource
+	huaweicloud_compute_instance?: [_]:                   #HuaweicloudComputeInstanceResource
 	huaweicloud_compute_instance_v2?: [_]:                #HuaweicloudComputeInstanceV2Resource
+	huaweicloud_compute_interface_attach?: [_]:           #HuaweicloudComputeInterfaceAttachResource
 	huaweicloud_compute_interface_attach_v2?: [_]:        #HuaweicloudComputeInterfaceAttachV2Resource
+	huaweicloud_compute_keypair?: [_]:                    #HuaweicloudComputeKeypairResource
 	huaweicloud_compute_keypair_v2?: [_]:                 #HuaweicloudComputeKeypairV2Resource
 	huaweicloud_compute_secgroup_v2?: [_]:                #HuaweicloudComputeSecgroupV2Resource
+	huaweicloud_compute_servergroup?: [_]:                #HuaweicloudComputeServergroupResource
 	huaweicloud_compute_servergroup_v2?: [_]:             #HuaweicloudComputeServergroupV2Resource
+	huaweicloud_compute_volume_attach?: [_]:              #HuaweicloudComputeVolumeAttachResource
 	huaweicloud_compute_volume_attach_v2?: [_]:           #HuaweicloudComputeVolumeAttachV2Resource
+	huaweicloud_cs_cluster?: [_]:                         #HuaweicloudCsClusterResource
 	huaweicloud_cs_cluster_v1?: [_]:                      #HuaweicloudCsClusterV1Resource
+	huaweicloud_cs_peering_connect?: [_]:                 #HuaweicloudCsPeeringConnectResource
 	huaweicloud_cs_peering_connect_v1?: [_]:              #HuaweicloudCsPeeringConnectV1Resource
+	huaweicloud_cs_route?: [_]:                           #HuaweicloudCsRouteResource
 	huaweicloud_cs_route_v1?: [_]:                        #HuaweicloudCsRouteV1Resource
+	huaweicloud_csbs_backup?: [_]:                        #HuaweicloudCsbsBackupResource
+	huaweicloud_csbs_backup_policy?: [_]:                 #HuaweicloudCsbsBackupPolicyResource
 	huaweicloud_csbs_backup_policy_v1?: [_]:              #HuaweicloudCsbsBackupPolicyV1Resource
 	huaweicloud_csbs_backup_v1?: [_]:                     #HuaweicloudCsbsBackupV1Resource
+	huaweicloud_css_cluster?: [_]:                        #HuaweicloudCssClusterResource
 	huaweicloud_css_cluster_v1?: [_]:                     #HuaweicloudCssClusterV1Resource
+	huaweicloud_css_snapshot?: [_]:                       #HuaweicloudCssSnapshotResource
+	huaweicloud_cts_tracker?: [_]:                        #HuaweicloudCtsTrackerResource
 	huaweicloud_cts_tracker_v1?: [_]:                     #HuaweicloudCtsTrackerV1Resource
+	huaweicloud_dcs_instance?: [_]:                       #HuaweicloudDcsInstanceResource
 	huaweicloud_dcs_instance_v1?: [_]:                    #HuaweicloudDcsInstanceV1Resource
+	huaweicloud_dds_instance?: [_]:                       #HuaweicloudDdsInstanceResource
 	huaweicloud_dds_instance_v3?: [_]:                    #HuaweicloudDdsInstanceV3Resource
+	huaweicloud_dis_stream?: [_]:                         #HuaweicloudDisStreamResource
 	huaweicloud_dis_stream_v2?: [_]:                      #HuaweicloudDisStreamV2Resource
+	huaweicloud_dli_queue?: [_]:                          #HuaweicloudDliQueueResource
 	huaweicloud_dli_queue_v1?: [_]:                       #HuaweicloudDliQueueV1Resource
+	huaweicloud_dms_group?: [_]:                          #HuaweicloudDmsGroupResource
 	huaweicloud_dms_group_v1?: [_]:                       #HuaweicloudDmsGroupV1Resource
+	huaweicloud_dms_instance?: [_]:                       #HuaweicloudDmsInstanceResource
 	huaweicloud_dms_instance_v1?: [_]:                    #HuaweicloudDmsInstanceV1Resource
+	huaweicloud_dms_queue?: [_]:                          #HuaweicloudDmsQueueResource
 	huaweicloud_dms_queue_v1?: [_]:                       #HuaweicloudDmsQueueV1Resource
+	huaweicloud_dns_ptrrecord?: [_]:                      #HuaweicloudDnsPtrrecordResource
 	huaweicloud_dns_ptrrecord_v2?: [_]:                   #HuaweicloudDnsPtrrecordV2Resource
+	huaweicloud_dns_recordset?: [_]:                      #HuaweicloudDnsRecordsetResource
 	huaweicloud_dns_recordset_v2?: [_]:                   #HuaweicloudDnsRecordsetV2Resource
+	huaweicloud_dns_zone?: [_]:                           #HuaweicloudDnsZoneResource
 	huaweicloud_dns_zone_v2?: [_]:                        #HuaweicloudDnsZoneV2Resource
 	huaweicloud_dws_cluster?: [_]:                        #HuaweicloudDwsClusterResource
 	huaweicloud_ecs_instance_v1?: [_]:                    #HuaweicloudEcsInstanceV1Resource
@@ -1608,72 +5025,151 @@ package huaweicloud
 	huaweicloud_elb_listener?: [_]:                       #HuaweicloudElbListenerResource
 	huaweicloud_elb_loadbalancer?: [_]:                   #HuaweicloudElbLoadbalancerResource
 	huaweicloud_evs_snapshot?: [_]:                       #HuaweicloudEvsSnapshotResource
+	huaweicloud_evs_volume?: [_]:                         #HuaweicloudEvsVolumeResource
+	huaweicloud_fgs_function?: [_]:                       #HuaweicloudFgsFunctionResource
 	huaweicloud_fgs_function_v2?: [_]:                    #HuaweicloudFgsFunctionV2Resource
 	huaweicloud_fw_firewall_group_v2?: [_]:               #HuaweicloudFwFirewallGroupV2Resource
 	huaweicloud_fw_policy_v2?: [_]:                       #HuaweicloudFwPolicyV2Resource
 	huaweicloud_fw_rule_v2?: [_]:                         #HuaweicloudFwRuleV2Resource
+	huaweicloud_gaussdb_cassandra_instance?: [_]:         #HuaweicloudGaussdbCassandraInstanceResource
+	huaweicloud_gaussdb_mysql_instance?: [_]:             #HuaweicloudGaussdbMysqlInstanceResource
+	huaweicloud_gaussdb_opengauss_instance?: [_]:         #HuaweicloudGaussdbOpengaussInstanceResource
+	huaweicloud_ges_graph?: [_]:                          #HuaweicloudGesGraphResource
 	huaweicloud_ges_graph_v1?: [_]:                       #HuaweicloudGesGraphV1Resource
+	huaweicloud_iam_agency?: [_]:                         #HuaweicloudIamAgencyResource
 	huaweicloud_iam_agency_v3?: [_]:                      #HuaweicloudIamAgencyV3Resource
+	huaweicloud_identity_agency?: [_]:                    #HuaweicloudIdentityAgencyResource
+	huaweicloud_identity_group?: [_]:                     #HuaweicloudIdentityGroupResource
+	huaweicloud_identity_group_membership?: [_]:          #HuaweicloudIdentityGroupMembershipResource
 	huaweicloud_identity_group_membership_v3?: [_]:       #HuaweicloudIdentityGroupMembershipV3Resource
 	huaweicloud_identity_group_v3?: [_]:                  #HuaweicloudIdentityGroupV3Resource
+	huaweicloud_identity_project?: [_]:                   #HuaweicloudIdentityProjectResource
 	huaweicloud_identity_project_v3?: [_]:                #HuaweicloudIdentityProjectV3Resource
+	huaweicloud_identity_role?: [_]:                      #HuaweicloudIdentityRoleResource
+	huaweicloud_identity_role_assignment?: [_]:           #HuaweicloudIdentityRoleAssignmentResource
 	huaweicloud_identity_role_assignment_v3?: [_]:        #HuaweicloudIdentityRoleAssignmentV3Resource
+	huaweicloud_identity_user?: [_]:                      #HuaweicloudIdentityUserResource
 	huaweicloud_identity_user_v3?: [_]:                   #HuaweicloudIdentityUserV3Resource
+	huaweicloud_iec_eip?: [_]:                            #HuaweicloudIecEipResource
+	huaweicloud_iec_keypair?: [_]:                        #HuaweicloudIecKeypairResource
+	huaweicloud_iec_network_acl?: [_]:                    #HuaweicloudIecNetworkAclResource
+	huaweicloud_iec_network_acl_rule?: [_]:               #HuaweicloudIecNetworkAclRuleResource
+	huaweicloud_iec_security_group?: [_]:                 #HuaweicloudIecSecurityGroupResource
+	huaweicloud_iec_security_group_rule?: [_]:            #HuaweicloudIecSecurityGroupRuleResource
+	huaweicloud_iec_server?: [_]:                         #HuaweicloudIecServerResource
+	huaweicloud_iec_vip?: [_]:                            #HuaweicloudIecVipResource
+	huaweicloud_iec_vpc?: [_]:                            #HuaweicloudIecVpcResource
+	huaweicloud_iec_vpc_subnet?: [_]:                     #HuaweicloudIecVpcSubnetResource
+	huaweicloud_images_image?: [_]:                       #HuaweicloudImagesImageResource
 	huaweicloud_images_image_v2?: [_]:                    #HuaweicloudImagesImageV2Resource
+	huaweicloud_kms_key?: [_]:                            #HuaweicloudKmsKeyResource
 	huaweicloud_kms_key_v1?: [_]:                         #HuaweicloudKmsKeyV1Resource
+	huaweicloud_lb_certificate?: [_]:                     #HuaweicloudLbCertificateResource
 	huaweicloud_lb_certificate_v2?: [_]:                  #HuaweicloudLbCertificateV2Resource
+	huaweicloud_lb_l7policy?: [_]:                        #HuaweicloudLbL7PolicyResource
 	huaweicloud_lb_l7policy_v2?: [_]:                     #HuaweicloudLbL7PolicyV2Resource
+	huaweicloud_lb_l7rule?: [_]:                          #HuaweicloudLbL7RuleResource
 	huaweicloud_lb_l7rule_v2?: [_]:                       #HuaweicloudLbL7RuleV2Resource
+	huaweicloud_lb_listener?: [_]:                        #HuaweicloudLbListenerResource
 	huaweicloud_lb_listener_v2?: [_]:                     #HuaweicloudLbListenerV2Resource
+	huaweicloud_lb_loadbalancer?: [_]:                    #HuaweicloudLbLoadbalancerResource
 	huaweicloud_lb_loadbalancer_v2?: [_]:                 #HuaweicloudLbLoadbalancerV2Resource
+	huaweicloud_lb_member?: [_]:                          #HuaweicloudLbMemberResource
 	huaweicloud_lb_member_v2?: [_]:                       #HuaweicloudLbMemberV2Resource
+	huaweicloud_lb_monitor?: [_]:                         #HuaweicloudLbMonitorResource
 	huaweicloud_lb_monitor_v2?: [_]:                      #HuaweicloudLbMonitorV2Resource
+	huaweicloud_lb_pool?: [_]:                            #HuaweicloudLbPoolResource
 	huaweicloud_lb_pool_v2?: [_]:                         #HuaweicloudLbPoolV2Resource
+	huaweicloud_lb_whitelist?: [_]:                       #HuaweicloudLbWhitelistResource
 	huaweicloud_lb_whitelist_v2?: [_]:                    #HuaweicloudLbWhitelistV2Resource
+	huaweicloud_lts_group?: [_]:                          #HuaweicloudLtsGroupResource
+	huaweicloud_lts_stream?: [_]:                         #HuaweicloudLtsStreamResource
+	huaweicloud_maas_task?: [_]:                          #HuaweicloudMaasTaskResource
 	huaweicloud_maas_task_v1?: [_]:                       #HuaweicloudMaasTaskV1Resource
 	huaweicloud_mls_instance?: [_]:                       #HuaweicloudMlsInstanceResource
+	huaweicloud_mrs_cluster?: [_]:                        #HuaweicloudMrsClusterResource
 	huaweicloud_mrs_cluster_v1?: [_]:                     #HuaweicloudMrsClusterV1Resource
+	huaweicloud_mrs_job?: [_]:                            #HuaweicloudMrsJobResource
 	huaweicloud_mrs_job_v1?: [_]:                         #HuaweicloudMrsJobV1Resource
+	huaweicloud_nat_dnat_rule?: [_]:                      #HuaweicloudNatDnatRuleResource
 	huaweicloud_nat_dnat_rule_v2?: [_]:                   #HuaweicloudNatDnatRuleV2Resource
+	huaweicloud_nat_gateway?: [_]:                        #HuaweicloudNatGatewayResource
 	huaweicloud_nat_gateway_v2?: [_]:                     #HuaweicloudNatGatewayV2Resource
+	huaweicloud_nat_snat_rule?: [_]:                      #HuaweicloudNatSnatRuleResource
 	huaweicloud_nat_snat_rule_v2?: [_]:                   #HuaweicloudNatSnatRuleV2Resource
+	huaweicloud_network_acl?: [_]:                        #HuaweicloudNetworkAclResource
+	huaweicloud_network_acl_rule?: [_]:                   #HuaweicloudNetworkAclRuleResource
+	huaweicloud_networking_eip_associate?: [_]:           #HuaweicloudNetworkingEipAssociateResource
 	huaweicloud_networking_floatingip_associate_v2?: [_]: #HuaweicloudNetworkingFloatingipAssociateV2Resource
 	huaweicloud_networking_floatingip_v2?: [_]:           #HuaweicloudNetworkingFloatingipV2Resource
 	huaweicloud_networking_network_v2?: [_]:              #HuaweicloudNetworkingNetworkV2Resource
+	huaweicloud_networking_port?: [_]:                    #HuaweicloudNetworkingPortResource
 	huaweicloud_networking_port_v2?: [_]:                 #HuaweicloudNetworkingPortV2Resource
 	huaweicloud_networking_router_interface_v2?: [_]:     #HuaweicloudNetworkingRouterInterfaceV2Resource
 	huaweicloud_networking_router_route_v2?: [_]:         #HuaweicloudNetworkingRouterRouteV2Resource
 	huaweicloud_networking_router_v2?: [_]:               #HuaweicloudNetworkingRouterV2Resource
+	huaweicloud_networking_secgroup?: [_]:                #HuaweicloudNetworkingSecgroupResource
+	huaweicloud_networking_secgroup_rule?: [_]:           #HuaweicloudNetworkingSecgroupRuleResource
 	huaweicloud_networking_secgroup_rule_v2?: [_]:        #HuaweicloudNetworkingSecgroupRuleV2Resource
 	huaweicloud_networking_secgroup_v2?: [_]:             #HuaweicloudNetworkingSecgroupV2Resource
 	huaweicloud_networking_subnet_v2?: [_]:               #HuaweicloudNetworkingSubnetV2Resource
+	huaweicloud_networking_vip?: [_]:                     #HuaweicloudNetworkingVipResource
+	huaweicloud_networking_vip_associate?: [_]:           #HuaweicloudNetworkingVipAssociateResource
 	huaweicloud_networking_vip_associate_v2?: [_]:        #HuaweicloudNetworkingVipAssociateV2Resource
 	huaweicloud_networking_vip_v2?: [_]:                  #HuaweicloudNetworkingVipV2Resource
 	huaweicloud_obs_bucket?: [_]:                         #HuaweicloudObsBucketResource
 	huaweicloud_obs_bucket_object?: [_]:                  #HuaweicloudObsBucketObjectResource
+	huaweicloud_obs_bucket_policy?: [_]:                  #HuaweicloudObsBucketPolicyResource
+	huaweicloud_oms_task?: [_]:                           #HuaweicloudOmsTaskResource
+	huaweicloud_rds_instance?: [_]:                       #HuaweicloudRdsInstanceResource
 	huaweicloud_rds_instance_v1?: [_]:                    #HuaweicloudRdsInstanceV1Resource
 	huaweicloud_rds_instance_v3?: [_]:                    #HuaweicloudRdsInstanceV3Resource
+	huaweicloud_rds_parametergroup?: [_]:                 #HuaweicloudRdsParametergroupResource
 	huaweicloud_rds_parametergroup_v3?: [_]:              #HuaweicloudRdsParametergroupV3Resource
+	huaweicloud_rds_read_replica_instance?: [_]:          #HuaweicloudRdsReadReplicaInstanceResource
 	huaweicloud_rts_software_config_v1?: [_]:             #HuaweicloudRtsSoftwareConfigV1Resource
 	huaweicloud_rts_stack_v1?: [_]:                       #HuaweicloudRtsStackV1Resource
 	huaweicloud_s3_bucket?: [_]:                          #HuaweicloudS3BucketResource
 	huaweicloud_s3_bucket_object?: [_]:                   #HuaweicloudS3BucketObjectResource
 	huaweicloud_s3_bucket_policy?: [_]:                   #HuaweicloudS3BucketPolicyResource
+	huaweicloud_sfs_access_rule?: [_]:                    #HuaweicloudSfsAccessRuleResource
+	huaweicloud_sfs_access_rule_v2?: [_]:                 #HuaweicloudSfsAccessRuleV2Resource
+	huaweicloud_sfs_file_system?: [_]:                    #HuaweicloudSfsFileSystemResource
 	huaweicloud_sfs_file_system_v2?: [_]:                 #HuaweicloudSfsFileSystemV2Resource
+	huaweicloud_sfs_turbo?: [_]:                          #HuaweicloudSfsTurboResource
+	huaweicloud_smn_subscription?: [_]:                   #HuaweicloudSmnSubscriptionResource
 	huaweicloud_smn_subscription_v2?: [_]:                #HuaweicloudSmnSubscriptionV2Resource
+	huaweicloud_smn_topic?: [_]:                          #HuaweicloudSmnTopicResource
 	huaweicloud_smn_topic_v2?: [_]:                       #HuaweicloudSmnTopicV2Resource
+	huaweicloud_vbs_backup?: [_]:                         #HuaweicloudVbsBackupResource
+	huaweicloud_vbs_backup_policy?: [_]:                  #HuaweicloudVbsBackupPolicyResource
 	huaweicloud_vbs_backup_policy_v2?: [_]:               #HuaweicloudVbsBackupPolicyV2Resource
 	huaweicloud_vbs_backup_v2?: [_]:                      #HuaweicloudVbsBackupV2Resource
+	huaweicloud_vpc?: [_]:                                #HuaweicloudVpcResource
+	huaweicloud_vpc_bandwidth?: [_]:                      #HuaweicloudVpcBandwidthResource
 	huaweicloud_vpc_bandwidth_v2?: [_]:                   #HuaweicloudVpcBandwidthV2Resource
+	huaweicloud_vpc_eip?: [_]:                            #HuaweicloudVpcEipResource
 	huaweicloud_vpc_eip_v1?: [_]:                         #HuaweicloudVpcEipV1Resource
+	huaweicloud_vpc_peering_connection?: [_]:             #HuaweicloudVpcPeeringConnectionResource
+	huaweicloud_vpc_peering_connection_accepter?: [_]:    #HuaweicloudVpcPeeringConnectionAccepterResource
 	huaweicloud_vpc_peering_connection_accepter_v2?: [_]: #HuaweicloudVpcPeeringConnectionAccepterV2Resource
 	huaweicloud_vpc_peering_connection_v2?: [_]:          #HuaweicloudVpcPeeringConnectionV2Resource
+	huaweicloud_vpc_route?: [_]:                          #HuaweicloudVpcRouteResource
 	huaweicloud_vpc_route_v2?: [_]:                       #HuaweicloudVpcRouteV2Resource
+	huaweicloud_vpc_subnet?: [_]:                         #HuaweicloudVpcSubnetResource
 	huaweicloud_vpc_subnet_v1?: [_]:                      #HuaweicloudVpcSubnetV1Resource
 	huaweicloud_vpc_v1?: [_]:                             #HuaweicloudVpcV1Resource
+	huaweicloud_vpcep_approval?: [_]:                     #HuaweicloudVpcepApprovalResource
+	huaweicloud_vpcep_endpoint?: [_]:                     #HuaweicloudVpcepEndpointResource
+	huaweicloud_vpcep_service?: [_]:                      #HuaweicloudVpcepServiceResource
+	huaweicloud_vpnaas_endpoint_group?: [_]:              #HuaweicloudVpnaasEndpointGroupResource
 	huaweicloud_vpnaas_endpoint_group_v2?: [_]:           #HuaweicloudVpnaasEndpointGroupV2Resource
+	huaweicloud_vpnaas_ike_policy?: [_]:                  #HuaweicloudVpnaasIkePolicyResource
 	huaweicloud_vpnaas_ike_policy_v2?: [_]:               #HuaweicloudVpnaasIkePolicyV2Resource
+	huaweicloud_vpnaas_ipsec_policy?: [_]:                #HuaweicloudVpnaasIpsecPolicyResource
 	huaweicloud_vpnaas_ipsec_policy_v2?: [_]:             #HuaweicloudVpnaasIpsecPolicyV2Resource
+	huaweicloud_vpnaas_service?: [_]:                     #HuaweicloudVpnaasServiceResource
 	huaweicloud_vpnaas_service_v2?: [_]:                  #HuaweicloudVpnaasServiceV2Resource
+	huaweicloud_vpnaas_site_connection?: [_]:             #HuaweicloudVpnaasSiteConnectionResource
 	huaweicloud_vpnaas_site_connection_v2?: [_]:          #HuaweicloudVpnaasSiteConnectionV2Resource
 }

@@ -2,6 +2,7 @@
 package huaweicloud
 
 #Provider: huaweicloud: {
+	region:              string
 	access_key?:         string
 	agency_domain_name?: string
 	agency_name?:        string
@@ -12,17 +13,18 @@ package huaweicloud
 	delegated_project?:  string
 	domain_id?:          string
 	domain_name?:        string
-	endpoint_type?:      string
-	insecure?:           bool
-	key?:                string
-	password?:           string
-	region?:             string
-	secret_key?:         string
-	swauth?:             bool
-	tenant_id?:          string
-	tenant_name?:        string
-	token?:              string
-	use_octavia?:        bool
-	user_id?:            string
-	user_name?:          string
+	endpoints?: [_]: string
+	enterprise_project_id?: string
+	insecure?:              bool
+	key?:                   string
+	max_retries?:           number
+	password?:              string
+	project_id?:            string
+	project_name?:          string
+	secret_key?:            string
+	tenant_id?:             string
+	tenant_name?:           string
+	token?:                 string
+	user_id?:               string
+	user_name?:             string
 }

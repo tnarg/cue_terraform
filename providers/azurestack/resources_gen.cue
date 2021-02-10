@@ -5,9 +5,11 @@ package azurestack
 	location:                      string
 	name:                          string
 	resource_group_name:           string
+	id?:                           string
 	managed?:                      bool
 	platform_fault_domain_count?:  number
 	platform_update_domain_count?: number
+	tags?: [_]: string
 }
 #AzurestackDnsARecordResource: {
 	name: string
@@ -15,23 +17,43 @@ package azurestack
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	id?:                 string
+	tags?: [_]: string
 }
 #AzurestackDnsZoneResource: {
-	name:                string
-	resource_group_name: string
+	name:                       string
+	resource_group_name:        string
+	id?:                        string
+	max_number_of_record_sets?: number
+	name_servers?: [string, ...]
+	number_of_record_sets?: number
+	tags?: [_]: string
 }
 #AzurestackLbResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	private_ip_address?: string
+	private_ip_addresses?: [string, ...]
+	tags?: [_]: string
 	frontend_ip_configuration?: [{
 		name: string
+		inbound_nat_rules?: [string, ...]
+		load_balancer_rules?: [string, ...]
+		private_ip_address?:            string
+		private_ip_address_allocation?: string
+		public_ip_address_id?:          string
+		subnet_id?:                     string
 	}, ...]
 }
 #AzurestackLbBackendAddressPoolResource: {
 	loadbalancer_id:     string
 	name:                string
 	resource_group_name: string
+	backend_ip_configurations?: [string, ...]
+	id?: string
+	load_balancing_rules?: [string, ...]
 }
 #AzurestackLbNatPoolResource: {
 	backend_port:                   number
@@ -42,6 +64,8 @@ package azurestack
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	frontend_ip_configuration_id?:  string
+	id?:                            string
 }
 #AzurestackLbNatRuleResource: {
 	backend_port:                   number
@@ -51,15 +75,22 @@ package azurestack
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	backend_ip_configuration_id?:   string
+	enable_floating_ip?:            bool
+	frontend_ip_configuration_id?:  string
+	id?:                            string
 }
 #AzurestackLbProbeResource: {
 	loadbalancer_id:      string
 	name:                 string
 	port:                 number
 	resource_group_name:  string
+	id?:                  string
 	interval_in_seconds?: number
-	number_of_probes?:    number
-	request_path?:        string
+	load_balancer_rules?: [string, ...]
+	number_of_probes?: number
+	protocol?:         string
+	request_path?:     string
 }
 #AzurestackLbRuleResource: {
 	backend_port:                   number
@@ -69,7 +100,13 @@ package azurestack
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	backend_address_pool_id?:       string
 	enable_floating_ip?:            bool
+	frontend_ip_configuration_id?:  string
+	id?:                            string
+	idle_timeout_in_minutes?:       number
+	load_distribution?:             string
+	probe_id?:                      string
 }
 #AzurestackLocalNetworkGatewayResource: {
 	address_space: [string, ...]
@@ -77,9 +114,12 @@ package azurestack
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
 	bgp_settings?: [{
 		asn:                 number
 		bgp_peering_address: string
+		peer_weight?:        number
 	}, ...]
 }
 #AzurestackManagedDiskResource: {
@@ -88,26 +128,49 @@ package azurestack
 	name:                 string
 	resource_group_name:  string
 	storage_account_type: string
+	disk_size_gb?:        number
+	id?:                  string
 	image_reference_id?:  string
 	os_type?:             string
 	source_resource_id?:  string
+	source_uri?:          string
+	tags?: [_]: string
 }
 #AzurestackNetworkInterfaceResource: {
-	location:                   string
-	name:                       string
-	resource_group_name:        string
+	location:            string
+	name:                string
+	resource_group_name: string
+	applied_dns_servers?: [string, ...]
+	dns_servers?: [string, ...]
 	enable_ip_forwarding?:      bool
+	id?:                        string
+	internal_dns_name_label?:   string
+	internal_fqdn?:             string
+	mac_address?:               string
 	network_security_group_id?: string
+	private_ip_address?:        string
+	private_ip_addresses?: [string, ...]
+	tags?: [_]: string
+	virtual_machine_id?: string
 	ip_configuration?: [{
 		name:                          string
 		private_ip_address_allocation: string
 		subnet_id:                     string
+		application_gateway_backend_address_pools_ids?: [string, ...]
+		application_security_group_ids?: [string, ...]
+		load_balancer_backend_address_pools_ids?: [string, ...]
+		load_balancer_inbound_nat_rules_ids?: [string, ...]
+		primary?:              bool
+		private_ip_address?:   string
+		public_ip_address_id?: string
 	}, ...]
 }
 #AzurestackNetworkSecurityGroupResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
 	security_rule?: [{
 		access:                      string
 		direction:                   string
@@ -132,6 +195,7 @@ package azurestack
 	description?:                string
 	destination_address_prefix?: string
 	destination_port_range?:     string
+	id?:                         string
 	source_address_prefix?:      string
 	source_application_security_group_ids?: [string, ...]
 	source_port_range?: string
@@ -142,33 +206,69 @@ package azurestack
 	public_ip_address_allocation: string
 	resource_group_name:          string
 	domain_name_label?:           string
+	fqdn?:                        string
+	id?:                          string
 	idle_timeout_in_minutes?:     number
+	ip_address?:                  string
 	reverse_fqdn?:                string
+	tags?: [_]: string
 }
 #AzurestackResourceGroupResource: {
 	location: string
 	name:     string
+	id?:      string
+	tags?: [_]: string
 }
 #AzurestackRouteResource: {
-	address_prefix:      string
-	name:                string
-	next_hop_type:       string
-	resource_group_name: string
-	route_table_name:    string
+	address_prefix:          string
+	name:                    string
+	next_hop_type:           string
+	resource_group_name:     string
+	route_table_name:        string
+	id?:                     string
+	next_hop_in_ip_address?: string
 }
 #AzurestackRouteTableResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	route?: [{
+		address_prefix:         string
+		name:                   string
+		next_hop_in_ip_address: string
+		next_hop_type:          string
+	}, ...]
+	subnets?: [string, ...]
+	tags?: [_]: string
 }
 #AzurestackStorageAccountResource: {
-	account_replication_type:   string
-	account_tier:               string
-	location:                   string
-	name:                       string
-	resource_group_name:        string
-	account_encryption_source?: string
-	account_kind?:              string
+	account_replication_type:          string
+	account_tier:                      string
+	location:                          string
+	name:                              string
+	resource_group_name:               string
+	account_encryption_source?:        string
+	account_kind?:                     string
+	account_type?:                     string
+	enable_blob_encryption?:           bool
+	id?:                               string
+	primary_access_key?:               string
+	primary_blob_connection_string?:   string
+	primary_blob_endpoint?:            string
+	primary_connection_string?:        string
+	primary_file_endpoint?:            string
+	primary_location?:                 string
+	primary_queue_endpoint?:           string
+	primary_table_endpoint?:           string
+	secondary_access_key?:             string
+	secondary_blob_connection_string?: string
+	secondary_blob_endpoint?:          string
+	secondary_connection_string?:      string
+	secondary_location?:               string
+	secondary_queue_endpoint?:         string
+	secondary_table_endpoint?:         string
+	tags?: [_]: string
 	custom_domain?: [{
 		name:           string
 		use_subdomain?: bool
@@ -180,23 +280,29 @@ package azurestack
 	storage_account_name:   string
 	storage_container_name: string
 	attempts?:              number
+	id?:                    string
 	parallelism?:           number
 	size?:                  number
 	source?:                string
 	source_uri?:            string
 	type?:                  string
+	url?:                   string
 }
 #AzurestackStorageContainerResource: {
 	name:                   string
 	resource_group_name:    string
 	storage_account_name:   string
 	container_access_type?: string
+	id?:                    string
+	properties?: [_]: string
 }
 #AzurestackSubnetResource: {
-	address_prefix:             string
-	name:                       string
-	resource_group_name:        string
-	virtual_network_name:       string
+	address_prefix:       string
+	name:                 string
+	resource_group_name:  string
+	virtual_network_name: string
+	id?:                  string
+	ip_configurations?: [string, ...]
 	network_security_group_id?: string
 	route_table_id?:            string
 }
@@ -204,8 +310,11 @@ package azurestack
 	deployment_mode:     string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	outputs?: [_]:    string
 	parameters?: [_]: string
 	parameters_body?: string
+	template_body?:   string
 }
 #AzurestackVirtualMachineResource: {
 	location: string
@@ -213,20 +322,26 @@ package azurestack
 	network_interface_ids: [string, ...]
 	resource_group_name:               string
 	vm_size:                           string
+	availability_set_id?:              string
 	delete_data_disks_on_termination?: bool
 	delete_os_disk_on_termination?:    bool
+	id?:                               string
+	license_type?:                     string
 	primary_network_interface_id?:     string
+	tags?: [_]: string
 	boot_diagnostics?: [{
 		enabled:     bool
 		storage_uri: string
 	}, ...]
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
 	}, ...]
 	os_profile?: [{
 		admin_username:  string
 		computer_name:   string
 		admin_password?: string
+		custom_data?:    string
 	}, ...]
 	os_profile_linux_config?: [{
 		disable_password_authentication: bool
@@ -262,22 +377,32 @@ package azurestack
 		publisher: string
 	}, ...]
 	storage_data_disk?: [{
-		create_option: string
-		lun:           number
-		name:          string
-		vhd_uri?:      string
+		create_option:      string
+		lun:                number
+		name:               string
+		caching?:           string
+		disk_size_gb?:      number
+		managed_disk_id?:   string
+		managed_disk_type?: string
+		vhd_uri?:           string
 	}, ...]
 	storage_image_reference?: [{
 		id?:        string
 		offer?:     string
 		publisher?: string
 		sku?:       string
+		version?:   string
 	}, ...]
 	storage_os_disk?: [{
-		create_option: string
-		name:          string
-		image_uri?:    string
-		vhd_uri?:      string
+		create_option:      string
+		name:               string
+		caching?:           string
+		disk_size_gb?:      number
+		image_uri?:         string
+		managed_disk_id?:   string
+		managed_disk_type?: string
+		os_type?:           string
+		vhd_uri?:           string
 	}, ...]
 }
 #AzurestackVirtualMachineExtensionResource: {
@@ -289,17 +414,22 @@ package azurestack
 	type_handler_version:        string
 	virtual_machine_name:        string
 	auto_upgrade_minor_version?: bool
+	id?:                         string
 	protected_settings?:         string
 	settings?:                   string
+	tags?: [_]: string
 }
 #AzurestackVirtualMachineScaleSetResource: {
 	location:                string
 	name:                    string
 	resource_group_name:     string
 	upgrade_policy_mode:     string
+	id?:                     string
+	license_type?:           string
 	overprovision?:          bool
 	priority?:               string
 	single_placement_group?: bool
+	tags?: [_]: string
 	extension?: [{
 		name:                        string
 		publisher:                   string
@@ -310,7 +440,8 @@ package azurestack
 		settings?:                   string
 	}, ...]
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
 	}, ...]
 	network_profile?: [{
 		name:                       string
@@ -321,6 +452,7 @@ package azurestack
 			subnet_id: string
 			application_gateway_backend_address_pool_ids?: [string, ...]
 			load_balancer_backend_address_pool_ids?: [string, ...]
+			load_balancer_inbound_nat_rules_ids?: [string, ...]
 			primary?: bool
 			public_ip_address_configuration?: [{
 				domain_name_label: string
@@ -371,10 +503,14 @@ package azurestack
 	sku?: [{
 		capacity: number
 		name:     string
+		tier?:    string
 	}, ...]
 	storage_profile_data_disk?: [{
-		create_option: string
-		lun:           number
+		create_option:      string
+		lun:                number
+		caching?:           string
+		disk_size_gb?:      number
+		managed_disk_type?: string
 	}, ...]
 	storage_profile_image_reference?: [{
 		id?:        string
@@ -384,10 +520,12 @@ package azurestack
 		version?:   string
 	}, ...]
 	storage_profile_os_disk?: [{
-		create_option: string
-		image?:        string
-		name?:         string
-		os_type?:      string
+		create_option:      string
+		caching?:           string
+		image?:             string
+		managed_disk_type?: string
+		name?:              string
+		os_type?:           string
 		vhd_containers?: [string, ...]
 	}, ...]
 }
@@ -397,6 +535,8 @@ package azurestack
 	name:                string
 	resource_group_name: string
 	dns_servers?: [string, ...]
+	id?: string
+	tags?: [_]: string
 	subnet?: [{
 		address_prefix:  string
 		name:            string
@@ -410,10 +550,14 @@ package azurestack
 	sku:                               string
 	type:                              string
 	default_local_network_gateway_id?: string
-	vpn_type?:                         string
+	enable_bgp?:                       bool
+	id?:                               string
+	tags?: [_]: string
+	vpn_type?: string
 	bgp_settings?: [{
-		asn?:         number
-		peer_weight?: number
+		asn?:             number
+		peer_weight?:     number
+		peering_address?: string
 	}, ...]
 	ip_configuration?: [{
 		subnet_id:                      string
@@ -441,9 +585,14 @@ package azurestack
 	type:                             string
 	virtual_network_gateway_id:       string
 	authorization_key?:               string
+	enable_bgp?:                      bool
 	express_route_circuit_id?:        string
+	id?:                              string
 	local_network_gateway_id?:        string
 	peer_virtual_network_gateway_id?: string
+	routing_weight?:                  number
+	shared_key?:                      string
+	tags?: [_]: string
 }
 #Resources: {
 	azurestack_availability_set?: [_]:                   #AzurestackAvailabilitySetResource

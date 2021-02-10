@@ -2,16 +2,30 @@
 package rancher
 
 #RancherCertificateResource: {
-	cert:           string
-	environment_id: string
-	key:            string
-	name:           string
-	cert_chain?:    string
-	description?:   string
+	cert:              string
+	environment_id:    string
+	key:               string
+	name:              string
+	algorithm?:        string
+	cert_chain?:       string
+	cert_fingerprint?: string
+	cn?:               string
+	description?:      string
+	expires_at?:       string
+	id?:               string
+	issued_at?:        string
+	issuer?:           string
+	key_size?:         string
+	serial_number?:    string
+	subject_alternative_names?: [string, ...]
+	version?: string
 }
 #RancherEnvironmentResource: {
-	name:         string
-	description?: string
+	name:                 string
+	description?:         string
+	id?:                  string
+	orchestration?:       string
+	project_template_id?: string
 	member?: [{
 		external_id:      string
 		external_id_type: string
@@ -23,20 +37,27 @@ package rancher
 	hostname:       string
 	name:           string
 	description?:   string
+	id?:            string
 	labels?: [_]: string
 }
 #RancherRegistrationTokenResource: {
 	environment_id: string
 	name:           string
 	agent_ip?:      string
+	command?:       string
 	description?:   string
 	host_labels?: [_]: string
+	id?:               string
+	image?:            string
+	registration_url?: string
+	token?:            string
 }
 #RancherRegistryResource: {
 	environment_id: string
 	name:           string
 	server_address: string
 	description?:   string
+	id?:            string
 }
 #RancherRegistryCredentialResource: {
 	name:         string
@@ -45,12 +66,14 @@ package rancher
 	secret_value: string
 	description?: string
 	email?:       string
+	id?:          string
 }
 #RancherSecretResource: {
 	environment_id: string
 	name:           string
 	value:          string
 	description?:   string
+	id?:            string
 }
 #RancherStackResource: {
 	environment_id:  string
@@ -59,15 +82,20 @@ package rancher
 	description?:    string
 	docker_compose?: string
 	environment?: [_]: string
-	finish_upgrade?:  bool
-	rancher_compose?: string
-	scope?:           string
+	finish_upgrade?:           bool
+	id?:                       string
+	rancher_compose?:          string
+	rendered_docker_compose?:  string
+	rendered_rancher_compose?: string
+	scope?:                    string
+	start_on_create?:          bool
 }
 #RancherVolumeResource: {
 	driver:         string
 	environment_id: string
 	name:           string
 	description?:   string
+	id?:            string
 }
 #Resources: {
 	rancher_certificate?: [_]:         #RancherCertificateResource

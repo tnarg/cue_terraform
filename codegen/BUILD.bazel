@@ -28,7 +28,6 @@ config_setting(
 
 genrule(
     name = "terraform",
-    output_to_bindir = 1,
     srcs = select({
         "//codegen:linux_amd64": ["@terraform_toolchain_linux_amd64//:terraform"],
         "//codegen:darwin_amd64": ["@terraform_toolchain_darwin_amd64//:terraform"],
@@ -37,4 +36,5 @@ genrule(
     outs = ["bin/cue"],
     cmd = "cp $(<) $(@)",
     executable = True,
+    output_to_bindir = 1,
 )

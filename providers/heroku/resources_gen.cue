@@ -2,28 +2,53 @@
 package heroku
 
 #HerokuAccountFeatureResource: {
-	enabled: bool
-	name:    string
+	enabled:      bool
+	name:         string
+	description?: string
+	id?:          string
+	state?:       string
 }
 #HerokuAddonResource: {
 	app:  string
 	plan: string
 	config?: [_]: string
+	config_vars?: [string, ...]
+	id?:          string
+	name?:        string
+	provider_id?: string
 }
 #HerokuAddonAttachmentResource: {
-	addon_id: string
-	app_id:   string
+	addon_id:   string
+	app_id:     string
+	id?:        string
+	name?:      string
+	namespace?: string
 }
 #HerokuAppResource: {
 	name:   string
 	region: string
-	space?: string
+	acm?:   bool
+	all_config_vars?: [_]: string
+	buildpacks?: [string, ...]
+	config_vars?: [_]: string
+	git_url?:          string
+	heroku_hostname?:  string
+	id?:               string
+	internal_routing?: bool
+	sensitive_config_vars?: [_]: string
+	space?:   string
+	stack?:   string
+	uuid?:    string
+	web_url?: string
 	organization?: [{
-		name: string
+		name:      string
+		locked?:   bool
+		personal?: bool
 	}, ...]
 }
 #HerokuAppConfigAssociationResource: {
 	app_id: string
+	id?:    string
 	sensitive_vars?: [_]: string
 	vars?: [_]:           string
 }
@@ -31,10 +56,13 @@ package heroku
 	app:      string
 	name:     string
 	enabled?: bool
+	id?:      string
 }
 #HerokuAppReleaseResource: {
-	app:     string
-	slug_id: string
+	app:          string
+	slug_id:      string
+	description?: string
+	id?:          string
 }
 #HerokuAppWebhookResource: {
 	app_id: string
@@ -42,37 +70,58 @@ package heroku
 	level:          string
 	url:            string
 	authorization?: string
+	id?:            string
 	secret?:        string
 }
 #HerokuBuildResource: {
 	app: string
 	source: [_]: string
+	buildpacks?: [string, ...]
+	id?:                string
+	local_checksum?:    string
+	output_stream_url?: string
+	release_id?:        string
+	slug_id?:           string
+	stack?:             string
+	status?:            string
+	user?: [_]: string
+	uuid?: string
 }
 #HerokuCertResource: {
 	app:               string
 	certificate_chain: string
 	private_key:       string
+	cname?:            string
+	id?:               string
+	name?:             string
 }
 #HerokuConfigResource: {
+	id?: string
 	sensitive_vars?: [_]: string
 	vars?: [_]:           string
 }
 #HerokuDomainResource: {
 	app:      string
 	hostname: string
+	cname?:   string
+	id?:      string
 }
 #HerokuDrainResource: {
-	app: string
-	url: string
+	app:    string
+	url:    string
+	id?:    string
+	token?: string
 }
 #HerokuFormationResource: {
 	app:      string
 	quantity: number
 	size:     string
 	type:     string
+	id?:      string
 }
 #HerokuPipelineResource: {
 	name: string
+	id?:  string
 	owner?: [{
 		id:   string
 		type: string
@@ -81,6 +130,8 @@ package heroku
 #HerokuPipelineConfigVarResource: {
 	pipeline_id:    string
 	pipeline_stage: string
+	all_vars?: [_]: string
+	id?: string
 	sensitive_vars?: [_]: string
 	vars?: [_]:           string
 }
@@ -88,31 +139,47 @@ package heroku
 	app:      string
 	pipeline: string
 	stage:    string
+	app_id?:  string
+	id?:      string
 }
 #HerokuSlugResource: {
 	app: string
 	process_types: [_]: string
+	blob?: [{
+		method: string
+		url:    string
+	}, ...]
 	buildpack_provided_description?: string
+	checksum?:                       string
 	commit?:                         string
 	commit_description?:             string
 	file_path?:                      string
 	file_url?:                       string
+	id?:                             string
+	size?:                           number
+	stack?:                          string
+	stack_id?:                       string
 }
 #HerokuSpaceResource: {
 	name:         string
 	organization: string
 	cidr?:        string
 	data_cidr?:   string
-	region?:      string
-	shield?:      bool
+	id?:          string
+	outbound_ips?: [string, ...]
+	region?: string
+	shield?: bool
+	trusted_ip_ranges?: [string, ...]
 }
 #HerokuSpaceAppAccessResource: {
 	email: string
 	permissions: [string, ...]
 	space: string
+	id?:   string
 }
 #HerokuSpaceInboundRulesetResource: {
 	space: string
+	id?:   string
 	rule?: [{
 		action: string
 		source: string
@@ -121,25 +188,36 @@ package heroku
 #HerokuSpacePeeringConnectionAccepterResource: {
 	space:                     string
 	vpc_peering_connection_id: string
+	id?:                       string
+	status?:                   string
+	type?:                     string
 }
 #HerokuSpaceVpnConnectionResource: {
 	name:      string
 	public_ip: string
 	routable_cidrs: [string, ...]
-	space: string
+	space:             string
+	id?:               string
+	ike_version?:      number
+	space_cidr_block?: string
 	timeouts?: create?: string
-	tunnels?: [{}, ...]
+	tunnels?: [{
+		ip?:             string
+		pre_shared_key?: string
+	}, ...]
 }
 #HerokuTeamCollaboratorResource: {
 	app:   string
 	email: string
 	permissions: [string, ...]
+	id?: string
 }
 #HerokuTeamMemberResource: {
 	email:      string
 	role:       string
 	team:       string
 	federated?: bool
+	id?:        string
 }
 #Resources: {
 	heroku_account_feature?: [_]:                   #HerokuAccountFeatureResource

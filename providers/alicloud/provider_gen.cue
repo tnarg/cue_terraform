@@ -17,6 +17,7 @@ package alicloud
 	security_token?:          string
 	shared_credentials_file?: string
 	skip_region_validation?:  bool
+	source_ip?:               string
 	assume_role?: [{
 		policy?:             string
 		role_arn?:           string
@@ -24,51 +25,67 @@ package alicloud
 		session_name?:       string
 	}, ...]
 	endpoints?: [{
-		actiontrail?:     string
-		adb?:             string
-		alidns?:          string
-		alikafka?:        string
-		apigateway?:      string
-		bssopenapi?:      string
-		cas?:             string
-		cbn?:             string
-		cdn?:             string
-		cen?:             string
-		cms?:             string
-		cr?:              string
-		cs?:              string
-		datahub?:         string
-		ddosbgp?:         string
-		ddoscoo?:         string
-		dds?:             string
-		dms_enterprise?:  string
-		dns?:             string
-		drds?:            string
-		ecs?:             string
-		elasticsearch?:   string
-		emr?:             string
-		ess?:             string
-		fc?:              string
-		gpdb?:            string
-		kms?:             string
-		kvstore?:         string
-		location?:        string
-		log?:             string
-		market?:          string
-		maxcompute?:      string
-		mns?:             string
-		nas?:             string
-		ons?:             string
-		oss?:             string
-		ots?:             string
-		polardb?:         string
-		pvtz?:            string
-		ram?:             string
-		rds?:             string
-		resourcemanager?: string
-		slb?:             string
-		sts?:             string
-		vpc?:             string
-		waf_openapi?:     string
+		actiontrail?:      string
+		adb?:              string
+		alidns?:           string
+		alikafka?:         string
+		apigateway?:       string
+		brain_industrial?: string
+		bssopenapi?:       string
+		cas?:              string
+		cassandra?:        string
+		cbn?:              string
+		cdn?:              string
+		cen?:              string
+		cms?:              string
+		config?:           string
+		cr?:               string
+		cs?:               string
+		datahub?:          string
+		dcdn?:             string
+		ddosbgp?:          string
+		ddoscoo?:          string
+		dds?:              string
+		dms_enterprise?:   string
+		dns?:              string
+		drds?:             string
+		eci?:              string
+		ecs?:              string
+		eipanycast?:       string
+		elasticsearch?:    string
+		emr?:              string
+		ess?:              string
+		fc?:               string
+		fnf?:              string
+		ga?:               string
+		gpdb?:             string
+		hitsdb?:           string
+		ims?:              string
+		kms?:              string
+		kvstore?:          string
+		location?:         string
+		log?:              string
+		market?:           string
+		maxcompute?:       string
+		mns?:              string
+		mse?:              string
+		nas?:              string
+		ons?:              string
+		oos?:              string
+		oss?:              string
+		ots?:              string
+		polardb?:          string
+		privatelink?:      string
+		pvtz?:             string
+		r_kvstore?:        string
+		ram?:              string
+		rds?:              string
+		resourcemanager?:  string
+		resourcesharing?:  string
+		ros?:              string
+		slb?:              string
+		sts?:              string
+		vpc?:              string
+		waf_openapi?:      string
 	}, ...]
 }

@@ -2,12 +2,15 @@
 package influxdb
 
 #InfluxdbContinuousQueryResource: {
-	database: string
-	name:     string
-	query:    string
+	database:  string
+	name:      string
+	query:     string
+	id?:       string
+	resample?: string
 }
 #InfluxdbDatabaseResource: {
 	name: string
+	id?:  string
 	retention_policies?: [{
 		duration:            string
 		name:                string
@@ -19,6 +22,8 @@ package influxdb
 #InfluxdbUserResource: {
 	name:     string
 	password: string
+	admin?:   bool
+	id?:      string
 	grant?: [{
 		database:  string
 		privilege: string

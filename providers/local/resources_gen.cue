@@ -7,6 +7,7 @@ package local
 	content_base64?:       string
 	directory_permission?: string
 	file_permission?:      string
+	id?:                   string
 	sensitive_content?:    string
 }
 #Resources: local_file?: [_]: #LocalFileResource

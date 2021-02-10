@@ -10,19 +10,39 @@ package pureport
 	speed:          number
 	billing_term?:  string
 	cloud_service_hrefs?: [string, ...]
-	customer_asn?:      number
-	description?:       string
+	customer_asn?: number
+	description?:  string
+	gateways?: [{
+		availability_domain: string
+		bgp_password:        string
+		customer_asn:        number
+		customer_ip:         string
+		description:         string
+		name:                string
+		peering_subnet:      string
+		public_nat_ip:       string
+		pureport_asn:        number
+		pureport_ip:         string
+		remote_id:           string
+		vlan:                number
+	}, ...]
 	high_availability?: bool
+	href?:              string
+	id?:                string
 	peering_type?:      string
+	state?:             string
 	tags?: [_]: string
 	customer_networks?: [{
 		address: string
 		name:    string
 	}, ...]
 	nat_config?: [{
-		enabled?: bool
+		blocks?: [string, ...]
+		enabled?:   bool
+		pnat_cidr?: string
 		mappings?: [{
 			native_cidr: string
+			nat_cidr?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -31,25 +51,45 @@ package pureport
 	}
 }
 #PureportAzureConnectionResource: {
-	location_href:      string
-	name:               string
-	network_href:       string
-	service_key:        string
-	speed:              number
-	billing_term?:      string
-	customer_asn?:      number
-	description?:       string
+	location_href: string
+	name:          string
+	network_href:  string
+	service_key:   string
+	speed:         number
+	billing_term?: string
+	customer_asn?: number
+	description?:  string
+	gateways?: [{
+		availability_domain: string
+		bgp_password:        string
+		customer_asn:        number
+		customer_ip:         string
+		description:         string
+		name:                string
+		peering_subnet:      string
+		public_nat_ip:       string
+		pureport_asn:        number
+		pureport_ip:         string
+		remote_id:           string
+		vlan:                number
+	}, ...]
 	high_availability?: bool
+	href?:              string
+	id?:                string
 	peering_type?:      string
+	state?:             string
 	tags?: [_]: string
 	customer_networks?: [{
 		address: string
 		name:    string
 	}, ...]
 	nat_config?: [{
-		enabled?: bool
+		blocks?: [string, ...]
+		enabled?:   bool
+		pnat_cidr?: string
 		mappings?: [{
 			native_cidr: string
+			nat_cidr?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -58,25 +98,45 @@ package pureport
 	}
 }
 #PureportGoogleCloudConnectionResource: {
-	location_href:          string
-	name:                   string
-	network_href:           string
-	primary_pairing_key:    string
-	speed:                  number
-	billing_term?:          string
-	customer_asn?:          number
-	description?:           string
+	location_href:       string
+	name:                string
+	network_href:        string
+	primary_pairing_key: string
+	speed:               number
+	billing_term?:       string
+	customer_asn?:       number
+	description?:        string
+	gateways?: [{
+		availability_domain: string
+		bgp_password:        string
+		customer_asn:        number
+		customer_ip:         string
+		description:         string
+		name:                string
+		peering_subnet:      string
+		public_nat_ip:       string
+		pureport_asn:        number
+		pureport_ip:         string
+		remote_id:           string
+		vlan:                number
+	}, ...]
 	high_availability?:     bool
+	href?:                  string
+	id?:                    string
 	secondary_pairing_key?: string
+	state?:                 string
 	tags?: [_]: string
 	customer_networks?: [{
 		address: string
 		name:    string
 	}, ...]
 	nat_config?: [{
-		enabled?: bool
+		blocks?: [string, ...]
+		enabled?:   bool
+		pnat_cidr?: string
 		mappings?: [{
 			native_cidr: string
+			nat_cidr?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -88,25 +148,48 @@ package pureport
 	account_href: string
 	name:         string
 	description?: string
+	href?:        string
+	id?:          string
 	tags?: [_]: string
 }
 #PureportSiteVpnConnectionResource: {
-	ike_version:                   string
-	location_href:                 string
-	name:                          string
-	network_href:                  string
-	primary_customer_router_ip:    string
-	routing_type:                  string
-	speed:                         number
-	auth_type?:                    string
-	billing_term?:                 string
-	customer_asn?:                 number
-	description?:                  string
-	enable_bgp_password?:          bool
+	ike_version:                string
+	location_href:              string
+	name:                       string
+	network_href:               string
+	primary_customer_router_ip: string
+	routing_type:               string
+	speed:                      number
+	auth_type?:                 string
+	billing_term?:              string
+	customer_asn?:              number
+	description?:               string
+	enable_bgp_password?:       bool
+	gateways?: [{
+		availability_domain: string
+		bgp_password:        string
+		customer_asn:        number
+		customer_gateway_ip: string
+		customer_ip:         string
+		customer_vti_ip:     string
+		description:         string
+		name:                string
+		peering_subnet:      string
+		public_nat_ip:       string
+		pureport_asn:        number
+		pureport_gateway_ip: string
+		pureport_ip:         string
+		pureport_vti_ip:     string
+		vpn_auth_key:        string
+		vpn_auth_type:       string
+	}, ...]
 	high_availability?:            bool
+	href?:                         string
+	id?:                           string
 	primary_key?:                  string
 	secondary_customer_router_ip?: string
 	secondary_key?:                string
+	state?:                        string
 	tags?: [_]: string
 	customer_networks?: [{
 		address: string
@@ -126,9 +209,12 @@ package pureport
 		}, ...]
 	}, ...]
 	nat_config?: [{
-		enabled?: bool
+		blocks?: [string, ...]
+		enabled?:   bool
+		pnat_cidr?: string
 		mappings?: [{
 			native_cidr: string
+			nat_cidr?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {

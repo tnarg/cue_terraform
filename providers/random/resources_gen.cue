@@ -3,17 +3,26 @@ package random
 
 #RandomIdResource: {
 	byte_length: number
+	b64?:        string
+	b64_std?:    string
+	b64_url?:    string
+	dec?:        string
+	hex?:        string
+	id?:         string
 	keepers?: [_]: string
 	prefix?: string
 }
 #RandomIntegerResource: {
 	max: number
 	min: number
+	id?: string
 	keepers?: [_]: string
-	seed?: string
+	result?: number
+	seed?:   string
 }
 #RandomPasswordResource: {
 	length: number
+	id?:    string
 	keepers?: [_]: string
 	lower?:            bool
 	min_lower?:        number
@@ -22,10 +31,12 @@ package random
 	min_upper?:        number
 	number?:           bool
 	override_special?: string
+	result?:           string
 	special?:          bool
 	upper?:            bool
 }
 #RandomPetResource: {
+	id?: string
 	keepers?: [_]: string
 	length?:    number
 	prefix?:    string
@@ -33,12 +44,15 @@ package random
 }
 #RandomShuffleResource: {
 	input: [string, ...]
+	id?: string
 	keepers?: [_]: string
+	result?: [string, ...]
 	result_count?: number
 	seed?:         string
 }
 #RandomStringResource: {
 	length: number
+	id?:    string
 	keepers?: [_]: string
 	lower?:            bool
 	min_lower?:        number
@@ -47,10 +61,15 @@ package random
 	min_upper?:        number
 	number?:           bool
 	override_special?: string
+	result?:           string
 	special?:          bool
 	upper?:            bool
 }
-#RandomUuidResource: keepers?: [_]: string
+#RandomUuidResource: {
+	id?: string
+	keepers?: [_]: string
+	result?: string
+}
 #Resources: {
 	random_id?: [_]:       #RandomIdResource
 	random_integer?: [_]:  #RandomIntegerResource

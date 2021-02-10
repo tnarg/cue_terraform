@@ -5,11 +5,14 @@ package consul
 	address?:        string
 	ca_file?:        string
 	ca_path?:        string
+	ca_pem?:         string
 	cert_file?:      string
+	cert_pem?:       string
 	datacenter?:     string
 	http_auth?:      string
 	insecure_https?: bool
 	key_file?:       string
+	key_pem?:        string
 	namespace?:      string
 	scheme?:         string
 	token?:          string

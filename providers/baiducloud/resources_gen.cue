@@ -12,6 +12,7 @@ package baiducloud
 	source_port:            string
 	subnet_id:              string
 	description?:           string
+	id?:                    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -21,8 +22,23 @@ package baiducloud
 #BaiducloudAppblbResource: {
 	subnet_id:    string
 	vpc_id:       string
+	address?:     string
+	cidr?:        string
+	create_time?: string
 	description?: string
+	id?:          string
+	listener?: [{
+		port: number
+		type: string
+	}, ...]
+	name?:         string
+	public_ip?:    string
+	release_time?: string
+	status?:       string
+	subnet_cidr?:  string
+	subnet_name?:  string
 	tags?: [_]: string
+	vpc_name?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -34,12 +50,30 @@ package baiducloud
 	listener_port: number
 	protocol:      string
 	scheduler:     string
-	dual_auth?:    bool
+	cert_ids?: [string, ...]
+	client_cert_ids?: [string, ...]
+	dual_auth?: bool
+	encryption_protocols?: [string, ...]
+	encryption_type?:          string
+	id?:                       string
+	ie6_compatible?:           bool
+	keep_session?:             bool
+	keep_session_cookie_name?: string
+	keep_session_timeout?:     number
+	keep_session_type?:        string
+	redirect_port?:            number
+	server_timeout?:           number
+	tcp_session_timeout?:      number
+	x_forwarded_for?:          bool
 	policies?: [{
-		app_server_group_id: string
-		backend_port:        number
-		priority:            number
-		description?:        string
+		app_server_group_id:    string
+		backend_port:           number
+		priority:               number
+		app_server_group_name?: string
+		description?:           string
+		frontend_port?:         number
+		id?:                    string
+		port_type?:             string
 		rule_list?: [{
 			key:   string
 			value: string
@@ -52,15 +86,39 @@ package baiducloud
 	}
 }
 #BaiducloudAppblbServerGroupResource: {
-	blb_id: string
+	blb_id:       string
+	description?: string
+	id?:          string
+	name?:        string
+	status?:      string
 	backend_server_list?: [{
 		instance_id: string
 		weight:      number
+		port_list?: [{
+			backend_port:           number
+			health_check_port_type: string
+			listener_port:          number
+			policy_id:              string
+			port_id:                string
+			port_type:              string
+			status:                 string
+		}, ...]
+		private_ip?: string
 	}, ...]
 	port_list?: [{
-		health_check: string
-		port:         number
-		type:         string
+		health_check:                     string
+		port:                             number
+		type:                             string
+		health_check_down_retry?:         number
+		health_check_interval_in_second?: number
+		health_check_normal_status?:      string
+		health_check_port?:               number
+		health_check_timeout_in_second?:  number
+		health_check_up_retry?:           number
+		health_check_url_path?:           string
+		id?:                              string
+		status?:                          string
+		udp_health_check_string?:         string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -73,6 +131,13 @@ package baiducloud
 	repeat_weekdays: [number, ...]
 	retention_days: number
 	time_points: [number, ...]
+	created_time?:      string
+	deleted_time?:      string
+	id?:                string
+	last_execute_time?: string
+	status?:            string
+	updated_time?:      string
+	volume_count?:      number
 	volume_ids?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -80,10 +145,16 @@ package baiducloud
 	}
 }
 #BaiducloudBosBucketResource: {
-	bucket:         string
-	acl?:           string
-	force_destroy?: bool
-	storage_class?: string
+	bucket:                       string
+	acl?:                         string
+	creation_date?:               string
+	force_destroy?:               bool
+	id?:                          string
+	location?:                    string
+	owner_id?:                    string
+	owner_name?:                  string
+	server_side_encryption_rule?: string
+	storage_class?:               string
 	copyright_protection?: [{
 		resource: [string, ...]
 	}, ...]
@@ -97,6 +168,7 @@ package baiducloud
 	lifecycle_rule?: [{
 		resource: [string, ...]
 		status: string
+		id?:    string
 		action?: [{
 			name:           string
 			storage_class?: string
@@ -141,9 +213,19 @@ package baiducloud
 	acl?:                 string
 	cache_control?:       string
 	content?:             string
+	content_crc32?:       string
 	content_disposition?: string
+	content_encoding?:    string
+	content_length?:      number
+	content_md5?:         string
 	content_sha256?:      string
+	content_type?:        string
+	etag?:                string
+	expires?:             string
+	id?:                  string
+	last_modified?:       string
 	source?:              string
+	storage_class?:       string
 	user_meta?: [_]: string
 	timeouts?: {
 		create?: string
@@ -151,14 +233,814 @@ package baiducloud
 		update?: string
 	}
 }
+#BaiducloudCceClusterResource: {
+	cluster_name:  string
+	container_net: string
+	advanced_options?: [_]: string
+	cluster_node_num?:    number
+	cluster_uuid?:        string
+	comment?:             string
+	create_start_time?:   string
+	delete_eip_cds?:      bool
+	delete_snapshots?:    bool
+	delete_time?:         string
+	deploy_mode?:         string
+	has_prepay?:          bool
+	id?:                  string
+	instance_mode?:       string
+	main_available_zone?: string
+	master_vm_count?:     number
+	master_zone_subnet_map?: [_]: string
+	region?:   string
+	status?:   string
+	version?:  string
+	vpc_cidr?: string
+	vpc_id?:   string
+	vpc_uuid?: string
+	worker_instances_list?: [{
+		available_zone: string
+		eip:            string
+		instance_id:    string
+		status:         string
+	}, ...]
+	zone_subnet_map?: [_]: string
+	master_config?: [{
+		cpu:                     number
+		image_id:                string
+		image_type:              string
+		instance_type:           string
+		logical_zone:            string
+		memory:                  number
+		security_group_id:       string
+		subnet_uuid:             string
+		admin_pass?:             string
+		auto_renew?:             bool
+		auto_renew_time?:        number
+		auto_renew_time_unit?:   string
+		gpu_card?:               string
+		gpu_count?:              number
+		keypair_id?:             string
+		product_type?:           string
+		purchase_length?:        number
+		root_disk_size_in_gb?:   number
+		root_disk_storage_type?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	worker_config?: [{
+		count: [_]: number
+		cpu:               number
+		image_id:          string
+		image_type:        string
+		instance_type:     string
+		memory:            number
+		security_group_id: string
+		subnet_uuid: [_]: string
+		admin_pass?:           string
+		auto_renew?:           bool
+		auto_renew_time?:      number
+		auto_renew_time_unit?: string
+		eip?: [_]: string
+		gpu_card?:               string
+		gpu_count?:              number
+		keypair_id?:             string
+		product_type?:           string
+		purchase_length?:        number
+		root_disk_size_in_gb?:   number
+		root_disk_storage_type?: string
+		cds_disks?: [{
+			disk_size_in_gb: number
+			volume_type:     string
+			snapshot_id?:    string
+		}, ...]
+	}, ...]
+}
+#BaiducloudCcev2ClusterResource: {
+	cluster_status?: [{
+		cluster_blb: [{
+			eip:    string
+			id:     string
+			vpc_ip: string
+		}, ...]
+		cluster_phase: string
+		node_num:      number
+	}, ...]
+	created_at?: string
+	id?:         string
+	masters?: [{
+		created_at: string
+		instance_spec: [{
+			admin_password: string
+			bbc_option: [{
+				raid_id:       string
+				reserve_data:  bool
+				sys_disk_size: number
+			}, ...]
+			cce_instance_id:       string
+			cce_instance_priority: number
+			cluster_id:            string
+			cluster_role:          string
+			delete_option: [{
+				delete_cds_snapshot: bool
+				delete_resource:     bool
+				move_out:            bool
+			}, ...]
+			deploy_custom_config: [{
+				docker_config: [{
+					bip:                 string
+					docker_data_root:    string
+					docker_log_max_file: string
+					docker_log_max_size: string
+					insecure_registries: [string, ...]
+					registry_mirrors: [string, ...]
+				}, ...]
+				enable_cordon:            bool
+				enable_resource_reserved: bool
+				kube_reserved: [_]: string
+				kubelet_root_dir: string
+				post_user_script: string
+				pre_user_script:  string
+			}, ...]
+			eip_option: [{
+				eip_bandwidth:     number
+				eip_charging_type: string
+				eip_name:          string
+			}, ...]
+			existed: bool
+			existed_option: [{
+				existed_instance_id: string
+				rebuild:             bool
+			}, ...]
+			image_id:               string
+			instance_charging_type: string
+			instance_group_id:      string
+			instance_group_name:    string
+			instance_name:          string
+			instance_os: [{
+				image_name: string
+				image_type: string
+				os_arch:    string
+				os_build:   string
+				os_name:    string
+				os_type:    string
+				os_version: string
+			}, ...]
+			instance_precharging_option: [{
+				auto_renew:           bool
+				auto_renew_time:      number
+				auto_renew_time_unit: string
+				purchase_time:        number
+			}, ...]
+			instance_resource: [{
+				cds_list: [{
+					cds_size:     number
+					path:         string
+					snapshot_id:  string
+					storage_type: string
+				}, ...]
+				cpu:             number
+				gpu_count:       number
+				gpu_type:        string
+				local_disk_size: number
+				mem:             number
+				node_cpu_quota:  number
+				node_mem_quota:  number
+				root_disk_size:  number
+				root_disk_type:  string
+			}, ...]
+			instance_taints: [{
+				effect:     string
+				key:        string
+				time_added: string
+				value:      string
+			}, ...]
+			instance_type: string
+			labels: [_]: string
+			machine_type:    string
+			master_type:     string
+			need_eip:        bool
+			runtime_type:    string
+			runtime_version: string
+			ssh_key_id:      string
+			tag_list: [{
+				tag_key:   string
+				tag_value: string
+			}, ...]
+			vpc_config: [{
+				available_zone:       string
+				security_group_id:    string
+				vpc_id:               string
+				vpc_subnet_cidr:      string
+				vpc_subnet_cidr_ipv6: string
+				vpc_subnet_id:        string
+				vpc_subnet_type:      string
+			}, ...]
+		}, ...]
+		instance_status: [{
+			instance_phase: string
+			machine: [{
+				eip:         string
+				instance_id: string
+				mount_list: [{
+					cds_id:       string
+					cds_size:     number
+					device:       string
+					path:         string
+					storage_type: string
+				}, ...]
+				order_id:    string
+				vpc_ip:      string
+				vpc_ip_ipv6: string
+			}, ...]
+			machine_status: string
+		}, ...]
+		updated_at: string
+	}, ...]
+	nodes?: [{
+		created_at: string
+		instance_spec: [{
+			admin_password: string
+			bbc_option: [{
+				raid_id:       string
+				reserve_data:  bool
+				sys_disk_size: number
+			}, ...]
+			cce_instance_id:       string
+			cce_instance_priority: number
+			cluster_id:            string
+			cluster_role:          string
+			delete_option: [{
+				delete_cds_snapshot: bool
+				delete_resource:     bool
+				move_out:            bool
+			}, ...]
+			deploy_custom_config: [{
+				docker_config: [{
+					bip:                 string
+					docker_data_root:    string
+					docker_log_max_file: string
+					docker_log_max_size: string
+					insecure_registries: [string, ...]
+					registry_mirrors: [string, ...]
+				}, ...]
+				enable_cordon:            bool
+				enable_resource_reserved: bool
+				kube_reserved: [_]: string
+				kubelet_root_dir: string
+				post_user_script: string
+				pre_user_script:  string
+			}, ...]
+			eip_option: [{
+				eip_bandwidth:     number
+				eip_charging_type: string
+				eip_name:          string
+			}, ...]
+			existed: bool
+			existed_option: [{
+				existed_instance_id: string
+				rebuild:             bool
+			}, ...]
+			image_id:               string
+			instance_charging_type: string
+			instance_group_id:      string
+			instance_group_name:    string
+			instance_name:          string
+			instance_os: [{
+				image_name: string
+				image_type: string
+				os_arch:    string
+				os_build:   string
+				os_name:    string
+				os_type:    string
+				os_version: string
+			}, ...]
+			instance_precharging_option: [{
+				auto_renew:           bool
+				auto_renew_time:      number
+				auto_renew_time_unit: string
+				purchase_time:        number
+			}, ...]
+			instance_resource: [{
+				cds_list: [{
+					cds_size:     number
+					path:         string
+					snapshot_id:  string
+					storage_type: string
+				}, ...]
+				cpu:             number
+				gpu_count:       number
+				gpu_type:        string
+				local_disk_size: number
+				mem:             number
+				node_cpu_quota:  number
+				node_mem_quota:  number
+				root_disk_size:  number
+				root_disk_type:  string
+			}, ...]
+			instance_taints: [{
+				effect:     string
+				key:        string
+				time_added: string
+				value:      string
+			}, ...]
+			instance_type: string
+			labels: [_]: string
+			machine_type:    string
+			master_type:     string
+			need_eip:        bool
+			runtime_type:    string
+			runtime_version: string
+			ssh_key_id:      string
+			tag_list: [{
+				tag_key:   string
+				tag_value: string
+			}, ...]
+			vpc_config: [{
+				available_zone:       string
+				security_group_id:    string
+				vpc_id:               string
+				vpc_subnet_cidr:      string
+				vpc_subnet_cidr_ipv6: string
+				vpc_subnet_id:        string
+				vpc_subnet_type:      string
+			}, ...]
+		}, ...]
+		instance_status: [{
+			instance_phase: string
+			machine: [{
+				eip:         string
+				instance_id: string
+				mount_list: [{
+					cds_id:       string
+					cds_size:     number
+					device:       string
+					path:         string
+					storage_type: string
+				}, ...]
+				order_id:    string
+				vpc_ip:      string
+				vpc_ip_ipv6: string
+			}, ...]
+			machine_status: string
+		}, ...]
+		updated_at: string
+	}, ...]
+	updated_at?: string
+	cluster_spec?: [{
+		cluster_name?: string
+		cluster_type?: string
+		description?:  string
+		k8s_version?:  string
+		plugins?: [string, ...]
+		runtime_type?:    string
+		runtime_version?: string
+		vpc_cidr?:        string
+		vpc_cidr_ipv6?:   string
+		vpc_id?:          string
+		cluster_delete_option?: [{
+			delete_cds_snapshot?: bool
+			delete_resource?:     bool
+		}, ...]
+		container_network_config?: [{
+			cluster_ip_service_cidr?:      string
+			cluster_ip_service_cidr_ipv6?: string
+			cluster_pod_cidr?:             string
+			cluster_pod_cidr_ipv6?:        string
+			eni_security_group_id?:        string
+			ip_version?:                   string
+			kube_proxy_mode?:              string
+			lb_service_vpc_subnet_id?:     string
+			max_pods_per_node?:            number
+			mode?:                         string
+			node_port_range_max?:          number
+			node_port_range_min?:          number
+			eni_vpc_subnet_ids?: [{
+				zone_and_id?: [_]: string
+			}, ...]
+		}, ...]
+		k8s_custom_config?: [{
+			admission_plugins?: [string, ...]
+			etcd_data_path?: string
+			kube_api_burst?: number
+			kube_api_qps?:   number
+			master_feature_gates?: [_]: bool
+			node_feature_gates?: [_]:   bool
+			pause_image?: string
+			scheduler_predicated?: [string, ...]
+			scheduler_priorities?: [_]: number
+		}, ...]
+		master_config?: [{
+			cluster_blb_vpc_subnet_id?: string
+			cluster_ha?:                number
+			exposed_public?:            bool
+			master_type?:               string
+			managed_cluster_master_option?: [{
+				master_vpc_subnet_zone?: string
+			}, ...]
+		}, ...]
+	}, ...]
+	master_specs?: [{
+		count: number
+		master_spec?: [{
+			admin_password?:         string
+			cce_instance_id?:        string
+			cce_instance_priority?:  number
+			cluster_id?:             string
+			cluster_role?:           string
+			existed?:                bool
+			image_id?:               string
+			instance_charging_type?: string
+			instance_group_id?:      string
+			instance_group_name?:    string
+			instance_name?:          string
+			instance_type?:          string
+			labels?: [_]: string
+			machine_type?:    string
+			master_type?:     string
+			need_eip?:        bool
+			runtime_type?:    string
+			runtime_version?: string
+			ssh_key_id?:      string
+			bbc_option?: [{
+				raid_id?:       string
+				reserve_data?:  bool
+				sys_disk_size?: number
+			}, ...]
+			delete_option?: [{
+				delete_cds_snapshot?: bool
+				delete_resource?:     bool
+				move_out?:            bool
+			}, ...]
+			deploy_custom_config?: [{
+				enable_cordon?:            bool
+				enable_resource_reserved?: bool
+				kube_reserved?: [_]: string
+				kubelet_root_dir?: string
+				post_user_script?: string
+				pre_user_script?:  string
+				docker_config?: [{
+					bip?:                 string
+					docker_data_root?:    string
+					docker_log_max_file?: string
+					docker_log_max_size?: string
+					insecure_registries?: [string, ...]
+					registry_mirrors?: [string, ...]
+				}, ...]
+			}, ...]
+			eip_option?: [{
+				eip_bandwidth?:     number
+				eip_charging_type?: string
+				eip_name?:          string
+			}, ...]
+			existed_option?: [{
+				existed_instance_id?: string
+				rebuild?:             bool
+			}, ...]
+			instance_os?: [{
+				image_name?: string
+				image_type?: string
+				os_arch?:    string
+				os_build?:   string
+				os_name?:    string
+				os_type?:    string
+				os_version?: string
+			}, ...]
+			instance_precharging_option?: [{
+				auto_renew?:           bool
+				auto_renew_time?:      number
+				auto_renew_time_unit?: string
+				purchase_time?:        number
+			}, ...]
+			instance_resource?: [{
+				cpu?:             number
+				gpu_count?:       number
+				gpu_type?:        string
+				local_disk_size?: number
+				mem?:             number
+				node_cpu_quota?:  number
+				node_mem_quota?:  number
+				root_disk_size?:  number
+				root_disk_type?:  string
+				cds_list?: [{
+					cds_size?:     number
+					path?:         string
+					snapshot_id?:  string
+					storage_type?: string
+				}, ...]
+			}, ...]
+			instance_taints?: [{
+				effect?:     string
+				key?:        string
+				time_added?: string
+				value?:      string
+			}, ...]
+			tag_list?: [{
+				tag_key?:   string
+				tag_value?: string
+			}, ...]
+			vpc_config?: [{
+				available_zone?:       string
+				security_group_id?:    string
+				vpc_id?:               string
+				vpc_subnet_cidr?:      string
+				vpc_subnet_cidr_ipv6?: string
+				vpc_subnet_id?:        string
+				vpc_subnet_type?:      string
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#BaiducloudCcev2InstanceResource: {
+	cluster_id:  string
+	instance_id: string
+	id?:         string
+	spec?: [{
+		cce_instance_priority?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#BaiducloudCcev2InstanceGroupResource: {
+	id?: string
+	nodes?: [{
+		created_at: string
+		instance_spec: [{
+			admin_password: string
+			bbc_option: [{
+				raid_id:       string
+				reserve_data:  bool
+				sys_disk_size: number
+			}, ...]
+			cce_instance_id:       string
+			cce_instance_priority: number
+			cluster_id:            string
+			cluster_role:          string
+			delete_option: [{
+				delete_cds_snapshot: bool
+				delete_resource:     bool
+				move_out:            bool
+			}, ...]
+			deploy_custom_config: [{
+				docker_config: [{
+					bip:                 string
+					docker_data_root:    string
+					docker_log_max_file: string
+					docker_log_max_size: string
+					insecure_registries: [string, ...]
+					registry_mirrors: [string, ...]
+				}, ...]
+				enable_cordon:            bool
+				enable_resource_reserved: bool
+				kube_reserved: [_]: string
+				kubelet_root_dir: string
+				post_user_script: string
+				pre_user_script:  string
+			}, ...]
+			eip_option: [{
+				eip_bandwidth:     number
+				eip_charging_type: string
+				eip_name:          string
+			}, ...]
+			existed: bool
+			existed_option: [{
+				existed_instance_id: string
+				rebuild:             bool
+			}, ...]
+			image_id:               string
+			instance_charging_type: string
+			instance_group_id:      string
+			instance_group_name:    string
+			instance_name:          string
+			instance_os: [{
+				image_name: string
+				image_type: string
+				os_arch:    string
+				os_build:   string
+				os_name:    string
+				os_type:    string
+				os_version: string
+			}, ...]
+			instance_precharging_option: [{
+				auto_renew:           bool
+				auto_renew_time:      number
+				auto_renew_time_unit: string
+				purchase_time:        number
+			}, ...]
+			instance_resource: [{
+				cds_list: [{
+					cds_size:     number
+					path:         string
+					snapshot_id:  string
+					storage_type: string
+				}, ...]
+				cpu:             number
+				gpu_count:       number
+				gpu_type:        string
+				local_disk_size: number
+				mem:             number
+				node_cpu_quota:  number
+				node_mem_quota:  number
+				root_disk_size:  number
+				root_disk_type:  string
+			}, ...]
+			instance_taints: [{
+				effect:     string
+				key:        string
+				time_added: string
+				value:      string
+			}, ...]
+			instance_type: string
+			labels: [_]: string
+			machine_type:    string
+			master_type:     string
+			need_eip:        bool
+			runtime_type:    string
+			runtime_version: string
+			ssh_key_id:      string
+			tag_list: [{
+				tag_key:   string
+				tag_value: string
+			}, ...]
+			vpc_config: [{
+				available_zone:       string
+				security_group_id:    string
+				vpc_id:               string
+				vpc_subnet_cidr:      string
+				vpc_subnet_cidr_ipv6: string
+				vpc_subnet_id:        string
+				vpc_subnet_type:      string
+			}, ...]
+		}, ...]
+		instance_status: [{
+			instance_phase: string
+			machine: [{
+				eip:         string
+				instance_id: string
+				mount_list: [{
+					cds_id:       string
+					cds_size:     number
+					device:       string
+					path:         string
+					storage_type: string
+				}, ...]
+				order_id:    string
+				vpc_ip:      string
+				vpc_ip_ipv6: string
+			}, ...]
+			machine_status: string
+		}, ...]
+		updated_at: string
+	}, ...]
+	status?: [{
+		ready_replicas: number
+	}, ...]
+	spec?: [{
+		cluster_id:          string
+		instance_group_name: string
+		replicas:            number
+		instance_template?: [{
+			admin_password?:         string
+			cce_instance_id?:        string
+			cce_instance_priority?:  number
+			cluster_id?:             string
+			cluster_role?:           string
+			existed?:                bool
+			image_id?:               string
+			instance_charging_type?: string
+			instance_group_id?:      string
+			instance_group_name?:    string
+			instance_name?:          string
+			instance_type?:          string
+			labels?: [_]: string
+			machine_type?:    string
+			master_type?:     string
+			need_eip?:        bool
+			runtime_type?:    string
+			runtime_version?: string
+			ssh_key_id?:      string
+			bbc_option?: [{
+				raid_id?:       string
+				reserve_data?:  bool
+				sys_disk_size?: number
+			}, ...]
+			delete_option?: [{
+				delete_cds_snapshot?: bool
+				delete_resource?:     bool
+				move_out?:            bool
+			}, ...]
+			deploy_custom_config?: [{
+				enable_cordon?:            bool
+				enable_resource_reserved?: bool
+				kube_reserved?: [_]: string
+				kubelet_root_dir?: string
+				post_user_script?: string
+				pre_user_script?:  string
+				docker_config?: [{
+					bip?:                 string
+					docker_data_root?:    string
+					docker_log_max_file?: string
+					docker_log_max_size?: string
+					insecure_registries?: [string, ...]
+					registry_mirrors?: [string, ...]
+				}, ...]
+			}, ...]
+			eip_option?: [{
+				eip_bandwidth?:     number
+				eip_charging_type?: string
+				eip_name?:          string
+			}, ...]
+			existed_option?: [{
+				existed_instance_id?: string
+				rebuild?:             bool
+			}, ...]
+			instance_os?: [{
+				image_name?: string
+				image_type?: string
+				os_arch?:    string
+				os_build?:   string
+				os_name?:    string
+				os_type?:    string
+				os_version?: string
+			}, ...]
+			instance_precharging_option?: [{
+				auto_renew?:           bool
+				auto_renew_time?:      number
+				auto_renew_time_unit?: string
+				purchase_time?:        number
+			}, ...]
+			instance_resource?: [{
+				cpu?:             number
+				gpu_count?:       number
+				gpu_type?:        string
+				local_disk_size?: number
+				mem?:             number
+				node_cpu_quota?:  number
+				node_mem_quota?:  number
+				root_disk_size?:  number
+				root_disk_type?:  string
+				cds_list?: [{
+					cds_size?:     number
+					path?:         string
+					snapshot_id?:  string
+					storage_type?: string
+				}, ...]
+			}, ...]
+			instance_taints?: [{
+				effect?:     string
+				key?:        string
+				time_added?: string
+				value?:      string
+			}, ...]
+			tag_list?: [{
+				tag_key?:   string
+				tag_value?: string
+			}, ...]
+			vpc_config?: [{
+				available_zone?:       string
+				security_group_id?:    string
+				vpc_id?:               string
+				vpc_subnet_cidr?:      string
+				vpc_subnet_cidr_ipv6?: string
+				vpc_subnet_id?:        string
+				vpc_subnet_type?:      string
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #BaiducloudCdsResource: {
-	payment_timing:         string
-	auto_snapshot?:         bool
-	description?:           string
-	manual_snapshot?:       bool
-	name?:                  string
-	reservation_length?:    number
-	reservation_time_unit?: string
+	payment_timing:           string
+	auto_snapshot?:           bool
+	auto_snapshot_policy_id?: string
+	create_time?:             string
+	description?:             string
+	disk_size_in_gb?:         number
+	expire_time?:             string
+	id?:                      string
+	manual_snapshot?:         bool
+	name?:                    string
+	reservation_length?:      number
+	reservation_time_unit?:   string
+	snapshot_id?:             string
+	status?:                  string
+	storage_type?:            string
+	type?:                    string
+	zone_name?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -166,8 +1048,11 @@ package baiducloud
 	}
 }
 #BaiducloudCdsAttachmentResource: {
-	cds_id:      string
-	instance_id: string
+	cds_id:             string
+	instance_id:        string
+	attachment_device?: string
+	attachment_serial?: string
+	id?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -177,7 +1062,14 @@ package baiducloud
 	cert_name:         string
 	cert_private_data: string
 	cert_server_data:  string
+	cert_common_name?: string
+	cert_create_time?: string
 	cert_link_data?:   string
+	cert_start_time?:  string
+	cert_stop_time?:   string
+	cert_type?:        number
+	cert_update_time?: string
+	id?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -188,7 +1080,13 @@ package baiducloud
 	alias_name:       string
 	function_name:    string
 	function_version: string
+	alias_arn?:       string
+	alias_brn?:       string
+	create_time?:     string
 	description?:     string
+	id?:              string
+	uid?:             string
+	update_time?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -204,11 +1102,26 @@ package baiducloud
 	code_bos_object?: string
 	code_file_dir?:   string
 	code_file_name?:  string
-	description?:     string
+	code_sha256?:     string
+	code_size?:       string
+	code_storage?: [_]: string
+	commit_id?:   string
+	description?: string
 	environment?: [_]: string
+	function_arn?:                   string
+	function_brn?:                   string
+	id?:                             string
+	last_modified?:                  string
 	log_bos_dir?:                    string
+	log_type?:                       string
 	memory_size?:                    number
+	region?:                         string
 	reserved_concurrent_executions?: number
+	role?:                           string
+	source_tag?:                     string
+	uid?:                            string
+	update_time?:                    string
+	version?:                        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -217,6 +1130,7 @@ package baiducloud
 	vpc_config?: [{
 		security_group_ids: [string, ...]
 		subnet_ids: [string, ...]
+		vpc_id?: string
 	}, ...]
 }
 #BaiducloudCfcTriggerResource: {
@@ -228,13 +1142,16 @@ package baiducloud
 	cdn_event_type?: string
 	domain?:         string
 	enabled?:        string
+	id?:             string
 	input?:          string
 	method?: [string, ...]
 	name?:                string
+	relation_id?:         string
 	remark?:              string
 	resource?:            string
 	resource_path?:       string
 	schedule_expression?: string
+	sid?:                 string
 	status?:              string
 	timeouts?: {
 		create?: string
@@ -243,8 +1160,91 @@ package baiducloud
 	}
 }
 #BaiducloudCfcVersionResource: {
-	function_name:        string
+	function_name: string
+	code_sha256?:  string
+	code_size?:    string
+	commit_id?:    string
+	description?:  string
+	environment?: [_]: string
+	function_arn?:        string
+	function_brn?:        string
+	handler?:             string
+	id?:                  string
+	last_modified?:       string
+	log_bos_dir?:         string
+	log_type?:            string
+	memory_size?:         number
+	region?:              string
+	role?:                string
+	runtime?:             string
+	time_out?:            number
+	uid?:                 string
+	update_time?:         string
+	version?:             string
 	version_description?: string
+	vpc_config?: [{
+		security_group_ids: [string, ...]
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#BaiducloudDtsResource: {
+	cross_region_tag: number
+	data_type: [string, ...]
+	product_type:         string
+	source_instance_type: string
+	standard:             string
+	target_instance_type: string
+	task_name:            string
+	type:                 string
+	base?: [{
+		count:              string
+		current:            string
+		expect_finish_time: string
+		speed:              string
+	}, ...]
+	create_time?: string
+	dst_connection?: [_]: string
+	dts_id?:      string
+	errmsg?:      string
+	granularity?: string
+	id?:          string
+	increment?: [_]: string
+	init_position?:      string
+	init_position_type?: string
+	operation?:          string
+	pay_create_time?:    number
+	pay_end_time?:       string
+	queue_type?:         string
+	region?:             string
+	running_time?:       number
+	schema?: [{
+		count:              string
+		current:            string
+		expect_finish_time: string
+		speed:              string
+	}, ...]
+	sdk_realtime_progress?: string
+	src_connection?: [_]: string
+	status?:         string
+	sub_end_time?:   string
+	sub_start_time?: string
+	schema_mapping?: [{
+		dst?:   string
+		src?:   string
+		type?:  string
+		where?: string
+	}, ...]
+	sub_status?: [{
+		b?: string
+		i?: string
+		s?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -257,8 +1257,16 @@ package baiducloud
 	payment_timing:         string
 	auto_renew_time?:       number
 	auto_renew_time_unit?:  string
+	create_time?:           string
+	eip?:                   string
+	eip_instance_type?:     string
+	expire_time?:           string
+	id?:                    string
+	name?:                  string
 	reservation_length?:    number
 	reservation_time_unit?: string
+	share_group_id?:        string
+	status?:                string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -270,6 +1278,7 @@ package baiducloud
 	eip:           string
 	instance_id:   string
 	instance_type: string
+	id?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -283,22 +1292,37 @@ package baiducloud
 	memory_capacity_in_gb:     number
 	action?:                   string
 	admin_pass?:               string
+	auto_renew?:               bool
 	auto_renew_time_length?:   number
 	auto_renew_time_unit?:     string
+	availability_zone?:        string
 	card_count?:               string
 	cds_auto_renew?:           bool
+	create_time?:              string
 	dedicate_host_id?:         string
 	delete_cds_snapshot_flag?: bool
 	description?:              string
+	expire_time?:              string
 	fpga_card?:                string
 	gpu_card?:                 string
+	id?:                       string
 	instance_type?:            string
+	internal_ip?:              string
+	keypair_id?:               string
+	keypair_name?:             string
 	name?:                     string
+	network_capacity_in_mbps?: number
+	placement_policy?:         string
+	public_ip?:                string
 	related_release_flag?:     bool
 	relation_tag?:             bool
 	root_disk_size_in_gb?:     number
 	root_disk_storage_type?:   string
+	security_groups?: [string, ...]
+	status?:    string
+	subnet_id?: string
 	tags?: [_]: string
+	vpc_id?: string
 	cds_disks?: [{
 		cds_size_in_gb?: number
 		snapshot_id?:    string
@@ -318,7 +1342,11 @@ package baiducloud
 	billing: [_]: string
 	name:   string
 	vpc_id: string
-	spec?:  string
+	eips?: [string, ...]
+	expired_time?: string
+	id?:           string
+	spec?:         string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -328,12 +1356,21 @@ package baiducloud
 #BaiducloudPeerConnResource: {
 	bandwidth_in_mbps: number
 	billing: [_]: string
-	local_vpc_id:  string
-	peer_region:   string
-	peer_vpc_id:   string
-	description?:  string
-	dns_sync?:     bool
-	peer_if_name?: string
+	local_vpc_id:     string
+	peer_region:      string
+	peer_vpc_id:      string
+	created_time?:    string
+	description?:     string
+	dns_status?:      string
+	dns_sync?:        bool
+	expired_time?:    string
+	id?:              string
+	local_if_id?:     string
+	local_if_name?:   string
+	peer_account_id?: string
+	peer_if_name?:    string
+	role?:            string
+	status?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -341,10 +1378,105 @@ package baiducloud
 	}
 }
 #BaiducloudPeerConnAcceptorResource: {
-	peer_conn_id: string
-	auto_accept?: bool
-	auto_reject?: bool
-	dns_sync?:    bool
+	peer_conn_id:       string
+	auto_accept?:       bool
+	auto_reject?:       bool
+	bandwidth_in_mbps?: number
+	billing?: [_]: string
+	created_time?:    string
+	description?:     string
+	dns_status?:      string
+	dns_sync?:        bool
+	expired_time?:    string
+	id?:              string
+	local_if_id?:     string
+	local_if_name?:   string
+	local_vpc_id?:    string
+	peer_account_id?: string
+	peer_if_name?:    string
+	peer_region?:     string
+	peer_vpc_id?:     string
+	role?:            string
+	status?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#BaiducloudRdsAccountResource: {
+	account_name:  string
+	instance_id:   string
+	password:      string
+	account_type?: string
+	desc?:         string
+	id?:           string
+	status?:       string
+}
+#BaiducloudRdsInstanceResource: {
+	billing: [_]: string
+	cpu_count:        number
+	engine:           string
+	engine_version:   string
+	memory_capacity:  number
+	volume_capacity:  number
+	address?:         string
+	category?:        string
+	create_time?:     string
+	expire_time?:     string
+	id?:              string
+	instance_id?:     string
+	instance_name?:   string
+	instance_status?: string
+	instance_type?:   string
+	node_amount?:     number
+	payment_timing?:  string
+	port?:            number
+	purchase_count?:  number
+	region?:          string
+	tags?: [_]: string
+	used_storage?: number
+	v_net_ip?:     string
+	vpc_id?:       string
+	zone_names?: [string, ...]
+	subnets?: [{
+		subnet_id?: string
+		zone_name?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#BaiducloudRdsReadonlyInstanceResource: {
+	billing: [_]: string
+	cpu_count:          number
+	memory_capacity:    number
+	source_instance_id: string
+	volume_capacity:    number
+	address?:           string
+	category?:          string
+	create_time?:       string
+	expire_time?:       string
+	id?:                string
+	instance_id?:       string
+	instance_name?:     string
+	instance_status?:   string
+	instance_type?:     string
+	node_amount?:       number
+	payment_timing?:    string
+	port?:              number
+	region?:            string
+	tags?: [_]: string
+	used_storage?: number
+	v_net_ip?:     string
+	vpc_id?:       string
+	zone_names?: [string, ...]
+	subnets?: [{
+		subnet_id?: string
+		zone_name?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -357,15 +1489,57 @@ package baiducloud
 	route_table_id:      string
 	source_address:      string
 	description?:        string
+	id?:                 string
+	next_hop_id?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#BaiducloudScsResource: {
+	billing: [_]: string
+	instance_name:           string
+	node_type:               string
+	auto_renew?:             bool
+	auto_renew_time_length?: number
+	auto_renew_time_unit?:   string
+	capacity?:               number
+	cluster_type?:           string
+	create_time?:            string
+	domain?:                 string
+	engine?:                 string
+	engine_version?:         string
+	expire_time?:            string
+	id?:                     string
+	instance_id?:            string
+	instance_status?:        string
+	payment_timing?:         string
+	port?:                   number
+	proxy_num?:              number
+	purchase_count?:         number
+	replication_num?:        number
+	shard_num?:              number
+	tags?: [_]: string
+	used_capacity?: number
+	v_net_ip?:      string
+	vpc_id?:        string
+	zone_names?: [string, ...]
+	subnets?: [{
+		subnet_id?: string
+		zone_name?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #BaiducloudSecurityGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -375,6 +1549,15 @@ package baiducloud
 #BaiducloudSecurityGroupRuleResource: {
 	direction:         string
 	security_group_id: string
+	dest_group_id?:    string
+	dest_ip?:          string
+	ether_type?:       string
+	id?:               string
+	port_range?:       string
+	protocol?:         string
+	remark?:           string
+	source_group_id?:  string
+	source_ip?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -382,9 +1565,14 @@ package baiducloud
 	}
 }
 #BaiducloudSnapshotResource: {
-	name:         string
-	volume_id:    string
-	description?: string
+	name:           string
+	volume_id:      string
+	create_method?: string
+	create_time?:   string
+	description?:   string
+	id?:            string
+	size_in_gb?:    number
+	status?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -396,6 +1584,8 @@ package baiducloud
 	vpc_id:       string
 	zone_name:    string
 	description?: string
+	id?:          string
+	subnet_type?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -404,9 +1594,12 @@ package baiducloud
 	}
 }
 #BaiducloudVpcResource: {
-	cidr:         string
-	name:         string
-	description?: string
+	cidr:            string
+	name:            string
+	description?:    string
+	id?:             string
+	route_table_id?: string
+	secondary_cidrs?: [string, ...]
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -415,30 +1608,39 @@ package baiducloud
 	}
 }
 #Resources: {
-	baiducloud_acl?: [_]:                  #BaiducloudAclResource
-	baiducloud_appblb?: [_]:               #BaiducloudAppblbResource
-	baiducloud_appblb_listener?: [_]:      #BaiducloudAppblbListenerResource
-	baiducloud_appblb_server_group?: [_]:  #BaiducloudAppblbServerGroupResource
-	baiducloud_auto_snapshot_policy?: [_]: #BaiducloudAutoSnapshotPolicyResource
-	baiducloud_bos_bucket?: [_]:           #BaiducloudBosBucketResource
-	baiducloud_bos_bucket_object?: [_]:    #BaiducloudBosBucketObjectResource
-	baiducloud_cds?: [_]:                  #BaiducloudCdsResource
-	baiducloud_cds_attachment?: [_]:       #BaiducloudCdsAttachmentResource
-	baiducloud_cert?: [_]:                 #BaiducloudCertResource
-	baiducloud_cfc_alias?: [_]:            #BaiducloudCfcAliasResource
-	baiducloud_cfc_function?: [_]:         #BaiducloudCfcFunctionResource
-	baiducloud_cfc_trigger?: [_]:          #BaiducloudCfcTriggerResource
-	baiducloud_cfc_version?: [_]:          #BaiducloudCfcVersionResource
-	baiducloud_eip?: [_]:                  #BaiducloudEipResource
-	baiducloud_eip_association?: [_]:      #BaiducloudEipAssociationResource
-	baiducloud_instance?: [_]:             #BaiducloudInstanceResource
-	baiducloud_nat_gateway?: [_]:          #BaiducloudNatGatewayResource
-	baiducloud_peer_conn?: [_]:            #BaiducloudPeerConnResource
-	baiducloud_peer_conn_acceptor?: [_]:   #BaiducloudPeerConnAcceptorResource
-	baiducloud_route_rule?: [_]:           #BaiducloudRouteRuleResource
-	baiducloud_security_group?: [_]:       #BaiducloudSecurityGroupResource
-	baiducloud_security_group_rule?: [_]:  #BaiducloudSecurityGroupRuleResource
-	baiducloud_snapshot?: [_]:             #BaiducloudSnapshotResource
-	baiducloud_subnet?: [_]:               #BaiducloudSubnetResource
-	baiducloud_vpc?: [_]:                  #BaiducloudVpcResource
+	baiducloud_acl?: [_]:                   #BaiducloudAclResource
+	baiducloud_appblb?: [_]:                #BaiducloudAppblbResource
+	baiducloud_appblb_listener?: [_]:       #BaiducloudAppblbListenerResource
+	baiducloud_appblb_server_group?: [_]:   #BaiducloudAppblbServerGroupResource
+	baiducloud_auto_snapshot_policy?: [_]:  #BaiducloudAutoSnapshotPolicyResource
+	baiducloud_bos_bucket?: [_]:            #BaiducloudBosBucketResource
+	baiducloud_bos_bucket_object?: [_]:     #BaiducloudBosBucketObjectResource
+	baiducloud_cce_cluster?: [_]:           #BaiducloudCceClusterResource
+	baiducloud_ccev2_cluster?: [_]:         #BaiducloudCcev2ClusterResource
+	baiducloud_ccev2_instance?: [_]:        #BaiducloudCcev2InstanceResource
+	baiducloud_ccev2_instance_group?: [_]:  #BaiducloudCcev2InstanceGroupResource
+	baiducloud_cds?: [_]:                   #BaiducloudCdsResource
+	baiducloud_cds_attachment?: [_]:        #BaiducloudCdsAttachmentResource
+	baiducloud_cert?: [_]:                  #BaiducloudCertResource
+	baiducloud_cfc_alias?: [_]:             #BaiducloudCfcAliasResource
+	baiducloud_cfc_function?: [_]:          #BaiducloudCfcFunctionResource
+	baiducloud_cfc_trigger?: [_]:           #BaiducloudCfcTriggerResource
+	baiducloud_cfc_version?: [_]:           #BaiducloudCfcVersionResource
+	baiducloud_dts?: [_]:                   #BaiducloudDtsResource
+	baiducloud_eip?: [_]:                   #BaiducloudEipResource
+	baiducloud_eip_association?: [_]:       #BaiducloudEipAssociationResource
+	baiducloud_instance?: [_]:              #BaiducloudInstanceResource
+	baiducloud_nat_gateway?: [_]:           #BaiducloudNatGatewayResource
+	baiducloud_peer_conn?: [_]:             #BaiducloudPeerConnResource
+	baiducloud_peer_conn_acceptor?: [_]:    #BaiducloudPeerConnAcceptorResource
+	baiducloud_rds_account?: [_]:           #BaiducloudRdsAccountResource
+	baiducloud_rds_instance?: [_]:          #BaiducloudRdsInstanceResource
+	baiducloud_rds_readonly_instance?: [_]: #BaiducloudRdsReadonlyInstanceResource
+	baiducloud_route_rule?: [_]:            #BaiducloudRouteRuleResource
+	baiducloud_scs?: [_]:                   #BaiducloudScsResource
+	baiducloud_security_group?: [_]:        #BaiducloudSecurityGroupResource
+	baiducloud_security_group_rule?: [_]:   #BaiducloudSecurityGroupRuleResource
+	baiducloud_snapshot?: [_]:              #BaiducloudSnapshotResource
+	baiducloud_subnet?: [_]:                #BaiducloudSubnetResource
+	baiducloud_vpc?: [_]:                   #BaiducloudVpcResource
 }

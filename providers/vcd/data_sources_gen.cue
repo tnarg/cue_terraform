@@ -2,132 +2,608 @@
 package vcd
 
 #VcdCatalogDataSource: {
-	name: string
-	org:  string
+	org:          string
+	created?:     string
+	description?: string
+	id?:          string
+	name?:        string
+	filter?: [{
+		date?:       string
+		earliest?:   bool
+		latest?:     bool
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
 }
 #VcdCatalogItemDataSource: {
-	catalog: string
-	name:    string
-	org?:    string
-}
-#VcdCatalogMediaDataSource: {
-	catalog: string
-	name:    string
-	org?:    string
-}
-#VcdEdgegatewayDataSource: {
-	name: string
-	org?: string
-	vdc?: string
-}
-#VcdExternalNetworkDataSource: name: string
-#VcdIndependentDiskDataSource: {
-	id?:   string
+	catalog:      string
+	created?:     string
+	description?: string
+	id?:          string
+	metadata?: [_]: string
 	name?: string
 	org?:  string
-	vdc?:  string
+	filter?: [{
+		date?:       string
+		earliest?:   bool
+		latest?:     bool
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
+}
+#VcdCatalogMediaDataSource: {
+	catalog:        string
+	creation_date?: string
+	description?:   string
+	id?:            string
+	is_iso?:        bool
+	is_published?:  bool
+	metadata?: [_]: string
+	name?:                 string
+	org?:                  string
+	owner_name?:           string
+	size?:                 number
+	status?:               string
+	storage_profile_name?: string
+	filter?: [{
+		date?:       string
+		earliest?:   bool
+		latest?:     bool
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
+}
+#VcdEdgegatewayDataSource: {
+	advanced?:                    bool
+	configuration?:               string
+	default_external_network_ip?: string
+	default_gateway_network?:     string
+	description?:                 string
+	distributed_routing?:         bool
+	external_network?: [{
+		enable_rate_limit:   bool
+		incoming_rate_limit: number
+		name:                string
+		outgoing_rate_limit: number
+		subnet: [{
+			gateway:    string
+			ip_address: string
+			netmask:    string
+			suballocate_pool: [{
+				end_address:   string
+				start_address: string
+			}, ...]
+			use_for_default_route: bool
+		}, ...]
+	}, ...]
+	external_network_ips?: [string, ...]
+	external_networks?: [string, ...]
+	fips_mode_enabled?:               bool
+	fw_default_rule_action?:          string
+	fw_default_rule_logging_enabled?: bool
+	fw_enabled?:                      bool
+	ha_enabled?:                      bool
+	id?:                              string
+	lb_acceleration_enabled?:         bool
+	lb_enabled?:                      bool
+	lb_logging_enabled?:              bool
+	lb_loglevel?:                     string
+	name?:                            string
+	org?:                             string
+	use_default_route_for_dns_relay?: bool
+	vdc?:                             string
+	filter?: [{
+		name_regex?: string
+	}, ...]
+}
+#VcdExternalNetworkDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	ip_scope?: [{
+		dns1:       string
+		dns2:       string
+		dns_suffix: string
+		gateway:    string
+		netmask:    string
+		static_ip_pool: [{
+			end_address:   string
+			start_address: string
+		}, ...]
+	}, ...]
+	retain_net_info_across_deployments?: bool
+	vsphere_network?: [{
+		name:    string
+		type:    string
+		vcenter: string
+	}, ...]
+}
+#VcdIndependentDiskDataSource: {
+	bus_sub_type?:    string
+	bus_type?:        string
+	datastore_name?:  string
+	description?:     string
+	id?:              string
+	iops?:            number
+	is_attached?:     bool
+	name?:            string
+	org?:             string
+	owner_name?:      string
+	storage_profile?: string
+	vdc?:             string
 }
 #VcdLbAppProfileDataSource: {
-	edge_gateway: string
-	name:         string
-	org?:         string
-	vdc?:         string
+	edge_gateway:                    string
+	name:                            string
+	cookie_mode?:                    string
+	cookie_name?:                    string
+	enable_pool_side_ssl?:           bool
+	enable_ssl_passthrough?:         bool
+	expiration?:                     number
+	http_redirect_url?:              string
+	id?:                             string
+	insert_x_forwarded_http_header?: bool
+	org?:                            string
+	persistence_mechanism?:          string
+	type?:                           string
+	vdc?:                            string
 }
 #VcdLbAppRuleDataSource: {
 	edge_gateway: string
 	name:         string
+	id?:          string
 	org?:         string
+	script?:      string
 	vdc?:         string
 }
 #VcdLbServerPoolDataSource: {
-	edge_gateway: string
-	name:         string
-	org?:         string
-	vdc?:         string
+	edge_gateway:          string
+	name:                  string
+	algorithm?:            string
+	algorithm_parameters?: string
+	description?:          string
+	enable_transparency?:  bool
+	id?:                   string
+	member?: [{
+		condition:       string
+		id:              string
+		ip_address:      string
+		max_connections: number
+		min_connections: number
+		monitor_port:    number
+		name:            string
+		port:            number
+		weight:          number
+	}, ...]
+	monitor_id?: string
+	org?:        string
+	vdc?:        string
 }
 #VcdLbServiceMonitorDataSource: {
 	edge_gateway: string
 	name:         string
+	expected?:    string
+	extension?: [_]: string
+	id?:          string
+	interval?:    number
+	max_retries?: number
+	method?:      string
 	org?:         string
+	receive?:     string
+	send?:        string
+	timeout?:     number
+	type?:        string
+	url?:         string
 	vdc?:         string
 }
 #VcdLbVirtualServerDataSource: {
-	edge_gateway: string
-	name:         string
-	org?:         string
-	vdc?:         string
+	edge_gateway:    string
+	name:            string
+	app_profile_id?: string
+	app_rule_ids?: [string, ...]
+	connection_limit?:      number
+	connection_rate_limit?: number
+	description?:           string
+	enable_acceleration?:   bool
+	enabled?:               bool
+	id?:                    string
+	ip_address?:            string
+	org?:                   string
+	port?:                  number
+	protocol?:              string
+	server_pool_id?:        string
+	vdc?:                   string
 }
 #VcdNetworkDirectDataSource: {
-	name: string
-	org?: string
-	vdc?: string
+	description?:                 string
+	external_network?:            string
+	external_network_dns1?:       string
+	external_network_dns2?:       string
+	external_network_dns_suffix?: string
+	external_network_gateway?:    string
+	external_network_netmask?:    string
+	href?:                        string
+	id?:                          string
+	name?:                        string
+	org?:                         string
+	shared?:                      bool
+	vdc?:                         string
+	filter?: [{
+		ip?:         string
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
 }
 #VcdNetworkIsolatedDataSource: {
-	name: string
-	org?: string
+	description?: string
+	dhcp_pool?: [{
+		default_lease_time: number
+		end_address:        string
+		max_lease_time:     number
+		start_address:      string
+	}, ...]
+	dns1?:       string
+	dns2?:       string
+	dns_suffix?: string
+	gateway?:    string
+	href?:       string
+	id?:         string
+	name?:       string
+	netmask?:    string
+	org?:        string
+	shared?:     bool
+	static_ip_pool?: [{
+		end_address:   string
+		start_address: string
+	}, ...]
 	vdc?: string
+	filter?: [{
+		ip?:         string
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
 }
 #VcdNetworkRoutedDataSource: {
-	name: string
-	org?: string
+	description?: string
+	dhcp_pool?: [{
+		default_lease_time: number
+		end_address:        string
+		max_lease_time:     number
+		start_address:      string
+	}, ...]
+	dns1?:           string
+	dns2?:           string
+	dns_suffix?:     string
+	edge_gateway?:   string
+	gateway?:        string
+	href?:           string
+	id?:             string
+	interface_type?: string
+	name?:           string
+	netmask?:        string
+	org?:            string
+	shared?:         bool
+	static_ip_pool?: [{
+		end_address:   string
+		start_address: string
+	}, ...]
 	vdc?: string
+	filter?: [{
+		ip?:         string
+		name_regex?: string
+		metadata?: [{
+			key:             string
+			value:           string
+			is_system?:      bool
+			type?:           string
+			use_api_search?: bool
+		}, ...]
+	}, ...]
 }
 #VcdNsxvDhcpRelayDataSource: {
 	edge_gateway: string
-	org?:         string
-	vdc?:         string
+	domain_names?: [string, ...]
+	id?: string
+	ip_addresses?: [string, ...]
+	ip_sets?: [string, ...]
+	org?: string
+	relay_agent?: [{
+		gateway_ip_address: string
+		network_name:       string
+	}, ...]
+	vdc?: string
 }
 #VcdNsxvDnatDataSource: {
-	edge_gateway: string
-	rule_id:      string
-	org?:         string
-	vdc?:         string
+	edge_gateway:        string
+	rule_id:             string
+	description?:        string
+	enabled?:            bool
+	icmp_type?:          string
+	id?:                 string
+	logging_enabled?:    bool
+	network_name?:       string
+	network_type?:       string
+	org?:                string
+	original_address?:   string
+	original_port?:      string
+	protocol?:           string
+	rule_tag?:           number
+	rule_type?:          string
+	translated_address?: string
+	translated_port?:    string
+	vdc?:                string
 }
 #VcdNsxvFirewallRuleDataSource: {
 	edge_gateway: string
 	rule_id:      string
-	org?:         string
-	vdc?:         string
+	action?:      string
+	destination?: [{
+		exclude: bool
+		gateway_interfaces: [string, ...]
+		ip_addresses: [string, ...]
+		ip_sets: [string, ...]
+		org_networks: [string, ...]
+		virtual_machine_ids: [string, ...]
+	}, ...]
+	enabled?:         bool
+	id?:              string
+	logging_enabled?: bool
+	name?:            string
+	org?:             string
+	rule_tag?:        number
+	rule_type?:       string
+	service?: [{
+		port:        string
+		protocol:    string
+		source_port: string
+	}, ...]
+	source?: [{
+		exclude: bool
+		gateway_interfaces: [string, ...]
+		ip_addresses: [string, ...]
+		ip_sets: [string, ...]
+		org_networks: [string, ...]
+		virtual_machine_ids: [string, ...]
+	}, ...]
+	vdc?: string
 }
 #VcdNsxvIpSetDataSource: {
-	name: string
-	org?: string
-	vdc?: string
+	name:         string
+	description?: string
+	id?:          string
+	ip_addresses?: [string, ...]
+	is_inheritance_allowed?: bool
+	org?:                    string
+	vdc?:                    string
 }
 #VcdNsxvSnatDataSource: {
-	edge_gateway: string
-	rule_id:      string
-	org?:         string
-	vdc?:         string
+	edge_gateway:        string
+	rule_id:             string
+	description?:        string
+	enabled?:            bool
+	id?:                 string
+	logging_enabled?:    bool
+	network_name?:       string
+	network_type?:       string
+	org?:                string
+	original_address?:   string
+	rule_tag?:           number
+	rule_type?:          string
+	translated_address?: string
+	vdc?:                string
 }
-#VcdOrgDataSource: name: string
+#VcdOrgDataSource: {
+	name:                          string
+	can_publish_catalogs?:         bool
+	delay_after_power_on_seconds?: number
+	deployed_vm_quota?:            number
+	description?:                  string
+	full_name?:                    string
+	id?:                           string
+	is_enabled?:                   bool
+	stored_vm_quota?:              number
+	vapp_lease?: [{
+		delete_on_storage_lease_expiration:    bool
+		maximum_runtime_lease_in_sec:          number
+		maximum_storage_lease_in_sec:          number
+		power_off_on_runtime_lease_expiration: bool
+	}, ...]
+	vapp_template_lease?: [{
+		delete_on_storage_lease_expiration: bool
+		maximum_storage_lease_in_sec:       number
+	}, ...]
+}
 #VcdOrgVdcDataSource: {
-	name: string
-	org?: string
+	name:               string
+	allocation_model?:  string
+	allow_over_commit?: bool
+	compute_capacity?: [{
+		cpu: [{
+			allocated: number
+			limit:     number
+			reserved:  number
+			used:      number
+		}, ...]
+		memory: [{
+			allocated: number
+			limit:     number
+			reserved:  number
+			used:      number
+		}, ...]
+	}, ...]
+	cpu_guaranteed?:             number
+	cpu_speed?:                  number
+	description?:                string
+	elasticity?:                 bool
+	enable_fast_provisioning?:   bool
+	enable_thin_provisioning?:   bool
+	enable_vm_discovery?:        bool
+	enabled?:                    bool
+	id?:                         string
+	include_vm_memory_overhead?: bool
+	memory_guaranteed?:          number
+	metadata?: [_]: string
+	network_pool_name?: string
+	network_quota?:     number
+	nic_quota?:         number
+	org?:               string
+	provider_vdc_name?: string
+	storage_profile?: [{
+		default: bool
+		enabled: bool
+		limit:   number
+		name:    string
+	}, ...]
+	vm_quota?: number
 }
 #VcdVappDataSource: {
-	name: string
-	org?: string
-	vdc?: string
+	name:         string
+	description?: string
+	guest_properties?: [_]: string
+	href?: string
+	id?:   string
+	metadata?: [_]: string
+	org?:         string
+	status?:      number
+	status_text?: string
+	vdc?:         string
 }
 #VcdVappNetworkDataSource: {
-	name:      string
-	vapp_name: string
-	org?:      string
-	vdc?:      string
+	name:         string
+	vapp_name:    string
+	description?: string
+	dhcp_pool?: [{
+		default_lease_time: number
+		enabled:            bool
+		end_address:        string
+		max_lease_time:     number
+		start_address:      string
+	}, ...]
+	dns1?:                  string
+	dns2?:                  string
+	dns_suffix?:            string
+	gateway?:               string
+	guest_vlan_allowed?:    bool
+	id?:                    string
+	netmask?:               string
+	org?:                   string
+	org_network_name?:      string
+	retain_ip_mac_enabled?: bool
+	static_ip_pool?: [{
+		end_address:   string
+		start_address: string
+	}, ...]
+	vdc?: string
 }
 #VcdVappOrgNetworkDataSource: {
-	org_network_name: string
-	vapp_name:        string
-	org?:             string
-	vdc?:             string
+	org_network_name:       string
+	vapp_name:              string
+	id?:                    string
+	is_fenced?:             bool
+	org?:                   string
+	retain_ip_mac_enabled?: bool
+	vdc?:                   string
 }
 #VcdVappVmDataSource: {
-	name:                       string
-	vapp_name:                  string
+	name:           string
+	vapp_name:      string
+	computer_name?: string
+	cpu_cores?:     number
+	cpus?:          number
+	customization?: [{
+		admin_password:                      string
+		allow_local_admin_password:          bool
+		auto_generate_password:              bool
+		change_sid:                          bool
+		enabled:                             bool
+		force:                               bool
+		initscript:                          string
+		join_domain:                         bool
+		join_domain_account_ou:              string
+		join_domain_name:                    string
+		join_domain_password:                string
+		join_domain_user:                    string
+		join_org_domain:                     bool
+		must_change_password_on_first_login: bool
+		number_of_auto_logons:               number
+	}, ...]
+	description?: string
+	disk?: [{
+		bus_number:  string
+		name:        string
+		size_in_mb:  number
+		unit_number: string
+	}, ...]
+	expose_hardware_virtualization?: bool
+	guest_properties?: [_]: string
+	href?: string
+	id?:   string
+	internal_disk?: [{
+		bus_number:       number
+		bus_type:         string
+		disk_id:          string
+		iops:             number
+		size_in_mb:       number
+		storage_profile:  string
+		thin_provisioned: bool
+		unit_number:      number
+	}, ...]
+	memory?: number
+	metadata?: [_]: string
+	network?: [{
+		adapter_type:       string
+		ip:                 string
+		ip_allocation_mode: string
+		is_primary:         bool
+		mac:                string
+		name:               string
+		type:               string
+	}, ...]
 	network_dhcp_wait_seconds?: number
 	org?:                       string
+	storage_profile?:           string
 	vdc?:                       string
+}
+#VcdVmAffinityRuleDataSource: {
+	enabled?:  bool
+	id?:       string
+	name?:     string
+	org?:      string
+	polarity?: string
+	required?: bool
+	rule_id?:  string
+	vdc?:      string
+	virtual_machine_ids?: [string, ...]
 }
 #DataSources: {
 	vcd_catalog?: [_]:            #VcdCatalogDataSource
@@ -155,4 +631,5 @@ package vcd
 	vcd_vapp_network?: [_]:       #VcdVappNetworkDataSource
 	vcd_vapp_org_network?: [_]:   #VcdVappOrgNetworkDataSource
 	vcd_vapp_vm?: [_]:            #VcdVappVmDataSource
+	vcd_vm_affinity_rule?: [_]:   #VcdVmAffinityRuleDataSource
 }

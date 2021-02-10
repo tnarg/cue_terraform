@@ -11,9 +11,12 @@ package spotinst
 	security_groups: [string, ...]
 	availability_zones?: [string, ...]
 	block_devices_mode?: string
+	capacity_unit?:      string
 	cpu_credits?:        string
 	description?:        string
 	desired_capacity?:   number
+	draining_timeout?:   number
+	ebs_optimized?:      bool
 	elastic_ips?: [string, ...]
 	elastic_load_balancers?: [string, ...]
 	enable_monitoring?:                                  bool
@@ -21,10 +24,13 @@ package spotinst
 	health_check_type?:                                  string
 	health_check_unhealthy_duration_before_replacement?: number
 	iam_instance_profile?:                               string
+	id?:                                                 string
 	image_id?:                                           string
 	instance_types_preferred_spot?: [string, ...]
 	key_name?:              string
 	lifetime_period?:       string
+	max_size?:              number
+	min_size?:              number
 	ondemand_count?:        number
 	persist_block_devices?: bool
 	persist_private_ip?:    bool
@@ -42,11 +48,14 @@ package spotinst
 	wait_for_capacity?:          number
 	wait_for_capacity_timeout?:  number
 	ebs_block_device?: [{
-		device_name:  string
-		iops?:        number
-		kms_key_id?:  string
-		snapshot_id?: string
-		volume_size?: number
+		device_name:            string
+		delete_on_termination?: bool
+		encrypted?:             bool
+		iops?:                  number
+		kms_key_id?:            string
+		snapshot_id?:           string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
 		device_name:  string
@@ -116,6 +125,9 @@ package spotinst
 			memory_per_unit?: number
 			num_of_units?:    number
 		}, ...]
+		batch?: [{
+			job_queue_names: [string, ...]
+		}, ...]
 	}, ...]
 	integration_gitlab?: [{
 		runner?: [{
@@ -177,12 +189,18 @@ package spotinst
 	integration_route53?: [{
 		domains?: [{
 			hosted_zone_id:    string
+			record_set_type?:  string
 			spotinst_acct_id?: string
 			record_sets?: [{
-				name:           string
-				use_public_ip?: bool
+				name:            string
+				use_public_dns?: bool
+				use_public_ip?:  bool
 			}, ...]
 		}, ...]
+	}, ...]
+	metadata_options?: [{
+		http_tokens:                  string
+		http_put_response_hop_limit?: number
 	}, ...]
 	multai_target_sets?: [{
 		balancer_id:   string
@@ -192,6 +210,7 @@ package spotinst
 		device_index:                        string
 		associate_ipv6_address?:             bool
 		associate_public_ip_address?:        bool
+		delete_on_termination?:              bool
 		description?:                        string
 		network_interface_id?:               string
 		private_ip_address?:                 string
@@ -206,15 +225,21 @@ package spotinst
 		namespace:            string
 		policy_name:          string
 		threshold:            number
-		unit:                 string
 		action_type?:         string
 		adjustment?:          string
+		cooldown?:            number
+		evaluation_periods?:  number
 		is_enabled?:          bool
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		source?:              string
+		statistic?:           string
 		target?:              string
+		unit?:                string
 		dimensions?: [{
 			name:   string
 			value?: string
@@ -225,12 +250,16 @@ package spotinst
 		termination_policy?:               string
 	}, ...]
 	scaling_target_policy?: [{
-		metric_name:      string
-		namespace:        string
-		policy_name:      string
-		target:           number
-		unit:             string
-		predictive_mode?: string
+		metric_name:             string
+		namespace:               string
+		policy_name:             string
+		target:                  number
+		cooldown?:               number
+		max_capacity_per_scale?: string
+		predictive_mode?:        string
+		source?:                 string
+		statistic?:              string
+		unit?:                   string
 		dimensions?: [{
 			name:   string
 			value?: string
@@ -241,15 +270,21 @@ package spotinst
 		namespace:            string
 		policy_name:          string
 		threshold:            number
-		unit:                 string
 		action_type?:         string
 		adjustment?:          string
+		cooldown?:            number
+		evaluation_periods?:  number
 		is_enabled?:          bool
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		source?:              string
+		statistic?:           string
 		target?:              string
+		unit?:                string
 		dimensions?: [{
 			name:   string
 			value?: string
@@ -321,6 +356,7 @@ package spotinst
 	region:                      string
 	beanstalk_environment_id?:   string
 	beanstalk_environment_name?: string
+	id?:                         string
 	maintenance?:                string
 	deployment_preferences?: [{
 		automatic_roll?:        bool
@@ -356,6 +392,13 @@ package spotinst
 		target_capacity?:       string
 	}, ...]
 }
+#SpotinstElastigroupAwsSuspensionResource: {
+	group_id: string
+	id?:      string
+	suspension?: [{
+		name: string
+	}, ...]
+}
 #SpotinstElastigroupAzureResource: {
 	low_priority_sizes: [string, ...]
 	name: string
@@ -365,6 +408,9 @@ package spotinst
 	resource_group_name: string
 	custom_data?:        string
 	desired_capacity?:   number
+	id?:                 string
+	max_size?:           number
+	min_size?:           number
 	shutdown_script?:    string
 	user_data?:          string
 	health_check?: [{
@@ -421,10 +467,15 @@ package spotinst
 		threshold:            number
 		action_type?:         string
 		adjustment?:          string
+		cooldown?:            number
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 		unit?:                string
 		dimensions?: [{
@@ -439,10 +490,15 @@ package spotinst
 		threshold:            number
 		action_type?:         string
 		adjustment?:          string
+		cooldown?:            number
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 		unit?:                string
 		dimensions?: [{
@@ -486,9 +542,12 @@ package spotinst
 	fallback_to_ondemand?:      bool
 	health_check_grace_period?: number
 	health_check_type?:         string
+	id?:                        string
 	instance_types_ondemand?:   string
 	instance_types_preemptible?: [string, ...]
 	ip_forwarding?:          bool
+	max_size?:               number
+	min_size?:               number
 	ondemand_count?:         number
 	preemptible_percentage?: number
 	service_account?:        string
@@ -571,26 +630,38 @@ package spotinst
 		}, ...]
 	}, ...]
 	scaling_down_policy?: [{
-		metric_name:  string
-		namespace:    string
-		policy_name:  string
-		threshold:    number
-		unit:         string
-		action_type?: string
-		adjustment?:  number
+		metric_name:         string
+		namespace:           string
+		policy_name:         string
+		threshold:           number
+		unit:                string
+		action_type?:        string
+		adjustment?:         number
+		cooldown?:           number
+		evaluation_periods?: number
+		operator?:           string
+		period?:             number
+		source?:             string
+		statistic?:          string
 		dimensions?: [{
 			name:   string
 			value?: string
 		}, ...]
 	}, ...]
 	scaling_up_policy?: [{
-		metric_name:  string
-		namespace:    string
-		policy_name:  string
-		threshold:    number
-		unit:         string
-		action_type?: string
-		adjustment?:  number
+		metric_name:         string
+		namespace:           string
+		policy_name:         string
+		threshold:           number
+		unit:                string
+		action_type?:        string
+		adjustment?:         number
+		cooldown?:           number
+		evaluation_periods?: number
+		operator?:           string
+		period?:             number
+		source?:             string
+		statistic?:          string
 		dimensions?: [{
 			name:   string
 			value?: string
@@ -616,9 +687,12 @@ package spotinst
 	cluster_id?:              string
 	draining_timeout?:        number
 	fallback_to_ondemand?:    bool
+	id?:                      string
 	instance_types_ondemand?: string
 	instance_types_preemptible?: [string, ...]
 	ip_forwarding?:          bool
+	max_size?:               number
+	min_size?:               number
 	node_image?:             string
 	ondemand_count?:         number
 	preemptible_percentage?: number
@@ -701,26 +775,38 @@ package spotinst
 		}, ...]
 	}, ...]
 	scaling_down_policy?: [{
-		metric_name:  string
-		namespace:    string
-		policy_name:  string
-		threshold:    number
-		unit:         string
-		action_type?: string
-		adjustment?:  number
+		metric_name:         string
+		namespace:           string
+		policy_name:         string
+		threshold:           number
+		unit:                string
+		action_type?:        string
+		adjustment?:         number
+		cooldown?:           number
+		evaluation_periods?: number
+		operator?:           string
+		period?:             number
+		source?:             string
+		statistic?:          string
 		dimensions?: [{
 			name:   string
 			value?: string
 		}, ...]
 	}, ...]
 	scaling_up_policy?: [{
-		metric_name:  string
-		namespace:    string
-		policy_name:  string
-		threshold:    number
-		unit:         string
-		action_type?: string
-		adjustment?:  number
+		metric_name:         string
+		namespace:           string
+		policy_name:         string
+		threshold:           number
+		unit:                string
+		action_type?:        string
+		adjustment?:         number
+		cooldown?:           number
+		evaluation_periods?: number
+		operator?:           string
+		period?:             number
+		source?:             string
+		statistic?:          string
 		dimensions?: [{
 			name:   string
 			value?: string
@@ -730,16 +816,19 @@ package spotinst
 #SpotinstHealthCheckResource: {
 	proxy_address: string
 	resource_id:   string
+	id?:           string
 	name?:         string
 	proxy_port?:   number
 	check?: [{
-		endpoint:  string
-		healthy:   number
-		interval:  number
-		port:      number
-		protocol:  string
-		timeout:   number
-		unhealthy: number
+		healthy:    number
+		interval:   number
+		port:       number
+		protocol:   string
+		unhealthy:  number
+		end_point?: string
+		endpoint?:  string
+		time_out?:  number
+		timeout?:   number
 	}, ...]
 }
 #SpotinstManagedInstanceAwsResource: {
@@ -755,12 +844,14 @@ package spotinst
 	cpu_credits?:          string
 	description?:          string
 	draining_timeout?:     number
+	ebs_optimized?:        bool
 	elastic_ip?:           string
 	enable_monitoring?:    bool
 	fall_back_to_od?:      bool
 	grace_period?:         number
 	health_check_type?:    string
 	iam_instance_profile?: string
+	id?:                   string
 	key_pair?:             string
 	life_cycle?:           string
 	optimization_windows?: [string, ...]
@@ -779,10 +870,12 @@ package spotinst
 	integration_route53?: [{
 		domains?: [{
 			hosted_zone_id:    string
+			record_set_type?:  string
 			spotinst_acct_id?: string
 			record_sets?: [{
-				name:           string
-				use_public_ip?: bool
+				name:            string
+				use_public_dns?: bool
+				use_public_ip?:  bool
 			}, ...]
 		}, ...]
 	}, ...]
@@ -835,6 +928,7 @@ package spotinst
 	ebs_root_volume_size?:           number
 	ec2_key_name?:                   string
 	expose_cluster_id?:              bool
+	id?:                             string
 	job_flow_role?:                  string
 	keep_job_flow_alive?:            bool
 	log_uri?:                        string
@@ -843,6 +937,7 @@ package spotinst
 	master_ebs_optimized?:           bool
 	master_instance_types?: [string, ...]
 	master_lifecycle?:              string
+	output_cluster_id?:             string
 	region?:                        string
 	release_label?:                 string
 	repo_upgrade_on_boot?:          string
@@ -886,11 +981,16 @@ package spotinst
 		unit:         string
 		action_type?: string
 		adjustment?:  string
+		cooldown?:    number
 		dimensions?: [_]: string
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 	}, ...]
 	core_scaling_up_policy?: [{
@@ -901,11 +1001,16 @@ package spotinst
 		unit:         string
 		action_type?: string
 		adjustment?:  string
+		cooldown?:    number
 		dimensions?: [_]: string
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 	}, ...]
 	instance_weights?: [{
@@ -953,11 +1058,16 @@ package spotinst
 		unit:         string
 		action_type?: string
 		adjustment?:  string
+		cooldown?:    number
 		dimensions?: [_]: string
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 	}, ...]
 	task_scaling_up_policy?: [{
@@ -968,11 +1078,16 @@ package spotinst
 		unit:         string
 		action_type?: string
 		adjustment?:  string
+		cooldown?:    number
 		dimensions?: [_]: string
+		evaluation_periods?:  number
 		max_target_capacity?: string
 		maximum?:             string
 		min_target_capacity?: string
 		minimum?:             string
+		operator?:            string
+		period?:              number
+		statistic?:           string
 		target?:              string
 	}, ...]
 	termination_policies?: [{
@@ -991,6 +1106,7 @@ package spotinst
 #SpotinstMultaiBalancerResource: {
 	name: string
 	dns_cname_aliases?: [string, ...]
+	id?:     string
 	scheme?: string
 	connection_timeouts?: [{
 		draining?: number
@@ -1001,11 +1117,15 @@ package spotinst
 		value: string
 	}, ...]
 }
-#SpotinstMultaiDeploymentResource: name: string
+#SpotinstMultaiDeploymentResource: {
+	name: string
+	id?:  string
+}
 #SpotinstMultaiListenerResource: {
 	balancer_id: string
 	port:        number
 	protocol:    string
+	id?:         string
 	tags?: [{
 		key:   string
 		value: string
@@ -1024,6 +1144,7 @@ package spotinst
 	listener_id: string
 	route:       string
 	target_set_ids: [string, ...]
+	id?: string
 	middleware_ids?: [string, ...]
 	priority?: number
 	strategy?: string
@@ -1037,6 +1158,7 @@ package spotinst
 	host:          string
 	target_set_id: string
 	weight:        number
+	id?:           string
 	name?:         string
 	port?:         number
 	tags?: [{
@@ -1049,6 +1171,7 @@ package spotinst
 	deployment_id: string
 	protocol:      string
 	weight:        number
+	id?:           string
 	name?:         string
 	port?:         number
 	health_check?: [{
@@ -1058,6 +1181,7 @@ package spotinst
 		protocol:            string
 		timeout:             number
 		unhealthy_threshold: number
+		port?:               number
 	}, ...]
 	tags?: [{
 		key:   string
@@ -1070,14 +1194,17 @@ package spotinst
 	associate_public_ip_address?: bool
 	blacklist?: [string, ...]
 	controller_id?:              string
+	desired_capacity?:           number
 	draining_timeout?:           number
 	ebs_optimized?:              bool
 	fallback_to_ondemand?:       bool
 	grace_period?:               number
 	iam_instance_profile?:       string
+	id?:                         string
 	image_id?:                   string
 	key_name?:                   string
 	max_size?:                   number
+	min_size?:                   number
 	monitoring?:                 bool
 	name?:                       string
 	region?:                     string
@@ -1136,9 +1263,11 @@ package spotinst
 #SpotinstOceanAwsLaunchSpecResource: {
 	ocean_id:              string
 	iam_instance_profile?: string
+	id?:                   string
 	image_id?:             string
-	name?:                 string
-	root_volume_size?:     number
+	instance_types?: [string, ...]
+	name?:             string
+	root_volume_size?: number
 	security_groups?: [string, ...]
 	subnet_ids?: [string, ...]
 	user_data?: string
@@ -1147,6 +1276,25 @@ package spotinst
 		cpu_per_unit?:    number
 		gpu_per_unit?:    number
 		memory_per_unit?: number
+	}, ...]
+	block_device_mappings?: [{
+		device_name:   string
+		no_device?:    string
+		virtual_name?: string
+		ebs?: [{
+			delete_on_termination?: bool
+			encrypted?:             bool
+			iops?:                  number
+			kms_key_id?:            string
+			snapshot_id?:           string
+			volume_size?:           number
+			volume_type?:           string
+			dynamic_volume_size?: [{
+				base_size:              number
+				resource:               string
+				size_per_resource_unit: number
+			}, ...]
+		}, ...]
 	}, ...]
 	elastic_ip_pool?: [{
 		tag_selector?: [{
@@ -1157,6 +1305,12 @@ package spotinst
 	labels?: [{
 		key:   string
 		value: string
+	}, ...]
+	resource_limits?: [{
+		max_instance_count?: number
+	}, ...]
+	strategy?: [{
+		spot_percentage?: number
 	}, ...]
 	tags?: [{
 		key:   string
@@ -1175,11 +1329,15 @@ package spotinst
 	security_group_ids: [string, ...]
 	subnet_ids: [string, ...]
 	associate_public_ip_address?: bool
+	desired_capacity?:            number
 	draining_timeout?:            number
 	ebs_optimized?:               bool
 	iam_instance_profile?:        string
+	id?:                          string
 	image_id?:                    string
 	key_pair?:                    string
+	max_size?:                    number
+	min_size?:                    number
 	monitoring?:                  bool
 	user_data?:                   string
 	utilize_reserved_instances?:  bool
@@ -1227,6 +1385,7 @@ package spotinst
 	name:                  string
 	ocean_id:              string
 	iam_instance_profile?: string
+	id?:                   string
 	image_id?:             string
 	security_group_ids?: [string, ...]
 	user_data?: string
@@ -1239,14 +1398,38 @@ package spotinst
 		cpu_per_unit?:    number
 		memory_per_unit?: number
 	}, ...]
+	block_device_mappings?: [{
+		device_name:   string
+		no_device?:    string
+		virtual_name?: string
+		ebs?: [{
+			delete_on_termination?: bool
+			encrypted?:             bool
+			iops?:                  number
+			kms_key_id?:            string
+			snapshot_id?:           string
+			volume_size?:           number
+			volume_type?:           string
+			dynamic_volume_size?: [{
+				base_size:              number
+				resource:               string
+				size_per_resource_unit: number
+			}, ...]
+		}, ...]
+	}, ...]
 	tags?: [{
 		key:   string
 		value: string
 	}, ...]
 }
 #SpotinstOceanGkeImportResource: {
-	cluster_name: string
-	location:     string
+	cluster_name:           string
+	location:               string
+	cluster_controller_id?: string
+	desired_capacity?:      number
+	id?:                    string
+	max_size?:              number
+	min_size?:              number
 	whitelist?: [string, ...]
 	autoscaler?: [{
 		auto_headroom_percentage?: number
@@ -1293,6 +1476,7 @@ package spotinst
 #SpotinstOceanGkeLaunchSpecResource: {
 	ocean_id:     string
 	source_image: string
+	id?:          string
 	autoscale_headrooms?: [{
 		num_of_units:     number
 		cpu_per_unit?:    number
@@ -1316,6 +1500,7 @@ package spotinst
 #SpotinstOceanGkeLaunchSpecImportResource: {
 	node_pool_name: string
 	ocean_id:       string
+	id?:            string
 }
 #SpotinstSubscriptionResource: {
 	endpoint:    string
@@ -1323,10 +1508,12 @@ package spotinst
 	protocol:    string
 	resource_id: string
 	format?: [_]: string
+	id?: string
 }
 #Resources: {
 	spotinst_elastigroup_aws?: [_]:              #SpotinstElastigroupAwsResource
 	spotinst_elastigroup_aws_beanstalk?: [_]:    #SpotinstElastigroupAwsBeanstalkResource
+	spotinst_elastigroup_aws_suspension?: [_]:   #SpotinstElastigroupAwsSuspensionResource
 	spotinst_elastigroup_azure?: [_]:            #SpotinstElastigroupAzureResource
 	spotinst_elastigroup_gcp?: [_]:              #SpotinstElastigroupGcpResource
 	spotinst_elastigroup_gke?: [_]:              #SpotinstElastigroupGkeResource

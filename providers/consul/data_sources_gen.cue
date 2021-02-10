@@ -4,22 +4,36 @@ package consul
 #ConsulAclAuthMethodDataSource: {
 	name: string
 	config?: [_]: string
-	description?: string
-	namespace?:   string
-	type?:        string
+	config_json?:   string
+	description?:   string
+	display_name?:  string
+	id?:            string
+	max_token_ttl?: string
+	namespace?:     string
+	namespace_rule?: [{
+		bind_namespace: string
+		selector:       string
+	}, ...]
+	token_locality?: string
+	type?:           string
 }
 #ConsulAclPolicyDataSource: {
 	name: string
 	datacenters?: [string, ...]
 	description?: string
+	id?:          string
 	namespace?:   string
 	rules?:       string
 }
 #ConsulAclRoleDataSource: {
 	name:         string
 	description?: string
+	id?:          string
 	namespace?:   string
-	policies?: [{}, ...]
+	policies?: [{
+		id?:   string
+		name?: string
+	}, ...]
 	service_identities?: [{
 		datacenters?: [string, ...]
 		service_name?: string
@@ -28,31 +42,169 @@ package consul
 #ConsulAclTokenDataSource: {
 	accessor_id:  string
 	description?: string
+	id?:          string
 	local?:       bool
 	namespace?:   string
-	policies?: [{}, ...]
+	policies?: [{
+		id?:   string
+		name?: string
+	}, ...]
 }
 #ConsulAclTokenSecretIdDataSource: {
-	accessor_id: string
-	pgp_key?:    string
+	accessor_id:          string
+	encrypted_secret_id?: string
+	id?:                  string
+	pgp_key?:             string
+	secret_id?:           string
 }
-#ConsulAgentConfigDataSource: {}
-#ConsulAgentSelfDataSource: {}
-#ConsulAutopilotHealthDataSource: datacenter?: string
-#ConsulCatalogNodesDataSource: query_options?: [{
-	allow_stale?: bool
-	datacenter?:  string
-	near?:        string
-	node_meta?: [_]: string
-	require_consistent?: bool
-	token?:              string
-	wait_index?:         number
-	wait_time?:          string
-}, ...]
+#ConsulAgentConfigDataSource: {
+	datacenter?: string
+	id?:         string
+	node_id?:    string
+	node_name?:  string
+	revision?:   string
+	server?:     bool
+	version?:    string
+}
+#ConsulAgentSelfDataSource: {
+	acl_datacenter?:            string
+	acl_default_policy?:        string
+	acl_disabled_ttl?:          string
+	acl_down_policy?:           string
+	acl_enforce_0_8_semantics?: bool
+	acl_ttl?:                   string
+	addresses?: [_]: string
+	advertise_addr?:     string
+	advertise_addr_wan?: string
+	advertise_addrs?: [_]: string
+	atlas_join?:                    bool
+	bind_addr?:                     string
+	bootstrap_expect?:              number
+	bootstrap_mode?:                bool
+	check_deregister_interval_min?: string
+	check_reap_interval?:           string
+	check_update_interval?:         string
+	client_addr?:                   string
+	data_dir?:                      string
+	datacenter?:                    string
+	dev_mode?:                      bool
+	dns?: [_]: string
+	dns_recursors?: [string, ...]
+	domain?:                     string
+	enable_anonymous_signature?: bool
+	enable_coordinates?:         bool
+	enable_debug?:               bool
+	enable_remote_exec?:         bool
+	enable_syslog?:              bool
+	enable_ui?:                  bool
+	enable_update_check?:        bool
+	id?:                         string
+	leave_on_int?:               bool
+	leave_on_term?:              bool
+	log_level?:                  string
+	name?:                       string
+	performance?: [_]: string
+	pid_file?: string
+	ports?: [_]: number
+	protocol_version?:      number
+	reconnect_timeout_lan?: string
+	reconnect_timeout_wan?: string
+	rejoin_after_leave?:    bool
+	retry_join?: [string, ...]
+	retry_join_ec2?: [_]: string
+	retry_join_gce?: [_]: string
+	retry_join_wan?: [string, ...]
+	retry_max_attempts?:     number
+	retry_max_attempts_wan?: number
+	serf_lan_bind_addr?:     string
+	serf_wan_bind_addr?:     string
+	server_mode?:            bool
+	server_name?:            string
+	session_ttl_min?:        string
+	start_join?: [string, ...]
+	start_join_wan?: [string, ...]
+	syslog_facility?: string
+	tagged_addresses?: [_]: string
+	telemetry?: [_]:        string
+	tls_ca_file?:                string
+	tls_cert_file?:              string
+	tls_key_file?:               string
+	tls_min_version?:            string
+	tls_verify_incoming?:        bool
+	tls_verify_outgoing?:        bool
+	tls_verify_server_hostname?: bool
+	translate_wan_addrs?:        bool
+	ui_dir?:                     string
+	unix_sockets?: [_]: string
+	version?:            string
+	version_prerelease?: string
+	version_revision?:   string
+}
+#ConsulAutopilotHealthDataSource: {
+	datacenter?:        string
+	failure_tolerance?: number
+	healthy?:           bool
+	id?:                string
+	servers?: [{
+		address:      string
+		healthy:      bool
+		id:           string
+		last_contact: string
+		last_index:   number
+		last_term:    number
+		leader:       bool
+		name:         string
+		serf_status:  string
+		stable_since: string
+		version:      string
+		voter:        bool
+	}, ...]
+}
+#ConsulCatalogNodesDataSource: {
+	datacenter?: string
+	id?:         string
+	node_ids?: [string, ...]
+	node_names?: [string, ...]
+	nodes?: [{
+		address: string
+		id:      string
+		meta: [_]: string
+		name: string
+		tagged_addresses: [_]: string
+	}, ...]
+	query_options?: [{
+		allow_stale?: bool
+		datacenter?:  string
+		near?:        string
+		node_meta?: [_]: string
+		require_consistent?: bool
+		token?:              string
+		wait_index?:         number
+		wait_time?:          string
+	}, ...]
+}
 #ConsulCatalogServiceDataSource: {
 	name:        string
 	datacenter?: string
-	tag?:        string
+	filter?:     string
+	id?:         string
+	service?: [{
+		address:             string
+		create_index:        string
+		enable_tag_override: string
+		id:                  string
+		meta: [_]: string
+		modify_index: string
+		name:         string
+		node_address: string
+		node_id:      string
+		node_meta: [_]: string
+		node_name: string
+		port:      string
+		tagged_addresses: [_]: string
+		tags: [string, ...]
+	}, ...]
+	tag?: string
 	query_options?: [{
 		allow_stale?: bool
 		datacenter?:  string
@@ -65,21 +217,31 @@ package consul
 		wait_time?:          string
 	}, ...]
 }
-#ConsulCatalogServicesDataSource: query_options?: [{
-	allow_stale?: bool
-	datacenter?:  string
-	namespace?:   string
-	near?:        string
-	node_meta?: [_]: string
-	require_consistent?: bool
-	token?:              string
-	wait_index?:         number
-	wait_time?:          string
-}, ...]
+#ConsulCatalogServicesDataSource: {
+	datacenter?: string
+	id?:         string
+	names?: [string, ...]
+	services?: [_]: string
+	query_options?: [{
+		allow_stale?: bool
+		datacenter?:  string
+		namespace?:   string
+		near?:        string
+		node_meta?: [_]: string
+		require_consistent?: bool
+		token?:              string
+		wait_index?:         number
+		wait_time?:          string
+	}, ...]
+}
 #ConsulKeyPrefixDataSource: {
 	path_prefix: string
+	datacenter?: string
+	id?:         string
 	namespace?:  string
-	token?:      string
+	subkeys?: [_]: string
+	token?: string
+	var?: [_]: string
 	subkey?: [{
 		name:     string
 		path:     string
@@ -87,8 +249,11 @@ package consul
 	}, ...]
 }
 #ConsulKeysDataSource: {
-	namespace?: string
-	token?:     string
+	datacenter?: string
+	id?:         string
+	namespace?:  string
+	token?:      string
+	var?: [_]: string
 	key?: [{
 		name:     string
 		path:     string
@@ -96,24 +261,74 @@ package consul
 	}, ...]
 }
 #ConsulNetworkAreaMembersDataSource: {
-	uuid:   string
+	uuid:        string
+	datacenter?: string
+	id?:         string
+	members?: [{
+		address:    string
+		build:      string
+		datacenter: string
+		id:         string
+		name:       string
+		port:       number
+		protocol:   number
+		role:       string
+		rtt:        number
+		status:     string
+	}, ...]
 	token?: string
 }
-#ConsulNetworkSegmentsDataSource: token?: string
-#ConsulNodesDataSource: query_options?: [{
-	allow_stale?: bool
-	datacenter?:  string
-	near?:        string
-	node_meta?: [_]: string
-	require_consistent?: bool
-	token?:              string
-	wait_index?:         number
-	wait_time?:          string
-}, ...]
+#ConsulNetworkSegmentsDataSource: {
+	datacenter?: string
+	id?:         string
+	segments?: [string, ...]
+	token?: string
+}
+#ConsulNodesDataSource: {
+	datacenter?: string
+	id?:         string
+	node_ids?: [string, ...]
+	node_names?: [string, ...]
+	nodes?: [{
+		address: string
+		id:      string
+		meta: [_]: string
+		name: string
+		tagged_addresses: [_]: string
+	}, ...]
+	query_options?: [{
+		allow_stale?: bool
+		datacenter?:  string
+		near?:        string
+		node_meta?: [_]: string
+		require_consistent?: bool
+		token?:              string
+		wait_index?:         number
+		wait_time?:          string
+	}, ...]
+}
 #ConsulServiceDataSource: {
 	name:        string
 	datacenter?: string
-	tag?:        string
+	filter?:     string
+	id?:         string
+	service?: [{
+		address:             string
+		create_index:        string
+		enable_tag_override: string
+		id:                  string
+		meta: [_]: string
+		modify_index: string
+		name:         string
+		node_address: string
+		node_id:      string
+		node_meta: [_]: string
+		node_name: string
+		port:      string
+		tagged_addresses: [_]: string
+		tags: [string, ...]
+	}, ...]
+	tag?: string
 	query_options?: [{
 		allow_stale?: bool
 		datacenter?:  string
@@ -129,23 +344,60 @@ package consul
 #ConsulServiceHealthDataSource: {
 	name:        string
 	datacenter?: string
+	filter?:     string
+	id?:         string
 	near?:       string
 	node_meta?: [_]: string
-	passing?:  bool
+	passing?: bool
+	results?: [{
+		checks: [{
+			id:           string
+			name:         string
+			node:         string
+			notes:        string
+			output:       string
+			service_id:   string
+			service_name: string
+			service_tags: [string, ...]
+			status: string
+		}, ...]
+		node: [{
+			address:    string
+			datacenter: string
+			id:         string
+			meta: [_]: string
+			name: string
+			tagged_addresses: [_]: string
+		}, ...]
+		service: [{
+			address: string
+			id:      string
+			meta: [_]: string
+			name: string
+			port: number
+			tags: [string, ...]
+		}, ...]
+	}, ...]
 	tag?:      string
 	wait_for?: string
 }
-#ConsulServicesDataSource: query_options?: [{
-	allow_stale?: bool
-	datacenter?:  string
-	namespace?:   string
-	near?:        string
-	node_meta?: [_]: string
-	require_consistent?: bool
-	token?:              string
-	wait_index?:         number
-	wait_time?:          string
-}, ...]
+#ConsulServicesDataSource: {
+	datacenter?: string
+	id?:         string
+	names?: [string, ...]
+	services?: [_]: string
+	query_options?: [{
+		allow_stale?: bool
+		datacenter?:  string
+		namespace?:   string
+		near?:        string
+		node_meta?: [_]: string
+		require_consistent?: bool
+		token?:              string
+		wait_index?:         number
+		wait_time?:          string
+	}, ...]
+}
 #DataSources: {
 	consul_acl_auth_method?: [_]:      #ConsulAclAuthMethodDataSource
 	consul_acl_policy?: [_]:           #ConsulAclPolicyDataSource

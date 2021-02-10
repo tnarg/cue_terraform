@@ -2,14 +2,31 @@
 package grafana
 
 #GrafanaAlertNotificationResource: {
-	name:        string
-	type:        string
-	is_default?: bool
+	name:           string
+	type:           string
+	frequency?:     string
+	id?:            string
+	is_default?:    bool
+	send_reminder?: bool
 	settings?: [_]: string
+	uid?: string
 }
 #GrafanaDashboardResource: {
-	config_json: string
-	folder?:     number
+	config_json:   string
+	dashboard_id?: number
+	folder?:       number
+	id?:           string
+	slug?:         string
+}
+#GrafanaDashboardPermissionResource: {
+	dashboard_id: number
+	id?:          string
+	permissions?: [{
+		permission: string
+		role?:      string
+		team_id?:   number
+		user_id?:   number
+	}, ...]
 }
 #GrafanaDataSourceResource: {
 	name:                 string
@@ -19,34 +36,104 @@ package grafana
 	basic_auth_password?: string
 	basic_auth_username?: string
 	database_name?:       string
+	id?:                  string
 	is_default?:          bool
 	password?:            string
 	url?:                 string
 	username?:            string
 	json_data?: [{
-		auth_type:                  string
-		default_region:             string
 		assume_role_arn?:           string
+		auth_type?:                 string
+		conn_max_lifetime?:         number
 		custom_metrics_namespaces?: string
+		default_region?:            string
+		encrypt?:                   string
+		es_version?:                number
+		graphite_version?:          string
+		http_method?:               string
+		interval?:                  string
+		log_level_field?:           string
+		log_message_field?:         string
+		max_idle_conns?:            number
+		max_open_conns?:            number
+		postgres_version?:          number
+		query_timeout?:             string
+		ssl_mode?:                  string
+		time_field?:                string
+		time_interval?:             string
+		timescaledb?:               bool
+		tls_auth?:                  bool
+		tls_auth_with_ca_cert?:     bool
+		tls_skip_verify?:           bool
+		tsdb_resolution?:           string
+		tsdb_version?:              string
 	}, ...]
 	secure_json_data?: [{
-		access_key: string
-		secret_key: string
+		access_key?:          string
+		basic_auth_password?: string
+		password?:            string
+		private_key?:         string
+		secret_key?:          string
+		tls_ca_cert?:         string
+		tls_client_cert?:     string
+		tls_client_key?:      string
 	}, ...]
 }
-#GrafanaFolderResource: title: string
+#GrafanaFolderResource: {
+	title: string
+	id?:   string
+	uid?:  string
+}
+#GrafanaFolderPermissionResource: {
+	folder_uid: string
+	id?:        string
+	permissions?: [{
+		permission: string
+		role?:      string
+		team_id?:   number
+		user_id?:   number
+	}, ...]
+}
 #GrafanaOrganizationResource: {
 	name:        string
 	admin_user?: string
 	admins?: [string, ...]
 	create_users?: bool
 	editors?: [string, ...]
+	id?:     string
+	org_id?: number
 	viewers?: [string, ...]
 }
+#GrafanaTeamResource: {
+	name:   string
+	email?: string
+	id?:    string
+	members?: [string, ...]
+	team_id?: number
+}
+#GrafanaTeamPreferencesResource: {
+	team_id:            number
+	home_dashboard_id?: number
+	id?:                string
+	theme?:             string
+	timezone?:          string
+}
+#GrafanaUserResource: {
+	email:    string
+	password: string
+	id?:      string
+	login?:   string
+	name?:    string
+}
 #Resources: {
-	grafana_alert_notification?: [_]: #GrafanaAlertNotificationResource
-	grafana_dashboard?: [_]:          #GrafanaDashboardResource
-	grafana_data_source?: [_]:        #GrafanaDataSourceResource
-	grafana_folder?: [_]:             #GrafanaFolderResource
-	grafana_organization?: [_]:       #GrafanaOrganizationResource
+	grafana_alert_notification?: [_]:   #GrafanaAlertNotificationResource
+	grafana_dashboard?: [_]:            #GrafanaDashboardResource
+	grafana_dashboard_permission?: [_]: #GrafanaDashboardPermissionResource
+	grafana_data_source?: [_]:          #GrafanaDataSourceResource
+	grafana_folder?: [_]:               #GrafanaFolderResource
+	grafana_folder_permission?: [_]:    #GrafanaFolderPermissionResource
+	grafana_organization?: [_]:         #GrafanaOrganizationResource
+	grafana_team?: [_]:                 #GrafanaTeamResource
+	grafana_team_preferences?: [_]:     #GrafanaTeamPreferencesResource
+	grafana_user?: [_]:                 #GrafanaUserResource
 }

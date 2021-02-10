@@ -5,16 +5,26 @@ package github
 	plaintext_value: string
 	repository:      string
 	secret_name:     string
+	created_at?:     string
+	id?:             string
+	updated_at?:     string
 }
 #GithubBranchResource: {
 	branch:         string
 	repository:     string
+	etag?:          string
+	id?:            string
+	ref?:           string
+	sha?:           string
 	source_branch?: string
+	source_sha?:    string
 }
 #GithubBranchProtectionResource: {
 	branch:                  string
 	repository:              string
 	enforce_admins?:         bool
+	etag?:                   string
+	id?:                     string
 	require_signed_commits?: bool
 	required_pull_request_reviews?: [{
 		dismiss_stale_reviews?: bool
@@ -40,20 +50,35 @@ package github
 	name:         string
 	repository:   string
 	description?: string
+	etag?:        string
+	id?:          string
+	url?:         string
 }
 #GithubMembershipResource: {
 	username: string
+	etag?:    string
+	id?:      string
 	role?:    string
 }
-#GithubOrganizationBlockResource: username: string
+#GithubOrganizationBlockResource: {
+	username: string
+	etag?:    string
+	id?:      string
+}
 #GithubOrganizationProjectResource: {
 	name:  string
 	body?: string
+	etag?: string
+	id?:   string
+	url?:  string
 }
 #GithubOrganizationWebhookResource: {
 	events: [string, ...]
 	active?: bool
+	etag?:   string
+	id?:     string
 	name?:   string
+	url?:    string
 	configuration?: [{
 		url:           string
 		content_type?: string
@@ -64,6 +89,8 @@ package github
 #GithubProjectColumnResource: {
 	name:       string
 	project_id: string
+	etag?:      string
+	id?:        string
 }
 #GithubRepositoryResource: {
 	name:                    string
@@ -72,17 +99,27 @@ package github
 	allow_squash_merge?:     bool
 	archived?:               bool
 	auto_init?:              bool
+	default_branch?:         string
 	delete_branch_on_merge?: bool
 	description?:            string
+	etag?:                   string
+	full_name?:              string
+	git_clone_url?:          string
 	gitignore_template?:     string
 	has_downloads?:          bool
 	has_issues?:             bool
 	has_projects?:           bool
 	has_wiki?:               bool
 	homepage_url?:           string
+	html_url?:               string
+	http_clone_url?:         string
+	id?:                     string
 	is_template?:            bool
 	license_template?:       string
+	node_id?:                string
 	private?:                bool
+	ssh_clone_url?:          string
+	svn_url?:                string
 	topics?: [string, ...]
 	template?: [{
 		owner:      string
@@ -90,32 +127,47 @@ package github
 	}, ...]
 }
 #GithubRepositoryCollaboratorResource: {
-	repository:  string
-	username:    string
-	permission?: string
+	repository:     string
+	username:       string
+	id?:            string
+	invitation_id?: string
+	permission?:    string
 }
 #GithubRepositoryDeployKeyResource: {
 	key:        string
 	repository: string
 	title:      string
+	etag?:      string
+	id?:        string
 	read_only?: bool
 }
 #GithubRepositoryFileResource: {
-	content:    string
-	file:       string
-	repository: string
-	branch?:    string
+	content:         string
+	file:            string
+	repository:      string
+	branch?:         string
+	commit_author?:  string
+	commit_email?:   string
+	commit_message?: string
+	id?:             string
+	sha?:            string
 }
 #GithubRepositoryProjectResource: {
 	name:       string
 	repository: string
 	body?:      string
+	etag?:      string
+	id?:        string
+	url?:       string
 }
 #GithubRepositoryWebhookResource: {
 	events: [string, ...]
 	repository: string
 	active?:    bool
+	etag?:      string
+	id?:        string
 	name?:      string
+	url?:       string
 	configuration?: [{
 		url:           string
 		content_type?: string
@@ -126,33 +178,54 @@ package github
 #GithubTeamResource: {
 	name:            string
 	description?:    string
+	etag?:           string
+	id?:             string
 	ldap_dn?:        string
+	node_id?:        string
 	parent_team_id?: number
 	privacy?:        string
+	slug?:           string
 }
 #GithubTeamMembershipResource: {
 	team_id:  string
 	username: string
+	etag?:    string
+	id?:      string
 	role?:    string
 }
 #GithubTeamRepositoryResource: {
 	repository:  string
 	team_id:     string
+	etag?:       string
+	id?:         string
 	permission?: string
 }
 #GithubTeamSyncGroupMappingResource: {
 	team_slug: string
+	etag?:     string
+	id?:       string
 	group?: [{
 		group_description: string
 		group_id:          string
 		group_name:        string
 	}, ...]
 }
-#GithubUserGpgKeyResource: armored_public_key:        string
-#GithubUserInvitationAccepterResource: invitation_id: string
+#GithubUserGpgKeyResource: {
+	armored_public_key: string
+	etag?:              string
+	id?:                string
+	key_id?:            string
+}
+#GithubUserInvitationAccepterResource: {
+	invitation_id: string
+	id?:           string
+}
 #GithubUserSshKeyResource: {
 	key:   string
 	title: string
+	etag?: string
+	id?:   string
+	url?:  string
 }
 #Resources: {
 	github_actions_secret?: [_]:           #GithubActionsSecretResource

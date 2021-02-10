@@ -5,14 +5,17 @@ package panos
 	name:           string
 	description?:   string
 	dynamic_match?: string
+	id?:            string
 	static_addresses?: [string, ...]
 	tags?: [string, ...]
 	vsys?: string
 }
 #PanosAddressObjectResource: {
-	name:         string
-	value:        string
-	description?: string
+	name:          string
+	value:         string
+	description?:  string
+	device_group?: string
+	id?:           string
 	tags?: [string, ...]
 	type?: string
 	vsys?: string
@@ -21,33 +24,120 @@ package panos
 	name:     string
 	color?:   string
 	comment?: string
+	id?:      string
 	vsys?:    string
 }
 #PanosAggregateInterfaceResource: {
-	name:                          string
-	adjust_tcp_mss?:               bool
-	comment?:                      string
-	create_dhcp_default_route?:    bool
-	decrypt_forward?:              bool
-	dhcp_default_route_metric?:    number
-	dhcp_send_hostname_enable?:    bool
-	dhcp_send_hostname_value?:     string
-	enable_dhcp?:                  bool
-	enable_untagged_subinterface?: bool
-	ipv4_mss_adjust?:              number
-	ipv6_enabled?:                 bool
-	ipv6_interface_id?:            string
-	ipv6_mss_adjust?:              number
-	management_profile?:           string
-	mode?:                         string
-	mtu?:                          number
-	netflow_profile?:              string
+	name:                             string
+	adjust_tcp_mss?:                  bool
+	comment?:                         string
+	create_dhcp_default_route?:       bool
+	decrypt_forward?:                 bool
+	dhcp_default_route_metric?:       number
+	dhcp_send_hostname_enable?:       bool
+	dhcp_send_hostname_value?:        string
+	enable_dhcp?:                     bool
+	enable_untagged_subinterface?:    bool
+	id?:                              string
+	ipv4_mss_adjust?:                 number
+	ipv6_enabled?:                    bool
+	ipv6_interface_id?:               string
+	ipv6_mss_adjust?:                 number
+	lacp_enable?:                     bool
+	lacp_fast_failover?:              bool
+	lacp_ha_enable_same_system_mac?:  bool
+	lacp_ha_passive_pre_negotiation?: bool
+	lacp_ha_same_system_mac_address?: string
+	lacp_max_ports?:                  number
+	lacp_mode?:                       string
+	lacp_system_priority?:            number
+	lacp_transmission_rate?:          string
+	lldp_enable?:                     bool
+	lldp_ha_passive_pre_negotiation?: bool
+	lldp_profile?:                    string
+	management_profile?:              string
+	mode?:                            string
+	mtu?:                             number
+	netflow_profile?:                 string
 	static_ips?: [string, ...]
 	vsys?: string
+}
+#PanosAntiSpywareSecurityProfileResource: {
+	name:                   string
+	description?:           string
+	device_group?:          string
+	id?:                    string
+	packet_capture?:        string
+	sinkhole_ipv4_address?: string
+	sinkhole_ipv6_address?: string
+	threat_exceptions?: [string, ...]
+	vsys?: string
+	botnet_list?: [{
+		action:          string
+		name:            string
+		packet_capture?: string
+	}, ...]
+	dns_category?: [{
+		name:            string
+		action?:         string
+		log_level?:      string
+		packet_capture?: string
+	}, ...]
+	exception?: [{
+		name:               string
+		action?:            string
+		block_ip_duration?: number
+		block_ip_track_by?: string
+		exempt_ips?: [string, ...]
+		packet_capture?: string
+	}, ...]
+	rule?: [{
+		category:           string
+		name:               string
+		action?:            string
+		block_ip_duration?: number
+		block_ip_track_by?: string
+		packet_capture?:    string
+		severities?: [string, ...]
+		threat_name?: string
+	}, ...]
+	white_list?: [{
+		name:         string
+		description?: string
+	}, ...]
+}
+#PanosAntivirusSecurityProfileResource: {
+	name:            string
+	description?:    string
+	device_group?:   string
+	id?:             string
+	packet_capture?: bool
+	threat_exceptions?: [string, ...]
+	vsys?: string
+	application_exception?: [{
+		application: string
+		action?:     string
+	}, ...]
+	decoder?: [{
+		name:                     string
+		action?:                  string
+		machine_learning_action?: string
+		wildfire_action?:         string
+	}, ...]
+	machine_learning_exception?: [{
+		name:         string
+		description?: string
+		filename?:    string
+	}, ...]
+	machine_learning_model?: [{
+		action: string
+		model:  string
+	}, ...]
 }
 #PanosApplicationGroupResource: {
 	name: string
 	applications?: [string, ...]
+	id?:   string
 	vsys?: string
 }
 #PanosApplicationObjectResource: {
@@ -62,6 +152,7 @@ package panos
 	evasive_behavior?:                         bool
 	excessive_bandwidth?:                      bool
 	has_known_vulnerability?:                  bool
+	id?:                                       string
 	no_app_id_caching?:                        bool
 	parent_app?:                               string
 	pervasive_use?:                            bool
@@ -103,11 +194,14 @@ package panos
 	application_object: string
 	name:               string
 	comment?:           string
+	id?:                string
 	ordered_match?:     bool
 	scope?:             string
 	vsys?:              string
 	and_condition?: [{
+		name?: string
 		or_condition?: [{
+			name?: string
 			equal_to?: [{
 				context:   string
 				value:     string
@@ -132,10 +226,21 @@ package panos
 		}, ...]
 	}, ...]
 }
+#PanosArpResource: {
+	ip:                 string
+	mac_address:        string
+	id?:                string
+	interface?:         string
+	interface_name?:    string
+	interface_type?:    string
+	subinterface_name?: string
+	template?:          string
+}
 #PanosBfdProfileResource: {
 	name:                  string
 	detection_multiplier?: number
 	hold_time?:            number
+	id?:                   string
 	minimum_rx_interval?:  number
 	minimum_rx_ttl?:       number
 	minimum_tx_interval?:  number
@@ -156,6 +261,7 @@ package panos
 	enable?:                           bool
 	enable_graceful_restart?:          bool
 	enforce_first_as?:                 bool
+	id?:                               string
 	install_route?:                    bool
 	local_restart_time?:               number
 	max_peer_restart_time?:            number
@@ -177,6 +283,7 @@ package panos
 	enable?:                   bool
 	extended_community_type?:  string
 	extended_community_value?: string
+	id?:                       string
 	local_preference?:         string
 	med?:                      string
 	next_hop?:                 string
@@ -193,6 +300,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?: string
@@ -210,6 +318,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?: string
@@ -221,12 +330,15 @@ package panos
 #PanosBgpAuthProfileResource: {
 	name:           string
 	virtual_router: string
+	id?:            string
 	secret?:        string
+	secret_enc?:    string
 }
 #PanosBgpConditionalAdvResource: {
 	name:           string
 	virtual_router: string
 	enable?:        bool
+	id?:            string
 	used_by?: [string, ...]
 }
 #PanosBgpConditionalAdvAdvertiseFilterResource: {
@@ -239,6 +351,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?: string
@@ -253,6 +366,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?: string
@@ -264,11 +378,13 @@ package panos
 	decay_half_life_reachable?:   number
 	decay_half_life_unreachable?: number
 	enable?:                      bool
+	id?:                          string
 	max_hold_time?:               number
 	reuse?:                       number
 }
 #PanosBgpExportRuleGroupResource: {
 	virtual_router:      string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rule?: [{
@@ -302,6 +418,7 @@ package panos
 }
 #PanosBgpImportRuleGroupResource: {
 	virtual_router:      string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rule?: [{
@@ -349,6 +466,7 @@ package panos
 	enable_mp_bgp?:                       bool
 	enable_sender_side_loop_detection?:   bool
 	hold_time?:                           number
+	id?:                                  string
 	idle_hold_time?:                      number
 	incoming_connections_remote_port?:    number
 	keep_alive_interval?:                 number
@@ -370,6 +488,7 @@ package panos
 	aggregated_confed_as_path?:   bool
 	enable?:                      bool
 	export_next_hop?:             string
+	id?:                          string
 	import_next_hop?:             string
 	remove_private_as?:           bool
 	soft_reset_with_stored_info?: bool
@@ -380,6 +499,7 @@ package panos
 	virtual_router:     string
 	address_family?:    string
 	enable?:            bool
+	id?:                string
 	metric?:            number
 	route_table?:       string
 	set_as_path_limit?: number
@@ -389,19 +509,123 @@ package panos
 	set_med?:              string
 	set_origin?:           string
 }
+#PanosCustomDataPatternObjectResource: {
+	name:          string
+	description?:  string
+	device_group?: string
+	id?:           string
+	type?:         string
+	vsys?:         string
+	file_property?: [{
+		file_property:  string
+		file_type:      string
+		name:           string
+		property_value: string
+	}, ...]
+	predefined_pattern?: [{
+		name: string
+		file_types?: [string, ...]
+	}, ...]
+	regex?: [{
+		name:  string
+		regex: string
+		file_types?: [string, ...]
+	}, ...]
+}
 #PanosDagTagsResource: {
+	id?:   string
 	vsys?: string
 	register?: [{
 		ip: string
 		tags: [string, ...]
 	}, ...]
 }
+#PanosDataFilteringSecurityProfileResource: {
+	name:          string
+	data_capture?: bool
+	description?:  string
+	device_group?: string
+	id?:           string
+	vsys?:         string
+	rule?: [{
+		data_pattern:     string
+		alert_threshold?: number
+		applications?: [string, ...]
+		block_threshold?: number
+		direction?:       string
+		file_types?: [string, ...]
+		log_severity?: string
+		name?:         string
+	}, ...]
+}
+#PanosDeviceGroupParentResource: {
+	device_group: string
+	id?:          string
+	parent?:      string
+}
+#PanosDosProtectionProfileResource: {
+	name:                         string
+	description?:                 string
+	device_group?:                string
+	enable_sessions_protections?: bool
+	id?:                          string
+	max_concurrent_sessions?:     number
+	type?:                        string
+	vsys?:                        string
+	icmp?: [{
+		activate_rate?:  number
+		alarm_rate?:     number
+		block_duration?: number
+		enable?:         bool
+		max_rate?:       number
+	}, ...]
+	icmpv6?: [{
+		activate_rate?:  number
+		alarm_rate?:     number
+		block_duration?: number
+		enable?:         bool
+		max_rate?:       number
+	}, ...]
+	other?: [{
+		activate_rate?:  number
+		alarm_rate?:     number
+		block_duration?: number
+		enable?:         bool
+		max_rate?:       number
+	}, ...]
+	syn?: [{
+		action:          string
+		activate_rate?:  number
+		alarm_rate?:     number
+		block_duration?: number
+		enable?:         bool
+		max_rate?:       number
+	}, ...]
+	udp?: [{
+		activate_rate?:  number
+		alarm_rate?:     number
+		block_duration?: number
+		enable?:         bool
+		max_rate?:       number
+	}, ...]
+}
+#PanosDynamicUserGroupResource: {
+	filter:        string
+	name:          string
+	description?:  string
+	device_group?: string
+	id?:           string
+	tags?: [string, ...]
+	vsys?: string
+}
 #PanosEdlResource: {
 	name:                 string
 	certificate_profile?: string
 	description?:         string
 	exceptions?: [string, ...]
+	id?:                  string
 	password?:            string
+	password_enc?:        string
 	repeat?:              string
 	repeat_at?:           string
 	repeat_day_of_month?: number
@@ -420,6 +644,7 @@ package panos
 	escaped_characters?: string
 	gtp_format?:         string
 	hip_match_format?:   string
+	id?:                 string
 	iptag_format?:       string
 	sctp_format?:        string
 	system_format?:      string
@@ -440,36 +665,75 @@ package panos
 	}, ...]
 }
 #PanosEthernetInterfaceResource: {
-	mode:                       string
-	name:                       string
-	adjust_tcp_mss?:            bool
-	aggregate_group?:           string
-	comment?:                   string
-	create_dhcp_default_route?: bool
-	decrypt_forward?:           bool
-	dhcp_default_route_metric?: number
-	dhcp_send_hostname_enable?: bool
-	dhcp_send_hostname_value?:  string
-	enable_dhcp?:               bool
-	ipv4_mss_adjust?:           number
-	ipv6_enabled?:              bool
-	ipv6_mss_adjust?:           number
-	link_duplex?:               string
-	link_speed?:                string
-	link_state?:                string
-	lldp_enabled?:              bool
-	lldp_profile?:              string
-	management_profile?:        string
-	mtu?:                       number
-	netflow_profile?:           string
-	rx_policing_rate?:          number
+	mode:                             string
+	name:                             string
+	adjust_tcp_mss?:                  bool
+	aggregate_group?:                 string
+	comment?:                         string
+	create_dhcp_default_route?:       bool
+	decrypt_forward?:                 bool
+	dhcp_default_route_metric?:       number
+	dhcp_send_hostname_enable?:       bool
+	dhcp_send_hostname_value?:        string
+	enable_dhcp?:                     bool
+	id?:                              string
+	ipv4_mss_adjust?:                 number
+	ipv6_enabled?:                    bool
+	ipv6_mss_adjust?:                 number
+	lacp_ha_passive_pre_negotiation?: bool
+	lacp_port_priority?:              number
+	link_duplex?:                     string
+	link_speed?:                      string
+	link_state?:                      string
+	lldp_enabled?:                    bool
+	lldp_ha_passive_pre_negotiation?: bool
+	lldp_profile?:                    string
+	management_profile?:              string
+	mtu?:                             number
+	netflow_profile?:                 string
+	rx_policing_rate?:                number
 	static_ips?: [string, ...]
 	tx_policing_rate?: number
 	vsys?:             string
 }
+#PanosFileBlockingSecurityProfileResource: {
+	name:          string
+	description?:  string
+	device_group?: string
+	id?:           string
+	vsys?:         string
+	rule?: [{
+		name:    string
+		action?: string
+		applications?: [string, ...]
+		direction?: string
+		file_types?: [string, ...]
+	}, ...]
+}
 #PanosGeneralSettingsResource: {
-	update_server?:        string
-	verify_update_server?: bool
+	dns_primary?:             string
+	dns_secondary?:           string
+	domain?:                  string
+	hostname?:                string
+	id?:                      string
+	ntp_primary_address?:     string
+	ntp_primary_algorithm?:   string
+	ntp_primary_auth_key?:    string
+	ntp_primary_auth_type?:   string
+	ntp_primary_key_id?:      number
+	ntp_secondary_address?:   string
+	ntp_secondary_algorithm?: string
+	ntp_secondary_auth_key?:  string
+	ntp_secondary_auth_type?: string
+	ntp_secondary_key_id?:    number
+	proxy_password?:          string
+	proxy_password_enc?:      string
+	proxy_port?:              number
+	proxy_server?:            string
+	proxy_user?:              string
+	timezone?:                string
+	update_server?:           string
+	verify_update_server?:    bool
 }
 #PanosGreTunnelResource: {
 	interface:              string
@@ -480,6 +744,7 @@ package panos
 	copy_tos?:              bool
 	disabled?:              bool
 	enable_keep_alive?:     bool
+	id?:                    string
 	keep_alive_hold_timer?: number
 	keep_alive_interval?:   number
 	keep_alive_retry?:      number
@@ -487,7 +752,10 @@ package panos
 	ttl?:                   number
 }
 #PanosHttpServerProfileResource: {
-	name:              string
+	name: string
+	id?:  string
+	password_enc?: [_]: string
+	password_raw?: [_]: string
 	tag_registration?: bool
 	vsys?:             string
 	auth_format?: [{
@@ -606,6 +874,7 @@ package panos
 	encryptions: [string, ...]
 	name:                     string
 	authentication_multiple?: number
+	id?:                      string
 	lifetime_type?:           string
 	lifetime_value?:          number
 }
@@ -628,6 +897,7 @@ package panos
 	enable_liveness_check?:             bool
 	enable_nat_traversal?:              bool
 	enable_passive_mode?:               bool
+	id?:                                string
 	ikev1_crypto_profile?:              string
 	ikev1_exchange_mode?:               string
 	ikev2_cookie_validation?:           bool
@@ -646,13 +916,21 @@ package panos
 	peer_ip_type?:                      string
 	peer_ip_value?:                     string
 	pre_shared_key?:                    string
+	pre_shared_key_enc?:                string
 	version?:                           string
+}
+#PanosIpTagResource: {
+	ip: string
+	tags: [string, ...]
+	id?:   string
+	vsys?: string
 }
 #PanosIpsecCryptoProfileResource: {
 	authentications: [string, ...]
 	encryptions: [string, ...]
 	name:            string
 	dh_group?:       string
+	id?:             string
 	lifesize_type?:  string
 	lifesize_value?: number
 	lifetime_type?:  string
@@ -681,9 +959,12 @@ package panos
 	gps_prefer_ipv6?:                bool
 	gps_publish_connected_routes?:   bool
 	gps_publish_routes?: [string, ...]
+	id?:                            string
 	mk_auth_key?:                   string
+	mk_auth_key_enc?:               string
 	mk_auth_type?:                  string
 	mk_esp_encryption_key?:         string
+	mk_esp_encryption_key_enc?:     string
 	mk_esp_encryption_type?:        string
 	mk_interface?:                  string
 	mk_local_address_floating_ip?:  string
@@ -701,6 +982,7 @@ package panos
 #PanosIpsecTunnelProxyIdIpv4Resource: {
 	ipsec_tunnel:         string
 	name:                 string
+	id?:                  string
 	local?:               string
 	protocol_any?:        bool
 	protocol_number?:     number
@@ -714,6 +996,7 @@ package panos
 	name:             string
 	parent_interface: string
 	comment?:         string
+	id?:              string
 	interface_type?:  string
 	netflow_profile?: string
 	parent_mode?:     string
@@ -731,6 +1014,7 @@ package panos
 	dhcp_send_hostname_enable?: bool
 	dhcp_send_hostname_value?:  string
 	enable_dhcp?:               bool
+	id?:                        string
 	interface_type?:            string
 	ipv4_mss_adjust?:           number
 	ipv6_enabled?:              bool
@@ -745,17 +1029,29 @@ package panos
 }
 #PanosLicenseApiKeyResource: {
 	key:         string
+	id?:         string
 	retain_key?: bool
 }
 #PanosLicensingResource: {
 	auth_codes: [string, ...]
 	delicense?: bool
-	mode?:      string
+	id?:        string
+	licenses?: [{
+		auth_code:   string
+		description: string
+		expired:     string
+		expires:     string
+		feature:     string
+		issued:      string
+		serial:      string
+	}, ...]
+	mode?: string
 }
 #PanosLogForwardingProfileResource: {
 	name:              string
 	description?:      string
 	enhanced_logging?: bool
+	id?:               string
 	vsys?:             string
 	match_list?: [{
 		name:         string
@@ -794,6 +1090,7 @@ package panos
 	name:                string
 	adjust_tcp_mss?:     bool
 	comment?:            string
+	id?:                 string
 	ipv4_mss_adjust?:    number
 	ipv6_mss_adjust?:    number
 	management_profile?: string
@@ -807,6 +1104,7 @@ package panos
 	http?:      bool
 	http_ocsp?: bool
 	https?:     bool
+	id?:        string
 	permitted_ips?: [string, ...]
 	ping?:                       bool
 	response_pages?:             bool
@@ -820,6 +1118,7 @@ package panos
 #PanosMonitorProfileResource: {
 	name:       string
 	action?:    string
+	id?:        string
 	interval?:  number
 	threshold?: number
 }
@@ -835,6 +1134,8 @@ package panos
 	dat_type?:                 string
 	description?:              string
 	disabled?:                 bool
+	id?:                       string
+	rulebase?:                 string
 	sat_address_type?:         string
 	sat_fallback_interface?:   string
 	sat_fallback_ip_address?:  string
@@ -865,6 +1166,8 @@ package panos
 	dat_type?:                 string
 	description?:              string
 	disabled?:                 bool
+	id?:                       string
+	rulebase?:                 string
 	sat_address_type?:         string
 	sat_fallback_interface?:   string
 	sat_fallback_ip_address?:  string
@@ -884,6 +1187,7 @@ package panos
 	vsys?:         string
 }
 #PanosNatRuleGroupResource: {
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	vsys?:               string
@@ -953,11 +1257,118 @@ package panos
 		}, ...]
 	}, ...]
 }
+#PanosOspfResource: {
+	virtual_router:                    string
+	allow_redistribute_default_route?: bool
+	bfd_profile?:                      string
+	enable?:                           bool
+	enable_graceful_restart?:          bool
+	grace_period?:                     number
+	helper_enable?:                    bool
+	id?:                               string
+	lsa_interval?:                     number
+	max_neighbor_restart_time?:        number
+	reject_default_route?:             bool
+	rfc_1583?:                         bool
+	router_id?:                        string
+	spf_calculation_delay?:            number
+	strict_lsa_checking?:              bool
+	template?:                         string
+	template_stack?:                   string
+}
+#PanosOspfAreaResource: {
+	name:                     string
+	virtual_router:           string
+	accept_summary?:          bool
+	advertise_metric?:        number
+	advertise_type?:          string
+	default_route_advertise?: bool
+	id?:                      string
+	template?:                string
+	template_stack?:          string
+	type?:                    string
+	ext_range?: [{
+		network: string
+		action?: string
+	}, ...]
+	range?: [{
+		network: string
+		action?: string
+	}, ...]
+}
+#PanosOspfAreaInterfaceResource: {
+	name:                 string
+	ospf_area:            string
+	virtual_router:       string
+	auth_profile?:        string
+	bfd_profile?:         string
+	dead_counts?:         number
+	enable?:              bool
+	grace_restart_delay?: number
+	hello_interval?:      number
+	id?:                  string
+	link_type?:           string
+	metric?:              number
+	neighbors?: [string, ...]
+	passive?:             bool
+	priority?:            number
+	retransmit_interval?: number
+	template?:            string
+	template_stack?:      string
+	transit_delay?:       number
+}
+#PanosOspfAreaVirtualLinkResource: {
+	name:                 string
+	neighbor_id:          string
+	ospf_area:            string
+	transit_area_id:      string
+	virtual_router:       string
+	auth_profile?:        string
+	bfd_profile?:         string
+	dead_counts?:         number
+	enable?:              bool
+	hello_interval?:      number
+	id?:                  string
+	retransmit_interval?: number
+	template?:            string
+	template_stack?:      string
+	transit_delay?:       number
+}
+#PanosOspfAuthProfileResource: {
+	name:           string
+	virtual_router: string
+	auth_type?:     string
+	id?:            string
+	md5_keys_enc?: [{
+		enc: string
+		raw: string
+	}, ...]
+	password?:       string
+	password_enc?:   string
+	template?:       string
+	template_stack?: string
+	md5_key?: [{
+		key:        string
+		key_id:     number
+		preferred?: bool
+	}, ...]
+}
+#PanosOspfExportResource: {
+	name:            string
+	virtual_router:  string
+	id?:             string
+	metric?:         number
+	path_type?:      string
+	tag?:            string
+	template?:       string
+	template_stack?: string
+}
 #PanosPanoramaAddressGroupResource: {
 	name:           string
 	description?:   string
 	device_group?:  string
 	dynamic_match?: string
+	id?:            string
 	static_addresses?: [string, ...]
 	tags?: [string, ...]
 }
@@ -966,35 +1377,51 @@ package panos
 	value:         string
 	description?:  string
 	device_group?: string
+	id?:           string
 	tags?: [string, ...]
 	type?: string
+	vsys?: string
 }
 #PanosPanoramaAdministrativeTagResource: {
 	name:          string
 	color?:        string
 	comment?:      string
 	device_group?: string
+	id?:           string
 }
 #PanosPanoramaAggregateInterfaceResource: {
-	name:                          string
-	template:                      string
-	adjust_tcp_mss?:               bool
-	comment?:                      string
-	create_dhcp_default_route?:    bool
-	decrypt_forward?:              bool
-	dhcp_default_route_metric?:    number
-	dhcp_send_hostname_enable?:    bool
-	dhcp_send_hostname_value?:     string
-	enable_dhcp?:                  bool
-	enable_untagged_subinterface?: bool
-	ipv4_mss_adjust?:              number
-	ipv6_enabled?:                 bool
-	ipv6_interface_id?:            string
-	ipv6_mss_adjust?:              number
-	management_profile?:           string
-	mode?:                         string
-	mtu?:                          number
-	netflow_profile?:              string
+	name:                             string
+	template:                         string
+	adjust_tcp_mss?:                  bool
+	comment?:                         string
+	create_dhcp_default_route?:       bool
+	decrypt_forward?:                 bool
+	dhcp_default_route_metric?:       number
+	dhcp_send_hostname_enable?:       bool
+	dhcp_send_hostname_value?:        string
+	enable_dhcp?:                     bool
+	enable_untagged_subinterface?:    bool
+	id?:                              string
+	ipv4_mss_adjust?:                 number
+	ipv6_enabled?:                    bool
+	ipv6_interface_id?:               string
+	ipv6_mss_adjust?:                 number
+	lacp_enable?:                     bool
+	lacp_fast_failover?:              bool
+	lacp_ha_enable_same_system_mac?:  bool
+	lacp_ha_passive_pre_negotiation?: bool
+	lacp_ha_same_system_mac_address?: string
+	lacp_max_ports?:                  number
+	lacp_mode?:                       string
+	lacp_system_priority?:            number
+	lacp_transmission_rate?:          string
+	lldp_enable?:                     bool
+	lldp_ha_passive_pre_negotiation?: bool
+	lldp_profile?:                    string
+	management_profile?:              string
+	mode?:                            string
+	mtu?:                             number
+	netflow_profile?:                 string
 	static_ips?: [string, ...]
 	vsys?: string
 }
@@ -1002,6 +1429,7 @@ package panos
 	name: string
 	applications?: [string, ...]
 	device_group?: string
+	id?:           string
 }
 #PanosPanoramaApplicationObjectResource: {
 	category:                                  string
@@ -1016,6 +1444,7 @@ package panos
 	evasive_behavior?:                         bool
 	excessive_bandwidth?:                      bool
 	has_known_vulnerability?:                  bool
+	id?:                                       string
 	no_app_id_caching?:                        bool
 	parent_app?:                               string
 	pervasive_use?:                            bool
@@ -1057,10 +1486,13 @@ package panos
 	name:               string
 	comment?:           string
 	device_group?:      string
+	id?:                string
 	ordered_match?:     bool
 	scope?:             string
 	and_condition?: [{
+		name?: string
 		or_condition?: [{
+			name?: string
 			equal_to?: [{
 				context:   string
 				value:     string
@@ -1089,6 +1521,7 @@ package panos
 	name:                  string
 	detection_multiplier?: number
 	hold_time?:            number
+	id?:                   string
 	minimum_rx_interval?:  number
 	minimum_rx_ttl?:       number
 	minimum_tx_interval?:  number
@@ -1111,6 +1544,7 @@ package panos
 	enable?:                           bool
 	enable_graceful_restart?:          bool
 	enforce_first_as?:                 bool
+	id?:                               string
 	install_route?:                    bool
 	local_restart_time?:               number
 	max_peer_restart_time?:            number
@@ -1134,6 +1568,7 @@ package panos
 	enable?:                   bool
 	extended_community_type?:  string
 	extended_community_value?: string
+	id?:                       string
 	local_preference?:         string
 	med?:                      string
 	next_hop?:                 string
@@ -1152,6 +1587,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?:    string
@@ -1171,6 +1607,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?:    string
@@ -1184,7 +1621,9 @@ package panos
 #PanosPanoramaBgpAuthProfileResource: {
 	name:            string
 	virtual_router:  string
+	id?:             string
 	secret?:         string
+	secret_enc?:     string
 	template?:       string
 	template_stack?: string
 }
@@ -1192,6 +1631,7 @@ package panos
 	name:            string
 	virtual_router:  string
 	enable?:         bool
+	id?:             string
 	template?:       string
 	template_stack?: string
 	used_by?: [string, ...]
@@ -1206,6 +1646,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?:    string
@@ -1222,6 +1663,7 @@ package panos
 	enable?:                   bool
 	extended_community_regex?: string
 	from_peers?: [string, ...]
+	id?:  string
 	med?: string
 	next_hops?: [string, ...]
 	route_table?:    string
@@ -1235,6 +1677,7 @@ package panos
 	decay_half_life_reachable?:   number
 	decay_half_life_unreachable?: number
 	enable?:                      bool
+	id?:                          string
 	max_hold_time?:               number
 	reuse?:                       number
 	template?:                    string
@@ -1242,6 +1685,7 @@ package panos
 }
 #PanosPanoramaBgpExportRuleGroupResource: {
 	virtual_router:      string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	template?:           string
@@ -1277,6 +1721,7 @@ package panos
 }
 #PanosPanoramaBgpImportRuleGroupResource: {
 	virtual_router:      string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	template?:           string
@@ -1326,6 +1771,7 @@ package panos
 	enable_mp_bgp?:                       bool
 	enable_sender_side_loop_detection?:   bool
 	hold_time?:                           number
+	id?:                                  string
 	idle_hold_time?:                      number
 	incoming_connections_remote_port?:    number
 	keep_alive_interval?:                 number
@@ -1349,6 +1795,7 @@ package panos
 	aggregated_confed_as_path?:   bool
 	enable?:                      bool
 	export_next_hop?:             string
+	id?:                          string
 	import_next_hop?:             string
 	remove_private_as?:           bool
 	soft_reset_with_stored_info?: bool
@@ -1361,6 +1808,7 @@ package panos
 	virtual_router:     string
 	address_family?:    string
 	enable?:            bool
+	id?:                string
 	metric?:            number
 	route_table?:       string
 	set_as_path_limit?: number
@@ -1375,6 +1823,7 @@ package panos
 #PanosPanoramaDeviceGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	device?: [{
 		serial: string
 		vsys_list?: [string, ...]
@@ -1383,6 +1832,7 @@ package panos
 #PanosPanoramaDeviceGroupEntryResource: {
 	device_group: string
 	serial:       string
+	id?:          string
 	vsys_list?: [string, ...]
 }
 #PanosPanoramaEdlResource: {
@@ -1391,7 +1841,9 @@ package panos
 	description?:         string
 	device_group?:        string
 	exceptions?: [string, ...]
+	id?:                  string
 	password?:            string
+	password_enc?:        string
 	repeat?:              string
 	repeat_at?:           string
 	repeat_day_of_month?: number
@@ -1410,6 +1862,7 @@ package panos
 	escaped_characters?: string
 	gtp_format?:         string
 	hip_match_format?:   string
+	id?:                 string
 	iptag_format?:       string
 	sctp_format?:        string
 	system_format?:      string
@@ -1432,30 +1885,34 @@ package panos
 	}, ...]
 }
 #PanosPanoramaEthernetInterfaceResource: {
-	mode:                       string
-	name:                       string
-	template:                   string
-	adjust_tcp_mss?:            bool
-	aggregate_group?:           string
-	comment?:                   string
-	create_dhcp_default_route?: bool
-	decrypt_forward?:           bool
-	dhcp_default_route_metric?: number
-	dhcp_send_hostname_enable?: bool
-	dhcp_send_hostname_value?:  string
-	enable_dhcp?:               bool
-	ipv4_mss_adjust?:           number
-	ipv6_enabled?:              bool
-	ipv6_mss_adjust?:           number
-	link_duplex?:               string
-	link_speed?:                string
-	link_state?:                string
-	lldp_enabled?:              bool
-	lldp_profile?:              string
-	management_profile?:        string
-	mtu?:                       number
-	netflow_profile?:           string
-	rx_policing_rate?:          number
+	mode:                             string
+	name:                             string
+	template:                         string
+	adjust_tcp_mss?:                  bool
+	aggregate_group?:                 string
+	comment?:                         string
+	create_dhcp_default_route?:       bool
+	decrypt_forward?:                 bool
+	dhcp_default_route_metric?:       number
+	dhcp_send_hostname_enable?:       bool
+	dhcp_send_hostname_value?:        string
+	enable_dhcp?:                     bool
+	id?:                              string
+	ipv4_mss_adjust?:                 number
+	ipv6_enabled?:                    bool
+	ipv6_mss_adjust?:                 number
+	lacp_ha_passive_pre_negotiation?: bool
+	lacp_port_priority?:              number
+	link_duplex?:                     string
+	link_speed?:                      string
+	link_state?:                      string
+	lldp_enabled?:                    bool
+	lldp_ha_passive_pre_negotiation?: bool
+	lldp_profile?:                    string
+	management_profile?:              string
+	mtu?:                             number
+	netflow_profile?:                 string
+	rx_policing_rate?:                number
 	static_ips?: [string, ...]
 	tx_policing_rate?: number
 	vsys?:             string
@@ -1464,7 +1921,9 @@ package panos
 	credential_file:                  string
 	name:                             string
 	project_id:                       string
+	credential_file_enc?:             string
 	description?:                     string
+	id?:                              string
 	service_account_credential_type?: string
 }
 #PanosPanoramaGkeClusterResource: {
@@ -1472,6 +1931,7 @@ package panos
 	gcp_zone:           string
 	gke_cluster_group:  string
 	name:               string
+	id?:                string
 }
 #PanosPanoramaGkeClusterGroupResource: {
 	device_group:           string
@@ -1479,6 +1939,7 @@ package panos
 	name:                   string
 	template_stack:         string
 	description?:           string
+	id?:                    string
 }
 #PanosPanoramaGreTunnelResource: {
 	interface:              string
@@ -1490,6 +1951,7 @@ package panos
 	copy_tos?:              bool
 	disabled?:              bool
 	enable_keep_alive?:     bool
+	id?:                    string
 	keep_alive_hold_timer?: number
 	keep_alive_interval?:   number
 	keep_alive_retry?:      number
@@ -1497,8 +1959,11 @@ package panos
 	ttl?:                   number
 }
 #PanosPanoramaHttpServerProfileResource: {
-	name:              string
-	device_group?:     string
+	name:          string
+	device_group?: string
+	id?:           string
+	password_enc?: [_]: string
+	password_raw?: [_]: string
 	tag_registration?: bool
 	template?:         string
 	template_stack?:   string
@@ -1619,6 +2084,7 @@ package panos
 	encryptions: [string, ...]
 	name:                     string
 	authentication_multiple?: number
+	id?:                      string
 	lifetime_type?:           string
 	lifetime_value?:          number
 	template?:                string
@@ -1643,6 +2109,7 @@ package panos
 	enable_liveness_check?:             bool
 	enable_nat_traversal?:              bool
 	enable_passive_mode?:               bool
+	id?:                                string
 	ikev1_crypto_profile?:              string
 	ikev1_exchange_mode?:               string
 	ikev2_cookie_validation?:           bool
@@ -1661,6 +2128,7 @@ package panos
 	peer_ip_type?:                      string
 	peer_ip_value?:                     string
 	pre_shared_key?:                    string
+	pre_shared_key_enc?:                string
 	template?:                          string
 	template_stack?:                    string
 	version?:                           string
@@ -1670,6 +2138,7 @@ package panos
 	encryptions: [string, ...]
 	name:            string
 	dh_group?:       string
+	id?:             string
 	lifesize_type?:  string
 	lifesize_value?: number
 	lifetime_type?:  string
@@ -1701,9 +2170,12 @@ package panos
 	gps_prefer_ipv6?:                bool
 	gps_publish_connected_routes?:   bool
 	gps_publish_routes?: [string, ...]
+	id?:                            string
 	mk_auth_key?:                   string
+	mk_auth_key_enc?:               string
 	mk_auth_type?:                  string
 	mk_esp_encryption_key?:         string
+	mk_esp_encryption_key_enc?:     string
 	mk_esp_encryption_type?:        string
 	mk_interface?:                  string
 	mk_local_address_floating_ip?:  string
@@ -1722,6 +2194,7 @@ package panos
 	ipsec_tunnel:         string
 	name:                 string
 	template:             string
+	id?:                  string
 	local?:               string
 	protocol_any?:        bool
 	protocol_number?:     number
@@ -1736,6 +2209,7 @@ package panos
 	parent_interface: string
 	template:         string
 	comment?:         string
+	id?:              string
 	interface_type?:  string
 	netflow_profile?: string
 	parent_mode?:     string
@@ -1754,6 +2228,7 @@ package panos
 	dhcp_send_hostname_enable?: bool
 	dhcp_send_hostname_value?:  string
 	enable_dhcp?:               bool
+	id?:                        string
 	interface_type?:            string
 	ipv4_mss_adjust?:           number
 	ipv6_enabled?:              bool
@@ -1771,6 +2246,7 @@ package panos
 	description?:      string
 	device_group?:     string
 	enhanced_logging?: bool
+	id?:               string
 	match_list?: [{
 		name:         string
 		description?: string
@@ -1809,6 +2285,7 @@ package panos
 	template:            string
 	adjust_tcp_mss?:     bool
 	comment?:            string
+	id?:                 string
 	ipv4_mss_adjust?:    number
 	ipv6_mss_adjust?:    number
 	management_profile?: string
@@ -1822,6 +2299,7 @@ package panos
 	http?:      bool
 	http_ocsp?: bool
 	https?:     bool
+	id?:        string
 	permitted_ips?: [string, ...]
 	ping?:                       bool
 	response_pages?:             bool
@@ -1837,6 +2315,7 @@ package panos
 #PanosPanoramaMonitorProfileResource: {
 	name:            string
 	action?:         string
+	id?:             string
 	interval?:       number
 	template?:       string
 	template_stack?: string
@@ -1855,6 +2334,7 @@ package panos
 	description?:              string
 	device_group?:             string
 	disabled?:                 bool
+	id?:                       string
 	negate_target?:            bool
 	rulebase?:                 string
 	sat_address_type?:         string
@@ -1891,6 +2371,7 @@ package panos
 	description?:              string
 	device_group?:             string
 	disabled?:                 bool
+	id?:                       string
 	negate_target?:            bool
 	rulebase?:                 string
 	sat_address_type?:         string
@@ -1916,6 +2397,7 @@ package panos
 }
 #PanosPanoramaNatRuleGroupResource: {
 	device_group?:       string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rulebase?:           string
@@ -1992,6 +2474,7 @@ package panos
 }
 #PanosPanoramaPbfRuleGroupResource: {
 	device_group?:       string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rulebase?:           string
@@ -2003,6 +2486,7 @@ package panos
 		negate_target?:                bool
 		schedule?:                     string
 		tags?: [string, ...]
+		uuid?: string
 		destination?: [{
 			addresses: [string, ...]
 			applications: [string, ...]
@@ -2046,6 +2530,7 @@ package panos
 	bgp_communities?: [string, ...]
 	bgp_extended_communities?: [string, ...]
 	destinations?: [string, ...]
+	id?: string
 	interfaces?: [string, ...]
 	next_hops?: [string, ...]
 	ospf_areas?: [string, ...]
@@ -2057,6 +2542,7 @@ package panos
 }
 #PanosPanoramaSecurityPoliciesResource: {
 	device_group?: string
+	id?:           string
 	rulebase?:     string
 	rule?: [{
 		applications: [string, ...]
@@ -2099,6 +2585,7 @@ package panos
 }
 #PanosPanoramaSecurityPolicyResource: {
 	device_group?: string
+	id?:           string
 	rulebase?:     string
 	rule?: [{
 		applications: [string, ...]
@@ -2141,6 +2628,7 @@ package panos
 }
 #PanosPanoramaSecurityPolicyGroupResource: {
 	device_group?:       string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rulebase?:           string
@@ -2185,6 +2673,7 @@ package panos
 }
 #PanosPanoramaSecurityRuleGroupResource: {
 	device_group?:       string
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	rulebase?:           string
@@ -2231,6 +2720,7 @@ package panos
 	name: string
 	services: [string, ...]
 	device_group?: string
+	id?:           string
 	tags?: [string, ...]
 }
 #PanosPanoramaServiceObjectResource: {
@@ -2239,6 +2729,7 @@ package panos
 	protocol:                      string
 	description?:                  string
 	device_group?:                 string
+	id?:                           string
 	override_half_closed_timeout?: number
 	override_session_timeout?:     bool
 	override_time_wait_timeout?:   number
@@ -2247,8 +2738,13 @@ package panos
 	tags?: [string, ...]
 }
 #PanosPanoramaSnmptrapServerProfileResource: {
-	name:            string
-	device_group?:   string
+	name: string
+	auth_password_enc?: [_]: string
+	auth_password_raw?: [_]: string
+	device_group?: string
+	id?:           string
+	priv_password_enc?: [_]: string
+	priv_password_raw?: [_]: string
 	template?:       string
 	template_stack?: string
 	vsys?:           string
@@ -2272,6 +2768,7 @@ package panos
 	virtual_router:  string
 	admin_distance?: number
 	bfd_profile?:    string
+	id?:             string
 	interface?:      string
 	metric?:         number
 	next_hop?:       string
@@ -2290,6 +2787,7 @@ package panos
 	escaped_characters?: string
 	gtp_format?:         string
 	hip_match_format?:   string
+	id?:                 string
 	iptag_format?:       string
 	sctp_format?:        string
 	system_format?:      string
@@ -2312,8 +2810,10 @@ package panos
 	}, ...]
 }
 #PanosPanoramaTemplateResource: {
-	name:         string
-	description?: string
+	name:          string
+	default_vsys?: string
+	description?:  string
+	id?:           string
 	devices?: [{
 		serial: string
 		vsys_list?: [string, ...]
@@ -2322,21 +2822,26 @@ package panos
 #PanosPanoramaTemplateEntryResource: {
 	serial:   string
 	template: string
+	id?:      string
 	vsys_list?: [string, ...]
 }
 #PanosPanoramaTemplateStackResource: {
 	name:          string
 	default_vsys?: string
 	description?:  string
+	devices?: [string, ...]
+	id?: string
 	templates?: [string, ...]
 }
 #PanosPanoramaTemplateStackEntryResource: {
 	device:         string
 	template_stack: string
+	id?:            string
 }
 #PanosPanoramaTemplateVariableResource: {
 	name:            string
 	value:           string
+	id?:             string
 	template?:       string
 	template_stack?: string
 	type?:           string
@@ -2345,6 +2850,7 @@ package panos
 	name:                string
 	template:            string
 	comment?:            string
+	id?:                 string
 	management_profile?: string
 	mtu?:                number
 	netflow_profile?:    string
@@ -2352,10 +2858,21 @@ package panos
 	vsys?: string
 }
 #PanosPanoramaVirtualRouterResource: {
-	name:              string
-	template:          string
-	ebgp_dist?:        number
-	ibgp_dist?:        number
+	name:                      string
+	template:                  string
+	ebgp_dist?:                number
+	ecmp_hash_seed?:           number
+	ecmp_hash_source_only?:    bool
+	ecmp_hash_use_port?:       bool
+	ecmp_load_balance_method?: string
+	ecmp_max_path?:            number
+	ecmp_strict_source_path?:  bool
+	ecmp_symmetric_return?:    bool
+	ecmp_weighted_round_robin_interfaces?: [_]: number
+	enable_ecmp?: bool
+	ibgp_dist?:   number
+	id?:          string
+	interfaces?: [string, ...]
 	ospf_ext_dist?:    number
 	ospf_int_dist?:    number
 	ospfv3_ext_dist?:  number
@@ -2369,10 +2886,13 @@ package panos
 	interface:      string
 	template:       string
 	virtual_router: string
+	id?:            string
 }
 #PanosPanoramaVlanResource: {
-	name:            string
-	template:        string
+	name:     string
+	template: string
+	id?:      string
+	interfaces?: [string, ...]
 	vlan_interface?: string
 	vsys?:           string
 }
@@ -2380,6 +2900,8 @@ package panos
 	interface: string
 	template:  string
 	vlan:      string
+	id?:       string
+	live_mac_addresses?: [string, ...]
 	mac_addresses?: [string, ...]
 }
 #PanosPanoramaVlanInterfaceResource: {
@@ -2390,6 +2912,7 @@ package panos
 	create_dhcp_default_route?: bool
 	dhcp_default_route_metric?: number
 	enable_dhcp?:               bool
+	id?:                        string
 	ipv4_mss_adjust?:           number
 	ipv6_mss_adjust?:           number
 	management_profile?:        string
@@ -2402,7 +2925,9 @@ package panos
 	name:            string
 	enable_user_id?: bool
 	exclude_acls?: [string, ...]
+	id?: string
 	include_acls?: [string, ...]
+	interfaces?: [string, ...]
 	log_setting?:    string
 	mode?:           string
 	template?:       string
@@ -2414,10 +2939,12 @@ package panos
 	interface: string
 	template:  string
 	zone:      string
+	id?:       string
 	mode?:     string
 	vsys?:     string
 }
 #PanosPbfRuleGroupResource: {
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	vsys?:               string
@@ -2428,6 +2955,7 @@ package panos
 		disabled?:                     bool
 		schedule?:                     string
 		tags?: [string, ...]
+		uuid?: string
 		destination?: [{
 			addresses: [string, ...]
 			applications: [string, ...]
@@ -2467,6 +2995,7 @@ package panos
 	bgp_communities?: [string, ...]
 	bgp_extended_communities?: [string, ...]
 	destinations?: [string, ...]
+	id?: string
 	interfaces?: [string, ...]
 	next_hops?: [string, ...]
 	ospf_areas?: [string, ...]
@@ -2475,7 +3004,9 @@ package panos
 	types?: [string, ...]
 }
 #PanosSecurityPoliciesResource: {
-	vsys?: string
+	id?:       string
+	rulebase?: string
+	vsys?:     string
 	rule?: [{
 		applications: [string, ...]
 		categories: [string, ...]
@@ -2511,7 +3042,9 @@ package panos
 	}, ...]
 }
 #PanosSecurityPolicyResource: {
-	vsys?: string
+	id?:       string
+	rulebase?: string
+	vsys?:     string
 	rule?: [{
 		applications: [string, ...]
 		categories: [string, ...]
@@ -2547,6 +3080,7 @@ package panos
 	}, ...]
 }
 #PanosSecurityPolicyGroupResource: {
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	vsys?:               string
@@ -2585,6 +3119,7 @@ package panos
 	}, ...]
 }
 #PanosSecurityRuleGroupResource: {
+	id?:                 string
 	position_keyword?:   string
 	position_reference?: string
 	vsys?:               string
@@ -2625,6 +3160,7 @@ package panos
 #PanosServiceGroupResource: {
 	name: string
 	services: [string, ...]
+	id?: string
 	tags?: [string, ...]
 	vsys?: string
 }
@@ -2633,6 +3169,7 @@ package panos
 	name:                          string
 	protocol:                      string
 	description?:                  string
+	id?:                           string
 	override_half_closed_timeout?: number
 	override_session_timeout?:     bool
 	override_time_wait_timeout?:   number
@@ -2642,7 +3179,12 @@ package panos
 	vsys?: string
 }
 #PanosSnmptrapServerProfileResource: {
-	name:  string
+	name: string
+	auth_password_enc?: [_]: string
+	auth_password_raw?: [_]: string
+	id?: string
+	priv_password_enc?: [_]: string
+	priv_password_raw?: [_]: string
 	vsys?: string
 	v2c_server?: [{
 		community: string
@@ -2664,6 +3206,7 @@ package panos
 	virtual_router:  string
 	admin_distance?: number
 	bfd_profile?:    string
+	id?:             string
 	interface?:      string
 	metric?:         number
 	next_hop?:       string
@@ -2679,6 +3222,7 @@ package panos
 	escaped_characters?: string
 	gtp_format?:         string
 	hip_match_format?:   string
+	id?:                 string
 	iptag_format?:       string
 	sctp_format?:        string
 	system_format?:      string
@@ -2701,6 +3245,7 @@ package panos
 #PanosTelemetryResource: {
 	application_reports?:               bool
 	file_type_identification_reports?:  bool
+	id?:                                string
 	passive_dns_monitoring?:            bool
 	product_usage_stats?:               bool
 	threat_prevention_data?:            bool
@@ -2711,16 +3256,86 @@ package panos
 #PanosTunnelInterfaceResource: {
 	name:                string
 	comment?:            string
+	id?:                 string
 	management_profile?: string
 	mtu?:                number
 	netflow_profile?:    string
 	static_ips?: [string, ...]
 	vsys?: string
 }
+#PanosUrlFilteringSecurityProfileResource: {
+	name: string
+	alert_categories?: [string, ...]
+	allow_categories?: [string, ...]
+	allow_list?: [string, ...]
+	block_categories?: [string, ...]
+	block_list?: [string, ...]
+	block_list_action?: string
+	continue_categories?: [string, ...]
+	description?:                string
+	device_group?:               string
+	dynamic_url?:                bool
+	expired_license_action?:     bool
+	id?:                         string
+	log_container_page_only?:    bool
+	log_http_header_referer?:    bool
+	log_http_header_user_agent?: bool
+	log_http_header_xff?:        bool
+	machine_learning_exceptions?: [string, ...]
+	override_categories?: [string, ...]
+	safe_search_enforcement?: bool
+	track_container_page?:    bool
+	ucd_alert_categories?: [string, ...]
+	ucd_allow_categories?: [string, ...]
+	ucd_block_categories?: [string, ...]
+	ucd_continue_categories?: [string, ...]
+	ucd_log_severity?:       string
+	ucd_mode?:               string
+	ucd_mode_group_mapping?: string
+	vsys?:                   string
+	http_header_insertion?: [{
+		name: string
+		domains?: [string, ...]
+		type?: string
+		http_header?: [{
+			header: string
+			value:  string
+			log?:   bool
+			name?:  string
+		}, ...]
+	}, ...]
+	machine_learning_model?: [{
+		action: string
+		model:  string
+	}, ...]
+}
+#PanosUserTagResource: {
+	tags: [string, ...]
+	user:  string
+	id?:   string
+	vsys?: string
+}
+#PanosUseridLoginResource: {
+	ip:    string
+	user:  string
+	id?:   string
+	vsys?: string
+}
 #PanosVirtualRouterResource: {
-	name:              string
-	ebgp_dist?:        number
-	ibgp_dist?:        number
+	name:                      string
+	ebgp_dist?:                number
+	ecmp_hash_seed?:           number
+	ecmp_hash_source_only?:    bool
+	ecmp_hash_use_port?:       bool
+	ecmp_load_balance_method?: string
+	ecmp_max_path?:            number
+	ecmp_strict_source_path?:  bool
+	ecmp_symmetric_return?:    bool
+	ecmp_weighted_round_robin_interfaces?: [_]: number
+	enable_ecmp?: bool
+	ibgp_dist?:   number
+	id?:          string
+	interfaces?: [string, ...]
 	ospf_ext_dist?:    number
 	ospf_int_dist?:    number
 	ospfv3_ext_dist?:  number
@@ -2733,15 +3348,20 @@ package panos
 #PanosVirtualRouterEntryResource: {
 	interface:      string
 	virtual_router: string
+	id?:            string
 }
 #PanosVlanResource: {
-	name:            string
+	name: string
+	id?:  string
+	interfaces?: [string, ...]
 	vlan_interface?: string
 	vsys?:           string
 }
 #PanosVlanEntryResource: {
 	interface: string
 	vlan:      string
+	id?:       string
+	live_mac_addresses?: [string, ...]
 	mac_addresses?: [string, ...]
 }
 #PanosVlanInterfaceResource: {
@@ -2751,6 +3371,7 @@ package panos
 	create_dhcp_default_route?: bool
 	dhcp_default_route_metric?: number
 	enable_dhcp?:               bool
+	id?:                        string
 	ipv4_mss_adjust?:           number
 	ipv6_mss_adjust?:           number
 	management_profile?:        string
@@ -2759,11 +3380,65 @@ package panos
 	static_ips?: [string, ...]
 	vsys?: string
 }
+#PanosVmAuthKeyResource: {
+	auth_key?: string
+	expiry?:   string
+	hours?:    number
+	id?:       string
+	valid?:    bool
+}
+#PanosVulnerabilitySecurityProfileResource: {
+	name:          string
+	description?:  string
+	device_group?: string
+	id?:           string
+	vsys?:         string
+	exception?: [{
+		name:               string
+		action?:            string
+		block_ip_duration?: number
+		block_ip_track_by?: string
+		exempt_ips?: [string, ...]
+		packet_capture?: string
+		time_interval?:  number
+		time_threshold?: number
+		time_track_by?:  string
+	}, ...]
+	rule?: [{
+		name:               string
+		action?:            string
+		block_ip_duration?: number
+		block_ip_track_by?: string
+		category?:          string
+		cves?: [string, ...]
+		host?:           string
+		packet_capture?: string
+		severities?: [string, ...]
+		threat_name?: string
+		vendor_ids?: [string, ...]
+	}, ...]
+}
+#PanosWildfireAnalysisSecurityProfileResource: {
+	name:          string
+	description?:  string
+	device_group?: string
+	id?:           string
+	vsys?:         string
+	rule?: [{
+		name:      string
+		analysis?: string
+		applications?: [string, ...]
+		direction?: string
+		file_types?: [string, ...]
+	}, ...]
+}
 #PanosZoneResource: {
 	name:            string
 	enable_user_id?: bool
 	exclude_acls?: [string, ...]
+	id?: string
 	include_acls?: [string, ...]
+	interfaces?: [string, ...]
 	log_setting?:  string
 	mode?:         string
 	vsys?:         string
@@ -2772,6 +3447,7 @@ package panos
 #PanosZoneEntryResource: {
 	interface: string
 	zone:      string
+	id?:       string
 	mode?:     string
 	vsys?:     string
 }
@@ -2780,9 +3456,12 @@ package panos
 	panos_address_object?: [_]:                                #PanosAddressObjectResource
 	panos_administrative_tag?: [_]:                            #PanosAdministrativeTagResource
 	panos_aggregate_interface?: [_]:                           #PanosAggregateInterfaceResource
+	panos_anti_spyware_security_profile?: [_]:                 #PanosAntiSpywareSecurityProfileResource
+	panos_antivirus_security_profile?: [_]:                    #PanosAntivirusSecurityProfileResource
 	panos_application_group?: [_]:                             #PanosApplicationGroupResource
 	panos_application_object?: [_]:                            #PanosApplicationObjectResource
 	panos_application_signature?: [_]:                         #PanosApplicationSignatureResource
+	panos_arp?: [_]:                                           #PanosArpResource
 	panos_bfd_profile?: [_]:                                   #PanosBfdProfileResource
 	panos_bgp?: [_]:                                           #PanosBgpResource
 	panos_bgp_aggregate?: [_]:                                 #PanosBgpAggregateResource
@@ -2798,15 +3477,22 @@ package panos
 	panos_bgp_peer?: [_]:                                      #PanosBgpPeerResource
 	panos_bgp_peer_group?: [_]:                                #PanosBgpPeerGroupResource
 	panos_bgp_redist_rule?: [_]:                               #PanosBgpRedistRuleResource
+	panos_custom_data_pattern_object?: [_]:                    #PanosCustomDataPatternObjectResource
 	panos_dag_tags?: [_]:                                      #PanosDagTagsResource
+	panos_data_filtering_security_profile?: [_]:               #PanosDataFilteringSecurityProfileResource
+	panos_device_group_parent?: [_]:                           #PanosDeviceGroupParentResource
+	panos_dos_protection_profile?: [_]:                        #PanosDosProtectionProfileResource
+	panos_dynamic_user_group?: [_]:                            #PanosDynamicUserGroupResource
 	panos_edl?: [_]:                                           #PanosEdlResource
 	panos_email_server_profile?: [_]:                          #PanosEmailServerProfileResource
 	panos_ethernet_interface?: [_]:                            #PanosEthernetInterfaceResource
+	panos_file_blocking_security_profile?: [_]:                #PanosFileBlockingSecurityProfileResource
 	panos_general_settings?: [_]:                              #PanosGeneralSettingsResource
 	panos_gre_tunnel?: [_]:                                    #PanosGreTunnelResource
 	panos_http_server_profile?: [_]:                           #PanosHttpServerProfileResource
 	panos_ike_crypto_profile?: [_]:                            #PanosIkeCryptoProfileResource
 	panos_ike_gateway?: [_]:                                   #PanosIkeGatewayResource
+	panos_ip_tag?: [_]:                                        #PanosIpTagResource
 	panos_ipsec_crypto_profile?: [_]:                          #PanosIpsecCryptoProfileResource
 	panos_ipsec_tunnel?: [_]:                                  #PanosIpsecTunnelResource
 	panos_ipsec_tunnel_proxy_id_ipv4?: [_]:                    #PanosIpsecTunnelProxyIdIpv4Resource
@@ -2821,6 +3507,12 @@ package panos
 	panos_nat_policy?: [_]:                                    #PanosNatPolicyResource
 	panos_nat_rule?: [_]:                                      #PanosNatRuleResource
 	panos_nat_rule_group?: [_]:                                #PanosNatRuleGroupResource
+	panos_ospf?: [_]:                                          #PanosOspfResource
+	panos_ospf_area?: [_]:                                     #PanosOspfAreaResource
+	panos_ospf_area_interface?: [_]:                           #PanosOspfAreaInterfaceResource
+	panos_ospf_area_virtual_link?: [_]:                        #PanosOspfAreaVirtualLinkResource
+	panos_ospf_auth_profile?: [_]:                             #PanosOspfAuthProfileResource
+	panos_ospf_export?: [_]:                                   #PanosOspfExportResource
 	panos_panorama_address_group?: [_]:                        #PanosPanoramaAddressGroupResource
 	panos_panorama_address_object?: [_]:                       #PanosPanoramaAddressObjectResource
 	panos_panorama_administrative_tag?: [_]:                   #PanosPanoramaAdministrativeTagResource
@@ -2904,11 +3596,17 @@ package panos
 	panos_syslog_server_profile?: [_]:                         #PanosSyslogServerProfileResource
 	panos_telemetry?: [_]:                                     #PanosTelemetryResource
 	panos_tunnel_interface?: [_]:                              #PanosTunnelInterfaceResource
+	panos_url_filtering_security_profile?: [_]:                #PanosUrlFilteringSecurityProfileResource
+	panos_user_tag?: [_]:                                      #PanosUserTagResource
+	panos_userid_login?: [_]:                                  #PanosUseridLoginResource
 	panos_virtual_router?: [_]:                                #PanosVirtualRouterResource
 	panos_virtual_router_entry?: [_]:                          #PanosVirtualRouterEntryResource
 	panos_vlan?: [_]:                                          #PanosVlanResource
 	panos_vlan_entry?: [_]:                                    #PanosVlanEntryResource
 	panos_vlan_interface?: [_]:                                #PanosVlanInterfaceResource
+	panos_vm_auth_key?: [_]:                                   #PanosVmAuthKeyResource
+	panos_vulnerability_security_profile?: [_]:                #PanosVulnerabilitySecurityProfileResource
+	panos_wildfire_analysis_security_profile?: [_]:            #PanosWildfireAnalysisSecurityProfileResource
 	panos_zone?: [_]:                                          #PanosZoneResource
 	panos_zone_entry?: [_]:                                    #PanosZoneEntryResource
 }

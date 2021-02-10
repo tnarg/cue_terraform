@@ -5,23 +5,35 @@ package signalfx
 	description: string
 	start_time:  number
 	detectors?: [string, ...]
-	stop_time?: number
+	effective_start_time?: number
+	id?:                   string
+	stop_time?:            number
 	filter?: [{
 		property:       string
 		property_value: string
 		negated?:       bool
 	}, ...]
 }
-#SignalfxAwsExternalIntegrationResource: name: string
+#SignalfxAwsExternalIntegrationResource: {
+	name:                  string
+	external_id?:          string
+	id?:                   string
+	signalfx_aws_account?: string
+}
 #SignalfxAwsIntegrationResource: {
 	enabled:        bool
 	integration_id: string
+	auth_method?:   string
 	custom_cloudwatch_namespaces?: [string, ...]
-	enable_aws_usage?:   bool
-	external_id?:        string
-	import_cloud_watch?: bool
-	key?:                string
-	poll_rate?:          number
+	enable_aws_usage?:          bool
+	enable_check_large_volume?: bool
+	external_id?:               string
+	id?:                        string
+	import_cloud_watch?:        bool
+	key?:                       string
+	name?:                      string
+	named_token?:               string
+	poll_rate?:                 number
 	regions?: [string, ...]
 	role_arn?: string
 	services?: [string, ...]
@@ -40,7 +52,12 @@ package signalfx
 		filter_source?:  string
 	}, ...]
 }
-#SignalfxAwsTokenIntegrationResource: name: string
+#SignalfxAwsTokenIntegrationResource: {
+	name:                  string
+	id?:                   string
+	signalfx_aws_account?: string
+	token_id?:             string
+}
 #SignalfxAzureIntegrationResource: {
 	app_id:     string
 	enabled:    bool
@@ -48,9 +65,16 @@ package signalfx
 	secret_key: string
 	services: [string, ...]
 	subscriptions: [string, ...]
-	tenant_id:    string
-	environment?: string
-	poll_rate?:   number
+	tenant_id:                 string
+	environment?:              string
+	id?:                       string
+	named_token?:              string
+	poll_rate?:                number
+	sync_guest_os_namespaces?: bool
+	custom_namespaces_per_service?: [{
+		namespaces: [string, ...]
+		service: string
+	}, ...]
 }
 #SignalfxDashboardResource: {
 	dashboard_group: string
@@ -62,8 +86,10 @@ package signalfx
 	discovery_options_query?: string
 	discovery_options_selectors?: [string, ...]
 	end_time?:   number
+	id?:         string
 	start_time?: number
 	time_range?: string
+	url?:        string
 	chart?: [{
 		chart_id: string
 		column?:  number
@@ -126,6 +152,7 @@ package signalfx
 	authorized_writer_teams?: [string, ...]
 	authorized_writer_users?: [string, ...]
 	description?: string
+	id?:          string
 	teams?: [string, ...]
 	dashboard?: [{
 		dashboard_id:          string
@@ -153,6 +180,7 @@ package signalfx
 }
 #SignalfxDataLinkResource: {
 	context_dashboard_id?: string
+	id?:                   string
 	property_name?:        string
 	property_value?:       string
 	target_external_url?: [{
@@ -183,12 +211,14 @@ package signalfx
 	description?:       string
 	disable_sampling?:  bool
 	end_time?:          number
+	id?:                string
 	max_delay?:         number
 	show_data_markers?: bool
 	show_event_lines?:  bool
 	start_time?:        number
 	teams?: [string, ...]
 	time_range?: number
+	url?:        string
 	rule?: [{
 		detect_label: string
 		severity:     string
@@ -214,14 +244,19 @@ package signalfx
 	program_text: string
 	description?: string
 	end_time?:    number
+	id?:          string
 	start_time?:  number
 	time_range?:  number
+	url?:         string
 }
 #SignalfxGcpIntegrationResource: {
-	enabled:    bool
-	name:       string
-	poll_rate?: number
+	enabled:      bool
+	name:         string
+	id?:          string
+	named_token?: string
+	poll_rate?:   number
 	services?: [string, ...]
+	whitelist?: [string, ...]
 	project_service_keys?: [{
 		project_id:  string
 		project_key: string
@@ -234,11 +269,13 @@ package signalfx
 	disable_sampling?: bool
 	group_by?: [string, ...]
 	hide_timestamp?:     bool
+	id?:                 string
 	max_delay?:          number
 	minimum_resolution?: number
 	refresh_interval?:   number
 	sort_by?:            string
 	unit_prefix?:        string
+	url?:                string
 	color_range?: [{
 		color:      string
 		max_value?: number
@@ -262,6 +299,7 @@ package signalfx
 	project_key:            string
 	api_token?:             string
 	assignee_display_name?: string
+	id?:                    string
 	password?:              string
 	user_email?:            string
 	username?:              string
@@ -273,6 +311,7 @@ package signalfx
 	description?:      string
 	disable_sampling?: bool
 	end_time?:         number
+	id?:               string
 	legend_fields_to_hide?: [string, ...]
 	max_delay?:               number
 	max_precision?:           number
@@ -282,6 +321,7 @@ package signalfx
 	start_time?:              number
 	time_range?:              number
 	unit_prefix?:             string
+	url?:                     string
 	color_scale?: [{
 		color: string
 		gt?:   number
@@ -307,12 +347,15 @@ package signalfx
 	enabled:  bool
 	name:     string
 	api_url?: string
+	id?:      string
 }
 #SignalfxOrgTokenResource: {
 	name:         string
 	description?: string
 	disabled?:    bool
+	id?:          string
 	notifications?: [string, ...]
+	secret?: string
 	dpm_limits?: [{
 		dpm_limit:                   number
 		dpm_notification_threshold?: number
@@ -332,12 +375,14 @@ package signalfx
 	enabled:  bool
 	name:     string
 	api_key?: string
+	id?:      string
 }
 #SignalfxSingleValueChartResource: {
 	name:                     string
 	program_text:             string
 	color_by?:                string
 	description?:             string
+	id?:                      string
 	is_timestamp_hidden?:     bool
 	max_delay?:               number
 	max_precision?:           number
@@ -345,6 +390,7 @@ package signalfx
 	secondary_visualization?: string
 	show_spark_line?:         bool
 	unit_prefix?:             string
+	url?:                     string
 	color_scale?: [{
 		color: string
 		gt?:   number
@@ -365,10 +411,12 @@ package signalfx
 	enabled:     bool
 	name:        string
 	webhook_url: string
+	id?:         string
 }
 #SignalfxTeamResource: {
 	name:         string
 	description?: string
+	id?:          string
 	members?: [string, ...]
 	notifications_critical?: [string, ...]
 	notifications_default?: [string, ...]
@@ -376,11 +424,14 @@ package signalfx
 	notifications_major?: [string, ...]
 	notifications_minor?: [string, ...]
 	notifications_warning?: [string, ...]
+	url?: string
 }
 #SignalfxTextChartResource: {
 	markdown:     string
 	name:         string
 	description?: string
+	id?:          string
+	url?:         string
 }
 #SignalfxTimeChartResource: {
 	name:               string
@@ -391,6 +442,7 @@ package signalfx
 	description?:       string
 	disable_sampling?:  bool
 	end_time?:          number
+	id?:                string
 	legend_fields_to_hide?: [string, ...]
 	max_delay?:                 number
 	minimum_resolution?:        number
@@ -404,6 +456,7 @@ package signalfx
 	time_range?:  number
 	timezone?:    string
 	unit_prefix?: string
+	url?:         string
 	axis_left?: [{
 		high_watermark?:       number
 		high_watermark_label?: string
@@ -456,11 +509,13 @@ package signalfx
 #SignalfxVictorOpsIntegrationResource: {
 	enabled:   bool
 	name:      string
+	id?:       string
 	post_url?: string
 }
 #SignalfxWebhookIntegrationResource: {
 	enabled:        bool
 	name:           string
+	id?:            string
 	shared_secret?: string
 	url?:           string
 	headers?: [{

@@ -4,7 +4,9 @@ package exoscale
 #ExoscaleAffinityResource: {
 	name:         string
 	description?: string
+	id?:          string
 	type?:        string
+	virtual_machine_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -12,14 +14,34 @@ package exoscale
 	}
 }
 #ExoscaleComputeResource: {
-	disk_size:  number
-	zone:       string
-	ip4?:       bool
-	ip6?:       bool
-	key_pair?:  string
-	keyboard?:  string
-	size?:      string
-	user_data?: string
+	disk_size: number
+	zone:      string
+	affinity_group_ids?: [string, ...]
+	affinity_groups?: [string, ...]
+	display_name?: string
+	gateway?:      string
+	hostname?:     string
+	id?:           string
+	ip4?:          bool
+	ip6?:          bool
+	ip6_address?:  string
+	ip6_cidr?:     string
+	ip_address?:   string
+	key_pair?:     string
+	keyboard?:     string
+	name?:         string
+	password?:     string
+	reverse_dns?:  string
+	security_group_ids?: [string, ...]
+	security_groups?: [string, ...]
+	size?:  string
+	state?: string
+	tags?: [_]: string
+	template?:         string
+	template_id?:      string
+	user_data?:        string
+	user_data_base64?: bool
+	username?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -28,7 +50,12 @@ package exoscale
 	}
 }
 #ExoscaleDomainResource: {
-	name: string
+	name:        string
+	auto_renew?: bool
+	expires_on?: string
+	id?:         string
+	state?:      string
+	token?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -40,6 +67,10 @@ package exoscale
 	domain:      string
 	name:        string
 	record_type: string
+	hostname?:   string
+	id?:         string
+	prio?:       number
+	ttl?:        number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -53,11 +84,17 @@ package exoscale
 	size:             number
 	template_id:      string
 	zone:             string
-	description?:     string
-	key_pair?:        string
+	affinity_group_ids?: [string, ...]
+	description?: string
+	disk_size?:   number
+	id?:          string
+	ipv6?:        bool
+	key_pair?:    string
 	network_ids?: [string, ...]
 	security_group_ids?: [string, ...]
+	state?:     string
 	user_data?: string
+	virtual_machines?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -66,15 +103,20 @@ package exoscale
 	}
 }
 #ExoscaleIpaddressResource: {
-	zone:                      string
-	description?:              string
-	healthcheck_interval?:     number
-	healthcheck_mode?:         string
-	healthcheck_path?:         string
-	healthcheck_port?:         number
-	healthcheck_strikes_fail?: number
-	healthcheck_strikes_ok?:   number
-	healthcheck_timeout?:      number
+	zone:                         string
+	description?:                 string
+	healthcheck_interval?:        number
+	healthcheck_mode?:            string
+	healthcheck_path?:            string
+	healthcheck_port?:            number
+	healthcheck_strikes_fail?:    number
+	healthcheck_strikes_ok?:      number
+	healthcheck_timeout?:         number
+	healthcheck_tls_skip_verify?: bool
+	healthcheck_tls_sni?:         string
+	id?:                          string
+	ip_address?:                  string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -85,10 +127,13 @@ package exoscale
 #ExoscaleNetworkResource: {
 	name:              string
 	zone:              string
+	display_text?:     string
 	end_ip?:           string
+	id?:               string
 	netmask?:          string
 	network_offering?: string
 	start_ip?:         string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -97,8 +142,56 @@ package exoscale
 	}
 }
 #ExoscaleNicResource: {
-	compute_id: string
-	network_id: string
+	compute_id:   string
+	network_id:   string
+	gateway?:     string
+	id?:          string
+	ip_address?:  string
+	mac_address?: string
+	netmask?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#ExoscaleNlbResource: {
+	name:         string
+	zone:         string
+	created_at?:  string
+	description?: string
+	id?:          string
+	ip_address?:  string
+	services?: [string, ...]
+	state?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#ExoscaleNlbServiceResource: {
+	instance_pool_id: string
+	name:             string
+	nlb_id:           string
+	port:             number
+	target_port:      number
+	zone:             string
+	description?:     string
+	id?:              string
+	protocol?:        string
+	strategy?:        string
+	healthcheck?: [{
+		port:      number
+		interval?: number
+		mode?:     string
+		retries?:  number
+		timeout?:  number
+		tls_sni?:  string
+		uri?:      string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -107,8 +200,11 @@ package exoscale
 	}
 }
 #ExoscaleSecondaryIpaddressResource: {
-	compute_id: string
-	ip_address: string
+	compute_id:  string
+	ip_address:  string
+	id?:         string
+	network_id?: string
+	nic_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -118,6 +214,7 @@ package exoscale
 #ExoscaleSecurityGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -132,8 +229,12 @@ package exoscale
 	end_port?:               number
 	icmp_code?:              number
 	icmp_type?:              number
+	id?:                     string
 	protocol?:               string
+	security_group?:         string
+	security_group_id?:      string
 	start_port?:             number
+	user_security_group?:    string
 	user_security_group_id?: string
 	timeouts?: {
 		create?: string
@@ -142,11 +243,15 @@ package exoscale
 	}
 }
 #ExoscaleSecurityGroupRulesResource: {
+	id?:                string
+	security_group?:    string
+	security_group_id?: string
 	egress?: [{
 		cidr_list?: [string, ...]
 		description?: string
 		icmp_code?:   number
 		icmp_type?:   number
+		ids?: [string, ...]
 		ports?: [string, ...]
 		protocol?: string
 		user_security_group_list?: [string, ...]
@@ -156,6 +261,7 @@ package exoscale
 		description?: string
 		icmp_code?:   number
 		icmp_type?:   number
+		ids?: [string, ...]
 		ports?: [string, ...]
 		protocol?: string
 		user_security_group_list?: [string, ...]
@@ -168,8 +274,11 @@ package exoscale
 	}
 }
 #ExoscaleSshKeypairResource: {
-	name:        string
-	public_key?: string
+	name:         string
+	fingerprint?: string
+	id?:          string
+	private_key?: string
+	public_key?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -185,6 +294,8 @@ package exoscale
 	exoscale_ipaddress?: [_]:            #ExoscaleIpaddressResource
 	exoscale_network?: [_]:              #ExoscaleNetworkResource
 	exoscale_nic?: [_]:                  #ExoscaleNicResource
+	exoscale_nlb?: [_]:                  #ExoscaleNlbResource
+	exoscale_nlb_service?: [_]:          #ExoscaleNlbServiceResource
 	exoscale_secondary_ipaddress?: [_]:  #ExoscaleSecondaryIpaddressResource
 	exoscale_security_group?: [_]:       #ExoscaleSecurityGroupResource
 	exoscale_security_group_rule?: [_]:  #ExoscaleSecurityGroupRuleResource

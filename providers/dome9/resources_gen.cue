@@ -5,13 +5,21 @@ package dome9
 	aws_cloud_account_id: string
 	aws_group_arn:        string
 	aws_policy_arn:       string
+	id?:                  string
+	mode?:                string
 }
 #Dome9AwsSecurityGroupResource: {
 	dome9_cloud_account_id:    string
 	dome9_security_group_name: string
 	aws_region_id?:            string
+	cloud_account_name?:       string
 	description?:              string
+	external_id?:              string
+	id?:                       string
+	is_protected?:             bool
 	tags?: [_]: string
+	vpc_id?:   string
+	vpc_name?: string
 	services?: [{
 		inbound?: [{
 			description?:   string
@@ -38,12 +46,16 @@ package dome9
 	}, ...]
 }
 #Dome9AzureSecurityGroupResource: {
-	dome9_cloud_account_id:    string
-	dome9_security_group_name: string
-	region:                    string
-	resource_group:            string
-	description?:              string
-	is_tamper_protected?:      bool
+	dome9_cloud_account_id:      string
+	dome9_security_group_name:   string
+	region:                      string
+	resource_group:              string
+	cloud_account_name?:         string
+	description?:                string
+	external_security_group_id?: string
+	id?:                         string
+	is_tamper_protected?:        bool
+	last_updated_by_dome9?:      string
 	inbound?: [{
 		destination_port_ranges: [string, ...]
 		name:     string
@@ -52,6 +64,7 @@ package dome9
 		source_port_ranges: [string, ...]
 		access?:      string
 		description?: string
+		direction?:   string
 		is_default?:  bool
 		destination_scopes?: [{
 			data: [_]: string
@@ -70,6 +83,7 @@ package dome9
 		source_port_ranges: [string, ...]
 		access?:      string
 		description?: string
+		direction?:   string
 		is_default?:  bool
 		destination_scopes?: [{
 			data: [_]: string
@@ -85,45 +99,115 @@ package dome9
 		value: string
 	}, ...]
 }
+#Dome9CloudSecurityGroupRuleResource: {
+	dome9_security_group_id: string
+	id?:                     string
+	services?: [{
+		inbound?: [{
+			description?:   string
+			name?:          string
+			open_for_all?:  bool
+			port?:          string
+			protocol_type?: string
+			scope?: [{
+				data: [_]: string
+				type: string
+			}, ...]
+		}, ...]
+		outbound?: [{
+			description?:   string
+			name?:          string
+			open_for_all?:  bool
+			port?:          string
+			protocol_type?: string
+			scope?: [{
+				data?: [_]: string
+				type?: string
+			}, ...]
+		}, ...]
+	}, ...]
+}
 #Dome9CloudaccountAwsResource: {
-	name:                    string
+	name:                     string
+	allow_read_only?:         bool
+	creation_date?:           string
+	external_account_number?: string
+	full_protection?:         bool
+	iam_safe?: [{
+		aws_group_arn:  string
+		aws_policy_arn: string
+		mode:           string
+		restricted_iam_entities: [{
+			roles_arns: [string, ...]
+			users_arns: [string, ...]
+		}, ...]
+	}, ...]
+	id?:                     string
+	is_fetching_suspended?:  bool
 	organizational_unit_id?: string
+	vendor?:                 string
 	credentials?: [{
-		arn:       string
-		secret:    string
-		type:      string
-		api_key?:  string
-		iam_user?: string
+		arn:           string
+		secret:        string
+		type:          string
+		api_key?:      string
+		iam_user?:     string
+		is_read_only?: bool
 	}, ...]
 	net_sec?: [{
 		regions?: [{
-			region: string
+			region:              string
+			hidden?:             bool
+			name?:               string
+			new_group_behavior?: string
 		}, ...]
 	}, ...]
 }
 #Dome9CloudaccountAzureResource: {
-	client_id:               string
-	client_password:         string
-	name:                    string
-	operation_mode:          string
-	subscription_id:         string
-	tenant_id:               string
-	organizational_unit_id?: string
+	client_id:                 string
+	client_password:           string
+	name:                      string
+	operation_mode:            string
+	subscription_id:           string
+	tenant_id:                 string
+	creation_date?:            string
+	id?:                       string
+	organizational_unit_id?:   string
+	organizational_unit_name?: string
+	organizational_unit_path?: string
+	vendor?:                   string
 }
 #Dome9CloudaccountGcpResource: {
-	client_email:            string
-	client_id:               string
-	client_x509_cert_url:    string
-	name:                    string
-	private_key:             string
-	private_key_id:          string
-	project_id:              string
-	domain_name?:            string
-	gsuite_user?:            string
-	organizational_unit_id?: string
+	client_email:              string
+	client_id:                 string
+	client_x509_cert_url:      string
+	name:                      string
+	private_key:               string
+	private_key_id:            string
+	project_id:                string
+	domain_name?:              string
+	gsuite_user?:              string
+	id?:                       string
+	organizational_unit_id?:   string
+	organizational_unit_name?: string
+	organizational_unit_path?: string
+	vendor?:                   string
+}
+#Dome9CloudaccountKubernetesResource: {
+	name:                      string
+	cluster_version?:          string
+	creation_date?:            string
+	id?:                       string
+	organizational_unit_id?:   string
+	organizational_unit_name?: string
+	organizational_unit_path?: string
+	vendor?:                   string
 }
 #Dome9ContinuousComplianceNotificationResource: {
-	name: string
+	name:            string
+	alerts_console?: bool
+	description?:    string
+	id?:             string
 	change_detection?: [{
 		aws_security_hub_integration_state?: string
 		email_per_finding_sending_state?:    string
@@ -148,18 +232,26 @@ package dome9
 		}, ...]
 		ticketing_system_data?: [{
 			pass:                  string
+			domain?:               string
+			issue_type?:           string
+			project_key?:          string
 			should_close_tickets?: bool
 			system_type?:          string
+			user?:                 string
 		}, ...]
 		webhook_data?: [{
 			url:          string
 			auth_method?: string
 			format_type?: string
 			http_method?: string
+			password?:    string
+			username?:    string
 		}, ...]
 	}, ...]
 	gcp_security_command_center_integration?: [{
-		state?: string
+		project_id?: string
+		source_id?:  string
+		state?:      string
 	}, ...]
 	scheduled_report?: [{
 		email_sending_state?: string
@@ -171,35 +263,58 @@ package dome9
 	}, ...]
 }
 #Dome9ContinuousCompliancePolicyResource: {
-	cloud_account_id:    string
-	cloud_account_type:  string
-	external_account_id: string
 	notification_ids: [string, ...]
-	bundle_id?: number
+	target_id:   string
+	target_type: string
+	id?:         string
+	ruleset_id?: number
 }
 #Dome9IamSafeEntityResource: {
 	aws_cloud_account_id: string
 	entity_name:          string
 	entity_type:          string
 	protection_mode:      string
+	arn?:                 string
+	attached_dome9_users?: [string, ...]
 	dome9_users_id_to_protect?: [string, ...]
+	exists_in_aws?: bool
+	id?:            string
+	state?:         string
 }
 #Dome9IplistResource: {
-	name: string
+	name:         string
+	description?: string
+	id?:          string
 	items?: [{
 		comment?: string
 		ip?:      string
 	}, ...]
 }
 #Dome9OrganizationalUnitResource: {
-	name:       string
-	parent_id?: string
+	name:                                   string
+	account_id?:                            string
+	aws_aggregate_cloud_accounts_count?:    number
+	aws_cloud_accounts_count?:              number
+	azure_aggregate_cloud_accounts_count?:  number
+	azure_cloud_accounts_count?:            number
+	created?:                               string
+	google_aggregate_cloud_accounts_count?: number
+	google_cloud_accounts_count?:           number
+	id?:                                    string
+	is_parent_root?:                        bool
+	is_root?:                               bool
+	parent_id?:                             string
+	path?:                                  string
+	path_str?:                              string
+	sub_organizational_units_count?:        number
+	updated?:                               string
 }
 #Dome9RoleResource: {
 	description: string
 	name:        string
 	create?: [string, ...]
 	cross_account_access?: [string, ...]
+	id?:                   string
 	permit_alert_actions?: bool
 	permit_notifications?: bool
 	permit_on_boarding?:   bool
@@ -232,8 +347,12 @@ package dome9
 	hide_in_compliance: bool
 	language:           string
 	name:               string
+	created_time?:      string
 	description?:       string
+	id?:                string
 	is_template?:       bool
+	min_feature_tier?:  string
+	updated_time?:      string
 	rules?: [{
 		compliance_tag?: string
 		control_title?:  string
@@ -241,6 +360,7 @@ package dome9
 		domain?:         string
 		is_default?:     bool
 		logic?:          string
+		logic_hash?:     string
 		name?:           string
 		priority?:       string
 		remediation?:    string
@@ -249,17 +369,47 @@ package dome9
 	}, ...]
 }
 #Dome9UserResource: {
-	email:          string
-	first_name:     string
-	is_sso_enabled: bool
-	last_name:      string
+	email:            string
+	first_name:       string
+	is_sso_enabled:   bool
+	last_name:        string
+	can_switch_role?: bool
 	create?: [string, ...]
 	cross_account_access?: [string, ...]
-	permit_alert_actions?: bool
-	permit_notifications?: bool
-	permit_on_boarding?:   bool
-	permit_policies?:      bool
-	permit_rulesets?:      bool
+	has_api_key?:    bool
+	has_api_key_v1?: bool
+	has_api_key_v2?: bool
+	iam_safe?: [{
+		cloud_accounts: [{
+			cloud_account_id:        string
+			cloud_account_state:     string
+			external_account_number: string
+			iam_entities: [string, ...]
+			iam_entities_last_lease_time: [{
+				iam_entity:      string
+				last_lease_time: string
+			}, ...]
+			iam_entity:      string
+			last_lease_time: string
+			name:            string
+			state:           bool
+		}, ...]
+	}, ...]
+	id?:                      string
+	is_auditor?:              bool
+	is_locked?:               bool
+	is_mfa_enabled?:          bool
+	is_mobile_device_paired?: bool
+	is_owner?:                bool
+	is_super_user?:           bool
+	is_suspended?:            bool
+	last_login?:              string
+	permit_alert_actions?:    bool
+	permit_notifications?:    bool
+	permit_on_boarding?:      bool
+	permit_policies?:         bool
+	permit_rulesets?:         bool
+	role_ids?: [number, ...]
 	access?: [{
 		main_id?:           string
 		region?:            string
@@ -286,9 +436,11 @@ package dome9
 	dome9_attach_iam_safe?: [_]:                    #Dome9AttachIamSafeResource
 	dome9_aws_security_group?: [_]:                 #Dome9AwsSecurityGroupResource
 	dome9_azure_security_group?: [_]:               #Dome9AzureSecurityGroupResource
+	dome9_cloud_security_group_rule?: [_]:          #Dome9CloudSecurityGroupRuleResource
 	dome9_cloudaccount_aws?: [_]:                   #Dome9CloudaccountAwsResource
 	dome9_cloudaccount_azure?: [_]:                 #Dome9CloudaccountAzureResource
 	dome9_cloudaccount_gcp?: [_]:                   #Dome9CloudaccountGcpResource
+	dome9_cloudaccount_kubernetes?: [_]:            #Dome9CloudaccountKubernetesResource
 	dome9_continuous_compliance_notification?: [_]: #Dome9ContinuousComplianceNotificationResource
 	dome9_continuous_compliance_policy?: [_]:       #Dome9ContinuousCompliancePolicyResource
 	dome9_iam_safe_entity?: [_]:                    #Dome9IamSafeEntityResource

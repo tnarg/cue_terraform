@@ -3,19 +3,52 @@ package azuread
 
 #AzureadApplicationResource: {
 	name:                        string
+	application_id?:             string
 	available_to_other_tenants?: bool
 	group_membership_claims?:    string
+	homepage?:                   string
+	id?:                         string
+	identifier_uris?: [string, ...]
 	logout_url?:                 string
 	oauth2_allow_implicit_flow?: bool
-	type?:                       string
+	oauth2_permissions?: [{
+		admin_consent_description:  string
+		admin_consent_display_name: string
+		id:                         string
+		is_enabled:                 bool
+		type:                       string
+		user_consent_description:   string
+		user_consent_display_name:  string
+		value:                      string
+	}, ...]
+	object_id?: string
+	owners?: [string, ...]
+	prevent_duplicate_names?: bool
+	public_client?:           bool
+	reply_urls?: [string, ...]
+	type?: string
 	app_role?: [{
 		allowed_member_types: [string, ...]
 		description:  string
 		display_name: string
+		id?:          string
 		is_enabled?:  bool
 		value?:       string
 	}, ...]
-	oauth2_permissions?: [{}, ...]
+	optional_claims?: [{
+		access_token?: [{
+			name: string
+			additional_properties?: [string, ...]
+			essential?: bool
+			source?:    string
+		}, ...]
+		id_token?: [{
+			name: string
+			additional_properties?: [string, ...]
+			essential?: bool
+			source?:    string
+		}, ...]
+	}, ...]
 	required_resource_access?: [{
 		resource_app_id: string
 		resource_access?: [{
@@ -24,42 +57,102 @@ package azuread
 		}, ...]
 	}, ...]
 }
+#AzureadApplicationCertificateResource: {
+	application_object_id: string
+	value:                 string
+	end_date?:             string
+	end_date_relative?:    string
+	id?:                   string
+	key_id?:               string
+	start_date?:           string
+	type?:                 string
+}
 #AzureadApplicationPasswordResource: {
-	value:              string
-	end_date_relative?: string
+	value:                  string
+	application_id?:        string
+	application_object_id?: string
+	description?:           string
+	end_date?:              string
+	end_date_relative?:     string
+	id?:                    string
+	key_id?:                string
+	start_date?:            string
 }
 #AzureadGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
+	members?: [string, ...]
+	object_id?: string
+	owners?: [string, ...]
+	prevent_duplicate_names?: bool
 }
 #AzureadGroupMemberResource: {
 	group_object_id:  string
 	member_object_id: string
+	id?:              string
 }
 #AzureadServicePrincipalResource: {
 	application_id:                string
 	app_role_assignment_required?: bool
+	display_name?:                 string
+	id?:                           string
+	object_id?:                    string
 	tags?: [string, ...]
-	oauth2_permissions?: [{}, ...]
+	oauth2_permissions?: [{
+		admin_consent_description?:  string
+		admin_consent_display_name?: string
+		id?:                         string
+		is_enabled?:                 bool
+		type?:                       string
+		user_consent_description?:   string
+		user_consent_display_name?:  string
+		value?:                      string
+	}, ...]
+}
+#AzureadServicePrincipalCertificateResource: {
+	service_principal_id: string
+	value:                string
+	end_date?:            string
+	end_date_relative?:   string
+	id?:                  string
+	key_id?:              string
+	start_date?:          string
+	type?:                string
 }
 #AzureadServicePrincipalPasswordResource: {
 	service_principal_id: string
 	value:                string
+	description?:         string
+	end_date?:            string
 	end_date_relative?:   string
+	id?:                  string
+	key_id?:              string
+	start_date?:          string
 }
 #AzureadUserResource: {
-	display_name:           string
-	password:               string
-	user_principal_name:    string
-	account_enabled?:       bool
-	force_password_change?: bool
+	display_name:                    string
+	password:                        string
+	user_principal_name:             string
+	account_enabled?:                bool
+	force_password_change?:          bool
+	id?:                             string
+	immutable_id?:                   string
+	mail?:                           string
+	mail_nickname?:                  string
+	object_id?:                      string
+	onpremises_sam_account_name?:    string
+	onpremises_user_principal_name?: string
+	usage_location?:                 string
 }
 #Resources: {
-	azuread_application?: [_]:                #AzureadApplicationResource
-	azuread_application_password?: [_]:       #AzureadApplicationPasswordResource
-	azuread_group?: [_]:                      #AzureadGroupResource
-	azuread_group_member?: [_]:               #AzureadGroupMemberResource
-	azuread_service_principal?: [_]:          #AzureadServicePrincipalResource
-	azuread_service_principal_password?: [_]: #AzureadServicePrincipalPasswordResource
-	azuread_user?: [_]:                       #AzureadUserResource
+	azuread_application?: [_]:                   #AzureadApplicationResource
+	azuread_application_certificate?: [_]:       #AzureadApplicationCertificateResource
+	azuread_application_password?: [_]:          #AzureadApplicationPasswordResource
+	azuread_group?: [_]:                         #AzureadGroupResource
+	azuread_group_member?: [_]:                  #AzureadGroupMemberResource
+	azuread_service_principal?: [_]:             #AzureadServicePrincipalResource
+	azuread_service_principal_certificate?: [_]: #AzureadServicePrincipalCertificateResource
+	azuread_service_principal_password?: [_]:    #AzureadServicePrincipalPasswordResource
+	azuread_user?: [_]:                          #AzureadUserResource
 }

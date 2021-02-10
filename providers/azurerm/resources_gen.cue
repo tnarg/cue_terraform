@@ -4,6 +4,7 @@ package azurerm
 #AzurermAdvancedThreatProtectionResource: {
 	enabled:            bool
 	target_resource_id: string
+	id?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -19,6 +20,9 @@ package azurerm
 	admin_users?: [string, ...]
 	backup_blob_container_uri?: string
 	enable_power_bi_service?:   bool
+	id?:                        string
+	querypool_connection_mode?: string
+	server_full_name?:          string
 	tags?: [_]: string
 	ipv4_firewall_rule?: [{
 		name:        string
@@ -33,16 +37,36 @@ package azurerm
 	}
 }
 #AzurermApiManagementResource: {
-	location:            string
-	name:                string
-	publisher_email:     string
-	publisher_name:      string
-	resource_group_name: string
-	sku_name:            string
+	location:                   string
+	name:                       string
+	publisher_email:            string
+	publisher_name:             string
+	resource_group_name:        string
+	sku_name:                   string
+	developer_portal_url?:      string
+	gateway_regional_url?:      string
+	gateway_url?:               string
+	id?:                        string
+	management_api_url?:        string
+	notification_sender_email?: string
+	policy?: [{
+		xml_content: string
+		xml_link:    string
+	}, ...]
+	portal_url?: string
+	private_ip_addresses?: [string, ...]
+	public_ip_addresses?: [string, ...]
+	scm_url?: string
 	tags?: [_]: string
 	virtual_network_type?: string
 	additional_location?: [{
-		location: string
+		location:              string
+		gateway_regional_url?: string
+		private_ip_addresses?: [string, ...]
+		public_ip_addresses?: [string, ...]
+		virtual_network_configuration?: [{
+			subnet_id: string
+		}, ...]
 	}, ...]
 	certificate?: [{
 		certificate_password: string
@@ -75,6 +99,7 @@ package azurerm
 			host_name:                     string
 			certificate?:                  string
 			certificate_password?:         string
+			default_ssl_binding?:          bool
 			key_vault_id?:                 string
 			negotiate_client_certificate?: bool
 		}, ...]
@@ -88,19 +113,31 @@ package azurerm
 	}, ...]
 	identity?: [{
 		identity_ids?: [string, ...]
-		type?: string
+		principal_id?: string
+		tenant_id?:    string
+		type?:         string
 	}, ...]
 	protocols?: [{
 		enable_http2?: bool
 	}, ...]
 	security?: [{
-		enable_backend_ssl30?:      bool
-		enable_backend_tls10?:      bool
-		enable_backend_tls11?:      bool
-		enable_frontend_ssl30?:     bool
-		enable_frontend_tls10?:     bool
-		enable_frontend_tls11?:     bool
-		enable_triple_des_ciphers?: bool
+		enable_backend_ssl30?:                                bool
+		enable_backend_tls10?:                                bool
+		enable_backend_tls11?:                                bool
+		enable_frontend_ssl30?:                               bool
+		enable_frontend_tls10?:                               bool
+		enable_frontend_tls11?:                               bool
+		enable_triple_des_ciphers?:                           bool
+		tls_ecdhe_ecdsa_with_aes128_cbc_sha_ciphers_enabled?: bool
+		tls_ecdhe_ecdsa_with_aes256_cbc_sha_ciphers_enabled?: bool
+		tls_ecdhe_rsa_with_aes128_cbc_sha_ciphers_enabled?:   bool
+		tls_ecdhe_rsa_with_aes256_cbc_sha_ciphers_enabled?:   bool
+		tls_rsa_with_aes128_cbc_sha256_ciphers_enabled?:      bool
+		tls_rsa_with_aes128_cbc_sha_ciphers_enabled?:         bool
+		tls_rsa_with_aes128_gcm_sha256_ciphers_enabled?:      bool
+		tls_rsa_with_aes256_cbc_sha256_ciphers_enabled?:      bool
+		tls_rsa_with_aes256_cbc_sha_ciphers_enabled?:         bool
+		triple_des_ciphers_enabled?:                          bool
 	}, ...]
 	sign_in?: [{
 		enabled: bool
@@ -129,10 +166,17 @@ package azurerm
 	name:                string
 	path:                string
 	protocols: [string, ...]
-	resource_group_name: string
-	revision:            string
-	description?:        string
-	soap_pass_through?:  bool
+	resource_group_name:    string
+	revision:               string
+	description?:           string
+	id?:                    string
+	is_current?:            bool
+	is_online?:             bool
+	service_url?:           string
+	soap_pass_through?:     bool
+	subscription_required?: bool
+	version?:               string
+	version_set_id?:        string
 	import?: [{
 		content_format: string
 		content_value:  string
@@ -141,9 +185,52 @@ package azurerm
 			service_name:  string
 		}, ...]
 	}, ...]
+	oauth2_authorization?: [{
+		authorization_server_name: string
+		scope?:                    string
+	}, ...]
+	openid_authentication?: [{
+		openid_provider_name: string
+		bearer_token_sending_methods?: [string, ...]
+	}, ...]
 	subscription_key_parameter_names?: [{
 		header: string
 		query:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermApiManagementApiDiagnosticResource: {
+	api_management_logger_id:   string
+	api_management_name:        string
+	api_name:                   string
+	identifier:                 string
+	resource_group_name:        string
+	always_log_errors?:         bool
+	http_correlation_protocol?: string
+	id?:                        string
+	log_client_ip?:             bool
+	sampling_percentage?:       number
+	verbosity?:                 string
+	backend_request?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	backend_response?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	frontend_request?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	frontend_response?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -161,6 +248,7 @@ package azurerm
 	resource_group_name: string
 	url_template:        string
 	description?:        string
+	id?:                 string
 	request?: [{
 		description?: string
 		header?: [{
@@ -240,6 +328,8 @@ package azurerm
 	api_name:            string
 	operation_id:        string
 	resource_group_name: string
+	id?:                 string
+	xml_content?:        string
 	xml_link?:           string
 	timeouts?: {
 		create?: string
@@ -252,6 +342,8 @@ package azurerm
 	api_management_name: string
 	api_name:            string
 	resource_group_name: string
+	id?:                 string
+	xml_content?:        string
 	xml_link?:           string
 	timeouts?: {
 		create?: string
@@ -267,6 +359,7 @@ package azurerm
 	resource_group_name: string
 	schema_id:           string
 	value:               string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -281,6 +374,7 @@ package azurerm
 	resource_group_name:  string
 	versioning_scheme:    string
 	description?:         string
+	id?:                  string
 	version_header_name?: string
 	version_query_name?:  string
 	timeouts?: {
@@ -305,6 +399,7 @@ package azurerm
 	client_secret?:           string
 	default_scope?:           string
 	description?:             string
+	id?:                      string
 	resource_owner_password?: string
 	resource_owner_username?: string
 	support_state?:           bool
@@ -327,6 +422,7 @@ package azurerm
 	resource_group_name: string
 	url:                 string
 	description?:        string
+	id?:                 string
 	resource_id?:        string
 	title?:              string
 	credentials?: [{
@@ -369,7 +465,57 @@ package azurerm
 	data:                string
 	name:                string
 	resource_group_name: string
+	expiration?:         string
+	id?:                 string
 	password?:           string
+	subject?:            string
+	thumbprint?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermApiManagementCustomDomainResource: {
+	api_management_id: string
+	id?:               string
+	developer_portal?: [{
+		host_name:                     string
+		certificate?:                  string
+		certificate_password?:         string
+		key_vault_id?:                 string
+		negotiate_client_certificate?: bool
+	}, ...]
+	management?: [{
+		host_name:                     string
+		certificate?:                  string
+		certificate_password?:         string
+		key_vault_id?:                 string
+		negotiate_client_certificate?: bool
+	}, ...]
+	portal?: [{
+		host_name:                     string
+		certificate?:                  string
+		certificate_password?:         string
+		key_vault_id?:                 string
+		negotiate_client_certificate?: bool
+	}, ...]
+	proxy?: [{
+		host_name:                     string
+		certificate?:                  string
+		certificate_password?:         string
+		default_ssl_binding?:          bool
+		key_vault_id?:                 string
+		negotiate_client_certificate?: bool
+	}, ...]
+	scm?: [{
+		host_name:                     string
+		certificate?:                  string
+		certificate_password?:         string
+		key_vault_id?:                 string
+		negotiate_client_certificate?: bool
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -378,11 +524,33 @@ package azurerm
 	}
 }
 #AzurermApiManagementDiagnosticResource: {
-	api_management_logger_id: string
-	api_management_name:      string
-	identifier:               string
-	resource_group_name:      string
-	enabled?:                 bool
+	api_management_logger_id:   string
+	api_management_name:        string
+	identifier:                 string
+	resource_group_name:        string
+	always_log_errors?:         bool
+	enabled?:                   bool
+	http_correlation_protocol?: string
+	id?:                        string
+	log_client_ip?:             bool
+	sampling_percentage?:       number
+	verbosity?:                 string
+	backend_request?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	backend_response?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	frontend_request?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
+	frontend_response?: [{
+		body_bytes?: number
+		headers_to_log?: [string, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -397,6 +565,7 @@ package azurerm
 	resource_group_name: string
 	description?:        string
 	external_id?:        string
+	id?:                 string
 	type?:               string
 	timeouts?: {
 		create?: string
@@ -410,6 +579,7 @@ package azurerm
 	group_name:          string
 	resource_group_name: string
 	user_id:             string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -423,6 +593,28 @@ package azurerm
 	client_id:           string
 	client_secret:       string
 	resource_group_name: string
+	id?:                 string
+	signin_tenant?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermApiManagementIdentityProviderAadb2CResource: {
+	allowed_tenant:          string
+	api_management_name:     string
+	authority:               string
+	client_id:               string
+	client_secret:           string
+	resource_group_name:     string
+	signin_policy:           string
+	signin_tenant:           string
+	signup_policy:           string
+	id?:                     string
+	password_reset_policy?:  string
+	profile_editing_policy?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -435,6 +627,7 @@ package azurerm
 	app_id:              string
 	app_secret:          string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -447,6 +640,7 @@ package azurerm
 	client_id:           string
 	client_secret:       string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -459,6 +653,7 @@ package azurerm
 	client_id:           string
 	client_secret:       string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -471,6 +666,7 @@ package azurerm
 	api_management_name: string
 	api_secret_key:      string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -484,6 +680,7 @@ package azurerm
 	resource_group_name: string
 	buffered?:           bool
 	description?:        string
+	id?:                 string
 	application_insights?: [{
 		instrumentation_key: string
 	}, ...]
@@ -504,6 +701,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	value:               string
+	id?:                 string
 	secret?:             bool
 	tags?: [string, ...]
 	timeouts?: {
@@ -522,6 +720,19 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	description?:        string
+	id?:                 string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermApiManagementPolicyResource: {
+	api_management_id: string
+	id?:               string
+	xml_content?:      string
+	xml_link?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -538,6 +749,7 @@ package azurerm
 	subscription_required: bool
 	approval_required?:    bool
 	description?:          string
+	id?:                   string
 	subscriptions_limit?:  number
 	terms?:                string
 	timeouts?: {
@@ -552,6 +764,7 @@ package azurerm
 	api_name:            string
 	product_id:          string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -564,6 +777,7 @@ package azurerm
 	group_name:          string
 	product_id:          string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -575,6 +789,8 @@ package azurerm
 	api_management_name: string
 	product_id:          string
 	resource_group_name: string
+	id?:                 string
+	xml_content?:        string
 	xml_link?:           string
 	timeouts?: {
 		create?: string
@@ -589,6 +805,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	value:               string
+	id?:                 string
 	secret?:             bool
 	tags?: [string, ...]
 	timeouts?: {
@@ -603,8 +820,13 @@ package azurerm
 	display_name:        string
 	resource_group_name: string
 	user_id:             string
+	allow_tracing?:      bool
+	id?:                 string
+	primary_key?:        string
 	product_id?:         string
+	secondary_key?:      string
 	state?:              string
+	subscription_id?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -620,8 +842,10 @@ package azurerm
 	resource_group_name: string
 	user_id:             string
 	confirmation?:       string
+	id?:                 string
 	note?:               string
 	password?:           string
+	state?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -633,8 +857,35 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
-	sku?:                string
+	endpoint?:           string
+	id?:                 string
+	primary_read_key?: [{
+		connection_string: string
+		id:                string
+		secret:            string
+	}, ...]
+	primary_write_key?: [{
+		connection_string: string
+		id:                string
+		secret:            string
+	}, ...]
+	secondary_read_key?: [{
+		connection_string: string
+		id:                string
+		secret:            string
+	}, ...]
+	secondary_write_key?: [{
+		connection_string: string
+		id:                string
+		secret:            string
+	}, ...]
+	sku?: string
 	tags?: [_]: string
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -643,13 +894,26 @@ package azurerm
 	}
 }
 #AzurermAppServiceResource: {
-	app_service_plan_id:  string
-	location:             string
-	name:                 string
-	resource_group_name:  string
-	client_cert_enabled?: bool
-	enabled?:             bool
-	https_only?:          bool
+	app_service_plan_id: string
+	location:            string
+	name:                string
+	resource_group_name: string
+	app_settings?: [_]: string
+	client_affinity_enabled?:       bool
+	client_cert_enabled?:           bool
+	custom_domain_verification_id?: string
+	default_site_hostname?:         string
+	enabled?:                       bool
+	https_only?:                    bool
+	id?:                            string
+	outbound_ip_address_list?: [string, ...]
+	outbound_ip_addresses?: string
+	possible_outbound_ip_address_list?: [string, ...]
+	possible_outbound_ip_addresses?: string
+	site_credential?: [{
+		password: string
+		username: string
+	}, ...]
 	tags?: [_]: string
 	auth_settings?: [{
 		enabled: bool
@@ -706,9 +970,14 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	logs?: [{
+		detailed_error_messages_enabled?: bool
+		failed_request_tracing_enabled?:  bool
 		application_logs?: [{
+			file_system_level?: string
 			azure_blob_storage?: [{
 				level:             string
 				retention_in_days: number
@@ -731,21 +1000,56 @@ package azurerm
 		app_command_line?:    string
 		auto_swap_slot_name?: string
 		default_documents?: [string, ...]
-		dotnet_framework_version?:  string
-		health_check_path?:         string
-		http2_enabled?:             bool
-		java_container?:            string
-		java_container_version?:    string
-		java_version?:              string
-		php_version?:               string
-		python_version?:            string
-		remote_debugging_enabled?:  bool
-		scm_type?:                  string
-		use_32_bit_worker_process?: bool
+		dotnet_framework_version?: string
+		ftps_state?:               string
+		health_check_path?:        string
+		http2_enabled?:            bool
+		ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		java_container?:           string
+		java_container_version?:   string
+		java_version?:             string
+		linux_fx_version?:         string
+		local_mysql_enabled?:      bool
+		managed_pipeline_mode?:    string
+		min_tls_version?:          string
+		number_of_workers?:        number
+		php_version?:              string
+		python_version?:           string
+		remote_debugging_enabled?: bool
+		remote_debugging_version?: string
+		scm_ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		scm_type?:                    string
+		scm_use_main_ip_restriction?: bool
+		use_32_bit_worker_process?:   bool
+		websockets_enabled?:          bool
+		windows_fx_version?:          string
 		cors?: [{
 			allowed_origins: [string, ...]
 			support_credentials?: bool
 		}, ...]
+	}, ...]
+	source_control?: [{
+		branch?:             string
+		manual_integration?: bool
+		repo_url?:           string
+		rollback_enabled?:   bool
+		use_mercurial?:      bool
 	}, ...]
 	storage_account?: [{
 		access_key:   string
@@ -766,6 +1070,7 @@ package azurerm
 	app_service_name:      string
 	app_service_slot_name: string
 	resource_group_name:   string
+	id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -774,13 +1079,22 @@ package azurerm
 	}
 }
 #AzurermAppServiceCertificateResource: {
-	location:             string
-	name:                 string
-	resource_group_name:  string
-	key_vault_secret_id?: string
-	password?:            string
-	pfx_blob?:            string
+	location:            string
+	name:                string
+	resource_group_name: string
+	expiration_date?:    string
+	friendly_name?:      string
+	host_names?: [string, ...]
+	hosting_environment_profile_id?: string
+	id?:                             string
+	issue_date?:                     string
+	issuer?:                         string
+	key_vault_secret_id?:            string
+	password?:                       string
+	pfx_blob?:                       string
+	subject_name?:                   string
 	tags?: [_]: string
+	thumbprint?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -788,13 +1102,44 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermAppServiceCertificateBindingResource: {
+	certificate_id:      string
+	hostname_binding_id: string
+	ssl_state:           string
+	app_service_name?:   string
+	hostname?:           string
+	id?:                 string
+	thumbprint?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermAppServiceCertificateOrderResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
-	auto_renew?:         bool
-	key_size?:           number
-	product_type?:       string
+	app_service_certificate_not_renewable_reasons?: [string, ...]
+	auto_renew?: bool
+	certificates?: [{
+		certificate_name:      string
+		key_vault_id:          string
+		key_vault_secret_name: string
+		provisioning_state:    string
+	}, ...]
+	csr?:                           string
+	distinguished_name?:            string
+	domain_verification_token?:     string
+	expiration_time?:               string
+	id?:                            string
+	intermediate_thumbprint?:       string
+	is_private_key_external?:       bool
+	key_size?:                      number
+	product_type?:                  string
+	root_thumbprint?:               string
+	signed_certificate_thumbprint?: string
+	status?:                        string
 	tags?: [_]: string
 	validity_in_years?: number
 	timeouts?: {
@@ -808,8 +1153,10 @@ package azurerm
 	app_service_name:    string
 	hostname:            string
 	resource_group_name: string
+	id?:                 string
 	ssl_state?:          string
 	thumbprint?:         string
+	virtual_ip?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -818,12 +1165,60 @@ package azurerm
 	}
 }
 #AzurermAppServiceEnvironmentResource: {
-	name:                          string
-	subnet_id:                     string
+	name:      string
+	subnet_id: string
+	allowed_user_ip_cidrs?: [string, ...]
 	front_end_scale_factor?:       number
+	id?:                           string
 	internal_load_balancing_mode?: string
+	location?:                     string
 	pricing_tier?:                 string
+	resource_group_name?:          string
 	tags?: [_]: string
+	user_whitelisted_ip_ranges?: [string, ...]
+	cluster_setting?: [{
+		name:  string
+		value: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAppServiceHybridConnectionResource: {
+	app_service_name:       string
+	hostname:               string
+	port:                   number
+	relay_id:               string
+	resource_group_name:    string
+	id?:                    string
+	namespace_name?:        string
+	relay_name?:            string
+	send_key_name?:         string
+	send_key_value?:        string
+	service_bus_namespace?: string
+	service_bus_suffix?:    string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAppServiceManagedCertificateResource: {
+	custom_hostname_binding_id: string
+	canonical_name?:            string
+	expiration_date?:           string
+	friendly_name?:             string
+	host_names?: [string, ...]
+	id?:           string
+	issue_date?:   string
+	issuer?:       string
+	subject_name?: string
+	tags?: [_]: string
+	thumbprint?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -832,18 +1227,22 @@ package azurerm
 	}
 }
 #AzurermAppServicePlanResource: {
-	location:                    string
-	name:                        string
-	resource_group_name:         string
-	app_service_environment_id?: string
-	is_xenon?:                   bool
-	kind?:                       string
-	per_site_scaling?:           bool
-	reserved?:                   bool
+	location:                      string
+	name:                          string
+	resource_group_name:           string
+	app_service_environment_id?:   string
+	id?:                           string
+	is_xenon?:                     bool
+	kind?:                         string
+	maximum_elastic_worker_count?: number
+	maximum_number_of_workers?:    number
+	per_site_scaling?:             bool
+	reserved?:                     bool
 	tags?: [_]: string
 	sku?: [{
-		size: string
-		tier: string
+		size:      string
+		tier:      string
+		capacity?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -858,8 +1257,16 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
-	enabled?:            bool
-	https_only?:         bool
+	app_settings?: [_]: string
+	client_affinity_enabled?: bool
+	default_site_hostname?:   string
+	enabled?:                 bool
+	https_only?:              bool
+	id?:                      string
+	site_credential?: [{
+		password: string
+		username: string
+	}, ...]
 	tags?: [_]: string
 	auth_settings?: [{
 		enabled: bool
@@ -904,9 +1311,14 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	logs?: [{
+		detailed_error_messages_enabled?: bool
+		failed_request_tracing_enabled?:  bool
 		application_logs?: [{
+			file_system_level?: string
 			azure_blob_storage?: [{
 				level:             string
 				retention_in_days: number
@@ -929,17 +1341,45 @@ package azurerm
 		app_command_line?:    string
 		auto_swap_slot_name?: string
 		default_documents?: [string, ...]
-		dotnet_framework_version?:  string
-		health_check_path?:         string
-		http2_enabled?:             bool
-		java_container?:            string
-		java_container_version?:    string
-		java_version?:              string
-		php_version?:               string
-		python_version?:            string
-		remote_debugging_enabled?:  bool
-		scm_type?:                  string
-		use_32_bit_worker_process?: bool
+		dotnet_framework_version?: string
+		ftps_state?:               string
+		health_check_path?:        string
+		http2_enabled?:            bool
+		ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		java_container?:           string
+		java_container_version?:   string
+		java_version?:             string
+		linux_fx_version?:         string
+		local_mysql_enabled?:      bool
+		managed_pipeline_mode?:    string
+		min_tls_version?:          string
+		number_of_workers?:        number
+		php_version?:              string
+		python_version?:           string
+		remote_debugging_enabled?: bool
+		remote_debugging_version?: string
+		scm_ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		scm_type?:                    string
+		scm_use_main_ip_restriction?: bool
+		use_32_bit_worker_process?:   bool
+		websockets_enabled?:          bool
+		windows_fx_version?:          string
 		cors?: [{
 			allowed_origins: [string, ...]
 			support_credentials?: bool
@@ -952,9 +1392,22 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermAppServiceSlotVirtualNetworkSwiftConnectionResource: {
+	app_service_id: string
+	slot_name:      string
+	subnet_id:      string
+	id?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermAppServiceSourceControlTokenResource: {
 	token:         string
 	type:          string
+	id?:           string
 	token_secret?: string
 	timeouts?: {
 		create?: string
@@ -966,6 +1419,7 @@ package azurerm
 #AzurermAppServiceVirtualNetworkSwiftConnectionResource: {
 	app_service_id: string
 	subnet_id:      string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -979,11 +1433,13 @@ package azurerm
 	resource_group_name: string
 	enable_http2?:       bool
 	firewall_policy_id?: string
+	id?:                 string
 	tags?: [_]: string
 	zones?: [string, ...]
 	authentication_certificate?: [{
 		data: string
 		name: string
+		id?:  string
 	}, ...]
 	autoscale_configuration?: [{
 		min_capacity:  number
@@ -992,6 +1448,7 @@ package azurerm
 	backend_address_pool?: [{
 		name: string
 		fqdns?: [string, ...]
+		id?: string
 		ip_addresses?: [string, ...]
 	}, ...]
 	backend_http_settings?: [{
@@ -1001,13 +1458,16 @@ package azurerm
 		protocol:                             string
 		affinity_cookie_name?:                string
 		host_name?:                           string
+		id?:                                  string
 		path?:                                string
 		pick_host_name_from_backend_address?: bool
+		probe_id?:                            string
 		probe_name?:                          string
 		request_timeout?:                     number
 		trusted_root_certificate_names?: [string, ...]
 		authentication_certificate?: [{
 			name: string
+			id?:  string
 		}, ...]
 		connection_draining?: [{
 			drain_timeout_sec: number
@@ -1017,30 +1477,44 @@ package azurerm
 	custom_error_configuration?: [{
 		custom_error_page_url: string
 		status_code:           string
+		id?:                   string
 	}, ...]
 	frontend_ip_configuration?: [{
-		name: string
+		name:                           string
+		id?:                            string
+		private_ip_address?:            string
+		private_ip_address_allocation?: string
+		public_ip_address_id?:          string
+		subnet_id?:                     string
 	}, ...]
 	frontend_port?: [{
 		name: string
 		port: number
+		id?:  string
 	}, ...]
 	gateway_ip_configuration?: [{
 		name:      string
 		subnet_id: string
+		id?:       string
 	}, ...]
 	http_listener?: [{
 		frontend_ip_configuration_name: string
 		frontend_port_name:             string
 		name:                           string
 		protocol:                       string
+		firewall_policy_id?:            string
+		frontend_ip_configuration_id?:  string
+		frontend_port_id?:              string
 		host_name?:                     string
 		host_names?: [string, ...]
+		id?:                   string
 		require_sni?:          bool
+		ssl_certificate_id?:   string
 		ssl_certificate_name?: string
 		custom_error_configuration?: [{
 			custom_error_page_url: string
 			status_code:           string
+			id?:                   string
 		}, ...]
 	}, ...]
 	identity?: [{
@@ -1055,8 +1529,10 @@ package azurerm
 		timeout:                                    number
 		unhealthy_threshold:                        number
 		host?:                                      string
+		id?:                                        string
 		minimum_servers?:                           number
 		pick_host_name_from_backend_http_settings?: bool
+		port?:                                      number
 		match?: [{
 			body?: string
 			status_code?: [string, ...]
@@ -1065,8 +1541,10 @@ package azurerm
 	redirect_configuration?: [{
 		name:                  string
 		redirect_type:         string
+		id?:                   string
 		include_path?:         bool
 		include_query_string?: bool
+		target_listener_id?:   string
 		target_listener_name?: string
 		target_url?:           string
 	}, ...]
@@ -1074,14 +1552,22 @@ package azurerm
 		http_listener_name:           string
 		name:                         string
 		rule_type:                    string
+		backend_address_pool_id?:     string
 		backend_address_pool_name?:   string
+		backend_http_settings_id?:    string
 		backend_http_settings_name?:  string
+		http_listener_id?:            string
+		id?:                          string
+		redirect_configuration_id?:   string
 		redirect_configuration_name?: string
+		rewrite_rule_set_id?:         string
 		rewrite_rule_set_name?:       string
+		url_path_map_id?:             string
 		url_path_map_name?:           string
 	}, ...]
 	rewrite_rule_set?: [{
 		name: string
+		id?:  string
 		rewrite_rule?: [{
 			name:          string
 			rule_sequence: number
@@ -1109,8 +1595,10 @@ package azurerm
 	ssl_certificate?: [{
 		name:                 string
 		data?:                string
+		id?:                  string
 		key_vault_secret_id?: string
 		password?:            string
+		public_cert_data?:    string
 	}, ...]
 	ssl_policy?: [{
 		cipher_suites?: [string, ...]
@@ -1128,19 +1616,30 @@ package azurerm
 	trusted_root_certificate?: [{
 		data: string
 		name: string
+		id?:  string
 	}, ...]
 	url_path_map?: [{
 		name:                                 string
+		default_backend_address_pool_id?:     string
 		default_backend_address_pool_name?:   string
+		default_backend_http_settings_id?:    string
 		default_backend_http_settings_name?:  string
+		default_redirect_configuration_id?:   string
 		default_redirect_configuration_name?: string
+		default_rewrite_rule_set_id?:         string
 		default_rewrite_rule_set_name?:       string
+		id?:                                  string
 		path_rule?: [{
 			name: string
 			paths: [string, ...]
+			backend_address_pool_id?:     string
 			backend_address_pool_name?:   string
+			backend_http_settings_id?:    string
 			backend_http_settings_name?:  string
+			id?:                          string
+			redirect_configuration_id?:   string
 			redirect_configuration_name?: string
+			rewrite_rule_set_id?:         string
 			rewrite_rule_set_name?:       string
 		}, ...]
 	}, ...]
@@ -1164,13 +1663,19 @@ package azurerm
 	}, ...]
 }
 #AzurermApplicationInsightsResource: {
-	application_type:     string
-	location:             string
-	name:                 string
-	resource_group_name:  string
-	disable_ip_masking?:  bool
-	retention_in_days?:   number
-	sampling_percentage?: number
+	application_type:                       string
+	location:                               string
+	name:                                   string
+	resource_group_name:                    string
+	app_id?:                                string
+	connection_string?:                     string
+	daily_data_cap_in_gb?:                  number
+	daily_data_cap_notifications_disabled?: bool
+	disable_ip_masking?:                    bool
+	id?:                                    string
+	instrumentation_key?:                   string
+	retention_in_days?:                     number
+	sampling_percentage?:                   number
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1186,6 +1691,10 @@ package azurerm
 	scope:                   string
 	type:                    string
 	function_alias?:         string
+	id?:                     string
+	time_created?:           string
+	time_modified?:          string
+	version?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1196,6 +1705,8 @@ package azurerm
 #AzurermApplicationInsightsApiKeyResource: {
 	application_insights_id: string
 	name:                    string
+	api_key?:                string
+	id?:                     string
 	read_permissions?: [string, ...]
 	write_permissions?: [string, ...]
 	timeouts?: {
@@ -1209,14 +1720,16 @@ package azurerm
 	application_insights_id: string
 	configuration:           string
 	geo_locations: [string, ...]
-	kind:                string
-	location:            string
-	name:                string
-	resource_group_name: string
-	description?:        string
-	enabled?:            bool
-	frequency?:          number
-	retry_enabled?:      bool
+	kind:                  string
+	location:              string
+	name:                  string
+	resource_group_name:   string
+	description?:          string
+	enabled?:              bool
+	frequency?:            number
+	id?:                   string
+	retry_enabled?:        bool
+	synthetic_monitor_id?: string
 	tags?: [_]: string
 	timeout?: number
 	timeouts?: {
@@ -1230,6 +1743,7 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1238,11 +1752,31 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermAttestationProviderResource: {
+	location:                         string
+	name:                             string
+	resource_group_name:              string
+	attestation_uri?:                 string
+	id?:                              string
+	policy_signing_certificate_data?: string
+	tags?: [_]: string
+	trust_model?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermAutomationAccountResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	sku_name:            string
+	location:                  string
+	name:                      string
+	resource_group_name:       string
+	sku_name:                  string
+	dsc_primary_access_key?:   string
+	dsc_secondary_access_key?: string
+	dsc_server_endpoint?:      string
+	id?:                       string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1257,6 +1791,72 @@ package azurerm
 	name:                    string
 	resource_group_name:     string
 	description?:            string
+	exportable?:             bool
+	id?:                     string
+	thumbprint?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAutomationConnectionResource: {
+	automation_account_name: string
+	name:                    string
+	resource_group_name:     string
+	type:                    string
+	values: [_]: string
+	description?: string
+	id?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAutomationConnectionCertificateResource: {
+	automation_account_name:     string
+	automation_certificate_name: string
+	name:                        string
+	resource_group_name:         string
+	subscription_id:             string
+	description?:                string
+	id?:                         string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAutomationConnectionClassicCertificateResource: {
+	automation_account_name: string
+	certificate_asset_name:  string
+	name:                    string
+	resource_group_name:     string
+	subscription_id:         string
+	subscription_name:       string
+	description?:            string
+	id?:                     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermAutomationConnectionServicePrincipalResource: {
+	application_id:          string
+	automation_account_name: string
+	certificate_thumbprint:  string
+	name:                    string
+	resource_group_name:     string
+	subscription_id:         string
+	tenant_id:               string
+	description?:            string
+	id?:                     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1271,6 +1871,7 @@ package azurerm
 	resource_group_name:     string
 	username:                string
 	description?:            string
+	id?:                     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1285,7 +1886,9 @@ package azurerm
 	name:                    string
 	resource_group_name:     string
 	description?:            string
+	id?:                     string
 	log_verbose?:            bool
+	state?:                  string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1299,6 +1902,8 @@ package azurerm
 	content_embedded:        string
 	name:                    string
 	resource_group_name:     string
+	configuration_name?:     string
+	id?:                     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1311,6 +1916,8 @@ package azurerm
 	resource_group_name:     string
 	runbook_name:            string
 	schedule_name:           string
+	id?:                     string
+	job_schedule_id?:        string
 	parameters?: [_]: string
 	run_on?: string
 	timeouts?: {
@@ -1324,6 +1931,7 @@ package azurerm
 	automation_account_name: string
 	name:                    string
 	resource_group_name:     string
+	id?:                     string
 	module_link?: [{
 		uri: string
 		hash?: [{
@@ -1346,7 +1954,15 @@ package azurerm
 	name:                    string
 	resource_group_name:     string
 	runbook_type:            string
+	content?:                string
 	description?:            string
+	id?:                     string
+	job_schedule?: [{
+		job_schedule_id: string
+		parameters: [_]: string
+		run_on:        string
+		schedule_name: string
+	}, ...]
 	tags?: [_]: string
 	publish_content_link?: [{
 		uri:      string
@@ -1369,8 +1985,12 @@ package azurerm
 	name:                    string
 	resource_group_name:     string
 	description?:            string
+	expiry_time?:            string
+	id?:                     string
+	interval?:               number
 	month_days?: [number, ...]
-	timezone?: string
+	start_time?: string
+	timezone?:   string
 	week_days?: [string, ...]
 	monthly_occurrence?: [{
 		day:        string
@@ -1389,6 +2009,7 @@ package azurerm
 	resource_group_name:     string
 	description?:            string
 	encrypted?:              bool
+	id?:                     string
 	value?:                  bool
 	timeouts?: {
 		create?: string
@@ -1403,6 +2024,7 @@ package azurerm
 	resource_group_name:     string
 	description?:            string
 	encrypted?:              bool
+	id?:                     string
 	value?:                  string
 	timeouts?: {
 		create?: string
@@ -1417,6 +2039,7 @@ package azurerm
 	resource_group_name:     string
 	description?:            string
 	encrypted?:              bool
+	id?:                     string
 	value?:                  number
 	timeouts?: {
 		create?: string
@@ -1431,6 +2054,7 @@ package azurerm
 	resource_group_name:     string
 	description?:            string
 	encrypted?:              bool
+	id?:                     string
 	value?:                  string
 	timeouts?: {
 		create?: string
@@ -1443,6 +2067,7 @@ package azurerm
 	location:                      string
 	name:                          string
 	resource_group_name:           string
+	id?:                           string
 	managed?:                      bool
 	platform_fault_domain_count?:  number
 	platform_update_domain_count?: number
@@ -1459,6 +2084,7 @@ package azurerm
 	recovery_vault_name: string
 	resource_group_name: string
 	storage_account_id:  string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1470,6 +2096,7 @@ package azurerm
 	name:                string
 	recovery_vault_name: string
 	resource_group_name: string
+	id?:                 string
 	timezone?:           string
 	backup?: [{
 		frequency: string
@@ -1486,9 +2113,11 @@ package azurerm
 	}
 }
 #AzurermBackupPolicyVmResource: {
-	name:                string
-	recovery_vault_name: string
-	resource_group_name: string
+	name:                            string
+	recovery_vault_name:             string
+	resource_group_name:             string
+	id?:                             string
+	instant_restore_retention_days?: number
 	tags?: [_]: string
 	timezone?: string
 	backup?: [{
@@ -1527,6 +2156,7 @@ package azurerm
 	resource_group_name:       string
 	source_file_share_name:    string
 	source_storage_account_id: string
+	id?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1539,6 +2169,7 @@ package azurerm
 	recovery_vault_name: string
 	resource_group_name: string
 	source_vm_id:        string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1551,6 +2182,8 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	dns_name?:           string
+	id?:                 string
 	tags?: [_]: string
 	ip_configuration?: [{
 		name:                 string
@@ -1568,7 +2201,12 @@ package azurerm
 	location:              string
 	name:                  string
 	resource_group_name:   string
+	account_endpoint?:     string
+	id?:                   string
 	pool_allocation_mode?: string
+	primary_access_key?:   string
+	secondary_access_key?: string
+	storage_account_id?:   string
 	tags?: [_]: string
 	key_vault_reference?: [{
 		id:  string
@@ -1588,6 +2226,7 @@ package azurerm
 	allow_updates?:      bool
 	default_version?:    string
 	display_name?:       string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1602,7 +2241,10 @@ package azurerm
 	resource_group_name:  string
 	thumbprint:           string
 	thumbprint_algorithm: string
+	id?:                  string
+	name?:                string
 	password?:            string
+	public_data?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1617,6 +2259,7 @@ package azurerm
 	resource_group_name: string
 	vm_size:             string
 	display_name?:       string
+	id?:                 string
 	max_tasks_per_node?: number
 	metadata?: [_]: string
 	stop_pending_resize_operation?: bool
@@ -1631,6 +2274,7 @@ package azurerm
 		visibility?: [string, ...]
 	}, ...]
 	container_configuration?: [{
+		container_image_names?: [string, ...]
 		container_registries?: [{
 			password:        string
 			registry_server: string
@@ -1644,7 +2288,8 @@ package azurerm
 		target_low_priority_nodes?: number
 	}, ...]
 	network_configuration?: [{
-		subnet_id: string
+		subnet_id:                         string
+		public_address_provisioning_type?: string
 		public_ips?: [string, ...]
 		endpoint_configuration?: [{
 			backend_port:        number
@@ -1693,14 +2338,45 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermBlueprintAssignmentResource: {
+	location:               string
+	name:                   string
+	target_subscription_id: string
+	version_id:             string
+	blueprint_name?:        string
+	description?:           string
+	display_name?:          string
+	id?:                    string
+	lock_exclude_principals?: [string, ...]
+	lock_mode?:        string
+	parameter_values?: string
+	resource_groups?:  string
+	type?:             string
+	identity?: [{
+		identity_ids: [string, ...]
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermBotChannelDirectlineResource: {
 	bot_name:            string
 	location:            string
 	resource_group_name: string
+	id?:                 string
 	site?: [{
 		name:                             string
 		enabled?:                         bool
 		enhanced_authentication_enabled?: bool
+		id?:                              string
+		key?:                             string
+		key2?:                            string
 		trusted_origins?: [string, ...]
 		v1_allowed?: bool
 		v3_allowed?: bool
@@ -1718,6 +2394,7 @@ package azurerm
 	email_password:      string
 	location:            string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1731,6 +2408,7 @@ package azurerm
 	resource_group_name: string
 	calling_web_hook?:   string
 	enable_calling?:     bool
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1745,6 +2423,7 @@ package azurerm
 	location:            string
 	resource_group_name: string
 	verification_token:  string
+	id?:                 string
 	landing_page_url?:   string
 	timeouts?: {
 		create?: string
@@ -1754,12 +2433,17 @@ package azurerm
 	}
 }
 #AzurermBotChannelsRegistrationResource: {
-	location:            string
-	microsoft_app_id:    string
-	name:                string
-	resource_group_name: string
-	sku:                 string
-	endpoint?:           string
+	location:                               string
+	microsoft_app_id:                       string
+	name:                                   string
+	resource_group_name:                    string
+	sku:                                    string
+	developer_app_insights_api_key?:        string
+	developer_app_insights_application_id?: string
+	developer_app_insights_key?:            string
+	display_name?:                          string
+	endpoint?:                              string
+	id?:                                    string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1776,6 +2460,7 @@ package azurerm
 	name:                  string
 	resource_group_name:   string
 	service_provider_name: string
+	id?:                   string
 	parameters?: [_]: string
 	scopes?: string
 	tags?: [_]: string
@@ -1787,12 +2472,17 @@ package azurerm
 	}
 }
 #AzurermBotWebAppResource: {
-	location:            string
-	microsoft_app_id:    string
-	name:                string
-	resource_group_name: string
-	sku:                 string
-	endpoint?:           string
+	location:                               string
+	microsoft_app_id:                       string
+	name:                                   string
+	resource_group_name:                    string
+	sku:                                    string
+	developer_app_insights_api_key?:        string
+	developer_app_insights_application_id?: string
+	developer_app_insights_key?:            string
+	display_name?:                          string
+	endpoint?:                              string
+	id?:                                    string
 	luis_app_ids?: [string, ...]
 	luis_key?: string
 	tags?: [_]: string
@@ -1804,14 +2494,20 @@ package azurerm
 	}
 }
 #AzurermCdnEndpointResource: {
-	location:                       string
-	name:                           string
-	profile_name:                   string
-	resource_group_name:            string
+	location:            string
+	name:                string
+	profile_name:        string
+	resource_group_name: string
+	content_types_to_compress?: [string, ...]
+	host_name?:                     string
+	id?:                            string
 	is_compression_enabled?:        bool
 	is_http_allowed?:               bool
 	is_https_allowed?:              bool
 	optimization_type?:             string
+	origin_host_header?:            string
+	origin_path?:                   string
+	probe_path?:                    string
 	querystring_caching_behaviour?: string
 	tags?: [_]: string
 	delivery_rule?: [{
@@ -1826,9 +2522,9 @@ package azurerm
 			parameters?: string
 		}, ...]
 		cookies_condition?: [{
-			match_values: [string, ...]
-			operator:          string
-			selector:          string
+			operator: string
+			selector: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
@@ -1853,33 +2549,33 @@ package azurerm
 			value?: string
 		}, ...]
 		post_arg_condition?: [{
-			match_values: [string, ...]
-			operator:          string
-			selector:          string
+			operator: string
+			selector: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		query_string_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		remote_address_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 		}, ...]
 		request_body_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		request_header_condition?: [{
-			match_values: [string, ...]
-			operator:          string
-			selector:          string
+			operator: string
+			selector: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
@@ -1894,26 +2590,26 @@ package azurerm
 			operator?:         string
 		}, ...]
 		request_uri_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		url_file_extension_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		url_file_name_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
 		url_path_condition?: [{
-			match_values: [string, ...]
-			operator:          string
+			operator: string
+			match_values?: [string, ...]
 			negate_condition?: bool
 			transforms?: [string, ...]
 		}, ...]
@@ -1987,6 +2683,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	sku:                 string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2001,7 +2698,11 @@ package azurerm
 	name:                  string
 	resource_group_name:   string
 	sku_name:              string
+	endpoint?:             string
+	id?:                   string
+	primary_access_key?:   string
 	qna_runtime_endpoint?: string
+	secondary_access_key?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2016,6 +2717,9 @@ package azurerm
 	os_type:             string
 	resource_group_name: string
 	dns_name_label?:     string
+	fqdn?:               string
+	id?:                 string
+	ip_address?:         string
 	ip_address_type?:    string
 	network_profile_id?: string
 	restart_policy?:     string
@@ -2025,6 +2729,7 @@ package azurerm
 		image:  string
 		memory: number
 		name:   string
+		commands?: [string, ...]
 		environment_variables?: [_]:        string
 		secure_environment_variables?: [_]: string
 		gpu?: [{
@@ -2062,12 +2767,19 @@ package azurerm
 			}, ...]
 		}, ...]
 		volume?: [{
-			mount_path:           string
-			name:                 string
-			share_name:           string
-			storage_account_key:  string
-			storage_account_name: string
-			read_only?:           bool
+			mount_path: string
+			name:       string
+			empty_dir?: bool
+			read_only?: bool
+			secret?: [_]: string
+			share_name?:           string
+			storage_account_key?:  string
+			storage_account_name?: string
+			git_repo?: [{
+				url:        string
+				directory?: string
+				revision?:  string
+			}, ...]
 		}, ...]
 	}, ...]
 	diagnostics?: [{
@@ -2078,9 +2790,15 @@ package azurerm
 			metadata?: [_]: string
 		}, ...]
 	}, ...]
+	dns_config?: [{
+		nameservers: [string, ...]
+		options: [string, ...]
+		search_domains: [string, ...]
+	}, ...]
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
 	}, ...]
 	image_registry_credential?: [{
 		password: string
@@ -2099,10 +2817,32 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	admin_enabled?:      bool
+	admin_password?:     string
+	admin_username?:     string
 	georeplication_locations?: [string, ...]
+	id?:           string
+	login_server?: string
+	network_rule_set?: [{
+		default_action: string
+		ip_rule: [{
+			action:   string
+			ip_range: string
+		}, ...]
+		virtual_network: [{
+			action:    string
+			subnet_id: string
+		}, ...]
+	}, ...]
+	retention_policy?: [{
+		days:    number
+		enabled: bool
+	}, ...]
 	sku?:                string
 	storage_account_id?: string
 	tags?: [_]: string
+	trust_policy?: [{
+		enabled: bool
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2118,6 +2858,7 @@ package azurerm
 	resource_group_name: string
 	service_uri:         string
 	custom_headers?: [_]: string
+	id?:     string
 	scope?:  string
 	status?: string
 	tags?: [_]: string
@@ -2129,16 +2870,33 @@ package azurerm
 	}
 }
 #AzurermCosmosdbAccountResource: {
-	location:                           string
-	name:                               string
-	offer_type:                         string
-	resource_group_name:                string
+	location:                    string
+	name:                        string
+	offer_type:                  string
+	resource_group_name:         string
+	analytical_storage_enabled?: bool
+	connection_strings?: [string, ...]
 	enable_automatic_failover?:         bool
+	enable_free_tier?:                  bool
 	enable_multiple_write_locations?:   bool
+	endpoint?:                          string
+	id?:                                string
 	ip_range_filter?:                   string
 	is_virtual_network_filter_enabled?: bool
+	key_vault_key_id?:                  string
 	kind?:                              string
+	primary_key?:                       string
+	primary_master_key?:                string
+	primary_readonly_key?:              string
+	primary_readonly_master_key?:       string
+	public_network_access_enabled?:     bool
+	read_endpoints?: [string, ...]
+	secondary_key?:                 string
+	secondary_master_key?:          string
+	secondary_readonly_key?:        string
+	secondary_readonly_master_key?: string
 	tags?: [_]: string
+	write_endpoints?: [string, ...]
 	capabilities?: [{
 		name: string
 	}, ...]
@@ -2150,7 +2908,9 @@ package azurerm
 	geo_location?: [{
 		failover_priority: number
 		location:          string
+		id?:               string
 		prefix?:           string
+		zone_redundant?:   bool
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2159,13 +2919,48 @@ package azurerm
 		update?: string
 	}
 	virtual_network_rule?: [{
-		id: string
+		id:                                    string
+		ignore_missing_vnet_service_endpoint?: bool
 	}, ...]
 }
 #AzurermCosmosdbCassandraKeyspaceResource: {
 	account_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermCosmosdbCassandraTableResource: {
+	cassandra_keyspace_id: string
+	name:                  string
+	default_ttl?:          number
+	id?:                   string
+	throughput?:           number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
+	schema?: [{
+		cluster_key?: [{
+			name:     string
+			order_by: string
+		}, ...]
+		column?: [{
+			name: string
+			type: string
+		}, ...]
+		partition_key?: [{
+			name: string
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2177,6 +2972,11 @@ package azurerm
 	account_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2189,7 +2989,13 @@ package azurerm
 	database_name:       string
 	name:                string
 	resource_group_name: string
+	default_ttl?:        number
+	id?:                 string
 	partition_key_path?: string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
 	conflict_resolution_policy?: [{
 		mode:                           string
 		conflict_resolution_path?:      string
@@ -2217,7 +3023,16 @@ package azurerm
 	name:                 string
 	resource_group_name:  string
 	default_ttl_seconds?: number
+	id?:                  string
 	shard_key?:           string
+	system_indexes?: [{
+		keys: [string, ...]
+		unique: bool
+	}, ...]
+	throughput?: number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
 	index?: [{
 		keys: [string, ...]
 		unique?: bool
@@ -2233,6 +3048,11 @@ package azurerm
 	account_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2241,11 +3061,33 @@ package azurerm
 	}
 }
 #AzurermCosmosdbSqlContainerResource: {
-	account_name:        string
-	database_name:       string
-	name:                string
-	resource_group_name: string
-	partition_key_path?: string
+	account_name:           string
+	database_name:          string
+	name:                   string
+	resource_group_name:    string
+	default_ttl?:           number
+	id?:                    string
+	partition_key_path?:    string
+	partition_key_version?: number
+	throughput?:            number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
+	indexing_policy?: [{
+		indexing_mode?: string
+		composite_index?: [{
+			index?: [{
+				order: string
+				path:  string
+			}, ...]
+		}, ...]
+		excluded_path?: [{
+			path: string
+		}, ...]
+		included_path?: [{
+			path: string
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2260,6 +3102,26 @@ package azurerm
 	account_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermCosmosdbSqlStoredProcedureResource: {
+	account_name:        string
+	body:                string
+	container_name:      string
+	database_name:       string
+	name:                string
+	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2271,6 +3133,11 @@ package azurerm
 	account_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	throughput?:         number
+	autoscale_settings?: [{
+		max_throughput?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2285,6 +3152,7 @@ package azurerm
 	recurrence_type:         string
 	resource_group_id:       string
 	active?:                 bool
+	id?:                     string
 	delivery_info?: [{
 		container_name:     string
 		root_folder_path:   string
@@ -2305,6 +3173,7 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	action?: [{
 		endpoint: string
@@ -2326,9 +3195,11 @@ package azurerm
 	}, ...]
 }
 #AzurermDashboardResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
+	location:              string
+	name:                  string
+	resource_group_name:   string
+	dashboard_properties?: string
+	id?:                   string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2338,9 +3209,11 @@ package azurerm
 	}
 }
 #AzurermDataFactoryResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
+	location:                string
+	name:                    string
+	resource_group_name:     string
+	id?:                     string
+	public_network_enabled?: bool
 	tags?: [_]: string
 	github_configuration?: [{
 		account_name:    string
@@ -2350,7 +3223,9 @@ package azurerm
 		root_folder:     string
 	}, ...]
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2367,6 +3242,157 @@ package azurerm
 		tenant_id:       string
 	}, ...]
 }
+#AzurermDataFactoryDatasetAzureBlobResource: {
+	data_factory_name:   string
+	linked_service_name: string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?: string
+	filename?:    string
+	folder?:      string
+	id?:          string
+	parameters?: [_]: string
+	path?: string
+	schema_column?: [{
+		name:         string
+		description?: string
+		type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryDatasetCosmosdbSqlapiResource: {
+	data_factory_name:   string
+	linked_service_name: string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	collection_name?: string
+	description?:     string
+	folder?:          string
+	id?:              string
+	parameters?: [_]: string
+	schema_column?: [{
+		name:         string
+		description?: string
+		type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryDatasetDelimitedTextResource: {
+	data_factory_name:   string
+	linked_service_name: string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	column_delimiter?:    string
+	compression_codec?:   string
+	compression_level?:   string
+	description?:         string
+	encoding?:            string
+	escape_character?:    string
+	first_row_as_header?: bool
+	folder?:              string
+	id?:                  string
+	null_value?:          string
+	parameters?: [_]: string
+	quote_character?: string
+	row_delimiter?:   string
+	azure_blob_storage_location?: [{
+		container: string
+		filename:  string
+		path:      string
+	}, ...]
+	http_server_location?: [{
+		filename:     string
+		path:         string
+		relative_url: string
+	}, ...]
+	schema_column?: [{
+		name:         string
+		description?: string
+		type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryDatasetHttpResource: {
+	data_factory_name:   string
+	linked_service_name: string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?: string
+	folder?:      string
+	id?:          string
+	parameters?: [_]: string
+	relative_url?:   string
+	request_body?:   string
+	request_method?: string
+	schema_column?: [{
+		name:         string
+		description?: string
+		type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryDatasetJsonResource: {
+	data_factory_name:   string
+	linked_service_name: string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?: string
+	encoding?:    string
+	folder?:      string
+	id?:          string
+	parameters?: [_]: string
+	azure_blob_storage_location?: [{
+		container: string
+		filename:  string
+		path:      string
+	}, ...]
+	http_server_location?: [{
+		filename:     string
+		path:         string
+		relative_url: string
+	}, ...]
+	schema_column?: [{
+		name:         string
+		description?: string
+		type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermDataFactoryDatasetMysqlResource: {
 	data_factory_name:   string
 	linked_service_name: string
@@ -2376,6 +3402,7 @@ package azurerm
 	annotations?: [string, ...]
 	description?: string
 	folder?:      string
+	id?:          string
 	parameters?: [_]: string
 	table_name?: string
 	schema_column?: [{
@@ -2399,6 +3426,7 @@ package azurerm
 	annotations?: [string, ...]
 	description?: string
 	folder?:      string
+	id?:          string
 	parameters?: [_]: string
 	table_name?: string
 	schema_column?: [{
@@ -2422,6 +3450,7 @@ package azurerm
 	annotations?: [string, ...]
 	description?: string
 	folder?:      string
+	id?:          string
 	parameters?: [_]: string
 	table_name?: string
 	schema_column?: [{
@@ -2444,6 +3473,7 @@ package azurerm
 	resource_group_name:               string
 	description?:                      string
 	edition?:                          string
+	id?:                               string
 	license_type?:                     string
 	max_parallel_executions_per_node?: number
 	number_of_nodes?:                  number
@@ -2468,17 +3498,171 @@ package azurerm
 		vnet_id:     string
 	}, ...]
 }
-#AzurermDataFactoryLinkedServiceDataLakeStorageGen2Resource: {
-	data_factory_name:     string
-	name:                  string
-	resource_group_name:   string
-	service_principal_id:  string
-	service_principal_key: string
-	tenant:                string
-	url:                   string
+#AzurermDataFactoryIntegrationRuntimeSelfHostedResource: {
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	auth_key_1?:         string
+	auth_key_2?:         string
+	description?:        string
+	id?:                 string
+	rbac_authorization?: [{
+		resource_id: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceAzureBlobStorageResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
 	additional_properties?: [_]: string
 	annotations?: [string, ...]
 	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceAzureFileStorageResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	file_share?:               string
+	host?:                     string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	password?: string
+	user_id?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceAzureFunctionResource: {
+	data_factory_name:   string
+	key:                 string
+	name:                string
+	resource_group_name: string
+	url:                 string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceAzureSqlDatabaseResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceAzureTableStorageResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceCosmosdbResource: {
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	account_endpoint?:   string
+	account_key?:        string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	connection_string?:        string
+	database?:                 string
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceDataLakeStorageGen2Resource: {
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	url:                 string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	service_principal_id?:  string
+	service_principal_key?: string
+	tenant?:                string
+	use_managed_identity?:  bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceKeyVaultResource: {
+	data_factory_name:   string
+	key_vault_id:        string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
 	integration_runtime_name?: string
 	parameters?: [_]: string
 	timeouts?: {
@@ -2496,6 +3680,7 @@ package azurerm
 	additional_properties?: [_]: string
 	annotations?: [string, ...]
 	description?:              string
+	id?:                       string
 	integration_runtime_name?: string
 	parameters?: [_]: string
 	timeouts?: {
@@ -2513,8 +3698,53 @@ package azurerm
 	additional_properties?: [_]: string
 	annotations?: [string, ...]
 	description?:              string
+	id?:                       string
 	integration_runtime_name?: string
 	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceSftpResource: {
+	authentication_type: string
+	data_factory_name:   string
+	host:                string
+	name:                string
+	password:            string
+	port:                number
+	resource_group_name: string
+	username:            string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceSnowflakeResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	key_vault_password?: [{
+		linked_service_name: string
+		secret_name:         string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2530,8 +3760,56 @@ package azurerm
 	additional_properties?: [_]: string
 	annotations?: [string, ...]
 	description?:              string
+	id?:                       string
 	integration_runtime_name?: string
 	parameters?: [_]: string
+	key_vault_password?: [{
+		linked_service_name: string
+		secret_name:         string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceSynapseResource: {
+	connection_string:   string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	key_vault_password?: [{
+		linked_service_name: string
+		secret_name:         string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDataFactoryLinkedServiceWebResource: {
+	authentication_type: string
+	data_factory_name:   string
+	name:                string
+	resource_group_name: string
+	url:                 string
+	additional_properties?: [_]: string
+	annotations?: [string, ...]
+	description?:              string
+	id?:                       string
+	integration_runtime_name?: string
+	parameters?: [_]: string
+	password?: string
+	username?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2543,8 +3821,10 @@ package azurerm
 	data_factory_name:   string
 	name:                string
 	resource_group_name: string
+	activities_json?:    string
 	annotations?: [string, ...]
 	description?: string
+	id?:          string
 	parameters?: [_]: string
 	variables?: [_]:  string
 	timeouts?: {
@@ -2562,8 +3842,10 @@ package azurerm
 	annotations?: [string, ...]
 	end_time?:  string
 	frequency?: string
+	id?:        string
 	interval?:  number
 	pipeline_parameters?: [_]: string
+	start_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2576,6 +3858,7 @@ package azurerm
 	location:                   string
 	name:                       string
 	resource_group_name:        string
+	id?:                        string
 	tags?: [_]: string
 	tier?: string
 	timeouts?: {
@@ -2591,6 +3874,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2603,8 +3887,11 @@ package azurerm
 	name:                      string
 	resource_group_name:       string
 	encryption_state?:         string
+	encryption_type?:          string
+	endpoint?:                 string
 	firewall_allow_azure_ips?: string
 	firewall_state?:           string
+	id?:                       string
 	tags?: [_]: string
 	tier?: string
 	timeouts?: {
@@ -2618,6 +3905,7 @@ package azurerm
 	account_name:     string
 	local_file_path:  string
 	remote_file_path: string
+	id?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2631,6 +3919,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2643,6 +3932,7 @@ package azurerm
 	kind:         string
 	name:         string
 	description?: string
+	id?:          string
 	terms?:       string
 	snapshot_schedule?: [{
 		name:       string
@@ -2660,15 +3950,92 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
 		update?: string
+	}
+}
+#AzurermDataShareDatasetBlobStorageResource: {
+	container_name: string
+	data_share_id:  string
+	name:           string
+	display_name?:  string
+	file_path?:     string
+	folder_path?:   string
+	id?:            string
+	storage_account?: [{
+		name:                string
+		resource_group_name: string
+		subscription_id:     string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermDataShareDatasetDataLakeGen1Resource: {
+	data_lake_store_id: string
+	data_share_id:      string
+	folder_path:        string
+	name:               string
+	display_name?:      string
+	file_name?:         string
+	id?:                string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermDataShareDatasetDataLakeGen2Resource: {
+	file_system_name:   string
+	name:               string
+	share_id:           string
+	storage_account_id: string
+	display_name?:      string
+	file_path?:         string
+	folder_path?:       string
+	id?:                string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermDataShareDatasetKustoClusterResource: {
+	kusto_cluster_id:        string
+	name:                    string
+	share_id:                string
+	display_name?:           string
+	id?:                     string
+	kusto_cluster_location?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermDataShareDatasetKustoDatabaseResource: {
+	kusto_database_id:       string
+	name:                    string
+	share_id:                string
+	display_name?:           string
+	id?:                     string
+	kusto_cluster_location?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
 	}
 }
 #AzurermDatabaseMigrationProjectResource: {
@@ -2678,6 +4045,7 @@ package azurerm
 	service_name:        string
 	source_platform:     string
 	target_platform:     string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2692,6 +4060,7 @@ package azurerm
 	resource_group_name: string
 	sku_name:            string
 	subnet_id:           string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2701,16 +4070,41 @@ package azurerm
 	}
 }
 #AzurermDatabricksWorkspaceResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	sku:                 string
+	location:                     string
+	name:                         string
+	resource_group_name:          string
+	sku:                          string
+	id?:                          string
+	managed_resource_group_id?:   string
+	managed_resource_group_name?: string
 	tags?: [_]: string
+	workspace_id?:  string
+	workspace_url?: string
 	custom_parameters?: [{
 		no_public_ip?:        bool
 		private_subnet_name?: string
 		public_subnet_name?:  string
 		virtual_network_id?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDedicatedHardwareSecurityModuleResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	sku_name:            string
+	id?:                 string
+	stamp_id?:           string
+	tags?: [_]: string
+	zones?: [string, ...]
+	network_profile?: [{
+		network_interface_private_ip_addresses: [string, ...]
+		subnet_id: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2726,6 +4120,7 @@ package azurerm
 	platform_fault_domain:    number
 	sku_name:                 string
 	auto_replace_on_failure?: bool
+	id?:                      string
 	license_type?:            string
 	tags?: [_]: string
 	timeouts?: {
@@ -2740,6 +4135,7 @@ package azurerm
 	name:                        string
 	platform_fault_domain_count: number
 	resource_group_name:         string
+	id?:                         string
 	tags?: [_]: string
 	zones?: [string, ...]
 	timeouts?: {
@@ -2749,12 +4145,39 @@ package azurerm
 		update?: string
 	}
 }
-#AzurermDevTestLabResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	storage_type?:       string
+#AzurermDevTestGlobalVmShutdownScheduleResource: {
+	daily_recurrence_time: string
+	location:              string
+	timezone:              string
+	virtual_machine_id:    string
+	enabled?:              bool
+	id?:                   string
 	tags?: [_]: string
+	notification_settings?: [{
+		enabled:          bool
+		time_in_minutes?: number
+		webhook_url?:     string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDevTestLabResource: {
+	location:                              string
+	name:                                  string
+	resource_group_name:                   string
+	artifacts_storage_account_id?:         string
+	default_premium_storage_account_id?:   string
+	default_storage_account_id?:           string
+	id?:                                   string
+	key_vault_id?:                         string
+	premium_data_disk_storage_account_id?: string
+	storage_type?:                         string
+	tags?: [_]: string
+	unique_identifier?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2774,10 +4197,13 @@ package azurerm
 	username:                    string
 	allow_claim?:                bool
 	disallow_public_ip_address?: bool
+	fqdn?:                       string
+	id?:                         string
 	notes?:                      string
 	password?:                   string
 	ssh_key?:                    string
 	tags?: [_]: string
+	unique_identifier?: string
 	gallery_image_reference?: [{
 		offer:     string
 		publisher: string
@@ -2785,8 +4211,9 @@ package azurerm
 		version:   string
 	}, ...]
 	inbound_nat_rule?: [{
-		backend_port: number
-		protocol:     string
+		backend_port:   number
+		protocol:       string
+		frontend_port?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2804,6 +4231,7 @@ package azurerm
 	threshold:           string
 	description?:        string
 	fact_data?:          string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2819,6 +4247,7 @@ package azurerm
 	resource_group_name: string
 	task_type:           string
 	time_zone_id:        string
+	id?:                 string
 	status?:             string
 	tags?: [_]: string
 	daily_recurrence?: [{
@@ -2848,8 +4277,11 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	description?:        string
+	id?:                 string
 	tags?: [_]: string
+	unique_identifier?: string
 	subnet?: [{
+		name?:                            string
 		use_in_virtual_machine_creation?: string
 		use_public_ip_address?:           string
 	}, ...]
@@ -2873,8 +4305,11 @@ package azurerm
 	username:                    string
 	allow_claim?:                bool
 	disallow_public_ip_address?: bool
+	fqdn?:                       string
+	id?:                         string
 	notes?:                      string
 	tags?: [_]: string
+	unique_identifier?: string
 	gallery_image_reference?: [{
 		offer:     string
 		publisher: string
@@ -2882,8 +4317,9 @@ package azurerm
 		version:   string
 	}, ...]
 	inbound_nat_rule?: [{
-		backend_port: number
-		protocol:     string
+		backend_port:   number
+		protocol:       string
+		frontend_port?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2899,6 +4335,79 @@ package azurerm
 	sku_name:                                 string
 	target_container_host_credentials_base64: string
 	target_container_host_resource_id:        string
+	data_plane_fqdn?:                         string
+	host_suffix?:                             string
+	id?:                                      string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDigitalTwinsEndpointEventgridResource: {
+	digital_twins_id:                     string
+	eventgrid_topic_endpoint:             string
+	eventgrid_topic_primary_access_key:   string
+	eventgrid_topic_secondary_access_key: string
+	name:                                 string
+	dead_letter_storage_secret?:          string
+	id?:                                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDigitalTwinsEndpointEventhubResource: {
+	digital_twins_id:                     string
+	eventhub_primary_connection_string:   string
+	eventhub_secondary_connection_string: string
+	name:                                 string
+	dead_letter_storage_secret?:          string
+	id?:                                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDigitalTwinsEndpointServicebusResource: {
+	digital_twins_id:                       string
+	name:                                   string
+	servicebus_primary_connection_string:   string
+	servicebus_secondary_connection_string: string
+	dead_letter_storage_secret?:            string
+	id?:                                    string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDigitalTwinsInstanceResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	host_name?:          string
+	id?:                 string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermDiskAccessResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2912,9 +4421,12 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2928,6 +4440,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	records?: [string, ...]
 	tags?: [_]: string
 	target_resource_id?: string
@@ -2943,6 +4457,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	records?: [string, ...]
 	tags?: [_]: string
 	target_resource_id?: string
@@ -2958,6 +4474,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	record?: [{
 		flags: number
@@ -2976,6 +4494,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	record?:             string
 	tags?: [_]: string
 	target_resource_id?: string
@@ -2990,6 +4510,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	name?:               string
 	tags?: [_]: string
 	record?: [{
@@ -3009,6 +4531,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -3023,6 +4547,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -3036,6 +4562,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	record?: [{
 		port:     number
@@ -3055,6 +4583,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	record?: [{
 		value: string
@@ -3067,9 +4597,25 @@ package azurerm
 	}
 }
 #AzurermDnsZoneResource: {
-	name:                string
-	resource_group_name: string
+	name:                       string
+	resource_group_name:        string
+	id?:                        string
+	max_number_of_record_sets?: number
+	name_servers?: [string, ...]
+	number_of_record_sets?: number
 	tags?: [_]: string
+	soa_record?: [{
+		email:          string
+		host_name:      string
+		expire_time?:   number
+		fqdn?:          string
+		minimum_ttl?:   number
+		refresh_time?:  number
+		retry_time?:    number
+		serial_number?: number
+		tags?: [_]: string
+		ttl?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3081,7 +4627,16 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
-	input_schema?:       string
+	endpoint?:           string
+	id?:                 string
+	inbound_ip_rule?: [{
+		action:  string
+		ip_mask: string
+	}, ...]
+	input_schema?:                  string
+	primary_access_key?:            string
+	public_network_access_enabled?: bool
+	secondary_access_key?:          string
 	tags?: [_]: string
 	input_mapping_default_values?: [{
 		data_version?: string
@@ -3107,6 +4662,7 @@ package azurerm
 	domain_name:         string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3114,15 +4670,78 @@ package azurerm
 	}
 }
 #AzurermEventgridEventSubscriptionResource: {
-	name:                   string
-	scope:                  string
-	event_delivery_schema?: string
+	name:                           string
+	scope:                          string
+	event_delivery_schema?:         string
+	eventhub_endpoint_id?:          string
+	expiration_time_utc?:           string
+	hybrid_connection_endpoint_id?: string
+	id?:                            string
+	included_event_types?: [string, ...]
 	labels?: [string, ...]
+	service_bus_queue_endpoint_id?: string
+	service_bus_topic_endpoint_id?: string
+	topic_name?:                    string
+	advanced_filter?: [{
+		bool_equals?: [{
+			key:   string
+			value: bool
+		}, ...]
+		number_greater_than?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_greater_than_or_equals?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_in?: [{
+			key: string
+			values: [number, ...]
+		}, ...]
+		number_less_than?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_less_than_or_equals?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_not_in?: [{
+			key: string
+			values: [number, ...]
+		}, ...]
+		string_begins_with?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_contains?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_ends_with?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_in?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_not_in?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+	}, ...]
+	azure_function_endpoint?: [{
+		function_id:                        string
+		max_events_per_batch?:              number
+		preferred_batch_size_in_kilobytes?: number
+	}, ...]
 	eventhub_endpoint?: [{
-		eventhub_id: string
+		eventhub_id?: string
 	}, ...]
 	hybrid_connection_endpoint?: [{
-		hybrid_connection_id: string
+		hybrid_connection_id?: string
 	}, ...]
 	retry_policy?: [{
 		event_time_to_live:    number
@@ -3148,14 +4767,158 @@ package azurerm
 		update?: string
 	}
 	webhook_endpoint?: [{
-		url: string
+		url:                                string
+		active_directory_app_id_or_uri?:    string
+		active_directory_tenant_id?:        string
+		base_url?:                          string
+		max_events_per_batch?:              number
+		preferred_batch_size_in_kilobytes?: number
+	}, ...]
+}
+#AzurermEventgridSystemTopicResource: {
+	location:                string
+	name:                    string
+	resource_group_name:     string
+	source_arm_resource_id:  string
+	topic_type:              string
+	id?:                     string
+	metric_arm_resource_id?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermEventgridSystemTopicEventSubscriptionResource: {
+	name:                           string
+	resource_group_name:            string
+	system_topic:                   string
+	event_delivery_schema?:         string
+	eventhub_endpoint_id?:          string
+	expiration_time_utc?:           string
+	hybrid_connection_endpoint_id?: string
+	id?:                            string
+	included_event_types?: [string, ...]
+	labels?: [string, ...]
+	service_bus_queue_endpoint_id?: string
+	service_bus_topic_endpoint_id?: string
+	advanced_filter?: [{
+		bool_equals?: [{
+			key:   string
+			value: bool
+		}, ...]
+		number_greater_than?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_greater_than_or_equals?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_in?: [{
+			key: string
+			values: [number, ...]
+		}, ...]
+		number_less_than?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_less_than_or_equals?: [{
+			key:   string
+			value: number
+		}, ...]
+		number_not_in?: [{
+			key: string
+			values: [number, ...]
+		}, ...]
+		string_begins_with?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_contains?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_ends_with?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_in?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+		string_not_in?: [{
+			key: string
+			values: [string, ...]
+		}, ...]
+	}, ...]
+	azure_function_endpoint?: [{
+		function_id:                        string
+		max_events_per_batch?:              number
+		preferred_batch_size_in_kilobytes?: number
+	}, ...]
+	retry_policy?: [{
+		event_time_to_live:    number
+		max_delivery_attempts: number
+	}, ...]
+	storage_blob_dead_letter_destination?: [{
+		storage_account_id:          string
+		storage_blob_container_name: string
+	}, ...]
+	storage_queue_endpoint?: [{
+		queue_name:         string
+		storage_account_id: string
+	}, ...]
+	subject_filter?: [{
+		case_sensitive?:      bool
+		subject_begins_with?: string
+		subject_ends_with?:   string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+	webhook_endpoint?: [{
+		url:                                string
+		active_directory_app_id_or_uri?:    string
+		active_directory_tenant_id?:        string
+		base_url?:                          string
+		max_events_per_batch?:              number
+		preferred_batch_size_in_kilobytes?: number
 	}, ...]
 }
 #AzurermEventgridTopicResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	endpoint?:           string
+	id?:                 string
+	inbound_ip_rule?: [{
+		action:  string
+		ip_mask: string
+	}, ...]
+	input_schema?:                  string
+	primary_access_key?:            string
+	public_network_access_enabled?: bool
+	secondary_access_key?:          string
 	tags?: [_]: string
+	input_mapping_default_values?: [{
+		data_version?: string
+		event_type?:   string
+		subject?:      string
+	}, ...]
+	input_mapping_fields?: [{
+		data_version?: string
+		event_time?:   string
+		event_type?:   string
+		id?:           string
+		subject?:      string
+		topic?:        string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3169,6 +4932,8 @@ package azurerm
 	namespace_name:      string
 	partition_count:     number
 	resource_group_name: string
+	id?:                 string
+	partition_ids?: [string, ...]
 	capture_description?: [{
 		enabled:              bool
 		encoding:             string
@@ -3190,13 +4955,34 @@ package azurerm
 	}
 }
 #AzurermEventhubAuthorizationRuleResource: {
-	eventhub_name:       string
+	eventhub_name:                      string
+	name:                               string
+	namespace_name:                     string
+	resource_group_name:                string
+	id?:                                string
+	listen?:                            bool
+	manage?:                            bool
+	primary_connection_string?:         string
+	primary_connection_string_alias?:   string
+	primary_key?:                       string
+	secondary_connection_string?:       string
+	secondary_connection_string_alias?: string
+	secondary_key?:                     string
+	send?:                              bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermEventhubClusterResource: {
+	location:            string
 	name:                string
-	namespace_name:      string
 	resource_group_name: string
-	listen?:             bool
-	manage?:             bool
-	send?:               bool
+	sku_name:            string
+	id?:                 string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3209,6 +4995,7 @@ package azurerm
 	name:                string
 	namespace_name:      string
 	resource_group_name: string
+	id?:                 string
 	user_metadata?:      string
 	timeouts?: {
 		create?: string
@@ -3218,13 +5005,40 @@ package azurerm
 	}
 }
 #AzurermEventhubNamespaceResource: {
-	location:              string
-	name:                  string
-	resource_group_name:   string
-	sku:                   string
-	auto_inflate_enabled?: bool
-	capacity?:             number
+	location:                                   string
+	name:                                       string
+	resource_group_name:                        string
+	sku:                                        string
+	auto_inflate_enabled?:                      bool
+	capacity?:                                  number
+	dedicated_cluster_id?:                      string
+	default_primary_connection_string?:         string
+	default_primary_connection_string_alias?:   string
+	default_primary_key?:                       string
+	default_secondary_connection_string?:       string
+	default_secondary_connection_string_alias?: string
+	default_secondary_key?:                     string
+	id?:                                        string
+	maximum_throughput_units?:                  number
+	network_rulesets?: [{
+		default_action: string
+		ip_rule: [{
+			action:  string
+			ip_mask: string
+		}, ...]
+		trusted_service_access_enabled: bool
+		virtual_network_rule: [{
+			ignore_missing_virtual_network_service_endpoint: bool
+			subnet_id:                                       string
+		}, ...]
+	}, ...]
 	tags?: [_]: string
+	zone_redundant?: bool
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3233,12 +5047,19 @@ package azurerm
 	}
 }
 #AzurermEventhubNamespaceAuthorizationRuleResource: {
-	name:                string
-	namespace_name:      string
-	resource_group_name: string
-	listen?:             bool
-	manage?:             bool
-	send?:               bool
+	name:                               string
+	namespace_name:                     string
+	resource_group_name:                string
+	id?:                                string
+	listen?:                            bool
+	manage?:                            bool
+	primary_connection_string?:         string
+	primary_connection_string_alias?:   string
+	primary_key?:                       string
+	secondary_connection_string?:       string
+	secondary_connection_string_alias?: string
+	secondary_key?:                     string
+	send?:                              bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3252,6 +5073,7 @@ package azurerm
 	partner_namespace_id: string
 	resource_group_name:  string
 	alternate_name?:      string
+	id?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3260,13 +5082,16 @@ package azurerm
 	}
 }
 #AzurermExpressRouteCircuitResource: {
-	bandwidth_in_mbps:         number
-	location:                  string
-	name:                      string
-	peering_location:          string
-	resource_group_name:       string
-	service_provider_name:     string
-	allow_classic_operations?: bool
+	bandwidth_in_mbps:                    number
+	location:                             string
+	name:                                 string
+	peering_location:                     string
+	resource_group_name:                  string
+	service_provider_name:                string
+	allow_classic_operations?:            bool
+	id?:                                  string
+	service_key?:                         string
+	service_provider_provisioning_state?: string
 	tags?: [_]: string
 	sku?: [{
 		family: string
@@ -3283,6 +5108,9 @@ package azurerm
 	express_route_circuit_name: string
 	name:                       string
 	resource_group_name:        string
+	authorization_key?:         string
+	authorization_use_status?:  string
+	id?:                        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3297,7 +5125,23 @@ package azurerm
 	resource_group_name:           string
 	secondary_peer_address_prefix: string
 	vlan_id:                       number
+	azure_asn?:                    number
+	id?:                           string
+	peer_asn?:                     number
+	primary_azure_port?:           string
+	route_filter_id?:              string
+	secondary_azure_port?:         string
 	shared_key?:                   string
+	ipv6?: [{
+		primary_peer_address_prefix:   string
+		secondary_peer_address_prefix: string
+		route_filter_id?:              string
+		microsoft_peering?: [{
+			advertised_public_prefixes?: [string, ...]
+			customer_asn?:          number
+			routing_registry_name?: string
+		}, ...]
+	}, ...]
 	microsoft_peering_config?: [{
 		advertised_public_prefixes: [string, ...]
 		customer_asn?:          number
@@ -3316,6 +5160,7 @@ package azurerm
 	resource_group_name: string
 	scale_units:         number
 	virtual_hub_id:      string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -3328,12 +5173,25 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	dns_servers?: [string, ...]
+	firewall_policy_id?: string
+	id?:                 string
+	sku_name?:           string
+	sku_tier?:           string
 	tags?: [_]: string
+	threat_intel_mode?: string
 	zones?: [string, ...]
 	ip_configuration?: [{
 		name:                 string
 		public_ip_address_id: string
+		private_ip_address?:  string
 		subnet_id?:           string
+	}, ...]
+	management_ip_configuration?: [{
+		name:                 string
+		public_ip_address_id: string
+		subnet_id:            string
+		private_ip_address?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3341,6 +5199,12 @@ package azurerm
 		read?:   string
 		update?: string
 	}
+	virtual_hub?: [{
+		virtual_hub_id:      string
+		private_ip_address?: string
+		public_ip_addresses?: [string, ...]
+		public_ip_count?: number
+	}, ...]
 }
 #AzurermFirewallApplicationRuleCollectionResource: {
 	action:              string
@@ -3348,11 +5212,13 @@ package azurerm
 	name:                string
 	priority:            number
 	resource_group_name: string
+	id?:                 string
 	rule?: [{
-		name: string
-		source_addresses: [string, ...]
+		name:         string
 		description?: string
 		fqdn_tags?: [string, ...]
+		source_addresses?: [string, ...]
+		source_ip_groups?: [string, ...]
 		target_fqdns?: [string, ...]
 		protocol?: [{
 			type:  string
@@ -3372,15 +5238,17 @@ package azurerm
 	name:                string
 	priority:            number
 	resource_group_name: string
+	id?:                 string
 	rule?: [{
 		destination_addresses: [string, ...]
 		destination_ports: [string, ...]
 		name: string
 		protocols: [string, ...]
-		source_addresses: [string, ...]
 		translated_address: string
 		translated_port:    string
 		description?:       string
+		source_addresses?: [string, ...]
+		source_ip_groups?: [string, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3395,13 +5263,103 @@ package azurerm
 	name:                string
 	priority:            number
 	resource_group_name: string
+	id?:                 string
 	rule?: [{
-		destination_addresses: [string, ...]
 		destination_ports: [string, ...]
 		name: string
 		protocols: [string, ...]
-		source_addresses: [string, ...]
 		description?: string
+		destination_addresses?: [string, ...]
+		destination_fqdns?: [string, ...]
+		destination_ip_groups?: [string, ...]
+		source_addresses?: [string, ...]
+		source_ip_groups?: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermFirewallPolicyResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	base_policy_id?:     string
+	child_policies?: [string, ...]
+	firewalls?: [string, ...]
+	id?: string
+	rule_collection_groups?: [string, ...]
+	sku?: string
+	tags?: [_]: string
+	threat_intelligence_mode?: string
+	dns?: [{
+		network_rule_fqdn_enabled?: bool
+		proxy_enabled?:             bool
+		servers?: [string, ...]
+	}, ...]
+	threat_intelligence_allowlist?: [{
+		fqdns?: [string, ...]
+		ip_addresses?: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermFirewallPolicyRuleCollectionGroupResource: {
+	firewall_policy_id: string
+	name:               string
+	priority:           number
+	id?:                string
+	application_rule_collection?: [{
+		action:   string
+		name:     string
+		priority: number
+		rule?: [{
+			name: string
+			destination_fqdn_tags?: [string, ...]
+			destination_fqdns?: [string, ...]
+			source_addresses?: [string, ...]
+			source_ip_groups?: [string, ...]
+			protocols?: [{
+				port: number
+				type: string
+			}, ...]
+		}, ...]
+	}, ...]
+	nat_rule_collection?: [{
+		action:   string
+		name:     string
+		priority: number
+		rule?: [{
+			name: string
+			protocols: [string, ...]
+			translated_address:   string
+			translated_port:      number
+			destination_address?: string
+			destination_ports?: [string, ...]
+			source_addresses?: [string, ...]
+			source_ip_groups?: [string, ...]
+		}, ...]
+	}, ...]
+	network_rule_collection?: [{
+		action:   string
+		name:     string
+		priority: number
+		rule?: [{
+			destination_ports: [string, ...]
+			name: string
+			protocols: [string, ...]
+			destination_addresses?: [string, ...]
+			destination_fqdns?: [string, ...]
+			destination_ip_groups?: [string, ...]
+			source_addresses?: [string, ...]
+			source_ip_groups?: [string, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3415,13 +5373,18 @@ package azurerm
 	name:                                         string
 	resource_group_name:                          string
 	backend_pools_send_receive_timeout_seconds?:  number
+	cname?:                                       string
 	friendly_name?:                               string
+	header_frontdoor_id?:                         string
+	id?:                                          string
 	load_balancer_enabled?:                       bool
+	location?:                                    string
 	tags?: [_]: string
 	backend_pool?: [{
 		health_probe_name:   string
 		load_balancing_name: string
 		name:                string
+		id?:                 string
 		backend?: [{
 			address:     string
 			host_header: string
@@ -3435,6 +5398,7 @@ package azurerm
 	backend_pool_health_probe?: [{
 		name:                 string
 		enabled?:             bool
+		id?:                  string
 		interval_in_seconds?: number
 		path?:                string
 		probe_method?:        string
@@ -3443,13 +5407,15 @@ package azurerm
 	backend_pool_load_balancing?: [{
 		name:                             string
 		additional_latency_milliseconds?: number
+		id?:                              string
 		sample_size?:                     number
 		successful_samples_required?:     number
 	}, ...]
 	frontend_endpoint?: [{
-		custom_https_provisioning_enabled:        bool
 		host_name:                                string
 		name:                                     string
+		custom_https_provisioning_enabled?:       bool
+		id?:                                      string
 		session_affinity_enabled?:                bool
 		session_affinity_ttl_seconds?:            number
 		web_application_firewall_policy_link_id?: string
@@ -3458,6 +5424,9 @@ package azurerm
 			azure_key_vault_certificate_secret_version?: string
 			azure_key_vault_certificate_vault_id?:       string
 			certificate_source?:                         string
+			minimum_tls_version?:                        string
+			provisioning_state?:                         string
+			provisioning_substate?:                      string
 		}, ...]
 	}, ...]
 	routing_rule?: [{
@@ -3466,6 +5435,7 @@ package azurerm
 		name: string
 		patterns_to_match: [string, ...]
 		enabled?: bool
+		id?:      string
 		forwarding_configuration?: [{
 			backend_pool_name:                      string
 			cache_enabled?:                         bool
@@ -3490,14 +5460,38 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermFrontdoorCustomHttpsConfigurationResource: {
+	custom_https_provisioning_enabled: bool
+	frontend_endpoint_id:              string
+	id?:                               string
+	resource_group_name?:              string
+	custom_https_configuration?: [{
+		azure_key_vault_certificate_secret_name?:    string
+		azure_key_vault_certificate_secret_version?: string
+		azure_key_vault_certificate_vault_id?:       string
+		certificate_source?:                         string
+		minimum_tls_version?:                        string
+		provisioning_state?:                         string
+		provisioning_substate?:                      string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermFrontdoorFirewallPolicyResource: {
 	name:                               string
 	resource_group_name:                string
 	custom_block_response_body?:        string
 	custom_block_response_status_code?: number
 	enabled?:                           bool
-	mode?:                              string
-	redirect_url?:                      string
+	frontend_endpoint_ids?: [string, ...]
+	id?:           string
+	location?:     string
+	mode?:         string
+	redirect_url?: string
 	tags?: [_]: string
 	custom_rule?: [{
 		action:                          string
@@ -3556,11 +5550,25 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	app_settings?: [_]: string
-	daily_memory_time_quota?: number
-	enable_builtin_logging?:  bool
-	enabled?:                 bool
-	https_only?:              bool
-	os_type?:                 string
+	client_affinity_enabled?:        bool
+	custom_domain_verification_id?:  string
+	daily_memory_time_quota?:        number
+	default_hostname?:               string
+	enable_builtin_logging?:         bool
+	enabled?:                        bool
+	https_only?:                     bool
+	id?:                             string
+	kind?:                           string
+	os_type?:                        string
+	outbound_ip_addresses?:          string
+	possible_outbound_ip_addresses?: string
+	site_credential?: [{
+		password: string
+		username: string
+	}, ...]
+	storage_account_access_key?: string
+	storage_account_name?:       string
+	storage_connection_string?:  string
 	tags?: [_]: string
 	version?: string
 	auth_settings?: [{
@@ -3606,17 +5614,51 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	site_config?: [{
-		always_on?:                 bool
-		http2_enabled?:             bool
+		always_on?:           bool
+		auto_swap_slot_name?: string
+		ftps_state?:          string
+		health_check_path?:   string
+		http2_enabled?:       bool
+		ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		linux_fx_version?:          string
+		min_tls_version?:           string
 		pre_warmed_instance_count?: number
-		use_32_bit_worker_process?: bool
-		websockets_enabled?:        bool
+		scm_ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		scm_type?:                    string
+		scm_use_main_ip_restriction?: bool
+		use_32_bit_worker_process?:   bool
+		websockets_enabled?:          bool
 		cors?: [{
 			allowed_origins: [string, ...]
 			support_credentials?: bool
 		}, ...]
+	}, ...]
+	source_control?: [{
+		branch?:             string
+		manual_integration?: bool
+		repo_url?:           string
+		rollback_enabled?:   bool
+		use_mercurial?:      bool
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3634,11 +5676,21 @@ package azurerm
 	storage_account_access_key: string
 	storage_account_name:       string
 	app_settings?: [_]: string
-	daily_memory_time_quota?: number
-	enable_builtin_logging?:  bool
-	enabled?:                 bool
-	https_only?:              bool
-	os_type?:                 string
+	client_affinity_enabled?:        bool
+	daily_memory_time_quota?:        number
+	default_hostname?:               string
+	enable_builtin_logging?:         bool
+	enabled?:                        bool
+	https_only?:                     bool
+	id?:                             string
+	kind?:                           string
+	os_type?:                        string
+	outbound_ip_addresses?:          string
+	possible_outbound_ip_addresses?: string
+	site_credential?: [{
+		password: string
+		username: string
+	}, ...]
 	tags?: [_]: string
 	version?: string
 	auth_settings?: [{
@@ -3684,13 +5736,40 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	site_config?: [{
-		always_on?:                 bool
-		http2_enabled?:             bool
+		always_on?:           bool
+		auto_swap_slot_name?: string
+		ftps_state?:          string
+		health_check_path?:   string
+		http2_enabled?:       bool
+		ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		linux_fx_version?:          string
+		min_tls_version?:           string
 		pre_warmed_instance_count?: number
-		use_32_bit_worker_process?: bool
-		websockets_enabled?:        bool
+		scm_ip_restriction?: [{
+			action:                    string
+			ip_address:                string
+			name:                      string
+			priority:                  number
+			service_tag:               string
+			subnet_id:                 string
+			virtual_network_subnet_id: string
+		}, ...]
+		scm_type?:                    string
+		scm_use_main_ip_restriction?: bool
+		use_32_bit_worker_process?:   bool
+		websockets_enabled?:          bool
 		cors?: [{
 			allowed_origins: [string, ...]
 			support_credentials?: bool
@@ -3709,15 +5788,18 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	tier:                string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		hadoop: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
 	}, ...]
 	metastores?: [{
 		ambari?: [{
@@ -3738,6 +5820,10 @@ package azurerm
 			server:        string
 			username:      string
 		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
 	}, ...]
 	roles?: [{
 		edge_node?: [{
@@ -3799,15 +5885,42 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	tier:                string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		hbase: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
+	}, ...]
+	metastores?: [{
+		ambari?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		hive?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		oozie?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
 	}, ...]
 	roles?: [{
 		head_node?: [{
@@ -3861,15 +5974,42 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	tier:                string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		interactive_hive: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
+	}, ...]
+	metastores?: [{
+		ambari?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		hive?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		oozie?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
 	}, ...]
 	roles?: [{
 		head_node?: [{
@@ -3918,23 +6058,62 @@ package azurerm
 	}
 }
 #AzurermHdinsightKafkaClusterResource: {
-	cluster_version:     string
-	location:            string
-	name:                string
-	resource_group_name: string
-	tier:                string
+	cluster_version:            string
+	location:                   string
+	name:                       string
+	resource_group_name:        string
+	tier:                       string
+	https_endpoint?:            string
+	id?:                        string
+	kafka_rest_proxy_endpoint?: string
+	ssh_endpoint?:              string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		kafka: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
+	}, ...]
+	metastores?: [{
+		ambari?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		hive?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		oozie?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
+	}, ...]
+	rest_proxy?: [{
+		security_group_id: string
 	}, ...]
 	roles?: [{
 		head_node?: [{
+			username:  string
+			vm_size:   string
+			password?: string
+			ssh_keys?: [string, ...]
+			subnet_id?:          string
+			virtual_network_id?: string
+		}, ...]
+		kafka_management_node?: [{
 			username:  string
 			vm_size:   string
 			password?: string
@@ -3987,12 +6166,16 @@ package azurerm
 	resource_group_name: string
 	rstudio:             bool
 	tier:                string
+	edge_ssh_endpoint?:  string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
 	}, ...]
 	roles?: [{
 		edge_node?: [{
@@ -4049,12 +6232,16 @@ package azurerm
 	resource_group_name: string
 	rstudio:             bool
 	tier:                string
+	edge_ssh_endpoint?:  string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
 	}, ...]
 	roles?: [{
 		edge_node?: [{
@@ -4110,15 +6297,42 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	tier:                string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		spark: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
+	}, ...]
+	metastores?: [{
+		ambari?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		hive?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		oozie?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
 	}, ...]
 	roles?: [{
 		head_node?: [{
@@ -4172,15 +6386,42 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	tier:                string
+	https_endpoint?:     string
+	id?:                 string
+	ssh_endpoint?:       string
 	tags?: [_]: string
 	tls_min_version?: string
 	component_version?: [{
 		storm: string
 	}, ...]
 	gateway?: [{
-		enabled:  bool
 		password: string
 		username: string
+		enabled?: bool
+	}, ...]
+	metastores?: [{
+		ambari?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		hive?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+		oozie?: [{
+			database_name: string
+			password:      string
+			server:        string
+			username:      string
+		}, ...]
+	}, ...]
+	monitor?: [{
+		log_analytics_workspace_id: string
+		primary_key:                string
 	}, ...]
 	roles?: [{
 		head_node?: [{
@@ -4223,11 +6464,12 @@ package azurerm
 	}
 }
 #AzurermHealthcareServiceResource: {
-	access_policy_object_ids: [string, ...]
-	location:             string
-	name:                 string
-	resource_group_name:  string
+	location:            string
+	name:                string
+	resource_group_name: string
+	access_policy_object_ids?: [string, ...]
 	cosmosdb_throughput?: number
+	id?:                  string
 	kind?:                string
 	tags?: [_]: string
 	authentication_configuration?: [{
@@ -4256,10 +6498,15 @@ package azurerm
 	resource_group_name: string
 	sku_name:            string
 	subnet_id:           string
+	id?:                 string
+	mount_addresses?: [string, ...]
+	mtu?:                 number
+	root_squash_enabled?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
+		update?: string
 	}
 }
 #AzurermHpcCacheBlobTargetResource: {
@@ -4268,6 +6515,7 @@ package azurerm
 	namespace_path:       string
 	resource_group_name:  string
 	storage_container_id: string
+	id?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4281,6 +6529,7 @@ package azurerm
 	resource_group_name: string
 	target_host_name:    string
 	usage_model:         string
+	id?:                 string
 	namespace_junction?: [{
 		namespace_path: string
 		nfs_export:     string
@@ -4298,18 +6547,136 @@ package azurerm
 	name:                       string
 	resource_group_name:        string
 	hyper_v_generation?:        string
+	id?:                        string
 	source_virtual_machine_id?: string
 	tags?: [_]: string
 	zone_resilient?: bool
 	data_disk?: [{
+		blob_uri?:        string
 		caching?:         string
 		lun?:             number
 		managed_disk_id?: string
+		size_gb?:         number
 	}, ...]
 	os_disk?: [{
-		caching?:  string
-		os_state?: string
-		os_type?:  string
+		blob_uri?:        string
+		caching?:         string
+		managed_disk_id?: string
+		os_state?:        string
+		os_type?:         string
+		size_gb?:         number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIntegrationServiceEnvironmentResource: {
+	access_endpoint_type: string
+	location:             string
+	name:                 string
+	resource_group_name:  string
+	virtual_network_subnet_ids: [string, ...]
+	connector_endpoint_ip_addresses?: [string, ...]
+	connector_outbound_ip_addresses?: [string, ...]
+	id?:       string
+	sku_name?: string
+	tags?: [_]: string
+	workflow_endpoint_ip_addresses?: [string, ...]
+	workflow_outbound_ip_addresses?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIotSecuritySolutionResource: {
+	display_name: string
+	iothub_ids: [string, ...]
+	location:            string
+	name:                string
+	resource_group_name: string
+	enabled?:            bool
+	events_to_export?: [string, ...]
+	id?:                         string
+	log_analytics_workspace_id?: string
+	log_unmasked_ips_enabled?:   bool
+	query_for_resources?:        string
+	query_subscription_ids?: [string, ...]
+	tags?: [_]: string
+	recommendations_enabled?: [{
+		acr_authentication?:               bool
+		agent_send_unutilized_msg?:        bool
+		baseline?:                         bool
+		edge_hub_mem_optimize?:            bool
+		edge_logging_option?:              bool
+		inconsistent_module_settings?:     bool
+		install_agent?:                    bool
+		ip_filter_deny_all?:               bool
+		ip_filter_permissive_rule?:        bool
+		open_ports?:                       bool
+		permissive_firewall_policy?:       bool
+		permissive_input_firewall_rules?:  bool
+		permissive_output_firewall_rules?: bool
+		privileged_docker_options?:        bool
+		shared_credentials?:               bool
+		vulnerable_tls_cipher_suite?:      bool
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIotTimeSeriesInsightsAccessPolicyResource: {
+	name:                string
+	principal_object_id: string
+	roles: [string, ...]
+	time_series_insights_environment_id: string
+	description?:                        string
+	id?:                                 string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIotTimeSeriesInsightsGen2EnvironmentResource: {
+	id_properties: [string, ...]
+	location:            string
+	name:                string
+	resource_group_name: string
+	sku_name:            string
+	data_access_fqdn?:   string
+	id?:                 string
+	tags?: [_]: string
+	warm_store_data_retention_time?: string
+	storage?: [{
+		key:  string
+		name: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIotTimeSeriesInsightsReferenceDataSetResource: {
+	location:                            string
+	name:                                string
+	time_series_insights_environment_id: string
+	data_string_comparison_behavior?:    string
+	id?:                                 string
+	tags?: [_]: string
+	key_property?: [{
+		name: string
+		type: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -4324,6 +6691,7 @@ package azurerm
 	name:                             string
 	resource_group_name:              string
 	sku_name:                         string
+	id?:                              string
 	partition_key?:                   string
 	storage_limit_exceeded_behavior?: string
 	tags?: [_]: string
@@ -4339,8 +6707,11 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	sub_domain:          string
+	display_name?:       string
+	id?:                 string
 	sku?:                string
 	tags?: [_]: string
+	template?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4352,38 +6723,66 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
-	tags?: [_]: string
 	endpoint?: [{
-		connection_string:           string
-		name:                        string
-		type:                        string
-		batch_frequency_in_seconds?: number
-		container_name?:             string
-		encoding?:                   string
-		file_name_format?:           string
-		max_chunk_size_in_bytes?:    number
+		batch_frequency_in_seconds: number
+		connection_string:          string
+		container_name:             string
+		encoding:                   string
+		file_name_format:           string
+		max_chunk_size_in_bytes:    number
+		name:                       string
+		resource_group_name:        string
+		type:                       string
 	}, ...]
+	enrichment?: [{
+		endpoint_names: [string, ...]
+		key:   string
+		value: string
+	}, ...]
+	event_hub_events_endpoint?:     string
+	event_hub_events_path?:         string
+	event_hub_operations_endpoint?: string
+	event_hub_operations_path?:     string
+	event_hub_partition_count?:     number
+	event_hub_retention_in_days?:   number
+	hostname?:                      string
+	id?:                            string
+	min_tls_version?:               string
+	public_network_access_enabled?: bool
+	route?: [{
+		condition: string
+		enabled:   bool
+		endpoint_names: [string, ...]
+		name:   string
+		source: string
+	}, ...]
+	shared_access_policy?: [{
+		key_name:      string
+		permissions:   string
+		primary_key:   string
+		secondary_key: string
+	}, ...]
+	tags?: [_]: string
+	type?: string
 	fallback_route?: [{
 		condition?: string
-		source?:    string
+		enabled?:   bool
+		endpoint_names?: [string, ...]
+		source?: string
 	}, ...]
 	file_upload?: [{
 		connection_string:   string
 		container_name:      string
+		default_ttl?:        string
+		lock_duration?:      string
 		max_delivery_count?: number
 		notifications?:      bool
+		sas_ttl?:            string
 	}, ...]
 	ip_filter_rule?: [{
 		action:  string
 		ip_mask: string
 		name:    string
-	}, ...]
-	route?: [{
-		enabled: bool
-		endpoint_names: [string, ...]
-		name:       string
-		source:     string
-		condition?: string
 	}, ...]
 	sku?: [{
 		capacity: number
@@ -4401,6 +6800,7 @@ package azurerm
 	iothub_name:            string
 	name:                   string
 	resource_group_name:    string
+	id?:                    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4409,15 +6809,21 @@ package azurerm
 	}
 }
 #AzurermIothubDpsResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
+	location:                       string
+	name:                           string
+	resource_group_name:            string
+	allocation_policy?:             string
+	device_provisioning_host_name?: string
+	id?:                            string
+	id_scope?:                      string
+	service_operations_host_name?:  string
 	tags?: [_]: string
 	linked_hub?: [{
 		connection_string:        string
 		location:                 string
 		allocation_weight?:       number
 		apply_allocation_policy?: bool
+		hostname?:                string
 	}, ...]
 	sku?: [{
 		capacity: number
@@ -4435,6 +6841,7 @@ package azurerm
 	iot_dps_name:        string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4443,14 +6850,19 @@ package azurerm
 	}
 }
 #AzurermIothubDpsSharedAccessPolicyResource: {
-	iothub_dps_name:     string
-	name:                string
-	resource_group_name: string
-	enrollment_read?:    bool
-	enrollment_write?:   bool
-	registration_read?:  bool
-	registration_write?: bool
-	service_config?:     bool
+	iothub_dps_name:              string
+	name:                         string
+	resource_group_name:          string
+	enrollment_read?:             bool
+	enrollment_write?:            bool
+	id?:                          string
+	primary_connection_string?:   string
+	primary_key?:                 string
+	registration_read?:           bool
+	registration_write?:          bool
+	secondary_connection_string?: string
+	secondary_key?:               string
+	service_config?:              bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4463,6 +6875,7 @@ package azurerm
 	iothub_name:         string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4475,6 +6888,7 @@ package azurerm
 	iothub_name:         string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4487,6 +6901,7 @@ package azurerm
 	iothub_name:         string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4503,7 +6918,22 @@ package azurerm
 	batch_frequency_in_seconds?: number
 	encoding?:                   string
 	file_name_format?:           string
+	id?:                         string
 	max_chunk_size_in_bytes?:    number
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIothubEnrichmentResource: {
+	endpoint_names: [string, ...]
+	iothub_name:         string
+	key:                 string
+	resource_group_name: string
+	value:               string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4517,6 +6947,7 @@ package azurerm
 	iothub_name:         string
 	resource_group_name: string
 	condition?:          string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4532,6 +6963,7 @@ package azurerm
 	resource_group_name: string
 	source:              string
 	condition?:          string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4540,13 +6972,32 @@ package azurerm
 	}
 }
 #AzurermIothubSharedAccessPolicyResource: {
-	iothub_name:         string
+	iothub_name:                  string
+	name:                         string
+	resource_group_name:          string
+	device_connect?:              bool
+	id?:                          string
+	primary_connection_string?:   string
+	primary_key?:                 string
+	registry_read?:               bool
+	registry_write?:              bool
+	secondary_connection_string?: string
+	secondary_key?:               string
+	service_connect?:             bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermIpGroupResource: {
+	location:            string
 	name:                string
 	resource_group_name: string
-	device_connect?:     bool
-	registry_read?:      bool
-	registry_write?:     bool
-	service_connect?:    bool
+	cidrs?: [string, ...]
+	id?: string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4555,17 +7006,35 @@ package azurerm
 	}
 }
 #AzurermKeyVaultResource: {
-	location:                         string
-	name:                             string
-	resource_group_name:              string
-	sku_name:                         string
-	tenant_id:                        string
+	location:            string
+	name:                string
+	resource_group_name: string
+	sku_name:            string
+	tenant_id:           string
+	access_policy?: [{
+		application_id: string
+		certificate_permissions: [string, ...]
+		key_permissions: [string, ...]
+		object_id: string
+		secret_permissions: [string, ...]
+		storage_permissions: [string, ...]
+		tenant_id: string
+	}, ...]
+	enable_rbac_authorization?:       bool
 	enabled_for_deployment?:          bool
 	enabled_for_disk_encryption?:     bool
 	enabled_for_template_deployment?: bool
+	id?:                              string
 	purge_protection_enabled?:        bool
 	soft_delete_enabled?:             bool
+	soft_delete_retention_days?:      number
 	tags?: [_]: string
+	vault_uri?: string
+	contact?: [{
+		email:  string
+		name?:  string
+		phone?: string
+	}, ...]
 	network_acls?: [{
 		bypass:         string
 		default_action: string
@@ -4585,6 +7054,7 @@ package azurerm
 	tenant_id:       string
 	application_id?: string
 	certificate_permissions?: [string, ...]
+	id?: string
 	key_permissions?: [string, ...]
 	secret_permissions?: [string, ...]
 	storage_permissions?: [string, ...]
@@ -4598,7 +7068,21 @@ package azurerm
 #AzurermKeyVaultCertificateResource: {
 	key_vault_id: string
 	name:         string
+	certificate_attribute?: [{
+		created:        string
+		enabled:        bool
+		expires:        string
+		not_before:     string
+		recovery_level: string
+		updated:        string
+	}, ...]
+	certificate_data?:        string
+	certificate_data_base64?: string
+	id?:                      string
+	secret_id?:               string
 	tags?: [_]: string
+	thumbprint?: string
+	version?:    string
 	certificate?: [{
 		contents:  string
 		password?: string
@@ -4629,6 +7113,7 @@ package azurerm
 			key_usage: [string, ...]
 			subject:            string
 			validity_in_months: number
+			extended_key_usage?: [string, ...]
 			subject_alternative_names?: [{
 				dns_names?: [string, ...]
 				emails?: [string, ...]
@@ -4642,15 +7127,43 @@ package azurerm
 		read?:   string
 	}
 }
+#AzurermKeyVaultCertificateIssuerResource: {
+	key_vault_id:  string
+	name:          string
+	provider_name: string
+	account_id?:   string
+	id?:           string
+	org_id?:       string
+	password?:     string
+	admin?: [{
+		email_address: string
+		first_name?:   string
+		last_name?:    string
+		phone?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermKeyVaultKeyResource: {
 	key_opts: [string, ...]
 	key_type:         string
 	key_vault_id:     string
 	name:             string
+	curve?:           string
+	e?:               string
 	expiration_date?: string
+	id?:              string
 	key_size?:        number
+	n?:               string
 	not_before_date?: string
 	tags?: [_]: string
+	version?: string
+	x?:       string
+	y?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4664,8 +7177,10 @@ package azurerm
 	value:            string
 	content_type?:    string
 	expiration_date?: string
+	id?:              string
 	not_before_date?: string
 	tags?: [_]: string
+	version?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4679,7 +7194,39 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	api_server_authorized_ip_ranges?: [string, ...]
+	disk_encryption_set_id?:     string
 	enable_pod_security_policy?: bool
+	fqdn?:                       string
+	id?:                         string
+	kube_admin_config?: [{
+		client_certificate:     string
+		client_key:             string
+		cluster_ca_certificate: string
+		host:                   string
+		password:               string
+		username:               string
+	}, ...]
+	kube_admin_config_raw?: string
+	kube_config?: [{
+		client_certificate:     string
+		client_key:             string
+		cluster_ca_certificate: string
+		host:                   string
+		password:               string
+		username:               string
+	}, ...]
+	kube_config_raw?: string
+	kubelet_identity?: [{
+		client_id:                 string
+		object_id:                 string
+		user_assigned_identity_id: string
+	}, ...]
+	kubernetes_version?:      string
+	node_resource_group?:     string
+	private_cluster_enabled?: bool
+	private_fqdn?:            string
+	private_link_enabled?:    bool
+	sku_tier?:                string
 	tags?: [_]: string
 	addon_profile?: [{
 		aci_connector_linux?: [{
@@ -4690,7 +7237,8 @@ package azurerm
 			enabled: bool
 		}, ...]
 		http_application_routing?: [{
-			enabled: bool
+			enabled:                             bool
+			http_application_routing_zone_name?: string
 		}, ...]
 		kube_dashboard?: [{
 			enabled: bool
@@ -4698,24 +7246,51 @@ package azurerm
 		oms_agent?: [{
 			enabled:                     bool
 			log_analytics_workspace_id?: string
+			oms_agent_identity?: [{
+				client_id:                 string
+				object_id:                 string
+				user_assigned_identity_id: string
+			}, ...]
 		}, ...]
+	}, ...]
+	auto_scaler_profile?: [{
+		balance_similar_node_groups?:      bool
+		max_graceful_termination_sec?:     string
+		new_pod_scale_up_delay?:           string
+		scale_down_delay_after_add?:       string
+		scale_down_delay_after_delete?:    string
+		scale_down_delay_after_failure?:   string
+		scale_down_unneeded?:              string
+		scale_down_unready?:               string
+		scale_down_utilization_threshold?: string
+		scan_interval?:                    string
 	}, ...]
 	default_node_pool?: [{
 		name:    string
 		vm_size: string
 		availability_zones?: [string, ...]
-		enable_auto_scaling?:   bool
-		enable_node_public_ip?: bool
-		max_count?:             number
-		min_count?:             number
+		enable_auto_scaling?:    bool
+		enable_host_encryption?: bool
+		enable_node_public_ip?:  bool
+		max_count?:              number
+		max_pods?:               number
+		min_count?:              number
+		node_count?:             number
 		node_labels?: [_]: string
 		node_taints?: [string, ...]
+		orchestrator_version?:         string
+		os_disk_size_gb?:              number
+		os_disk_type?:                 string
+		proximity_placement_group_id?: string
 		tags?: [_]: string
 		type?:           string
 		vnet_subnet_id?: string
 	}, ...]
 	identity?: [{
-		type: string
+		type:                       string
+		principal_id?:              string
+		tenant_id?:                 string
+		user_assigned_identity_id?: string
 	}, ...]
 	linux_profile?: [{
 		admin_username: string
@@ -4724,17 +7299,33 @@ package azurerm
 		}, ...]
 	}, ...]
 	network_profile?: [{
-		network_plugin:     string
-		load_balancer_sku?: string
-		outbound_type?:     string
-		load_balancer_profile?: [{}, ...]
+		network_plugin:      string
+		dns_service_ip?:     string
+		docker_bridge_cidr?: string
+		load_balancer_sku?:  string
+		network_mode?:       string
+		network_policy?:     string
+		outbound_type?:      string
+		pod_cidr?:           string
+		service_cidr?:       string
+		load_balancer_profile?: [{
+			effective_outbound_ips?: [string, ...]
+			idle_timeout_in_minutes?:   number
+			managed_outbound_ip_count?: number
+			outbound_ip_address_ids?: [string, ...]
+			outbound_ip_prefix_ids?: [string, ...]
+			outbound_ports_allocated?: number
+		}, ...]
 	}, ...]
 	role_based_access_control?: [{
 		enabled: bool
 		azure_active_directory?: [{
-			client_app_id:     string
-			server_app_id:     string
-			server_app_secret: string
+			admin_group_object_ids?: [string, ...]
+			client_app_id?:     string
+			managed?:           bool
+			server_app_id?:     string
+			server_app_secret?: string
+			tenant_id?:         string
 		}, ...]
 	}, ...]
 	service_principal?: [{
@@ -4757,15 +7348,44 @@ package azurerm
 	name:                  string
 	vm_size:               string
 	availability_zones?: [string, ...]
-	enable_auto_scaling?:   bool
-	enable_node_public_ip?: bool
-	max_count?:             number
-	min_count?:             number
+	enable_auto_scaling?:    bool
+	enable_host_encryption?: bool
+	enable_node_public_ip?:  bool
+	eviction_policy?:        string
+	id?:                     string
+	max_count?:              number
+	max_pods?:               number
+	min_count?:              number
+	mode?:                   string
+	node_count?:             number
 	node_labels?: [_]: string
 	node_taints?: [string, ...]
-	os_type?: string
+	orchestrator_version?:         string
+	os_disk_size_gb?:              number
+	os_disk_type?:                 string
+	os_type?:                      string
+	priority?:                     string
+	proximity_placement_group_id?: string
+	spot_max_price?:               number
 	tags?: [_]: string
 	vnet_subnet_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermKustoAttachedDatabaseConfigurationResource: {
+	cluster_name:        string
+	cluster_resource_id: string
+	database_name:       string
+	location:            string
+	name:                string
+	resource_group_name: string
+	attached_database_names?: [string, ...]
+	default_principal_modification_kind?: string
+	id?:                                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4777,13 +7397,67 @@ package azurerm
 	location:                 string
 	name:                     string
 	resource_group_name:      string
+	data_ingestion_uri?:      string
 	enable_disk_encryption?:  bool
+	enable_purge?:            bool
 	enable_streaming_ingest?: bool
+	engine?:                  string
+	id?:                      string
+	language_extensions?: [string, ...]
 	tags?: [_]: string
-	sku?: [{
-		capacity: number
-		name:     string
+	trusted_external_tenants?: [string, ...]
+	uri?: string
+	zones?: [string, ...]
+	identity?: [{
+		type: string
+		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
+	optimized_auto_scale?: [{
+		maximum_instances: number
+		minimum_instances: number
+	}, ...]
+	sku?: [{
+		name:      string
+		capacity?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+	virtual_network_configuration?: [{
+		data_management_public_ip_id: string
+		engine_public_ip_id:          string
+		subnet_id:                    string
+	}, ...]
+}
+#AzurermKustoClusterCustomerManagedKeyResource: {
+	cluster_id:   string
+	key_name:     string
+	key_vault_id: string
+	key_version:  string
+	id?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermKustoClusterPrincipalAssignmentResource: {
+	cluster_name:        string
+	name:                string
+	principal_id:        string
+	principal_type:      string
+	resource_group_name: string
+	role:                string
+	tenant_id:           string
+	id?:                 string
+	principal_name?:     string
+	tenant_name?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4797,6 +7471,8 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	hot_cache_period?:   string
+	id?:                 string
+	size?:               number
 	soft_delete_period?: string
 	timeouts?: {
 		create?: string
@@ -4806,18 +7482,41 @@ package azurerm
 	}
 }
 #AzurermKustoDatabasePrincipalResource: {
-	client_id:           string
-	cluster_name:        string
-	database_name:       string
-	object_id:           string
-	resource_group_name: string
-	role:                string
-	type:                string
+	client_id:             string
+	cluster_name:          string
+	database_name:         string
+	object_id:             string
+	resource_group_name:   string
+	role:                  string
+	type:                  string
+	app_id?:               string
+	email?:                string
+	fully_qualified_name?: string
+	id?:                   string
+	name?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
 		update?: string
+	}
+}
+#AzurermKustoDatabasePrincipalAssignmentResource: {
+	cluster_name:        string
+	database_name:       string
+	name:                string
+	principal_id:        string
+	principal_type:      string
+	resource_group_name: string
+	role:                string
+	tenant_id:           string
+	id?:                 string
+	principal_name?:     string
+	tenant_name?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
 	}
 }
 #AzurermKustoEventhubDataConnectionResource: {
@@ -4828,7 +7527,9 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	compression?:        string
 	data_format?:        string
+	id?:                 string
 	mapping_rule_name?:  string
 	table_name?:         string
 	timeouts?: {
@@ -4842,11 +7543,23 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
-	sku?:                string
+	id?:                 string
+	private_ip_address?: string
+	private_ip_addresses?: [string, ...]
+	sku?: string
 	tags?: [_]: string
 	frontend_ip_configuration?: [{
-		name:                        string
-		private_ip_address_version?: string
+		name: string
+		id?:  string
+		inbound_nat_rules?: [string, ...]
+		load_balancer_rules?: [string, ...]
+		outbound_rules?: [string, ...]
+		private_ip_address?:            string
+		private_ip_address_allocation?: string
+		private_ip_address_version?:    string
+		public_ip_address_id?:          string
+		public_ip_prefix_id?:           string
+		subnet_id?:                     string
 		zones?: [string, ...]
 	}, ...]
 	timeouts?: {
@@ -4857,9 +7570,18 @@ package azurerm
 	}
 }
 #AzurermLbBackendAddressPoolResource: {
-	loadbalancer_id:     string
-	name:                string
-	resource_group_name: string
+	loadbalancer_id: string
+	name:            string
+	backend_ip_configurations?: [string, ...]
+	id?: string
+	load_balancing_rules?: [string, ...]
+	outbound_rules?: [string, ...]
+	resource_group_name?: string
+	backend_address?: [{
+		ip_address:         string
+		name:               string
+		virtual_network_id: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4876,6 +7598,8 @@ package azurerm
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	frontend_ip_configuration_id?:  string
+	id?:                            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4891,7 +7615,12 @@ package azurerm
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	backend_ip_configuration_id?:   string
+	enable_floating_ip?:            bool
 	enable_tcp_reset?:              bool
+	frontend_ip_configuration_id?:  string
+	id?:                            string
+	idle_timeout_in_minutes?:       number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4907,9 +7636,11 @@ package azurerm
 	resource_group_name:       string
 	allocated_outbound_ports?: number
 	enable_tcp_reset?:         bool
+	id?:                       string
 	idle_timeout_in_minutes?:  number
 	frontend_ip_configuration?: [{
 		name: string
+		id?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -4923,9 +7654,12 @@ package azurerm
 	name:                 string
 	port:                 number
 	resource_group_name:  string
+	id?:                  string
 	interval_in_seconds?: number
-	number_of_probes?:    number
-	request_path?:        string
+	load_balancer_rules?: [string, ...]
+	number_of_probes?: number
+	protocol?:         string
+	request_path?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4941,9 +7675,44 @@ package azurerm
 	name:                           string
 	protocol:                       string
 	resource_group_name:            string
+	backend_address_pool_id?:       string
 	disable_outbound_snat?:         bool
 	enable_floating_ip?:            bool
 	enable_tcp_reset?:              bool
+	frontend_ip_configuration_id?:  string
+	id?:                            string
+	idle_timeout_in_minutes?:       number
+	load_distribution?:             string
+	probe_id?:                      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLighthouseAssignmentResource: {
+	lighthouse_definition_id: string
+	scope:                    string
+	id?:                      string
+	name?:                    string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermLighthouseDefinitionResource: {
+	managing_tenant_id:        string
+	name:                      string
+	scope:                     string
+	description?:              string
+	id?:                       string
+	lighthouse_definition_id?: string
+	authorization?: [{
+		principal_id:       string
+		role_definition_id: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4961,17 +7730,27 @@ package azurerm
 	admin_password?:                  string
 	allow_extension_operations?:      bool
 	availability_set_id?:             string
+	computer_name?:                   string
 	custom_data?:                     string
 	dedicated_host_id?:               string
 	disable_password_authentication?: bool
+	encryption_at_host_enabled?:      bool
 	eviction_policy?:                 string
+	extensions_time_budget?:          string
+	id?:                              string
 	max_bid_price?:                   number
 	priority?:                        string
-	provision_vm_agent?:              bool
-	proximity_placement_group_id?:    string
-	source_image_id?:                 string
+	private_ip_address?:              string
+	private_ip_addresses?: [string, ...]
+	provision_vm_agent?:           bool
+	proximity_placement_group_id?: string
+	public_ip_address?:            string
+	public_ip_addresses?: [string, ...]
+	source_image_id?: string
 	tags?: [_]: string
+	virtual_machine_id?:           string
 	virtual_machine_scale_set_id?: string
+	zone?:                         string
 	additional_capabilities?: [{
 		ultra_ssd_enabled?: bool
 	}, ...]
@@ -4980,16 +7759,20 @@ package azurerm
 		username:   string
 	}, ...]
 	boot_diagnostics?: [{
-		storage_account_uri: string
+		storage_account_uri?: string
 	}, ...]
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	os_disk?: [{
 		caching:                    string
 		storage_account_type:       string
 		disk_encryption_set_id?:    string
+		disk_size_gb?:              number
+		name?:                      string
 		write_accelerator_enabled?: bool
 		diff_disk_settings?: [{
 			option: string
@@ -5027,13 +7810,18 @@ package azurerm
 	resource_group_name:                                string
 	sku:                                                string
 	admin_password?:                                    string
+	computer_name_prefix?:                              string
 	custom_data?:                                       string
 	disable_password_authentication?:                   bool
 	do_not_run_extensions_on_overprovisioned_machines?: bool
+	encryption_at_host_enabled?:                        bool
 	eviction_policy?:                                   string
+	extensions_time_budget?:                            string
 	health_probe_id?:                                   string
+	id?:                                                string
 	max_bid_price?:                                     number
 	overprovision?:                                     bool
+	platform_fault_domain_count?:                       number
 	priority?:                                          string
 	provision_vm_agent?:                                bool
 	proximity_placement_group_id?:                      string
@@ -5041,6 +7829,7 @@ package azurerm
 	single_placement_group?:                            bool
 	source_image_id?:                                   string
 	tags?: [_]: string
+	unique_id?:    string
 	upgrade_mode?: string
 	zone_balance?: bool
 	zones?: [string, ...]
@@ -5060,7 +7849,7 @@ package azurerm
 		enable_automatic_os_upgrade: bool
 	}, ...]
 	boot_diagnostics?: [{
-		storage_account_uri: string
+		storage_account_uri?: string
 	}, ...]
 	data_disk?: [{
 		caching:                    string
@@ -5069,11 +7858,25 @@ package azurerm
 		storage_account_type:       string
 		create_option?:             string
 		disk_encryption_set_id?:    string
+		disk_iops_read_write?:      number
+		disk_mbps_read_write?:      number
 		write_accelerator_enabled?: bool
+	}, ...]
+	extension?: [{
+		name:                        string
+		publisher:                   string
+		type:                        string
+		type_handler_version:        string
+		auto_upgrade_minor_version?: bool
+		force_update_tag?:           string
+		protected_settings?:         string
+		provision_after_extensions?: [string, ...]
+		settings?: string
 	}, ...]
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
 	}, ...]
 	network_interface?: [{
 		name: string
@@ -5092,9 +7895,10 @@ package azurerm
 			subnet_id?: string
 			version?:   string
 			public_ip_address?: [{
-				name:                 string
-				domain_name_label?:   string
-				public_ip_prefix_id?: string
+				name:                     string
+				domain_name_label?:       string
+				idle_timeout_in_minutes?: number
+				public_ip_prefix_id?:     string
 				ip_tag?: [{
 					tag:  string
 					type: string
@@ -5106,6 +7910,7 @@ package azurerm
 		caching:                    string
 		storage_account_type:       string
 		disk_encryption_set_id?:    string
+		disk_size_gb?:              number
 		write_accelerator_enabled?: bool
 		diff_disk_settings?: [{
 			option: string
@@ -5147,15 +7952,65 @@ package azurerm
 }
 #AzurermLocalNetworkGatewayResource: {
 	address_space: [string, ...]
-	gateway_address:     string
 	location:            string
 	name:                string
 	resource_group_name: string
+	gateway_address?:    string
+	gateway_fqdn?:       string
+	id?:                 string
 	tags?: [_]: string
 	bgp_settings?: [{
 		asn:                 number
 		bgp_peering_address: string
+		peer_weight?:        number
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsClusterResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	cluster_id?:         string
+	id?:                 string
+	size_gb?:            number
+	tags?: [_]: string
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsClusterCustomerManagedKeyResource: {
+	key_vault_key_id:         string
+	log_analytics_cluster_id: string
+	id?:                      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsDataExportRuleResource: {
+	destination_resource_id: string
+	name:                    string
+	resource_group_name:     string
+	table_names: [string, ...]
+	workspace_resource_id: string
+	enabled?:              bool
+	export_rule_id?:       string
+	id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5169,6 +8024,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	workspace_name:      string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5184,6 +8040,7 @@ package azurerm
 	object_name:         string
 	resource_group_name: string
 	workspace_name:      string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5193,9 +8050,44 @@ package azurerm
 }
 #AzurermLogAnalyticsLinkedServiceResource: {
 	resource_group_name:  string
-	resource_id:          string
-	workspace_name:       string
+	id?:                  string
 	linked_service_name?: string
+	name?:                string
+	read_access_id?:      string
+	resource_id?:         string
+	tags?: [_]: string
+	workspace_id?:    string
+	workspace_name?:  string
+	write_access_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsLinkedStorageAccountResource: {
+	data_source_type:    string
+	resource_group_name: string
+	storage_account_ids: [string, ...]
+	workspace_resource_id: string
+	id?:                   string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsSavedSearchResource: {
+	category:                   string
+	display_name:               string
+	log_analytics_workspace_id: string
+	name:                       string
+	query:                      string
+	function_alias?:            string
+	function_parameters?: [string, ...]
+	id?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -5210,9 +8102,12 @@ package azurerm
 	solution_name:         string
 	workspace_name:        string
 	workspace_resource_id: string
+	id?:                   string
+	tags?: [_]: string
 	plan?: [{
 		product:         string
 		publisher:       string
+		name?:           string
 		promotion_code?: string
 	}, ...]
 	timeouts?: {
@@ -5222,12 +8117,38 @@ package azurerm
 		update?: string
 	}
 }
-#AzurermLogAnalyticsWorkspaceResource: {
-	location:            string
+#AzurermLogAnalyticsStorageInsightsResource: {
 	name:                string
 	resource_group_name: string
-	sku:                 string
+	storage_account_id:  string
+	storage_account_key: string
+	workspace_id:        string
+	blob_container_names?: [string, ...]
+	id?: string
+	table_names?: [string, ...]
 	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogAnalyticsWorkspaceResource: {
+	location:                    string
+	name:                        string
+	resource_group_name:         string
+	daily_quota_gb?:             number
+	id?:                         string
+	internet_ingestion_enabled?: bool
+	internet_query_enabled?:     bool
+	portal_url?:                 string
+	primary_shared_key?:         string
+	retention_in_days?:          number
+	secondary_shared_key?:       string
+	sku?:                        string
+	tags?: [_]: string
+	workspace_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5239,6 +8160,7 @@ package azurerm
 	body:         string
 	logic_app_id: string
 	name:         string
+	id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5253,6 +8175,25 @@ package azurerm
 	uri:          string
 	body?:        string
 	headers?: [_]: string
+	id?: string
+	run_after?: [{
+		action_name:   string
+		action_result: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermLogicAppIntegrationAccountResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	sku_name:            string
+	id?:                 string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5264,6 +8205,7 @@ package azurerm
 	body:         string
 	logic_app_id: string
 	name:         string
+	id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5275,6 +8217,7 @@ package azurerm
 	logic_app_id:   string
 	name:           string
 	schema:         string
+	id?:            string
 	method?:        string
 	relative_path?: string
 	timeouts?: {
@@ -5289,7 +8232,9 @@ package azurerm
 	interval:     number
 	logic_app_id: string
 	name:         string
+	id?:          string
 	start_time?:  string
+	time_zone?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5301,8 +8246,16 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	access_endpoint?:    string
+	connector_endpoint_ip_addresses?: [string, ...]
+	connector_outbound_ip_addresses?: [string, ...]
+	id?:                                 string
+	integration_service_environment_id?: string
+	logic_app_integration_account_id?:   string
 	parameters?: [_]: string
 	tags?: [_]:       string
+	workflow_endpoint_ip_addresses?: [string, ...]
+	workflow_outbound_ip_addresses?: [string, ...]
 	workflow_schema?:  string
 	workflow_version?: string
 	timeouts?: {
@@ -5322,10 +8275,14 @@ package azurerm
 	container_registry_id?:  string
 	description?:            string
 	friendly_name?:          string
+	high_business_impact?:   bool
+	id?:                     string
 	sku_name?:               string
 	tags?: [_]: string
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -5334,10 +8291,33 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermMaintenanceAssignmentDedicatedHostResource: {
+	dedicated_host_id:            string
+	location:                     string
+	maintenance_configuration_id: string
+	id?:                          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermMaintenanceAssignmentVirtualMachineResource: {
+	location:                     string
+	maintenance_configuration_id: string
+	virtual_machine_id:           string
+	id?:                          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermMaintenanceConfigurationResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	scope?:              string
 	tags?: [_]: string
 	timeouts?: {
@@ -5354,6 +8334,8 @@ package azurerm
 	name:                        string
 	resource_group_name:         string
 	application_definition_id?:  string
+	id?:                         string
+	outputs?: [_]:    string
 	parameters?: [_]: string
 	tags?: [_]:       string
 	plan?: [{
@@ -5378,6 +8360,7 @@ package azurerm
 	resource_group_name:   string
 	create_ui_definition?: string
 	description?:          string
+	id?:                   string
 	main_template?:        string
 	package_enabled?:      bool
 	package_file_uri?:     string
@@ -5400,9 +8383,14 @@ package azurerm
 	resource_group_name:     string
 	storage_account_type:    string
 	disk_encryption_set_id?: string
+	disk_iops_read_write?:   number
+	disk_mbps_read_write?:   number
+	disk_size_gb?:           number
+	id?:                     string
 	image_reference_id?:     string
 	os_type?:                string
 	source_resource_id?:     string
+	source_uri?:             string
 	storage_account_id?:     string
 	tags?: [_]: string
 	zones?: [string, ...]
@@ -5425,6 +8413,11 @@ package azurerm
 	}
 }
 #AzurermManagementGroupResource: {
+	display_name?:               string
+	group_id?:                   string
+	id?:                         string
+	name?:                       string
+	parent_management_group_id?: string
 	subscription_ids?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -5437,6 +8430,7 @@ package azurerm
 	lock_level: string
 	name:       string
 	scope:      string
+	id?:        string
 	notes?:     string
 	timeouts?: {
 		create?: string
@@ -5446,10 +8440,14 @@ package azurerm
 	}
 }
 #AzurermMapsAccountResource: {
-	name:                string
-	resource_group_name: string
-	sku_name:            string
+	name:                  string
+	resource_group_name:   string
+	sku_name:              string
+	id?:                   string
+	primary_access_key?:   string
+	secondary_access_key?: string
 	tags?: [_]: string
+	x_ms_client_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5462,6 +8460,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	value:               string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5475,6 +8474,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	server_name:         string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5488,6 +8488,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5501,14 +8502,26 @@ package azurerm
 	resource_group_name:            string
 	sku_name:                       string
 	version:                        string
+	administrator_login?:           string
 	administrator_login_password?:  string
+	auto_grow_enabled?:             bool
+	backup_retention_days?:         number
 	create_mode?:                   string
 	creation_source_server_id?:     string
+	fqdn?:                          string
+	geo_redundant_backup_enabled?:  bool
+	id?:                            string
 	public_network_access_enabled?: bool
 	restore_point_in_time?:         string
+	ssl_enforcement?:               string
+	ssl_enforcement_enabled?:       bool
+	storage_mb?:                    number
 	tags?: [_]: string
 	storage_profile?: [{
-		storage_mb?: number
+		auto_grow?:             string
+		backup_retention_days?: number
+		geo_redundant_backup?:  string
+		storage_mb?:            number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -5522,6 +8535,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	subnet_id:           string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5530,9 +8544,120 @@ package azurerm
 	}
 }
 #AzurermMarketplaceAgreementResource: {
-	offer:     string
-	plan:      string
-	publisher: string
+	offer:                string
+	plan:                 string
+	publisher:            string
+	id?:                  string
+	license_text_link?:   string
+	privacy_policy_link?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMediaAssetResource: {
+	media_services_account_name: string
+	name:                        string
+	resource_group_name:         string
+	alternate_id?:               string
+	container?:                  string
+	description?:                string
+	id?:                         string
+	storage_account_name?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMediaContentKeyPolicyResource: {
+	media_services_account_name: string
+	name:                        string
+	resource_group_name:         string
+	description?:                string
+	id?:                         string
+	policy_option?: [{
+		name:                             string
+		clear_key_configuration_enabled?: bool
+		open_restriction_enabled?:        bool
+		widevine_configuration_template?: string
+		fairplay_configuration?: [{
+			ask?:                       string
+			pfx?:                       string
+			pfx_password?:              string
+			rental_and_lease_key_type?: string
+			rental_duration_seconds?:   number
+			offline_rental_configuration?: [{
+				playback_duration_seconds?: number
+				storage_duration_seconds?:  number
+			}, ...]
+		}, ...]
+		playready_configuration_license?: [{
+			allow_test_devices?:                       bool
+			begin_date?:                               string
+			content_key_location_from_header_enabled?: bool
+			content_key_location_from_key_id?:         string
+			content_type?:                             string
+			expiration_date?:                          string
+			grace_period?:                             string
+			license_type?:                             string
+			relative_begin_date?:                      string
+			relative_expiration_date?:                 string
+			play_right?: [{
+				agc_and_color_stripe_restriction?:                         number
+				allow_passing_video_content_to_unknown_output?:            string
+				analog_video_opl?:                                         number
+				compressed_digital_audio_opl?:                             number
+				digital_video_only_content_restriction?:                   bool
+				first_play_expiration?:                                    string
+				image_constraint_for_analog_component_video_restriction?:  bool
+				image_constraint_for_analog_computer_monitor_restriction?: bool
+				scms_restriction?:                                         number
+				uncompressed_digital_audio_opl?:                           number
+				uncompressed_digital_video_opl?:                           number
+			}, ...]
+		}, ...]
+		token_restriction?: [{
+			audience?:                           string
+			issuer?:                             string
+			open_id_connect_discovery_document?: string
+			primary_rsa_token_key_exponent?:     string
+			primary_rsa_token_key_modulus?:      string
+			primary_symmetric_token_key?:        string
+			primary_x509_token_key_raw?:         string
+			token_type?:                         string
+			required_claim?: [{
+				type?:  string
+				value?: string
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMediaJobResource: {
+	media_services_account_name: string
+	name:                        string
+	resource_group_name:         string
+	transform_name:              string
+	description?:                string
+	id?:                         string
+	priority?:                   string
+	input_asset?: [{
+		name:   string
+		label?: string
+	}, ...]
+	output_asset?: [{
+		name:   string
+		label?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5541,12 +8666,166 @@ package azurerm
 	}
 }
 #AzurermMediaServicesAccountResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
+	location:                     string
+	name:                         string
+	resource_group_name:          string
+	id?:                          string
+	storage_authentication_type?: string
+	tags?: [_]: string
+	identity?: [{
+		principal_id?: string
+		tenant_id?:    string
+		type?:         string
+	}, ...]
 	storage_account?: [{
 		id:          string
 		is_primary?: bool
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMediaStreamingEndpointResource: {
+	location:                    string
+	media_services_account_name: string
+	name:                        string
+	resource_group_name:         string
+	scale_units:                 number
+	auto_start_enabled?:         bool
+	cdn_enabled?:                bool
+	cdn_profile?:                string
+	cdn_provider?:               string
+	custom_host_names?: [string, ...]
+	description?:           string
+	id?:                    string
+	max_cache_age_seconds?: number
+	tags?: [_]: string
+	access_control?: [{
+		akamai_signature_header_authentication_key?: [{
+			base64_key?: string
+			expiration?: string
+			identifier?: string
+		}, ...]
+		ip_allow?: [{
+			address?:              string
+			name?:                 string
+			subnet_prefix_length?: number
+		}, ...]
+	}, ...]
+	cross_site_access_policy?: [{
+		client_access_policy?: string
+		cross_domain_policy?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMediaStreamingLocatorResource: {
+	asset_name:                       string
+	media_services_account_name:      string
+	name:                             string
+	resource_group_name:              string
+	streaming_policy_name:            string
+	alternative_media_id?:            string
+	default_content_key_policy_name?: string
+	end_time?:                        string
+	id?:                              string
+	start_time?:                      string
+	streaming_locator_id?:            string
+	content_key?: [{
+		content_key_id?:                      string
+		label_reference_in_streaming_policy?: string
+		policy_name?:                         string
+		type?:                                string
+		value?:                               string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermMediaStreamingPolicyResource: {
+	media_services_account_name:      string
+	name:                             string
+	resource_group_name:              string
+	default_content_key_policy_name?: string
+	id?:                              string
+	common_encryption_cbcs?: [{
+		default_content_key?: [{
+			label?:       string
+			policy_name?: string
+		}, ...]
+		drm_fairplay?: [{
+			allow_persistent_license?:                bool
+			custom_license_acquisition_url_template?: string
+		}, ...]
+		enabled_protocols?: [{
+			dash?:             bool
+			download?:         bool
+			hls?:              bool
+			smooth_streaming?: bool
+		}, ...]
+	}, ...]
+	common_encryption_cenc?: [{
+		drm_widevine_custom_license_acquisition_url_template?: string
+		default_content_key?: [{
+			label?:       string
+			policy_name?: string
+		}, ...]
+		drm_playready?: [{
+			custom_attributes?:                       string
+			custom_license_acquisition_url_template?: string
+		}, ...]
+		enabled_protocols?: [{
+			dash?:             bool
+			download?:         bool
+			hls?:              bool
+			smooth_streaming?: bool
+		}, ...]
+	}, ...]
+	no_encryption_enabled_protocols?: [{
+		dash?:             bool
+		download?:         bool
+		hls?:              bool
+		smooth_streaming?: bool
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermMediaTransformResource: {
+	media_services_account_name: string
+	name:                        string
+	resource_group_name:         string
+	description?:                string
+	id?:                         string
+	output?: [{
+		on_error_action?:   string
+		relative_priority?: string
+		audio_analyzer_preset?: [{
+			audio_analysis_mode?: string
+			audio_language?:      string
+		}, ...]
+		builtin_preset?: [{
+			preset_name?: string
+		}, ...]
+		face_detector_preset?: [{
+			analysis_resolution?: string
+		}, ...]
+		video_analyzer_preset?: [{
+			audio_analysis_mode?: string
+			audio_language?:      string
+			insights_type?:       string
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -5560,6 +8839,7 @@ package azurerm
 	resource_group_name: string
 	short_name:          string
 	enabled?:            bool
+	id?:                 string
 	tags?: [_]: string
 	arm_role_receiver?: [{
 		name:                     string
@@ -5626,28 +8906,138 @@ package azurerm
 		use_common_alert_schema?: bool
 	}, ...]
 }
+#AzurermMonitorActionRuleActionGroupResource: {
+	action_group_id:     string
+	name:                string
+	resource_group_name: string
+	description?:        string
+	enabled?:            bool
+	id?:                 string
+	tags?: [_]: string
+	condition?: [{
+		alert_context?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		alert_rule_id?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		description?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		monitor?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		monitor_service?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		severity?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		target_resource_type?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+	}, ...]
+	scope?: [{
+		resource_ids: [string, ...]
+		type: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMonitorActionRuleSuppressionResource: {
+	name:                string
+	resource_group_name: string
+	description?:        string
+	enabled?:            bool
+	id?:                 string
+	tags?: [_]: string
+	condition?: [{
+		alert_context?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		alert_rule_id?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		description?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		monitor?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		monitor_service?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		severity?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+		target_resource_type?: [{
+			operator: string
+			values: [string, ...]
+		}, ...]
+	}, ...]
+	scope?: [{
+		resource_ids: [string, ...]
+		type: string
+	}, ...]
+	suppression?: [{
+		recurrence_type: string
+		schedule?: [{
+			end_date_utc:   string
+			start_date_utc: string
+			recurrence_monthly?: [number, ...]
+			recurrence_weekly?: [string, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermMonitorActivityLogAlertResource: {
 	name:                string
 	resource_group_name: string
 	scopes: [string, ...]
 	description?: string
 	enabled?:     bool
+	id?:          string
 	tags?: [_]: string
 	action?: [{
 		action_group_id: string
 		webhook_properties?: [_]: string
 	}, ...]
 	criteria?: [{
-		category:           string
-		caller?:            string
-		level?:             string
-		operation_name?:    string
-		resource_group?:    string
-		resource_id?:       string
-		resource_provider?: string
-		resource_type?:     string
-		status?:            string
-		sub_status?:        string
+		category:                 string
+		caller?:                  string
+		level?:                   string
+		operation_name?:          string
+		recommendation_category?: string
+		recommendation_impact?:   string
+		recommendation_type?:     string
+		resource_group?:          string
+		resource_id?:             string
+		resource_provider?:       string
+		resource_type?:           string
+		status?:                  string
+		sub_status?:              string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -5662,6 +9052,7 @@ package azurerm
 	resource_group_name: string
 	target_resource_id:  string
 	enabled?:            bool
+	id?:                 string
 	tags?: [_]: string
 	notification?: [{
 		email?: [{
@@ -5702,6 +9093,12 @@ package azurerm
 				time_aggregation:   string
 				time_grain:         string
 				time_window:        string
+				metric_namespace?:  string
+				dimensions?: [{
+					name:     string
+					operator: string
+					values: [string, ...]
+				}, ...]
 			}, ...]
 			scale_action?: [{
 				cooldown:  string
@@ -5723,6 +9120,7 @@ package azurerm
 	target_resource_id:              string
 	eventhub_authorization_rule_id?: string
 	eventhub_name?:                  string
+	id?:                             string
 	log_analytics_destination_type?: string
 	log_analytics_workspace_id?:     string
 	storage_account_id?:             string
@@ -5753,6 +9151,7 @@ package azurerm
 	categories: [string, ...]
 	locations: [string, ...]
 	name:                string
+	id?:                 string
 	servicebus_rule_id?: string
 	storage_account_id?: string
 	retention_policy?: [{
@@ -5774,19 +9173,44 @@ package azurerm
 	description?:   string
 	enabled?:       bool
 	frequency?:     string
+	id?:            string
 	severity?:      number
 	tags?: [_]: string
-	window_size?: string
+	target_resource_location?: string
+	target_resource_type?:     string
+	window_size?:              string
 	action?: [{
 		action_group_id: string
 		webhook_properties?: [_]: string
 	}, ...]
+	application_insights_web_test_location_availability_criteria?: [{
+		component_id:          string
+		failed_location_count: number
+		web_test_id:           string
+	}, ...]
 	criteria?: [{
-		aggregation:      string
-		metric_name:      string
-		metric_namespace: string
-		operator:         string
-		threshold:        number
+		aggregation:             string
+		metric_name:             string
+		metric_namespace:        string
+		operator:                string
+		threshold:               number
+		skip_metric_validation?: bool
+		dimension?: [{
+			name:     string
+			operator: string
+			values: [string, ...]
+		}, ...]
+	}, ...]
+	dynamic_criteria?: [{
+		aggregation:               string
+		alert_sensitivity:         string
+		metric_name:               string
+		metric_namespace:          string
+		operator:                  string
+		evaluation_failure_count?: number
+		evaluation_total_count?:   number
+		ignore_data_before?:       string
+		skip_metric_validation?:   bool
 		dimension?: [{
 			name:     string
 			operator: string
@@ -5811,6 +9235,7 @@ package azurerm
 	authorized_resource_ids?: [string, ...]
 	description?: string
 	enabled?:     bool
+	id?:          string
 	query_type?:  string
 	severity?:    number
 	tags?: [_]: string
@@ -5845,6 +9270,7 @@ package azurerm
 	authorized_resource_ids?: [string, ...]
 	description?: string
 	enabled?:     bool
+	id?:          string
 	tags?: [_]: string
 	criteria?: [{
 		metric_name: string
@@ -5861,16 +9287,65 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermMonitorSmartDetectorAlertRuleResource: {
+	detector_type:       string
+	frequency:           string
+	name:                string
+	resource_group_name: string
+	scope_resource_ids: [string, ...]
+	severity:             string
+	description?:         string
+	enabled?:             bool
+	id?:                  string
+	throttling_duration?: string
+	action_group?: [{
+		ids: [string, ...]
+		email_subject?:   string
+		webhook_payload?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermMssqlDatabaseResource: {
-	name:             string
-	server_id:        string
-	elastic_pool_id?: string
-	tags?: [_]: string
+	name:                         string
+	server_id:                    string
+	auto_pause_delay_in_minutes?: number
+	collation?:                   string
+	create_mode?:                 string
+	creation_source_database_id?: string
+	elastic_pool_id?:             string
 	extended_auditing_policy?: [{
-		storage_account_access_key:               string
-		storage_endpoint:                         string
-		retention_in_days?:                       number
-		storage_account_access_key_is_secondary?: bool
+		retention_in_days:                       number
+		storage_account_access_key:              string
+		storage_account_access_key_is_secondary: bool
+		storage_endpoint:                        string
+	}, ...]
+	id?:                          string
+	license_type?:                string
+	max_size_gb?:                 number
+	min_capacity?:                number
+	read_replica_count?:          number
+	read_scale?:                  bool
+	recover_database_id?:         string
+	restore_dropped_database_id?: string
+	restore_point_in_time?:       string
+	sample_name?:                 string
+	sku_name?:                    string
+	storage_account_type?:        string
+	tags?: [_]: string
+	zone_redundant?: bool
+	long_term_retention_policy?: [{
+		monthly_retention?: string
+		week_of_year?:      number
+		weekly_retention?:  string
+		yearly_retention?:  string
+	}, ...]
+	short_term_retention_policy?: [{
+		retention_days: number
 	}, ...]
 	threat_detection_policy?: [{
 		disabled_alerts?: [string, ...]
@@ -5889,11 +9364,26 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermMssqlDatabaseExtendedAuditingPolicyResource: {
+	database_id:                              string
+	storage_endpoint:                         string
+	id?:                                      string
+	retention_in_days?:                       number
+	storage_account_access_key?:              string
+	storage_account_access_key_is_secondary?: bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermMssqlDatabaseVulnerabilityAssessmentRuleBaselineResource: {
 	database_name:                      string
 	rule_id:                            string
 	server_vulnerability_assessment_id: string
 	baseline_name?:                     string
+	id?:                                string
 	baseline_result?: [{
 		result: [string, ...]
 	}, ...]
@@ -5909,6 +9399,10 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	server_name:         string
+	id?:                 string
+	license_type?:       string
+	max_size_bytes?:     number
+	max_size_gb?:        number
 	tags?: [_]: string
 	zone_redundant?: bool
 	per_database_settings?: [{
@@ -5929,28 +9423,49 @@ package azurerm
 	}
 }
 #AzurermMssqlServerResource: {
-	administrator_login:            string
-	administrator_login_password:   string
-	location:                       string
-	name:                           string
-	resource_group_name:            string
-	version:                        string
-	connection_policy?:             string
+	administrator_login:          string
+	administrator_login_password: string
+	location:                     string
+	name:                         string
+	resource_group_name:          string
+	version:                      string
+	connection_policy?:           string
+	extended_auditing_policy?: [{
+		retention_in_days:                       number
+		storage_account_access_key:              string
+		storage_account_access_key_is_secondary: bool
+		storage_endpoint:                        string
+	}, ...]
+	fully_qualified_domain_name?:   string
+	id?:                            string
+	minimum_tls_version?:           string
 	public_network_access_enabled?: bool
+	restorable_dropped_database_ids?: [string, ...]
 	tags?: [_]: string
 	azuread_administrator?: [{
 		login_username: string
 		object_id:      string
-	}, ...]
-	extended_auditing_policy?: [{
-		storage_account_access_key:               string
-		storage_endpoint:                         string
-		retention_in_days?:                       number
-		storage_account_access_key_is_secondary?: bool
+		tenant_id?:     string
 	}, ...]
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMssqlServerExtendedAuditingPolicyResource: {
+	server_id:                                string
+	storage_endpoint:                         string
+	id?:                                      string
+	retention_in_days?:                       number
+	storage_account_access_key?:              string
+	storage_account_access_key_is_secondary?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5965,6 +9480,7 @@ package azurerm
 	disabled_alerts?: [string, ...]
 	email_account_admins?: bool
 	email_addresses?: [string, ...]
+	id?:                         string
 	retention_days?:             number
 	storage_account_access_key?: string
 	storage_endpoint?:           string
@@ -5978,6 +9494,7 @@ package azurerm
 #AzurermMssqlServerVulnerabilityAssessmentResource: {
 	server_security_alert_policy_id: string
 	storage_container_path:          string
+	id?:                             string
 	storage_account_access_key?:     string
 	storage_container_sas_key?:      string
 	recurring_scans?: [{
@@ -5995,6 +9512,7 @@ package azurerm
 #AzurermMssqlVirtualMachineResource: {
 	sql_license_type:                  string
 	virtual_machine_id:                string
+	id?:                               string
 	r_services_enabled?:               bool
 	sql_connectivity_port?:            number
 	sql_connectivity_type?:            string
@@ -6012,6 +9530,36 @@ package azurerm
 		service_principal_name:   string
 		service_principal_secret: string
 	}, ...]
+	storage_configuration?: [{
+		disk_type:             string
+		storage_workload_type: string
+		data_settings?: [{
+			default_file_path: string
+			luns: [number, ...]
+		}, ...]
+		log_settings?: [{
+			default_file_path: string
+			luns: [number, ...]
+		}, ...]
+		temp_db_settings?: [{
+			default_file_path: string
+			luns: [number, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMysqlActiveDirectoryAdministratorResource: {
+	login:               string
+	object_id:           string
+	resource_group_name: string
+	server_name:         string
+	tenant_id:           string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6024,6 +9572,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	value:               string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6037,6 +9586,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	server_name:         string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6050,6 +9600,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6063,17 +9614,54 @@ package azurerm
 	resource_group_name:                string
 	sku_name:                           string
 	version:                            string
+	administrator_login?:               string
 	administrator_login_password?:      string
+	auto_grow_enabled?:                 bool
+	backup_retention_days?:             number
 	create_mode?:                       string
 	creation_source_server_id?:         string
+	fqdn?:                              string
+	geo_redundant_backup_enabled?:      bool
+	id?:                                string
 	infrastructure_encryption_enabled?: bool
 	public_network_access_enabled?:     bool
 	restore_point_in_time?:             string
+	ssl_enforcement?:                   string
+	ssl_enforcement_enabled?:           bool
 	ssl_minimal_tls_version_enforced?:  string
+	storage_mb?:                        number
 	tags?: [_]: string
-	storage_profile?: [{
-		storage_mb?: number
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
+	storage_profile?: [{
+		auto_grow?:             string
+		backup_retention_days?: number
+		geo_redundant_backup?:  string
+		storage_mb?:            number
+	}, ...]
+	threat_detection_policy?: [{
+		disabled_alerts?: [string, ...]
+		email_account_admins?: bool
+		email_addresses?: [string, ...]
+		enabled?:                    bool
+		retention_days?:             number
+		storage_account_access_key?: string
+		storage_endpoint?:           string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermMysqlServerKeyResource: {
+	key_vault_key_id: string
+	server_id:        string
+	id?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6086,6 +9674,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	subnet_id:           string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6097,10 +9686,12 @@ package azurerm
 	location:                 string
 	name:                     string
 	resource_group_name:      string
+	id?:                      string
 	idle_timeout_in_minutes?: number
 	public_ip_address_ids?: [string, ...]
 	public_ip_prefix_ids?: [string, ...]
-	sku_name?: string
+	resource_guid?: string
+	sku_name?:      string
 	tags?: [_]: string
 	zones?: [string, ...]
 	timeouts?: {
@@ -6110,10 +9701,21 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermNatGatewayPublicIpAssociationResource: {
+	nat_gateway_id:       string
+	public_ip_address_id: string
+	id?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermNetappAccountResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	active_directory?: [{
 		dns_servers: [string, ...]
@@ -6137,6 +9739,7 @@ package azurerm
 	resource_group_name: string
 	service_level:       string
 	size_in_tb:          number
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6152,6 +9755,7 @@ package azurerm
 	pool_name:           string
 	resource_group_name: string
 	volume_name:         string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6170,10 +9774,17 @@ package azurerm
 	storage_quota_in_gb: number
 	subnet_id:           string
 	volume_path:         string
+	id?:                 string
+	mount_ip_addresses?: [string, ...]
+	protocols?: [string, ...]
 	tags?: [_]: string
 	export_policy_rule?: [{
 		allowed_clients: [string, ...]
-		rule_index:       number
+		rule_index:     number
+		cifs_enabled?:  bool
+		nfsv3_enabled?: bool
+		nfsv4_enabled?: bool
+		protocols_enabled?: [string, ...]
 		unix_read_only?:  bool
 		unix_read_write?: bool
 	}, ...]
@@ -6187,19 +9798,68 @@ package azurerm
 #AzurermNetworkConnectionMonitorResource: {
 	location:             string
 	name:                 string
-	network_watcher_name: string
-	resource_group_name:  string
+	network_watcher_id:   string
 	auto_start?:          bool
+	id?:                  string
 	interval_in_seconds?: number
+	notes?:               string
+	output_workspace_resource_ids?: [string, ...]
 	tags?: [_]: string
 	destination?: [{
-		port:                number
 		address?:            string
+		port?:               number
 		virtual_machine_id?: string
 	}, ...]
+	endpoint?: [{
+		name:                string
+		address?:            string
+		virtual_machine_id?: string
+		filter?: [{
+			type?: string
+			item?: [{
+				address?: string
+				type?:    string
+			}, ...]
+		}, ...]
+	}, ...]
 	source?: [{
-		virtual_machine_id: string
-		port?:              number
+		port?:               number
+		virtual_machine_id?: string
+	}, ...]
+	test_configuration?: [{
+		name:                       string
+		protocol:                   string
+		preferred_ip_version?:      string
+		test_frequency_in_seconds?: number
+		http_configuration?: [{
+			method?:       string
+			path?:         string
+			port?:         number
+			prefer_https?: bool
+			valid_status_code_ranges?: [string, ...]
+			request_header?: [{
+				name:  string
+				value: string
+			}, ...]
+		}, ...]
+		icmp_configuration?: [{
+			trace_route_enabled?: bool
+		}, ...]
+		success_threshold?: [{
+			checks_failed_percent?: number
+			round_trip_time_ms?:    number
+		}, ...]
+		tcp_configuration?: [{
+			port:                 number
+			trace_route_enabled?: bool
+		}, ...]
+	}, ...]
+	test_group?: [{
+		destination_endpoints: [string, ...]
+		name: string
+		source_endpoints: [string, ...]
+		test_configuration_names: [string, ...]
+		enabled?: bool
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6212,7 +9872,9 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
+	virtual_network_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6221,15 +9883,26 @@ package azurerm
 	}
 }
 #AzurermNetworkInterfaceResource: {
-	location:                       string
-	name:                           string
-	resource_group_name:            string
+	location:            string
+	name:                string
+	resource_group_name: string
+	applied_dns_servers?: [string, ...]
+	dns_servers?: [string, ...]
 	enable_accelerated_networking?: bool
 	enable_ip_forwarding?:          bool
+	id?:                            string
+	internal_dns_name_label?:       string
+	internal_domain_name_suffix?:   string
+	mac_address?:                   string
+	private_ip_address?:            string
+	private_ip_addresses?: [string, ...]
 	tags?: [_]: string
+	virtual_machine_id?: string
 	ip_configuration?: [{
 		name:                          string
 		private_ip_address_allocation: string
+		primary?:                      bool
+		private_ip_address?:           string
 		private_ip_address_version?:   string
 		public_ip_address_id?:         string
 		subnet_id?:                    string
@@ -6245,6 +9918,7 @@ package azurerm
 	backend_address_pool_id: string
 	ip_configuration_name:   string
 	network_interface_id:    string
+	id?:                     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6255,6 +9929,7 @@ package azurerm
 #AzurermNetworkInterfaceApplicationSecurityGroupAssociationResource: {
 	application_security_group_id: string
 	network_interface_id:          string
+	id?:                           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6266,6 +9941,7 @@ package azurerm
 	backend_address_pool_id: string
 	ip_configuration_name:   string
 	network_interface_id:    string
+	id?:                     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6277,6 +9953,7 @@ package azurerm
 	ip_configuration_name: string
 	nat_rule_id:           string
 	network_interface_id:  string
+	id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6287,6 +9964,7 @@ package azurerm
 #AzurermNetworkInterfaceSecurityGroupAssociationResource: {
 	network_interface_id:      string
 	network_security_group_id: string
+	id?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6299,6 +9977,7 @@ package azurerm
 	network_watcher_name:       string
 	resource_group_name:        string
 	target_resource_id:         string
+	id?:                        string
 	maximum_bytes_per_packet?:  number
 	maximum_bytes_per_session?: number
 	maximum_capture_duration?:  number
@@ -6312,6 +9991,7 @@ package azurerm
 	storage_location?: [{
 		file_path?:          string
 		storage_account_id?: string
+		storage_path?:       string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6324,6 +10004,8 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	container_network_interface_ids?: [string, ...]
+	id?: string
 	tags?: [_]: string
 	container_network_interface?: [{
 		name: string
@@ -6343,6 +10025,25 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	security_rule?: [{
+		access:                     string
+		description:                string
+		destination_address_prefix: string
+		destination_address_prefixes: [string, ...]
+		destination_application_security_group_ids: [string, ...]
+		destination_port_range: string
+		destination_port_ranges: [string, ...]
+		direction:             string
+		name:                  string
+		priority:              number
+		protocol:              string
+		source_address_prefix: string
+		source_address_prefixes: [string, ...]
+		source_application_security_group_ids: [string, ...]
+		source_port_range: string
+		source_port_ranges: [string, ...]
+	}, ...]
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6365,6 +10066,7 @@ package azurerm
 	destination_application_security_group_ids?: [string, ...]
 	destination_port_range?: string
 	destination_port_ranges?: [string, ...]
+	id?:                    string
 	source_address_prefix?: string
 	source_address_prefixes?: [string, ...]
 	source_application_security_group_ids?: [string, ...]
@@ -6381,6 +10083,7 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6395,6 +10098,8 @@ package azurerm
 	network_watcher_name:      string
 	resource_group_name:       string
 	storage_account_id:        string
+	id?:                       string
+	version?:                  number
 	retention_policy?: [{
 		days:    number
 		enabled: bool
@@ -6418,6 +10123,7 @@ package azurerm
 	name:                string
 	namespace_name:      string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	apns_credential?: [{
 		application_mode: string
@@ -6441,8 +10147,11 @@ package azurerm
 	namespace_name:        string
 	notification_hub_name: string
 	resource_group_name:   string
+	id?:                   string
 	listen?:               bool
 	manage?:               bool
+	primary_access_key?:   string
+	secondary_access_key?: string
 	send?:                 bool
 	timeouts?: {
 		create?: string
@@ -6452,12 +10161,14 @@ package azurerm
 	}
 }
 #AzurermNotificationHubNamespaceResource: {
-	location:            string
-	name:                string
-	namespace_type:      string
-	resource_group_name: string
-	sku_name:            string
-	enabled?:            bool
+	location:             string
+	name:                 string
+	namespace_type:       string
+	resource_group_name:  string
+	sku_name:             string
+	enabled?:             bool
+	id?:                  string
+	servicebus_endpoint?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6467,12 +10178,15 @@ package azurerm
 	}
 }
 #AzurermOrchestratedVirtualMachineScaleSetResource: {
-	location:                    string
-	name:                        string
-	platform_fault_domain_count: number
-	resource_group_name:         string
-	single_placement_group:      bool
+	location:                      string
+	name:                          string
+	platform_fault_domain_count:   number
+	resource_group_name:           string
+	id?:                           string
+	proximity_placement_group_id?: string
+	single_placement_group?:       bool
 	tags?: [_]: string
+	unique_id?: string
 	zones?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -6486,6 +10200,7 @@ package azurerm
 	network_watcher_name:       string
 	resource_group_name:        string
 	target_resource_id:         string
+	id?:                        string
 	maximum_bytes_per_packet?:  number
 	maximum_bytes_per_session?: number
 	maximum_capture_duration?:  number
@@ -6499,6 +10214,7 @@ package azurerm
 	storage_location?: [{
 		file_path?:          string
 		storage_account_id?: string
+		storage_path?:       string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6514,9 +10230,18 @@ package azurerm
 	scale_unit:                  number
 	virtual_hub_id:              string
 	vpn_server_configuration_id: string
+	dns_servers?: [string, ...]
+	id?: string
 	tags?: [_]: string
 	connection_configuration?: [{
 		name: string
+		route?: [{
+			associated_route_table_id: string
+			propagated_route_table?: [{
+				ids: [string, ...]
+				labels?: [string, ...]
+			}, ...]
+		}, ...]
 		vpn_client_address_pool?: [{
 			address_prefixes: [string, ...]
 		}, ...]
@@ -6534,11 +10259,16 @@ package azurerm
 	scope:                string
 	description?:         string
 	display_name?:        string
+	enforcement_mode?:    bool
+	id?:                  string
 	location?:            string
+	metadata?:            string
 	not_scopes?: [string, ...]
 	parameters?: string
 	identity?: [{
-		type?: string
+		principal_id?: string
+		tenant_id?:    string
+		type?:         string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6548,13 +10278,17 @@ package azurerm
 	}
 }
 #AzurermPolicyDefinitionResource: {
-	display_name: string
-	mode:         string
-	name:         string
-	policy_type:  string
-	description?: string
-	parameters?:  string
-	policy_rule?: string
+	display_name:           string
+	mode:                   string
+	name:                   string
+	policy_type:            string
+	description?:           string
+	id?:                    string
+	management_group_id?:   string
+	management_group_name?: string
+	metadata?:              string
+	parameters?:            string
+	policy_rule?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6566,8 +10300,10 @@ package azurerm
 	name:                 string
 	policy_assignment_id: string
 	scope:                string
+	id?:                  string
 	location_filters?: [string, ...]
 	policy_definition_reference_id?: string
+	resource_discovery_mode?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6576,13 +10312,44 @@ package azurerm
 	}
 }
 #AzurermPolicySetDefinitionResource: {
-	display_name:         string
-	name:                 string
-	policy_type:          string
-	description?:         string
-	management_group_id?: string
-	parameters?:          string
-	policy_definitions?:  string
+	display_name:           string
+	name:                   string
+	policy_type:            string
+	description?:           string
+	id?:                    string
+	management_group_id?:   string
+	management_group_name?: string
+	metadata?:              string
+	parameters?:            string
+	policy_definitions?:    string
+	policy_definition_group?: [{
+		name:                             string
+		additional_metadata_resource_id?: string
+		category?:                        string
+		description?:                     string
+		display_name?:                    string
+	}, ...]
+	policy_definition_reference?: [{
+		policy_definition_id: string
+		parameter_values?:    string
+		parameters?: [_]: string
+		policy_group_names?: [string, ...]
+		reference_id?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermPostgresqlActiveDirectoryAdministratorResource: {
+	login:               string
+	object_id:           string
+	resource_group_name: string
+	server_name:         string
+	tenant_id:           string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6595,6 +10362,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	value:               string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6608,6 +10376,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	server_name:         string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6621,6 +10390,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6634,16 +10404,32 @@ package azurerm
 	resource_group_name:                string
 	sku_name:                           string
 	version:                            string
+	administrator_login?:               string
 	administrator_login_password?:      string
+	auto_grow_enabled?:                 bool
+	backup_retention_days?:             number
 	create_mode?:                       string
 	creation_source_server_id?:         string
+	fqdn?:                              string
+	geo_redundant_backup_enabled?:      bool
+	id?:                                string
 	infrastructure_encryption_enabled?: bool
 	public_network_access_enabled?:     bool
 	restore_point_in_time?:             string
+	ssl_enforcement?:                   string
+	ssl_enforcement_enabled?:           bool
 	ssl_minimal_tls_version_enforced?:  string
+	storage_mb?:                        number
 	tags?: [_]: string
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
 	storage_profile?: [{
+		auto_grow?:             string
 		backup_retention_days?: number
+		geo_redundant_backup?:  string
 		storage_mb?:            number
 	}, ...]
 	threat_detection_policy?: [{
@@ -6662,11 +10448,23 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermPostgresqlServerKeyResource: {
+	key_vault_key_id: string
+	server_id:        string
+	id?:              string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermPostgresqlVirtualNetworkRuleResource: {
 	name:                                  string
 	resource_group_name:                   string
 	server_name:                           string
 	subnet_id:                             string
+	id?:                                   string
 	ignore_missing_vnet_service_endpoint?: bool
 	timeouts?: {
 		create?: string
@@ -6681,6 +10479,7 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	sku_name:            string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6695,6 +10494,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6709,6 +10510,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6723,6 +10526,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6735,6 +10540,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	name?:               string
 	tags?: [_]: string
 	record?: [{
@@ -6754,6 +10561,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6767,6 +10576,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	record?: [{
 		port:     number
@@ -6786,6 +10597,8 @@ package azurerm
 	resource_group_name: string
 	ttl:                 number
 	zone_name:           string
+	fqdn?:               string
+	id?:                 string
 	tags?: [_]: string
 	record?: [{
 		value: string
@@ -6798,9 +10611,26 @@ package azurerm
 	}
 }
 #AzurermPrivateDnsZoneResource: {
-	name:                string
-	resource_group_name: string
+	name:                                                   string
+	resource_group_name:                                    string
+	id?:                                                    string
+	max_number_of_record_sets?:                             number
+	max_number_of_virtual_network_links?:                   number
+	max_number_of_virtual_network_links_with_registration?: number
+	number_of_record_sets?:                                 number
 	tags?: [_]: string
+	soa_record?: [{
+		email:          string
+		expire_time?:   number
+		fqdn?:          string
+		host_name?:     string
+		minimum_ttl?:   number
+		refresh_time?:  number
+		retry_time?:    number
+		serial_number?: number
+		tags?: [_]: string
+		ttl?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6813,6 +10643,7 @@ package azurerm
 	private_dns_zone_name: string
 	resource_group_name:   string
 	virtual_network_id:    string
+	id?:                   string
 	registration_enabled?: bool
 	tags?: [_]: string
 	timeouts?: {
@@ -6827,11 +10658,34 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	subnet_id:           string
+	custom_dns_configs?: [{
+		fqdn: string
+		ip_addresses: [string, ...]
+	}, ...]
+	id?: string
+	private_dns_zone_configs?: [{
+		id:                  string
+		name:                string
+		private_dns_zone_id: string
+		record_sets: [{
+			fqdn: string
+			ip_addresses: [string, ...]
+			name: string
+			ttl:  number
+			type: string
+		}, ...]
+	}, ...]
 	tags?: [_]: string
+	private_dns_zone_group?: [{
+		name: string
+		private_dns_zone_ids: [string, ...]
+		id?: string
+	}, ...]
 	private_service_connection?: [{
 		is_manual_connection:           bool
 		name:                           string
 		private_connection_resource_id: string
+		private_ip_address?:            string
 		request_message?:               string
 		subresource_names?: [string, ...]
 	}, ...]
@@ -6847,8 +10701,10 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	alias?:              string
 	auto_approval_subscription_ids?: [string, ...]
 	enable_proxy_protocol?: bool
+	id?:                    string
 	tags?: [_]: string
 	visibility_subscription_ids?: [string, ...]
 	nat_ip_configuration?: [{
@@ -6869,6 +10725,7 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6883,7 +10740,10 @@ package azurerm
 	name:                     string
 	resource_group_name:      string
 	domain_name_label?:       string
+	fqdn?:                    string
+	id?:                      string
 	idle_timeout_in_minutes?: number
+	ip_address?:              string
 	ip_version?:              string
 	public_ip_prefix_id?:     string
 	reverse_fqdn?:            string
@@ -6901,6 +10761,8 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	ip_prefix?:          string
 	prefix_length?:      number
 	sku?:                string
 	tags?: [_]: string
@@ -6917,8 +10779,14 @@ package azurerm
 	name:                 string
 	resource_group_name:  string
 	sku:                  string
+	id?:                  string
 	soft_delete_enabled?: bool
 	tags?: [_]: string
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6927,16 +10795,26 @@ package azurerm
 	}
 }
 #AzurermRedisCacheResource: {
-	capacity:             number
-	family:               string
-	location:             string
-	name:                 string
-	resource_group_name:  string
-	sku_name:             string
-	enable_non_ssl_port?: bool
-	minimum_tls_version?: string
-	shard_count?:         number
-	subnet_id?:           string
+	capacity:                       number
+	family:                         string
+	location:                       string
+	name:                           string
+	resource_group_name:            string
+	sku_name:                       string
+	enable_non_ssl_port?:           bool
+	hostname?:                      string
+	id?:                            string
+	minimum_tls_version?:           string
+	port?:                          number
+	primary_access_key?:            string
+	primary_connection_string?:     string
+	private_static_ip_address?:     string
+	public_network_access_enabled?: bool
+	secondary_access_key?:          string
+	secondary_connection_string?:   string
+	shard_count?:                   number
+	ssl_port?:                      number
+	subnet_id?:                     string
 	tags?: [_]: string
 	zones?: [string, ...]
 	patch_schedule?: [{
@@ -6948,7 +10826,11 @@ package azurerm
 		aof_storage_connection_string_0?: string
 		aof_storage_connection_string_1?: string
 		enable_authentication?:           bool
+		maxclients?:                      number
+		maxfragmentationmemory_reserved?: number
+		maxmemory_delta?:                 number
 		maxmemory_policy?:                string
+		maxmemory_reserved?:              number
 		notify_keyspace_events?:          string
 		rdb_backup_enabled?:              bool
 		rdb_backup_frequency?:            number
@@ -6968,6 +10850,22 @@ package azurerm
 	redis_cache_name:    string
 	resource_group_name: string
 	start_ip:            string
+	id?:                 string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermRedisLinkedServerResource: {
+	linked_redis_cache_id:       string
+	linked_redis_cache_location: string
+	resource_group_name:         string
+	server_role:                 string
+	target_redis_cache_name:     string
+	id?:                         string
+	name?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6979,6 +10877,7 @@ package azurerm
 	name:                           string
 	relay_namespace_name:           string
 	resource_group_name:            string
+	id?:                            string
 	requires_client_authorization?: bool
 	user_metadata?:                 string
 	timeouts?: {
@@ -6989,10 +10888,16 @@ package azurerm
 	}
 }
 #AzurermRelayNamespaceResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	sku_name:            string
+	location:                     string
+	name:                         string
+	resource_group_name:          string
+	sku_name:                     string
+	id?:                          string
+	metric_id?:                   string
+	primary_connection_string?:   string
+	primary_key?:                 string
+	secondary_connection_string?: string
+	secondary_key?:               string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7004,6 +10909,7 @@ package azurerm
 #AzurermResourceGroupResource: {
 	location: string
 	name:     string
+	id?:      string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7012,9 +10918,41 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermResourceGroupTemplateDeploymentResource: {
+	deployment_mode:     string
+	name:                string
+	resource_group_name: string
+	template_content:    string
+	debug_level?:        string
+	id?:                 string
+	output_content?:     string
+	parameters_content?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermResourceProviderRegistrationResource: {
+	name: string
+	id?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermRoleAssignmentResource: {
-	principal_id: string
-	scope:        string
+	principal_id:                      string
+	scope:                             string
+	id?:                               string
+	name?:                             string
+	principal_type?:                   string
+	role_definition_id?:               string
+	role_definition_name?:             string
+	skip_service_principal_aad_check?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7023,10 +10961,13 @@ package azurerm
 	}
 }
 #AzurermRoleDefinitionResource: {
-	assignable_scopes: [string, ...]
-	name:         string
-	scope:        string
-	description?: string
+	name:  string
+	scope: string
+	assignable_scopes?: [string, ...]
+	description?:                 string
+	id?:                          string
+	role_definition_id?:          string
+	role_definition_resource_id?: string
 	permissions?: [{
 		actions?: [string, ...]
 		data_actions?: [string, ...]
@@ -7046,7 +10987,27 @@ package azurerm
 	next_hop_type:           string
 	resource_group_name:     string
 	route_table_name:        string
+	id?:                     string
 	next_hop_in_ip_address?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermRouteFilterResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	id?:                 string
+	rule?: [{
+		access: string
+		communities: [string, ...]
+		name:      string
+		rule_type: string
+	}, ...]
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7059,6 +11020,14 @@ package azurerm
 	name:                           string
 	resource_group_name:            string
 	disable_bgp_route_propagation?: bool
+	id?:                            string
+	route?: [{
+		address_prefix:         string
+		name:                   string
+		next_hop_in_ip_address: string
+		next_hop_type:          string
+	}, ...]
+	subnets?: [string, ...]
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7072,7 +11041,66 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	sku:                 string
+	allowed_ips?: [string, ...]
+	id?:                            string
+	partition_count?:               number
+	primary_key?:                   string
+	public_network_access_enabled?: bool
+	query_keys?: [{
+		key:  string
+		name: string
+	}, ...]
+	replica_count?: number
+	secondary_key?: string
 	tags?: [_]: string
+	identity?: [{
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSecurityCenterAutoProvisioningResource: {
+	auto_provision: string
+	id?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSecurityCenterAutomationResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	scopes: [string, ...]
+	description?: string
+	enabled?:     bool
+	id?:          string
+	tags?: [_]: string
+	action?: [{
+		resource_id:        string
+		type:               string
+		connection_string?: string
+		trigger_url?:       string
+	}, ...]
+	source?: [{
+		event_source: string
+		rule_set?: [{
+			rule?: [{
+				expected_value: string
+				operator:       string
+				property_path:  string
+				property_type:  string
+			}, ...]
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7084,6 +11112,7 @@ package azurerm
 	alert_notifications: bool
 	alerts_to_admins:    bool
 	email:               string
+	id?:                 string
 	phone?:              string
 	timeouts?: {
 		create?: string
@@ -7092,8 +11121,21 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermSecurityCenterSettingResource: {
+	enabled:      bool
+	setting_name: string
+	id?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermSecurityCenterSubscriptionPricingResource: {
-	tier: string
+	tier:           string
+	id?:            string
+	resource_type?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7104,6 +11146,20 @@ package azurerm
 #AzurermSecurityCenterWorkspaceResource: {
 	scope:        string
 	workspace_id: string
+	id?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSentinelAlertRuleFusionResource: {
+	alert_rule_template_guid:   string
+	log_analytics_workspace_id: string
+	name:                       string
+	enabled?:                   bool
+	id?:                        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7117,8 +11173,12 @@ package azurerm
 	name:                       string
 	product_filter:             string
 	severity_filter: [string, ...]
-	description?: string
-	enabled?:     bool
+	alert_rule_template_guid?: string
+	description?:              string
+	display_name_exclude_filter?: [string, ...]
+	display_name_filter?: [string, ...]
+	enabled?: bool
+	id?:      string
 	text_whitelist?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -7133,8 +11193,10 @@ package azurerm
 	name:                       string
 	query:                      string
 	severity:                   string
+	alert_rule_template_guid?:  string
 	description?:               string
 	enabled?:                   bool
+	id?:                        string
 	query_frequency?:           string
 	query_period?:              string
 	suppression_duration?:      string
@@ -7142,6 +11204,19 @@ package azurerm
 	tactics?: [string, ...]
 	trigger_operator?:  string
 	trigger_threshold?: number
+	event_grouping?: [{
+		aggregation_method: string
+	}, ...]
+	incident_configuration?: [{
+		create_incident: bool
+		grouping?: [{
+			enabled?:                bool
+			entity_matching_method?: string
+			group_by?: [string, ...]
+			lookback_duration?:       string
+			reopen_closed_incidents?: bool
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7158,6 +11233,9 @@ package azurerm
 	upgrade_mode:        string
 	vm_image:            string
 	add_on_features?: [string, ...]
+	cluster_code_version?: string
+	cluster_endpoint?:     string
+	id?:                   string
 	tags?: [_]: string
 	azure_active_directory?: [{
 		client_application_id:  string
@@ -7220,6 +11298,88 @@ package azurerm
 		x509_store_name:       string
 		thumbprint_secondary?: string
 	}, ...]
+	reverse_proxy_certificate_common_names?: [{
+		x509_store_name: string
+		common_names?: [{
+			certificate_common_name:        string
+			certificate_issuer_thumbprint?: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermServiceFabricMeshApplicationResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
+	service?: [{
+		name:    string
+		os_type: string
+		code_package?: [{
+			image_name: string
+			name:       string
+			resources?: [{
+				limits?: [{
+					cpu:    number
+					memory: number
+				}, ...]
+				requests?: [{
+					cpu:    number
+					memory: number
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermServiceFabricMeshLocalNetworkResource: {
+	location:               string
+	name:                   string
+	network_address_prefix: string
+	resource_group_name:    string
+	description?:           string
+	id?:                    string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermServiceFabricMeshSecretResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	content_type?:       string
+	description?:        string
+	id?:                 string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermServiceFabricMeshSecretValueResource: {
+	location:                      string
+	name:                          string
+	service_fabric_mesh_secret_id: string
+	value:                         string
+	id?:                           string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7228,11 +11388,16 @@ package azurerm
 	}
 }
 #AzurermServicebusNamespaceResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	sku:                 string
-	capacity?:           number
+	location:                             string
+	name:                                 string
+	resource_group_name:                  string
+	sku:                                  string
+	capacity?:                            number
+	default_primary_connection_string?:   string
+	default_primary_key?:                 string
+	default_secondary_connection_string?: string
+	default_secondary_key?:               string
+	id?:                                  string
 	tags?: [_]: string
 	zone_redundant?: bool
 	timeouts?: {
@@ -7243,12 +11408,17 @@ package azurerm
 	}
 }
 #AzurermServicebusNamespaceAuthorizationRuleResource: {
-	name:                string
-	namespace_name:      string
-	resource_group_name: string
-	listen?:             bool
-	manage?:             bool
-	send?:               bool
+	name:                         string
+	namespace_name:               string
+	resource_group_name:          string
+	id?:                          string
+	listen?:                      bool
+	manage?:                      bool
+	primary_connection_string?:   string
+	primary_key?:                 string
+	secondary_connection_string?: string
+	secondary_key?:               string
+	send?:                        bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7260,6 +11430,7 @@ package azurerm
 	namespace_name:      string
 	resource_group_name: string
 	default_action?:     string
+	id?:                 string
 	ip_rules?: [string, ...]
 	network_rules?: [{
 		subnet_id:                             string
@@ -7273,15 +11444,25 @@ package azurerm
 	}
 }
 #AzurermServicebusQueueResource: {
-	name:                                  string
-	namespace_name:                        string
-	resource_group_name:                   string
-	dead_lettering_on_message_expiration?: bool
-	enable_express?:                       bool
-	enable_partitioning?:                  bool
-	max_delivery_count?:                   number
-	requires_duplicate_detection?:         bool
-	requires_session?:                     bool
+	name:                                     string
+	namespace_name:                           string
+	resource_group_name:                      string
+	auto_delete_on_idle?:                     string
+	dead_lettering_on_message_expiration?:    bool
+	default_message_ttl?:                     string
+	duplicate_detection_history_time_window?: string
+	enable_batched_operations?:               bool
+	enable_express?:                          bool
+	enable_partitioning?:                     bool
+	forward_dead_lettered_messages_to?:       string
+	forward_to?:                              string
+	id?:                                      string
+	lock_duration?:                           string
+	max_delivery_count?:                      number
+	max_size_in_megabytes?:                   number
+	requires_duplicate_detection?:            bool
+	requires_session?:                        bool
+	status?:                                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7290,13 +11471,18 @@ package azurerm
 	}
 }
 #AzurermServicebusQueueAuthorizationRuleResource: {
-	name:                string
-	namespace_name:      string
-	queue_name:          string
-	resource_group_name: string
-	listen?:             bool
-	manage?:             bool
-	send?:               bool
+	name:                         string
+	namespace_name:               string
+	queue_name:                   string
+	resource_group_name:          string
+	id?:                          string
+	listen?:                      bool
+	manage?:                      bool
+	primary_connection_string?:   string
+	primary_key?:                 string
+	secondary_connection_string?: string
+	secondary_key?:               string
+	send?:                        bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7305,16 +11491,22 @@ package azurerm
 	}
 }
 #AzurermServicebusSubscriptionResource: {
-	max_delivery_count:                    number
-	name:                                  string
-	namespace_name:                        string
-	resource_group_name:                   string
-	topic_name:                            string
-	dead_lettering_on_message_expiration?: bool
-	enable_batched_operations?:            bool
-	forward_dead_lettered_messages_to?:    string
-	forward_to?:                           string
-	requires_session?:                     bool
+	max_delivery_count:                         number
+	name:                                       string
+	namespace_name:                             string
+	resource_group_name:                        string
+	topic_name:                                 string
+	auto_delete_on_idle?:                       string
+	dead_lettering_on_filter_evaluation_error?: bool
+	dead_lettering_on_message_expiration?:      bool
+	default_message_ttl?:                       string
+	enable_batched_operations?:                 bool
+	forward_dead_lettered_messages_to?:         string
+	forward_to?:                                string
+	id?:                                        string
+	lock_duration?:                             string
+	requires_session?:                          bool
+	status?:                                    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7330,12 +11522,14 @@ package azurerm
 	subscription_name:   string
 	topic_name:          string
 	action?:             string
+	id?:                 string
 	sql_filter?:         string
 	correlation_filter?: [{
-		content_type?:        string
-		correlation_id?:      string
-		label?:               string
-		message_id?:          string
+		content_type?:   string
+		correlation_id?: string
+		label?:          string
+		message_id?:     string
+		properties?: [_]: string
 		reply_to?:            string
 		reply_to_session_id?: string
 		session_id?:          string
@@ -7349,15 +11543,20 @@ package azurerm
 	}
 }
 #AzurermServicebusTopicResource: {
-	name:                          string
-	namespace_name:                string
-	resource_group_name:           string
-	enable_batched_operations?:    bool
-	enable_express?:               bool
-	enable_partitioning?:          bool
-	requires_duplicate_detection?: bool
-	status?:                       string
-	support_ordering?:             bool
+	name:                                     string
+	namespace_name:                           string
+	resource_group_name:                      string
+	auto_delete_on_idle?:                     string
+	default_message_ttl?:                     string
+	duplicate_detection_history_time_window?: string
+	enable_batched_operations?:               bool
+	enable_express?:                          bool
+	enable_partitioning?:                     bool
+	id?:                                      string
+	max_size_in_megabytes?:                   number
+	requires_duplicate_detection?:            bool
+	status?:                                  string
+	support_ordering?:                        bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7366,13 +11565,18 @@ package azurerm
 	}
 }
 #AzurermServicebusTopicAuthorizationRuleResource: {
-	name:                string
-	namespace_name:      string
-	resource_group_name: string
-	topic_name:          string
-	listen?:             bool
-	manage?:             bool
-	send?:               bool
+	name:                         string
+	namespace_name:               string
+	resource_group_name:          string
+	topic_name:                   string
+	id?:                          string
+	listen?:                      bool
+	manage?:                      bool
+	primary_connection_string?:   string
+	primary_key?:                 string
+	secondary_connection_string?: string
+	secondary_key?:               string
+	send?:                        bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7389,13 +11593,20 @@ package azurerm
 	description?:           string
 	eula?:                  string
 	hyper_v_generation?:    string
+	id?:                    string
 	privacy_statement_uri?: string
 	release_note_uri?:      string
+	specialized?:           bool
 	tags?: [_]: string
 	identifier?: [{
 		offer:     string
 		publisher: string
 		sku:       string
+	}, ...]
+	purchase_plan?: [{
+		name:       string
+		product?:   string
+		publisher?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -7409,7 +11620,9 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	description?:        string
+	id?:                 string
 	tags?: [_]: string
+	unique_name?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7421,14 +11634,17 @@ package azurerm
 	gallery_name:         string
 	image_name:           string
 	location:             string
-	managed_image_id:     string
 	name:                 string
 	resource_group_name:  string
 	exclude_from_latest?: bool
+	id?:                  string
+	managed_image_id?:    string
+	os_disk_snapshot_id?: string
 	tags?: [_]: string
 	target_region?: [{
 		name:                   string
 		regional_replica_count: number
+		storage_account_type?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -7438,9 +11654,18 @@ package azurerm
 	}
 }
 #AzurermSignalrServiceResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
+	location:                     string
+	name:                         string
+	resource_group_name:          string
+	hostname?:                    string
+	id?:                          string
+	ip_address?:                  string
+	primary_access_key?:          string
+	primary_connection_string?:   string
+	public_port?:                 number
+	secondary_access_key?:        string
+	secondary_connection_string?: string
+	server_port?:                 number
 	tags?: [_]: string
 	cors?: [{
 		allowed_origins: [string, ...]
@@ -7465,6 +11690,7 @@ package azurerm
 	name:                string
 	recovery_vault_name: string
 	resource_group_name: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7480,6 +11706,7 @@ package azurerm
 	source_recovery_fabric_name: string
 	target_network_id:           string
 	target_recovery_fabric_name: string
+	id?:                         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7492,6 +11719,7 @@ package azurerm
 	recovery_fabric_name: string
 	recovery_vault_name:  string
 	resource_group_name:  string
+	id?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7507,6 +11735,7 @@ package azurerm
 	recovery_target_protection_container_id:   string
 	recovery_vault_name:                       string
 	resource_group_name:                       string
+	id?:                                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7525,6 +11754,7 @@ package azurerm
 	target_recovery_fabric_id:                 string
 	target_recovery_protection_container_id:   string
 	target_resource_group_id:                  string
+	id?:                                       string
 	managed_disk?: [{
 		disk_id:                    string
 		staging_storage_account_id: string
@@ -7532,7 +11762,13 @@ package azurerm
 		target_replica_disk_type:   string
 		target_resource_group_id:   string
 	}, ...]
+	network_interface?: [{
+		source_network_interface_id: string
+		target_static_ip:            string
+		target_subnet_name:          string
+	}, ...]
 	target_availability_set_id?: string
+	target_network_id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7546,6 +11782,7 @@ package azurerm
 	recovery_point_retention_in_minutes:                  number
 	recovery_vault_name:                                  string
 	resource_group_name:                                  string
+	id?:                                                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7558,6 +11795,8 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	disk_size_gb?:       number
+	id?:                 string
 	source_resource_id?: string
 	source_uri?:         string
 	storage_account_id?: string
@@ -7584,7 +11823,19 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSpringCloudActiveDeploymentResource: {
+	deployment_name:     string
+	spring_cloud_app_id: string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7596,16 +11847,62 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	service_name:        string
+	https_only?:         bool
+	id?:                 string
+	is_public?:          bool
+	url?:                string
+	identity?: [{
+		principal_id?: string
+		tenant_id?:    string
+		type?:         string
+	}, ...]
+	persistent_disk?: [{
+		size_in_gb:  number
+		mount_path?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSpringCloudCertificateResource: {
+	key_vault_certificate_id: string
+	name:                     string
+	resource_group_name:      string
+	service_name:             string
+	id?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
 	}
 }
+#AzurermSpringCloudJavaDeploymentResource: {
+	name:                string
+	spring_cloud_app_id: string
+	cpu?:                number
+	environment_variables?: [_]: string
+	id?:              string
+	instance_count?:  number
+	jvm_options?:     string
+	memory_in_gb?:    number
+	runtime_version?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermSpringCloudServiceResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	outbound_public_ip_addresses?: [string, ...]
+	sku_name?: string
 	tags?: [_]: string
 	config_server_git_setting?: [{
 		uri:    string
@@ -7639,12 +11936,22 @@ package azurerm
 			strict_host_key_checking_enabled?: bool
 		}, ...]
 	}, ...]
+	network?: [{
+		app_subnet_id: string
+		cidr_ranges: [string, ...]
+		service_runtime_subnet_id:               string
+		app_network_resource_group?:             string
+		service_runtime_network_resource_group?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
 		update?: string
 	}
+	trace?: [{
+		instrumentation_key: string
+	}, ...]
 }
 #AzurermSqlActiveDirectoryAdministratorResource: {
 	login:               string
@@ -7652,6 +11959,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	tenant_id:           string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7660,20 +11968,34 @@ package azurerm
 	}
 }
 #AzurermSqlDatabaseResource: {
-	location:            string
-	name:                string
-	resource_group_name: string
-	server_name:         string
-	create_mode?:        string
-	read_scale?:         bool
+	location:                    string
+	name:                        string
+	resource_group_name:         string
+	server_name:                 string
+	collation?:                  string
+	create_mode?:                string
+	creation_date?:              string
+	default_secondary_location?: string
+	edition?:                    string
+	elastic_pool_name?:          string
+	encryption?:                 string
+	extended_auditing_policy?: [{
+		retention_in_days:                       number
+		storage_account_access_key:              string
+		storage_account_access_key_is_secondary: bool
+		storage_endpoint:                        string
+	}, ...]
+	id?:                               string
+	max_size_bytes?:                   string
+	max_size_gb?:                      string
+	read_scale?:                       bool
+	requested_service_objective_id?:   string
+	requested_service_objective_name?: string
+	restore_point_in_time?:            string
+	source_database_deletion_date?:    string
+	source_database_id?:               string
 	tags?: [_]: string
 	zone_redundant?: bool
-	extended_auditing_policy?: [{
-		storage_account_access_key:               string
-		storage_endpoint:                         string
-		retention_in_days?:                       number
-		storage_account_access_key_is_secondary?: bool
-	}, ...]
 	import?: [{
 		administrator_login:          string
 		administrator_login_password: string
@@ -7707,6 +12029,11 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	server_name:         string
+	creation_date?:      string
+	db_dtu_max?:         number
+	db_dtu_min?:         number
+	id?:                 string
+	pool_size?:          number
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7720,9 +12047,14 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	databases?: [string, ...]
+	id?:       string
+	location?: string
+	role?:     string
 	tags?: [_]: string
 	partner_servers?: [{
-		id: string
+		id:        string
+		location?: string
+		role?:     string
 	}, ...]
 	read_write_endpoint_failover_policy?: [{
 		mode:           string
@@ -7744,6 +12076,7 @@ package azurerm
 	resource_group_name: string
 	server_name:         string
 	start_ip_address:    string
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7759,15 +12092,19 @@ package azurerm
 	resource_group_name:          string
 	version:                      string
 	connection_policy?:           string
-	tags?: [_]: string
 	extended_auditing_policy?: [{
-		storage_account_access_key:               string
-		storage_endpoint:                         string
-		retention_in_days?:                       number
-		storage_account_access_key_is_secondary?: bool
+		retention_in_days:                       number
+		storage_account_access_key:              string
+		storage_account_access_key_is_secondary: bool
+		storage_endpoint:                        string
 	}, ...]
+	fully_qualified_domain_name?: string
+	id?:                          string
+	tags?: [_]: string
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -7781,6 +12118,7 @@ package azurerm
 	resource_group_name:                   string
 	server_name:                           string
 	subnet_id:                             string
+	id?:                                   string
 	ignore_missing_vnet_service_endpoint?: bool
 	timeouts?: {
 		create?: string
@@ -7789,15 +12127,81 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermSshPublicKeyResource: {
+	location:            string
+	name:                string
+	public_key:          string
+	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermStackHciClusterResource: {
+	client_id:           string
+	location:            string
+	name:                string
+	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
+	tenant_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermStorageAccountResource: {
-	account_replication_type:   string
-	account_tier:               string
-	location:                   string
-	name:                       string
-	resource_group_name:        string
-	account_kind?:              string
-	enable_https_traffic_only?: bool
-	is_hns_enabled?:            bool
+	account_replication_type:          string
+	account_tier:                      string
+	location:                          string
+	name:                              string
+	resource_group_name:               string
+	access_tier?:                      string
+	account_kind?:                     string
+	allow_blob_public_access?:         bool
+	enable_https_traffic_only?:        bool
+	id?:                               string
+	is_hns_enabled?:                   bool
+	large_file_share_enabled?:         bool
+	min_tls_version?:                  string
+	primary_access_key?:               string
+	primary_blob_connection_string?:   string
+	primary_blob_endpoint?:            string
+	primary_blob_host?:                string
+	primary_connection_string?:        string
+	primary_dfs_endpoint?:             string
+	primary_dfs_host?:                 string
+	primary_file_endpoint?:            string
+	primary_file_host?:                string
+	primary_location?:                 string
+	primary_queue_endpoint?:           string
+	primary_queue_host?:               string
+	primary_table_endpoint?:           string
+	primary_table_host?:               string
+	primary_web_endpoint?:             string
+	primary_web_host?:                 string
+	secondary_access_key?:             string
+	secondary_blob_connection_string?: string
+	secondary_blob_endpoint?:          string
+	secondary_blob_host?:              string
+	secondary_connection_string?:      string
+	secondary_dfs_endpoint?:           string
+	secondary_dfs_host?:               string
+	secondary_file_endpoint?:          string
+	secondary_file_host?:              string
+	secondary_location?:               string
+	secondary_queue_endpoint?:         string
+	secondary_queue_host?:             string
+	secondary_table_endpoint?:         string
+	secondary_table_host?:             string
+	secondary_web_endpoint?:           string
+	secondary_web_host?:               string
 	tags?: [_]: string
 	blob_properties?: [{
 		cors_rule?: [{
@@ -7816,10 +12220,15 @@ package azurerm
 		use_subdomain?: bool
 	}, ...]
 	identity?: [{
-		type: string
+		type:          string
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	network_rules?: [{
 		default_action: string
+		bypass?: [string, ...]
+		ip_rules?: [string, ...]
+		virtual_network_subnet_ids?: [string, ...]
 	}, ...]
 	queue_properties?: [{
 		cors_rule?: [{
@@ -7863,8 +12272,9 @@ package azurerm
 #AzurermStorageAccountCustomerManagedKeyResource: {
 	key_name:           string
 	key_vault_id:       string
-	key_version:        string
 	storage_account_id: string
+	id?:                string
+	key_version?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7876,6 +12286,10 @@ package azurerm
 	default_action:       string
 	resource_group_name:  string
 	storage_account_name: string
+	bypass?: [string, ...]
+	id?: string
+	ip_rules?: [string, ...]
+	virtual_network_subnet_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7888,12 +12302,17 @@ package azurerm
 	storage_account_name:   string
 	storage_container_name: string
 	type:                   string
+	access_tier?:           string
+	content_md5?:           string
 	content_type?:          string
-	parallelism?:           number
-	size?:                  number
-	source?:                string
-	source_content?:        string
-	source_uri?:            string
+	id?:                    string
+	metadata?: [_]: string
+	parallelism?:    number
+	size?:           number
+	source?:         string
+	source_content?: string
+	source_uri?:     string
+	url?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7902,9 +12321,14 @@ package azurerm
 	}
 }
 #AzurermStorageContainerResource: {
-	name:                   string
-	storage_account_name:   string
-	container_access_type?: string
+	name:                     string
+	storage_account_name:     string
+	container_access_type?:   string
+	has_immutability_policy?: bool
+	has_legal_hold?:          bool
+	id?:                      string
+	metadata?: [_]: string
+	resource_manager_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7915,7 +12339,48 @@ package azurerm
 #AzurermStorageDataLakeGen2FilesystemResource: {
 	name:               string
 	storage_account_id: string
+	id?:                string
 	properties?: [_]: string
+	ace?: [{
+		permissions: string
+		type:        string
+		id?:         string
+		scope?:      string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermStorageDataLakeGen2PathResource: {
+	filesystem_name:    string
+	path:               string
+	resource:           string
+	storage_account_id: string
+	group?:             string
+	id?:                string
+	owner?:             string
+	ace?: [{
+		permissions: string
+		type:        string
+		id?:         string
+		scope?:      string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermStorageEncryptionScopeResource: {
+	name:               string
+	source:             string
+	storage_account_id: string
+	id?:                string
+	key_vault_key_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7925,6 +12390,7 @@ package azurerm
 }
 #AzurermStorageManagementPolicyResource: {
 	storage_account_id: string
+	id?:                string
 	rule?: [{
 		enabled: bool
 		name:    string
@@ -7953,6 +12419,7 @@ package azurerm
 #AzurermStorageQueueResource: {
 	name:                 string
 	storage_account_name: string
+	id?:                  string
 	metadata?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7964,14 +12431,17 @@ package azurerm
 #AzurermStorageShareResource: {
 	name:                 string
 	storage_account_name: string
+	id?:                  string
 	metadata?: [_]: string
-	quota?: number
+	quota?:               number
+	resource_manager_id?: string
+	url?:                 string
 	acl?: [{
 		id: string
 		access_policy?: [{
-			expiry:      string
 			permissions: string
-			start:       string
+			expiry?:     string
+			start?:      string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -7985,6 +12455,7 @@ package azurerm
 	name:                 string
 	share_name:           string
 	storage_account_name: string
+	id?:                  string
 	metadata?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7993,9 +12464,65 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermStorageShareFileResource: {
+	name:                 string
+	storage_share_id:     string
+	content_disposition?: string
+	content_encoding?:    string
+	content_md5?:         string
+	content_type?:        string
+	id?:                  string
+	metadata?: [_]: string
+	path?:   string
+	source?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermStorageSyncResource: {
+	location:                 string
+	name:                     string
+	resource_group_name:      string
+	id?:                      string
+	incoming_traffic_policy?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermStorageSyncCloudEndpointResource: {
+	file_share_name:            string
+	name:                       string
+	storage_account_id:         string
+	storage_sync_group_id:      string
+	id?:                        string
+	storage_account_tenant_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermStorageSyncGroupResource: {
+	name:            string
+	storage_sync_id: string
+	id?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermStorageTableResource: {
 	name:                 string
 	storage_account_name: string
+	id?:                  string
 	acl?: [{
 		id: string
 		access_policy?: [{
@@ -8017,6 +12544,7 @@ package azurerm
 	row_key:              string
 	storage_account_name: string
 	table_name:           string
+	id?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8029,6 +12557,7 @@ package azurerm
 	resource_group_name:       string
 	script:                    string
 	stream_analytics_job_name: string
+	id?:                       string
 	input?: [{
 		type: string
 	}, ...]
@@ -8048,9 +12577,13 @@ package azurerm
 	resource_group_name:                       string
 	streaming_units:                           number
 	transformation_query:                      string
+	compatibility_level?:                      string
+	data_locale?:                              string
 	events_late_arrival_max_delay_in_seconds?: number
 	events_out_of_order_max_delay_in_seconds?: number
 	events_out_of_order_policy?:               string
+	id?:                                       string
+	job_id?:                                   string
 	output_error_policy?:                      string
 	tags?: [_]: string
 	timeouts?: {
@@ -8070,6 +12603,7 @@ package azurerm
 	storage_container_name:    string
 	stream_analytics_job_name: string
 	time_format:               string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8091,6 +12625,7 @@ package azurerm
 	shared_access_policy_key:  string
 	shared_access_policy_name: string
 	stream_analytics_job_name: string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8113,6 +12648,7 @@ package azurerm
 	stream_analytics_job_name: string
 	table:                     string
 	user:                      string
+	id?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8128,6 +12664,7 @@ package azurerm
 	shared_access_policy_key:  string
 	shared_access_policy_name: string
 	stream_analytics_job_name: string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8149,6 +12686,7 @@ package azurerm
 	shared_access_policy_name: string
 	stream_analytics_job_name: string
 	topic_name:                string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8172,6 +12710,7 @@ package azurerm
 	storage_container_name:    string
 	stream_analytics_job_name: string
 	time_format:               string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8194,6 +12733,7 @@ package azurerm
 	storage_container_name:    string
 	stream_analytics_job_name: string
 	time_format:               string
+	id?:                       string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8215,6 +12755,7 @@ package azurerm
 	shared_access_policy_key:     string
 	shared_access_policy_name:    string
 	stream_analytics_job_name:    string
+	id?:                          string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8236,6 +12777,7 @@ package azurerm
 	shared_access_policy_key:     string
 	shared_access_policy_name:    string
 	stream_analytics_job_name:    string
+	id?:                          string
 	serialization?: [{
 		type:             string
 		encoding?:        string
@@ -8249,11 +12791,15 @@ package azurerm
 	}
 }
 #AzurermSubnetResource: {
-	name:                                            string
-	resource_group_name:                             string
-	virtual_network_name:                            string
+	name:                 string
+	resource_group_name:  string
+	virtual_network_name: string
+	address_prefix?:      string
+	address_prefixes?: [string, ...]
 	enforce_private_link_endpoint_network_policies?: bool
 	enforce_private_link_service_network_policies?:  bool
+	id?:                                             string
+	service_endpoint_policy_ids?: [string, ...]
 	service_endpoints?: [string, ...]
 	delegation?: [{
 		name: string
@@ -8272,6 +12818,7 @@ package azurerm
 #AzurermSubnetNatGatewayAssociationResource: {
 	nat_gateway_id: string
 	subnet_id:      string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8282,6 +12829,7 @@ package azurerm
 #AzurermSubnetNetworkSecurityGroupAssociationResource: {
 	network_security_group_id: string
 	subnet_id:                 string
+	id?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8292,6 +12840,157 @@ package azurerm
 #AzurermSubnetRouteTableAssociationResource: {
 	route_table_id: string
 	subnet_id:      string
+	id?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSubnetServiceEndpointStoragePolicyResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	id?:                 string
+	tags?: [_]: string
+	definition?: [{
+		name: string
+		service_resources: [string, ...]
+		description?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSubscriptionTemplateDeploymentResource: {
+	location:            string
+	name:                string
+	template_content:    string
+	debug_level?:        string
+	id?:                 string
+	output_content?:     string
+	parameters_content?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSynapseFirewallRuleResource: {
+	end_ip_address:       string
+	name:                 string
+	start_ip_address:     string
+	synapse_workspace_id: string
+	id?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSynapseManagedPrivateEndpointResource: {
+	name:                 string
+	subresource_name:     string
+	synapse_workspace_id: string
+	target_resource_id:   string
+	id?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermSynapseRoleAssignmentResource: {
+	principal_id:         string
+	role_name:            string
+	synapse_workspace_id: string
+	id?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
+#AzurermSynapseSparkPoolResource: {
+	name:                 string
+	node_size:            string
+	node_size_family:     string
+	synapse_workspace_id: string
+	id?:                  string
+	node_count?:          number
+	spark_events_folder?: string
+	spark_log_folder?:    string
+	spark_version?:       string
+	tags?: [_]: string
+	auto_pause?: [{
+		delay_in_minutes: number
+	}, ...]
+	auto_scale?: [{
+		max_node_count: number
+		min_node_count: number
+	}, ...]
+	library_requirement?: [{
+		content:  string
+		filename: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSynapseSqlPoolResource: {
+	name:                  string
+	sku_name:              string
+	synapse_workspace_id:  string
+	collation?:            string
+	create_mode?:          string
+	data_encrypted?:       bool
+	id?:                   string
+	recovery_database_id?: string
+	tags?: [_]: string
+	restore?: [{
+		point_in_time:      string
+		source_database_id: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermSynapseWorkspaceResource: {
+	location:                             string
+	name:                                 string
+	resource_group_name:                  string
+	sql_administrator_login:              string
+	sql_administrator_login_password:     string
+	storage_data_lake_gen2_filesystem_id: string
+	aad_admin?: [{
+		login:     string
+		object_id: string
+		tenant_id: string
+	}, ...]
+	connectivity_endpoints?: [_]: string
+	id?: string
+	identity?: [{
+		principal_id: string
+		tenant_id:    string
+		type:         string
+	}, ...]
+	managed_resource_group_name?:     string
+	managed_virtual_network_enabled?: bool
+	sql_identity_control_enabled?:    bool
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8303,8 +13002,11 @@ package azurerm
 	deployment_mode:     string
 	name:                string
 	resource_group_name: string
+	id?:                 string
+	outputs?: [_]:    string
 	parameters?: [_]: string
 	parameters_body?: string
+	template_body?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8313,13 +13015,20 @@ package azurerm
 	}
 }
 #AzurermTrafficManagerEndpointResource: {
-	name:                string
-	profile_name:        string
-	resource_group_name: string
-	type:                string
+	name:                     string
+	profile_name:             string
+	resource_group_name:      string
+	type:                     string
+	endpoint_location?:       string
+	endpoint_monitor_status?: string
+	endpoint_status?:         string
 	geo_mappings?: [string, ...]
+	id?:                  string
 	min_child_endpoints?: number
+	priority?:            number
+	target?:              string
 	target_resource_id?:  string
+	weight?:              number
 	custom_header?: [{
 		name:  string
 		value: string
@@ -8340,7 +13049,12 @@ package azurerm
 	name:                   string
 	resource_group_name:    string
 	traffic_routing_method: string
+	fqdn?:                  string
+	id?:                    string
+	max_return?:            number
+	profile_status?:        string
 	tags?: [_]: string
+	traffic_view_enabled?: bool
 	dns_config?: [{
 		relative_name: string
 		ttl:           number
@@ -8369,6 +13083,9 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	client_id?:          string
+	id?:                 string
+	principal_id?:       string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -8377,13 +13094,84 @@ package azurerm
 		update?: string
 	}
 }
-#AzurermVirtualHubResource: {
-	address_prefix:      string
+#AzurermVirtualDesktopApplicationGroupResource: {
+	host_pool_id:        string
 	location:            string
 	name:                string
 	resource_group_name: string
-	virtual_wan_id:      string
+	type:                string
+	description?:        string
+	friendly_name?:      string
+	id?:                 string
 	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualDesktopHostPoolResource: {
+	load_balancer_type:                string
+	location:                          string
+	name:                              string
+	resource_group_name:               string
+	type:                              string
+	description?:                      string
+	friendly_name?:                    string
+	id?:                               string
+	maximum_sessions_allowed?:         number
+	personal_desktop_assignment_type?: string
+	preferred_app_group_type?:         string
+	tags?: [_]: string
+	validate_environment?: bool
+	registration_info?: [{
+		expiration_date: string
+		reset_token?:    bool
+		token?:          string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualDesktopWorkspaceResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	description?:        string
+	friendly_name?:      string
+	id?:                 string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualDesktopWorkspaceApplicationGroupAssociationResource: {
+	application_group_id: string
+	workspace_id:         string
+	id?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualHubResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	address_prefix?:     string
+	id?:                 string
+	sku?:                string
+	tags?: [_]: string
+	virtual_wan_id?: string
 	route?: [{
 		address_prefixes: [string, ...]
 		next_hop_ip_address: string
@@ -8395,17 +13183,92 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermVirtualHubBgpConnectionResource: {
+	name:           string
+	peer_asn:       number
+	peer_ip:        string
+	virtual_hub_id: string
+	id?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #AzurermVirtualHubConnectionResource: {
 	name:                                            string
 	remote_virtual_network_id:                       string
 	virtual_hub_id:                                  string
 	hub_to_vitual_network_traffic_allowed?:          bool
+	id?:                                             string
 	internet_security_enabled?:                      bool
 	vitual_network_to_hub_gateways_traffic_allowed?: bool
+	routing?: [{
+		associated_route_table_id?: string
+		propagated_route_table?: [{
+			labels?: [string, ...]
+			route_table_ids?: [string, ...]
+		}, ...]
+		static_vnet_route?: [{
+			address_prefixes?: [string, ...]
+			name?:                string
+			next_hop_ip_address?: string
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualHubIpResource: {
+	name:                          string
+	subnet_id:                     string
+	virtual_hub_id:                string
+	id?:                           string
+	private_ip_address?:           string
+	private_ip_allocation_method?: string
+	public_ip_address_id?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualHubRouteTableResource: {
+	name:           string
+	virtual_hub_id: string
+	id?:            string
+	labels?: [string, ...]
+	route?: [{
+		destinations: [string, ...]
+		destinations_type: string
+		name:              string
+		next_hop:          string
+		next_hop_type?:    string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
+#AzurermVirtualHubSecurityPartnerProviderResource: {
+	location:               string
+	name:                   string
+	resource_group_name:    string
+	security_provider_name: string
+	id?:                    string
+	tags?: [_]: string
+	virtual_hub_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
 	}
 }
 #AzurermVirtualMachineResource: {
@@ -8414,8 +13277,11 @@ package azurerm
 	network_interface_ids: [string, ...]
 	resource_group_name:               string
 	vm_size:                           string
+	availability_set_id?:              string
 	delete_data_disks_on_termination?: bool
 	delete_os_disk_on_termination?:    bool
+	id?:                               string
+	license_type?:                     string
 	primary_network_interface_id?:     string
 	proximity_placement_group_id?:     string
 	tags?: [_]: string
@@ -8430,11 +13296,13 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
 	}, ...]
 	os_profile?: [{
 		admin_username:  string
 		computer_name:   string
 		admin_password?: string
+		custom_data?:    string
 	}, ...]
 	os_profile_linux_config?: [{
 		disable_password_authentication: bool
@@ -8474,6 +13342,10 @@ package azurerm
 		create_option:              string
 		lun:                        number
 		name:                       string
+		caching?:                   string
+		disk_size_gb?:              number
+		managed_disk_id?:           string
+		managed_disk_type?:         string
 		vhd_uri?:                   string
 		write_accelerator_enabled?: bool
 	}, ...]
@@ -8482,11 +13354,17 @@ package azurerm
 		offer?:     string
 		publisher?: string
 		sku?:       string
+		version?:   string
 	}, ...]
 	storage_os_disk?: [{
 		create_option:              string
 		name:                       string
+		caching?:                   string
+		disk_size_gb?:              number
 		image_uri?:                 string
+		managed_disk_id?:           string
+		managed_disk_type?:         string
+		os_type?:                   string
 		vhd_uri?:                   string
 		write_accelerator_enabled?: bool
 	}, ...]
@@ -8503,6 +13381,7 @@ package azurerm
 	managed_disk_id:            string
 	virtual_machine_id:         string
 	create_option?:             string
+	id?:                        string
 	write_accelerator_enabled?: bool
 	timeouts?: {
 		create?: string
@@ -8518,6 +13397,7 @@ package azurerm
 	type_handler_version:        string
 	virtual_machine_id:          string
 	auto_upgrade_minor_version?: bool
+	id?:                         string
 	protected_settings?:         string
 	settings?:                   string
 	tags?: [_]: string
@@ -8536,6 +13416,8 @@ package azurerm
 	automatic_os_upgrade?:         bool
 	eviction_policy?:              string
 	health_probe_id?:              string
+	id?:                           string
+	license_type?:                 string
 	overprovision?:                bool
 	priority?:                     string
 	proximity_placement_group_id?: string
@@ -8559,6 +13441,7 @@ package azurerm
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
 	}, ...]
 	network_profile?: [{
 		name:                       string
@@ -8576,6 +13459,7 @@ package azurerm
 			application_gateway_backend_address_pool_ids?: [string, ...]
 			application_security_group_ids?: [string, ...]
 			load_balancer_backend_address_pool_ids?: [string, ...]
+			load_balancer_inbound_nat_rules_ids?: [string, ...]
 			public_ip_address_configuration?: [{
 				domain_name_label: string
 				idle_timeout:      number
@@ -8631,10 +13515,14 @@ package azurerm
 	sku?: [{
 		capacity: number
 		name:     string
+		tier?:    string
 	}, ...]
 	storage_profile_data_disk?: [{
-		create_option: string
-		lun:           number
+		create_option:      string
+		lun:                number
+		caching?:           string
+		disk_size_gb?:      number
+		managed_disk_type?: string
 	}, ...]
 	storage_profile_image_reference?: [{
 		id?:        string
@@ -8644,10 +13532,12 @@ package azurerm
 		version?:   string
 	}, ...]
 	storage_profile_os_disk?: [{
-		create_option: string
-		image?:        string
-		name?:         string
-		os_type?:      string
+		create_option:      string
+		caching?:           string
+		image?:             string
+		managed_disk_type?: string
+		name?:              string
+		os_type?:           string
 		vhd_containers?: [string, ...]
 	}, ...]
 	timeouts?: {
@@ -8665,6 +13555,7 @@ package azurerm
 	virtual_machine_scale_set_id: string
 	auto_upgrade_minor_version?:  bool
 	force_update_tag?:            string
+	id?:                          string
 	protected_settings?:          string
 	provision_after_extensions?: [string, ...]
 	settings?: string
@@ -8680,8 +13571,18 @@ package azurerm
 	location:            string
 	name:                string
 	resource_group_name: string
+	bgp_community?:      string
 	dns_servers?: [string, ...]
+	guid?: string
+	id?:   string
+	subnet?: [{
+		address_prefix: string
+		id:             string
+		name:           string
+		security_group: string
+	}, ...]
 	tags?: [_]: string
+	vm_protection_enabled?: bool
 	ddos_protection_plan?: [{
 		enable: bool
 		id:     string
@@ -8699,12 +13600,21 @@ package azurerm
 	resource_group_name:               string
 	sku:                               string
 	type:                              string
+	active_active?:                    bool
 	default_local_network_gateway_id?: string
+	enable_bgp?:                       bool
+	generation?:                       string
+	id?:                               string
+	private_ip_address_enabled?:       bool
 	tags?: [_]: string
 	vpn_type?: string
 	bgp_settings?: [{
-		asn?:         number
-		peer_weight?: number
+		asn?:             number
+		peer_weight?:     number
+		peering_address?: string
+	}, ...]
+	custom_route?: [{
+		address_prefixes?: [string, ...]
 	}, ...]
 	ip_configuration?: [{
 		public_ip_address_id:           string
@@ -8720,6 +13630,9 @@ package azurerm
 	}
 	vpn_client_configuration?: [{
 		address_space: [string, ...]
+		aad_audience?:          string
+		aad_issuer?:            string
+		aad_tenant?:            string
 		radius_server_address?: string
 		radius_server_secret?:  string
 		vpn_client_protocols?: [string, ...]
@@ -8740,11 +13653,19 @@ package azurerm
 	type:                             string
 	virtual_network_gateway_id:       string
 	authorization_key?:               string
+	connection_protocol?:             string
+	dpd_timeout_seconds?:             number
+	enable_bgp?:                      bool
 	express_route_circuit_id?:        string
+	express_route_gateway_bypass?:    bool
+	id?:                              string
+	local_azure_ip_address_enabled?:  bool
 	local_network_gateway_id?:        string
 	peer_virtual_network_gateway_id?: string
+	routing_weight?:                  number
 	shared_key?:                      string
 	tags?: [_]: string
+	use_policy_based_traffic_selectors?: bool
 	ipsec_policy?: [{
 		dh_group:         string
 		ike_encryption:   string
@@ -8752,6 +13673,8 @@ package azurerm
 		ipsec_encryption: string
 		ipsec_integrity:  string
 		pfs_group:        string
+		sa_datasize?:     number
+		sa_lifetime?:     number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -8759,13 +13682,21 @@ package azurerm
 		read?:   string
 		update?: string
 	}
+	traffic_selector_policy?: [{
+		local_address_cidrs: [string, ...]
+		remote_address_cidrs: [string, ...]
+	}, ...]
 }
 #AzurermVirtualNetworkPeeringResource: {
 	name:                          string
 	remote_virtual_network_id:     string
 	resource_group_name:           string
 	virtual_network_name:          string
+	allow_forwarded_traffic?:      bool
+	allow_gateway_transit?:        bool
 	allow_virtual_network_access?: bool
+	id?:                           string
+	use_remote_gateways?:          bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -8780,6 +13711,7 @@ package azurerm
 	allow_branch_to_branch_traffic?:    bool
 	allow_vnet_to_vnet_traffic?:        bool
 	disable_vpn_encryption?:            bool
+	id?:                                string
 	office365_local_breakout_category?: string
 	tags?: [_]: string
 	type?: string
@@ -8795,11 +13727,25 @@ package azurerm
 	name:                string
 	resource_group_name: string
 	virtual_hub_id:      string
+	id?:                 string
 	scale_unit?:         number
 	tags?: [_]: string
 	bgp_settings?: [{
-		asn:         number
-		peer_weight: number
+		asn:                  number
+		peer_weight:          number
+		bgp_peering_address?: string
+		instance_0_bgp_peering_address?: [{
+			custom_ips: [string, ...]
+			default_ips?: [string, ...]
+			ip_configuration_id?: string
+			tunnel_ips?: [string, ...]
+		}, ...]
+		instance_1_bgp_peering_address?: [{
+			custom_ips: [string, ...]
+			default_ips?: [string, ...]
+			ip_configuration_id?: string
+			tunnel_ips?: [string, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -8808,12 +13754,53 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermVpnGatewayConnectionResource: {
+	name:                       string
+	remote_vpn_site_id:         string
+	vpn_gateway_id:             string
+	id?:                        string
+	internet_security_enabled?: bool
+	routing?: [{
+		associated_route_table: string
+		propagated_route_tables: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+	vpn_link?: [{
+		name:                                   string
+		vpn_site_link_id:                       string
+		bandwidth_mbps?:                        number
+		bgp_enabled?:                           bool
+		local_azure_ip_address_enabled?:        bool
+		policy_based_traffic_selector_enabled?: bool
+		protocol?:                              string
+		ratelimit_enabled?:                     bool
+		route_weight?:                          number
+		shared_key?:                            string
+		ipsec_policy?: [{
+			dh_group:                 string
+			encryption_algorithm:     string
+			ike_encryption_algorithm: string
+			ike_integrity_algorithm:  string
+			integrity_algorithm:      string
+			pfs_group:                string
+			sa_data_size_kb:          number
+			sa_lifetime_sec:          number
+		}, ...]
+	}, ...]
+}
 #AzurermVpnServerConfigurationResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
 	vpn_authentication_types: [string, ...]
+	id?: string
 	tags?: [_]: string
+	vpn_protocols?: [string, ...]
 	azure_active_directory_authentication?: [{
 		audience: string
 		issuer:   string
@@ -8837,6 +13824,21 @@ package azurerm
 		sa_data_size_kilobytes: number
 		sa_lifetime_seconds:    number
 	}, ...]
+	radius?: [{
+		client_root_certificate?: [{
+			name:       string
+			thumbprint: string
+		}, ...]
+		server?: [{
+			address: string
+			score:   number
+			secret:  string
+		}, ...]
+		server_root_certificate?: [{
+			name:             string
+			public_cert_data: string
+		}, ...]
+	}, ...]
 	radius_server?: [{
 		address: string
 		secret:  string
@@ -8856,10 +13858,40 @@ package azurerm
 		update?: string
 	}
 }
+#AzurermVpnSiteResource: {
+	location:            string
+	name:                string
+	resource_group_name: string
+	virtual_wan_id:      string
+	address_cidrs?: [string, ...]
+	device_model?:  string
+	device_vendor?: string
+	id?:            string
+	tags?: [_]: string
+	link?: [{
+		name:           string
+		fqdn?:          string
+		id?:            string
+		ip_address?:    string
+		provider_name?: string
+		speed_in_mbps?: number
+		bgp?: [{
+			asn:             number
+			peering_address: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+		update?: string
+	}
+}
 #AzurermWebApplicationFirewallPolicyResource: {
 	location:            string
 	name:                string
 	resource_group_name: string
+	id?:                 string
 	tags?: [_]: string
 	custom_rules?: [{
 		action:    string
@@ -8870,6 +13902,7 @@ package azurerm
 			match_values: [string, ...]
 			operator:            string
 			negation_condition?: bool
+			transforms?: [string, ...]
 			match_variables?: [{
 				variable_name: string
 				selector?:     string
@@ -8892,8 +13925,11 @@ package azurerm
 		}, ...]
 	}, ...]
 	policy_settings?: [{
-		enabled?: bool
-		mode?:    string
+		enabled?:                     bool
+		file_upload_limit_in_mb?:     number
+		max_request_body_size_in_kb?: number
+		mode?:                        string
+		request_body_check?:          bool
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -8908,22 +13944,32 @@ package azurerm
 	location:       string
 	name:           string
 	network_interface_ids: [string, ...]
-	resource_group_name:           string
-	size:                          string
-	allow_extension_operations?:   bool
-	availability_set_id?:          string
-	custom_data?:                  string
-	dedicated_host_id?:            string
-	enable_automatic_updates?:     bool
-	eviction_policy?:              string
-	license_type?:                 string
-	max_bid_price?:                number
-	priority?:                     string
+	resource_group_name:         string
+	size:                        string
+	allow_extension_operations?: bool
+	availability_set_id?:        string
+	computer_name?:              string
+	custom_data?:                string
+	dedicated_host_id?:          string
+	enable_automatic_updates?:   bool
+	encryption_at_host_enabled?: bool
+	eviction_policy?:            string
+	extensions_time_budget?:     string
+	id?:                         string
+	license_type?:               string
+	max_bid_price?:              number
+	patch_mode?:                 string
+	priority?:                   string
+	private_ip_address?:         string
+	private_ip_addresses?: [string, ...]
 	provision_vm_agent?:           bool
 	proximity_placement_group_id?: string
-	source_image_id?:              string
+	public_ip_address?:            string
+	public_ip_addresses?: [string, ...]
+	source_image_id?: string
 	tags?: [_]: string
 	timezone?:                     string
+	virtual_machine_id?:           string
 	virtual_machine_scale_set_id?: string
 	zone?:                         string
 	additional_capabilities?: [{
@@ -8934,16 +13980,20 @@ package azurerm
 		setting: string
 	}, ...]
 	boot_diagnostics?: [{
-		storage_account_uri: string
+		storage_account_uri?: string
 	}, ...]
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
+		tenant_id?:    string
 	}, ...]
 	os_disk?: [{
 		caching:                    string
 		storage_account_type:       string
 		disk_encryption_set_id?:    string
+		disk_size_gb?:              number
+		name?:                      string
 		write_accelerator_enabled?: bool
 		diff_disk_settings?: [{
 			option: string
@@ -8986,14 +14036,19 @@ package azurerm
 	name:                                               string
 	resource_group_name:                                string
 	sku:                                                string
+	computer_name_prefix?:                              string
 	custom_data?:                                       string
 	do_not_run_extensions_on_overprovisioned_machines?: bool
 	enable_automatic_updates?:                          bool
+	encryption_at_host_enabled?:                        bool
 	eviction_policy?:                                   string
+	extensions_time_budget?:                            string
 	health_probe_id?:                                   string
+	id?:                                                string
 	license_type?:                                      string
 	max_bid_price?:                                     number
 	overprovision?:                                     bool
+	platform_fault_domain_count?:                       number
 	priority?:                                          string
 	provision_vm_agent?:                                bool
 	proximity_placement_group_id?:                      string
@@ -9002,6 +14057,7 @@ package azurerm
 	source_image_id?:                                   string
 	tags?: [_]: string
 	timezone?:     string
+	unique_id?:    string
 	upgrade_mode?: string
 	zone_balance?: bool
 	zones?: [string, ...]
@@ -9021,7 +14077,7 @@ package azurerm
 		enable_automatic_os_upgrade: bool
 	}, ...]
 	boot_diagnostics?: [{
-		storage_account_uri: string
+		storage_account_uri?: string
 	}, ...]
 	data_disk?: [{
 		caching:                    string
@@ -9030,11 +14086,25 @@ package azurerm
 		storage_account_type:       string
 		create_option?:             string
 		disk_encryption_set_id?:    string
+		disk_iops_read_write?:      number
+		disk_mbps_read_write?:      number
 		write_accelerator_enabled?: bool
+	}, ...]
+	extension?: [{
+		name:                        string
+		publisher:                   string
+		type:                        string
+		type_handler_version:        string
+		auto_upgrade_minor_version?: bool
+		force_update_tag?:           string
+		protected_settings?:         string
+		provision_after_extensions?: [string, ...]
+		settings?: string
 	}, ...]
 	identity?: [{
 		type: string
 		identity_ids?: [string, ...]
+		principal_id?: string
 	}, ...]
 	network_interface?: [{
 		name: string
@@ -9053,9 +14123,10 @@ package azurerm
 			subnet_id?: string
 			version?:   string
 			public_ip_address?: [{
-				name:                 string
-				domain_name_label?:   string
-				public_ip_prefix_id?: string
+				name:                     string
+				domain_name_label?:       string
+				idle_timeout_in_minutes?: number
+				public_ip_prefix_id?:     string
 				ip_tag?: [{
 					tag:  string
 					type: string
@@ -9067,6 +14138,7 @@ package azurerm
 		caching:                    string
 		storage_account_type:       string
 		disk_encryption_set_id?:    string
+		disk_size_gb?:              number
 		write_accelerator_enabled?: bool
 		diff_disk_settings?: [{
 			option: string
@@ -9116,6 +14188,7 @@ package azurerm
 	azurerm_analysis_services_server?: [_]:                                               #AzurermAnalysisServicesServerResource
 	azurerm_api_management?: [_]:                                                         #AzurermApiManagementResource
 	azurerm_api_management_api?: [_]:                                                     #AzurermApiManagementApiResource
+	azurerm_api_management_api_diagnostic?: [_]:                                          #AzurermApiManagementApiDiagnosticResource
 	azurerm_api_management_api_operation?: [_]:                                           #AzurermApiManagementApiOperationResource
 	azurerm_api_management_api_operation_policy?: [_]:                                    #AzurermApiManagementApiOperationPolicyResource
 	azurerm_api_management_api_policy?: [_]:                                              #AzurermApiManagementApiPolicyResource
@@ -9124,10 +14197,12 @@ package azurerm
 	azurerm_api_management_authorization_server?: [_]:                                    #AzurermApiManagementAuthorizationServerResource
 	azurerm_api_management_backend?: [_]:                                                 #AzurermApiManagementBackendResource
 	azurerm_api_management_certificate?: [_]:                                             #AzurermApiManagementCertificateResource
+	azurerm_api_management_custom_domain?: [_]:                                           #AzurermApiManagementCustomDomainResource
 	azurerm_api_management_diagnostic?: [_]:                                              #AzurermApiManagementDiagnosticResource
 	azurerm_api_management_group?: [_]:                                                   #AzurermApiManagementGroupResource
 	azurerm_api_management_group_user?: [_]:                                              #AzurermApiManagementGroupUserResource
 	azurerm_api_management_identity_provider_aad?: [_]:                                   #AzurermApiManagementIdentityProviderAadResource
+	azurerm_api_management_identity_provider_aadb2c?: [_]:                                #AzurermApiManagementIdentityProviderAadb2CResource
 	azurerm_api_management_identity_provider_facebook?: [_]:                              #AzurermApiManagementIdentityProviderFacebookResource
 	azurerm_api_management_identity_provider_google?: [_]:                                #AzurermApiManagementIdentityProviderGoogleResource
 	azurerm_api_management_identity_provider_microsoft?: [_]:                             #AzurermApiManagementIdentityProviderMicrosoftResource
@@ -9135,6 +14210,7 @@ package azurerm
 	azurerm_api_management_logger?: [_]:                                                  #AzurermApiManagementLoggerResource
 	azurerm_api_management_named_value?: [_]:                                             #AzurermApiManagementNamedValueResource
 	azurerm_api_management_openid_connect_provider?: [_]:                                 #AzurermApiManagementOpenidConnectProviderResource
+	azurerm_api_management_policy?: [_]:                                                  #AzurermApiManagementPolicyResource
 	azurerm_api_management_product?: [_]:                                                 #AzurermApiManagementProductResource
 	azurerm_api_management_product_api?: [_]:                                             #AzurermApiManagementProductApiResource
 	azurerm_api_management_product_group?: [_]:                                           #AzurermApiManagementProductGroupResource
@@ -9146,11 +14222,15 @@ package azurerm
 	azurerm_app_service?: [_]:                                                            #AzurermAppServiceResource
 	azurerm_app_service_active_slot?: [_]:                                                #AzurermAppServiceActiveSlotResource
 	azurerm_app_service_certificate?: [_]:                                                #AzurermAppServiceCertificateResource
+	azurerm_app_service_certificate_binding?: [_]:                                        #AzurermAppServiceCertificateBindingResource
 	azurerm_app_service_certificate_order?: [_]:                                          #AzurermAppServiceCertificateOrderResource
 	azurerm_app_service_custom_hostname_binding?: [_]:                                    #AzurermAppServiceCustomHostnameBindingResource
 	azurerm_app_service_environment?: [_]:                                                #AzurermAppServiceEnvironmentResource
+	azurerm_app_service_hybrid_connection?: [_]:                                          #AzurermAppServiceHybridConnectionResource
+	azurerm_app_service_managed_certificate?: [_]:                                        #AzurermAppServiceManagedCertificateResource
 	azurerm_app_service_plan?: [_]:                                                       #AzurermAppServicePlanResource
 	azurerm_app_service_slot?: [_]:                                                       #AzurermAppServiceSlotResource
+	azurerm_app_service_slot_virtual_network_swift_connection?: [_]:                      #AzurermAppServiceSlotVirtualNetworkSwiftConnectionResource
 	azurerm_app_service_source_control_token?: [_]:                                       #AzurermAppServiceSourceControlTokenResource
 	azurerm_app_service_virtual_network_swift_connection?: [_]:                           #AzurermAppServiceVirtualNetworkSwiftConnectionResource
 	azurerm_application_gateway?: [_]:                                                    #AzurermApplicationGatewayResource
@@ -9159,8 +14239,13 @@ package azurerm
 	azurerm_application_insights_api_key?: [_]:                                           #AzurermApplicationInsightsApiKeyResource
 	azurerm_application_insights_web_test?: [_]:                                          #AzurermApplicationInsightsWebTestResource
 	azurerm_application_security_group?: [_]:                                             #AzurermApplicationSecurityGroupResource
+	azurerm_attestation_provider?: [_]:                                                   #AzurermAttestationProviderResource
 	azurerm_automation_account?: [_]:                                                     #AzurermAutomationAccountResource
 	azurerm_automation_certificate?: [_]:                                                 #AzurermAutomationCertificateResource
+	azurerm_automation_connection?: [_]:                                                  #AzurermAutomationConnectionResource
+	azurerm_automation_connection_certificate?: [_]:                                      #AzurermAutomationConnectionCertificateResource
+	azurerm_automation_connection_classic_certificate?: [_]:                              #AzurermAutomationConnectionClassicCertificateResource
+	azurerm_automation_connection_service_principal?: [_]:                                #AzurermAutomationConnectionServicePrincipalResource
 	azurerm_automation_credential?: [_]:                                                  #AzurermAutomationCredentialResource
 	azurerm_automation_dsc_configuration?: [_]:                                           #AzurermAutomationDscConfigurationResource
 	azurerm_automation_dsc_nodeconfiguration?: [_]:                                       #AzurermAutomationDscNodeconfigurationResource
@@ -9183,6 +14268,7 @@ package azurerm
 	azurerm_batch_application?: [_]:                                                      #AzurermBatchApplicationResource
 	azurerm_batch_certificate?: [_]:                                                      #AzurermBatchCertificateResource
 	azurerm_batch_pool?: [_]:                                                             #AzurermBatchPoolResource
+	azurerm_blueprint_assignment?: [_]:                                                   #AzurermBlueprintAssignmentResource
 	azurerm_bot_channel_directline?: [_]:                                                 #AzurermBotChannelDirectlineResource
 	azurerm_bot_channel_email?: [_]:                                                      #AzurermBotChannelEmailResource
 	azurerm_bot_channel_ms_teams?: [_]:                                                   #AzurermBotChannelMsTeamsResource
@@ -9198,25 +14284,44 @@ package azurerm
 	azurerm_container_registry_webhook?: [_]:                                             #AzurermContainerRegistryWebhookResource
 	azurerm_cosmosdb_account?: [_]:                                                       #AzurermCosmosdbAccountResource
 	azurerm_cosmosdb_cassandra_keyspace?: [_]:                                            #AzurermCosmosdbCassandraKeyspaceResource
+	azurerm_cosmosdb_cassandra_table?: [_]:                                               #AzurermCosmosdbCassandraTableResource
 	azurerm_cosmosdb_gremlin_database?: [_]:                                              #AzurermCosmosdbGremlinDatabaseResource
 	azurerm_cosmosdb_gremlin_graph?: [_]:                                                 #AzurermCosmosdbGremlinGraphResource
 	azurerm_cosmosdb_mongo_collection?: [_]:                                              #AzurermCosmosdbMongoCollectionResource
 	azurerm_cosmosdb_mongo_database?: [_]:                                                #AzurermCosmosdbMongoDatabaseResource
 	azurerm_cosmosdb_sql_container?: [_]:                                                 #AzurermCosmosdbSqlContainerResource
 	azurerm_cosmosdb_sql_database?: [_]:                                                  #AzurermCosmosdbSqlDatabaseResource
+	azurerm_cosmosdb_sql_stored_procedure?: [_]:                                          #AzurermCosmosdbSqlStoredProcedureResource
 	azurerm_cosmosdb_table?: [_]:                                                         #AzurermCosmosdbTableResource
 	azurerm_cost_management_export_resource_group?: [_]:                                  #AzurermCostManagementExportResourceGroupResource
 	azurerm_custom_provider?: [_]:                                                        #AzurermCustomProviderResource
 	azurerm_dashboard?: [_]:                                                              #AzurermDashboardResource
 	azurerm_data_factory?: [_]:                                                           #AzurermDataFactoryResource
+	azurerm_data_factory_dataset_azure_blob?: [_]:                                        #AzurermDataFactoryDatasetAzureBlobResource
+	azurerm_data_factory_dataset_cosmosdb_sqlapi?: [_]:                                   #AzurermDataFactoryDatasetCosmosdbSqlapiResource
+	azurerm_data_factory_dataset_delimited_text?: [_]:                                    #AzurermDataFactoryDatasetDelimitedTextResource
+	azurerm_data_factory_dataset_http?: [_]:                                              #AzurermDataFactoryDatasetHttpResource
+	azurerm_data_factory_dataset_json?: [_]:                                              #AzurermDataFactoryDatasetJsonResource
 	azurerm_data_factory_dataset_mysql?: [_]:                                             #AzurermDataFactoryDatasetMysqlResource
 	azurerm_data_factory_dataset_postgresql?: [_]:                                        #AzurermDataFactoryDatasetPostgresqlResource
 	azurerm_data_factory_dataset_sql_server_table?: [_]:                                  #AzurermDataFactoryDatasetSqlServerTableResource
 	azurerm_data_factory_integration_runtime_managed?: [_]:                               #AzurermDataFactoryIntegrationRuntimeManagedResource
+	azurerm_data_factory_integration_runtime_self_hosted?: [_]:                           #AzurermDataFactoryIntegrationRuntimeSelfHostedResource
+	azurerm_data_factory_linked_service_azure_blob_storage?: [_]:                         #AzurermDataFactoryLinkedServiceAzureBlobStorageResource
+	azurerm_data_factory_linked_service_azure_file_storage?: [_]:                         #AzurermDataFactoryLinkedServiceAzureFileStorageResource
+	azurerm_data_factory_linked_service_azure_function?: [_]:                             #AzurermDataFactoryLinkedServiceAzureFunctionResource
+	azurerm_data_factory_linked_service_azure_sql_database?: [_]:                         #AzurermDataFactoryLinkedServiceAzureSqlDatabaseResource
+	azurerm_data_factory_linked_service_azure_table_storage?: [_]:                        #AzurermDataFactoryLinkedServiceAzureTableStorageResource
+	azurerm_data_factory_linked_service_cosmosdb?: [_]:                                   #AzurermDataFactoryLinkedServiceCosmosdbResource
 	azurerm_data_factory_linked_service_data_lake_storage_gen2?: [_]:                     #AzurermDataFactoryLinkedServiceDataLakeStorageGen2Resource
+	azurerm_data_factory_linked_service_key_vault?: [_]:                                  #AzurermDataFactoryLinkedServiceKeyVaultResource
 	azurerm_data_factory_linked_service_mysql?: [_]:                                      #AzurermDataFactoryLinkedServiceMysqlResource
 	azurerm_data_factory_linked_service_postgresql?: [_]:                                 #AzurermDataFactoryLinkedServicePostgresqlResource
+	azurerm_data_factory_linked_service_sftp?: [_]:                                       #AzurermDataFactoryLinkedServiceSftpResource
+	azurerm_data_factory_linked_service_snowflake?: [_]:                                  #AzurermDataFactoryLinkedServiceSnowflakeResource
 	azurerm_data_factory_linked_service_sql_server?: [_]:                                 #AzurermDataFactoryLinkedServiceSqlServerResource
+	azurerm_data_factory_linked_service_synapse?: [_]:                                    #AzurermDataFactoryLinkedServiceSynapseResource
+	azurerm_data_factory_linked_service_web?: [_]:                                        #AzurermDataFactoryLinkedServiceWebResource
 	azurerm_data_factory_pipeline?: [_]:                                                  #AzurermDataFactoryPipelineResource
 	azurerm_data_factory_trigger_schedule?: [_]:                                          #AzurermDataFactoryTriggerScheduleResource
 	azurerm_data_lake_analytics_account?: [_]:                                            #AzurermDataLakeAnalyticsAccountResource
@@ -9226,11 +14331,18 @@ package azurerm
 	azurerm_data_lake_store_firewall_rule?: [_]:                                          #AzurermDataLakeStoreFirewallRuleResource
 	azurerm_data_share?: [_]:                                                             #AzurermDataShareResource
 	azurerm_data_share_account?: [_]:                                                     #AzurermDataShareAccountResource
+	azurerm_data_share_dataset_blob_storage?: [_]:                                        #AzurermDataShareDatasetBlobStorageResource
+	azurerm_data_share_dataset_data_lake_gen1?: [_]:                                      #AzurermDataShareDatasetDataLakeGen1Resource
+	azurerm_data_share_dataset_data_lake_gen2?: [_]:                                      #AzurermDataShareDatasetDataLakeGen2Resource
+	azurerm_data_share_dataset_kusto_cluster?: [_]:                                       #AzurermDataShareDatasetKustoClusterResource
+	azurerm_data_share_dataset_kusto_database?: [_]:                                      #AzurermDataShareDatasetKustoDatabaseResource
 	azurerm_database_migration_project?: [_]:                                             #AzurermDatabaseMigrationProjectResource
 	azurerm_database_migration_service?: [_]:                                             #AzurermDatabaseMigrationServiceResource
 	azurerm_databricks_workspace?: [_]:                                                   #AzurermDatabricksWorkspaceResource
+	azurerm_dedicated_hardware_security_module?: [_]:                                     #AzurermDedicatedHardwareSecurityModuleResource
 	azurerm_dedicated_host?: [_]:                                                         #AzurermDedicatedHostResource
 	azurerm_dedicated_host_group?: [_]:                                                   #AzurermDedicatedHostGroupResource
+	azurerm_dev_test_global_vm_shutdown_schedule?: [_]:                                   #AzurermDevTestGlobalVmShutdownScheduleResource
 	azurerm_dev_test_lab?: [_]:                                                           #AzurermDevTestLabResource
 	azurerm_dev_test_linux_virtual_machine?: [_]:                                         #AzurermDevTestLinuxVirtualMachineResource
 	azurerm_dev_test_policy?: [_]:                                                        #AzurermDevTestPolicyResource
@@ -9238,6 +14350,11 @@ package azurerm
 	azurerm_dev_test_virtual_network?: [_]:                                               #AzurermDevTestVirtualNetworkResource
 	azurerm_dev_test_windows_virtual_machine?: [_]:                                       #AzurermDevTestWindowsVirtualMachineResource
 	azurerm_devspace_controller?: [_]:                                                    #AzurermDevspaceControllerResource
+	azurerm_digital_twins_endpoint_eventgrid?: [_]:                                       #AzurermDigitalTwinsEndpointEventgridResource
+	azurerm_digital_twins_endpoint_eventhub?: [_]:                                        #AzurermDigitalTwinsEndpointEventhubResource
+	azurerm_digital_twins_endpoint_servicebus?: [_]:                                      #AzurermDigitalTwinsEndpointServicebusResource
+	azurerm_digital_twins_instance?: [_]:                                                 #AzurermDigitalTwinsInstanceResource
+	azurerm_disk_access?: [_]:                                                            #AzurermDiskAccessResource
 	azurerm_disk_encryption_set?: [_]:                                                    #AzurermDiskEncryptionSetResource
 	azurerm_dns_a_record?: [_]:                                                           #AzurermDnsARecordResource
 	azurerm_dns_aaaa_record?: [_]:                                                        #AzurermDnsAaaaRecordResource
@@ -9252,9 +14369,12 @@ package azurerm
 	azurerm_eventgrid_domain?: [_]:                                                       #AzurermEventgridDomainResource
 	azurerm_eventgrid_domain_topic?: [_]:                                                 #AzurermEventgridDomainTopicResource
 	azurerm_eventgrid_event_subscription?: [_]:                                           #AzurermEventgridEventSubscriptionResource
+	azurerm_eventgrid_system_topic?: [_]:                                                 #AzurermEventgridSystemTopicResource
+	azurerm_eventgrid_system_topic_event_subscription?: [_]:                              #AzurermEventgridSystemTopicEventSubscriptionResource
 	azurerm_eventgrid_topic?: [_]:                                                        #AzurermEventgridTopicResource
 	azurerm_eventhub?: [_]:                                                               #AzurermEventhubResource
 	azurerm_eventhub_authorization_rule?: [_]:                                            #AzurermEventhubAuthorizationRuleResource
+	azurerm_eventhub_cluster?: [_]:                                                       #AzurermEventhubClusterResource
 	azurerm_eventhub_consumer_group?: [_]:                                                #AzurermEventhubConsumerGroupResource
 	azurerm_eventhub_namespace?: [_]:                                                     #AzurermEventhubNamespaceResource
 	azurerm_eventhub_namespace_authorization_rule?: [_]:                                  #AzurermEventhubNamespaceAuthorizationRuleResource
@@ -9267,7 +14387,10 @@ package azurerm
 	azurerm_firewall_application_rule_collection?: [_]:                                   #AzurermFirewallApplicationRuleCollectionResource
 	azurerm_firewall_nat_rule_collection?: [_]:                                           #AzurermFirewallNatRuleCollectionResource
 	azurerm_firewall_network_rule_collection?: [_]:                                       #AzurermFirewallNetworkRuleCollectionResource
+	azurerm_firewall_policy?: [_]:                                                        #AzurermFirewallPolicyResource
+	azurerm_firewall_policy_rule_collection_group?: [_]:                                  #AzurermFirewallPolicyRuleCollectionGroupResource
 	azurerm_frontdoor?: [_]:                                                              #AzurermFrontdoorResource
+	azurerm_frontdoor_custom_https_configuration?: [_]:                                   #AzurermFrontdoorCustomHttpsConfigurationResource
 	azurerm_frontdoor_firewall_policy?: [_]:                                              #AzurermFrontdoorFirewallPolicyResource
 	azurerm_function_app?: [_]:                                                           #AzurermFunctionAppResource
 	azurerm_function_app_slot?: [_]:                                                      #AzurermFunctionAppSlotResource
@@ -9284,6 +14407,11 @@ package azurerm
 	azurerm_hpc_cache_blob_target?: [_]:                                                  #AzurermHpcCacheBlobTargetResource
 	azurerm_hpc_cache_nfs_target?: [_]:                                                   #AzurermHpcCacheNfsTargetResource
 	azurerm_image?: [_]:                                                                  #AzurermImageResource
+	azurerm_integration_service_environment?: [_]:                                        #AzurermIntegrationServiceEnvironmentResource
+	azurerm_iot_security_solution?: [_]:                                                  #AzurermIotSecuritySolutionResource
+	azurerm_iot_time_series_insights_access_policy?: [_]:                                 #AzurermIotTimeSeriesInsightsAccessPolicyResource
+	azurerm_iot_time_series_insights_gen2_environment?: [_]:                              #AzurermIotTimeSeriesInsightsGen2EnvironmentResource
+	azurerm_iot_time_series_insights_reference_data_set?: [_]:                            #AzurermIotTimeSeriesInsightsReferenceDataSetResource
 	azurerm_iot_time_series_insights_standard_environment?: [_]:                          #AzurermIotTimeSeriesInsightsStandardEnvironmentResource
 	azurerm_iotcentral_application?: [_]:                                                 #AzurermIotcentralApplicationResource
 	azurerm_iothub?: [_]:                                                                 #AzurermIothubResource
@@ -9295,19 +14423,26 @@ package azurerm
 	azurerm_iothub_endpoint_servicebus_queue?: [_]:                                       #AzurermIothubEndpointServicebusQueueResource
 	azurerm_iothub_endpoint_servicebus_topic?: [_]:                                       #AzurermIothubEndpointServicebusTopicResource
 	azurerm_iothub_endpoint_storage_container?: [_]:                                      #AzurermIothubEndpointStorageContainerResource
+	azurerm_iothub_enrichment?: [_]:                                                      #AzurermIothubEnrichmentResource
 	azurerm_iothub_fallback_route?: [_]:                                                  #AzurermIothubFallbackRouteResource
 	azurerm_iothub_route?: [_]:                                                           #AzurermIothubRouteResource
 	azurerm_iothub_shared_access_policy?: [_]:                                            #AzurermIothubSharedAccessPolicyResource
+	azurerm_ip_group?: [_]:                                                               #AzurermIpGroupResource
 	azurerm_key_vault?: [_]:                                                              #AzurermKeyVaultResource
 	azurerm_key_vault_access_policy?: [_]:                                                #AzurermKeyVaultAccessPolicyResource
 	azurerm_key_vault_certificate?: [_]:                                                  #AzurermKeyVaultCertificateResource
+	azurerm_key_vault_certificate_issuer?: [_]:                                           #AzurermKeyVaultCertificateIssuerResource
 	azurerm_key_vault_key?: [_]:                                                          #AzurermKeyVaultKeyResource
 	azurerm_key_vault_secret?: [_]:                                                       #AzurermKeyVaultSecretResource
 	azurerm_kubernetes_cluster?: [_]:                                                     #AzurermKubernetesClusterResource
 	azurerm_kubernetes_cluster_node_pool?: [_]:                                           #AzurermKubernetesClusterNodePoolResource
+	azurerm_kusto_attached_database_configuration?: [_]:                                  #AzurermKustoAttachedDatabaseConfigurationResource
 	azurerm_kusto_cluster?: [_]:                                                          #AzurermKustoClusterResource
+	azurerm_kusto_cluster_customer_managed_key?: [_]:                                     #AzurermKustoClusterCustomerManagedKeyResource
+	azurerm_kusto_cluster_principal_assignment?: [_]:                                     #AzurermKustoClusterPrincipalAssignmentResource
 	azurerm_kusto_database?: [_]:                                                         #AzurermKustoDatabaseResource
 	azurerm_kusto_database_principal?: [_]:                                               #AzurermKustoDatabasePrincipalResource
+	azurerm_kusto_database_principal_assignment?: [_]:                                    #AzurermKustoDatabasePrincipalAssignmentResource
 	azurerm_kusto_eventhub_data_connection?: [_]:                                         #AzurermKustoEventhubDataConnectionResource
 	azurerm_lb?: [_]:                                                                     #AzurermLbResource
 	azurerm_lb_backend_address_pool?: [_]:                                                #AzurermLbBackendAddressPoolResource
@@ -9316,21 +14451,32 @@ package azurerm
 	azurerm_lb_outbound_rule?: [_]:                                                       #AzurermLbOutboundRuleResource
 	azurerm_lb_probe?: [_]:                                                               #AzurermLbProbeResource
 	azurerm_lb_rule?: [_]:                                                                #AzurermLbRuleResource
+	azurerm_lighthouse_assignment?: [_]:                                                  #AzurermLighthouseAssignmentResource
+	azurerm_lighthouse_definition?: [_]:                                                  #AzurermLighthouseDefinitionResource
 	azurerm_linux_virtual_machine?: [_]:                                                  #AzurermLinuxVirtualMachineResource
 	azurerm_linux_virtual_machine_scale_set?: [_]:                                        #AzurermLinuxVirtualMachineScaleSetResource
 	azurerm_local_network_gateway?: [_]:                                                  #AzurermLocalNetworkGatewayResource
+	azurerm_log_analytics_cluster?: [_]:                                                  #AzurermLogAnalyticsClusterResource
+	azurerm_log_analytics_cluster_customer_managed_key?: [_]:                             #AzurermLogAnalyticsClusterCustomerManagedKeyResource
+	azurerm_log_analytics_data_export_rule?: [_]:                                         #AzurermLogAnalyticsDataExportRuleResource
 	azurerm_log_analytics_datasource_windows_event?: [_]:                                 #AzurermLogAnalyticsDatasourceWindowsEventResource
 	azurerm_log_analytics_datasource_windows_performance_counter?: [_]:                   #AzurermLogAnalyticsDatasourceWindowsPerformanceCounterResource
 	azurerm_log_analytics_linked_service?: [_]:                                           #AzurermLogAnalyticsLinkedServiceResource
+	azurerm_log_analytics_linked_storage_account?: [_]:                                   #AzurermLogAnalyticsLinkedStorageAccountResource
+	azurerm_log_analytics_saved_search?: [_]:                                             #AzurermLogAnalyticsSavedSearchResource
 	azurerm_log_analytics_solution?: [_]:                                                 #AzurermLogAnalyticsSolutionResource
+	azurerm_log_analytics_storage_insights?: [_]:                                         #AzurermLogAnalyticsStorageInsightsResource
 	azurerm_log_analytics_workspace?: [_]:                                                #AzurermLogAnalyticsWorkspaceResource
 	azurerm_logic_app_action_custom?: [_]:                                                #AzurermLogicAppActionCustomResource
 	azurerm_logic_app_action_http?: [_]:                                                  #AzurermLogicAppActionHttpResource
+	azurerm_logic_app_integration_account?: [_]:                                          #AzurermLogicAppIntegrationAccountResource
 	azurerm_logic_app_trigger_custom?: [_]:                                               #AzurermLogicAppTriggerCustomResource
 	azurerm_logic_app_trigger_http_request?: [_]:                                         #AzurermLogicAppTriggerHttpRequestResource
 	azurerm_logic_app_trigger_recurrence?: [_]:                                           #AzurermLogicAppTriggerRecurrenceResource
 	azurerm_logic_app_workflow?: [_]:                                                     #AzurermLogicAppWorkflowResource
 	azurerm_machine_learning_workspace?: [_]:                                             #AzurermMachineLearningWorkspaceResource
+	azurerm_maintenance_assignment_dedicated_host?: [_]:                                  #AzurermMaintenanceAssignmentDedicatedHostResource
+	azurerm_maintenance_assignment_virtual_machine?: [_]:                                 #AzurermMaintenanceAssignmentVirtualMachineResource
 	azurerm_maintenance_configuration?: [_]:                                              #AzurermMaintenanceConfigurationResource
 	azurerm_managed_application?: [_]:                                                    #AzurermManagedApplicationResource
 	azurerm_managed_application_definition?: [_]:                                         #AzurermManagedApplicationDefinitionResource
@@ -9344,8 +14490,17 @@ package azurerm
 	azurerm_mariadb_server?: [_]:                                                         #AzurermMariadbServerResource
 	azurerm_mariadb_virtual_network_rule?: [_]:                                           #AzurermMariadbVirtualNetworkRuleResource
 	azurerm_marketplace_agreement?: [_]:                                                  #AzurermMarketplaceAgreementResource
+	azurerm_media_asset?: [_]:                                                            #AzurermMediaAssetResource
+	azurerm_media_content_key_policy?: [_]:                                               #AzurermMediaContentKeyPolicyResource
+	azurerm_media_job?: [_]:                                                              #AzurermMediaJobResource
 	azurerm_media_services_account?: [_]:                                                 #AzurermMediaServicesAccountResource
+	azurerm_media_streaming_endpoint?: [_]:                                               #AzurermMediaStreamingEndpointResource
+	azurerm_media_streaming_locator?: [_]:                                                #AzurermMediaStreamingLocatorResource
+	azurerm_media_streaming_policy?: [_]:                                                 #AzurermMediaStreamingPolicyResource
+	azurerm_media_transform?: [_]:                                                        #AzurermMediaTransformResource
 	azurerm_monitor_action_group?: [_]:                                                   #AzurermMonitorActionGroupResource
+	azurerm_monitor_action_rule_action_group?: [_]:                                       #AzurermMonitorActionRuleActionGroupResource
+	azurerm_monitor_action_rule_suppression?: [_]:                                        #AzurermMonitorActionRuleSuppressionResource
 	azurerm_monitor_activity_log_alert?: [_]:                                             #AzurermMonitorActivityLogAlertResource
 	azurerm_monitor_autoscale_setting?: [_]:                                              #AzurermMonitorAutoscaleSettingResource
 	azurerm_monitor_diagnostic_setting?: [_]:                                             #AzurermMonitorDiagnosticSettingResource
@@ -9353,19 +14508,25 @@ package azurerm
 	azurerm_monitor_metric_alert?: [_]:                                                   #AzurermMonitorMetricAlertResource
 	azurerm_monitor_scheduled_query_rules_alert?: [_]:                                    #AzurermMonitorScheduledQueryRulesAlertResource
 	azurerm_monitor_scheduled_query_rules_log?: [_]:                                      #AzurermMonitorScheduledQueryRulesLogResource
+	azurerm_monitor_smart_detector_alert_rule?: [_]:                                      #AzurermMonitorSmartDetectorAlertRuleResource
 	azurerm_mssql_database?: [_]:                                                         #AzurermMssqlDatabaseResource
+	azurerm_mssql_database_extended_auditing_policy?: [_]:                                #AzurermMssqlDatabaseExtendedAuditingPolicyResource
 	azurerm_mssql_database_vulnerability_assessment_rule_baseline?: [_]:                  #AzurermMssqlDatabaseVulnerabilityAssessmentRuleBaselineResource
 	azurerm_mssql_elasticpool?: [_]:                                                      #AzurermMssqlElasticpoolResource
 	azurerm_mssql_server?: [_]:                                                           #AzurermMssqlServerResource
+	azurerm_mssql_server_extended_auditing_policy?: [_]:                                  #AzurermMssqlServerExtendedAuditingPolicyResource
 	azurerm_mssql_server_security_alert_policy?: [_]:                                     #AzurermMssqlServerSecurityAlertPolicyResource
 	azurerm_mssql_server_vulnerability_assessment?: [_]:                                  #AzurermMssqlServerVulnerabilityAssessmentResource
 	azurerm_mssql_virtual_machine?: [_]:                                                  #AzurermMssqlVirtualMachineResource
+	azurerm_mysql_active_directory_administrator?: [_]:                                   #AzurermMysqlActiveDirectoryAdministratorResource
 	azurerm_mysql_configuration?: [_]:                                                    #AzurermMysqlConfigurationResource
 	azurerm_mysql_database?: [_]:                                                         #AzurermMysqlDatabaseResource
 	azurerm_mysql_firewall_rule?: [_]:                                                    #AzurermMysqlFirewallRuleResource
 	azurerm_mysql_server?: [_]:                                                           #AzurermMysqlServerResource
+	azurerm_mysql_server_key?: [_]:                                                       #AzurermMysqlServerKeyResource
 	azurerm_mysql_virtual_network_rule?: [_]:                                             #AzurermMysqlVirtualNetworkRuleResource
 	azurerm_nat_gateway?: [_]:                                                            #AzurermNatGatewayResource
+	azurerm_nat_gateway_public_ip_association?: [_]:                                      #AzurermNatGatewayPublicIpAssociationResource
 	azurerm_netapp_account?: [_]:                                                         #AzurermNetappAccountResource
 	azurerm_netapp_pool?: [_]:                                                            #AzurermNetappPoolResource
 	azurerm_netapp_snapshot?: [_]:                                                        #AzurermNetappSnapshotResource
@@ -9394,10 +14555,12 @@ package azurerm
 	azurerm_policy_definition?: [_]:                                                      #AzurermPolicyDefinitionResource
 	azurerm_policy_remediation?: [_]:                                                     #AzurermPolicyRemediationResource
 	azurerm_policy_set_definition?: [_]:                                                  #AzurermPolicySetDefinitionResource
+	azurerm_postgresql_active_directory_administrator?: [_]:                              #AzurermPostgresqlActiveDirectoryAdministratorResource
 	azurerm_postgresql_configuration?: [_]:                                               #AzurermPostgresqlConfigurationResource
 	azurerm_postgresql_database?: [_]:                                                    #AzurermPostgresqlDatabaseResource
 	azurerm_postgresql_firewall_rule?: [_]:                                               #AzurermPostgresqlFirewallRuleResource
 	azurerm_postgresql_server?: [_]:                                                      #AzurermPostgresqlServerResource
+	azurerm_postgresql_server_key?: [_]:                                                  #AzurermPostgresqlServerKeyResource
 	azurerm_postgresql_virtual_network_rule?: [_]:                                        #AzurermPostgresqlVirtualNetworkRuleResource
 	azurerm_powerbi_embedded?: [_]:                                                       #AzurermPowerbiEmbeddedResource
 	azurerm_private_dns_a_record?: [_]:                                                   #AzurermPrivateDnsARecordResource
@@ -9417,20 +14580,32 @@ package azurerm
 	azurerm_recovery_services_vault?: [_]:                                                #AzurermRecoveryServicesVaultResource
 	azurerm_redis_cache?: [_]:                                                            #AzurermRedisCacheResource
 	azurerm_redis_firewall_rule?: [_]:                                                    #AzurermRedisFirewallRuleResource
+	azurerm_redis_linked_server?: [_]:                                                    #AzurermRedisLinkedServerResource
 	azurerm_relay_hybrid_connection?: [_]:                                                #AzurermRelayHybridConnectionResource
 	azurerm_relay_namespace?: [_]:                                                        #AzurermRelayNamespaceResource
 	azurerm_resource_group?: [_]:                                                         #AzurermResourceGroupResource
+	azurerm_resource_group_template_deployment?: [_]:                                     #AzurermResourceGroupTemplateDeploymentResource
+	azurerm_resource_provider_registration?: [_]:                                         #AzurermResourceProviderRegistrationResource
 	azurerm_role_assignment?: [_]:                                                        #AzurermRoleAssignmentResource
 	azurerm_role_definition?: [_]:                                                        #AzurermRoleDefinitionResource
 	azurerm_route?: [_]:                                                                  #AzurermRouteResource
+	azurerm_route_filter?: [_]:                                                           #AzurermRouteFilterResource
 	azurerm_route_table?: [_]:                                                            #AzurermRouteTableResource
 	azurerm_search_service?: [_]:                                                         #AzurermSearchServiceResource
+	azurerm_security_center_auto_provisioning?: [_]:                                      #AzurermSecurityCenterAutoProvisioningResource
+	azurerm_security_center_automation?: [_]:                                             #AzurermSecurityCenterAutomationResource
 	azurerm_security_center_contact?: [_]:                                                #AzurermSecurityCenterContactResource
+	azurerm_security_center_setting?: [_]:                                                #AzurermSecurityCenterSettingResource
 	azurerm_security_center_subscription_pricing?: [_]:                                   #AzurermSecurityCenterSubscriptionPricingResource
 	azurerm_security_center_workspace?: [_]:                                              #AzurermSecurityCenterWorkspaceResource
+	azurerm_sentinel_alert_rule_fusion?: [_]:                                             #AzurermSentinelAlertRuleFusionResource
 	azurerm_sentinel_alert_rule_ms_security_incident?: [_]:                               #AzurermSentinelAlertRuleMsSecurityIncidentResource
 	azurerm_sentinel_alert_rule_scheduled?: [_]:                                          #AzurermSentinelAlertRuleScheduledResource
 	azurerm_service_fabric_cluster?: [_]:                                                 #AzurermServiceFabricClusterResource
+	azurerm_service_fabric_mesh_application?: [_]:                                        #AzurermServiceFabricMeshApplicationResource
+	azurerm_service_fabric_mesh_local_network?: [_]:                                      #AzurermServiceFabricMeshLocalNetworkResource
+	azurerm_service_fabric_mesh_secret?: [_]:                                             #AzurermServiceFabricMeshSecretResource
+	azurerm_service_fabric_mesh_secret_value?: [_]:                                       #AzurermServiceFabricMeshSecretValueResource
 	azurerm_servicebus_namespace?: [_]:                                                   #AzurermServicebusNamespaceResource
 	azurerm_servicebus_namespace_authorization_rule?: [_]:                                #AzurermServicebusNamespaceAuthorizationRuleResource
 	azurerm_servicebus_namespace_network_rule_set?: [_]:                                  #AzurermServicebusNamespaceNetworkRuleSetResource
@@ -9452,7 +14627,10 @@ package azurerm
 	azurerm_site_recovery_replication_policy?: [_]:                                       #AzurermSiteRecoveryReplicationPolicyResource
 	azurerm_snapshot?: [_]:                                                               #AzurermSnapshotResource
 	azurerm_spatial_anchors_account?: [_]:                                                #AzurermSpatialAnchorsAccountResource
+	azurerm_spring_cloud_active_deployment?: [_]:                                         #AzurermSpringCloudActiveDeploymentResource
 	azurerm_spring_cloud_app?: [_]:                                                       #AzurermSpringCloudAppResource
+	azurerm_spring_cloud_certificate?: [_]:                                               #AzurermSpringCloudCertificateResource
+	azurerm_spring_cloud_java_deployment?: [_]:                                           #AzurermSpringCloudJavaDeploymentResource
 	azurerm_spring_cloud_service?: [_]:                                                   #AzurermSpringCloudServiceResource
 	azurerm_sql_active_directory_administrator?: [_]:                                     #AzurermSqlActiveDirectoryAdministratorResource
 	azurerm_sql_database?: [_]:                                                           #AzurermSqlDatabaseResource
@@ -9461,16 +14639,24 @@ package azurerm
 	azurerm_sql_firewall_rule?: [_]:                                                      #AzurermSqlFirewallRuleResource
 	azurerm_sql_server?: [_]:                                                             #AzurermSqlServerResource
 	azurerm_sql_virtual_network_rule?: [_]:                                               #AzurermSqlVirtualNetworkRuleResource
+	azurerm_ssh_public_key?: [_]:                                                         #AzurermSshPublicKeyResource
+	azurerm_stack_hci_cluster?: [_]:                                                      #AzurermStackHciClusterResource
 	azurerm_storage_account?: [_]:                                                        #AzurermStorageAccountResource
 	azurerm_storage_account_customer_managed_key?: [_]:                                   #AzurermStorageAccountCustomerManagedKeyResource
 	azurerm_storage_account_network_rules?: [_]:                                          #AzurermStorageAccountNetworkRulesResource
 	azurerm_storage_blob?: [_]:                                                           #AzurermStorageBlobResource
 	azurerm_storage_container?: [_]:                                                      #AzurermStorageContainerResource
 	azurerm_storage_data_lake_gen2_filesystem?: [_]:                                      #AzurermStorageDataLakeGen2FilesystemResource
+	azurerm_storage_data_lake_gen2_path?: [_]:                                            #AzurermStorageDataLakeGen2PathResource
+	azurerm_storage_encryption_scope?: [_]:                                               #AzurermStorageEncryptionScopeResource
 	azurerm_storage_management_policy?: [_]:                                              #AzurermStorageManagementPolicyResource
 	azurerm_storage_queue?: [_]:                                                          #AzurermStorageQueueResource
 	azurerm_storage_share?: [_]:                                                          #AzurermStorageShareResource
 	azurerm_storage_share_directory?: [_]:                                                #AzurermStorageShareDirectoryResource
+	azurerm_storage_share_file?: [_]:                                                     #AzurermStorageShareFileResource
+	azurerm_storage_sync?: [_]:                                                           #AzurermStorageSyncResource
+	azurerm_storage_sync_cloud_endpoint?: [_]:                                            #AzurermStorageSyncCloudEndpointResource
+	azurerm_storage_sync_group?: [_]:                                                     #AzurermStorageSyncGroupResource
 	azurerm_storage_table?: [_]:                                                          #AzurermStorageTableResource
 	azurerm_storage_table_entity?: [_]:                                                   #AzurermStorageTableEntityResource
 	azurerm_stream_analytics_function_javascript_udf?: [_]:                               #AzurermStreamAnalyticsFunctionJavascriptUdfResource
@@ -9488,12 +14674,28 @@ package azurerm
 	azurerm_subnet_nat_gateway_association?: [_]:                                         #AzurermSubnetNatGatewayAssociationResource
 	azurerm_subnet_network_security_group_association?: [_]:                              #AzurermSubnetNetworkSecurityGroupAssociationResource
 	azurerm_subnet_route_table_association?: [_]:                                         #AzurermSubnetRouteTableAssociationResource
+	azurerm_subnet_service_endpoint_storage_policy?: [_]:                                 #AzurermSubnetServiceEndpointStoragePolicyResource
+	azurerm_subscription_template_deployment?: [_]:                                       #AzurermSubscriptionTemplateDeploymentResource
+	azurerm_synapse_firewall_rule?: [_]:                                                  #AzurermSynapseFirewallRuleResource
+	azurerm_synapse_managed_private_endpoint?: [_]:                                       #AzurermSynapseManagedPrivateEndpointResource
+	azurerm_synapse_role_assignment?: [_]:                                                #AzurermSynapseRoleAssignmentResource
+	azurerm_synapse_spark_pool?: [_]:                                                     #AzurermSynapseSparkPoolResource
+	azurerm_synapse_sql_pool?: [_]:                                                       #AzurermSynapseSqlPoolResource
+	azurerm_synapse_workspace?: [_]:                                                      #AzurermSynapseWorkspaceResource
 	azurerm_template_deployment?: [_]:                                                    #AzurermTemplateDeploymentResource
 	azurerm_traffic_manager_endpoint?: [_]:                                               #AzurermTrafficManagerEndpointResource
 	azurerm_traffic_manager_profile?: [_]:                                                #AzurermTrafficManagerProfileResource
 	azurerm_user_assigned_identity?: [_]:                                                 #AzurermUserAssignedIdentityResource
+	azurerm_virtual_desktop_application_group?: [_]:                                      #AzurermVirtualDesktopApplicationGroupResource
+	azurerm_virtual_desktop_host_pool?: [_]:                                              #AzurermVirtualDesktopHostPoolResource
+	azurerm_virtual_desktop_workspace?: [_]:                                              #AzurermVirtualDesktopWorkspaceResource
+	azurerm_virtual_desktop_workspace_application_group_association?: [_]:                #AzurermVirtualDesktopWorkspaceApplicationGroupAssociationResource
 	azurerm_virtual_hub?: [_]:                                                            #AzurermVirtualHubResource
+	azurerm_virtual_hub_bgp_connection?: [_]:                                             #AzurermVirtualHubBgpConnectionResource
 	azurerm_virtual_hub_connection?: [_]:                                                 #AzurermVirtualHubConnectionResource
+	azurerm_virtual_hub_ip?: [_]:                                                         #AzurermVirtualHubIpResource
+	azurerm_virtual_hub_route_table?: [_]:                                                #AzurermVirtualHubRouteTableResource
+	azurerm_virtual_hub_security_partner_provider?: [_]:                                  #AzurermVirtualHubSecurityPartnerProviderResource
 	azurerm_virtual_machine?: [_]:                                                        #AzurermVirtualMachineResource
 	azurerm_virtual_machine_data_disk_attachment?: [_]:                                   #AzurermVirtualMachineDataDiskAttachmentResource
 	azurerm_virtual_machine_extension?: [_]:                                              #AzurermVirtualMachineExtensionResource
@@ -9505,7 +14707,9 @@ package azurerm
 	azurerm_virtual_network_peering?: [_]:                                                #AzurermVirtualNetworkPeeringResource
 	azurerm_virtual_wan?: [_]:                                                            #AzurermVirtualWanResource
 	azurerm_vpn_gateway?: [_]:                                                            #AzurermVpnGatewayResource
+	azurerm_vpn_gateway_connection?: [_]:                                                 #AzurermVpnGatewayConnectionResource
 	azurerm_vpn_server_configuration?: [_]:                                               #AzurermVpnServerConfigurationResource
+	azurerm_vpn_site?: [_]:                                                               #AzurermVpnSiteResource
 	azurerm_web_application_firewall_policy?: [_]:                                        #AzurermWebApplicationFirewallPolicyResource
 	azurerm_windows_virtual_machine?: [_]:                                                #AzurermWindowsVirtualMachineResource
 	azurerm_windows_virtual_machine_scale_set?: [_]:                                      #AzurermWindowsVirtualMachineScaleSetResource

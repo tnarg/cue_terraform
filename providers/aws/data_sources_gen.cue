@@ -3,25 +3,183 @@ package aws
 
 #AwsAcmCertificateDataSource: {
 	domain: string
+	arn?:   string
+	id?:    string
 	key_types?: [string, ...]
 	most_recent?: bool
 	statuses?: [string, ...]
+	tags?: [_]: string
 	types?: [string, ...]
 }
 #AwsAcmpcaCertificateAuthorityDataSource: {
-	arn: string
+	arn:                          string
+	certificate?:                 string
+	certificate_chain?:           string
+	certificate_signing_request?: string
+	id?:                          string
+	not_after?:                   string
+	not_before?:                  string
+	serial?:                      string
+	status?:                      string
+	tags?: [_]: string
+	type?: string
 	revocation_configuration?: [{
-		crl_configuration?: [{}, ...]
+		crl_configuration?: [{
+			custom_cname?:       string
+			enabled?:            bool
+			expiration_in_days?: number
+			s3_bucket_name?:     string
+		}, ...]
 	}, ...]
 }
-#AwsAlbDataSource: {}
-#AwsAlbListenerDataSource: {}
-#AwsAlbTargetGroupDataSource: {}
+#AwsAlbDataSource: {
+	access_logs?: [{
+		bucket:  string
+		enabled: bool
+		prefix:  string
+	}, ...]
+	arn?:                        string
+	arn_suffix?:                 string
+	dns_name?:                   string
+	drop_invalid_header_fields?: bool
+	enable_deletion_protection?: bool
+	id?:                         string
+	idle_timeout?:               number
+	internal?:                   bool
+	ip_address_type?:            string
+	load_balancer_type?:         string
+	name?:                       string
+	security_groups?: [string, ...]
+	subnet_mapping?: [{
+		allocation_id: string
+		subnet_id:     string
+	}, ...]
+	subnets?: [string, ...]
+	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
+}
+#AwsAlbListenerDataSource: {
+	arn?:             string
+	certificate_arn?: string
+	default_action?: [{
+		authenticate_cognito: [{
+			authentication_request_extra_params: [_]: string
+			on_unauthenticated_request: string
+			scope:                      string
+			session_cookie_name:        string
+			session_timeout:            number
+			user_pool_arn:              string
+			user_pool_client_id:        string
+			user_pool_domain:           string
+		}, ...]
+		authenticate_oidc: [{
+			authentication_request_extra_params: [_]: string
+			authorization_endpoint:     string
+			client_id:                  string
+			client_secret:              string
+			issuer:                     string
+			on_unauthenticated_request: string
+			scope:                      string
+			session_cookie_name:        string
+			session_timeout:            number
+			token_endpoint:             string
+			user_info_endpoint:         string
+		}, ...]
+		fixed_response: [{
+			content_type: string
+			message_body: string
+			status_code:  string
+		}, ...]
+		order: number
+		redirect: [{
+			host:        string
+			path:        string
+			port:        string
+			protocol:    string
+			query:       string
+			status_code: string
+		}, ...]
+		target_group_arn: string
+		type:             string
+	}, ...]
+	id?:                string
+	load_balancer_arn?: string
+	port?:              number
+	protocol?:          string
+	ssl_policy?:        string
+}
+#AwsAlbTargetGroupDataSource: {
+	arn?:                  string
+	arn_suffix?:           string
+	deregistration_delay?: number
+	health_check?: [{
+		enabled:             bool
+		healthy_threshold:   number
+		interval:            number
+		matcher:             string
+		path:                string
+		port:                string
+		protocol:            string
+		timeout:             number
+		unhealthy_threshold: number
+	}, ...]
+	id?:                                 string
+	lambda_multi_value_headers_enabled?: bool
+	load_balancing_algorithm_type?:      string
+	name?:                               string
+	port?:                               number
+	protocol?:                           string
+	proxy_protocol_v2?:                  bool
+	slow_start?:                         number
+	stickiness?: [{
+		cookie_duration: number
+		enabled:         bool
+		type:            string
+	}, ...]
+	tags?: [_]: string
+	target_type?: string
+	vpc_id?:      string
+}
 #AwsAmiDataSource: {
 	owners: [string, ...]
+	architecture?: string
+	arn?:          string
+	block_device_mappings?: [{
+		device_name: string
+		ebs: [_]: string
+		no_device:    string
+		virtual_name: string
+	}, ...]
+	creation_date?: string
+	description?:   string
 	executable_users?: [string, ...]
-	most_recent?: bool
-	name_regex?:  string
+	hypervisor?:        string
+	id?:                string
+	image_id?:          string
+	image_location?:    string
+	image_owner_alias?: string
+	image_type?:        string
+	kernel_id?:         string
+	most_recent?:       bool
+	name?:              string
+	name_regex?:        string
+	owner_id?:          string
+	platform?:          string
+	product_codes?: [{
+		product_code_id:   string
+		product_code_type: string
+	}, ...]
+	public?:            bool
+	ramdisk_id?:        string
+	root_device_name?:  string
+	root_device_type?:  string
+	root_snapshot_id?:  string
+	sriov_net_support?: string
+	state?:             string
+	state_reason?: [_]: string
+	tags?: [_]:         string
+	virtualization_type?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
@@ -30,6 +188,8 @@ package aws
 #AwsAmiIdsDataSource: {
 	owners: [string, ...]
 	executable_users?: [string, ...]
+	id?: string
+	ids?: [string, ...]
 	name_regex?:     string
 	sort_ascending?: bool
 	filter?: [{
@@ -37,21 +197,99 @@ package aws
 		values: [string, ...]
 	}, ...]
 }
-#AwsApiGatewayApiKeyDataSource: id: string
+#AwsApiGatewayApiKeyDataSource: {
+	id:                 string
+	created_date?:      string
+	description?:       string
+	enabled?:           bool
+	last_updated_date?: string
+	name?:              string
+	tags?: [_]: string
+	value?: string
+}
 #AwsApiGatewayResourceDataSource: {
 	path:        string
 	rest_api_id: string
+	id?:         string
+	parent_id?:  string
+	path_part?:  string
 }
-#AwsApiGatewayRestApiDataSource: name: string
-#AwsApiGatewayVpcLinkDataSource: name: string
-#AwsArnDataSource: arn:                string
-#AwsAutoscalingGroupDataSource: name:  string
-#AwsAutoscalingGroupsDataSource: filter?: [{
+#AwsApiGatewayRestApiDataSource: {
+	name:            string
+	api_key_source?: string
+	arn?:            string
+	binary_media_types?: [string, ...]
+	description?: string
+	endpoint_configuration?: [{
+		types: [string, ...]
+		vpc_endpoint_ids: [string, ...]
+	}, ...]
+	execution_arn?:            string
+	id?:                       string
+	minimum_compression_size?: number
+	policy?:                   string
+	root_resource_id?:         string
+	tags?: [_]: string
+}
+#AwsApiGatewayVpcLinkDataSource: {
+	name:            string
+	description?:    string
+	id?:             string
+	status?:         string
+	status_message?: string
+	tags?: [_]: string
+	target_arns?: [string, ...]
+}
+#AwsArnDataSource: {
+	arn:        string
+	account?:   string
+	id?:        string
+	partition?: string
+	region?:    string
+	resource?:  string
+	service?:   string
+}
+#AwsAutoscalingGroupDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
+	arn?: string
+	availability_zones?: [string, ...]
+	default_cooldown?:          number
+	desired_capacity?:          number
+	health_check_grace_period?: number
+	health_check_type?:         string
+	id?:                        string
+	launch_configuration?:      string
+	load_balancers?: [string, ...]
+	max_size?:                              number
+	min_size?:                              number
+	new_instances_protected_from_scale_in?: bool
+	placement_group?:                       string
+	service_linked_role_arn?:               string
+	status?:                                string
+	target_group_arns?: [string, ...]
+	termination_policies?: [string, ...]
+	vpc_zone_identifier?: string
+}
+#AwsAutoscalingGroupsDataSource: {
+	arns?: [string, ...]
+	id?: string
+	names?: [string, ...]
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
 #AwsAvailabilityZoneDataSource: {
 	all_availability_zones?: bool
+	group_name?:             string
+	id?:                     string
+	name?:                   string
+	name_suffix?:            string
+	network_border_group?:   string
+	opt_in_status?:          string
+	region?:                 string
+	state?:                  string
+	zone_id?:                string
 	filter?: [{
 		name: string
 		values: [string, ...]
@@ -61,83 +299,392 @@ package aws
 	all_availability_zones?: bool
 	blacklisted_names?: [string, ...]
 	blacklisted_zone_ids?: [string, ...]
+	exclude_names?: [string, ...]
+	exclude_zone_ids?: [string, ...]
 	group_names?: [string, ...]
+	id?: string
+	names?: [string, ...]
 	state?: string
+	zone_ids?: [string, ...]
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsBackupPlanDataSource: plan_id: string
-#AwsBackupSelectionDataSource: {
-	plan_id:      string
-	selection_id: string
+#AwsBackupPlanDataSource: {
+	plan_id: string
+	arn?:    string
+	id?:     string
+	name?:   string
+	tags?: [_]: string
+	version?: string
 }
-#AwsBackupVaultDataSource: name:                                 string
-#AwsBatchComputeEnvironmentDataSource: compute_environment_name: string
-#AwsBatchJobQueueDataSource: name:                               string
-#AwsBillingServiceAccountDataSource: {}
-#AwsCallerIdentityDataSource: {}
-#AwsCanonicalUserIdDataSource: {}
-#AwsCloudformationExportDataSource: name: string
-#AwsCloudformationStackDataSource: name:  string
-#AwsCloudfrontDistributionDataSource: {
-	id: string
+#AwsBackupSelectionDataSource: {
+	plan_id:       string
+	selection_id:  string
+	iam_role_arn?: string
+	id?:           string
+	name?:         string
+	resources?: [string, ...]
+}
+#AwsBackupVaultDataSource: {
+	name:             string
+	arn?:             string
+	id?:              string
+	kms_key_arn?:     string
+	recovery_points?: number
 	tags?: [_]: string
 }
-#AwsCloudhsmV2ClusterDataSource: cluster_id:         string
-#AwsCloudtrailServiceAccountDataSource: region?:     string
-#AwsCloudwatchLogGroupDataSource: name:              string
-#AwsCodecommitRepositoryDataSource: repository_name: string
-#AwsCognitoUserPoolsDataSource: name:                string
-#AwsCurReportDefinitionDataSource: report_name:      string
-#AwsCustomerGatewayDataSource: {
+#AwsBatchComputeEnvironmentDataSource: {
+	compute_environment_name: string
+	arn?:                     string
+	ecs_cluster_arn?:         string
+	id?:                      string
+	service_role?:            string
+	state?:                   string
+	status?:                  string
+	status_reason?:           string
+	type?:                    string
+}
+#AwsBatchJobQueueDataSource: {
+	name: string
+	arn?: string
+	compute_environment_order?: [{
+		compute_environment: string
+		order:               number
+	}, ...]
+	id?:            string
+	priority?:      number
+	state?:         string
+	status?:        string
+	status_reason?: string
+}
+#AwsBillingServiceAccountDataSource: {
+	arn?: string
+	id?:  string
+}
+#AwsCallerIdentityDataSource: {
+	account_id?: string
+	arn?:        string
+	id?:         string
+	user_id?:    string
+}
+#AwsCanonicalUserIdDataSource: {
+	display_name?: string
+	id?:           string
+}
+#AwsCloudformationExportDataSource: {
+	name:                string
+	exporting_stack_id?: string
+	id?:                 string
+	value?:              string
+}
+#AwsCloudformationStackDataSource: {
+	name: string
+	capabilities?: [string, ...]
+	description?:      string
+	disable_rollback?: bool
+	iam_role_arn?:     string
+	id?:               string
+	notification_arns?: [string, ...]
+	outputs?: [_]:    string
+	parameters?: [_]: string
+	tags?: [_]:       string
+	template_body?:      string
+	timeout_in_minutes?: number
+}
+#AwsCloudfrontDistributionDataSource: {
+	id:                              string
+	arn?:                            string
+	domain_name?:                    string
+	enabled?:                        bool
+	etag?:                           string
+	hosted_zone_id?:                 string
+	in_progress_validation_batches?: number
+	last_modified_time?:             string
+	status?:                         string
+	tags?: [_]: string
+}
+#AwsCloudhsmV2ClusterDataSource: {
+	cluster_id: string
+	cluster_certificates?: [{
+		aws_hardware_certificate:          string
+		cluster_certificate:               string
+		cluster_csr:                       string
+		hsm_certificate:                   string
+		manufacturer_hardware_certificate: string
+	}, ...]
+	cluster_state?:     string
+	id?:                string
+	security_group_id?: string
+	subnet_ids?: [string, ...]
+	vpc_id?: string
+}
+#AwsCloudtrailServiceAccountDataSource: {
+	arn?:    string
+	id?:     string
+	region?: string
+}
+#AwsCloudwatchLogGroupDataSource: {
+	name:               string
+	arn?:               string
+	creation_time?:     number
+	id?:                string
+	kms_key_id?:        string
+	retention_in_days?: number
+	tags?: [_]: string
+}
+#AwsCodecommitRepositoryDataSource: {
+	repository_name: string
+	arn?:            string
+	clone_url_http?: string
+	clone_url_ssh?:  string
+	id?:             string
+	repository_id?:  string
+}
+#AwsCognitoUserPoolsDataSource: {
+	name: string
+	arns?: [string, ...]
 	id?: string
+	ids?: [string, ...]
+}
+#AwsCurReportDefinitionDataSource: {
+	report_name: string
+	additional_artifacts?: [string, ...]
+	additional_schema_elements?: [string, ...]
+	compression?: string
+	format?:      string
+	id?:          string
+	s3_bucket?:   string
+	s3_prefix?:   string
+	s3_region?:   string
+	time_unit?:   string
+}
+#AwsCustomerGatewayDataSource: {
+	arn?:        string
+	bgp_asn?:    number
+	id?:         string
+	ip_address?: string
+	tags?: [_]: string
+	type?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsDbClusterSnapshotDataSource: {
+	allocated_storage?: number
+	availability_zones?: [string, ...]
 	db_cluster_identifier?:          string
+	db_cluster_snapshot_arn?:        string
 	db_cluster_snapshot_identifier?: string
+	engine?:                         string
+	engine_version?:                 string
+	id?:                             string
 	include_public?:                 bool
 	include_shared?:                 bool
+	kms_key_id?:                     string
+	license_model?:                  string
 	most_recent?:                    bool
+	port?:                           number
+	snapshot_create_time?:           string
 	snapshot_type?:                  string
+	source_db_cluster_snapshot_arn?: string
+	status?:                         string
+	storage_encrypted?:              bool
+	tags?: [_]: string
+	vpc_id?: string
 }
-#AwsDbEventCategoriesDataSource: source_type?:    string
-#AwsDbInstanceDataSource: db_instance_identifier: string
+#AwsDbEventCategoriesDataSource: {
+	event_categories?: [string, ...]
+	id?:          string
+	source_type?: string
+}
+#AwsDbInstanceDataSource: {
+	db_instance_identifier:      string
+	address?:                    string
+	allocated_storage?:          number
+	auto_minor_version_upgrade?: bool
+	availability_zone?:          string
+	backup_retention_period?:    number
+	ca_cert_identifier?:         string
+	db_cluster_identifier?:      string
+	db_instance_arn?:            string
+	db_instance_class?:          string
+	db_instance_port?:           number
+	db_name?:                    string
+	db_parameter_groups?: [string, ...]
+	db_security_groups?: [string, ...]
+	db_subnet_group?: string
+	enabled_cloudwatch_logs_exports?: [string, ...]
+	endpoint?:            string
+	engine?:              string
+	engine_version?:      string
+	hosted_zone_id?:      string
+	id?:                  string
+	iops?:                number
+	kms_key_id?:          string
+	license_model?:       string
+	master_username?:     string
+	monitoring_interval?: number
+	monitoring_role_arn?: string
+	multi_az?:            bool
+	option_group_memberships?: [string, ...]
+	port?:                         number
+	preferred_backup_window?:      string
+	preferred_maintenance_window?: string
+	publicly_accessible?:          bool
+	replicate_source_db?:          string
+	resource_id?:                  string
+	storage_encrypted?:            bool
+	storage_type?:                 string
+	tags?: [_]: string
+	timezone?: string
+	vpc_security_groups?: [string, ...]
+}
 #AwsDbSnapshotDataSource: {
-	db_instance_identifier?: string
-	db_snapshot_identifier?: string
-	include_public?:         bool
-	include_shared?:         bool
-	most_recent?:            bool
-	snapshot_type?:          string
+	allocated_storage?:             number
+	availability_zone?:             string
+	db_instance_identifier?:        string
+	db_snapshot_arn?:               string
+	db_snapshot_identifier?:        string
+	encrypted?:                     bool
+	engine?:                        string
+	engine_version?:                string
+	id?:                            string
+	include_public?:                bool
+	include_shared?:                bool
+	iops?:                          number
+	kms_key_id?:                    string
+	license_model?:                 string
+	most_recent?:                   bool
+	option_group_name?:             string
+	port?:                          number
+	snapshot_create_time?:          string
+	snapshot_type?:                 string
+	source_db_snapshot_identifier?: string
+	source_region?:                 string
+	status?:                        string
+	storage_type?:                  string
+	vpc_id?:                        string
 }
 #AwsDirectoryServiceDirectoryDataSource: {
 	directory_id: string
+	access_url?:  string
+	alias?:       string
+	connect_settings?: [{
+		availability_zones: [string, ...]
+		connect_ips: [string, ...]
+		customer_dns_ips: [string, ...]
+		customer_username: string
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
+	description?: string
+	dns_ip_addresses?: [string, ...]
+	edition?:           string
+	enable_sso?:        bool
+	id?:                string
+	name?:              string
+	security_group_id?: string
+	short_name?:        string
+	size?:              string
 	tags?: [_]: string
+	type?: string
+	vpc_settings?: [{
+		availability_zones: [string, ...]
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
 }
-#AwsDxGatewayDataSource: name: string
+#AwsDxGatewayDataSource: {
+	name:              string
+	amazon_side_asn?:  string
+	id?:               string
+	owner_account_id?: string
+}
 #AwsDynamodbTableDataSource: {
 	name: string
-	server_side_encryption?: [{}, ...]
+	arn?: string
+	attribute?: [{
+		name: string
+		type: string
+	}, ...]
+	billing_mode?: string
+	global_secondary_index?: [{
+		hash_key: string
+		name:     string
+		non_key_attributes: [string, ...]
+		projection_type: string
+		range_key:       string
+		read_capacity:   number
+		write_capacity:  number
+	}, ...]
+	hash_key?: string
+	id?:       string
+	local_secondary_index?: [{
+		name: string
+		non_key_attributes: [string, ...]
+		projection_type: string
+		range_key:       string
+	}, ...]
+	point_in_time_recovery?: [{
+		enabled: bool
+	}, ...]
+	range_key?:     string
+	read_capacity?: number
+	replica?: [{
+		region_name: string
+	}, ...]
+	stream_arn?:       string
+	stream_enabled?:   bool
+	stream_label?:     string
+	stream_view_type?: string
+	tags?: [_]: string
+	ttl?: [{
+		attribute_name: string
+		enabled:        bool
+	}, ...]
+	write_capacity?: number
+	server_side_encryption?: [{
+		enabled?:     bool
+		kms_key_arn?: string
+	}, ...]
 }
-#AwsEbsDefaultKmsKeyDataSource: {}
-#AwsEbsEncryptionByDefaultDataSource: {}
+#AwsEbsDefaultKmsKeyDataSource: {
+	id?:      string
+	key_arn?: string
+}
+#AwsEbsEncryptionByDefaultDataSource: {
+	enabled?: bool
+	id?:      string
+}
 #AwsEbsSnapshotDataSource: {
-	most_recent?: bool
+	arn?:                    string
+	data_encryption_key_id?: string
+	description?:            string
+	encrypted?:              bool
+	id?:                     string
+	kms_key_id?:             string
+	most_recent?:            bool
+	owner_alias?:            string
+	owner_id?:               string
 	owners?: [string, ...]
 	restorable_by_user_ids?: [string, ...]
+	snapshot_id?: string
 	snapshot_ids?: [string, ...]
+	state?: string
+	tags?: [_]: string
+	volume_id?:   string
+	volume_size?: number
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsEbsSnapshotIdsDataSource: {
+	id?: string
+	ids?: [string, ...]
 	owners?: [string, ...]
 	restorable_by_user_ids?: [string, ...]
 	filter?: [{
@@ -146,21 +693,57 @@ package aws
 	}, ...]
 }
 #AwsEbsVolumeDataSource: {
-	most_recent?: bool
+	arn?:                  string
+	availability_zone?:    string
+	encrypted?:            bool
+	id?:                   string
+	iops?:                 number
+	kms_key_id?:           string
+	most_recent?:          bool
+	multi_attach_enabled?: bool
+	outpost_arn?:          string
+	size?:                 number
+	snapshot_id?:          string
+	tags?: [_]: string
+	volume_id?:   string
+	volume_type?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsEc2CoipPoolDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsEc2CoipPoolsDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
+#AwsEbsVolumesDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2CoipPoolDataSource: {
+	id?:                           string
+	local_gateway_route_table_id?: string
+	pool_cidrs?: [string, ...]
+	pool_id?: string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2CoipPoolsDataSource: {
+	id?: string
+	pool_ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
 #AwsEc2InstanceTypeOfferingDataSource: {
+	id?:            string
+	instance_type?: string
 	location_type?: string
 	preferred_instance_types?: [string, ...]
 	filter?: [{
@@ -169,37 +752,113 @@ package aws
 	}, ...]
 }
 #AwsEc2InstanceTypeOfferingsDataSource: {
+	id?: string
+	instance_types?: [string, ...]
 	location_type?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsEc2LocalGatewayDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsEc2LocalGatewayRouteTableDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsEc2LocalGatewayRouteTablesDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsEc2LocalGatewaysDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsEc2TransitGatewayDataSource: {
+#AwsEc2LocalGatewayDataSource: {
+	id?:          string
+	outpost_arn?: string
+	owner_id?:    string
+	state?:       string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewayRouteTableDataSource: {
+	id?:                           string
+	local_gateway_id?:             string
+	local_gateway_route_table_id?: string
+	outpost_arn?:                  string
+	state?:                        string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewayRouteTablesDataSource: {
 	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewayVirtualInterfaceDataSource: {
+	id?:               string
+	local_address?:    string
+	local_bgp_asn?:    number
+	local_gateway_id?: string
+	local_gateway_virtual_interface_ids?: [string, ...]
+	peer_address?: string
+	peer_bgp_asn?: number
+	tags?: [_]: string
+	vlan?: number
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewayVirtualInterfaceGroupDataSource: {
+	id?:               string
+	local_gateway_id?: string
+	local_gateway_virtual_interface_ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewayVirtualInterfaceGroupsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	local_gateway_virtual_interface_ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2LocalGatewaysDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEc2TransitGatewayDataSource: {
+	amazon_side_asn?:                    number
+	arn?:                                string
+	association_default_route_table_id?: string
+	auto_accept_shared_attachments?:     string
+	default_route_table_association?:    string
+	default_route_table_propagation?:    string
+	description?:                        string
+	dns_support?:                        string
+	id?:                                 string
+	owner_id?:                           string
+	propagation_default_route_table_id?: string
+	tags?: [_]: string
+	vpn_ecmp_support?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsEc2TransitGatewayDxGatewayAttachmentDataSource: {
-	dx_gateway_id?:      string
+	dx_gateway_id?: string
+	id?:            string
+	tags?: [_]: string
 	transit_gateway_id?: string
 	filter?: [{
 		name: string
@@ -207,27 +866,45 @@ package aws
 	}, ...]
 }
 #AwsEc2TransitGatewayPeeringAttachmentDataSource: {
-	id?: string
+	id?:                      string
+	peer_account_id?:         string
+	peer_region?:             string
+	peer_transit_gateway_id?: string
+	tags?: [_]: string
+	transit_gateway_id?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsEc2TransitGatewayRouteTableDataSource: {
-	id?: string
+	default_association_route_table?: bool
+	default_propagation_route_table?: bool
+	id?:                              string
+	tags?: [_]: string
+	transit_gateway_id?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsEc2TransitGatewayVpcAttachmentDataSource: {
-	id?: string
+	dns_support?:  string
+	id?:           string
+	ipv6_support?: string
+	subnet_ids?: [string, ...]
+	tags?: [_]: string
+	transit_gateway_id?: string
+	vpc_id?:             string
+	vpc_owner_id?:       string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsEc2TransitGatewayVpnAttachmentDataSource: {
+	id?: string
+	tags?: [_]: string
 	transit_gateway_id?: string
 	vpn_connection_id?:  string
 	filter?: [{
@@ -235,47 +912,378 @@ package aws
 		values: [string, ...]
 	}, ...]
 }
+#AwsEcrAuthorizationTokenDataSource: {
+	authorization_token?: string
+	expires_at?:          string
+	id?:                  string
+	password?:            string
+	proxy_endpoint?:      string
+	registry_id?:         string
+	user_name?:           string
+}
 #AwsEcrImageDataSource: {
-	repository_name: string
-	image_tag?:      string
+	repository_name:      string
+	id?:                  string
+	image_digest?:        string
+	image_pushed_at?:     number
+	image_size_in_bytes?: number
+	image_tag?:           string
+	image_tags?: [string, ...]
+	registry_id?: string
 }
-#AwsEcrRepositoryDataSource: name:      string
-#AwsEcsClusterDataSource: cluster_name: string
-#AwsEcsContainerDefinitionDataSource: {
-	container_name:  string
-	task_definition: string
-}
-#AwsEcsServiceDataSource: {
-	cluster_arn:  string
-	service_name: string
-}
-#AwsEcsTaskDefinitionDataSource: task_definition: string
-#AwsEfsAccessPointDataSource: {
-	access_point_id: string
+#AwsEcrRepositoryDataSource: {
+	name:            string
+	arn?:            string
+	id?:             string
+	registry_id?:    string
+	repository_url?: string
 	tags?: [_]: string
 }
-#AwsEfsFileSystemDataSource: {}
-#AwsEfsMountTargetDataSource: mount_target_id: string
-#AwsEipDataSource: filter?: [{
+#AwsEcsClusterDataSource: {
+	cluster_name:                          string
+	arn?:                                  string
+	id?:                                   string
+	pending_tasks_count?:                  number
+	registered_container_instances_count?: number
+	running_tasks_count?:                  number
+	setting?: [{
+		name:  string
+		value: string
+	}, ...]
+	status?: string
+}
+#AwsEcsContainerDefinitionDataSource: {
+	container_name:      string
+	task_definition:     string
+	cpu?:                number
+	disable_networking?: bool
+	docker_labels?: [_]: string
+	environment?: [_]:   string
+	id?:                 string
+	image?:              string
+	image_digest?:       string
+	memory?:             number
+	memory_reservation?: number
+}
+#AwsEcsServiceDataSource: {
+	cluster_arn:          string
+	service_name:         string
+	arn?:                 string
+	desired_count?:       number
+	id?:                  string
+	launch_type?:         string
+	scheduling_strategy?: string
+	task_definition?:     string
+}
+#AwsEcsTaskDefinitionDataSource: {
+	task_definition: string
+	family?:         string
+	id?:             string
+	network_mode?:   string
+	revision?:       number
+	status?:         string
+	task_role_arn?:  string
+}
+#AwsEfsAccessPointDataSource: {
+	access_point_id:  string
+	arn?:             string
+	file_system_arn?: string
+	file_system_id?:  string
+	id?:              string
+	owner_id?:        string
+	posix_user?: [{
+		gid: number
+		secondary_gids: [number, ...]
+		uid: number
+	}, ...]
+	root_directory?: [{
+		creation_info: [{
+			owner_gid:   number
+			owner_uid:   number
+			permissions: string
+		}, ...]
+		path: string
+	}, ...]
+	tags?: [_]: string
+}
+#AwsEfsAccessPointsDataSource: {
+	file_system_id: string
+	arns?: [string, ...]
+	id?: string
+	ids?: [string, ...]
+}
+#AwsEfsFileSystemDataSource: {
+	arn?:            string
+	creation_token?: string
+	dns_name?:       string
+	encrypted?:      bool
+	file_system_id?: string
+	id?:             string
+	kms_key_id?:     string
+	lifecycle_policy?: [{
+		transition_to_ia: string
+	}, ...]
+	performance_mode?:                string
+	provisioned_throughput_in_mibps?: number
+	size_in_bytes?:                   number
+	tags?: [_]: string
+	throughput_mode?: string
+}
+#AwsEfsMountTargetDataSource: {
+	mount_target_id:         string
+	availability_zone_id?:   string
+	availability_zone_name?: string
+	dns_name?:               string
+	file_system_arn?:        string
+	file_system_id?:         string
+	id?:                     string
+	ip_address?:             string
+	mount_target_dns_name?:  string
+	network_interface_id?:   string
+	owner_id?:               string
+	security_groups?: [string, ...]
+	subnet_id?: string
+}
+#AwsEipDataSource: {
+	association_id?:             string
+	customer_owned_ip?:          string
+	customer_owned_ipv4_pool?:   string
+	domain?:                     string
+	id?:                         string
+	instance_id?:                string
+	network_interface_id?:       string
+	network_interface_owner_id?: string
+	private_dns?:                string
+	private_ip?:                 string
+	public_dns?:                 string
+	public_ip?:                  string
+	public_ipv4_pool?:           string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsEksClusterDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsEksClusterDataSource: name:                    string
-#AwsEksClusterAuthDataSource: name:                string
-#AwsElasticBeanstalkApplicationDataSource: name:   string
-#AwsElasticBeanstalkHostedZoneDataSource: region?: string
+	arn?: string
+	certificate_authority?: [{
+		data: string
+	}, ...]
+	created_at?: string
+	enabled_cluster_log_types?: [string, ...]
+	endpoint?: string
+	id?:       string
+	identity?: [{
+		oidc: [{
+			issuer: string
+		}, ...]
+	}, ...]
+	platform_version?: string
+	role_arn?:         string
+	status?:           string
+	tags?: [_]: string
+	version?: string
+	vpc_config?: [{
+		cluster_security_group_id: string
+		endpoint_private_access:   bool
+		endpoint_public_access:    bool
+		public_access_cidrs: [string, ...]
+		security_group_ids: [string, ...]
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
+}
+#AwsEksClusterAuthDataSource: {
+	name:   string
+	id?:    string
+	token?: string
+}
+#AwsElasticBeanstalkApplicationDataSource: {
+	name: string
+	appversion_lifecycle?: [{
+		delete_source_from_s3: bool
+		max_age_in_days:       number
+		max_count:             number
+		service_role:          string
+	}, ...]
+	arn?:         string
+	description?: string
+	id?:          string
+}
+#AwsElasticBeanstalkHostedZoneDataSource: {
+	id?:     string
+	region?: string
+}
 #AwsElasticBeanstalkSolutionStackDataSource: {
 	name_regex:   string
+	id?:          string
 	most_recent?: bool
+	name?:        string
 }
-#AwsElasticacheClusterDataSource: cluster_id:                    string
-#AwsElasticacheReplicationGroupDataSource: replication_group_id: string
-#AwsElasticsearchDomainDataSource: domain_name:                  string
-#AwsElbDataSource: name:                                         string
-#AwsElbHostedZoneIdDataSource: region?:                          string
-#AwsElbServiceAccountDataSource: region?:                        string
+#AwsElasticacheClusterDataSource: {
+	cluster_id:         string
+	arn?:               string
+	availability_zone?: string
+	cache_nodes?: [{
+		address:           string
+		availability_zone: string
+		id:                string
+		port:              number
+	}, ...]
+	cluster_address?:        string
+	configuration_endpoint?: string
+	engine?:                 string
+	engine_version?:         string
+	id?:                     string
+	maintenance_window?:     string
+	node_type?:              string
+	notification_topic_arn?: string
+	num_cache_nodes?:        number
+	parameter_group_name?:   string
+	port?:                   number
+	replication_group_id?:   string
+	security_group_ids?: [string, ...]
+	security_group_names?: [string, ...]
+	snapshot_retention_limit?: number
+	snapshot_window?:          string
+	subnet_group_name?:        string
+	tags?: [_]: string
+}
+#AwsElasticacheReplicationGroupDataSource: {
+	replication_group_id:            string
+	auth_token_enabled?:             bool
+	automatic_failover_enabled?:     bool
+	configuration_endpoint_address?: string
+	id?:                             string
+	member_clusters?: [string, ...]
+	node_type?:                     string
+	number_cache_clusters?:         number
+	port?:                          number
+	primary_endpoint_address?:      string
+	replication_group_description?: string
+	snapshot_retention_limit?:      number
+	snapshot_window?:               string
+}
+#AwsElasticsearchDomainDataSource: {
+	domain_name:      string
+	access_policies?: string
+	advanced_options?: [_]: string
+	advanced_security_options?: [{
+		enabled:                        bool
+		internal_user_database_enabled: bool
+	}, ...]
+	arn?: string
+	cluster_config?: [{
+		dedicated_master_count:   number
+		dedicated_master_enabled: bool
+		dedicated_master_type:    string
+		instance_count:           number
+		instance_type:            string
+		warm_count:               number
+		warm_enabled:             bool
+		warm_type:                string
+		zone_awareness_config: [{
+			availability_zone_count: number
+		}, ...]
+		zone_awareness_enabled: bool
+	}, ...]
+	cognito_options?: [{
+		enabled:          bool
+		identity_pool_id: string
+		role_arn:         string
+		user_pool_id:     string
+	}, ...]
+	created?:   bool
+	deleted?:   bool
+	domain_id?: string
+	ebs_options?: [{
+		ebs_enabled: bool
+		iops:        number
+		volume_size: number
+		volume_type: string
+	}, ...]
+	elasticsearch_version?: string
+	encryption_at_rest?: [{
+		enabled:    bool
+		kms_key_id: string
+	}, ...]
+	endpoint?:        string
+	id?:              string
+	kibana_endpoint?: string
+	log_publishing_options?: [{
+		cloudwatch_log_group_arn: string
+		enabled:                  bool
+		log_type:                 string
+	}, ...]
+	node_to_node_encryption?: [{
+		enabled: bool
+	}, ...]
+	processing?: bool
+	snapshot_options?: [{
+		automated_snapshot_start_hour: number
+	}, ...]
+	tags?: [_]: string
+	vpc_options?: [{
+		availability_zones: [string, ...]
+		security_group_ids: [string, ...]
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
+}
+#AwsElbDataSource: {
+	name: string
+	access_logs?: [{
+		bucket:        string
+		bucket_prefix: string
+		enabled:       bool
+		interval:      number
+	}, ...]
+	arn?: string
+	availability_zones?: [string, ...]
+	connection_draining?:         bool
+	connection_draining_timeout?: number
+	cross_zone_load_balancing?:   bool
+	dns_name?:                    string
+	health_check?: [{
+		healthy_threshold:   number
+		interval:            number
+		target:              string
+		timeout:             number
+		unhealthy_threshold: number
+	}, ...]
+	id?:           string
+	idle_timeout?: number
+	instances?: [string, ...]
+	internal?: bool
+	listener?: [{
+		instance_port:      number
+		instance_protocol:  string
+		lb_port:            number
+		lb_protocol:        string
+		ssl_certificate_id: string
+	}, ...]
+	security_groups?: [string, ...]
+	source_security_group?:    string
+	source_security_group_id?: string
+	subnets?: [string, ...]
+	tags?: [_]: string
+	zone_id?: string
+}
+#AwsElbHostedZoneIdDataSource: {
+	id?:     string
+	region?: string
+}
+#AwsElbServiceAccountDataSource: {
+	arn?:    string
+	id?:     string
+	region?: string
+}
 #AwsGlueScriptDataSource: {
-	language?: string
+	id?:            string
+	language?:      string
+	python_script?: string
+	scala_code?:    string
 	dag_edge?: [{
 		source:            string
 		target:            string
@@ -292,12 +1300,50 @@ package aws
 		}, ...]
 	}, ...]
 }
-#AwsGuarddutyDetectorDataSource: id?: string
-#AwsIamAccountAliasDataSource: {}
-#AwsIamGroupDataSource: group_name:     string
-#AwsIamInstanceProfileDataSource: name: string
-#AwsIamPolicyDataSource: arn:           string
+#AwsGuarddutyDetectorDataSource: {
+	finding_publishing_frequency?: string
+	id?:                           string
+	service_role_arn?:             string
+	status?:                       string
+}
+#AwsIamAccountAliasDataSource: {
+	account_alias?: string
+	id?:            string
+}
+#AwsIamGroupDataSource: {
+	group_name: string
+	arn?:       string
+	group_id?:  string
+	id?:        string
+	path?:      string
+	users?: [{
+		arn:       string
+		path:      string
+		user_id:   string
+		user_name: string
+	}, ...]
+}
+#AwsIamInstanceProfileDataSource: {
+	name:         string
+	arn?:         string
+	create_date?: string
+	id?:          string
+	path?:        string
+	role_arn?:    string
+	role_id?:     string
+	role_name?:   string
+}
+#AwsIamPolicyDataSource: {
+	arn:          string
+	description?: string
+	id?:          string
+	name?:        string
+	path?:        string
+	policy?:      string
+}
 #AwsIamPolicyDocumentDataSource: {
+	id?:            string
+	json?:          string
 	override_json?: string
 	policy_id?:     string
 	source_json?:   string
@@ -325,119 +1371,759 @@ package aws
 	}, ...]
 }
 #AwsIamRoleDataSource: {
-	name:       string
-	role_name?: string
+	name:                         string
+	arn?:                         string
+	assume_role_policy?:          string
+	assume_role_policy_document?: string
+	create_date?:                 string
+	description?:                 string
+	id?:                          string
+	max_session_duration?:        number
+	path?:                        string
+	permissions_boundary?:        string
+	role_id?:                     string
+	role_name?:                   string
+	tags?: [_]: string
+	unique_id?: string
 }
 #AwsIamServerCertificateDataSource: {
-	latest?:      bool
-	name_prefix?: string
-	path_prefix?: string
+	arn?:               string
+	certificate_body?:  string
+	certificate_chain?: string
+	expiration_date?:   string
+	id?:                string
+	latest?:            bool
+	name?:              string
+	name_prefix?:       string
+	path?:              string
+	path_prefix?:       string
+	upload_date?:       string
 }
-#AwsIamUserDataSource: user_name: string
-#AwsInspectorRulesPackagesDataSource: {}
+#AwsIamUserDataSource: {
+	user_name:             string
+	arn?:                  string
+	id?:                   string
+	path?:                 string
+	permissions_boundary?: string
+	user_id?:              string
+}
+#AwsInspectorRulesPackagesDataSource: {
+	arns?: [string, ...]
+	id?: string
+}
 #AwsInstanceDataSource: {
-	get_password_data?: bool
-	get_user_data?:     bool
-	instance_id?:       string
+	ami?:                         string
+	arn?:                         string
+	associate_public_ip_address?: bool
+	availability_zone?:           string
+	credit_specification?: [{
+		cpu_credits: string
+	}, ...]
+	disable_api_termination?: bool
+	ebs_block_device?: [{
+		delete_on_termination: bool
+		device_name:           string
+		encrypted:             bool
+		iops:                  number
+		kms_key_id:            string
+		snapshot_id:           string
+		volume_id:             string
+		volume_size:           number
+		volume_type:           string
+	}, ...]
+	ebs_optimized?: bool
+	ephemeral_block_device?: [{
+		device_name:  string
+		no_device:    bool
+		virtual_name: string
+	}, ...]
+	get_password_data?:    bool
+	get_user_data?:        bool
+	host_id?:              string
+	iam_instance_profile?: string
+	id?:                   string
+	instance_id?:          string
+	instance_state?:       string
+	instance_tags?: [_]: string
+	instance_type?: string
+	key_name?:      string
+	metadata_options?: [{
+		http_endpoint:               string
+		http_put_response_hop_limit: number
+		http_tokens:                 string
+	}, ...]
+	monitoring?:           bool
+	network_interface_id?: string
+	outpost_arn?:          string
+	password_data?:        string
+	placement_group?:      string
+	private_dns?:          string
+	private_ip?:           string
+	public_dns?:           string
+	public_ip?:            string
+	root_block_device?: [{
+		delete_on_termination: bool
+		device_name:           string
+		encrypted:             bool
+		iops:                  number
+		kms_key_id:            string
+		volume_id:             string
+		volume_size:           number
+		volume_type:           string
+	}, ...]
+	security_groups?: [string, ...]
+	source_dest_check?: bool
+	subnet_id?:         string
+	tags?: [_]: string
+	tenancy?:          string
+	user_data?:        string
+	user_data_base64?: string
+	vpc_security_group_ids?: [string, ...]
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
 #AwsInstancesDataSource: {
+	id?: string
+	ids?: [string, ...]
 	instance_state_names?: [string, ...]
+	instance_tags?: [_]: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsInternetGatewayDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsIotEndpointDataSource: endpoint_type?: string
+#AwsInternetGatewayDataSource: {
+	arn?: string
+	attachments?: [{
+		state:  string
+		vpc_id: string
+	}, ...]
+	id?:                  string
+	internet_gateway_id?: string
+	owner_id?:            string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsIotEndpointDataSource: {
+	endpoint_address?: string
+	endpoint_type?:    string
+	id?:               string
+}
 #AwsIpRangesDataSource: {
 	services: [string, ...]
+	cidr_blocks?: [string, ...]
+	create_date?: string
+	id?:          string
+	ipv6_cidr_blocks?: [string, ...]
 	regions?: [string, ...]
-	url?: string
+	sync_token?: number
+	url?:        string
 }
-#AwsKinesisStreamDataSource: name: string
-#AwsKmsAliasDataSource: name:      string
+#AwsKinesisStreamDataSource: {
+	name: string
+	arn?: string
+	closed_shards?: [string, ...]
+	creation_timestamp?: number
+	id?:                 string
+	open_shards?: [string, ...]
+	retention_period?: number
+	shard_level_metrics?: [string, ...]
+	status?: string
+	tags?: [_]: string
+}
+#AwsKmsAliasDataSource: {
+	name:            string
+	arn?:            string
+	id?:             string
+	target_key_arn?: string
+	target_key_id?:  string
+}
 #AwsKmsCiphertextDataSource: {
-	key_id:    string
-	plaintext: string
+	key_id:           string
+	plaintext:        string
+	ciphertext_blob?: string
 	context?: [_]: string
+	id?: string
 }
 #AwsKmsKeyDataSource: {
-	key_id: string
+	key_id:                    string
+	arn?:                      string
+	aws_account_id?:           string
+	creation_date?:            string
+	customer_master_key_spec?: string
+	deletion_date?:            string
+	description?:              string
+	enabled?:                  bool
+	expiration_model?:         string
 	grant_tokens?: [string, ...]
+	id?:          string
+	key_manager?: string
+	key_state?:   string
+	key_usage?:   string
+	origin?:      string
+	valid_to?:    string
 }
-#AwsKmsSecretDataSource: secret?: [{
-	name:    string
-	payload: string
-	context?: [_]: string
-	grant_tokens?: [string, ...]
-}, ...]
-#AwsKmsSecretsDataSource: secret?: [{
-	name:    string
-	payload: string
-	context?: [_]: string
-	grant_tokens?: [string, ...]
-}, ...]
+#AwsKmsSecretDataSource: {
+	id?: string
+	secret?: [{
+		name:    string
+		payload: string
+		context?: [_]: string
+		grant_tokens?: [string, ...]
+	}, ...]
+}
+#AwsKmsSecretsDataSource: {
+	id?: string
+	plaintext?: [_]: string
+	secret?: [{
+		name:    string
+		payload: string
+		context?: [_]: string
+		grant_tokens?: [string, ...]
+	}, ...]
+}
 #AwsLambdaAliasDataSource: {
-	function_name: string
-	name:          string
+	function_name:     string
+	name:              string
+	arn?:              string
+	description?:      string
+	function_version?: string
+	id?:               string
+	invoke_arn?:       string
 }
 #AwsLambdaFunctionDataSource: {
 	function_name: string
-	qualifier?:    string
+	arn?:          string
+	dead_letter_config?: [{
+		target_arn: string
+	}, ...]
+	description?: string
+	environment?: [{
+		variables: [_]: string
+	}, ...]
+	file_system_config?: [{
+		arn:              string
+		local_mount_path: string
+	}, ...]
+	handler?:       string
+	id?:            string
+	invoke_arn?:    string
+	kms_key_arn?:   string
+	last_modified?: string
+	layers?: [string, ...]
+	memory_size?:                    number
+	qualified_arn?:                  string
+	qualifier?:                      string
+	reserved_concurrent_executions?: number
+	role?:                           string
+	runtime?:                        string
+	source_code_hash?:               string
+	source_code_size?:               number
+	tags?: [_]: string
+	timeout?: number
+	tracing_config?: [{
+		mode: string
+	}, ...]
+	version?: string
+	vpc_config?: [{
+		security_group_ids: [string, ...]
+		subnet_ids: [string, ...]
+		vpc_id: string
+	}, ...]
 }
 #AwsLambdaInvocationDataSource: {
 	function_name: string
 	input:         string
+	id?:           string
 	qualifier?:    string
+	result?:       string
+	result_map?: [_]: string
 }
 #AwsLambdaLayerVersionDataSource: {
 	layer_name:          string
+	arn?:                string
 	compatible_runtime?: string
+	compatible_runtimes?: [string, ...]
+	created_date?:     string
+	description?:      string
+	id?:               string
+	layer_arn?:        string
+	license_info?:     string
+	source_code_hash?: string
+	source_code_size?: number
+	version?:          number
 }
-#AwsLaunchConfigurationDataSource: name: string
+#AwsLaunchConfigurationDataSource: {
+	name:                         string
+	arn?:                         string
+	associate_public_ip_address?: bool
+	ebs_block_device?: [{
+		delete_on_termination: bool
+		device_name:           string
+		encrypted:             bool
+		iops:                  number
+		snapshot_id:           string
+		volume_size:           number
+		volume_type:           string
+	}, ...]
+	ebs_optimized?:     bool
+	enable_monitoring?: bool
+	ephemeral_block_device?: [{
+		device_name:  string
+		virtual_name: string
+	}, ...]
+	iam_instance_profile?: string
+	id?:                   string
+	image_id?:             string
+	instance_type?:        string
+	key_name?:             string
+	placement_tenancy?:    string
+	root_block_device?: [{
+		delete_on_termination: bool
+		encrypted:             bool
+		iops:                  number
+		volume_size:           number
+		volume_type:           string
+	}, ...]
+	security_groups?: [string, ...]
+	spot_price?:          string
+	user_data?:           string
+	vpc_classic_link_id?: string
+	vpc_classic_link_security_groups?: [string, ...]
+}
 #AwsLaunchTemplateDataSource: {
+	arn?: string
+	block_device_mappings?: [{
+		device_name: string
+		ebs: [{
+			delete_on_termination: string
+			encrypted:             string
+			iops:                  number
+			kms_key_id:            string
+			snapshot_id:           string
+			volume_size:           number
+			volume_type:           string
+		}, ...]
+		no_device:    string
+		virtual_name: string
+	}, ...]
+	credit_specification?: [{
+		cpu_credits: string
+	}, ...]
+	default_version?:         number
+	description?:             string
+	disable_api_termination?: bool
+	ebs_optimized?:           string
+	elastic_gpu_specifications?: [{
+		type: string
+	}, ...]
+	hibernation_options?: [{
+		configured: bool
+	}, ...]
+	iam_instance_profile?: [{
+		arn:  string
+		name: string
+	}, ...]
+	id?:                                   string
+	image_id?:                             string
+	instance_initiated_shutdown_behavior?: string
+	instance_market_options?: [{
+		market_type: string
+		spot_options: [{
+			block_duration_minutes:         number
+			instance_interruption_behavior: string
+			max_price:                      string
+			spot_instance_type:             string
+			valid_until:                    string
+		}, ...]
+	}, ...]
+	instance_type?:  string
+	kernel_id?:      string
+	key_name?:       string
+	latest_version?: number
+	metadata_options?: [{
+		http_endpoint:               string
+		http_put_response_hop_limit: number
+		http_tokens:                 string
+	}, ...]
+	monitoring?: [{
+		enabled: bool
+	}, ...]
 	name?: string
+	network_interfaces?: [{
+		associate_public_ip_address: string
+		delete_on_termination:       bool
+		description:                 string
+		device_index:                number
+		ipv4_address_count:          number
+		ipv4_addresses: [string, ...]
+		ipv6_address_count: number
+		ipv6_addresses: [string, ...]
+		network_interface_id: string
+		private_ip_address:   string
+		security_groups: [string, ...]
+		subnet_id: string
+	}, ...]
+	placement?: [{
+		affinity:          string
+		availability_zone: string
+		group_name:        string
+		host_id:           string
+		partition_number:  number
+		spread_domain:     string
+		tenancy:           string
+	}, ...]
+	ram_disk_id?: string
+	security_group_names?: [string, ...]
+	tag_specifications?: [{
+		resource_type: string
+		tags: [_]: string
+	}, ...]
+	tags?: [_]: string
+	user_data?: string
+	vpc_security_group_ids?: [string, ...]
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsLbDataSource: {}
-#AwsLbListenerDataSource: {}
-#AwsLbTargetGroupDataSource: {}
-#AwsMqBrokerDataSource: logs?: [{}, ...]
-#AwsMskClusterDataSource: cluster_name: string
-#AwsMskConfigurationDataSource: name:   string
-#AwsNatGatewayDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsNetworkAclsDataSource: {
+#AwsLbDataSource: {
+	access_logs?: [{
+		bucket:  string
+		enabled: bool
+		prefix:  string
+	}, ...]
+	arn?:                        string
+	arn_suffix?:                 string
+	dns_name?:                   string
+	drop_invalid_header_fields?: bool
+	enable_deletion_protection?: bool
+	id?:                         string
+	idle_timeout?:               number
+	internal?:                   bool
+	ip_address_type?:            string
+	load_balancer_type?:         string
+	name?:                       string
+	security_groups?: [string, ...]
+	subnet_mapping?: [{
+		allocation_id: string
+		subnet_id:     string
+	}, ...]
+	subnets?: [string, ...]
+	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
+}
+#AwsLbListenerDataSource: {
+	arn?:             string
+	certificate_arn?: string
+	default_action?: [{
+		authenticate_cognito: [{
+			authentication_request_extra_params: [_]: string
+			on_unauthenticated_request: string
+			scope:                      string
+			session_cookie_name:        string
+			session_timeout:            number
+			user_pool_arn:              string
+			user_pool_client_id:        string
+			user_pool_domain:           string
+		}, ...]
+		authenticate_oidc: [{
+			authentication_request_extra_params: [_]: string
+			authorization_endpoint:     string
+			client_id:                  string
+			client_secret:              string
+			issuer:                     string
+			on_unauthenticated_request: string
+			scope:                      string
+			session_cookie_name:        string
+			session_timeout:            number
+			token_endpoint:             string
+			user_info_endpoint:         string
+		}, ...]
+		fixed_response: [{
+			content_type: string
+			message_body: string
+			status_code:  string
+		}, ...]
+		order: number
+		redirect: [{
+			host:        string
+			path:        string
+			port:        string
+			protocol:    string
+			query:       string
+			status_code: string
+		}, ...]
+		target_group_arn: string
+		type:             string
+	}, ...]
+	id?:                string
+	load_balancer_arn?: string
+	port?:              number
+	protocol?:          string
+	ssl_policy?:        string
+}
+#AwsLbTargetGroupDataSource: {
+	arn?:                  string
+	arn_suffix?:           string
+	deregistration_delay?: number
+	health_check?: [{
+		enabled:             bool
+		healthy_threshold:   number
+		interval:            number
+		matcher:             string
+		path:                string
+		port:                string
+		protocol:            string
+		timeout:             number
+		unhealthy_threshold: number
+	}, ...]
+	id?:                                 string
+	lambda_multi_value_headers_enabled?: bool
+	load_balancing_algorithm_type?:      string
+	name?:                               string
+	port?:                               number
+	protocol?:                           string
+	proxy_protocol_v2?:                  bool
+	slow_start?:                         number
+	stickiness?: [{
+		cookie_duration: number
+		enabled:         bool
+		type:            string
+	}, ...]
+	tags?: [_]: string
+	target_type?: string
+	vpc_id?:      string
+}
+#AwsMqBrokerDataSource: {
+	arn?:                        string
+	auto_minor_version_upgrade?: bool
+	broker_id?:                  string
+	broker_name?:                string
+	configuration?: [{
+		id:       string
+		revision: number
+	}, ...]
+	deployment_mode?: string
+	encryption_options?: [{
+		kms_key_id:        string
+		use_aws_owned_key: bool
+	}, ...]
+	engine_type?:        string
+	engine_version?:     string
+	host_instance_type?: string
+	id?:                 string
+	instances?: [{
+		console_url: string
+		endpoints: [string, ...]
+		ip_address: string
+	}, ...]
+	maintenance_window_start_time?: [{
+		day_of_week: string
+		time_of_day: string
+		time_zone:   string
+	}, ...]
+	publicly_accessible?: bool
+	security_groups?: [string, ...]
+	subnet_ids?: [string, ...]
+	tags?: [_]: string
+	user?: [{
+		console_access: bool
+		groups: [string, ...]
+		username: string
+	}, ...]
+	logs?: [{
+		audit?:   bool
+		general?: bool
+	}, ...]
+}
+#AwsMskClusterDataSource: {
+	cluster_name:            string
+	arn?:                    string
+	bootstrap_brokers?:      string
+	bootstrap_brokers_tls?:  string
+	id?:                     string
+	kafka_version?:          string
+	number_of_broker_nodes?: number
+	tags?: [_]: string
+	zookeeper_connect_string?: string
+}
+#AwsMskConfigurationDataSource: {
+	name:         string
+	arn?:         string
+	description?: string
+	id?:          string
+	kafka_versions?: [string, ...]
+	latest_revision?:   number
+	server_properties?: string
+}
+#AwsNatGatewayDataSource: {
+	allocation_id?:        string
+	id?:                   string
+	network_interface_id?: string
+	private_ip?:           string
+	public_ip?:            string
+	state?:                string
+	subnet_id?:            string
+	tags?: [_]: string
 	vpc_id?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsNetworkInterfaceDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsNetworkInterfacesDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsOrganizationsOrganizationDataSource: {}
-#AwsOrganizationsOrganizationalUnitsDataSource: parent_id: string
-#AwsPartitionDataSource: {}
+#AwsNetworkAclsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsNetworkInterfaceDataSource: {
+	association?: [{
+		allocation_id:   string
+		association_id:  string
+		ip_owner_id:     string
+		public_dns_name: string
+		public_ip:       string
+	}, ...]
+	attachment?: [{
+		attachment_id:     string
+		device_index:      number
+		instance_id:       string
+		instance_owner_id: string
+	}, ...]
+	availability_zone?: string
+	description?:       string
+	id?:                string
+	interface_type?:    string
+	ipv6_addresses?: [string, ...]
+	mac_address?:      string
+	outpost_arn?:      string
+	owner_id?:         string
+	private_dns_name?: string
+	private_ip?:       string
+	private_ips?: [string, ...]
+	requester_id?: string
+	security_groups?: [string, ...]
+	subnet_id?: string
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsNetworkInterfacesDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsOrganizationsOrganizationDataSource: {
+	accounts?: [{
+		arn:    string
+		email:  string
+		id:     string
+		name:   string
+		status: string
+	}, ...]
+	arn?: string
+	aws_service_access_principals?: [string, ...]
+	enabled_policy_types?: [string, ...]
+	feature_set?:          string
+	id?:                   string
+	master_account_arn?:   string
+	master_account_email?: string
+	master_account_id?:    string
+	non_master_accounts?: [{
+		arn:    string
+		email:  string
+		id:     string
+		name:   string
+		status: string
+	}, ...]
+	roots?: [{
+		arn:  string
+		id:   string
+		name: string
+		policy_types: [{
+			status: string
+			type:   string
+		}, ...]
+	}, ...]
+}
+#AwsOrganizationsOrganizationalUnitsDataSource: {
+	parent_id: string
+	children?: [{
+		arn:  string
+		id:   string
+		name: string
+	}, ...]
+	id?: string
+}
+#AwsOutpostsOutpostDataSource: {
+	arn?:                  string
+	availability_zone?:    string
+	availability_zone_id?: string
+	description?:          string
+	id?:                   string
+	name?:                 string
+	owner_id?:             string
+	site_id?:              string
+}
+#AwsOutpostsOutpostInstanceTypeDataSource: {
+	arn:            string
+	id?:            string
+	instance_type?: string
+	preferred_instance_types?: [string, ...]
+}
+#AwsOutpostsOutpostInstanceTypesDataSource: {
+	arn: string
+	id?: string
+	instance_types?: [string, ...]
+}
+#AwsOutpostsOutpostsDataSource: {
+	arns?: [string, ...]
+	availability_zone?:    string
+	availability_zone_id?: string
+	id?:                   string
+	ids?: [string, ...]
+	site_id?: string
+}
+#AwsOutpostsSiteDataSource: {
+	account_id?:  string
+	description?: string
+	id?:          string
+	name?:        string
+}
+#AwsOutpostsSitesDataSource: {
+	id?: string
+	ids?: [string, ...]
+}
+#AwsPartitionDataSource: {
+	dns_suffix?: string
+	id?:         string
+	partition?:  string
+}
 #AwsPrefixListDataSource: {
+	cidr_blocks?: [string, ...]
+	id?:             string
+	name?:           string
 	prefix_list_id?: string
 	filter?: [{
 		name: string
@@ -446,344 +2132,835 @@ package aws
 }
 #AwsPricingProductDataSource: {
 	service_code: string
+	id?:          string
+	result?:      string
 	filters?: [{
 		field: string
 		value: string
 	}, ...]
 }
-#AwsQldbLedgerDataSource: name: string
+#AwsQldbLedgerDataSource: {
+	name:                 string
+	arn?:                 string
+	deletion_protection?: bool
+	id?:                  string
+}
 #AwsRamResourceShareDataSource: {
-	name:           string
-	resource_owner: string
+	name:               string
+	resource_owner:     string
+	arn?:               string
+	id?:                string
+	owning_account_id?: string
+	status?:            string
+	tags?: [_]: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsRdsClusterDataSource: cluster_identifier: string
-#AwsRedshiftClusterDataSource: {
+#AwsRdsClusterDataSource: {
 	cluster_identifier: string
+	arn?:               string
+	availability_zones?: [string, ...]
+	backtrack_window?:        number
+	backup_retention_period?: number
+	cluster_members?: [string, ...]
+	cluster_resource_id?:             string
+	database_name?:                   string
+	db_cluster_parameter_group_name?: string
+	db_subnet_group_name?:            string
+	enabled_cloudwatch_logs_exports?: [string, ...]
+	endpoint?:                            string
+	engine?:                              string
+	engine_version?:                      string
+	final_snapshot_identifier?:           string
+	hosted_zone_id?:                      string
+	iam_database_authentication_enabled?: bool
+	iam_roles?: [string, ...]
+	id?:                            string
+	kms_key_id?:                    string
+	master_username?:               string
+	port?:                          number
+	preferred_backup_window?:       string
+	preferred_maintenance_window?:  string
+	reader_endpoint?:               string
+	replication_source_identifier?: string
+	storage_encrypted?:             bool
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 }
-#AwsRedshiftServiceAccountDataSource: region?: string
-#AwsRegionDataSource: {}
+#AwsRedshiftClusterDataSource: {
+	cluster_identifier:                   string
+	allow_version_upgrade?:               bool
+	automated_snapshot_retention_period?: number
+	availability_zone?:                   string
+	bucket_name?:                         string
+	cluster_parameter_group_name?:        string
+	cluster_public_key?:                  string
+	cluster_revision_number?:             string
+	cluster_security_groups?: [string, ...]
+	cluster_subnet_group_name?: string
+	cluster_type?:              string
+	cluster_version?:           string
+	database_name?:             string
+	elastic_ip?:                string
+	enable_logging?:            bool
+	encrypted?:                 bool
+	endpoint?:                  string
+	enhanced_vpc_routing?:      bool
+	iam_roles?: [string, ...]
+	id?:                           string
+	kms_key_id?:                   string
+	master_username?:              string
+	node_type?:                    string
+	number_of_nodes?:              number
+	port?:                         number
+	preferred_maintenance_window?: string
+	publicly_accessible?:          bool
+	s3_key_prefix?:                string
+	tags?: [_]: string
+	vpc_id?: string
+	vpc_security_group_ids?: [string, ...]
+}
+#AwsRedshiftServiceAccountDataSource: {
+	arn?:    string
+	id?:     string
+	region?: string
+}
+#AwsRegionDataSource: {
+	current?:     bool
+	description?: string
+	endpoint?:    string
+	id?:          string
+	name?:        string
+}
 #AwsRegionsDataSource: {
 	all_regions?: bool
+	id?:          string
+	names?: [string, ...]
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsRouteDataSource: route_table_id:    string
-#AwsRoute53DelegationSetDataSource: id: string
-#AwsRoute53ResolverRuleDataSource: {}
-#AwsRoute53ResolverRulesDataSource: {
+#AwsRouteDataSource: {
+	route_table_id:               string
+	destination_cidr_block?:      string
+	destination_ipv6_cidr_block?: string
+	egress_only_gateway_id?:      string
+	gateway_id?:                  string
+	id?:                          string
+	instance_id?:                 string
+	nat_gateway_id?:              string
+	network_interface_id?:        string
+	transit_gateway_id?:          string
+	vpc_peering_connection_id?:   string
+}
+#AwsRoute53DelegationSetDataSource: {
+	id:                string
+	caller_reference?: string
+	name_servers?: [string, ...]
+}
+#AwsRoute53ResolverRuleDataSource: {
+	arn?:                  string
+	domain_name?:          string
+	id?:                   string
+	name?:                 string
 	owner_id?:             string
 	resolver_endpoint_id?: string
+	resolver_rule_id?:     string
 	rule_type?:            string
 	share_status?:         string
+	tags?: [_]: string
 }
-#AwsRoute53ZoneDataSource: private_zone?: bool
-#AwsRouteTableDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsRouteTablesDataSource: {
+#AwsRoute53ResolverRulesDataSource: {
+	id?:                   string
+	owner_id?:             string
+	resolver_endpoint_id?: string
+	resolver_rule_ids?: [string, ...]
+	rule_type?:    string
+	share_status?: string
+}
+#AwsRoute53ZoneDataSource: {
+	caller_reference?:           string
+	comment?:                    string
+	id?:                         string
+	linked_service_description?: string
+	linked_service_principal?:   string
+	name?:                       string
+	name_servers?: [string, ...]
+	private_zone?:              bool
+	resource_record_set_count?: number
+	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
+}
+#AwsRouteTableDataSource: {
+	associations?: [{
+		gateway_id:                 string
+		main:                       bool
+		route_table_association_id: string
+		route_table_id:             string
+		subnet_id:                  string
+	}, ...]
+	gateway_id?:     string
+	id?:             string
+	owner_id?:       string
+	route_table_id?: string
+	routes?: [{
+		cidr_block:                string
+		egress_only_gateway_id:    string
+		gateway_id:                string
+		instance_id:               string
+		ipv6_cidr_block:           string
+		nat_gateway_id:            string
+		network_interface_id:      string
+		transit_gateway_id:        string
+		vpc_peering_connection_id: string
+	}, ...]
+	subnet_id?: string
+	tags?: [_]: string
 	vpc_id?: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsS3BucketDataSource: bucket: string
+#AwsRouteTablesDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsS3BucketDataSource: {
+	bucket:                       string
+	arn?:                         string
+	bucket_domain_name?:          string
+	bucket_regional_domain_name?: string
+	hosted_zone_id?:              string
+	id?:                          string
+	region?:                      string
+	website_domain?:              string
+	website_endpoint?:            string
+}
 #AwsS3BucketObjectDataSource: {
-	bucket: string
-	key:    string
-	range?: string
+	bucket:               string
+	key:                  string
+	body?:                string
+	cache_control?:       string
+	content_disposition?: string
+	content_encoding?:    string
+	content_language?:    string
+	content_length?:      number
+	content_type?:        string
+	etag?:                string
+	expiration?:          string
+	expires?:             string
+	id?:                  string
+	last_modified?:       string
+	metadata?: [_]: string
+	object_lock_legal_hold_status?: string
+	object_lock_mode?:              string
+	object_lock_retain_until_date?: string
+	range?:                         string
+	server_side_encryption?:        string
+	sse_kms_key_id?:                string
+	storage_class?:                 string
+	tags?: [_]: string
+	version_id?:                string
+	website_redirect_location?: string
 }
 #AwsS3BucketObjectsDataSource: {
-	bucket:         string
+	bucket: string
+	common_prefixes?: [string, ...]
 	delimiter?:     string
 	encoding_type?: string
 	fetch_owner?:   bool
-	max_keys?:      number
-	prefix?:        string
-	start_after?:   string
+	id?:            string
+	keys?: [string, ...]
+	max_keys?: number
+	owners?: [string, ...]
+	prefix?:      string
+	start_after?: string
 }
-#AwsSecretsmanagerSecretDataSource: {}
+#AwsSecretsmanagerSecretDataSource: {
+	arn?:                 string
+	description?:         string
+	id?:                  string
+	kms_key_id?:          string
+	name?:                string
+	policy?:              string
+	rotation_enabled?:    bool
+	rotation_lambda_arn?: string
+	rotation_rules?: [{
+		automatically_after_days: number
+	}, ...]
+	tags?: [_]: string
+}
+#AwsSecretsmanagerSecretRotationDataSource: {
+	secret_id:            string
+	id?:                  string
+	rotation_enabled?:    bool
+	rotation_lambda_arn?: string
+	rotation_rules?: [{
+		automatically_after_days: number
+	}, ...]
+}
 #AwsSecretsmanagerSecretVersionDataSource: {
 	secret_id:      string
+	arn?:           string
+	id?:            string
+	secret_binary?: string
+	secret_string?: string
+	version_id?:    string
 	version_stage?: string
+	version_stages?: [string, ...]
 }
-#AwsSecurityGroupDataSource: filter?: [{
+#AwsSecurityGroupDataSource: {
+	arn?:         string
+	description?: string
+	id?:          string
+	name?:        string
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsSecurityGroupsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	vpc_ids?: [string, ...]
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsServicequotasServiceDataSource: {
+	service_name:  string
+	id?:           string
+	service_code?: string
+}
+#AwsServicequotasServiceQuotaDataSource: {
+	service_code:   string
+	adjustable?:    bool
+	arn?:           string
+	default_value?: number
+	global_quota?:  bool
+	id?:            string
+	quota_code?:    string
+	quota_name?:    string
+	service_name?:  string
+	value?:         number
+}
+#AwsSfnActivityDataSource: {
+	arn?:           string
+	creation_date?: string
+	id?:            string
+	name?:          string
+}
+#AwsSfnStateMachineDataSource: {
+	name:           string
+	arn?:           string
+	creation_date?: string
+	definition?:    string
+	id?:            string
+	role_arn?:      string
+	status?:        string
+}
+#AwsSnsTopicDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsSecurityGroupsDataSource: filter?: [{
+	arn?: string
+	id?:  string
+}
+#AwsSqsQueueDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsServicequotasServiceDataSource: service_name:      string
-#AwsServicequotasServiceQuotaDataSource: service_code: string
-#AwsSfnActivityDataSource: {}
-#AwsSfnStateMachineDataSource: name: string
-#AwsSnsTopicDataSource: name:        string
-#AwsSqsQueueDataSource: name:        string
+	arn?: string
+	id?:  string
+	tags?: [_]: string
+	url?: string
+}
 #AwsSsmDocumentDataSource: {
 	name:              string
+	arn?:              string
+	content?:          string
 	document_format?:  string
+	document_type?:    string
 	document_version?: string
+	id?:               string
 }
 #AwsSsmParameterDataSource: {
 	name:             string
+	arn?:             string
+	id?:              string
+	type?:            string
+	value?:           string
+	version?:         number
 	with_decryption?: bool
 }
 #AwsSsmPatchBaselineDataSource: {
 	owner:             string
 	default_baseline?: bool
+	description?:      string
+	id?:               string
+	name?:             string
 	name_prefix?:      string
 	operating_system?: string
 }
 #AwsStoragegatewayLocalDiskDataSource: {
 	gateway_arn: string
+	disk_id?:    string
 	disk_node?:  string
 	disk_path?:  string
+	id?:         string
 }
-#AwsSubnetDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
+#AwsSubnetDataSource: {
+	arn?:                             string
+	assign_ipv6_address_on_creation?: bool
+	availability_zone?:               string
+	availability_zone_id?:            string
+	cidr_block?:                      string
+	default_for_az?:                  bool
+	id?:                              string
+	ipv6_cidr_block?:                 string
+	ipv6_cidr_block_association_id?:  string
+	map_public_ip_on_launch?:         bool
+	outpost_arn?:                     string
+	owner_id?:                        string
+	state?:                           string
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
 #AwsSubnetIdsDataSource: {
 	vpc_id: string
+	id?:    string
+	ids?: [string, ...]
+	tags?: [_]: string
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsTransferServerDataSource: server_id: string
-#AwsVpcDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsVpcDhcpOptionsDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
-#AwsVpcEndpointDataSource: filter?: [{
-	name: string
-	values: [string, ...]
-}, ...]
+#AwsTransferServerDataSource: {
+	server_id:               string
+	arn?:                    string
+	endpoint?:               string
+	id?:                     string
+	identity_provider_type?: string
+	invocation_role?:        string
+	logging_role?:           string
+	url?:                    string
+}
+#AwsVpcDataSource: {
+	arn?:        string
+	cidr_block?: string
+	cidr_block_associations?: [{
+		association_id: string
+		cidr_block:     string
+		state:          string
+	}, ...]
+	default?:              bool
+	dhcp_options_id?:      string
+	enable_dns_hostnames?: bool
+	enable_dns_support?:   bool
+	id?:                   string
+	instance_tenancy?:     string
+	ipv6_association_id?:  string
+	ipv6_cidr_block?:      string
+	main_route_table_id?:  string
+	owner_id?:             string
+	state?:                string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsVpcDhcpOptionsDataSource: {
+	arn?:             string
+	dhcp_options_id?: string
+	domain_name?:     string
+	domain_name_servers?: [string, ...]
+	id?: string
+	netbios_name_servers?: [string, ...]
+	netbios_node_type?: string
+	ntp_servers?: [string, ...]
+	owner_id?: string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsVpcEndpointDataSource: {
+	arn?: string
+	cidr_blocks?: [string, ...]
+	dns_entry?: [{
+		dns_name:       string
+		hosted_zone_id: string
+	}, ...]
+	id?: string
+	network_interface_ids?: [string, ...]
+	owner_id?:            string
+	policy?:              string
+	prefix_list_id?:      string
+	private_dns_enabled?: bool
+	requester_managed?:   bool
+	route_table_ids?: [string, ...]
+	security_group_ids?: [string, ...]
+	service_name?: string
+	state?:        string
+	subnet_ids?: [string, ...]
+	tags?: [_]: string
+	vpc_endpoint_type?: string
+	vpc_id?:            string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
 #AwsVpcEndpointServiceDataSource: {
-	service?: string
+	acceptance_required?: bool
+	arn?:                 string
+	availability_zones?: [string, ...]
+	base_endpoint_dns_names?: [string, ...]
+	id?:                    string
+	manages_vpc_endpoints?: bool
+	owner?:                 string
+	private_dns_name?:      string
+	service?:               string
+	service_id?:            string
+	service_name?:          string
+	service_type?:          string
+	tags?: [_]: string
+	vpc_endpoint_policy_supported?: bool
 	filter?: [{
 		name: string
 		values: [string, ...]
 	}, ...]
 }
-#AwsVpcPeeringConnectionDataSource: filter?: [{
+#AwsVpcPeeringConnectionDataSource: {
+	accepter?: [_]: bool
+	cidr_block?:      string
+	id?:              string
+	owner_id?:        string
+	peer_cidr_block?: string
+	peer_owner_id?:   string
+	peer_region?:     string
+	peer_vpc_id?:     string
+	region?:          string
+	requester?: [_]: bool
+	status?: string
+	tags?: [_]: string
+	vpc_id?: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsVpcsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsVpnGatewayDataSource: {
+	amazon_side_asn?:   string
+	arn?:               string
+	attached_vpc_id?:   string
+	availability_zone?: string
+	id?:                string
+	state?:             string
+	tags?: [_]: string
+	filter?: [{
+		name: string
+		values: [string, ...]
+	}, ...]
+}
+#AwsWafIpsetDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsVpcsDataSource: filter?: [{
+	id?:  string
+}
+#AwsWafRateBasedRuleDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsVpnGatewayDataSource: filter?: [{
+	id?:  string
+}
+#AwsWafRuleDataSource: {
 	name: string
-	values: [string, ...]
-}, ...]
-#AwsWafIpsetDataSource: name:                 string
-#AwsWafRateBasedRuleDataSource: name:         string
-#AwsWafRuleDataSource: name:                  string
-#AwsWafWebAclDataSource: name:                string
-#AwsWafregionalIpsetDataSource: name:         string
-#AwsWafregionalRateBasedRuleDataSource: name: string
-#AwsWafregionalRuleDataSource: name:          string
-#AwsWafregionalWebAclDataSource: name:        string
+	id?:  string
+}
+#AwsWafWebAclDataSource: {
+	name: string
+	id?:  string
+}
+#AwsWafregionalIpsetDataSource: {
+	name: string
+	id?:  string
+}
+#AwsWafregionalRateBasedRuleDataSource: {
+	name: string
+	id?:  string
+}
+#AwsWafregionalRuleDataSource: {
+	name: string
+	id?:  string
+}
+#AwsWafregionalWebAclDataSource: {
+	name: string
+	id?:  string
+}
 #AwsWafv2IpSetDataSource: {
 	name:  string
 	scope: string
+	addresses?: [string, ...]
+	arn?:                string
+	description?:        string
+	id?:                 string
+	ip_address_version?: string
 }
 #AwsWafv2RegexPatternSetDataSource: {
-	name:  string
-	scope: string
+	name:         string
+	scope:        string
+	arn?:         string
+	description?: string
+	id?:          string
+	regular_expression?: [{
+		regex_string: string
+	}, ...]
 }
-#AwsWorkspacesBundleDataSource: bundle_id: string
+#AwsWafv2RuleGroupDataSource: {
+	name:         string
+	scope:        string
+	arn?:         string
+	description?: string
+	id?:          string
+}
+#AwsWafv2WebAclDataSource: {
+	name:         string
+	scope:        string
+	arn?:         string
+	description?: string
+	id?:          string
+}
+#AwsWorkspacesBundleDataSource: {
+	bundle_id?: string
+	compute_type?: [{
+		name: string
+	}, ...]
+	description?: string
+	id?:          string
+	name?:        string
+	owner?:       string
+	root_storage?: [{
+		capacity: string
+	}, ...]
+	user_storage?: [{
+		capacity: string
+	}, ...]
+}
 #DataSources: {
-	aws_acm_certificate?: [_]:                           #AwsAcmCertificateDataSource
-	aws_acmpca_certificate_authority?: [_]:              #AwsAcmpcaCertificateAuthorityDataSource
-	aws_alb?: [_]:                                       #AwsAlbDataSource
-	aws_alb_listener?: [_]:                              #AwsAlbListenerDataSource
-	aws_alb_target_group?: [_]:                          #AwsAlbTargetGroupDataSource
-	aws_ami?: [_]:                                       #AwsAmiDataSource
-	aws_ami_ids?: [_]:                                   #AwsAmiIdsDataSource
-	aws_api_gateway_api_key?: [_]:                       #AwsApiGatewayApiKeyDataSource
-	aws_api_gateway_resource?: [_]:                      #AwsApiGatewayResourceDataSource
-	aws_api_gateway_rest_api?: [_]:                      #AwsApiGatewayRestApiDataSource
-	aws_api_gateway_vpc_link?: [_]:                      #AwsApiGatewayVpcLinkDataSource
-	aws_arn?: [_]:                                       #AwsArnDataSource
-	aws_autoscaling_group?: [_]:                         #AwsAutoscalingGroupDataSource
-	aws_autoscaling_groups?: [_]:                        #AwsAutoscalingGroupsDataSource
-	aws_availability_zone?: [_]:                         #AwsAvailabilityZoneDataSource
-	aws_availability_zones?: [_]:                        #AwsAvailabilityZonesDataSource
-	aws_backup_plan?: [_]:                               #AwsBackupPlanDataSource
-	aws_backup_selection?: [_]:                          #AwsBackupSelectionDataSource
-	aws_backup_vault?: [_]:                              #AwsBackupVaultDataSource
-	aws_batch_compute_environment?: [_]:                 #AwsBatchComputeEnvironmentDataSource
-	aws_batch_job_queue?: [_]:                           #AwsBatchJobQueueDataSource
-	aws_billing_service_account?: [_]:                   #AwsBillingServiceAccountDataSource
-	aws_caller_identity?: [_]:                           #AwsCallerIdentityDataSource
-	aws_canonical_user_id?: [_]:                         #AwsCanonicalUserIdDataSource
-	aws_cloudformation_export?: [_]:                     #AwsCloudformationExportDataSource
-	aws_cloudformation_stack?: [_]:                      #AwsCloudformationStackDataSource
-	aws_cloudfront_distribution?: [_]:                   #AwsCloudfrontDistributionDataSource
-	aws_cloudhsm_v2_cluster?: [_]:                       #AwsCloudhsmV2ClusterDataSource
-	aws_cloudtrail_service_account?: [_]:                #AwsCloudtrailServiceAccountDataSource
-	aws_cloudwatch_log_group?: [_]:                      #AwsCloudwatchLogGroupDataSource
-	aws_codecommit_repository?: [_]:                     #AwsCodecommitRepositoryDataSource
-	aws_cognito_user_pools?: [_]:                        #AwsCognitoUserPoolsDataSource
-	aws_cur_report_definition?: [_]:                     #AwsCurReportDefinitionDataSource
-	aws_customer_gateway?: [_]:                          #AwsCustomerGatewayDataSource
-	aws_db_cluster_snapshot?: [_]:                       #AwsDbClusterSnapshotDataSource
-	aws_db_event_categories?: [_]:                       #AwsDbEventCategoriesDataSource
-	aws_db_instance?: [_]:                               #AwsDbInstanceDataSource
-	aws_db_snapshot?: [_]:                               #AwsDbSnapshotDataSource
-	aws_directory_service_directory?: [_]:               #AwsDirectoryServiceDirectoryDataSource
-	aws_dx_gateway?: [_]:                                #AwsDxGatewayDataSource
-	aws_dynamodb_table?: [_]:                            #AwsDynamodbTableDataSource
-	aws_ebs_default_kms_key?: [_]:                       #AwsEbsDefaultKmsKeyDataSource
-	aws_ebs_encryption_by_default?: [_]:                 #AwsEbsEncryptionByDefaultDataSource
-	aws_ebs_snapshot?: [_]:                              #AwsEbsSnapshotDataSource
-	aws_ebs_snapshot_ids?: [_]:                          #AwsEbsSnapshotIdsDataSource
-	aws_ebs_volume?: [_]:                                #AwsEbsVolumeDataSource
-	aws_ec2_coip_pool?: [_]:                             #AwsEc2CoipPoolDataSource
-	aws_ec2_coip_pools?: [_]:                            #AwsEc2CoipPoolsDataSource
-	aws_ec2_instance_type_offering?: [_]:                #AwsEc2InstanceTypeOfferingDataSource
-	aws_ec2_instance_type_offerings?: [_]:               #AwsEc2InstanceTypeOfferingsDataSource
-	aws_ec2_local_gateway?: [_]:                         #AwsEc2LocalGatewayDataSource
-	aws_ec2_local_gateway_route_table?: [_]:             #AwsEc2LocalGatewayRouteTableDataSource
-	aws_ec2_local_gateway_route_tables?: [_]:            #AwsEc2LocalGatewayRouteTablesDataSource
-	aws_ec2_local_gateways?: [_]:                        #AwsEc2LocalGatewaysDataSource
-	aws_ec2_transit_gateway?: [_]:                       #AwsEc2TransitGatewayDataSource
-	aws_ec2_transit_gateway_dx_gateway_attachment?: [_]: #AwsEc2TransitGatewayDxGatewayAttachmentDataSource
-	aws_ec2_transit_gateway_peering_attachment?: [_]:    #AwsEc2TransitGatewayPeeringAttachmentDataSource
-	aws_ec2_transit_gateway_route_table?: [_]:           #AwsEc2TransitGatewayRouteTableDataSource
-	aws_ec2_transit_gateway_vpc_attachment?: [_]:        #AwsEc2TransitGatewayVpcAttachmentDataSource
-	aws_ec2_transit_gateway_vpn_attachment?: [_]:        #AwsEc2TransitGatewayVpnAttachmentDataSource
-	aws_ecr_image?: [_]:                                 #AwsEcrImageDataSource
-	aws_ecr_repository?: [_]:                            #AwsEcrRepositoryDataSource
-	aws_ecs_cluster?: [_]:                               #AwsEcsClusterDataSource
-	aws_ecs_container_definition?: [_]:                  #AwsEcsContainerDefinitionDataSource
-	aws_ecs_service?: [_]:                               #AwsEcsServiceDataSource
-	aws_ecs_task_definition?: [_]:                       #AwsEcsTaskDefinitionDataSource
-	aws_efs_access_point?: [_]:                          #AwsEfsAccessPointDataSource
-	aws_efs_file_system?: [_]:                           #AwsEfsFileSystemDataSource
-	aws_efs_mount_target?: [_]:                          #AwsEfsMountTargetDataSource
-	aws_eip?: [_]:                                       #AwsEipDataSource
-	aws_eks_cluster?: [_]:                               #AwsEksClusterDataSource
-	aws_eks_cluster_auth?: [_]:                          #AwsEksClusterAuthDataSource
-	aws_elastic_beanstalk_application?: [_]:             #AwsElasticBeanstalkApplicationDataSource
-	aws_elastic_beanstalk_hosted_zone?: [_]:             #AwsElasticBeanstalkHostedZoneDataSource
-	aws_elastic_beanstalk_solution_stack?: [_]:          #AwsElasticBeanstalkSolutionStackDataSource
-	aws_elasticache_cluster?: [_]:                       #AwsElasticacheClusterDataSource
-	aws_elasticache_replication_group?: [_]:             #AwsElasticacheReplicationGroupDataSource
-	aws_elasticsearch_domain?: [_]:                      #AwsElasticsearchDomainDataSource
-	aws_elb?: [_]:                                       #AwsElbDataSource
-	aws_elb_hosted_zone_id?: [_]:                        #AwsElbHostedZoneIdDataSource
-	aws_elb_service_account?: [_]:                       #AwsElbServiceAccountDataSource
-	aws_glue_script?: [_]:                               #AwsGlueScriptDataSource
-	aws_guardduty_detector?: [_]:                        #AwsGuarddutyDetectorDataSource
-	aws_iam_account_alias?: [_]:                         #AwsIamAccountAliasDataSource
-	aws_iam_group?: [_]:                                 #AwsIamGroupDataSource
-	aws_iam_instance_profile?: [_]:                      #AwsIamInstanceProfileDataSource
-	aws_iam_policy?: [_]:                                #AwsIamPolicyDataSource
-	aws_iam_policy_document?: [_]:                       #AwsIamPolicyDocumentDataSource
-	aws_iam_role?: [_]:                                  #AwsIamRoleDataSource
-	aws_iam_server_certificate?: [_]:                    #AwsIamServerCertificateDataSource
-	aws_iam_user?: [_]:                                  #AwsIamUserDataSource
-	aws_inspector_rules_packages?: [_]:                  #AwsInspectorRulesPackagesDataSource
-	aws_instance?: [_]:                                  #AwsInstanceDataSource
-	aws_instances?: [_]:                                 #AwsInstancesDataSource
-	aws_internet_gateway?: [_]:                          #AwsInternetGatewayDataSource
-	aws_iot_endpoint?: [_]:                              #AwsIotEndpointDataSource
-	aws_ip_ranges?: [_]:                                 #AwsIpRangesDataSource
-	aws_kinesis_stream?: [_]:                            #AwsKinesisStreamDataSource
-	aws_kms_alias?: [_]:                                 #AwsKmsAliasDataSource
-	aws_kms_ciphertext?: [_]:                            #AwsKmsCiphertextDataSource
-	aws_kms_key?: [_]:                                   #AwsKmsKeyDataSource
-	aws_kms_secret?: [_]:                                #AwsKmsSecretDataSource
-	aws_kms_secrets?: [_]:                               #AwsKmsSecretsDataSource
-	aws_lambda_alias?: [_]:                              #AwsLambdaAliasDataSource
-	aws_lambda_function?: [_]:                           #AwsLambdaFunctionDataSource
-	aws_lambda_invocation?: [_]:                         #AwsLambdaInvocationDataSource
-	aws_lambda_layer_version?: [_]:                      #AwsLambdaLayerVersionDataSource
-	aws_launch_configuration?: [_]:                      #AwsLaunchConfigurationDataSource
-	aws_launch_template?: [_]:                           #AwsLaunchTemplateDataSource
-	aws_lb?: [_]:                                        #AwsLbDataSource
-	aws_lb_listener?: [_]:                               #AwsLbListenerDataSource
-	aws_lb_target_group?: [_]:                           #AwsLbTargetGroupDataSource
-	aws_mq_broker?: [_]:                                 #AwsMqBrokerDataSource
-	aws_msk_cluster?: [_]:                               #AwsMskClusterDataSource
-	aws_msk_configuration?: [_]:                         #AwsMskConfigurationDataSource
-	aws_nat_gateway?: [_]:                               #AwsNatGatewayDataSource
-	aws_network_acls?: [_]:                              #AwsNetworkAclsDataSource
-	aws_network_interface?: [_]:                         #AwsNetworkInterfaceDataSource
-	aws_network_interfaces?: [_]:                        #AwsNetworkInterfacesDataSource
-	aws_organizations_organization?: [_]:                #AwsOrganizationsOrganizationDataSource
-	aws_organizations_organizational_units?: [_]:        #AwsOrganizationsOrganizationalUnitsDataSource
-	aws_partition?: [_]:                                 #AwsPartitionDataSource
-	aws_prefix_list?: [_]:                               #AwsPrefixListDataSource
-	aws_pricing_product?: [_]:                           #AwsPricingProductDataSource
-	aws_qldb_ledger?: [_]:                               #AwsQldbLedgerDataSource
-	aws_ram_resource_share?: [_]:                        #AwsRamResourceShareDataSource
-	aws_rds_cluster?: [_]:                               #AwsRdsClusterDataSource
-	aws_redshift_cluster?: [_]:                          #AwsRedshiftClusterDataSource
-	aws_redshift_service_account?: [_]:                  #AwsRedshiftServiceAccountDataSource
-	aws_region?: [_]:                                    #AwsRegionDataSource
-	aws_regions?: [_]:                                   #AwsRegionsDataSource
-	aws_route53_delegation_set?: [_]:                    #AwsRoute53DelegationSetDataSource
-	aws_route53_resolver_rule?: [_]:                     #AwsRoute53ResolverRuleDataSource
-	aws_route53_resolver_rules?: [_]:                    #AwsRoute53ResolverRulesDataSource
-	aws_route53_zone?: [_]:                              #AwsRoute53ZoneDataSource
-	aws_route?: [_]:                                     #AwsRouteDataSource
-	aws_route_table?: [_]:                               #AwsRouteTableDataSource
-	aws_route_tables?: [_]:                              #AwsRouteTablesDataSource
-	aws_s3_bucket?: [_]:                                 #AwsS3BucketDataSource
-	aws_s3_bucket_object?: [_]:                          #AwsS3BucketObjectDataSource
-	aws_s3_bucket_objects?: [_]:                         #AwsS3BucketObjectsDataSource
-	aws_secretsmanager_secret?: [_]:                     #AwsSecretsmanagerSecretDataSource
-	aws_secretsmanager_secret_version?: [_]:             #AwsSecretsmanagerSecretVersionDataSource
-	aws_security_group?: [_]:                            #AwsSecurityGroupDataSource
-	aws_security_groups?: [_]:                           #AwsSecurityGroupsDataSource
-	aws_servicequotas_service?: [_]:                     #AwsServicequotasServiceDataSource
-	aws_servicequotas_service_quota?: [_]:               #AwsServicequotasServiceQuotaDataSource
-	aws_sfn_activity?: [_]:                              #AwsSfnActivityDataSource
-	aws_sfn_state_machine?: [_]:                         #AwsSfnStateMachineDataSource
-	aws_sns_topic?: [_]:                                 #AwsSnsTopicDataSource
-	aws_sqs_queue?: [_]:                                 #AwsSqsQueueDataSource
-	aws_ssm_document?: [_]:                              #AwsSsmDocumentDataSource
-	aws_ssm_parameter?: [_]:                             #AwsSsmParameterDataSource
-	aws_ssm_patch_baseline?: [_]:                        #AwsSsmPatchBaselineDataSource
-	aws_storagegateway_local_disk?: [_]:                 #AwsStoragegatewayLocalDiskDataSource
-	aws_subnet?: [_]:                                    #AwsSubnetDataSource
-	aws_subnet_ids?: [_]:                                #AwsSubnetIdsDataSource
-	aws_transfer_server?: [_]:                           #AwsTransferServerDataSource
-	aws_vpc?: [_]:                                       #AwsVpcDataSource
-	aws_vpc_dhcp_options?: [_]:                          #AwsVpcDhcpOptionsDataSource
-	aws_vpc_endpoint?: [_]:                              #AwsVpcEndpointDataSource
-	aws_vpc_endpoint_service?: [_]:                      #AwsVpcEndpointServiceDataSource
-	aws_vpc_peering_connection?: [_]:                    #AwsVpcPeeringConnectionDataSource
-	aws_vpcs?: [_]:                                      #AwsVpcsDataSource
-	aws_vpn_gateway?: [_]:                               #AwsVpnGatewayDataSource
-	aws_waf_ipset?: [_]:                                 #AwsWafIpsetDataSource
-	aws_waf_rate_based_rule?: [_]:                       #AwsWafRateBasedRuleDataSource
-	aws_waf_rule?: [_]:                                  #AwsWafRuleDataSource
-	aws_waf_web_acl?: [_]:                               #AwsWafWebAclDataSource
-	aws_wafregional_ipset?: [_]:                         #AwsWafregionalIpsetDataSource
-	aws_wafregional_rate_based_rule?: [_]:               #AwsWafregionalRateBasedRuleDataSource
-	aws_wafregional_rule?: [_]:                          #AwsWafregionalRuleDataSource
-	aws_wafregional_web_acl?: [_]:                       #AwsWafregionalWebAclDataSource
-	aws_wafv2_ip_set?: [_]:                              #AwsWafv2IpSetDataSource
-	aws_wafv2_regex_pattern_set?: [_]:                   #AwsWafv2RegexPatternSetDataSource
-	aws_workspaces_bundle?: [_]:                         #AwsWorkspacesBundleDataSource
+	aws_acm_certificate?: [_]:                            #AwsAcmCertificateDataSource
+	aws_acmpca_certificate_authority?: [_]:               #AwsAcmpcaCertificateAuthorityDataSource
+	aws_alb?: [_]:                                        #AwsAlbDataSource
+	aws_alb_listener?: [_]:                               #AwsAlbListenerDataSource
+	aws_alb_target_group?: [_]:                           #AwsAlbTargetGroupDataSource
+	aws_ami?: [_]:                                        #AwsAmiDataSource
+	aws_ami_ids?: [_]:                                    #AwsAmiIdsDataSource
+	aws_api_gateway_api_key?: [_]:                        #AwsApiGatewayApiKeyDataSource
+	aws_api_gateway_resource?: [_]:                       #AwsApiGatewayResourceDataSource
+	aws_api_gateway_rest_api?: [_]:                       #AwsApiGatewayRestApiDataSource
+	aws_api_gateway_vpc_link?: [_]:                       #AwsApiGatewayVpcLinkDataSource
+	aws_arn?: [_]:                                        #AwsArnDataSource
+	aws_autoscaling_group?: [_]:                          #AwsAutoscalingGroupDataSource
+	aws_autoscaling_groups?: [_]:                         #AwsAutoscalingGroupsDataSource
+	aws_availability_zone?: [_]:                          #AwsAvailabilityZoneDataSource
+	aws_availability_zones?: [_]:                         #AwsAvailabilityZonesDataSource
+	aws_backup_plan?: [_]:                                #AwsBackupPlanDataSource
+	aws_backup_selection?: [_]:                           #AwsBackupSelectionDataSource
+	aws_backup_vault?: [_]:                               #AwsBackupVaultDataSource
+	aws_batch_compute_environment?: [_]:                  #AwsBatchComputeEnvironmentDataSource
+	aws_batch_job_queue?: [_]:                            #AwsBatchJobQueueDataSource
+	aws_billing_service_account?: [_]:                    #AwsBillingServiceAccountDataSource
+	aws_caller_identity?: [_]:                            #AwsCallerIdentityDataSource
+	aws_canonical_user_id?: [_]:                          #AwsCanonicalUserIdDataSource
+	aws_cloudformation_export?: [_]:                      #AwsCloudformationExportDataSource
+	aws_cloudformation_stack?: [_]:                       #AwsCloudformationStackDataSource
+	aws_cloudfront_distribution?: [_]:                    #AwsCloudfrontDistributionDataSource
+	aws_cloudhsm_v2_cluster?: [_]:                        #AwsCloudhsmV2ClusterDataSource
+	aws_cloudtrail_service_account?: [_]:                 #AwsCloudtrailServiceAccountDataSource
+	aws_cloudwatch_log_group?: [_]:                       #AwsCloudwatchLogGroupDataSource
+	aws_codecommit_repository?: [_]:                      #AwsCodecommitRepositoryDataSource
+	aws_cognito_user_pools?: [_]:                         #AwsCognitoUserPoolsDataSource
+	aws_cur_report_definition?: [_]:                      #AwsCurReportDefinitionDataSource
+	aws_customer_gateway?: [_]:                           #AwsCustomerGatewayDataSource
+	aws_db_cluster_snapshot?: [_]:                        #AwsDbClusterSnapshotDataSource
+	aws_db_event_categories?: [_]:                        #AwsDbEventCategoriesDataSource
+	aws_db_instance?: [_]:                                #AwsDbInstanceDataSource
+	aws_db_snapshot?: [_]:                                #AwsDbSnapshotDataSource
+	aws_directory_service_directory?: [_]:                #AwsDirectoryServiceDirectoryDataSource
+	aws_dx_gateway?: [_]:                                 #AwsDxGatewayDataSource
+	aws_dynamodb_table?: [_]:                             #AwsDynamodbTableDataSource
+	aws_ebs_default_kms_key?: [_]:                        #AwsEbsDefaultKmsKeyDataSource
+	aws_ebs_encryption_by_default?: [_]:                  #AwsEbsEncryptionByDefaultDataSource
+	aws_ebs_snapshot?: [_]:                               #AwsEbsSnapshotDataSource
+	aws_ebs_snapshot_ids?: [_]:                           #AwsEbsSnapshotIdsDataSource
+	aws_ebs_volume?: [_]:                                 #AwsEbsVolumeDataSource
+	aws_ebs_volumes?: [_]:                                #AwsEbsVolumesDataSource
+	aws_ec2_coip_pool?: [_]:                              #AwsEc2CoipPoolDataSource
+	aws_ec2_coip_pools?: [_]:                             #AwsEc2CoipPoolsDataSource
+	aws_ec2_instance_type_offering?: [_]:                 #AwsEc2InstanceTypeOfferingDataSource
+	aws_ec2_instance_type_offerings?: [_]:                #AwsEc2InstanceTypeOfferingsDataSource
+	aws_ec2_local_gateway?: [_]:                          #AwsEc2LocalGatewayDataSource
+	aws_ec2_local_gateway_route_table?: [_]:              #AwsEc2LocalGatewayRouteTableDataSource
+	aws_ec2_local_gateway_route_tables?: [_]:             #AwsEc2LocalGatewayRouteTablesDataSource
+	aws_ec2_local_gateway_virtual_interface?: [_]:        #AwsEc2LocalGatewayVirtualInterfaceDataSource
+	aws_ec2_local_gateway_virtual_interface_group?: [_]:  #AwsEc2LocalGatewayVirtualInterfaceGroupDataSource
+	aws_ec2_local_gateway_virtual_interface_groups?: [_]: #AwsEc2LocalGatewayVirtualInterfaceGroupsDataSource
+	aws_ec2_local_gateways?: [_]:                         #AwsEc2LocalGatewaysDataSource
+	aws_ec2_transit_gateway?: [_]:                        #AwsEc2TransitGatewayDataSource
+	aws_ec2_transit_gateway_dx_gateway_attachment?: [_]:  #AwsEc2TransitGatewayDxGatewayAttachmentDataSource
+	aws_ec2_transit_gateway_peering_attachment?: [_]:     #AwsEc2TransitGatewayPeeringAttachmentDataSource
+	aws_ec2_transit_gateway_route_table?: [_]:            #AwsEc2TransitGatewayRouteTableDataSource
+	aws_ec2_transit_gateway_vpc_attachment?: [_]:         #AwsEc2TransitGatewayVpcAttachmentDataSource
+	aws_ec2_transit_gateway_vpn_attachment?: [_]:         #AwsEc2TransitGatewayVpnAttachmentDataSource
+	aws_ecr_authorization_token?: [_]:                    #AwsEcrAuthorizationTokenDataSource
+	aws_ecr_image?: [_]:                                  #AwsEcrImageDataSource
+	aws_ecr_repository?: [_]:                             #AwsEcrRepositoryDataSource
+	aws_ecs_cluster?: [_]:                                #AwsEcsClusterDataSource
+	aws_ecs_container_definition?: [_]:                   #AwsEcsContainerDefinitionDataSource
+	aws_ecs_service?: [_]:                                #AwsEcsServiceDataSource
+	aws_ecs_task_definition?: [_]:                        #AwsEcsTaskDefinitionDataSource
+	aws_efs_access_point?: [_]:                           #AwsEfsAccessPointDataSource
+	aws_efs_access_points?: [_]:                          #AwsEfsAccessPointsDataSource
+	aws_efs_file_system?: [_]:                            #AwsEfsFileSystemDataSource
+	aws_efs_mount_target?: [_]:                           #AwsEfsMountTargetDataSource
+	aws_eip?: [_]:                                        #AwsEipDataSource
+	aws_eks_cluster?: [_]:                                #AwsEksClusterDataSource
+	aws_eks_cluster_auth?: [_]:                           #AwsEksClusterAuthDataSource
+	aws_elastic_beanstalk_application?: [_]:              #AwsElasticBeanstalkApplicationDataSource
+	aws_elastic_beanstalk_hosted_zone?: [_]:              #AwsElasticBeanstalkHostedZoneDataSource
+	aws_elastic_beanstalk_solution_stack?: [_]:           #AwsElasticBeanstalkSolutionStackDataSource
+	aws_elasticache_cluster?: [_]:                        #AwsElasticacheClusterDataSource
+	aws_elasticache_replication_group?: [_]:              #AwsElasticacheReplicationGroupDataSource
+	aws_elasticsearch_domain?: [_]:                       #AwsElasticsearchDomainDataSource
+	aws_elb?: [_]:                                        #AwsElbDataSource
+	aws_elb_hosted_zone_id?: [_]:                         #AwsElbHostedZoneIdDataSource
+	aws_elb_service_account?: [_]:                        #AwsElbServiceAccountDataSource
+	aws_glue_script?: [_]:                                #AwsGlueScriptDataSource
+	aws_guardduty_detector?: [_]:                         #AwsGuarddutyDetectorDataSource
+	aws_iam_account_alias?: [_]:                          #AwsIamAccountAliasDataSource
+	aws_iam_group?: [_]:                                  #AwsIamGroupDataSource
+	aws_iam_instance_profile?: [_]:                       #AwsIamInstanceProfileDataSource
+	aws_iam_policy?: [_]:                                 #AwsIamPolicyDataSource
+	aws_iam_policy_document?: [_]:                        #AwsIamPolicyDocumentDataSource
+	aws_iam_role?: [_]:                                   #AwsIamRoleDataSource
+	aws_iam_server_certificate?: [_]:                     #AwsIamServerCertificateDataSource
+	aws_iam_user?: [_]:                                   #AwsIamUserDataSource
+	aws_inspector_rules_packages?: [_]:                   #AwsInspectorRulesPackagesDataSource
+	aws_instance?: [_]:                                   #AwsInstanceDataSource
+	aws_instances?: [_]:                                  #AwsInstancesDataSource
+	aws_internet_gateway?: [_]:                           #AwsInternetGatewayDataSource
+	aws_iot_endpoint?: [_]:                               #AwsIotEndpointDataSource
+	aws_ip_ranges?: [_]:                                  #AwsIpRangesDataSource
+	aws_kinesis_stream?: [_]:                             #AwsKinesisStreamDataSource
+	aws_kms_alias?: [_]:                                  #AwsKmsAliasDataSource
+	aws_kms_ciphertext?: [_]:                             #AwsKmsCiphertextDataSource
+	aws_kms_key?: [_]:                                    #AwsKmsKeyDataSource
+	aws_kms_secret?: [_]:                                 #AwsKmsSecretDataSource
+	aws_kms_secrets?: [_]:                                #AwsKmsSecretsDataSource
+	aws_lambda_alias?: [_]:                               #AwsLambdaAliasDataSource
+	aws_lambda_function?: [_]:                            #AwsLambdaFunctionDataSource
+	aws_lambda_invocation?: [_]:                          #AwsLambdaInvocationDataSource
+	aws_lambda_layer_version?: [_]:                       #AwsLambdaLayerVersionDataSource
+	aws_launch_configuration?: [_]:                       #AwsLaunchConfigurationDataSource
+	aws_launch_template?: [_]:                            #AwsLaunchTemplateDataSource
+	aws_lb?: [_]:                                         #AwsLbDataSource
+	aws_lb_listener?: [_]:                                #AwsLbListenerDataSource
+	aws_lb_target_group?: [_]:                            #AwsLbTargetGroupDataSource
+	aws_mq_broker?: [_]:                                  #AwsMqBrokerDataSource
+	aws_msk_cluster?: [_]:                                #AwsMskClusterDataSource
+	aws_msk_configuration?: [_]:                          #AwsMskConfigurationDataSource
+	aws_nat_gateway?: [_]:                                #AwsNatGatewayDataSource
+	aws_network_acls?: [_]:                               #AwsNetworkAclsDataSource
+	aws_network_interface?: [_]:                          #AwsNetworkInterfaceDataSource
+	aws_network_interfaces?: [_]:                         #AwsNetworkInterfacesDataSource
+	aws_organizations_organization?: [_]:                 #AwsOrganizationsOrganizationDataSource
+	aws_organizations_organizational_units?: [_]:         #AwsOrganizationsOrganizationalUnitsDataSource
+	aws_outposts_outpost?: [_]:                           #AwsOutpostsOutpostDataSource
+	aws_outposts_outpost_instance_type?: [_]:             #AwsOutpostsOutpostInstanceTypeDataSource
+	aws_outposts_outpost_instance_types?: [_]:            #AwsOutpostsOutpostInstanceTypesDataSource
+	aws_outposts_outposts?: [_]:                          #AwsOutpostsOutpostsDataSource
+	aws_outposts_site?: [_]:                              #AwsOutpostsSiteDataSource
+	aws_outposts_sites?: [_]:                             #AwsOutpostsSitesDataSource
+	aws_partition?: [_]:                                  #AwsPartitionDataSource
+	aws_prefix_list?: [_]:                                #AwsPrefixListDataSource
+	aws_pricing_product?: [_]:                            #AwsPricingProductDataSource
+	aws_qldb_ledger?: [_]:                                #AwsQldbLedgerDataSource
+	aws_ram_resource_share?: [_]:                         #AwsRamResourceShareDataSource
+	aws_rds_cluster?: [_]:                                #AwsRdsClusterDataSource
+	aws_redshift_cluster?: [_]:                           #AwsRedshiftClusterDataSource
+	aws_redshift_service_account?: [_]:                   #AwsRedshiftServiceAccountDataSource
+	aws_region?: [_]:                                     #AwsRegionDataSource
+	aws_regions?: [_]:                                    #AwsRegionsDataSource
+	aws_route53_delegation_set?: [_]:                     #AwsRoute53DelegationSetDataSource
+	aws_route53_resolver_rule?: [_]:                      #AwsRoute53ResolverRuleDataSource
+	aws_route53_resolver_rules?: [_]:                     #AwsRoute53ResolverRulesDataSource
+	aws_route53_zone?: [_]:                               #AwsRoute53ZoneDataSource
+	aws_route?: [_]:                                      #AwsRouteDataSource
+	aws_route_table?: [_]:                                #AwsRouteTableDataSource
+	aws_route_tables?: [_]:                               #AwsRouteTablesDataSource
+	aws_s3_bucket?: [_]:                                  #AwsS3BucketDataSource
+	aws_s3_bucket_object?: [_]:                           #AwsS3BucketObjectDataSource
+	aws_s3_bucket_objects?: [_]:                          #AwsS3BucketObjectsDataSource
+	aws_secretsmanager_secret?: [_]:                      #AwsSecretsmanagerSecretDataSource
+	aws_secretsmanager_secret_rotation?: [_]:             #AwsSecretsmanagerSecretRotationDataSource
+	aws_secretsmanager_secret_version?: [_]:              #AwsSecretsmanagerSecretVersionDataSource
+	aws_security_group?: [_]:                             #AwsSecurityGroupDataSource
+	aws_security_groups?: [_]:                            #AwsSecurityGroupsDataSource
+	aws_servicequotas_service?: [_]:                      #AwsServicequotasServiceDataSource
+	aws_servicequotas_service_quota?: [_]:                #AwsServicequotasServiceQuotaDataSource
+	aws_sfn_activity?: [_]:                               #AwsSfnActivityDataSource
+	aws_sfn_state_machine?: [_]:                          #AwsSfnStateMachineDataSource
+	aws_sns_topic?: [_]:                                  #AwsSnsTopicDataSource
+	aws_sqs_queue?: [_]:                                  #AwsSqsQueueDataSource
+	aws_ssm_document?: [_]:                               #AwsSsmDocumentDataSource
+	aws_ssm_parameter?: [_]:                              #AwsSsmParameterDataSource
+	aws_ssm_patch_baseline?: [_]:                         #AwsSsmPatchBaselineDataSource
+	aws_storagegateway_local_disk?: [_]:                  #AwsStoragegatewayLocalDiskDataSource
+	aws_subnet?: [_]:                                     #AwsSubnetDataSource
+	aws_subnet_ids?: [_]:                                 #AwsSubnetIdsDataSource
+	aws_transfer_server?: [_]:                            #AwsTransferServerDataSource
+	aws_vpc?: [_]:                                        #AwsVpcDataSource
+	aws_vpc_dhcp_options?: [_]:                           #AwsVpcDhcpOptionsDataSource
+	aws_vpc_endpoint?: [_]:                               #AwsVpcEndpointDataSource
+	aws_vpc_endpoint_service?: [_]:                       #AwsVpcEndpointServiceDataSource
+	aws_vpc_peering_connection?: [_]:                     #AwsVpcPeeringConnectionDataSource
+	aws_vpcs?: [_]:                                       #AwsVpcsDataSource
+	aws_vpn_gateway?: [_]:                                #AwsVpnGatewayDataSource
+	aws_waf_ipset?: [_]:                                  #AwsWafIpsetDataSource
+	aws_waf_rate_based_rule?: [_]:                        #AwsWafRateBasedRuleDataSource
+	aws_waf_rule?: [_]:                                   #AwsWafRuleDataSource
+	aws_waf_web_acl?: [_]:                                #AwsWafWebAclDataSource
+	aws_wafregional_ipset?: [_]:                          #AwsWafregionalIpsetDataSource
+	aws_wafregional_rate_based_rule?: [_]:                #AwsWafregionalRateBasedRuleDataSource
+	aws_wafregional_rule?: [_]:                           #AwsWafregionalRuleDataSource
+	aws_wafregional_web_acl?: [_]:                        #AwsWafregionalWebAclDataSource
+	aws_wafv2_ip_set?: [_]:                               #AwsWafv2IpSetDataSource
+	aws_wafv2_regex_pattern_set?: [_]:                    #AwsWafv2RegexPatternSetDataSource
+	aws_wafv2_rule_group?: [_]:                           #AwsWafv2RuleGroupDataSource
+	aws_wafv2_web_acl?: [_]:                              #AwsWafv2WebAclDataSource
+	aws_workspaces_bundle?: [_]:                          #AwsWorkspacesBundleDataSource
 }

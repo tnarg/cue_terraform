@@ -2,6 +2,7 @@
 package spotinst
 
 #Provider: spotinst: {
-	account?: string
-	token?:   string
+	account?:       string
+	feature_flags?: string
+	token?:         string
 }

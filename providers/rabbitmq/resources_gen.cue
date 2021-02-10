@@ -7,10 +7,14 @@ package rabbitmq
 	source:           string
 	vhost:            string
 	arguments?: [_]: string
-	routing_key?: string
+	arguments_json?: string
+	id?:             string
+	properties_key?: string
+	routing_key?:    string
 }
 #RabbitmqExchangeResource: {
 	name:   string
+	id?:    string
 	vhost?: string
 	settings?: [{
 		type: string
@@ -19,8 +23,27 @@ package rabbitmq
 		durable?:     bool
 	}, ...]
 }
+#RabbitmqFederationUpstreamResource: {
+	name:       string
+	vhost:      string
+	component?: string
+	id?:        string
+	definition?: [{
+		uri:              string
+		ack_mode?:        string
+		exchange?:        string
+		expires?:         number
+		max_hops?:        number
+		message_ttl?:     number
+		prefetch_count?:  number
+		queue?:           string
+		reconnect_delay?: number
+		trust_user_id?:   bool
+	}, ...]
+}
 #RabbitmqPermissionsResource: {
 	user:   string
+	id?:    string
 	vhost?: string
 	permissions?: [{
 		configure: string
@@ -31,6 +54,7 @@ package rabbitmq
 #RabbitmqPolicyResource: {
 	name:  string
 	vhost: string
+	id?:   string
 	policy?: [{
 		apply_to: string
 		definition: [_]: string
@@ -40,6 +64,7 @@ package rabbitmq
 }
 #RabbitmqQueueResource: {
 	name:   string
+	id?:    string
 	vhost?: string
 	settings?: [{
 		arguments?: [_]: string
@@ -48,8 +73,40 @@ package rabbitmq
 		durable?:        bool
 	}, ...]
 }
+#RabbitmqShovelResource: {
+	name:  string
+	vhost: string
+	id?:   string
+	info?: [{
+		destination_uri:                     string
+		source_uri:                          string
+		ack_mode?:                           string
+		add_forward_headers?:                bool
+		delete_after?:                       string
+		destination_add_forward_headers?:    bool
+		destination_add_timestamp_header?:   bool
+		destination_address?:                string
+		destination_application_properties?: string
+		destination_exchange?:               string
+		destination_exchange_key?:           string
+		destination_properties?:             string
+		destination_protocol?:               string
+		destination_publish_properties?:     string
+		destination_queue?:                  string
+		prefetch_count?:                     number
+		reconnect_delay?:                    number
+		source_address?:                     string
+		source_delete_after?:                string
+		source_exchange?:                    string
+		source_exchange_key?:                string
+		source_prefetch_count?:              number
+		source_protocol?:                    string
+		source_queue?:                       string
+	}, ...]
+}
 #RabbitmqTopicPermissionsResource: {
 	user:   string
+	id?:    string
 	vhost?: string
 	permissions?: [{
 		exchange: string
@@ -60,16 +117,22 @@ package rabbitmq
 #RabbitmqUserResource: {
 	name:     string
 	password: string
+	id?:      string
 	tags?: [string, ...]
 }
-#RabbitmqVhostResource: name: string
+#RabbitmqVhostResource: {
+	name: string
+	id?:  string
+}
 #Resources: {
-	rabbitmq_binding?: [_]:           #RabbitmqBindingResource
-	rabbitmq_exchange?: [_]:          #RabbitmqExchangeResource
-	rabbitmq_permissions?: [_]:       #RabbitmqPermissionsResource
-	rabbitmq_policy?: [_]:            #RabbitmqPolicyResource
-	rabbitmq_queue?: [_]:             #RabbitmqQueueResource
-	rabbitmq_topic_permissions?: [_]: #RabbitmqTopicPermissionsResource
-	rabbitmq_user?: [_]:              #RabbitmqUserResource
-	rabbitmq_vhost?: [_]:             #RabbitmqVhostResource
+	rabbitmq_binding?: [_]:             #RabbitmqBindingResource
+	rabbitmq_exchange?: [_]:            #RabbitmqExchangeResource
+	rabbitmq_federation_upstream?: [_]: #RabbitmqFederationUpstreamResource
+	rabbitmq_permissions?: [_]:         #RabbitmqPermissionsResource
+	rabbitmq_policy?: [_]:              #RabbitmqPolicyResource
+	rabbitmq_queue?: [_]:               #RabbitmqQueueResource
+	rabbitmq_shovel?: [_]:              #RabbitmqShovelResource
+	rabbitmq_topic_permissions?: [_]:   #RabbitmqTopicPermissionsResource
+	rabbitmq_user?: [_]:                #RabbitmqUserResource
+	rabbitmq_vhost?: [_]:               #RabbitmqVhostResource
 }

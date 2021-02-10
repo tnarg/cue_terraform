@@ -3,27 +3,52 @@ package aws
 
 #AwsAccessanalyzerAnalyzerResource: {
 	analyzer_name: string
+	arn?:          string
+	id?:           string
 	tags?: [_]: string
 	type?: string
 }
 #AwsAcmCertificateResource: {
+	arn?:                       string
 	certificate_authority_arn?: string
 	certificate_body?:          string
 	certificate_chain?:         string
-	private_key?:               string
+	domain_name?:               string
+	domain_validation_options?: [{
+		domain_name:           string
+		resource_record_name:  string
+		resource_record_type:  string
+		resource_record_value: string
+	}, ...]
+	id?:          string
+	private_key?: string
+	status?:      string
+	subject_alternative_names?: [string, ...]
 	tags?: [_]: string
+	validation_emails?: [string, ...]
+	validation_method?: string
 	options?: [{
 		certificate_transparency_logging_preference?: string
 	}, ...]
 }
 #AwsAcmCertificateValidationResource: {
 	certificate_arn: string
+	id?:             string
 	validation_record_fqdns?: [string, ...]
 	timeouts?: create?: string
 }
 #AwsAcmpcaCertificateAuthorityResource: {
+	arn?:                             string
+	certificate?:                     string
+	certificate_chain?:               string
+	certificate_signing_request?:     string
 	enabled?:                         bool
+	id?:                              string
+	not_after?:                       string
+	not_before?:                      string
 	permanent_deletion_time_in_days?: number
+	serial?:                          string
+	status?:                          string
 	tags?: [_]: string
 	type?: string
 	certificate_authority_configuration?: [{
@@ -56,14 +81,25 @@ package aws
 	timeouts?: create?: string
 }
 #AwsAlbResource: {
+	arn?:                              string
+	arn_suffix?:                       string
+	dns_name?:                         string
 	drop_invalid_header_fields?:       bool
 	enable_cross_zone_load_balancing?: bool
 	enable_deletion_protection?:       bool
 	enable_http2?:                     bool
+	id?:                               string
 	idle_timeout?:                     number
+	internal?:                         bool
+	ip_address_type?:                  string
 	load_balancer_type?:               string
+	name?:                             string
 	name_prefix?:                      string
+	security_groups?: [string, ...]
+	subnets?: [string, ...]
 	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
 	access_logs?: [{
 		bucket:   string
 		enabled?: bool
@@ -82,16 +118,24 @@ package aws
 #AwsAlbListenerResource: {
 	load_balancer_arn: string
 	port:              number
+	arn?:              string
 	certificate_arn?:  string
+	id?:               string
 	protocol?:         string
+	ssl_policy?:       string
 	default_action?: [{
 		type:              string
+		order?:            number
 		target_group_arn?: string
 		authenticate_cognito?: [{
 			user_pool_arn:       string
 			user_pool_client_id: string
 			user_pool_domain:    string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		authenticate_oidc?: [{
 			authorization_endpoint: string
@@ -101,10 +145,25 @@ package aws
 			token_endpoint:         string
 			user_info_endpoint:     string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		fixed_response?: [{
 			content_type:  string
 			message_body?: string
+			status_code?:  string
+		}, ...]
+		forward?: [{
+			stickiness?: [{
+				duration: number
+				enabled?: bool
+			}, ...]
+			target_group?: [{
+				arn:     string
+				weight?: number
+			}, ...]
 		}, ...]
 		redirect?: [{
 			status_code: string
@@ -120,17 +179,26 @@ package aws
 #AwsAlbListenerCertificateResource: {
 	certificate_arn: string
 	listener_arn:    string
+	id?:             string
 }
 #AwsAlbListenerRuleResource: {
 	listener_arn: string
+	arn?:         string
+	id?:          string
+	priority?:    number
 	action?: [{
 		type:              string
+		order?:            number
 		target_group_arn?: string
 		authenticate_cognito?: [{
 			user_pool_arn:       string
 			user_pool_client_id: string
 			user_pool_domain:    string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		authenticate_oidc?: [{
 			authorization_endpoint: string
@@ -140,10 +208,25 @@ package aws
 			token_endpoint:         string
 			user_info_endpoint:     string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		fixed_response?: [{
 			content_type:  string
 			message_body?: string
+			status_code?:  string
+		}, ...]
+		forward?: [{
+			stickiness?: [{
+				duration: number
+				enabled?: bool
+			}, ...]
+			target_group?: [{
+				arn:     string
+				weight?: number
+			}, ...]
 		}, ...]
 		redirect?: [{
 			status_code: string
@@ -155,7 +238,11 @@ package aws
 		}, ...]
 	}, ...]
 	condition?: [{
-		host_header?: [{}, ...]
+		field?: string
+		values?: [string, ...]
+		host_header?: [{
+			values?: [string, ...]
+		}, ...]
 		http_header?: [{
 			http_header_name: string
 			values: [string, ...]
@@ -163,7 +250,9 @@ package aws
 		http_request_method?: [{
 			values: [string, ...]
 		}, ...]
-		path_pattern?: [{}, ...]
+		path_pattern?: [{
+			values?: [string, ...]
+		}, ...]
 		query_string?: [{
 			value: string
 			key?:  string
@@ -174,8 +263,13 @@ package aws
 	}, ...]
 }
 #AwsAlbTargetGroupResource: {
+	arn?:                                string
+	arn_suffix?:                         string
 	deregistration_delay?:               number
+	id?:                                 string
 	lambda_multi_value_headers_enabled?: bool
+	load_balancing_algorithm_type?:      string
+	name?:                               string
 	name_prefix?:                        string
 	port?:                               number
 	protocol?:                           string
@@ -188,8 +282,11 @@ package aws
 		enabled?:             bool
 		healthy_threshold?:   number
 		interval?:            number
+		matcher?:             string
+		path?:                string
 		port?:                string
 		protocol?:            string
+		timeout?:             number
 		unhealthy_threshold?: number
 	}, ...]
 	stickiness?: [{
@@ -202,17 +299,23 @@ package aws
 	target_group_arn:   string
 	target_id:          string
 	availability_zone?: string
+	id?:                string
 	port?:              number
 }
 #AwsAmiResource: {
-	name:               string
-	architecture?:      string
-	description?:       string
-	ena_support?:       bool
-	kernel_id?:         string
-	ramdisk_id?:        string
-	root_device_name?:  string
-	sriov_net_support?: string
+	name:                  string
+	architecture?:         string
+	arn?:                  string
+	description?:          string
+	ena_support?:          bool
+	id?:                   string
+	image_location?:       string
+	kernel_id?:            string
+	manage_ebs_snapshots?: bool
+	ramdisk_id?:           string
+	root_device_name?:     string
+	root_snapshot_id?:     string
+	sriov_net_support?:    string
 	tags?: [_]: string
 	virtualization_type?: string
 	ebs_block_device?: [{
@@ -221,6 +324,7 @@ package aws
 		encrypted?:             bool
 		iops?:                  number
 		snapshot_id?:           string
+		volume_size?:           number
 		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
@@ -234,14 +338,38 @@ package aws
 	}
 }
 #AwsAmiCopyResource: {
-	name:              string
-	source_ami_id:     string
-	source_ami_region: string
-	description?:      string
-	encrypted?:        bool
+	name:                  string
+	source_ami_id:         string
+	source_ami_region:     string
+	architecture?:         string
+	arn?:                  string
+	description?:          string
+	ena_support?:          bool
+	encrypted?:            bool
+	id?:                   string
+	image_location?:       string
+	kernel_id?:            string
+	kms_key_id?:           string
+	manage_ebs_snapshots?: bool
+	ramdisk_id?:           string
+	root_device_name?:     string
+	root_snapshot_id?:     string
+	sriov_net_support?:    string
 	tags?: [_]: string
-	ebs_block_device?: [{}, ...]
-	ephemeral_block_device?: [{}, ...]
+	virtualization_type?: string
+	ebs_block_device?: [{
+		delete_on_termination?: bool
+		device_name?:           string
+		encrypted?:             bool
+		iops?:                  number
+		snapshot_id?:           string
+		volume_size?:           number
+		volume_type?:           string
+	}, ...]
+	ephemeral_block_device?: [{
+		device_name?:  string
+		virtual_name?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -251,11 +379,34 @@ package aws
 #AwsAmiFromInstanceResource: {
 	name:                     string
 	source_instance_id:       string
+	architecture?:            string
+	arn?:                     string
 	description?:             string
+	ena_support?:             bool
+	id?:                      string
+	image_location?:          string
+	kernel_id?:               string
+	manage_ebs_snapshots?:    bool
+	ramdisk_id?:              string
+	root_device_name?:        string
+	root_snapshot_id?:        string
 	snapshot_without_reboot?: bool
+	sriov_net_support?:       string
 	tags?: [_]: string
-	ebs_block_device?: [{}, ...]
-	ephemeral_block_device?: [{}, ...]
+	virtualization_type?: string
+	ebs_block_device?: [{
+		delete_on_termination?: bool
+		device_name?:           string
+		encrypted?:             bool
+		iops?:                  number
+		snapshot_id?:           string
+		volume_size?:           number
+		volume_type?:           string
+	}, ...]
+	ephemeral_block_device?: [{
+		device_name?:  string
+		virtual_name?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -265,13 +416,26 @@ package aws
 #AwsAmiLaunchPermissionResource: {
 	account_id: string
 	image_id:   string
+	id?:        string
 }
-#AwsApiGatewayAccountResource: cloudwatch_role_arn?: string
+#AwsApiGatewayAccountResource: {
+	cloudwatch_role_arn?: string
+	id?:                  string
+	throttle_settings?: [{
+		burst_limit: number
+		rate_limit:  number
+	}, ...]
+}
 #AwsApiGatewayApiKeyResource: {
-	name:         string
-	description?: string
-	enabled?:     bool
+	name:               string
+	arn?:               string
+	created_date?:      string
+	description?:       string
+	enabled?:           bool
+	id?:                string
+	last_updated_date?: string
 	tags?: [_]: string
+	value?: string
 	stage_key?: [{
 		rest_api_id: string
 		stage_name:  string
@@ -283,6 +447,7 @@ package aws
 	authorizer_credentials?:           string
 	authorizer_result_ttl_in_seconds?: number
 	authorizer_uri?:                   string
+	id?:                               string
 	identity_source?:                  string
 	identity_validation_expression?:   string
 	provider_arns?: [string, ...]
@@ -292,15 +457,25 @@ package aws
 	api_id:      string
 	domain_name: string
 	base_path?:  string
+	id?:         string
 	stage_name?: string
 }
 #AwsApiGatewayClientCertificateResource: {
-	description?: string
+	arn?:                     string
+	created_date?:            string
+	description?:             string
+	expiration_date?:         string
+	id?:                      string
+	pem_encoded_certificate?: string
 	tags?: [_]: string
 }
 #AwsApiGatewayDeploymentResource: {
 	rest_api_id:        string
+	created_date?:      string
 	description?:       string
+	execution_arn?:     string
+	id?:                string
+	invoke_url?:        string
 	stage_description?: string
 	stage_name?:        string
 	triggers?: [_]:  string
@@ -309,6 +484,7 @@ package aws
 #AwsApiGatewayDocumentationPartResource: {
 	properties:  string
 	rest_api_id: string
+	id?:         string
 	location?: [{
 		type:         string
 		method?:      string
@@ -321,16 +497,25 @@ package aws
 	rest_api_id:  string
 	version:      string
 	description?: string
+	id?:          string
 }
 #AwsApiGatewayDomainNameResource: {
 	domain_name:                string
+	arn?:                       string
 	certificate_arn?:           string
 	certificate_body?:          string
 	certificate_chain?:         string
 	certificate_name?:          string
 	certificate_private_key?:   string
+	certificate_upload_date?:   string
+	cloudfront_domain_name?:    string
+	cloudfront_zone_id?:        string
+	id?:                        string
 	regional_certificate_arn?:  string
 	regional_certificate_name?: string
+	regional_domain_name?:      string
+	regional_zone_id?:          string
+	security_policy?:           string
 	tags?: [_]: string
 	endpoint_configuration?: [{
 		types: [string, ...]
@@ -339,6 +524,7 @@ package aws
 #AwsApiGatewayGatewayResponseResource: {
 	response_type: string
 	rest_api_id:   string
+	id?:           string
 	response_parameters?: [_]: string
 	response_templates?: [_]:  string
 	status_code?: string
@@ -349,11 +535,14 @@ package aws
 	rest_api_id: string
 	type:        string
 	cache_key_parameters?: [string, ...]
+	cache_namespace?:         string
 	connection_id?:           string
 	connection_type?:         string
 	content_handling?:        string
 	credentials?:             string
+	id?:                      string
 	integration_http_method?: string
+	passthrough_behavior?:    string
 	request_parameters?: [_]: string
 	request_parameters_in_json?: string
 	request_templates?: [_]: string
@@ -366,6 +555,7 @@ package aws
 	rest_api_id:       string
 	status_code:       string
 	content_handling?: string
+	id?:               string
 	response_parameters?: [_]: string
 	response_parameters_in_json?: string
 	response_templates?: [_]: string
@@ -379,6 +569,7 @@ package aws
 	api_key_required?: bool
 	authorization_scopes?: [string, ...]
 	authorizer_id?: string
+	id?:            string
 	request_models?: [_]:     string
 	request_parameters?: [_]: bool
 	request_parameters_in_json?: string
@@ -389,6 +580,7 @@ package aws
 	resource_id: string
 	rest_api_id: string
 	status_code: string
+	id?:         string
 	response_models?: [_]:     string
 	response_parameters?: [_]: bool
 	response_parameters_in_json?: string
@@ -397,6 +589,7 @@ package aws
 	method_path: string
 	rest_api_id: string
 	stage_name:  string
+	id?:         string
 	settings?: [{
 		cache_data_encrypted?:                       bool
 		cache_ttl_in_seconds?:                       number
@@ -415,11 +608,13 @@ package aws
 	name:         string
 	rest_api_id:  string
 	description?: string
+	id?:          string
 	schema?:      string
 }
 #AwsApiGatewayRequestValidatorResource: {
 	name:                         string
 	rest_api_id:                  string
+	id?:                          string
 	validate_request_body?:       bool
 	validate_request_parameters?: bool
 }
@@ -427,15 +622,22 @@ package aws
 	parent_id:   string
 	path_part:   string
 	rest_api_id: string
+	id?:         string
+	path?:       string
 }
 #AwsApiGatewayRestApiResource: {
 	name:            string
 	api_key_source?: string
+	arn?:            string
 	binary_media_types?: [string, ...]
 	body?:                     string
+	created_date?:             string
 	description?:              string
+	execution_arn?:            string
+	id?:                       string
 	minimum_compression_size?: number
 	policy?:                   string
+	root_resource_id?:         string
 	tags?: [_]: string
 	endpoint_configuration?: [{
 		types: [string, ...]
@@ -446,11 +648,15 @@ package aws
 	deployment_id:          string
 	rest_api_id:            string
 	stage_name:             string
+	arn?:                   string
 	cache_cluster_enabled?: bool
 	cache_cluster_size?:    string
 	client_certificate_id?: string
 	description?:           string
 	documentation_version?: string
+	execution_arn?:         string
+	id?:                    string
+	invoke_url?:            string
 	tags?: [_]:      string
 	variables?: [_]: string
 	xray_tracing_enabled?: bool
@@ -461,7 +667,9 @@ package aws
 }
 #AwsApiGatewayUsagePlanResource: {
 	name:          string
+	arn?:          string
 	description?:  string
+	id?:           string
 	product_code?: string
 	tags?: [_]: string
 	api_stages?: [{
@@ -482,19 +690,28 @@ package aws
 	key_id:        string
 	key_type:      string
 	usage_plan_id: string
+	id?:           string
+	name?:         string
+	value?:        string
 }
 #AwsApiGatewayVpcLinkResource: {
 	name: string
 	target_arns: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 }
 #AwsApigatewayv2ApiResource: {
 	name:                          string
 	protocol_type:                 string
+	api_endpoint?:                 string
 	api_key_selection_expression?: string
+	arn?:                          string
 	credentials_arn?:              string
 	description?:                  string
+	execution_arn?:                string
+	id?:                           string
 	route_key?:                    string
 	route_selection_expression?:   string
 	tags?: [_]: string
@@ -514,6 +731,7 @@ package aws
 	domain_name:      string
 	stage:            string
 	api_mapping_key?: string
+	id?:              string
 }
 #AwsApigatewayv2AuthorizerResource: {
 	api_id:          string
@@ -522,38 +740,48 @@ package aws
 	name:                        string
 	authorizer_credentials_arn?: string
 	authorizer_uri?:             string
+	id?:                         string
 	jwt_configuration?: [{
 		audience?: [string, ...]
 		issuer?: string
 	}, ...]
 }
 #AwsApigatewayv2DeploymentResource: {
-	api_id:       string
-	description?: string
+	api_id:         string
+	auto_deployed?: bool
+	description?:   string
+	id?:            string
 	triggers?: [_]: string
 }
 #AwsApigatewayv2DomainNameResource: {
-	domain_name: string
+	domain_name:                       string
+	api_mapping_selection_expression?: string
+	arn?:                              string
+	id?:                               string
 	tags?: [_]: string
 	domain_name_configuration?: [{
-		certificate_arn: string
-		endpoint_type:   string
-		security_policy: string
+		certificate_arn:     string
+		endpoint_type:       string
+		security_policy:     string
+		hosted_zone_id?:     string
+		target_domain_name?: string
 	}, ...]
 	timeouts?: update?: string
 }
 #AwsApigatewayv2IntegrationResource: {
-	api_id:                     string
-	integration_type:           string
-	connection_id?:             string
-	connection_type?:           string
-	content_handling_strategy?: string
-	credentials_arn?:           string
-	description?:               string
-	integration_method?:        string
-	integration_uri?:           string
-	passthrough_behavior?:      string
-	payload_format_version?:    string
+	api_id:                                     string
+	integration_type:                           string
+	connection_id?:                             string
+	connection_type?:                           string
+	content_handling_strategy?:                 string
+	credentials_arn?:                           string
+	description?:                               string
+	id?:                                        string
+	integration_method?:                        string
+	integration_response_selection_expression?: string
+	integration_uri?:                           string
+	passthrough_behavior?:                      string
+	payload_format_version?:                    string
 	request_templates?: [_]: string
 	template_selection_expression?: string
 	timeout_milliseconds?:          number
@@ -563,6 +791,7 @@ package aws
 	integration_id:             string
 	integration_response_key:   string
 	content_handling_strategy?: string
+	id?:                        string
 	response_templates?: [_]: string
 	template_selection_expression?: string
 }
@@ -572,6 +801,7 @@ package aws
 	name:         string
 	schema:       string
 	description?: string
+	id?:          string
 }
 #AwsApigatewayv2RouteResource: {
 	api_id:            string
@@ -580,6 +810,7 @@ package aws
 	authorization_scopes?: [string, ...]
 	authorization_type?:         string
 	authorizer_id?:              string
+	id?:                         string
 	model_selection_expression?: string
 	operation_name?:             string
 	request_models?: [_]: string
@@ -590,16 +821,21 @@ package aws
 	api_id:                      string
 	route_id:                    string
 	route_response_key:          string
+	id?:                         string
 	model_selection_expression?: string
 	response_models?: [_]: string
 }
 #AwsApigatewayv2StageResource: {
 	api_id:                 string
 	name:                   string
+	arn?:                   string
 	auto_deploy?:           bool
 	client_certificate_id?: string
 	deployment_id?:         string
 	description?:           string
+	execution_arn?:         string
+	id?:                    string
+	invoke_url?:            string
 	stage_variables?: [_]: string
 	tags?: [_]:            string
 	access_log_settings?: [{
@@ -626,6 +862,8 @@ package aws
 	name: string
 	security_group_ids: [string, ...]
 	subnet_ids: [string, ...]
+	arn?: string
+	id?:  string
 	tags?: [_]: string
 }
 #AwsAppCookieStickinessPolicyResource: {
@@ -633,6 +871,7 @@ package aws
 	lb_port:       number
 	load_balancer: string
 	name:          string
+	id?:           string
 }
 #AwsAppautoscalingPolicyResource: {
 	name:                      string
@@ -640,7 +879,9 @@ package aws
 	scalable_dimension:        string
 	service_namespace:         string
 	adjustment_type?:          string
+	arn?:                      string
 	cooldown?:                 number
+	id?:                       string
 	metric_aggregation_type?:  string
 	min_adjustment_magnitude?: number
 	policy_type?:              string
@@ -685,7 +926,9 @@ package aws
 	name:                string
 	resource_id:         string
 	service_namespace:   string
+	arn?:                string
 	end_time?:           string
+	id?:                 string
 	scalable_dimension?: string
 	schedule?:           string
 	start_time?:         string
@@ -700,9 +943,15 @@ package aws
 	resource_id:        string
 	scalable_dimension: string
 	service_namespace:  string
+	id?:                string
+	role_arn?:          string
 }
 #AwsAppmeshMeshResource: {
-	name: string
+	name:               string
+	arn?:               string
+	created_date?:      string
+	id?:                string
+	last_updated_date?: string
 	tags?: [_]: string
 	spec?: [{
 		egress_filter?: [{
@@ -714,6 +963,10 @@ package aws
 	mesh_name:           string
 	name:                string
 	virtual_router_name: string
+	arn?:                string
+	created_date?:       string
+	id?:                 string
+	last_updated_date?:  string
 	tags?: [_]: string
 	spec?: [{
 		priority?: number
@@ -755,10 +1008,15 @@ package aws
 	}, ...]
 }
 #AwsAppmeshVirtualNodeResource: {
-	mesh_name: string
-	name:      string
+	mesh_name:          string
+	name:               string
+	arn?:               string
+	created_date?:      string
+	id?:                string
+	last_updated_date?: string
 	tags?: [_]: string
 	spec?: [{
+		backends?: [string, ...]
 		backend?: [{
 			virtual_service?: [{
 				virtual_service_name: string
@@ -772,6 +1030,7 @@ package aws
 				timeout_millis:      number
 				unhealthy_threshold: number
 				path?:               string
+				port?:               number
 			}, ...]
 			port_mapping?: [{
 				port:     number
@@ -792,16 +1051,22 @@ package aws
 				attributes?: [_]: string
 			}, ...]
 			dns?: [{
-				hostname: string
+				hostname:      string
+				service_name?: string
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #AwsAppmeshVirtualRouterResource: {
-	mesh_name: string
-	name:      string
+	mesh_name:          string
+	name:               string
+	arn?:               string
+	created_date?:      string
+	id?:                string
+	last_updated_date?: string
 	tags?: [_]: string
 	spec?: [{
+		service_names?: [string, ...]
 		listener?: [{
 			port_mapping?: [{
 				port:     number
@@ -811,8 +1076,12 @@ package aws
 	}, ...]
 }
 #AwsAppmeshVirtualServiceResource: {
-	mesh_name: string
-	name:      string
+	mesh_name:          string
+	name:               string
+	arn?:               string
+	created_date?:      string
+	id?:                string
+	last_updated_date?: string
 	tags?: [_]: string
 	spec?: [{
 		provider?: [{
@@ -829,19 +1098,25 @@ package aws
 	api_id:       string
 	description?: string
 	expires?:     string
+	id?:          string
+	key?:         string
 }
 #AwsAppsyncDatasourceResource: {
 	api_id:            string
 	name:              string
 	type:              string
+	arn?:              string
 	description?:      string
+	id?:               string
 	service_role_arn?: string
 	dynamodb_config?: [{
 		table_name:              string
+		region?:                 string
 		use_caller_credentials?: bool
 	}, ...]
 	elasticsearch_config?: [{
 		endpoint: string
+		region?:  string
 	}, ...]
 	http_config?: [{
 		endpoint: string
@@ -856,14 +1131,20 @@ package aws
 	name:                      string
 	request_mapping_template:  string
 	response_mapping_template: string
+	arn?:                      string
 	description?:              string
+	function_id?:              string
 	function_version?:         string
+	id?:                       string
 }
 #AwsAppsyncGraphqlApiResource: {
 	authentication_type: string
 	name:                string
+	arn?:                string
+	id?:                 string
 	schema?:             string
 	tags?: [_]: string
+	uris?: [_]: string
 	xray_enabled?: bool
 	additional_authentication_provider?: [{
 		authentication_type: string
@@ -876,6 +1157,7 @@ package aws
 		user_pool_config?: [{
 			user_pool_id:         string
 			app_id_client_regex?: string
+			aws_region?:          string
 		}, ...]
 	}, ...]
 	log_config?: [{
@@ -893,6 +1175,7 @@ package aws
 		default_action:       string
 		user_pool_id:         string
 		app_id_client_regex?: string
+		aws_region?:          string
 	}, ...]
 }
 #AwsAppsyncResolverResource: {
@@ -901,7 +1184,9 @@ package aws
 	request_template:  string
 	response_template: string
 	type:              string
+	arn?:              string
 	data_source?:      string
+	id?:               string
 	kind?:             string
 	caching_config?: [{
 		caching_keys?: [string, ...]
@@ -915,6 +1200,7 @@ package aws
 	bucket:         string
 	name:           string
 	force_destroy?: bool
+	id?:            string
 	encryption_configuration?: [{
 		encryption_option: string
 		kms_key?:          string
@@ -925,12 +1211,15 @@ package aws
 	name:         string
 	query:        string
 	description?: string
+	id?:          string
 	workgroup?:   string
 }
 #AwsAthenaWorkgroupResource: {
 	name:           string
+	arn?:           string
 	description?:   string
 	force_destroy?: bool
+	id?:            string
 	state?:         string
 	tags?: [_]: string
 	configuration?: [{
@@ -950,36 +1239,51 @@ package aws
 	autoscaling_group_name: string
 	alb_target_group_arn?:  string
 	elb?:                   string
+	id?:                    string
 }
 #AwsAutoscalingGroupResource: {
 	max_size: number
 	min_size: number
+	arn?:     string
+	availability_zones?: [string, ...]
+	default_cooldown?: number
+	desired_capacity?: number
 	enabled_metrics?: [string, ...]
 	force_delete?:              bool
 	health_check_grace_period?: number
+	health_check_type?:         string
+	id?:                        string
 	launch_configuration?:      string
-	max_instance_lifetime?:     number
-	metrics_granularity?:       string
-	min_elb_capacity?:          number
-	name_prefix?:               string
-	placement_group?:           string
-	protect_from_scale_in?:     bool
+	load_balancers?: [string, ...]
+	max_instance_lifetime?:   number
+	metrics_granularity?:     string
+	min_elb_capacity?:        number
+	name?:                    string
+	name_prefix?:             string
+	placement_group?:         string
+	protect_from_scale_in?:   bool
+	service_linked_role_arn?: string
 	suspended_processes?: [string, ...]
 	tags?: [{
 		[_]: string
 	}, ...]
+	target_group_arns?: [string, ...]
 	termination_policies?: [string, ...]
+	vpc_zone_identifier?: [string, ...]
 	wait_for_capacity_timeout?: string
 	wait_for_elb_capacity?:     number
 	initial_lifecycle_hook?: [{
 		lifecycle_transition:     string
 		name:                     string
+		default_result?:          string
 		heartbeat_timeout?:       number
 		notification_metadata?:   string
 		notification_target_arn?: string
 		role_arn?:                string
 	}, ...]
 	launch_template?: [{
+		id?:      string
+		name?:    string
 		version?: string
 	}, ...]
 	mixed_instances_policy?: [{
@@ -988,11 +1292,14 @@ package aws
 			on_demand_base_capacity?:                  number
 			on_demand_percentage_above_base_capacity?: number
 			spot_allocation_strategy?:                 string
+			spot_instance_pools?:                      number
 			spot_max_price?:                           string
 		}, ...]
 		launch_template?: [{
 			launch_template_specification?: [{
-				version?: string
+				launch_template_id?:   string
+				launch_template_name?: string
+				version?:              string
 			}, ...]
 			override?: [{
 				instance_type?:     string
@@ -1011,7 +1318,9 @@ package aws
 	autoscaling_group_name:   string
 	lifecycle_transition:     string
 	name:                     string
+	default_result?:          string
 	heartbeat_timeout?:       number
+	id?:                      string
 	notification_metadata?:   string
 	notification_target_arn?: string
 	role_arn?:                string
@@ -1020,13 +1329,17 @@ package aws
 	group_names: [string, ...]
 	notifications: [string, ...]
 	topic_arn: string
+	id?:       string
 }
 #AwsAutoscalingPolicyResource: {
 	autoscaling_group_name:     string
 	name:                       string
 	adjustment_type?:           string
+	arn?:                       string
 	cooldown?:                  number
 	estimated_instance_warmup?: number
+	id?:                        string
+	metric_aggregation_type?:   string
 	min_adjustment_magnitude?:  number
 	min_adjustment_step?:       number
 	policy_type?:               string
@@ -1058,10 +1371,21 @@ package aws
 #AwsAutoscalingScheduleResource: {
 	autoscaling_group_name: string
 	scheduled_action_name:  string
+	arn?:                   string
+	desired_capacity?:      number
+	end_time?:              string
+	id?:                    string
+	max_size?:              number
+	min_size?:              number
+	recurrence?:            string
+	start_time?:            string
 }
 #AwsBackupPlanResource: {
 	name: string
+	arn?: string
+	id?:  string
 	tags?: [_]: string
+	version?: string
 	rule?: [{
 		rule_name:          string
 		target_vault_name:  string
@@ -1086,6 +1410,7 @@ package aws
 	iam_role_arn: string
 	name:         string
 	plan_id:      string
+	id?:          string
 	resources?: [string, ...]
 	selection_tag?: [{
 		key:   string
@@ -1094,14 +1419,25 @@ package aws
 	}, ...]
 }
 #AwsBackupVaultResource: {
-	name: string
+	name:             string
+	arn?:             string
+	id?:              string
+	kms_key_arn?:     string
+	recovery_points?: number
 	tags?: [_]: string
 }
 #AwsBatchComputeEnvironmentResource: {
 	service_role:                     string
 	type:                             string
+	arn?:                             string
+	compute_environment_name?:        string
 	compute_environment_name_prefix?: string
+	ecc_cluster_arn?:                 string
+	ecs_cluster_arn?:                 string
+	id?:                              string
 	state?:                           string
+	status?:                          string
+	status_reason?:                   string
 	compute_resources?: [{
 		instance_role: string
 		instance_type: [string, ...]
@@ -1127,8 +1463,11 @@ package aws
 #AwsBatchJobDefinitionResource: {
 	name:                  string
 	type:                  string
+	arn?:                  string
 	container_properties?: string
+	id?:                   string
 	parameters?: [_]: string
+	revision?: number
 	retry_strategy?: [{
 		attempts?: number
 	}, ...]
@@ -1141,6 +1480,8 @@ package aws
 	name:     string
 	priority: number
 	state:    string
+	arn?:     string
+	id?:      string
 }
 #AwsBudgetsBudgetResource: {
 	budget_type:       string
@@ -1148,7 +1489,12 @@ package aws
 	limit_unit:        string
 	time_period_start: string
 	time_unit:         string
-	time_period_end?:  string
+	account_id?:       string
+	cost_filters?: [_]: string
+	id?:              string
+	name?:            string
+	name_prefix?:     string
+	time_period_end?: string
 	cost_types?: [{
 		include_credit?:             bool
 		include_discount?:           bool
@@ -1174,20 +1520,29 @@ package aws
 #AwsCloud9EnvironmentEc2Resource: {
 	instance_type:                string
 	name:                         string
+	arn?:                         string
 	automatic_stop_time_minutes?: number
 	description?:                 string
+	id?:                          string
+	owner_arn?:                   string
 	subnet_id?:                   string
 	tags?: [_]: string
+	type?: string
 }
 #AwsCloudformationStackResource: {
 	name: string
 	capabilities?: [string, ...]
 	disable_rollback?: bool
 	iam_role_arn?:     string
+	id?:               string
 	notification_arns?: [string, ...]
 	on_failure?: string
-	policy_url?: string
+	outputs?: [_]:    string
+	parameters?: [_]: string
+	policy_body?: string
+	policy_url?:  string
 	tags?: [_]: string
+	template_body?:      string
 	template_url?:       string
 	timeout_in_minutes?: number
 	timeouts?: {
@@ -1199,18 +1554,26 @@ package aws
 #AwsCloudformationStackSetResource: {
 	administration_role_arn: string
 	name:                    string
+	arn?:                    string
 	capabilities?: [string, ...]
 	description?:         string
 	execution_role_name?: string
+	id?:                  string
 	parameters?: [_]: string
-	tags?: [_]:       string
-	template_url?: string
+	stack_set_id?: string
+	tags?: [_]: string
+	template_body?: string
+	template_url?:  string
 	timeouts?: update?: string
 }
 #AwsCloudformationStackSetInstanceResource: {
 	stack_set_name: string
+	account_id?:    string
+	id?:            string
 	parameter_overrides?: [_]: string
+	region?:       string
 	retain_stack?: bool
+	stack_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1219,13 +1582,23 @@ package aws
 }
 #AwsCloudfrontDistributionResource: {
 	enabled: bool
+	active_trusted_signers?: [_]: string
 	aliases?: [string, ...]
-	comment?:             string
-	default_root_object?: string
-	http_version?:        string
-	is_ipv6_enabled?:     bool
-	price_class?:         string
-	retain_on_delete?:    bool
+	arn?:                            string
+	caller_reference?:               string
+	comment?:                        string
+	default_root_object?:            string
+	domain_name?:                    string
+	etag?:                           string
+	hosted_zone_id?:                 string
+	http_version?:                   string
+	id?:                             string
+	in_progress_validation_batches?: number
+	is_ipv6_enabled?:                bool
+	last_modified_time?:             string
+	price_class?:                    string
+	retain_on_delete?:               bool
+	status?:                         string
 	tags?: [_]: string
 	wait_for_deployment?: bool
 	web_acl_id?:          string
@@ -1366,16 +1739,41 @@ package aws
 		ssl_support_method?:             string
 	}, ...]
 }
-#AwsCloudfrontOriginAccessIdentityResource: comment?: string
+#AwsCloudfrontOriginAccessIdentityResource: {
+	caller_reference?:                string
+	cloudfront_access_identity_path?: string
+	comment?:                         string
+	etag?:                            string
+	iam_arn?:                         string
+	id?:                              string
+	s3_canonical_user_id?:            string
+}
 #AwsCloudfrontPublicKeyResource: {
-	encoded_key: string
-	comment?:    string
+	encoded_key:       string
+	caller_reference?: string
+	comment?:          string
+	etag?:             string
+	id?:               string
+	name?:             string
+	name_prefix?:      string
 }
 #AwsCloudhsmV2ClusterResource: {
 	hsm_type: string
 	subnet_ids: [string, ...]
+	cluster_certificates?: [{
+		aws_hardware_certificate:          string
+		cluster_certificate:               string
+		cluster_csr:                       string
+		hsm_certificate:                   string
+		manufacturer_hardware_certificate: string
+	}, ...]
+	cluster_id?:               string
+	cluster_state?:            string
+	id?:                       string
+	security_group_id?:        string
 	source_backup_identifier?: string
 	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1383,7 +1781,14 @@ package aws
 	}
 }
 #AwsCloudhsmV2HsmResource: {
-	cluster_id: string
+	cluster_id:         string
+	availability_zone?: string
+	hsm_eni_id?:        string
+	hsm_id?:            string
+	hsm_state?:         string
+	id?:                string
+	ip_address?:        string
+	subnet_id?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1393,10 +1798,13 @@ package aws
 #AwsCloudtrailResource: {
 	name:                           string
 	s3_bucket_name:                 string
+	arn?:                           string
 	cloud_watch_logs_group_arn?:    string
 	cloud_watch_logs_role_arn?:     string
 	enable_log_file_validation?:    bool
 	enable_logging?:                bool
+	home_region?:                   string
+	id?:                            string
 	include_global_service_events?: bool
 	is_multi_region_trail?:         bool
 	is_organization_trail?:         bool
@@ -1416,11 +1824,14 @@ package aws
 #AwsCloudwatchDashboardResource: {
 	dashboard_body: string
 	dashboard_name: string
+	dashboard_arn?: string
+	id?:            string
 }
 #AwsCloudwatchEventPermissionResource: {
 	principal:    string
 	statement_id: string
 	action?:      string
+	id?:          string
 	condition?: [{
 		key:   string
 		type:  string
@@ -1428,9 +1839,12 @@ package aws
 	}, ...]
 }
 #AwsCloudwatchEventRuleResource: {
+	arn?:                 string
 	description?:         string
 	event_pattern?:       string
+	id?:                  string
 	is_enabled?:          bool
+	name?:                string
 	name_prefix?:         string
 	role_arn?:            string
 	schedule_expression?: string
@@ -1439,9 +1853,11 @@ package aws
 #AwsCloudwatchEventTargetResource: {
 	arn:         string
 	rule:        string
+	id?:         string
 	input?:      string
 	input_path?: string
 	role_arn?:   string
+	target_id?:  string
 	batch_target?: [{
 		job_definition: string
 		job_name:       string
@@ -1479,13 +1895,19 @@ package aws
 	name:       string
 	role_arn:   string
 	target_arn: string
+	arn?:       string
+	id?:        string
 }
 #AwsCloudwatchLogDestinationPolicyResource: {
 	access_policy:    string
 	destination_name: string
+	id?:              string
 }
 #AwsCloudwatchLogGroupResource: {
+	arn?:               string
+	id?:                string
 	kms_key_id?:        string
+	name?:              string
 	name_prefix?:       string
 	retention_in_days?: number
 	tags?: [_]: string
@@ -1494,6 +1916,7 @@ package aws
 	log_group_name: string
 	name:           string
 	pattern:        string
+	id?:            string
 	metric_transformation?: [{
 		name:           string
 		namespace:      string
@@ -1504,10 +1927,13 @@ package aws
 #AwsCloudwatchLogResourcePolicyResource: {
 	policy_document: string
 	policy_name:     string
+	id?:             string
 }
 #AwsCloudwatchLogStreamResource: {
 	log_group_name: string
 	name:           string
+	arn?:           string
+	id?:            string
 }
 #AwsCloudwatchLogSubscriptionFilterResource: {
 	destination_arn: string
@@ -1515,6 +1941,8 @@ package aws
 	log_group_name:  string
 	name:            string
 	distribution?:   string
+	id?:             string
+	role_arn?:       string
 }
 #AwsCloudwatchMetricAlarmResource: {
 	alarm_name:          string
@@ -1523,9 +1951,12 @@ package aws
 	actions_enabled?:    bool
 	alarm_actions?: [string, ...]
 	alarm_description?:   string
+	arn?:                 string
 	datapoints_to_alarm?: number
 	dimensions?: [_]: string
-	extended_statistic?: string
+	evaluate_low_sample_count_percentiles?: string
+	extended_statistic?:                    string
+	id?:                                    string
 	insufficient_data_actions?: [string, ...]
 	metric_name?: string
 	namespace?:   string
@@ -1555,8 +1986,13 @@ package aws
 #AwsCodebuildProjectResource: {
 	name:            string
 	service_role:    string
+	arn?:            string
 	badge_enabled?:  bool
+	badge_url?:      string
 	build_timeout?:  number
+	description?:    string
+	encryption_key?: string
+	id?:             string
 	queued_timeout?: number
 	source_version?: string
 	tags?: [_]: string
@@ -1657,11 +2093,17 @@ package aws
 	auth_type:   string
 	server_type: string
 	token:       string
+	arn?:        string
+	id?:         string
 	user_name?:  string
 }
 #AwsCodebuildWebhookResource: {
 	project_name:   string
 	branch_filter?: string
+	id?:            string
+	payload_url?:   string
+	secret?:        string
+	url?:           string
 	filter_group?: [{
 		filter?: [{
 			pattern:                  string
@@ -1672,12 +2114,19 @@ package aws
 }
 #AwsCodecommitRepositoryResource: {
 	repository_name: string
+	arn?:            string
+	clone_url_http?: string
+	clone_url_ssh?:  string
 	default_branch?: string
 	description?:    string
+	id?:             string
+	repository_id?:  string
 	tags?: [_]: string
 }
 #AwsCodecommitTriggerResource: {
-	repository_name: string
+	repository_name:   string
+	configuration_id?: string
+	id?:               string
 	trigger?: [{
 		destination_arn: string
 		events: [string, ...]
@@ -1689,10 +2138,14 @@ package aws
 #AwsCodedeployAppResource: {
 	name:              string
 	compute_platform?: string
+	id?:               string
+	unique_id?:        string
 }
 #AwsCodedeployDeploymentConfigResource: {
 	deployment_config_name: string
 	compute_platform?:      string
+	deployment_config_id?:  string
+	id?:                    string
 	minimum_healthy_hosts?: [{
 		type?:  string
 		value?: number
@@ -1715,6 +2168,7 @@ package aws
 	service_role_arn:      string
 	autoscaling_groups?: [string, ...]
 	deployment_config_name?: string
+	id?:                     string
 	alarm_configuration?: [{
 		alarms?: [string, ...]
 		enabled?:                   bool
@@ -1790,10 +2244,13 @@ package aws
 #AwsCodepipelineResource: {
 	name:     string
 	role_arn: string
+	arn?:     string
+	id?:      string
 	tags?: [_]: string
 	artifact_store?: [{
 		location: string
 		type:     string
+		region?:  string
 		encryption_key?: [{
 			id:   string
 			type: string
@@ -1811,7 +2268,9 @@ package aws
 			input_artifacts?: [string, ...]
 			namespace?: string
 			output_artifacts?: [string, ...]
-			role_arn?: string
+			region?:    string
+			role_arn?:  string
+			run_order?: number
 		}, ...]
 	}, ...]
 }
@@ -1820,7 +2279,9 @@ package aws
 	name:            string
 	target_action:   string
 	target_pipeline: string
+	id?:             string
 	tags?: [_]: string
+	url?: string
 	authentication_configuration?: [{
 		allowed_ip_range?: string
 		secret_token?:     string
@@ -1835,17 +2296,22 @@ package aws
 	event_type_ids: [string, ...]
 	name:     string
 	resource: string
+	arn?:     string
+	id?:      string
 	status?:  string
 	tags?: [_]: string
 	target?: [{
 		address: string
+		status?: string
 		type?:   string
 	}, ...]
 }
 #AwsCognitoIdentityPoolResource: {
 	identity_pool_name:                string
 	allow_unauthenticated_identities?: bool
+	arn?:                              string
 	developer_provider_name?:          string
+	id?:                               string
 	openid_connect_provider_arns?: [string, ...]
 	saml_provider_arns?: [string, ...]
 	supported_login_providers?: [_]: string
@@ -1859,6 +2325,7 @@ package aws
 #AwsCognitoIdentityPoolRolesAttachmentResource: {
 	identity_pool_id: string
 	roles: [_]: string
+	id?: string
 	role_mapping?: [{
 		identity_provider:          string
 		type:                       string
@@ -1876,12 +2343,16 @@ package aws
 	provider_name: string
 	provider_type: string
 	user_pool_id:  string
+	attribute_mapping?: [_]: string
+	id?: string
 	idp_identifiers?: [string, ...]
 }
 #AwsCognitoResourceServerResource: {
 	identifier:   string
 	name:         string
 	user_pool_id: string
+	id?:          string
+	scope_identifiers?: [string, ...]
 	scope?: [{
 		scope_description: string
 		scope_name:        string
@@ -1891,19 +2362,29 @@ package aws
 	name:         string
 	user_pool_id: string
 	description?: string
+	id?:          string
 	precedence?:  number
 	role_arn?:    string
 }
 #AwsCognitoUserPoolResource: {
 	name: string
 	alias_attributes?: [string, ...]
+	arn?: string
 	auto_verified_attributes?: [string, ...]
+	creation_date?:              string
+	email_verification_message?: string
+	email_verification_subject?: string
+	endpoint?:                   string
+	id?:                         string
+	last_modified_date?:         string
 	mfa_configuration?:          string
 	sms_authentication_message?: string
+	sms_verification_message?:   string
 	tags?: [_]: string
 	username_attributes?: [string, ...]
 	admin_create_user_config?: [{
 		allow_admin_create_user_only?: bool
+		unused_account_validity_days?: number
 		invite_message_template?: [{
 			email_message?: string
 			email_subject?: string
@@ -1969,7 +2450,12 @@ package aws
 		case_sensitive: bool
 	}, ...]
 	verification_message_template?: [{
-		default_email_option?: string
+		default_email_option?:  string
+		email_message?:         string
+		email_message_by_link?: string
+		email_subject?:         string
+		email_subject_by_link?: string
+		sms_message?:           string
 	}, ...]
 }
 #AwsCognitoUserPoolClientResource: {
@@ -1979,10 +2465,13 @@ package aws
 	allowed_oauth_flows_user_pool_client?: bool
 	allowed_oauth_scopes?: [string, ...]
 	callback_urls?: [string, ...]
+	client_secret?:        string
 	default_redirect_uri?: string
 	explicit_auth_flows?: [string, ...]
 	generate_secret?: bool
+	id?:              string
 	logout_urls?: [string, ...]
+	prevent_user_existence_errors?: string
 	read_attributes?: [string, ...]
 	refresh_token_validity?: number
 	supported_identity_providers?: [string, ...]
@@ -1995,20 +2484,30 @@ package aws
 	}, ...]
 }
 #AwsCognitoUserPoolDomainResource: {
-	domain:           string
-	user_pool_id:     string
-	certificate_arn?: string
+	domain:                       string
+	user_pool_id:                 string
+	aws_account_id?:              string
+	certificate_arn?:             string
+	cloudfront_distribution_arn?: string
+	id?:                          string
+	s3_bucket?:                   string
+	version?:                     string
 }
 #AwsConfigAggregateAuthorizationResource: {
 	account_id: string
 	region:     string
+	arn?:       string
+	id?:        string
 	tags?: [_]: string
 }
 #AwsConfigConfigRuleResource: {
 	name:                         string
+	arn?:                         string
 	description?:                 string
+	id?:                          string
 	input_parameters?:            string
 	maximum_execution_frequency?: string
+	rule_id?:                     string
 	tags?: [_]: string
 	scope?: [{
 		compliance_resource_id?: string
@@ -2028,6 +2527,8 @@ package aws
 }
 #AwsConfigConfigurationAggregatorResource: {
 	name: string
+	arn?: string
+	id?:  string
 	tags?: [_]: string
 	account_aggregation_source?: [{
 		account_ids: [string, ...]
@@ -2042,6 +2543,7 @@ package aws
 }
 #AwsConfigConfigurationRecorderResource: {
 	role_arn: string
+	id?:      string
 	name?:    string
 	recording_group?: [{
 		all_supported?:                 bool
@@ -2052,9 +2554,11 @@ package aws
 #AwsConfigConfigurationRecorderStatusResource: {
 	is_enabled: bool
 	name:       string
+	id?:        string
 }
 #AwsConfigDeliveryChannelResource: {
 	s3_bucket_name: string
+	id?:            string
 	name?:          string
 	s3_key_prefix?: string
 	sns_topic_arn?: string
@@ -2066,8 +2570,10 @@ package aws
 	lambda_function_arn: string
 	name:                string
 	trigger_types: [string, ...]
+	arn?:         string
 	description?: string
 	excluded_accounts?: [string, ...]
+	id?:                          string
 	input_parameters?:            string
 	maximum_execution_frequency?: string
 	resource_id_scope?:           string
@@ -2083,8 +2589,10 @@ package aws
 #AwsConfigOrganizationManagedRuleResource: {
 	name:            string
 	rule_identifier: string
+	arn?:            string
 	description?:    string
 	excluded_accounts?: [string, ...]
+	id?:                          string
 	input_parameters?:            string
 	maximum_execution_frequency?: string
 	resource_id_scope?:           string
@@ -2106,28 +2614,39 @@ package aws
 	s3_region:   string
 	time_unit:   string
 	additional_artifacts?: [string, ...]
+	id?:        string
 	s3_prefix?: string
 }
 #AwsCustomerGatewayResource: {
-	bgp_asn:    number
+	bgp_asn:    string
 	ip_address: string
 	type:       string
+	arn?:       string
+	id?:        string
 	tags?: [_]: string
 }
 #AwsDatapipelinePipelineResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 }
 #AwsDatasyncAgentResource: {
-	name?: string
+	activation_key?: string
+	arn?:            string
+	id?:             string
+	ip_address?:     string
+	name?:           string
 	tags?: [_]:         string
 	timeouts?: create?: string
 }
 #AwsDatasyncLocationEfsResource: {
 	efs_file_system_arn: string
+	arn?:                string
+	id?:                 string
 	subdirectory?:       string
 	tags?: [_]: string
+	uri?: string
 	ec2_config?: [{
 		security_group_arns: [string, ...]
 		subnet_arn: string
@@ -2136,7 +2655,10 @@ package aws
 #AwsDatasyncLocationNfsResource: {
 	server_hostname: string
 	subdirectory:    string
+	arn?:            string
+	id?:             string
 	tags?: [_]: string
+	uri?: string
 	on_prem_config?: [{
 		agent_arns: [string, ...]
 	}, ...]
@@ -2144,7 +2666,10 @@ package aws
 #AwsDatasyncLocationS3Resource: {
 	s3_bucket_arn: string
 	subdirectory:  string
+	arn?:          string
+	id?:           string
 	tags?: [_]: string
+	uri?: string
 	s3_config?: [{
 		bucket_access_role_arn: string
 	}, ...]
@@ -2155,7 +2680,11 @@ package aws
 	server_hostname: string
 	subdirectory:    string
 	user:            string
+	arn?:            string
+	domain?:         string
+	id?:             string
 	tags?: [_]: string
+	uri?: string
 	mount_options?: [{
 		version?: string
 	}, ...]
@@ -2163,7 +2692,9 @@ package aws
 #AwsDatasyncTaskResource: {
 	destination_location_arn:  string
 	source_location_arn:       string
+	arn?:                      string
 	cloudwatch_log_group_arn?: string
+	id?:                       string
 	name?:                     string
 	tags?: [_]: string
 	options?: [{
@@ -2184,9 +2715,24 @@ package aws
 	iam_role_arn:       string
 	node_type:          string
 	replication_factor: number
+	arn?:               string
 	availability_zones?: [string, ...]
+	cluster_address?:        string
+	configuration_endpoint?: string
 	description?:            string
+	id?:                     string
+	maintenance_window?:     string
+	nodes?: [{
+		address:           string
+		availability_zone: string
+		id:                string
+		port:              number
+	}, ...]
 	notification_topic_arn?: string
+	parameter_group_name?:   string
+	port?:                   number
+	security_group_ids?: [string, ...]
+	subnet_group_name?: string
 	tags?: [_]: string
 	server_side_encryption?: [{
 		enabled?: bool
@@ -2200,6 +2746,7 @@ package aws
 #AwsDaxParameterGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	parameters?: [{
 		name:  string
 		value: string
@@ -2209,17 +2756,37 @@ package aws
 	name: string
 	subnet_ids: [string, ...]
 	description?: string
+	id?:          string
+	vpc_id?:      string
 }
 #AwsDbClusterSnapshotResource: {
 	db_cluster_identifier:          string
 	db_cluster_snapshot_identifier: string
-	tags?: [_]:         string
+	allocated_storage?:             number
+	availability_zones?: [string, ...]
+	db_cluster_snapshot_arn?:        string
+	engine?:                         string
+	engine_version?:                 string
+	id?:                             string
+	kms_key_id?:                     string
+	license_model?:                  string
+	port?:                           number
+	snapshot_type?:                  string
+	source_db_cluster_snapshot_arn?: string
+	status?:                         string
+	storage_encrypted?:              bool
+	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: create?: string
 }
 #AwsDbEventSubscriptionResource: {
-	sns_topic: string
-	enabled?:  bool
+	sns_topic:        string
+	arn?:             string
+	customer_aws_id?: string
+	enabled?:         bool
 	event_categories?: [string, ...]
+	id?:          string
+	name?:        string
 	name_prefix?: string
 	source_ids?: [string, ...]
 	source_type?: string
@@ -2232,28 +2799,63 @@ package aws
 }
 #AwsDbInstanceResource: {
 	instance_class:               string
+	address?:                     string
+	allocated_storage?:           number
 	allow_major_version_upgrade?: bool
+	apply_immediately?:           bool
+	arn?:                         string
 	auto_minor_version_upgrade?:  bool
+	availability_zone?:           string
+	backup_retention_period?:     number
+	backup_window?:               string
+	ca_cert_identifier?:          string
+	character_set_name?:          string
 	copy_tags_to_snapshot?:       bool
+	db_subnet_group_name?:        string
 	delete_automated_backups?:    bool
 	deletion_protection?:         bool
 	domain?:                      string
 	domain_iam_role_name?:        string
 	enabled_cloudwatch_logs_exports?: [string, ...]
-	final_snapshot_identifier?:           string
-	iam_database_authentication_enabled?: bool
-	iops?:                                number
-	max_allocated_storage?:               number
-	monitoring_interval?:                 number
-	password?:                            string
-	performance_insights_enabled?:        bool
-	publicly_accessible?:                 bool
-	replicate_source_db?:                 string
+	endpoint?:                              string
+	engine?:                                string
+	engine_version?:                        string
+	final_snapshot_identifier?:             string
+	hosted_zone_id?:                        string
+	iam_database_authentication_enabled?:   bool
+	id?:                                    string
+	identifier?:                            string
+	identifier_prefix?:                     string
+	iops?:                                  number
+	kms_key_id?:                            string
+	license_model?:                         string
+	maintenance_window?:                    string
+	max_allocated_storage?:                 number
+	monitoring_interval?:                   number
+	monitoring_role_arn?:                   string
+	multi_az?:                              bool
+	name?:                                  string
+	option_group_name?:                     string
+	parameter_group_name?:                  string
+	password?:                              string
+	performance_insights_enabled?:          bool
+	performance_insights_kms_key_id?:       string
+	performance_insights_retention_period?: number
+	port?:                                  number
+	publicly_accessible?:                   bool
+	replicas?: [string, ...]
+	replicate_source_db?: string
+	resource_id?:         string
 	security_group_names?: [string, ...]
 	skip_final_snapshot?: bool
 	snapshot_identifier?: string
+	status?:              string
 	storage_encrypted?:   bool
+	storage_type?:        string
 	tags?: [_]: string
+	timezone?: string
+	username?: string
+	vpc_security_group_ids?: [string, ...]
 	s3_import?: [{
 		bucket_name:           string
 		ingestion_role:        string
@@ -2271,10 +2873,15 @@ package aws
 	db_instance_identifier: string
 	feature_name:           string
 	role_arn:               string
+	id?:                    string
 }
 #AwsDbOptionGroupResource: {
 	engine_name:               string
 	major_engine_version:      string
+	arn?:                      string
+	id?:                       string
+	name?:                     string
+	name_prefix?:              string
 	option_group_description?: string
 	tags?: [_]: string
 	option?: [{
@@ -2292,7 +2899,11 @@ package aws
 }
 #AwsDbParameterGroupResource: {
 	family:       string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 	parameter?: [{
 		name:          string
@@ -2302,27 +2913,58 @@ package aws
 }
 #AwsDbSecurityGroupResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	ingress?: [{
-		cidr?: string
+		cidr?:                    string
+		security_group_id?:       string
+		security_group_name?:     string
+		security_group_owner_id?: string
 	}, ...]
 }
 #AwsDbSnapshotResource: {
-	db_instance_identifier: string
-	db_snapshot_identifier: string
-	tags?: [_]:       string
+	db_instance_identifier:         string
+	db_snapshot_identifier:         string
+	allocated_storage?:             number
+	availability_zone?:             string
+	db_snapshot_arn?:               string
+	encrypted?:                     bool
+	engine?:                        string
+	engine_version?:                string
+	id?:                            string
+	iops?:                          number
+	kms_key_id?:                    string
+	license_model?:                 string
+	option_group_name?:             string
+	port?:                          number
+	snapshot_type?:                 string
+	source_db_snapshot_identifier?: string
+	source_region?:                 string
+	status?:                        string
+	storage_type?:                  string
+	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: read?: string
 }
 #AwsDbSubnetGroupResource: {
 	subnet_ids: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 }
 #AwsDefaultNetworkAclResource: {
 	default_network_acl_id: string
+	arn?:                   string
+	id?:                    string
+	owner_id?:              string
 	subnet_ids?: [string, ...]
 	tags?: [_]: string
+	vpc_id?: string
 	egress?: [{
 		action:           string
 		from_port:        number
@@ -2348,10 +2990,26 @@ package aws
 }
 #AwsDefaultRouteTableResource: {
 	default_route_table_id: string
+	id?:                    string
+	owner_id?:              string
 	propagating_vgws?: [string, ...]
+	route?: [{
+		cidr_block:                string
+		egress_only_gateway_id:    string
+		gateway_id:                string
+		instance_id:               string
+		ipv6_cidr_block:           string
+		nat_gateway_id:            string
+		network_interface_id:      string
+		transit_gateway_id:        string
+		vpc_peering_connection_id: string
+	}, ...]
 	tags?: [_]: string
+	vpc_id?: string
 }
 #AwsDefaultSecurityGroupResource: {
+	arn?:         string
+	description?: string
 	egress?: [{
 		cidr_blocks: [string, ...]
 		description: string
@@ -2363,6 +3021,7 @@ package aws
 		self:    bool
 		to_port: number
 	}, ...]
+	id?: string
 	ingress?: [{
 		cidr_blocks: [string, ...]
 		description: string
@@ -2374,42 +3033,90 @@ package aws
 		self:    bool
 		to_port: number
 	}, ...]
+	name?:                   string
+	owner_id?:               string
 	revoke_rules_on_delete?: bool
 	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsDefaultSubnetResource: {
-	availability_zone: string
-	outpost_arn?:      string
+	availability_zone:                string
+	arn?:                             string
+	assign_ipv6_address_on_creation?: bool
+	availability_zone_id?:            string
+	cidr_block?:                      string
+	id?:                              string
+	ipv6_cidr_block?:                 string
+	ipv6_cidr_block_association_id?:  string
+	map_public_ip_on_launch?:         bool
+	outpost_arn?:                     string
+	owner_id?:                        string
 	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsDefaultVpcResource: {
-	enable_dns_support?: bool
+	arn?:                              string
+	assign_generated_ipv6_cidr_block?: bool
+	cidr_block?:                       string
+	default_network_acl_id?:           string
+	default_route_table_id?:           string
+	default_security_group_id?:        string
+	dhcp_options_id?:                  string
+	enable_classiclink?:               bool
+	enable_classiclink_dns_support?:   bool
+	enable_dns_hostnames?:             bool
+	enable_dns_support?:               bool
+	id?:                               string
+	instance_tenancy?:                 string
+	ipv6_association_id?:              string
+	ipv6_cidr_block?:                  string
+	main_route_table_id?:              string
+	owner_id?:                         string
 	tags?: [_]: string
 }
 #AwsDefaultVpcDhcpOptionsResource: {
+	arn?:                 string
+	domain_name?:         string
+	domain_name_servers?: string
+	id?:                  string
 	netbios_name_servers?: [string, ...]
 	netbios_node_type?: string
+	ntp_servers?:       string
+	owner_id?:          string
 	tags?: [_]: string
 }
-#AwsDevicefarmProjectResource: name: string
+#AwsDevicefarmProjectResource: {
+	name: string
+	arn?: string
+	id?:  string
+}
 #AwsDirectoryServiceConditionalForwarderResource: {
 	directory_id: string
 	dns_ips: [string, ...]
 	remote_domain_name: string
+	id?:                string
 }
 #AwsDirectoryServiceDirectoryResource: {
 	name:         string
 	password:     string
+	access_url?:  string
+	alias?:       string
 	description?: string
-	enable_sso?:  bool
+	dns_ip_addresses?: [string, ...]
+	edition?:           string
+	enable_sso?:        bool
+	id?:                string
+	security_group_id?: string
+	short_name?:        string
+	size?:              string
 	tags?: [_]: string
 	type?: string
 	connect_settings?: [{
@@ -2417,30 +3124,38 @@ package aws
 		customer_username: string
 		subnet_ids: [string, ...]
 		vpc_id: string
+		availability_zones?: [string, ...]
+		connect_ips?: [string, ...]
 	}, ...]
 	vpc_settings?: [{
 		subnet_ids: [string, ...]
 		vpc_id: string
+		availability_zones?: [string, ...]
 	}, ...]
 }
 #AwsDirectoryServiceLogSubscriptionResource: {
 	directory_id:   string
 	log_group_name: string
+	id?:            string
 }
 #AwsDlmLifecyclePolicyResource: {
 	description:        string
 	execution_role_arn: string
+	arn?:               string
+	id?:                string
 	state?:             string
 	tags?: [_]: string
 	policy_details?: [{
 		resource_types: [string, ...]
 		target_tags: [_]: string
 		schedule?: [{
-			name: string
+			name:       string
+			copy_tags?: bool
 			tags_to_add?: [_]: string
 			create_rule?: [{
 				interval:       number
 				interval_unit?: string
+				times?: [string, ...]
 			}, ...]
 			retain_rule?: [{
 				count: number
@@ -2450,18 +3165,26 @@ package aws
 }
 #AwsDmsCertificateResource: {
 	certificate_id:      string
+	certificate_arn?:    string
 	certificate_pem?:    string
 	certificate_wallet?: string
+	id?:                 string
 }
 #AwsDmsEndpointResource: {
-	endpoint_id:          string
-	endpoint_type:        string
-	engine_name:          string
-	database_name?:       string
-	password?:            string
-	port?:                number
-	server_name?:         string
-	service_access_role?: string
+	endpoint_id:                  string
+	endpoint_type:                string
+	engine_name:                  string
+	certificate_arn?:             string
+	database_name?:               string
+	endpoint_arn?:                string
+	extra_connection_attributes?: string
+	id?:                          string
+	kms_key_arn?:                 string
+	password?:                    string
+	port?:                        number
+	server_name?:                 string
+	service_access_role?:         string
+	ssl_mode?:                    string
 	tags?: [_]: string
 	username?: string
 	elasticsearch_settings?: [{
@@ -2501,7 +3224,9 @@ package aws
 	event_categories: [string, ...]
 	name:          string
 	sns_topic_arn: string
+	arn?:          string
 	enabled?:      bool
+	id?:           string
 	source_ids?: [string, ...]
 	source_type?: string
 	tags?: [_]: string
@@ -2512,10 +3237,24 @@ package aws
 	}
 }
 #AwsDmsReplicationInstanceResource: {
-	replication_instance_class: string
-	replication_instance_id:    string
-	apply_immediately?:         bool
+	replication_instance_class:    string
+	replication_instance_id:       string
+	allocated_storage?:            number
+	apply_immediately?:            bool
+	auto_minor_version_upgrade?:   bool
+	availability_zone?:            string
+	engine_version?:               string
+	id?:                           string
+	kms_key_arn?:                  string
+	multi_az?:                     bool
+	preferred_maintenance_window?: string
+	publicly_accessible?:          bool
+	replication_instance_arn?:     string
+	replication_instance_private_ips?: [string, ...]
+	replication_instance_public_ips?: [string, ...]
+	replication_subnet_group_id?: string
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2526,7 +3265,10 @@ package aws
 	replication_subnet_group_description: string
 	replication_subnet_group_id:          string
 	subnet_ids: [string, ...]
+	id?:                           string
+	replication_subnet_group_arn?: string
 	tags?: [_]: string
+	vpc_id?: string
 }
 #AwsDmsReplicationTaskResource: {
 	migration_type:             string
@@ -2536,21 +3278,42 @@ package aws
 	table_mappings:             string
 	target_endpoint_arn:        string
 	cdc_start_time?:            string
+	id?:                        string
+	replication_task_arn?:      string
 	replication_task_settings?: string
 	tags?: [_]: string
 }
 #AwsDocdbClusterResource: {
-	backup_retention_period?: number
-	deletion_protection?:     bool
+	apply_immediately?: bool
+	arn?:               string
+	availability_zones?: [string, ...]
+	backup_retention_period?:   number
+	cluster_identifier?:        string
+	cluster_identifier_prefix?: string
+	cluster_members?: [string, ...]
+	cluster_resource_id?:             string
+	db_cluster_parameter_group_name?: string
+	db_subnet_group_name?:            string
+	deletion_protection?:             bool
 	enabled_cloudwatch_logs_exports?: [string, ...]
-	engine?:                    string
-	final_snapshot_identifier?: string
-	master_password?:           string
-	port?:                      number
-	skip_final_snapshot?:       bool
-	snapshot_identifier?:       string
-	storage_encrypted?:         bool
+	endpoint?:                     string
+	engine?:                       string
+	engine_version?:               string
+	final_snapshot_identifier?:    string
+	hosted_zone_id?:               string
+	id?:                           string
+	kms_key_id?:                   string
+	master_password?:              string
+	master_username?:              string
+	port?:                         number
+	preferred_backup_window?:      string
+	preferred_maintenance_window?: string
+	reader_endpoint?:              string
+	skip_final_snapshot?:          bool
+	snapshot_identifier?:          string
+	storage_encrypted?:            bool
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2558,12 +3321,30 @@ package aws
 	}
 }
 #AwsDocdbClusterInstanceResource: {
-	cluster_identifier:          string
-	instance_class:              string
-	auto_minor_version_upgrade?: bool
-	engine?:                     string
-	promotion_tier?:             number
+	cluster_identifier:            string
+	instance_class:                string
+	apply_immediately?:            bool
+	arn?:                          string
+	auto_minor_version_upgrade?:   bool
+	availability_zone?:            string
+	ca_cert_identifier?:           string
+	db_subnet_group_name?:         string
+	dbi_resource_id?:              string
+	endpoint?:                     string
+	engine?:                       string
+	engine_version?:               string
+	id?:                           string
+	identifier?:                   string
+	identifier_prefix?:            string
+	kms_key_id?:                   string
+	port?:                         number
+	preferred_backup_window?:      string
+	preferred_maintenance_window?: string
+	promotion_tier?:               number
+	publicly_accessible?:          bool
+	storage_encrypted?:            bool
 	tags?: [_]: string
+	writer?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2572,7 +3353,11 @@ package aws
 }
 #AwsDocdbClusterParameterGroupResource: {
 	family:       string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 	parameter?: [{
 		name:          string
@@ -2583,44 +3368,82 @@ package aws
 #AwsDocdbClusterSnapshotResource: {
 	db_cluster_identifier:          string
 	db_cluster_snapshot_identifier: string
+	availability_zones?: [string, ...]
+	db_cluster_snapshot_arn?:        string
+	engine?:                         string
+	engine_version?:                 string
+	id?:                             string
+	kms_key_id?:                     string
+	port?:                           number
+	snapshot_type?:                  string
+	source_db_cluster_snapshot_arn?: string
+	status?:                         string
+	storage_encrypted?:              bool
+	vpc_id?:                         string
 	timeouts?: create?: string
 }
 #AwsDocdbSubnetGroupResource: {
 	subnet_ids: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 }
 #AwsDxBgpPeerResource: {
 	address_family:       string
 	bgp_asn:              number
 	virtual_interface_id: string
+	amazon_address?:      string
+	aws_device?:          string
+	bgp_auth_key?:        string
+	bgp_peer_id?:         string
+	bgp_status?:          string
+	customer_address?:    string
+	id?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsDxConnectionResource: {
-	bandwidth: string
-	location:  string
-	name:      string
+	bandwidth:               string
+	location:                string
+	name:                    string
+	arn?:                    string
+	aws_device?:             string
+	has_logical_redundancy?: string
+	id?:                     string
+	jumbo_frame_capable?:    bool
 	tags?: [_]: string
 }
 #AwsDxConnectionAssociationResource: {
 	connection_id: string
 	lag_id:        string
+	id?:           string
 }
 #AwsDxGatewayResource: {
-	amazon_side_asn: string
-	name:            string
+	amazon_side_asn:   string
+	name:              string
+	id?:               string
+	owner_account_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsDxGatewayAssociationResource: {
-	dx_gateway_id:   string
-	proposal_id?:    string
-	vpn_gateway_id?: string
+	dx_gateway_id: string
+	allowed_prefixes?: [string, ...]
+	associated_gateway_id?:               string
+	associated_gateway_owner_account_id?: string
+	associated_gateway_type?:             string
+	dx_gateway_association_id?:           string
+	dx_gateway_owner_account_id?:         string
+	id?:                                  string
+	proposal_id?:                         string
+	vpn_gateway_id?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2630,17 +3453,29 @@ package aws
 #AwsDxGatewayAssociationProposalResource: {
 	dx_gateway_id:               string
 	dx_gateway_owner_account_id: string
-	associated_gateway_id?:      string
-	vpn_gateway_id?:             string
+	allowed_prefixes?: [string, ...]
+	associated_gateway_id?:               string
+	associated_gateway_owner_account_id?: string
+	associated_gateway_type?:             string
+	id?:                                  string
+	vpn_gateway_id?:                      string
 }
 #AwsDxHostedPrivateVirtualInterfaceResource: {
-	address_family:   string
-	bgp_asn:          number
-	connection_id:    string
-	name:             string
-	owner_account_id: string
-	vlan:             number
-	mtu?:             number
+	address_family:       string
+	bgp_asn:              number
+	connection_id:        string
+	name:                 string
+	owner_account_id:     string
+	vlan:                 number
+	amazon_address?:      string
+	amazon_side_asn?:     string
+	arn?:                 string
+	aws_device?:          string
+	bgp_auth_key?:        string
+	customer_address?:    string
+	id?:                  string
+	jumbo_frame_capable?: bool
+	mtu?:                 number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2649,7 +3484,9 @@ package aws
 }
 #AwsDxHostedPrivateVirtualInterfaceAccepterResource: {
 	virtual_interface_id: string
+	arn?:                 string
 	dx_gateway_id?:       string
+	id?:                  string
 	tags?: [_]: string
 	vpn_gateway_id?: string
 	timeouts?: {
@@ -2664,7 +3501,14 @@ package aws
 	name:             string
 	owner_account_id: string
 	route_filter_prefixes: [string, ...]
-	vlan: number
+	vlan:              number
+	amazon_address?:   string
+	amazon_side_asn?:  string
+	arn?:              string
+	aws_device?:       string
+	bgp_auth_key?:     string
+	customer_address?: string
+	id?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2672,6 +3516,8 @@ package aws
 }
 #AwsDxHostedPublicVirtualInterfaceAccepterResource: {
 	virtual_interface_id: string
+	arn?:                 string
+	id?:                  string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2679,13 +3525,21 @@ package aws
 	}
 }
 #AwsDxHostedTransitVirtualInterfaceResource: {
-	address_family:   string
-	bgp_asn:          number
-	connection_id:    string
-	name:             string
-	owner_account_id: string
-	vlan:             number
-	mtu?:             number
+	address_family:       string
+	bgp_asn:              number
+	connection_id:        string
+	name:                 string
+	owner_account_id:     string
+	vlan:                 number
+	amazon_address?:      string
+	amazon_side_asn?:     string
+	arn?:                 string
+	aws_device?:          string
+	bgp_auth_key?:        string
+	customer_address?:    string
+	id?:                  string
+	jumbo_frame_capable?: bool
+	mtu?:                 number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2695,6 +3549,8 @@ package aws
 #AwsDxHostedTransitVirtualInterfaceAccepterResource: {
 	dx_gateway_id:        string
 	virtual_interface_id: string
+	arn?:                 string
+	id?:                  string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2702,20 +3558,33 @@ package aws
 	}
 }
 #AwsDxLagResource: {
-	connections_bandwidth: string
-	location:              string
-	name:                  string
-	force_destroy?:        bool
+	connections_bandwidth:   string
+	location:                string
+	name:                    string
+	arn?:                    string
+	force_destroy?:          bool
+	has_logical_redundancy?: string
+	id?:                     string
+	jumbo_frame_capable?:    bool
+	number_of_connections?:  number
 	tags?: [_]: string
 }
 #AwsDxPrivateVirtualInterfaceResource: {
-	address_family: string
-	bgp_asn:        number
-	connection_id:  string
-	name:           string
-	vlan:           number
-	dx_gateway_id?: string
-	mtu?:           number
+	address_family:       string
+	bgp_asn:              number
+	connection_id:        string
+	name:                 string
+	vlan:                 number
+	amazon_address?:      string
+	amazon_side_asn?:     string
+	arn?:                 string
+	aws_device?:          string
+	bgp_auth_key?:        string
+	customer_address?:    string
+	dx_gateway_id?:       string
+	id?:                  string
+	jumbo_frame_capable?: bool
+	mtu?:                 number
 	tags?: [_]: string
 	vpn_gateway_id?: string
 	timeouts?: {
@@ -2730,7 +3599,14 @@ package aws
 	connection_id:  string
 	name:           string
 	route_filter_prefixes: [string, ...]
-	vlan: number
+	vlan:              number
+	amazon_address?:   string
+	amazon_side_asn?:  string
+	arn?:              string
+	aws_device?:       string
+	bgp_auth_key?:     string
+	customer_address?: string
+	id?:               string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2738,13 +3614,21 @@ package aws
 	}
 }
 #AwsDxTransitVirtualInterfaceResource: {
-	address_family: string
-	bgp_asn:        number
-	connection_id:  string
-	dx_gateway_id:  string
-	name:           string
-	vlan:           number
-	mtu?:           number
+	address_family:       string
+	bgp_asn:              number
+	connection_id:        string
+	dx_gateway_id:        string
+	name:                 string
+	vlan:                 number
+	amazon_address?:      string
+	amazon_side_asn?:     string
+	arn?:                 string
+	aws_device?:          string
+	bgp_auth_key?:        string
+	customer_address?:    string
+	id?:                  string
+	jumbo_frame_capable?: bool
+	mtu?:                 number
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2754,6 +3638,8 @@ package aws
 }
 #AwsDynamodbGlobalTableResource: {
 	name: string
+	arn?: string
+	id?:  string
 	replica?: [{
 		region_name: string
 	}, ...]
@@ -2764,12 +3650,17 @@ package aws
 	}
 }
 #AwsDynamodbTableResource: {
-	hash_key:        string
-	name:            string
-	billing_mode?:   string
-	range_key?:      string
-	read_capacity?:  number
-	stream_enabled?: bool
+	hash_key:          string
+	name:              string
+	arn?:              string
+	billing_mode?:     string
+	id?:               string
+	range_key?:        string
+	read_capacity?:    number
+	stream_arn?:       string
+	stream_enabled?:   bool
+	stream_label?:     string
+	stream_view_type?: string
 	tags?: [_]: string
 	write_capacity?: number
 	attribute?: [{
@@ -2798,7 +3689,8 @@ package aws
 		region_name: string
 	}, ...]
 	server_side_encryption?: [{
-		enabled: bool
+		enabled:      bool
+		kms_key_arn?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2814,56 +3706,101 @@ package aws
 	hash_key:   string
 	item:       string
 	table_name: string
+	id?:        string
 	range_key?: string
 }
-#AwsEbsDefaultKmsKeyResource: key_arn:        string
-#AwsEbsEncryptionByDefaultResource: enabled?: bool
+#AwsEbsDefaultKmsKeyResource: {
+	key_arn: string
+	id?:     string
+}
+#AwsEbsEncryptionByDefaultResource: {
+	enabled?: bool
+	id?:      string
+}
 #AwsEbsSnapshotResource: {
-	volume_id:    string
-	description?: string
+	volume_id:               string
+	arn?:                    string
+	data_encryption_key_id?: string
+	description?:            string
+	encrypted?:              bool
+	id?:                     string
+	kms_key_id?:             string
+	owner_alias?:            string
+	owner_id?:               string
 	tags?: [_]: string
+	volume_size?: number
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsEbsSnapshotCopyResource: {
-	source_region:      string
-	source_snapshot_id: string
-	description?:       string
-	encrypted?:         bool
-	kms_key_id?:        string
+	source_region:           string
+	source_snapshot_id:      string
+	arn?:                    string
+	data_encryption_key_id?: string
+	description?:            string
+	encrypted?:              bool
+	id?:                     string
+	kms_key_id?:             string
+	owner_alias?:            string
+	owner_id?:               string
 	tags?: [_]: string
+	volume_id?:   string
+	volume_size?: number
 }
 #AwsEbsVolumeResource: {
 	availability_zone:     string
+	arn?:                  string
+	encrypted?:            bool
+	id?:                   string
+	iops?:                 number
+	kms_key_id?:           string
 	multi_attach_enabled?: bool
 	outpost_arn?:          string
+	size?:                 number
+	snapshot_id?:          string
 	tags?: [_]: string
+	type?: string
 }
 #AwsEc2AvailabilityZoneGroupResource: {
 	group_name:    string
 	opt_in_status: string
+	id?:           string
 }
 #AwsEc2CapacityReservationResource: {
 	availability_zone:        string
 	instance_count:           number
 	instance_platform:        string
 	instance_type:            string
+	arn?:                     string
 	ebs_optimized?:           bool
 	end_date?:                string
 	end_date_type?:           string
 	ephemeral_storage?:       bool
+	id?:                      string
 	instance_match_criteria?: string
 	tags?: [_]: string
 	tenancy?: string
 }
+#AwsEc2ClientVpnAuthorizationRuleResource: {
+	client_vpn_endpoint_id: string
+	target_network_cidr:    string
+	access_group_id?:       string
+	authorize_all_groups?:  bool
+	description?:           string
+	id?:                    string
+}
 #AwsEc2ClientVpnEndpointResource: {
 	client_cidr_block:      string
 	server_certificate_arn: string
+	arn?:                   string
 	description?:           string
+	dns_name?:              string
 	dns_servers?: [string, ...]
+	id?:           string
 	split_tunnel?: bool
+	status?:       string
 	tags?: [_]: string
 	transport_protocol?: string
 	authentication_options?: [{
@@ -2880,9 +3817,23 @@ package aws
 #AwsEc2ClientVpnNetworkAssociationResource: {
 	client_vpn_endpoint_id: string
 	subnet_id:              string
+	id?:                    string
+	security_groups?: [string, ...]
+	status?: string
+	vpc_id?: string
+}
+#AwsEc2ClientVpnRouteResource: {
+	client_vpn_endpoint_id: string
+	destination_cidr_block: string
+	target_vpc_subnet_id:   string
+	description?:           string
+	id?:                    string
+	origin?:                string
+	type?:                  string
 }
 #AwsEc2FleetResource: {
 	excess_capacity_termination_policy?: string
+	id?:                                 string
 	replace_unhealthy_instances?:        bool
 	tags?: [_]: string
 	terminate_instances?:                 bool
@@ -2923,8 +3874,28 @@ package aws
 		update?: string
 	}
 }
+#AwsEc2LocalGatewayRouteResource: {
+	destination_cidr_block:                   string
+	local_gateway_route_table_id:             string
+	local_gateway_virtual_interface_group_id: string
+	id?:                                      string
+}
+#AwsEc2LocalGatewayRouteTableVpcAssociationResource: {
+	local_gateway_route_table_id: string
+	vpc_id:                       string
+	id?:                          string
+	local_gateway_id?:            string
+	tags?: [_]: string
+}
+#AwsEc2TagResource: {
+	key:         string
+	resource_id: string
+	value:       string
+	id?:         string
+}
 #AwsEc2TrafficMirrorFilterResource: {
 	description?: string
+	id?:          string
 	network_services?: [string, ...]
 	tags?: [_]: string
 }
@@ -2936,6 +3907,7 @@ package aws
 	traffic_direction:        string
 	traffic_mirror_filter_id: string
 	description?:             string
+	id?:                      string
 	protocol?:                number
 	destination_port_range?: [{
 		from_port?: number
@@ -2951,23 +3923,33 @@ package aws
 	session_number:           number
 	traffic_mirror_filter_id: string
 	traffic_mirror_target_id: string
+	arn?:                     string
 	description?:             string
+	id?:                      string
 	packet_length?:           number
 	tags?: [_]: string
+	virtual_network_id?: number
 }
 #AwsEc2TrafficMirrorTargetResource: {
+	arn?:                       string
 	description?:               string
+	id?:                        string
 	network_interface_id?:      string
 	network_load_balancer_arn?: string
 	tags?: [_]: string
 }
 #AwsEc2TransitGatewayResource: {
-	amazon_side_asn?:                 number
-	auto_accept_shared_attachments?:  string
-	default_route_table_association?: string
-	default_route_table_propagation?: string
-	description?:                     string
-	dns_support?:                     string
+	amazon_side_asn?:                    number
+	arn?:                                string
+	association_default_route_table_id?: string
+	auto_accept_shared_attachments?:     string
+	default_route_table_association?:    string
+	default_route_table_propagation?:    string
+	description?:                        string
+	dns_support?:                        string
+	id?:                                 string
+	owner_id?:                           string
+	propagation_default_route_table_id?: string
 	tags?: [_]: string
 	vpn_ecmp_support?: string
 }
@@ -2975,53 +3957,85 @@ package aws
 	peer_region:             string
 	peer_transit_gateway_id: string
 	transit_gateway_id:      string
+	id?:                     string
+	peer_account_id?:        string
 	tags?: [_]: string
 }
 #AwsEc2TransitGatewayPeeringAttachmentAccepterResource: {
 	transit_gateway_attachment_id: string
+	id?:                           string
+	peer_account_id?:              string
+	peer_region?:                  string
+	peer_transit_gateway_id?:      string
 	tags?: [_]: string
+	transit_gateway_id?: string
 }
 #AwsEc2TransitGatewayRouteResource: {
 	destination_cidr_block:         string
 	transit_gateway_route_table_id: string
 	blackhole?:                     bool
+	id?:                            string
 	transit_gateway_attachment_id?: string
 }
 #AwsEc2TransitGatewayRouteTableResource: {
-	transit_gateway_id: string
+	transit_gateway_id:               string
+	default_association_route_table?: bool
+	default_propagation_route_table?: bool
+	id?:                              string
 	tags?: [_]: string
 }
 #AwsEc2TransitGatewayRouteTableAssociationResource: {
 	transit_gateway_attachment_id:  string
 	transit_gateway_route_table_id: string
+	id?:                            string
+	resource_id?:                   string
+	resource_type?:                 string
 }
 #AwsEc2TransitGatewayRouteTablePropagationResource: {
 	transit_gateway_attachment_id:  string
 	transit_gateway_route_table_id: string
+	id?:                            string
+	resource_id?:                   string
+	resource_type?:                 string
 }
 #AwsEc2TransitGatewayVpcAttachmentResource: {
 	subnet_ids: [string, ...]
 	transit_gateway_id: string
 	vpc_id:             string
 	dns_support?:       string
+	id?:                string
 	ipv6_support?:      string
 	tags?: [_]: string
 	transit_gateway_default_route_table_association?: bool
 	transit_gateway_default_route_table_propagation?: bool
+	vpc_owner_id?:                                    string
 }
 #AwsEc2TransitGatewayVpcAttachmentAccepterResource: {
 	transit_gateway_attachment_id: string
+	dns_support?:                  string
+	id?:                           string
+	ipv6_support?:                 string
+	subnet_ids?: [string, ...]
 	tags?: [_]: string
 	transit_gateway_default_route_table_association?: bool
 	transit_gateway_default_route_table_propagation?: bool
+	transit_gateway_id?:                              string
+	vpc_id?:                                          string
+	vpc_owner_id?:                                    string
 }
 #AwsEcrLifecyclePolicyResource: {
-	policy:     string
-	repository: string
+	policy:       string
+	repository:   string
+	id?:          string
+	registry_id?: string
 }
 #AwsEcrRepositoryResource: {
 	name:                  string
+	arn?:                  string
+	id?:                   string
 	image_tag_mutability?: string
+	registry_id?:          string
+	repository_url?:       string
 	tags?: [_]: string
 	image_scanning_configuration?: [{
 		scan_on_push: bool
@@ -3029,20 +4043,32 @@ package aws
 	timeouts?: delete?: string
 }
 #AwsEcrRepositoryPolicyResource: {
-	policy:     string
-	repository: string
+	policy:       string
+	repository:   string
+	id?:          string
+	registry_id?: string
 }
 #AwsEcsCapacityProviderResource: {
 	name: string
+	arn?: string
+	id?:  string
 	tags?: [_]: string
 	auto_scaling_group_provider?: [{
-		auto_scaling_group_arn: string
-		managed_scaling?: [{}, ...]
+		auto_scaling_group_arn:          string
+		managed_termination_protection?: string
+		managed_scaling?: [{
+			maximum_scaling_step_size?: number
+			minimum_scaling_step_size?: number
+			status?:                    string
+			target_capacity?:           number
+		}, ...]
 	}, ...]
 }
 #AwsEcsClusterResource: {
 	name: string
+	arn?: string
 	capacity_providers?: [string, ...]
+	id?: string
 	tags?: [_]: string
 	default_capacity_provider_strategy?: [{
 		capacity_provider: string
@@ -3056,16 +4082,21 @@ package aws
 }
 #AwsEcsServiceResource: {
 	name:                                string
-	task_definition:                     string
+	cluster?:                            string
 	deployment_maximum_percent?:         number
 	deployment_minimum_healthy_percent?: number
 	desired_count?:                      number
 	enable_ecs_managed_tags?:            bool
 	force_new_deployment?:               bool
 	health_check_grace_period_seconds?:  number
+	iam_role?:                           string
+	id?:                                 string
+	launch_type?:                        string
+	platform_version?:                   string
 	propagate_tags?:                     string
 	scheduling_strategy?:                string
 	tags?: [_]: string
+	task_definition?: string
 	capacity_provider_strategy?: [{
 		capacity_provider: string
 		base?:             number
@@ -3103,16 +4134,21 @@ package aws
 		container_port?: number
 		port?:           number
 	}, ...]
+	timeouts?: delete?: string
 }
 #AwsEcsTaskDefinitionResource: {
 	container_definitions: string
 	family:                string
+	arn?:                  string
 	cpu?:                  string
 	execution_role_arn?:   string
+	id?:                   string
 	ipc_mode?:             string
 	memory?:               string
+	network_mode?:         string
 	pid_mode?:             string
 	requires_compatibilities?: [string, ...]
+	revision?: number
 	tags?: [_]: string
 	task_role_arn?: string
 	inference_accelerator?: [{
@@ -3136,15 +4172,26 @@ package aws
 			driver?:        string
 			driver_opts?: [_]: string
 			labels?: [_]:      string
+			scope?: string
 		}, ...]
 		efs_volume_configuration?: [{
-			file_system_id:  string
-			root_directory?: string
+			file_system_id:           string
+			root_directory?:          string
+			transit_encryption?:      string
+			transit_encryption_port?: number
+			authorization_config?: [{
+				access_point_id?: string
+				iam?:             string
+			}, ...]
 		}, ...]
 	}, ...]
 }
 #AwsEfsAccessPointResource: {
-	file_system_id: string
+	file_system_id:   string
+	arn?:             string
+	file_system_arn?: string
+	id?:              string
+	owner_id?:        string
 	tags?: [_]: string
 	posix_user?: [{
 		gid: number
@@ -3152,6 +4199,7 @@ package aws
 		secondary_gids?: [number, ...]
 	}, ...]
 	root_directory?: [{
+		path?: string
 		creation_info?: [{
 			owner_gid:   number
 			owner_uid:   number
@@ -3160,7 +4208,15 @@ package aws
 	}, ...]
 }
 #AwsEfsFileSystemResource: {
+	arn?:                             string
+	creation_token?:                  string
+	dns_name?:                        string
+	encrypted?:                       bool
+	id?:                              string
+	kms_key_id?:                      string
+	performance_mode?:                string
 	provisioned_throughput_in_mibps?: number
+	reference_name?:                  string
 	tags?: [_]: string
 	throughput_mode?: string
 	lifecycle_policy?: [{
@@ -3170,31 +4226,79 @@ package aws
 #AwsEfsFileSystemPolicyResource: {
 	file_system_id: string
 	policy:         string
+	id?:            string
 }
 #AwsEfsMountTargetResource: {
-	file_system_id: string
-	subnet_id:      string
+	file_system_id:          string
+	subnet_id:               string
+	availability_zone_id?:   string
+	availability_zone_name?: string
+	dns_name?:               string
+	file_system_arn?:        string
+	id?:                     string
+	ip_address?:             string
+	mount_target_dns_name?:  string
+	network_interface_id?:   string
+	owner_id?:               string
+	security_groups?: [string, ...]
 }
 #AwsEgressOnlyInternetGatewayResource: {
 	vpc_id: string
+	id?:    string
 	tags?: [_]: string
 }
 #AwsEipResource: {
+	allocation_id?:             string
 	associate_with_private_ip?: string
+	association_id?:            string
+	customer_owned_ip?:         string
 	customer_owned_ipv4_pool?:  string
+	domain?:                    string
+	id?:                        string
+	instance?:                  string
+	network_interface?:         string
+	private_dns?:               string
+	private_ip?:                string
+	public_dns?:                string
+	public_ip?:                 string
+	public_ipv4_pool?:          string
 	tags?: [_]: string
+	vpc?: bool
 	timeouts?: {
 		delete?: string
 		read?:   string
 		update?: string
 	}
 }
-#AwsEipAssociationResource: allow_reassociation?: bool
+#AwsEipAssociationResource: {
+	allocation_id?:        string
+	allow_reassociation?:  bool
+	id?:                   string
+	instance_id?:          string
+	network_interface_id?: string
+	private_ip_address?:   string
+	public_ip?:            string
+}
 #AwsEksClusterResource: {
 	name:     string
 	role_arn: string
+	arn?:     string
+	certificate_authority?: [{
+		data: string
+	}, ...]
+	created_at?: string
 	enabled_cluster_log_types?: [string, ...]
+	endpoint?: string
+	id?:       string
+	identity?: [{
+		oidc: [{
+			issuer: string
+		}, ...]
+	}, ...]
+	platform_version?: string
+	status?:           string
 	tags?: [_]: string
+	version?: string
 	encryption_config?: [{
 		resources: [string, ...]
 		provider?: [{
@@ -3208,15 +4312,21 @@ package aws
 	}
 	vpc_config?: [{
 		subnet_ids: [string, ...]
-		endpoint_private_access?: bool
-		endpoint_public_access?:  bool
+		cluster_security_group_id?: string
+		endpoint_private_access?:   bool
+		endpoint_public_access?:    bool
+		public_access_cidrs?: [string, ...]
 		security_group_ids?: [string, ...]
+		vpc_id?: string
 	}, ...]
 }
 #AwsEksFargateProfileResource: {
 	cluster_name:           string
 	fargate_profile_name:   string
 	pod_execution_role_arn: string
+	arn?:                   string
+	id?:                    string
+	status?:                string
 	subnet_ids?: [string, ...]
 	tags?: [_]: string
 	selector?: [{
@@ -3233,9 +4343,23 @@ package aws
 	node_group_name: string
 	node_role_arn:   string
 	subnet_ids: [string, ...]
+	ami_type?:             string
+	arn?:                  string
+	disk_size?:            number
 	force_update_version?: bool
+	id?:                   string
+	instance_types?: [string, ...]
 	labels?: [_]: string
-	tags?: [_]:   string
+	release_version?: string
+	resources?: [{
+		autoscaling_groups: [{
+			name: string
+		}, ...]
+		remote_access_security_group_id: string
+	}, ...]
+	status?: string
+	tags?: [_]: string
+	version?: string
 	remote_access?: [{
 		ec2_ssh_key?: string
 		source_security_group_ids?: [string, ...]
@@ -3253,7 +4377,9 @@ package aws
 }
 #AwsElasticBeanstalkApplicationResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	appversion_lifecycle?: [{
 		service_role:           string
@@ -3267,8 +4393,10 @@ package aws
 	bucket:        string
 	key:           string
 	name:          string
+	arn?:          string
 	description?:  string
 	force_delete?: bool
+	id?:           string
 	tags?: [_]: string
 }
 #AwsElasticBeanstalkConfigurationTemplateResource: {
@@ -3276,6 +4404,7 @@ package aws
 	name:                 string
 	description?:         string
 	environment_id?:      string
+	id?:                  string
 	solution_stack_name?: string
 	setting?: [{
 		name:      string
@@ -3285,13 +4414,33 @@ package aws
 	}, ...]
 }
 #AwsElasticBeanstalkEnvironmentResource: {
-	application:    string
-	name:           string
-	description?:   string
+	application: string
+	name:        string
+	all_settings?: [{
+		name:      string
+		namespace: string
+		resource:  string
+		value:     string
+	}, ...]
+	arn?: string
+	autoscaling_groups?: [string, ...]
+	cname?:        string
+	cname_prefix?: string
+	description?:  string
+	endpoint_url?: string
+	id?:           string
+	instances?: [string, ...]
+	launch_configurations?: [string, ...]
+	load_balancers?: [string, ...]
+	platform_arn?:  string
 	poll_interval?: string
+	queues?: [string, ...]
+	solution_stack_name?: string
 	tags?: [_]: string
-	template_name?:          string
-	tier?:                   string
+	template_name?: string
+	tier?:          string
+	triggers?: [string, ...]
+	version_label?:          string
 	wait_for_ready_timeout?: string
 	setting?: [{
 		name:      string
@@ -3301,19 +4450,45 @@ package aws
 	}, ...]
 }
 #AwsElasticacheClusterResource: {
-	cluster_id: string
+	cluster_id:         string
+	apply_immediately?: bool
+	arn?:               string
+	availability_zone?: string
 	availability_zones?: [string, ...]
+	az_mode?: string
+	cache_nodes?: [{
+		address:           string
+		availability_zone: string
+		id:                string
+		port:              number
+	}, ...]
+	cluster_address?:        string
+	configuration_endpoint?: string
+	engine?:                 string
+	engine_version?:         string
+	id?:                     string
+	maintenance_window?:     string
+	node_type?:              string
 	notification_topic_arn?: string
+	num_cache_nodes?:        number
+	parameter_group_name?:   string
+	port?:                   number
 	preferred_availability_zones?: [string, ...]
+	replication_group_id?: string
+	security_group_ids?: [string, ...]
+	security_group_names?: [string, ...]
 	snapshot_arns?: [string, ...]
 	snapshot_name?:            string
 	snapshot_retention_limit?: number
+	snapshot_window?:          string
+	subnet_group_name?:        string
 	tags?: [_]: string
 }
 #AwsElasticacheParameterGroupResource: {
 	family:       string
 	name:         string
 	description?: string
+	id?:          string
 	parameter?: [{
 		name:  string
 		value: string
@@ -3322,18 +4497,32 @@ package aws
 #AwsElasticacheReplicationGroupResource: {
 	replication_group_description: string
 	replication_group_id:          string
+	apply_immediately?:            bool
 	at_rest_encryption_enabled?:   bool
 	auth_token?:                   string
 	auto_minor_version_upgrade?:   bool
 	automatic_failover_enabled?:   bool
 	availability_zones?: [string, ...]
-	engine?:                 string
-	kms_key_id?:             string
-	notification_topic_arn?: string
-	port?:                   number
+	configuration_endpoint_address?: string
+	engine?:                         string
+	engine_version?:                 string
+	id?:                             string
+	kms_key_id?:                     string
+	maintenance_window?:             string
+	member_clusters?: [string, ...]
+	node_type?:                string
+	notification_topic_arn?:   string
+	number_cache_clusters?:    number
+	parameter_group_name?:     string
+	port?:                     number
+	primary_endpoint_address?: string
+	security_group_ids?: [string, ...]
+	security_group_names?: [string, ...]
 	snapshot_arns?: [string, ...]
 	snapshot_name?:            string
 	snapshot_retention_limit?: number
+	snapshot_window?:          string
+	subnet_group_name?:        string
 	tags?: [_]: string
 	transit_encryption_enabled?: bool
 	cluster_mode?: [{
@@ -3350,22 +4539,43 @@ package aws
 	name: string
 	security_group_names: [string, ...]
 	description?: string
+	id?:          string
 }
 #AwsElasticacheSubnetGroupResource: {
 	name: string
 	subnet_ids: [string, ...]
 	description?: string
+	id?:          string
 }
 #AwsElasticsearchDomainResource: {
-	domain_name:            string
+	domain_name:      string
+	access_policies?: string
+	advanced_options?: [_]: string
+	arn?:                   string
+	domain_id?:             string
 	elasticsearch_version?: string
+	endpoint?:              string
+	id?:                    string
+	kibana_endpoint?:       string
 	tags?: [_]: string
+	advanced_security_options?: [{
+		enabled:                         bool
+		internal_user_database_enabled?: bool
+		master_user_options?: [{
+			master_user_arn?:      string
+			master_user_name?:     string
+			master_user_password?: string
+		}, ...]
+	}, ...]
 	cluster_config?: [{
 		dedicated_master_count?:   number
 		dedicated_master_enabled?: bool
 		dedicated_master_type?:    string
 		instance_count?:           number
 		instance_type?:            string
+		warm_count?:               number
+		warm_enabled?:             bool
+		warm_type?:                string
 		zone_awareness_enabled?:   bool
 		zone_awareness_config?: [{
 			availability_zone_count?: number
@@ -3378,15 +4588,18 @@ package aws
 		enabled?:         bool
 	}, ...]
 	domain_endpoint_options?: [{
-		enforce_https: bool
+		enforce_https:        bool
+		tls_security_policy?: string
 	}, ...]
 	ebs_options?: [{
 		ebs_enabled:  bool
 		iops?:        number
 		volume_size?: number
+		volume_type?: string
 	}, ...]
 	encrypt_at_rest?: [{
-		enabled: bool
+		enabled:     bool
+		kms_key_id?: string
 	}, ...]
 	log_publishing_options?: [{
 		cloudwatch_log_group_arn: string
@@ -3401,19 +4614,27 @@ package aws
 	}, ...]
 	timeouts?: update?: string
 	vpc_options?: [{
+		availability_zones?: [string, ...]
 		security_group_ids?: [string, ...]
 		subnet_ids?: [string, ...]
+		vpc_id?: string
 	}, ...]
 }
 #AwsElasticsearchDomainPolicyResource: {
 	access_policies: string
 	domain_name:     string
+	id?:             string
 }
 #AwsElastictranscoderPipelineResource: {
 	input_bucket:     string
 	role:             string
+	arn?:             string
 	aws_kms_key_arn?: string
+	id?:              string
+	name?:            string
+	output_bucket?:   string
 	content_config?: [{
+		bucket?:        string
 		storage_class?: string
 	}, ...]
 	content_config_permissions?: [{
@@ -3428,6 +4649,7 @@ package aws
 		warning?:     string
 	}, ...]
 	thumbnail_config?: [{
+		bucket?:        string
 		storage_class?: string
 	}, ...]
 	thumbnail_config_permissions?: [{
@@ -3438,7 +4660,11 @@ package aws
 }
 #AwsElastictranscoderPresetResource: {
 	container:    string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	type?:        string
 	video_codec_options?: [_]: string
 	audio?: [{
 		audio_packing_mode?: string
@@ -3492,12 +4718,24 @@ package aws
 	}, ...]
 }
 #AwsElbResource: {
+	arn?: string
+	availability_zones?: [string, ...]
 	connection_draining?:         bool
 	connection_draining_timeout?: number
 	cross_zone_load_balancing?:   bool
+	dns_name?:                    string
+	id?:                          string
 	idle_timeout?:                number
-	name_prefix?:                 string
+	instances?: [string, ...]
+	internal?:    bool
+	name?:        string
+	name_prefix?: string
+	security_groups?: [string, ...]
+	source_security_group?:    string
+	source_security_group_id?: string
+	subnets?: [string, ...]
 	tags?: [_]: string
+	zone_id?: string
 	access_logs?: [{
 		bucket:         string
 		bucket_prefix?: string
@@ -3522,6 +4760,7 @@ package aws
 #AwsElbAttachmentResource: {
 	elb:      string
 	instance: string
+	id?:      string
 }
 #AwsEmrClusterResource: {
 	name:             string
@@ -3529,16 +4768,36 @@ package aws
 	service_role:     string
 	additional_info?: string
 	applications?: [string, ...]
-	autoscaling_role?:       string
-	configurations?:         string
-	configurations_json?:    string
-	custom_ami_id?:          string
-	ebs_root_volume_size?:   number
-	log_uri?:                string
-	security_configuration?: string
+	arn?:                               string
+	autoscaling_role?:                  string
+	cluster_state?:                     string
+	configurations?:                    string
+	configurations_json?:               string
+	core_instance_count?:               number
+	core_instance_type?:                string
+	custom_ami_id?:                     string
+	ebs_root_volume_size?:              number
+	id?:                                string
+	keep_job_flow_alive_when_no_steps?: bool
+	log_uri?:                           string
+	master_instance_type?:              string
+	master_public_dns?:                 string
+	scale_down_behavior?:               string
+	security_configuration?:            string
+	step?: [{
+		action_on_failure: string
+		hadoop_jar_step: [{
+			args: [string, ...]
+			jar:        string
+			main_class: string
+			properties: [_]: string
+		}, ...]
+		name: string
+	}, ...]
 	step_concurrency_level?: number
 	tags?: [_]: string
-	visible_to_all_users?: bool
+	termination_protection?: bool
+	visible_to_all_users?:   bool
 	bootstrap_action?: [{
 		name: string
 		path: string
@@ -3548,6 +4807,7 @@ package aws
 		instance_type:       string
 		autoscaling_policy?: string
 		bid_price?:          string
+		id?:                 string
 		instance_count?:     number
 		name?:               string
 		ebs_config?: [{
@@ -3561,7 +4821,10 @@ package aws
 		instance_profile:                   string
 		additional_master_security_groups?: string
 		additional_slave_security_groups?:  string
+		emr_managed_master_security_group?: string
+		emr_managed_slave_security_group?:  string
 		key_name?:                          string
+		service_access_security_group?:     string
 		subnet_id?:                         string
 	}, ...]
 	instance_group?: [{
@@ -3569,6 +4832,7 @@ package aws
 		instance_type:       string
 		autoscaling_policy?: string
 		bid_price?:          string
+		id?:                 string
 		instance_count?:     number
 		name?:               string
 		ebs_config?: [{
@@ -3588,6 +4852,7 @@ package aws
 	master_instance_group?: [{
 		instance_type:   string
 		bid_price?:      string
+		id?:             string
 		instance_count?: number
 		name?:           string
 		ebs_config?: [{
@@ -3599,14 +4864,17 @@ package aws
 	}, ...]
 }
 #AwsEmrInstanceGroupResource: {
-	cluster_id:           string
-	instance_type:        string
-	autoscaling_policy?:  string
-	bid_price?:           string
-	configurations_json?: string
-	ebs_optimized?:       bool
-	instance_count?:      number
-	name?:                string
+	cluster_id:              string
+	instance_type:           string
+	autoscaling_policy?:     string
+	bid_price?:              string
+	configurations_json?:    string
+	ebs_optimized?:          bool
+	id?:                     string
+	instance_count?:         number
+	name?:                   string
+	running_instance_count?: number
+	status?:                 string
 	ebs_config?: [{
 		size:                  number
 		type:                  string
@@ -3615,26 +4883,46 @@ package aws
 	}, ...]
 }
 #AwsEmrSecurityConfigurationResource: {
-	configuration: string
-	name_prefix?:  string
+	configuration:  string
+	creation_date?: string
+	id?:            string
+	name?:          string
+	name_prefix?:   string
 }
 #AwsFlowLogResource: {
 	traffic_type:              string
+	arn?:                      string
 	eni_id?:                   string
 	iam_role_arn?:             string
+	id?:                       string
+	log_destination?:          string
 	log_destination_type?:     string
+	log_format?:               string
+	log_group_name?:           string
 	max_aggregation_interval?: number
 	subnet_id?:                string
 	tags?: [_]: string
 	vpc_id?: string
 }
-#AwsFmsAdminAccountResource: {}
+#AwsFmsAdminAccountResource: {
+	account_id?: string
+	id?:         string
+}
 #AwsFsxLustreFileSystemResource: {
 	storage_capacity: number
 	subnet_ids: [string, ...]
-	import_path?: string
+	arn?:                      string
+	dns_name?:                 string
+	export_path?:              string
+	id?:                       string
+	import_path?:              string
+	imported_file_chunk_size?: number
+	network_interface_ids?: [string, ...]
+	owner_id?: string
 	security_group_ids?: [string, ...]
 	tags?: [_]: string
+	vpc_id?:                        string
+	weekly_maintenance_start_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3643,13 +4931,22 @@ package aws
 #AwsFsxWindowsFileSystemResource: {
 	storage_capacity: number
 	subnet_ids: [string, ...]
-	throughput_capacity:              number
-	active_directory_id?:             string
-	automatic_backup_retention_days?: number
-	copy_tags_to_backups?:            bool
+	throughput_capacity:                number
+	active_directory_id?:               string
+	arn?:                               string
+	automatic_backup_retention_days?:   number
+	copy_tags_to_backups?:              bool
+	daily_automatic_backup_start_time?: string
+	dns_name?:                          string
+	id?:                                string
+	kms_key_id?:                        string
+	network_interface_ids?: [string, ...]
+	owner_id?: string
 	security_group_ids?: [string, ...]
 	skip_final_backup?: bool
 	tags?: [_]: string
+	vpc_id?:                        string
+	weekly_maintenance_start_time?: string
 	self_managed_active_directory?: [{
 		dns_ips: [string, ...]
 		domain_name:                             string
@@ -3665,7 +4962,9 @@ package aws
 }
 #AwsGameliftAliasResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	routing_strategy?: [{
 		type:      string
@@ -3676,6 +4975,8 @@ package aws
 #AwsGameliftBuildResource: {
 	name:             string
 	operating_system: string
+	arn?:             string
+	id?:              string
 	tags?: [_]: string
 	version?: string
 	storage_location?: [{
@@ -3685,13 +4986,18 @@ package aws
 	}, ...]
 }
 #AwsGameliftFleetResource: {
-	build_id:                            string
-	ec2_instance_type:                   string
-	name:                                string
-	description?:                        string
-	fleet_type?:                         string
-	instance_role_arn?:                  string
+	build_id:           string
+	ec2_instance_type:  string
+	name:               string
+	arn?:               string
+	description?:       string
+	fleet_type?:        string
+	id?:                string
+	instance_role_arn?: string
+	log_paths?: [string, ...]
+	metric_groups?: [string, ...]
 	new_game_session_protection_policy?: string
+	operating_system?:                   string
 	tags?: [_]: string
 	ec2_inbound_permission?: [{
 		from_port: number
@@ -3719,7 +5025,9 @@ package aws
 }
 #AwsGameliftGameSessionQueueResource: {
 	name: string
+	arn?: string
 	destinations?: [string, ...]
+	id?: string
 	tags?: [_]: string
 	timeout_in_seconds?: number
 	player_latency_policy?: [{
@@ -3730,6 +5038,9 @@ package aws
 #AwsGlacierVaultResource: {
 	name:           string
 	access_policy?: string
+	arn?:           string
+	id?:            string
+	location?:      string
 	tags?: [_]: string
 	notification?: [{
 		events: [string, ...]
@@ -3740,12 +5051,20 @@ package aws
 	complete_lock:          bool
 	policy:                 string
 	vault_name:             string
+	id?:                    string
 	ignore_deletion_error?: bool
 }
 #AwsGlobalacceleratorAcceleratorResource: {
 	name:             string
+	dns_name?:        string
 	enabled?:         bool
+	hosted_zone_id?:  string
+	id?:              string
 	ip_address_type?: string
+	ip_sets?: [{
+		ip_addresses: [string, ...]
+		ip_family: string
+	}, ...]
 	tags?: [_]: string
 	attributes?: [{
 		flow_logs_enabled?:   bool
@@ -3755,10 +5074,12 @@ package aws
 }
 #AwsGlobalacceleratorEndpointGroupResource: {
 	listener_arn:                   string
+	endpoint_group_region?:         string
 	health_check_interval_seconds?: number
 	health_check_path?:             string
 	health_check_port?:             number
 	health_check_protocol?:         string
+	id?:                            string
 	threshold_count?:               number
 	traffic_dial_percentage?:       number
 	endpoint_configuration?: [{
@@ -3770,6 +5091,7 @@ package aws
 	accelerator_arn:  string
 	protocol:         string
 	client_affinity?: string
+	id?:              string
 	port_range?: [{
 		from_port?: number
 		to_port?:   number
@@ -3777,14 +5099,20 @@ package aws
 }
 #AwsGlueCatalogDatabaseResource: {
 	name:          string
+	arn?:          string
+	catalog_id?:   string
 	description?:  string
+	id?:           string
 	location_uri?: string
 	parameters?: [_]: string
 }
 #AwsGlueCatalogTableResource: {
 	database_name: string
 	name:          string
+	arn?:          string
+	catalog_id?:   string
 	description?:  string
+	id?:           string
 	owner?:        string
 	parameters?: [_]: string
 	retention?:          number
@@ -3828,6 +5156,7 @@ package aws
 }
 #AwsGlueClassifierResource: {
 	name: string
+	id?:  string
 	csv_classifier?: [{
 		allow_single_column?:    bool
 		contains_header?:        string
@@ -3852,8 +5181,11 @@ package aws
 #AwsGlueConnectionResource: {
 	connection_properties: [_]: string
 	name:             string
+	arn?:             string
+	catalog_id?:      string
 	connection_type?: string
 	description?:     string
+	id?:              string
 	match_criteria?: [string, ...]
 	physical_connection_requirements?: [{
 		availability_zone?: string
@@ -3865,9 +5197,11 @@ package aws
 	database_name: string
 	name:          string
 	role:          string
+	arn?:          string
 	classifiers?: [string, ...]
 	configuration?:          string
 	description?:            string
+	id?:                     string
 	schedule?:               string
 	security_configuration?: string
 	table_prefix?:           string
@@ -3894,11 +5228,16 @@ package aws
 	}, ...]
 }
 #AwsGlueJobResource: {
-	name:     string
-	role_arn: string
+	name:                string
+	role_arn:            string
+	allocated_capacity?: number
+	arn?:                string
 	connections?: [string, ...]
 	default_arguments?: [_]: string
 	description?:            string
+	glue_version?:           string
+	id?:                     string
+	max_capacity?:           number
 	max_retries?:            number
 	number_of_workers?:      number
 	security_configuration?: string
@@ -3908,6 +5247,7 @@ package aws
 	command?: [{
 		script_location: string
 		name?:           string
+		python_version?: string
 	}, ...]
 	execution_property?: [{
 		max_concurrent_runs?: number
@@ -3918,6 +5258,7 @@ package aws
 }
 #AwsGlueSecurityConfigurationResource: {
 	name: string
+	id?:  string
 	encryption_configuration?: [{
 		cloudwatch_encryption?: [{
 			cloudwatch_encryption_mode?: string
@@ -3936,8 +5277,10 @@ package aws
 #AwsGlueTriggerResource: {
 	name:         string
 	type:         string
+	arn?:         string
 	description?: string
 	enabled?:     bool
+	id?:          string
 	schedule?:    string
 	tags?: [_]: string
 	workflow_name?: string
@@ -3965,12 +5308,21 @@ package aws
 #AwsGlueWorkflowResource: {
 	default_run_properties?: [_]: string
 	description?: string
+	id?:          string
 	name?:        string
 }
-#AwsGuarddutyDetectorResource: enable?: bool
+#AwsGuarddutyDetectorResource: {
+	account_id?:                   string
+	arn?:                          string
+	enable?:                       bool
+	finding_publishing_frequency?: string
+	id?:                           string
+	tags?: [_]: string
+}
 #AwsGuarddutyInviteAccepterResource: {
 	detector_id:       string
 	master_account_id: string
+	id?:               string
 	timeouts?: create?: string
 }
 #AwsGuarddutyIpsetResource: {
@@ -3979,23 +5331,32 @@ package aws
 	format:      string
 	location:    string
 	name:        string
+	arn?:        string
+	id?:         string
+	tags?: [_]: string
 }
 #AwsGuarddutyMemberResource: {
 	account_id:                  string
 	detector_id:                 string
 	email:                       string
 	disable_email_notification?: bool
+	id?:                         string
 	invitation_message?:         string
 	invite?:                     bool
+	relationship_status?:        string
 	timeouts?: {
 		create?: string
 		update?: string
 	}
 }
-#AwsGuarddutyOrganizationAdminAccountResource: admin_account_id: string
+#AwsGuarddutyOrganizationAdminAccountResource: {
+	admin_account_id: string
+	id?:              string
+}
 #AwsGuarddutyOrganizationConfigurationResource: {
 	auto_enable: bool
 	detector_id: string
+	id?:         string
 }
 #AwsGuarddutyThreatintelsetResource: {
 	activate:    bool
@@ -4003,46 +5364,87 @@ package aws
 	format:      string
 	location:    string
 	name:        string
+	arn?:        string
+	id?:         string
+	tags?: [_]: string
 }
 #AwsIamAccessKeyResource: {
-	user:     string
-	pgp_key?: string
+	user:                  string
+	encrypted_secret?:     string
+	id?:                   string
+	key_fingerprint?:      string
+	pgp_key?:              string
+	secret?:               string
+	ses_smtp_password?:    string
+	ses_smtp_password_v4?: string
+	status?:               string
 }
-#AwsIamAccountAliasResource: account_alias: string
+#AwsIamAccountAliasResource: {
+	account_alias: string
+	id?:           string
+}
 #AwsIamAccountPasswordPolicyResource: {
 	allow_users_to_change_password?: bool
+	expire_passwords?:               bool
+	hard_expiry?:                    bool
+	id?:                             string
+	max_password_age?:               number
 	minimum_password_length?:        number
+	password_reuse_prevention?:      number
+	require_lowercase_characters?:   bool
+	require_numbers?:                bool
+	require_symbols?:                bool
+	require_uppercase_characters?:   bool
 }
 #AwsIamGroupResource: {
-	name:  string
-	path?: string
+	name:       string
+	arn?:       string
+	id?:        string
+	path?:      string
+	unique_id?: string
 }
 #AwsIamGroupMembershipResource: {
 	group: string
 	name:  string
 	users: [string, ...]
+	id?: string
 }
 #AwsIamGroupPolicyResource: {
 	group:        string
 	policy:       string
+	id?:          string
+	name?:        string
 	name_prefix?: string
 }
 #AwsIamGroupPolicyAttachmentResource: {
 	group:      string
 	policy_arn: string
+	id?:        string
 }
 #AwsIamInstanceProfileResource: {
+	arn?:         string
+	create_date?: string
+	id?:          string
+	name?:        string
 	name_prefix?: string
 	path?:        string
+	role?:        string
+	roles?: [string, ...]
+	unique_id?: string
 }
 #AwsIamOpenidConnectProviderResource: {
 	client_id_list: [string, ...]
 	thumbprint_list: [string, ...]
-	url: string
+	url:  string
+	arn?: string
+	id?:  string
 }
 #AwsIamPolicyResource: {
 	policy:       string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
 	name_prefix?: string
 	path?:        string
 }
@@ -4050,77 +5452,114 @@ package aws
 	name:       string
 	policy_arn: string
 	groups?: [string, ...]
+	id?: string
 	roles?: [string, ...]
 	users?: [string, ...]
 }
 #AwsIamRoleResource: {
 	assume_role_policy:     string
+	arn?:                   string
+	create_date?:           string
 	description?:           string
 	force_detach_policies?: bool
+	id?:                    string
 	max_session_duration?:  number
+	name?:                  string
 	name_prefix?:           string
 	path?:                  string
 	permissions_boundary?:  string
 	tags?: [_]: string
+	unique_id?: string
 }
 #AwsIamRolePolicyResource: {
 	policy:       string
 	role:         string
+	id?:          string
+	name?:        string
 	name_prefix?: string
 }
 #AwsIamRolePolicyAttachmentResource: {
 	policy_arn: string
 	role:       string
+	id?:        string
 }
 #AwsIamSamlProviderResource: {
 	name:                   string
 	saml_metadata_document: string
+	arn?:                   string
+	id?:                    string
+	valid_until?:           string
 }
 #AwsIamServerCertificateResource: {
 	certificate_body:   string
 	private_key:        string
+	arn?:               string
 	certificate_chain?: string
+	id?:                string
+	name?:              string
 	name_prefix?:       string
 	path?:              string
 }
 #AwsIamServiceLinkedRoleResource: {
 	aws_service_name: string
+	arn?:             string
+	create_date?:     string
 	custom_suffix?:   string
 	description?:     string
+	id?:              string
+	name?:            string
+	path?:            string
+	unique_id?:       string
 }
 #AwsIamUserResource: {
 	name:                  string
+	arn?:                  string
 	force_destroy?:        bool
+	id?:                   string
 	path?:                 string
 	permissions_boundary?: string
 	tags?: [_]: string
+	unique_id?: string
 }
 #AwsIamUserGroupMembershipResource: {
 	groups: [string, ...]
 	user: string
+	id?:  string
 }
 #AwsIamUserLoginProfileResource: {
 	pgp_key:                  string
 	user:                     string
+	encrypted_password?:      string
+	id?:                      string
+	key_fingerprint?:         string
 	password_length?:         number
 	password_reset_required?: bool
 }
 #AwsIamUserPolicyResource: {
 	policy:       string
 	user:         string
+	id?:          string
+	name?:        string
 	name_prefix?: string
 }
 #AwsIamUserPolicyAttachmentResource: {
 	policy_arn: string
 	user:       string
+	id?:        string
 }
 #AwsIamUserSshKeyResource: {
-	encoding:   string
-	public_key: string
-	username:   string
+	encoding:           string
+	public_key:         string
+	username:           string
+	fingerprint?:       string
+	id?:                string
+	ssh_public_key_id?: string
+	status?:            string
 }
 #AwsInspectorAssessmentTargetResource: {
 	name:                string
+	arn?:                string
+	id?:                 string
 	resource_group_arn?: string
 }
 #AwsInspectorAssessmentTemplateResource: {
@@ -4128,36 +5567,78 @@ package aws
 	name:     string
 	rules_package_arns: [string, ...]
 	target_arn: string
+	arn?:       string
+	id?:        string
 	tags?: [_]: string
 }
-#AwsInspectorResourceGroupResource: tags: [_]: string
+#AwsInspectorResourceGroupResource: {
+	tags: [_]: string
+	arn?: string
+	id?:  string
+}
 #AwsInstanceResource: {
 	ami:                                   string
 	instance_type:                         string
+	arn?:                                  string
+	associate_public_ip_address?:          bool
+	availability_zone?:                    string
+	cpu_core_count?:                       number
+	cpu_threads_per_core?:                 number
 	disable_api_termination?:              bool
 	ebs_optimized?:                        bool
 	get_password_data?:                    bool
 	hibernation?:                          bool
+	host_id?:                              string
 	iam_instance_profile?:                 string
+	id?:                                   string
 	instance_initiated_shutdown_behavior?: string
-	monitoring?:                           bool
-	source_dest_check?:                    bool
+	instance_state?:                       string
+	ipv6_address_count?:                   number
+	ipv6_addresses?: [string, ...]
+	key_name?:                     string
+	monitoring?:                   bool
+	network_interface_id?:         string
+	outpost_arn?:                  string
+	password_data?:                string
+	placement_group?:              string
+	primary_network_interface_id?: string
+	private_dns?:                  string
+	private_ip?:                   string
+	public_dns?:                   string
+	public_ip?:                    string
+	security_groups?: [string, ...]
+	source_dest_check?: bool
+	subnet_id?:         string
 	tags?: [_]: string
+	tenancy?:          string
 	user_data?:        string
 	user_data_base64?: string
+	volume_tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	credit_specification?: [{
 		cpu_credits?: string
 	}, ...]
 	ebs_block_device?: [{
 		device_name:            string
 		delete_on_termination?: bool
+		encrypted?:             bool
+		iops?:                  number
+		kms_key_id?:            string
+		snapshot_id?:           string
+		volume_id?:             string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
 		device_name:   string
 		no_device?:    bool
 		virtual_name?: string
 	}, ...]
-	metadata_options?: [{}, ...]
+	metadata_options?: [{
+		http_endpoint?:               string
+		http_put_response_hop_limit?: number
+		http_tokens?:                 string
+	}, ...]
 	network_interface?: [{
 		device_index:           number
 		network_interface_id:   string
@@ -4165,6 +5646,13 @@ package aws
 	}, ...]
 	root_block_device?: [{
 		delete_on_termination?: bool
+		device_name?:           string
+		encrypted?:             bool
+		iops?:                  number
+		kms_key_id?:            string
+		volume_id?:             string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -4173,40 +5661,62 @@ package aws
 	}
 }
 #AwsInternetGatewayResource: {
+	arn?:      string
+	id?:       string
+	owner_id?: string
 	tags?: [_]: string
 	vpc_id?: string
 }
 #AwsIotCertificateResource: {
-	active: bool
-	csr?:   string
+	active:           bool
+	arn?:             string
+	certificate_pem?: string
+	csr?:             string
+	id?:              string
+	private_key?:     string
+	public_key?:      string
 }
 #AwsIotPolicyResource: {
-	name:   string
-	policy: string
+	name:                string
+	policy:              string
+	arn?:                string
+	default_version_id?: string
+	id?:                 string
 }
 #AwsIotPolicyAttachmentResource: {
 	policy: string
 	target: string
+	id?:    string
 }
 #AwsIotRoleAliasResource: {
 	alias:                string
 	role_arn:             string
+	arn?:                 string
 	credential_duration?: number
+	id?:                  string
 }
 #AwsIotThingResource: {
 	name: string
+	arn?: string
 	attributes?: [_]: string
-	thing_type_name?: string
+	default_client_id?: string
+	id?:                string
+	thing_type_name?:   string
+	version?:           number
 }
 #AwsIotThingPrincipalAttachmentResource: {
 	principal: string
 	thing:     string
+	id?:       string
 }
 #AwsIotThingTypeResource: {
 	name:        string
+	arn?:        string
 	deprecated?: bool
+	id?:         string
 	properties?: [{
 		description?: string
+		searchable_attributes?: [string, ...]
 	}, ...]
 }
 #AwsIotTopicRuleResource: {
@@ -4214,7 +5724,9 @@ package aws
 	name:         string
 	sql:          string
 	sql_version:  string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	cloudwatch_alarm?: [{
 		alarm_name:   string
@@ -4254,6 +5766,94 @@ package aws
 		index:    string
 		role_arn: string
 		type:     string
+	}, ...]
+	error_action?: [{
+		cloudwatch_alarm?: [{
+			alarm_name:   string
+			role_arn:     string
+			state_reason: string
+			state_value:  string
+		}, ...]
+		cloudwatch_metric?: [{
+			metric_name:       string
+			metric_namespace:  string
+			metric_unit:       string
+			metric_value:      string
+			role_arn:          string
+			metric_timestamp?: string
+		}, ...]
+		dynamodb?: [{
+			hash_key_field:   string
+			hash_key_value:   string
+			role_arn:         string
+			table_name:       string
+			hash_key_type?:   string
+			operation?:       string
+			payload_field?:   string
+			range_key_field?: string
+			range_key_type?:  string
+			range_key_value?: string
+		}, ...]
+		dynamodbv2?: [{
+			role_arn: string
+			put_item?: [{
+				table_name: string
+			}, ...]
+		}, ...]
+		elasticsearch?: [{
+			endpoint: string
+			id:       string
+			index:    string
+			role_arn: string
+			type:     string
+		}, ...]
+		firehose?: [{
+			delivery_stream_name: string
+			role_arn:             string
+			separator?:           string
+		}, ...]
+		iot_analytics?: [{
+			channel_name: string
+			role_arn:     string
+		}, ...]
+		iot_events?: [{
+			input_name:  string
+			role_arn:    string
+			message_id?: string
+		}, ...]
+		kinesis?: [{
+			role_arn:       string
+			stream_name:    string
+			partition_key?: string
+		}, ...]
+		lambda?: [{
+			function_arn: string
+		}, ...]
+		republish?: [{
+			role_arn: string
+			topic:    string
+			qos?:     number
+		}, ...]
+		s3?: [{
+			bucket_name: string
+			key:         string
+			role_arn:    string
+		}, ...]
+		sns?: [{
+			role_arn:        string
+			target_arn:      string
+			message_format?: string
+		}, ...]
+		sqs?: [{
+			queue_url:  string
+			role_arn:   string
+			use_base64: bool
+		}, ...]
+		step_functions?: [{
+			role_arn:               string
+			state_machine_name:     string
+			execution_name_prefix?: string
+		}, ...]
 	}, ...]
 	firehose?: [{
 		delivery_stream_name: string
@@ -4297,23 +5897,45 @@ package aws
 		role_arn:   string
 		use_base64: bool
 	}, ...]
+	step_functions?: [{
+		role_arn:               string
+		state_machine_name:     string
+		execution_name_prefix?: string
+	}, ...]
 }
 #AwsKeyPairResource: {
 	public_key:       string
+	arn?:             string
+	fingerprint?:     string
+	id?:              string
+	key_name?:        string
 	key_name_prefix?: string
+	key_pair_id?:     string
 	tags?: [_]: string
 }
 #AwsKinesisAnalyticsApplicationResource: {
-	name:         string
-	code?:        string
-	description?: string
+	name:                   string
+	arn?:                   string
+	code?:                  string
+	create_timestamp?:      string
+	description?:           string
+	id?:                    string
+	last_update_timestamp?: string
+	status?:                string
 	tags?: [_]: string
+	version?: number
 	cloudwatch_logging_options?: [{
 		log_stream_arn: string
 		role_arn:       string
+		id?:            string
 	}, ...]
 	inputs?: [{
 		name_prefix: string
+		id?:         string
+		starting_position_configuration?: [{
+			starting_position: string
+		}, ...]
+		stream_names?: [string, ...]
 		kinesis_firehose?: [{
 			resource_arn: string
 			role_arn:     string
@@ -4339,6 +5961,7 @@ package aws
 				mapping?: string
 			}, ...]
 			record_format?: [{
+				record_format_type?: string
 				mapping_parameters?: [{
 					csv?: [{
 						record_column_delimiter: string
@@ -4353,6 +5976,7 @@ package aws
 	}, ...]
 	outputs?: [{
 		name: string
+		id?:  string
 		kinesis_firehose?: [{
 			resource_arn: string
 			role_arn:     string
@@ -4371,6 +5995,7 @@ package aws
 	}, ...]
 	reference_data_sources?: [{
 		table_name: string
+		id?:        string
 		s3?: [{
 			bucket_arn: string
 			file_key:   string
@@ -4384,6 +6009,7 @@ package aws
 				mapping?: string
 			}, ...]
 			record_format?: [{
+				record_format_type?: string
 				mapping_parameters?: [{
 					csv?: [{
 						record_column_delimiter: string
@@ -4398,9 +6024,13 @@ package aws
 	}, ...]
 }
 #AwsKinesisFirehoseDeliveryStreamResource: {
-	destination: string
-	name:        string
+	destination:     string
+	name:            string
+	arn?:            string
+	destination_id?: string
+	id?:             string
 	tags?: [_]: string
+	version_id?: string
 	elasticsearch_configuration?: [{
 		domain_arn:             string
 		index_name:             string
@@ -4484,6 +6114,8 @@ package aws
 				database_name: string
 				role_arn:      string
 				table_name:    string
+				catalog_id?:   string
+				region?:       string
 				version_id?:   string
 			}, ...]
 		}, ...]
@@ -4600,8 +6232,10 @@ package aws
 #AwsKinesisStreamResource: {
 	name:                       string
 	shard_count:                number
+	arn?:                       string
 	encryption_type?:           string
 	enforce_consumer_deletion?: bool
+	id?:                        string
 	kms_key_id?:                string
 	retention_period?:          number
 	shard_level_metrics?: [string, ...]
@@ -4614,10 +6248,15 @@ package aws
 }
 #AwsKinesisVideoStreamResource: {
 	name:                     string
+	arn?:                     string
+	creation_time?:           string
 	data_retention_in_hours?: number
 	device_name?:             string
+	id?:                      string
+	kms_key_id?:              string
 	media_type?:              string
 	tags?: [_]: string
+	version?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4625,19 +6264,31 @@ package aws
 	}
 }
 #AwsKmsAliasResource: {
-	target_key_id: string
-	name?:         string
-	name_prefix?:  string
+	target_key_id:   string
+	arn?:            string
+	id?:             string
+	name?:           string
+	name_prefix?:    string
+	target_key_arn?: string
 }
 #AwsKmsCiphertextResource: {
-	key_id:    string
-	plaintext: string
+	key_id:           string
+	plaintext:        string
+	ciphertext_blob?: string
 	context?: [_]: string
+	id?: string
 }
 #AwsKmsExternalKeyResource: {
+	arn?:                     string
 	deletion_window_in_days?: number
 	description?:             string
+	enabled?:                 bool
+	expiration_model?:        string
+	id?:                      string
 	key_material_base64?:     string
+	key_state?:               string
+	key_usage?:               string
+	policy?:                  string
 	tags?: [_]: string
 	valid_to?: string
 }
@@ -4646,6 +6297,9 @@ package aws
 	key_id:            string
 	operations: [string, ...]
 	grant_creation_tokens?: [string, ...]
+	grant_id?:           string
+	grant_token?:        string
+	id?:                 string
 	name?:               string
 	retire_on_delete?:   bool
 	retiring_principal?: string
@@ -4655,18 +6309,26 @@ package aws
 	}, ...]
 }
 #AwsKmsKeyResource: {
+	arn?:                      string
 	customer_master_key_spec?: string
 	deletion_window_in_days?:  number
+	description?:              string
 	enable_key_rotation?:      bool
+	id?:                       string
 	is_enabled?:               bool
+	key_id?:                   string
 	key_usage?:                string
+	policy?:                   string
 	tags?: [_]: string
 }
 #AwsLambdaAliasResource: {
 	function_name:    string
 	function_version: string
 	name:             string
+	arn?:             string
 	description?:     string
+	id?:              string
+	invoke_arn?:      string
 	routing_config?: [{
 		additional_version_weights?: [_]: number
 	}, ...]
@@ -4677,9 +6339,19 @@ package aws
 	batch_size?:                         number
 	bisect_batch_on_function_error?:     bool
 	enabled?:                            bool
+	function_arn?:                       string
+	id?:                                 string
+	last_modified?:                      string
+	last_processing_result?:             string
 	maximum_batching_window_in_seconds?: number
+	maximum_record_age_in_seconds?:      number
+	maximum_retry_attempts?:             number
+	parallelization_factor?:             number
 	starting_position?:                  string
 	starting_position_timestamp?:        string
+	state?:                              string
+	state_transition_reason?:            string
+	uuid?:                               string
 	destination_config?: [{
 		on_failure?: [{
 			destination_arn: string
@@ -4687,27 +6359,39 @@ package aws
 	}, ...]
 }
 #AwsLambdaFunctionResource: {
-	function_name: string
-	handler:       string
-	role:          string
-	runtime:       string
-	description?:  string
-	filename?:     string
-	kms_key_arn?:  string
+	function_name:  string
+	handler:        string
+	role:           string
+	runtime:        string
+	arn?:           string
+	description?:   string
+	filename?:      string
+	id?:            string
+	invoke_arn?:    string
+	kms_key_arn?:   string
+	last_modified?: string
 	layers?: [string, ...]
 	memory_size?:                    number
 	publish?:                        bool
+	qualified_arn?:                  string
 	reserved_concurrent_executions?: number
 	s3_bucket?:                      string
 	s3_key?:                         string
 	s3_object_version?:              string
+	source_code_hash?:               string
+	source_code_size?:               number
 	tags?: [_]: string
 	timeout?: number
+	version?: string
 	dead_letter_config?: [{
 		target_arn: string
 	}, ...]
 	environment?: [{
 		variables?: [_]: string
+	}, ...]
+	file_system_config?: [{
+		arn:              string
+		local_mount_path: string
 	}, ...]
 	timeouts?: create?: string
 	tracing_config?: [{
@@ -4716,10 +6400,12 @@ package aws
 	vpc_config?: [{
 		security_group_ids: [string, ...]
 		subnet_ids: [string, ...]
+		vpc_id?: string
 	}, ...]
 }
 #AwsLambdaFunctionEventInvokeConfigResource: {
 	function_name:                 string
+	id?:                           string
 	maximum_event_age_in_seconds?: number
 	maximum_retry_attempts?:       number
 	qualifier?:                    string
@@ -4734,28 +6420,38 @@ package aws
 }
 #AwsLambdaLayerVersionResource: {
 	layer_name: string
+	arn?:       string
 	compatible_runtimes?: [string, ...]
+	created_date?:      string
 	description?:       string
 	filename?:          string
+	id?:                string
+	layer_arn?:         string
 	license_info?:      string
 	s3_bucket?:         string
 	s3_key?:            string
 	s3_object_version?: string
+	source_code_hash?:  string
+	source_code_size?:  number
+	version?:           string
 }
 #AwsLambdaPermissionResource: {
 	action:               string
 	function_name:        string
 	principal:            string
 	event_source_token?:  string
+	id?:                  string
 	qualifier?:           string
 	source_account?:      string
 	source_arn?:          string
+	statement_id?:        string
 	statement_id_prefix?: string
 }
 #AwsLambdaProvisionedConcurrencyConfigResource: {
 	function_name:                     string
 	provisioned_concurrent_executions: number
 	qualifier:                         string
+	id?:                               string
 	timeouts?: {
 		create?: string
 		update?: string
@@ -4764,9 +6460,14 @@ package aws
 #AwsLaunchConfigurationResource: {
 	image_id:                     string
 	instance_type:                string
+	arn?:                         string
 	associate_public_ip_address?: bool
+	ebs_optimized?:               bool
 	enable_monitoring?:           bool
 	iam_instance_profile?:        string
+	id?:                          string
+	key_name?:                    string
+	name?:                        string
 	name_prefix?:                 string
 	placement_tenancy?:           string
 	security_groups?: [string, ...]
@@ -4778,7 +6479,12 @@ package aws
 	ebs_block_device?: [{
 		device_name:            string
 		delete_on_termination?: bool
+		encrypted?:             bool
+		iops?:                  number
 		no_device?:             bool
+		snapshot_id?:           string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
 		device_name:  string
@@ -4786,22 +6492,32 @@ package aws
 	}, ...]
 	root_block_device?: [{
 		delete_on_termination?: bool
+		encrypted?:             bool
+		iops?:                  number
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 }
 #AwsLaunchTemplateResource: {
+	arn?:                                  string
+	default_version?:                      number
 	description?:                          string
 	disable_api_termination?:              bool
 	ebs_optimized?:                        string
+	id?:                                   string
 	image_id?:                             string
 	instance_initiated_shutdown_behavior?: string
 	instance_type?:                        string
 	kernel_id?:                            string
 	key_name?:                             string
+	latest_version?:                       number
+	name?:                                 string
 	name_prefix?:                          string
 	ram_disk_id?:                          string
 	security_group_names?: [string, ...]
 	tags?: [_]: string
-	user_data?: string
+	update_default_version?: bool
+	user_data?:              string
 	vpc_security_group_ids?: [string, ...]
 	block_device_mappings?: [{
 		device_name?:  string
@@ -4810,8 +6526,11 @@ package aws
 		ebs?: [{
 			delete_on_termination?: string
 			encrypted?:             string
+			iops?:                  number
 			kms_key_id?:            string
 			snapshot_id?:           string
+			volume_size?:           number
+			volume_type?:           string
 		}, ...]
 	}, ...]
 	capacity_reservation_specification?: [{
@@ -4847,12 +6566,17 @@ package aws
 			instance_interruption_behavior?: string
 			max_price?:                      string
 			spot_instance_type?:             string
+			valid_until?:                    string
 		}, ...]
 	}, ...]
 	license_specification?: [{
 		license_configuration_arn: string
 	}, ...]
-	metadata_options?: [{}, ...]
+	metadata_options?: [{
+		http_endpoint?:               string
+		http_put_response_hop_limit?: number
+		http_tokens?:                 string
+	}, ...]
 	monitoring?: [{
 		enabled?: bool
 	}, ...]
@@ -4885,14 +6609,25 @@ package aws
 	}, ...]
 }
 #AwsLbResource: {
+	arn?:                              string
+	arn_suffix?:                       string
+	dns_name?:                         string
 	drop_invalid_header_fields?:       bool
 	enable_cross_zone_load_balancing?: bool
 	enable_deletion_protection?:       bool
 	enable_http2?:                     bool
+	id?:                               string
 	idle_timeout?:                     number
+	internal?:                         bool
+	ip_address_type?:                  string
 	load_balancer_type?:               string
+	name?:                             string
 	name_prefix?:                      string
+	security_groups?: [string, ...]
+	subnets?: [string, ...]
 	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
 	access_logs?: [{
 		bucket:   string
 		enabled?: bool
@@ -4913,20 +6648,29 @@ package aws
 	load_balancer:             string
 	name:                      string
 	cookie_expiration_period?: number
+	id?:                       string
 }
 #AwsLbListenerResource: {
 	load_balancer_arn: string
 	port:              number
+	arn?:              string
 	certificate_arn?:  string
+	id?:               string
 	protocol?:         string
+	ssl_policy?:       string
 	default_action?: [{
 		type:              string
+		order?:            number
 		target_group_arn?: string
 		authenticate_cognito?: [{
 			user_pool_arn:       string
 			user_pool_client_id: string
 			user_pool_domain:    string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		authenticate_oidc?: [{
 			authorization_endpoint: string
@@ -4936,10 +6680,25 @@ package aws
 			token_endpoint:         string
 			user_info_endpoint:     string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		fixed_response?: [{
 			content_type:  string
 			message_body?: string
+			status_code?:  string
+		}, ...]
+		forward?: [{
+			stickiness?: [{
+				duration: number
+				enabled?: bool
+			}, ...]
+			target_group?: [{
+				arn:     string
+				weight?: number
+			}, ...]
 		}, ...]
 		redirect?: [{
 			status_code: string
@@ -4955,17 +6714,26 @@ package aws
 #AwsLbListenerCertificateResource: {
 	certificate_arn: string
 	listener_arn:    string
+	id?:             string
 }
 #AwsLbListenerRuleResource: {
 	listener_arn: string
+	arn?:         string
+	id?:          string
+	priority?:    number
 	action?: [{
 		type:              string
+		order?:            number
 		target_group_arn?: string
 		authenticate_cognito?: [{
 			user_pool_arn:       string
 			user_pool_client_id: string
 			user_pool_domain:    string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		authenticate_oidc?: [{
 			authorization_endpoint: string
@@ -4975,10 +6743,25 @@ package aws
 			token_endpoint:         string
 			user_info_endpoint:     string
 			authentication_request_extra_params?: [_]: string
+			on_unauthenticated_request?: string
+			scope?:                      string
+			session_cookie_name?:        string
+			session_timeout?:            number
 		}, ...]
 		fixed_response?: [{
 			content_type:  string
 			message_body?: string
+			status_code?:  string
+		}, ...]
+		forward?: [{
+			stickiness?: [{
+				duration: number
+				enabled?: bool
+			}, ...]
+			target_group?: [{
+				arn:     string
+				weight?: number
+			}, ...]
 		}, ...]
 		redirect?: [{
 			status_code: string
@@ -4990,7 +6773,11 @@ package aws
 		}, ...]
 	}, ...]
 	condition?: [{
-		host_header?: [{}, ...]
+		field?: string
+		values?: [string, ...]
+		host_header?: [{
+			values?: [string, ...]
+		}, ...]
 		http_header?: [{
 			http_header_name: string
 			values: [string, ...]
@@ -4998,7 +6785,9 @@ package aws
 		http_request_method?: [{
 			values: [string, ...]
 		}, ...]
-		path_pattern?: [{}, ...]
+		path_pattern?: [{
+			values?: [string, ...]
+		}, ...]
 		query_string?: [{
 			value: string
 			key?:  string
@@ -5012,14 +6801,20 @@ package aws
 	lb_port:       number
 	load_balancer: string
 	name:          string
+	id?:           string
 	attribute?: [{
 		name:  string
 		value: string
 	}, ...]
 }
 #AwsLbTargetGroupResource: {
+	arn?:                                string
+	arn_suffix?:                         string
 	deregistration_delay?:               number
+	id?:                                 string
 	lambda_multi_value_headers_enabled?: bool
+	load_balancing_algorithm_type?:      string
+	name?:                               string
 	name_prefix?:                        string
 	port?:                               number
 	protocol?:                           string
@@ -5032,8 +6827,11 @@ package aws
 		enabled?:             bool
 		healthy_threshold?:   number
 		interval?:            number
+		matcher?:             string
+		path?:                string
 		port?:                string
 		protocol?:            string
+		timeout?:             number
 		unhealthy_threshold?: number
 	}, ...]
 	stickiness?: [{
@@ -5046,62 +6844,102 @@ package aws
 	target_group_arn:   string
 	target_id:          string
 	availability_zone?: string
+	id?:                string
 	port?:              number
 }
 #AwsLicensemanagerAssociationResource: {
 	license_configuration_arn: string
 	resource_arn:              string
+	id?:                       string
 }
 #AwsLicensemanagerLicenseConfigurationResource: {
 	license_counting_type:     string
 	name:                      string
 	description?:              string
+	id?:                       string
 	license_count?:            number
 	license_count_hard_limit?: bool
 	license_rules?: [string, ...]
 	tags?: [_]: string
 }
-#AwsLightsailDomainResource: domain_name: string
+#AwsLightsailDomainResource: {
+	domain_name: string
+	arn?:        string
+	id?:         string
+}
 #AwsLightsailInstanceResource: {
-	availability_zone: string
-	blueprint_id:      string
-	bundle_id:         string
-	name:              string
-	key_pair_name?:    string
+	availability_zone:   string
+	blueprint_id:        string
+	bundle_id:           string
+	name:                string
+	arn?:                string
+	cpu_count?:          number
+	created_at?:         string
+	id?:                 string
+	ipv6_address?:       string
+	is_static_ip?:       bool
+	key_pair_name?:      string
+	private_ip_address?: string
+	public_ip_address?:  string
+	ram_size?:           number
 	tags?: [_]: string
 	user_data?: string
+	username?:  string
 }
 #AwsLightsailKeyPairResource: {
-	name_prefix?: string
-	pgp_key?:     string
+	arn?:                   string
+	encrypted_fingerprint?: string
+	encrypted_private_key?: string
+	fingerprint?:           string
+	id?:                    string
+	name?:                  string
+	name_prefix?:           string
+	pgp_key?:               string
+	private_key?:           string
+	public_key?:            string
 }
-#AwsLightsailStaticIpResource: name: string
+#AwsLightsailStaticIpResource: {
+	name:          string
+	arn?:          string
+	id?:           string
+	ip_address?:   string
+	support_code?: string
+}
 #AwsLightsailStaticIpAttachmentResource: {
 	instance_name:  string
 	static_ip_name: string
+	id?:            string
+	ip_address?:    string
 }
 #AwsLoadBalancerBackendServerPolicyResource: {
 	instance_port:      number
 	load_balancer_name: string
+	id?:                string
 	policy_names?: [string, ...]
 }
 #AwsLoadBalancerListenerPolicyResource: {
 	load_balancer_name: string
 	load_balancer_port: number
+	id?:                string
 	policy_names?: [string, ...]
 }
 #AwsLoadBalancerPolicyResource: {
 	load_balancer_name: string
 	policy_name:        string
 	policy_type_name:   string
+	id?:                string
 	policy_attribute?: [{
 		name?:  string
 		value?: string
 	}, ...]
 }
-#AwsMacieMemberAccountAssociationResource: member_account_id: string
+#AwsMacieMemberAccountAssociationResource: {
+	member_account_id: string
+	id?:               string
+}
 #AwsMacieS3BucketAssociationResource: {
 	bucket_name:        string
+	id?:                string
 	member_account_id?: string
 	prefix?:            string
 	classification_type?: [{
@@ -5110,12 +6948,16 @@ package aws
 	}, ...]
 }
 #AwsMainRouteTableAssociationResource: {
-	route_table_id: string
-	vpc_id:         string
+	route_table_id:           string
+	vpc_id:                   string
+	id?:                      string
+	original_route_table_id?: string
 }
 #AwsMediaConvertQueueResource: {
 	name:          string
+	arn?:          string
 	description?:  string
+	id?:           string
 	pricing_plan?: string
 	status?:       string
 	tags?: [_]: string
@@ -5127,16 +6969,29 @@ package aws
 }
 #AwsMediaPackageChannelResource: {
 	channel_id:   string
+	arn?:         string
 	description?: string
+	hls_ingest?: [{
+		ingest_endpoints: [{
+			password: string
+			url:      string
+			username: string
+		}, ...]
+	}, ...]
+	id?: string
 	tags?: [_]: string
 }
 #AwsMediaStoreContainerResource: {
-	name: string
+	name:      string
+	arn?:      string
+	endpoint?: string
+	id?:       string
 	tags?: [_]: string
 }
 #AwsMediaStoreContainerPolicyResource: {
 	container_name: string
 	policy:         string
+	id?:            string
 }
 #AwsMqBrokerResource: {
 	broker_name:        string
@@ -5145,12 +7000,24 @@ package aws
 	host_instance_type: string
 	security_groups: [string, ...]
 	apply_immediately?:          bool
+	arn?:                        string
 	auto_minor_version_upgrade?: bool
 	deployment_mode?:            string
-	publicly_accessible?:        bool
+	id?:                         string
+	instances?: [{
+		console_url: string
+		endpoints: [string, ...]
+		ip_address: string
+	}, ...]
+	publicly_accessible?: bool
+	subnet_ids?: [string, ...]
 	tags?: [_]: string
-	configuration?: [{}, ...]
+	configuration?: [{
+		id?:       string
+		revision?: number
+	}, ...]
 	encryption_options?: [{
+		kms_key_id?:        string
 		use_aws_owned_key?: bool
 	}, ...]
 	logs?: [{
@@ -5170,19 +7037,28 @@ package aws
 	}, ...]
 }
 #AwsMqConfigurationResource: {
-	data:           string
-	engine_type:    string
-	engine_version: string
-	name:           string
-	description?:   string
+	data:             string
+	engine_type:      string
+	engine_version:   string
+	name:             string
+	arn?:             string
+	description?:     string
+	id?:              string
+	latest_revision?: number
 	tags?: [_]: string
 }
 #AwsMskClusterResource: {
 	cluster_name:           string
 	kafka_version:          string
 	number_of_broker_nodes: number
+	arn?:                   string
+	bootstrap_brokers?:     string
+	bootstrap_brokers_tls?: string
+	current_version?:       string
 	enhanced_monitoring?:   string
+	id?:                    string
 	tags?: [_]: string
+	zookeeper_connect_string?: string
 	broker_node_group_info?: [{
 		client_subnets: [string, ...]
 		ebs_volume_size: number
@@ -5200,6 +7076,7 @@ package aws
 		revision: number
 	}, ...]
 	encryption_info?: [{
+		encryption_at_rest_kms_key_arn?: string
 		encryption_in_transit?: [{
 			client_broker?: string
 			in_cluster?:    bool
@@ -5237,28 +7114,52 @@ package aws
 	kafka_versions: [string, ...]
 	name:              string
 	server_properties: string
+	arn?:              string
 	description?:      string
+	id?:               string
+	latest_revision?:  number
 }
 #AwsNatGatewayResource: {
-	allocation_id: string
-	subnet_id:     string
+	allocation_id:         string
+	subnet_id:             string
+	id?:                   string
+	network_interface_id?: string
+	private_ip?:           string
+	public_ip?:            string
 	tags?: [_]: string
 }
 #AwsNeptuneClusterResource: {
-	backup_retention_period?: number
-	deletion_protection?:     bool
+	apply_immediately?: bool
+	arn?:               string
+	availability_zones?: [string, ...]
+	backup_retention_period?:   number
+	cluster_identifier?:        string
+	cluster_identifier_prefix?: string
+	cluster_members?: [string, ...]
+	cluster_resource_id?: string
+	deletion_protection?: bool
 	enable_cloudwatch_logs_exports?: [string, ...]
+	endpoint?:                            string
 	engine?:                              string
+	engine_version?:                      string
 	final_snapshot_identifier?:           string
+	hosted_zone_id?:                      string
 	iam_database_authentication_enabled?: bool
 	iam_roles?: [string, ...]
+	id?:                                   string
+	kms_key_arn?:                          string
 	neptune_cluster_parameter_group_name?: string
+	neptune_subnet_group_name?:            string
 	port?:                                 number
+	preferred_backup_window?:              string
+	preferred_maintenance_window?:         string
+	reader_endpoint?:                      string
 	replication_source_identifier?:        string
 	skip_final_snapshot?:                  bool
 	snapshot_identifier?:                  string
 	storage_encrypted?:                    bool
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5268,13 +7169,29 @@ package aws
 #AwsNeptuneClusterInstanceResource: {
 	cluster_identifier:            string
 	instance_class:                string
+	address?:                      string
+	apply_immediately?:            bool
+	arn?:                          string
 	auto_minor_version_upgrade?:   bool
+	availability_zone?:            string
+	dbi_resource_id?:              string
+	endpoint?:                     string
 	engine?:                       string
+	engine_version?:               string
+	id?:                           string
+	identifier?:                   string
+	identifier_prefix?:            string
+	kms_key_arn?:                  string
 	neptune_parameter_group_name?: string
+	neptune_subnet_group_name?:    string
 	port?:                         number
+	preferred_backup_window?:      string
+	preferred_maintenance_window?: string
 	promotion_tier?:               number
 	publicly_accessible?:          bool
+	storage_encrypted?:            bool
 	tags?: [_]: string
+	writer?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -5283,7 +7200,11 @@ package aws
 }
 #AwsNeptuneClusterParameterGroupResource: {
 	family:       string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 	parameter?: [{
 		name:          string
@@ -5294,12 +7215,31 @@ package aws
 #AwsNeptuneClusterSnapshotResource: {
 	db_cluster_identifier:          string
 	db_cluster_snapshot_identifier: string
+	allocated_storage?:             number
+	availability_zones?: [string, ...]
+	db_cluster_snapshot_arn?:        string
+	engine?:                         string
+	engine_version?:                 string
+	id?:                             string
+	kms_key_id?:                     string
+	license_model?:                  string
+	port?:                           number
+	snapshot_type?:                  string
+	source_db_cluster_snapshot_arn?: string
+	status?:                         string
+	storage_encrypted?:              bool
+	vpc_id?:                         string
 	timeouts?: create?: string
 }
 #AwsNeptuneEventSubscriptionResource: {
-	sns_topic_arn: string
-	enabled?:      bool
+	sns_topic_arn:    string
+	arn?:             string
+	customer_aws_id?: string
+	enabled?:         bool
 	event_categories?: [string, ...]
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	source_ids?: [string, ...]
 	source_type?: string
 	tags?: [_]: string
@@ -5312,7 +7252,9 @@ package aws
 #AwsNeptuneParameterGroupResource: {
 	family:       string
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	parameter?: [{
 		name:          string
@@ -5322,12 +7264,42 @@ package aws
 }
 #AwsNeptuneSubnetGroupResource: {
 	subnet_ids: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 }
 #AwsNetworkAclResource: {
-	vpc_id:     string
+	vpc_id: string
+	arn?:   string
+	egress?: [{
+		action:          string
+		cidr_block:      string
+		from_port:       number
+		icmp_code:       number
+		icmp_type:       number
+		ipv6_cidr_block: string
+		protocol:        string
+		rule_no:         number
+		to_port:         number
+	}, ...]
+	id?: string
+	ingress?: [{
+		action:          string
+		cidr_block:      string
+		from_port:       number
+		icmp_code:       number
+		icmp_type:       number
+		ipv6_cidr_block: string
+		protocol:        string
+		rule_no:         number
+		to_port:         number
+	}, ...]
+	owner_id?:  string
 	subnet_id?: string
+	subnet_ids?: [string, ...]
 	tags?: [_]: string
 }
 #AwsNetworkAclRuleResource: {
@@ -5340,27 +7312,41 @@ package aws
 	from_port?:       number
 	icmp_code?:       string
 	icmp_type?:       string
+	id?:              string
 	ipv6_cidr_block?: string
 	to_port?:         number
 }
 #AwsNetworkInterfaceResource: {
-	subnet_id:          string
-	description?:       string
+	subnet_id:         string
+	description?:      string
+	id?:               string
+	mac_address?:      string
+	outpost_arn?:      string
+	private_dns_name?: string
+	private_ip?:       string
+	private_ips?: [string, ...]
+	private_ips_count?: number
+	security_groups?: [string, ...]
 	source_dest_check?: bool
 	tags?: [_]: string
 	attachment?: [{
-		device_index: number
-		instance:     string
+		device_index:   number
+		instance:       string
+		attachment_id?: string
 	}, ...]
 }
 #AwsNetworkInterfaceAttachmentResource: {
 	device_index:         number
 	instance_id:          string
 	network_interface_id: string
+	attachment_id?:       string
+	id?:                  string
+	status?:              string
 }
 #AwsNetworkInterfaceSgAttachmentResource: {
 	network_interface_id: string
 	security_group_id:    string
+	id?:                  string
 }
 #AwsOpsworksApplicationResource: {
 	name:                       string
@@ -5375,7 +7361,9 @@ package aws
 	document_root?:             string
 	domains?: [string, ...]
 	enable_ssl?: bool
+	id?:         string
 	rails_env?:  string
+	short_name?: string
 	app_source?: [{
 		type:      string
 		password?: string
@@ -5399,6 +7387,7 @@ package aws
 	name:                     string
 	short_name:               string
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5412,6 +7401,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	system_packages?: [string, ...]
@@ -5430,6 +7420,7 @@ package aws
 #AwsOpsworksGangliaLayerResource: {
 	password:                 string
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5443,6 +7434,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5464,6 +7456,7 @@ package aws
 #AwsOpsworksHaproxyLayerResource: {
 	stack_id:                 string
 	stats_password:           string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5479,6 +7472,7 @@ package aws
 	elastic_load_balancer?:     string
 	healthcheck_method?:        string
 	healthcheck_url?:           string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5502,17 +7496,53 @@ package aws
 	layer_ids: [string, ...]
 	stack_id:                 string
 	agent_version?:           string
+	ami_id?:                  string
 	architecture?:            string
 	auto_scaling_type?:       string
+	availability_zone?:       string
+	created_at?:              string
 	delete_ebs?:              bool
 	delete_eip?:              bool
 	ebs_optimized?:           bool
+	ec2_instance_id?:         string
+	ecs_cluster_arn?:         string
+	elastic_ip?:              string
+	hostname?:                string
+	id?:                      string
+	infrastructure_class?:    string
 	install_updates_on_boot?: bool
+	instance_profile_arn?:    string
 	instance_type?:           string
-	state?:                   string
+	last_service_error_id?:   string
+	os?:                      string
+	platform?:                string
+	private_dns?:             string
+	private_ip?:              string
+	public_dns?:              string
+	public_ip?:               string
+	registered_by?:           string
+	reported_agent_version?:  string
+	reported_os_family?:      string
+	reported_os_name?:        string
+	reported_os_version?:     string
+	root_device_type?:        string
+	root_device_volume_id?:   string
+	security_group_ids?: [string, ...]
+	ssh_host_dsa_key_fingerprint?: string
+	ssh_host_rsa_key_fingerprint?: string
+	ssh_key_name?:                 string
+	state?:                        string
+	status?:                       string
+	subnet_id?:                    string
+	tenancy?:                      string
+	virtualization_type?:          string
 	ebs_block_device?: [{
 		device_name:            string
 		delete_on_termination?: bool
+		iops?:                  number
+		snapshot_id?:           string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
 		device_name:  string
@@ -5520,6 +7550,9 @@ package aws
 	}, ...]
 	root_block_device?: [{
 		delete_on_termination?: bool
+		iops?:                  number
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -5531,6 +7564,7 @@ package aws
 	stack_id:                 string
 	app_server?:              string
 	app_server_version?:      string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5544,6 +7578,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	jvm_options?:               string
@@ -5566,6 +7601,7 @@ package aws
 #AwsOpsworksMemcachedLayerResource: {
 	stack_id:                 string
 	allocated_memory?:        number
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5579,6 +7615,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5597,6 +7634,7 @@ package aws
 }
 #AwsOpsworksMysqlLayerResource: {
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5610,6 +7648,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:          bool
 	elastic_load_balancer?:          string
+	id?:                             string
 	install_updates_on_boot?:        bool
 	instance_shutdown_timeout?:      number
 	name?:                           string
@@ -5630,6 +7669,7 @@ package aws
 }
 #AwsOpsworksNodejsAppLayerResource: {
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5643,6 +7683,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5660,9 +7701,17 @@ package aws
 		type?:           string
 	}, ...]
 }
-#AwsOpsworksPermissionResource: user_arn: string
+#AwsOpsworksPermissionResource: {
+	user_arn:    string
+	allow_ssh?:  bool
+	allow_sudo?: bool
+	id?:         string
+	level?:      string
+	stack_id?:   string
+}
 #AwsOpsworksPhpAppLayerResource: {
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5676,6 +7725,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5695,6 +7745,7 @@ package aws
 #AwsOpsworksRailsAppLayerResource: {
 	stack_id:                 string
 	app_server?:              string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5709,6 +7760,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	manage_bundler?:            bool
@@ -5734,25 +7786,33 @@ package aws
 	db_user:             string
 	rds_db_instance_arn: string
 	stack_id:            string
+	id?:                 string
 }
 #AwsOpsworksStackResource: {
 	default_instance_profile_arn:   string
 	name:                           string
 	region:                         string
 	service_role_arn:               string
+	agent_version?:                 string
+	arn?:                           string
 	berkshelf_version?:             string
 	color?:                         string
 	configuration_manager_name?:    string
 	configuration_manager_version?: string
 	custom_json?:                   string
+	default_availability_zone?:     string
 	default_os?:                    string
 	default_root_device_type?:      string
 	default_ssh_key_name?:          string
+	default_subnet_id?:             string
 	hostname_theme?:                string
+	id?:                            string
 	manage_berkshelf?:              bool
+	stack_endpoint?:                string
 	tags?: [_]: string
 	use_custom_cookbooks?:         bool
 	use_opsworks_security_groups?: bool
+	vpc_id?:                       string
 	custom_cookbooks_source?: [{
 		type:      string
 		url:       string
@@ -5764,6 +7824,7 @@ package aws
 }
 #AwsOpsworksStaticWebLayerResource: {
 	stack_id:                 string
+	arn?:                     string
 	auto_assign_elastic_ips?: bool
 	auto_assign_public_ips?:  bool
 	auto_healing?:            bool
@@ -5777,6 +7838,7 @@ package aws
 	custom_undeploy_recipes?: [string, ...]
 	drain_elb_on_shutdown?:     bool
 	elastic_load_balancer?:     string
+	id?:                        string
 	install_updates_on_boot?:   bool
 	instance_shutdown_timeout?: number
 	name?:                      string
@@ -5797,39 +7859,86 @@ package aws
 	ssh_username:           string
 	user_arn:               string
 	allow_self_management?: bool
+	id?:                    string
 	ssh_public_key?:        string
 }
 #AwsOrganizationsAccountResource: {
 	email:                       string
 	name:                        string
+	arn?:                        string
 	iam_user_access_to_billing?: string
+	id?:                         string
+	joined_method?:              string
+	joined_timestamp?:           string
+	parent_id?:                  string
 	role_name?:                  string
+	status?:                     string
 	tags?: [_]: string
 }
 #AwsOrganizationsOrganizationResource: {
+	accounts?: [{
+		arn:    string
+		email:  string
+		id:     string
+		name:   string
+		status: string
+	}, ...]
+	arn?: string
 	aws_service_access_principals?: [string, ...]
 	enabled_policy_types?: [string, ...]
-	feature_set?: string
+	feature_set?:          string
+	id?:                   string
+	master_account_arn?:   string
+	master_account_email?: string
+	master_account_id?:    string
+	non_master_accounts?: [{
+		arn:    string
+		email:  string
+		id:     string
+		name:   string
+		status: string
+	}, ...]
+	roots?: [{
+		arn:  string
+		id:   string
+		name: string
+		policy_types: [{
+			status: string
+			type:   string
+		}, ...]
+	}, ...]
 }
 #AwsOrganizationsOrganizationalUnitResource: {
 	name:      string
 	parent_id: string
+	accounts?: [{
+		arn:   string
+		email: string
+		id:    string
+		name:  string
+	}, ...]
+	arn?: string
+	id?:  string
 }
 #AwsOrganizationsPolicyResource: {
 	content:      string
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	type?:        string
 }
 #AwsOrganizationsPolicyAttachmentResource: {
 	policy_id: string
 	target_id: string
+	id?:       string
 }
 #AwsPinpointAdmChannelResource: {
 	application_id: string
 	client_id:      string
 	client_secret:  string
 	enabled?:       bool
+	id?:            string
 }
 #AwsPinpointApnsChannelResource: {
 	application_id:                 string
@@ -5837,6 +7946,7 @@ package aws
 	certificate?:                   string
 	default_authentication_method?: string
 	enabled?:                       bool
+	id?:                            string
 	private_key?:                   string
 	team_id?:                       string
 	token_key?:                     string
@@ -5848,6 +7958,7 @@ package aws
 	certificate?:                   string
 	default_authentication_method?: string
 	enabled?:                       bool
+	id?:                            string
 	private_key?:                   string
 	team_id?:                       string
 	token_key?:                     string
@@ -5859,6 +7970,7 @@ package aws
 	certificate?:                   string
 	default_authentication_method?: string
 	enabled?:                       bool
+	id?:                            string
 	private_key?:                   string
 	team_id?:                       string
 	token_key?:                     string
@@ -5870,13 +7982,18 @@ package aws
 	certificate?:                   string
 	default_authentication_method?: string
 	enabled?:                       bool
+	id?:                            string
 	private_key?:                   string
 	team_id?:                       string
 	token_key?:                     string
 	token_key_id?:                  string
 }
 #AwsPinpointAppResource: {
-	name_prefix?: string
+	application_id?: string
+	arn?:            string
+	id?:             string
+	name?:           string
+	name_prefix?:    string
 	tags?: [_]: string
 	campaign_hook?: [{
 		lambda_function_name?: string
@@ -5899,68 +8016,93 @@ package aws
 	application_id: string
 	secret_key:     string
 	enabled?:       bool
+	id?:            string
 }
 #AwsPinpointEmailChannelResource: {
-	application_id: string
-	from_address:   string
-	identity:       string
-	role_arn:       string
-	enabled?:       bool
+	application_id:       string
+	from_address:         string
+	identity:             string
+	role_arn:             string
+	enabled?:             bool
+	id?:                  string
+	messages_per_second?: number
 }
 #AwsPinpointEventStreamResource: {
 	application_id:         string
 	destination_stream_arn: string
 	role_arn:               string
+	id?:                    string
 }
 #AwsPinpointGcmChannelResource: {
 	api_key:        string
 	application_id: string
 	enabled?:       bool
+	id?:            string
 }
 #AwsPinpointSmsChannelResource: {
-	application_id: string
-	enabled?:       bool
-	sender_id?:     string
-	short_code?:    string
+	application_id:                     string
+	enabled?:                           bool
+	id?:                                string
+	promotional_messages_per_second?:   number
+	sender_id?:                         string
+	short_code?:                        string
+	transactional_messages_per_second?: number
 }
 #AwsPlacementGroupResource: {
-	name:     string
-	strategy: string
+	name:                string
+	strategy:            string
+	arn?:                string
+	id?:                 string
+	placement_group_id?: string
 	tags?: [_]: string
 }
 #AwsProxyProtocolPolicyResource: {
 	instance_ports: [string, ...]
 	load_balancer: string
+	id?:           string
 }
 #AwsQldbLedgerResource: {
+	arn?:                 string
 	deletion_protection?: bool
+	id?:                  string
+	name?:                string
 	tags?: [_]: string
 }
 #AwsQuicksightGroupResource: {
-	group_name:   string
-	description?: string
-	namespace?:   string
+	group_name:      string
+	arn?:            string
+	aws_account_id?: string
+	description?:    string
+	id?:             string
+	namespace?:      string
 }
 #AwsQuicksightUserResource: {
-	email:         string
-	identity_type: string
-	user_role:     string
-	iam_arn?:      string
-	namespace?:    string
-	session_name?: string
-	user_name?:    string
+	email:           string
+	identity_type:   string
+	user_role:       string
+	arn?:            string
+	aws_account_id?: string
+	iam_arn?:        string
+	id?:             string
+	namespace?:      string
+	session_name?:   string
+	user_name?:      string
 }
 #AwsRamPrincipalAssociationResource: {
 	principal:          string
 	resource_share_arn: string
+	id?:                string
 }
 #AwsRamResourceAssociationResource: {
 	resource_arn:       string
 	resource_share_arn: string
+	id?:                string
 }
 #AwsRamResourceShareResource: {
 	name:                       string
 	allow_external_principals?: bool
+	arn?:                       string
+	id?:                        string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -5968,32 +8110,61 @@ package aws
 	}
 }
 #AwsRamResourceShareAccepterResource: {
-	share_arn: string
+	share_arn:            string
+	id?:                  string
+	invitation_arn?:      string
+	receiver_account_id?: string
+	resources?: [string, ...]
+	sender_account_id?: string
+	share_id?:          string
+	share_name?:        string
+	status?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsRdsClusterResource: {
-	backtrack_window?:        number
-	backup_retention_period?: number
-	copy_tags_to_snapshot?:   bool
-	deletion_protection?:     bool
-	enable_http_endpoint?:    bool
+	apply_immediately?: bool
+	arn?:               string
+	availability_zones?: [string, ...]
+	backtrack_window?:          number
+	backup_retention_period?:   number
+	cluster_identifier?:        string
+	cluster_identifier_prefix?: string
+	cluster_members?: [string, ...]
+	cluster_resource_id?:             string
+	copy_tags_to_snapshot?:           bool
+	database_name?:                   string
+	db_cluster_parameter_group_name?: string
+	db_subnet_group_name?:            string
+	deletion_protection?:             bool
+	enable_http_endpoint?:            bool
 	enabled_cloudwatch_logs_exports?: [string, ...]
+	endpoint?:                            string
 	engine?:                              string
 	engine_mode?:                         string
+	engine_version?:                      string
 	final_snapshot_identifier?:           string
 	global_cluster_identifier?:           string
+	hosted_zone_id?:                      string
 	iam_database_authentication_enabled?: bool
 	iam_roles?: [string, ...]
+	id?:                            string
+	kms_key_id?:                    string
 	master_password?:               string
+	master_username?:               string
+	port?:                          number
+	preferred_backup_window?:       string
+	preferred_maintenance_window?:  string
+	reader_endpoint?:               string
 	replication_source_identifier?: string
 	skip_final_snapshot?:           bool
 	snapshot_identifier?:           string
 	source_region?:                 string
 	storage_encrypted?:             bool
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	s3_import?: [{
 		bucket_name:           string
 		ingestion_role:        string
@@ -6018,20 +8189,44 @@ package aws
 	cluster_endpoint_identifier: string
 	cluster_identifier:          string
 	custom_endpoint_type:        string
+	arn?:                        string
+	endpoint?:                   string
 	excluded_members?: [string, ...]
+	id?: string
 	static_members?: [string, ...]
 	tags?: [_]: string
 }
 #AwsRdsClusterInstanceResource: {
-	cluster_identifier:          string
-	instance_class:              string
-	auto_minor_version_upgrade?: bool
-	copy_tags_to_snapshot?:      bool
-	engine?:                     string
-	monitoring_interval?:        number
-	promotion_tier?:             number
-	publicly_accessible?:        bool
+	cluster_identifier:               string
+	instance_class:                   string
+	apply_immediately?:               bool
+	arn?:                             string
+	auto_minor_version_upgrade?:      bool
+	availability_zone?:               string
+	ca_cert_identifier?:              string
+	copy_tags_to_snapshot?:           bool
+	db_parameter_group_name?:         string
+	db_subnet_group_name?:            string
+	dbi_resource_id?:                 string
+	endpoint?:                        string
+	engine?:                          string
+	engine_version?:                  string
+	id?:                              string
+	identifier?:                      string
+	identifier_prefix?:               string
+	kms_key_id?:                      string
+	monitoring_interval?:             number
+	monitoring_role_arn?:             string
+	performance_insights_enabled?:    bool
+	performance_insights_kms_key_id?: string
+	port?:                            number
+	preferred_backup_window?:         string
+	preferred_maintenance_window?:    string
+	promotion_tier?:                  number
+	publicly_accessible?:             bool
+	storage_encrypted?:               bool
 	tags?: [_]: string
+	writer?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6040,7 +8235,11 @@ package aws
 }
 #AwsRdsClusterParameterGroupResource: {
 	family:       string
+	arn?:         string
 	description?: string
+	id?:          string
+	name?:        string
+	name_prefix?: string
 	tags?: [_]: string
 	parameter?: [{
 		name:          string
@@ -6049,33 +8248,59 @@ package aws
 	}, ...]
 }
 #AwsRdsGlobalClusterResource: {
-	global_cluster_identifier: string
-	database_name?:            string
-	deletion_protection?:      bool
-	engine?:                   string
-	storage_encrypted?:        bool
+	global_cluster_identifier:   string
+	arn?:                        string
+	database_name?:              string
+	deletion_protection?:        bool
+	engine?:                     string
+	engine_version?:             string
+	global_cluster_resource_id?: string
+	id?:                         string
+	storage_encrypted?:          bool
 }
 #AwsRedshiftClusterResource: {
 	cluster_identifier:                   string
 	node_type:                            string
 	allow_version_upgrade?:               bool
+	arn?:                                 string
 	automated_snapshot_retention_period?: number
-	cluster_version?:                     string
-	elastic_ip?:                          string
-	encrypted?:                           bool
-	final_snapshot_identifier?:           string
-	master_password?:                     string
-	master_username?:                     string
-	number_of_nodes?:                     number
-	owner_account?:                       string
-	port?:                                number
-	publicly_accessible?:                 bool
-	skip_final_snapshot?:                 bool
-	snapshot_cluster_identifier?:         string
-	snapshot_identifier?:                 string
+	availability_zone?:                   string
+	bucket_name?:                         string
+	cluster_parameter_group_name?:        string
+	cluster_public_key?:                  string
+	cluster_revision_number?:             string
+	cluster_security_groups?: [string, ...]
+	cluster_subnet_group_name?: string
+	cluster_type?:              string
+	cluster_version?:           string
+	database_name?:             string
+	dns_name?:                  string
+	elastic_ip?:                string
+	enable_logging?:            bool
+	encrypted?:                 bool
+	endpoint?:                  string
+	enhanced_vpc_routing?:      bool
+	final_snapshot_identifier?: string
+	iam_roles?: [string, ...]
+	id?:                           string
+	kms_key_id?:                   string
+	master_password?:              string
+	master_username?:              string
+	number_of_nodes?:              number
+	owner_account?:                string
+	port?:                         number
+	preferred_maintenance_window?: string
+	publicly_accessible?:          bool
+	s3_key_prefix?:                string
+	skip_final_snapshot?:          bool
+	snapshot_cluster_identifier?:  string
+	snapshot_identifier?:          string
 	tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	logging?: [{
-		enable: bool
+		enable:         bool
+		bucket_name?:   string
+		s3_key_prefix?: string
 	}, ...]
 	snapshot_copy?: [{
 		destination_region: string
@@ -6089,13 +8314,17 @@ package aws
 	}
 }
 #AwsRedshiftEventSubscriptionResource: {
-	name:          string
-	sns_topic_arn: string
-	enabled?:      bool
+	name:             string
+	sns_topic_arn:    string
+	arn?:             string
+	customer_aws_id?: string
+	enabled?:         bool
 	event_categories?: [string, ...]
+	id?:       string
 	severity?: string
 	source_ids?: [string, ...]
 	source_type?: string
+	status?:      string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -6106,7 +8335,9 @@ package aws
 #AwsRedshiftParameterGroupResource: {
 	family:       string
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	parameter?: [{
 		name:  string
@@ -6116,33 +8347,48 @@ package aws
 #AwsRedshiftSecurityGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	ingress?: [{
-		cidr?: string
+		cidr?:                    string
+		security_group_name?:     string
+		security_group_owner_id?: string
 	}, ...]
 }
 #AwsRedshiftSnapshotCopyGrantResource: {
 	snapshot_copy_grant_name: string
+	arn?:                     string
+	id?:                      string
+	kms_key_id?:              string
 	tags?: [_]: string
 }
 #AwsRedshiftSnapshotScheduleResource: {
 	definitions: [string, ...]
-	description?:   string
-	force_destroy?: bool
+	arn?:               string
+	description?:       string
+	force_destroy?:     bool
+	id?:                string
+	identifier?:        string
+	identifier_prefix?: string
 	tags?: [_]: string
 }
 #AwsRedshiftSnapshotScheduleAssociationResource: {
 	cluster_identifier:  string
 	schedule_identifier: string
+	id?:                 string
 }
 #AwsRedshiftSubnetGroupResource: {
 	name: string
 	subnet_ids: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 }
 #AwsResourcegroupsGroupResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	resource_query?: [{
 		query: string
@@ -6153,6 +8399,16 @@ package aws
 	route_table_id:               string
 	destination_cidr_block?:      string
 	destination_ipv6_cidr_block?: string
+	destination_prefix_list_id?:  string
+	egress_only_gateway_id?:      string
+	gateway_id?:                  string
+	id?:                          string
+	instance_id?:                 string
+	instance_owner_id?:           string
+	nat_gateway_id?:              string
+	network_interface_id?:        string
+	origin?:                      string
+	state?:                       string
 	transit_gateway_id?:          string
 	vpc_peering_connection_id?:   string
 	timeouts?: {
@@ -6160,15 +8416,21 @@ package aws
 		delete?: string
 	}
 }
-#AwsRoute53DelegationSetResource: reference_name?: string
+#AwsRoute53DelegationSetResource: {
+	id?: string
+	name_servers?: [string, ...]
+	reference_name?: string
+}
 #AwsRoute53HealthCheckResource: {
 	type:                    string
 	child_health_threshold?: number
 	child_healthchecks?: [string, ...]
 	cloudwatch_alarm_name?:           string
 	cloudwatch_alarm_region?:         string
+	enable_sni?:                      bool
 	failure_threshold?:               number
 	fqdn?:                            string
+	id?:                              string
 	insufficient_data_health_status?: string
 	invert_healthcheck?:              bool
 	ip_address?:                      string
@@ -6184,12 +8446,16 @@ package aws
 #AwsRoute53QueryLogResource: {
 	cloudwatch_log_group_arn: string
 	zone_id:                  string
+	id?:                      string
 }
 #AwsRoute53RecordResource: {
 	name:                              string
 	type:                              string
 	zone_id:                           string
+	allow_overwrite?:                  bool
+	fqdn?:                             string
 	health_check_id?:                  string
+	id?:                               string
 	multivalue_answer_routing_policy?: bool
 	records?: [string, ...]
 	set_identifier?: string
@@ -6217,10 +8483,15 @@ package aws
 #AwsRoute53ResolverEndpointResource: {
 	direction: string
 	security_group_ids: [string, ...]
-	name?: string
+	arn?:         string
+	host_vpc_id?: string
+	id?:          string
+	name?:        string
 	tags?: [_]: string
 	ip_address?: [{
 		subnet_id: string
+		ip?:       string
+		ip_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6231,8 +8502,12 @@ package aws
 #AwsRoute53ResolverRuleResource: {
 	domain_name:           string
 	rule_type:             string
+	arn?:                  string
+	id?:                   string
 	name?:                 string
+	owner_id?:             string
 	resolver_endpoint_id?: string
+	share_status?:         string
 	tags?: [_]: string
 	target_ip?: [{
 		ip:    string
@@ -6247,6 +8522,7 @@ package aws
 #AwsRoute53ResolverRuleAssociationResource: {
 	resolver_rule_id: string
 	vpc_id:           string
+	id?:              string
 	name?:            string
 	timeouts?: {
 		create?: string
@@ -6258,28 +8534,57 @@ package aws
 	comment?:           string
 	delegation_set_id?: string
 	force_destroy?:     bool
+	id?:                string
+	name_servers?: [string, ...]
 	tags?: [_]: string
+	vpc_id?:     string
+	vpc_region?: string
+	zone_id?:    string
 	vpc?: [{
-		vpc_id: string
+		vpc_id:      string
+		vpc_region?: string
 	}, ...]
 }
 #AwsRoute53ZoneAssociationResource: {
-	vpc_id:  string
-	zone_id: string
+	vpc_id:      string
+	zone_id:     string
+	id?:         string
+	vpc_region?: string
 }
 #AwsRouteTableResource: {
-	vpc_id: string
+	vpc_id:    string
+	id?:       string
+	owner_id?: string
+	propagating_vgws?: [string, ...]
+	route?: [{
+		cidr_block:                string
+		egress_only_gateway_id:    string
+		gateway_id:                string
+		instance_id:               string
+		ipv6_cidr_block:           string
+		nat_gateway_id:            string
+		network_interface_id:      string
+		transit_gateway_id:        string
+		vpc_peering_connection_id: string
+	}, ...]
 	tags?: [_]: string
 }
 #AwsRouteTableAssociationResource: {
 	route_table_id: string
 	gateway_id?:    string
+	id?:            string
 	subnet_id?:     string
 }
 #AwsS3AccessPointResource: {
-	bucket:  string
-	name:    string
-	policy?: string
+	bucket:                    string
+	name:                      string
+	account_id?:               string
+	arn?:                      string
+	domain_name?:              string
+	has_public_access_policy?: bool
+	id?:                       string
+	network_origin?:           string
+	policy?:                   string
 	public_access_block_configuration?: [{
 		block_public_acls?:       bool
 		block_public_policy?:     bool
@@ -6291,17 +8596,30 @@ package aws
 	}, ...]
 }
 #AwsS3AccountPublicAccessBlockResource: {
+	account_id?:              string
 	block_public_acls?:       bool
 	block_public_policy?:     bool
+	id?:                      string
 	ignore_public_acls?:      bool
 	restrict_public_buckets?: bool
 }
 #AwsS3BucketResource: {
-	acl?:           string
-	bucket_prefix?: string
-	force_destroy?: bool
-	policy?:        string
+	acceleration_status?:         string
+	acl?:                         string
+	arn?:                         string
+	bucket?:                      string
+	bucket_domain_name?:          string
+	bucket_prefix?:               string
+	bucket_regional_domain_name?: string
+	force_destroy?:               bool
+	hosted_zone_id?:              string
+	id?:                          string
+	policy?:                      string
+	region?:                      string
+	request_payer?:               string
 	tags?: [_]: string
+	website_domain?:   string
+	website_endpoint?: string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -6318,6 +8636,7 @@ package aws
 	lifecycle_rule?: [{
 		enabled:                                 bool
 		abort_incomplete_multipart_upload_days?: number
+		id?:                                     string
 		prefix?:                                 string
 		tags?: [_]: string
 		expiration?: [{
@@ -6401,6 +8720,7 @@ package aws
 #AwsS3BucketAnalyticsConfigurationResource: {
 	bucket: string
 	name:   string
+	id?:    string
 	filter?: [{
 		prefix?: string
 		tags?: [_]: string
@@ -6424,6 +8744,7 @@ package aws
 	included_object_versions: string
 	name:                     string
 	enabled?:                 bool
+	id?:                      string
 	optional_fields?: [string, ...]
 	destination?: [{
 		bucket?: [{
@@ -6449,6 +8770,7 @@ package aws
 #AwsS3BucketMetricResource: {
 	bucket: string
 	name:   string
+	id?:    string
 	filter?: [{
 		prefix?: string
 		tags?: [_]: string
@@ -6456,10 +8778,12 @@ package aws
 }
 #AwsS3BucketNotificationResource: {
 	bucket: string
+	id?:    string
 	lambda_function?: [{
 		events: [string, ...]
 		filter_prefix?:       string
 		filter_suffix?:       string
+		id?:                  string
 		lambda_function_arn?: string
 	}, ...]
 	queue?: [{
@@ -6467,12 +8791,14 @@ package aws
 		queue_arn:      string
 		filter_prefix?: string
 		filter_suffix?: string
+		id?:            string
 	}, ...]
 	topic?: [{
 		events: [string, ...]
 		topic_arn:      string
 		filter_prefix?: string
 		filter_suffix?: string
+		id?:            string
 	}, ...]
 }
 #AwsS3BucketObjectResource: {
@@ -6485,33 +8811,47 @@ package aws
 	content_disposition?: string
 	content_encoding?:    string
 	content_language?:    string
+	content_type?:        string
+	etag?:                string
 	force_destroy?:       bool
+	id?:                  string
 	kms_key_id?:          string
 	metadata?: [_]: string
 	object_lock_legal_hold_status?: string
 	object_lock_mode?:              string
 	object_lock_retain_until_date?: string
+	server_side_encryption?:        string
 	source?:                        string
+	storage_class?:                 string
 	tags?: [_]: string
+	version_id?:       string
 	website_redirect?: string
 }
 #AwsS3BucketPolicyResource: {
 	bucket: string
 	policy: string
+	id?:    string
 }
 #AwsS3BucketPublicAccessBlockResource: {
 	bucket:                   string
 	block_public_acls?:       bool
 	block_public_policy?:     bool
+	id?:                      string
 	ignore_public_acls?:      bool
 	restrict_public_buckets?: bool
 }
 #AwsSagemakerEndpointResource: {
 	endpoint_config_name: string
+	arn?:                 string
+	id?:                  string
+	name?:                string
 	tags?: [_]: string
 }
 #AwsSagemakerEndpointConfigurationResource: {
+	arn?:         string
+	id?:          string
 	kms_key_arn?: string
+	name?:        string
 	tags?: [_]: string
 	production_variants?: [{
 		initial_instance_count:  number
@@ -6519,11 +8859,15 @@ package aws
 		model_name:              string
 		accelerator_type?:       string
 		initial_variant_weight?: number
+		variant_name?:           string
 	}, ...]
 }
 #AwsSagemakerModelResource: {
 	execution_role_arn:        string
+	arn?:                      string
 	enable_network_isolation?: bool
+	id?:                       string
+	name?:                     string
 	tags?: [_]: string
 	container?: [{
 		image:               string
@@ -6546,23 +8890,43 @@ package aws
 	instance_type:           string
 	name:                    string
 	role_arn:                string
+	arn?:                    string
 	direct_internet_access?: string
+	id?:                     string
 	kms_key_id?:             string
 	lifecycle_config_name?:  string
-	subnet_id?:              string
+	security_groups?: [string, ...]
+	subnet_id?: string
 	tags?: [_]: string
 }
 #AwsSagemakerNotebookInstanceLifecycleConfigurationResource: {
+	arn?:       string
+	id?:        string
 	name?:      string
 	on_create?: string
 	on_start?:  string
 }
 #AwsSecretsmanagerSecretResource: {
+	arn?:                     string
 	description?:             string
+	id?:                      string
 	kms_key_id?:              string
+	name?:                    string
+	name_prefix?:             string
 	policy?:                  string
 	recovery_window_in_days?: number
+	rotation_enabled?:        bool
 	rotation_lambda_arn?:     string
+	tags?: [_]: string
+	rotation_rules?: [{
+		automatically_after_days: number
+	}, ...]
+}
+#AwsSecretsmanagerSecretRotationResource: {
+	rotation_lambda_arn: string
+	secret_id:           string
+	id?:                 string
+	rotation_enabled?:   bool
 	tags?: [_]: string
 	rotation_rules?: [{
 		automatically_after_days: number
@@ -6570,14 +8934,45 @@ package aws
 }
 #AwsSecretsmanagerSecretVersionResource: {
 	secret_id:      string
+	arn?:           string
+	id?:            string
 	secret_binary?: string
 	secret_string?: string
+	version_id?:    string
+	version_stages?: [string, ...]
 }
 #AwsSecurityGroupResource: {
-	description?:            string
+	arn?:         string
+	description?: string
+	egress?: [{
+		cidr_blocks: [string, ...]
+		description: string
+		from_port:   number
+		ipv6_cidr_blocks: [string, ...]
+		prefix_list_ids: [string, ...]
+		protocol: string
+		security_groups: [string, ...]
+		self:    bool
+		to_port: number
+	}, ...]
+	id?: string
+	ingress?: [{
+		cidr_blocks: [string, ...]
+		description: string
+		from_port:   number
+		ipv6_cidr_blocks: [string, ...]
+		prefix_list_ids: [string, ...]
+		protocol: string
+		security_groups: [string, ...]
+		self:    bool
+		to_port: number
+	}, ...]
+	name?:                   string
 	name_prefix?:            string
+	owner_id?:               string
 	revoke_rules_on_delete?: bool
 	tags?: [_]: string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -6591,34 +8986,61 @@ package aws
 	type:              string
 	cidr_blocks?: [string, ...]
 	description?: string
+	id?:          string
 	ipv6_cidr_blocks?: [string, ...]
 	prefix_list_ids?: [string, ...]
-	self?: bool
+	self?:                     bool
+	source_security_group_id?: string
 }
-#AwsSecurityhubAccountResource: {}
+#AwsSecurityhubAccountResource: id?: string
 #AwsSecurityhubMemberResource: {
-	account_id: string
-	email:      string
-	invite?:    bool
+	account_id:     string
+	email:          string
+	id?:            string
+	invite?:        bool
+	master_id?:     string
+	member_status?: string
 }
-#AwsSecurityhubProductSubscriptionResource: product_arn:     string
-#AwsSecurityhubStandardsSubscriptionResource: standards_arn: string
+#AwsSecurityhubProductSubscriptionResource: {
+	product_arn: string
+	arn?:        string
+	id?:         string
+}
+#AwsSecurityhubStandardsSubscriptionResource: {
+	standards_arn: string
+	id?:           string
+}
 #AwsServiceDiscoveryHttpNamespaceResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	id?:          string
+	tags?: [_]: string
 }
 #AwsServiceDiscoveryPrivateDnsNamespaceResource: {
 	name:         string
 	vpc:          string
+	arn?:         string
 	description?: string
+	hosted_zone?: string
+	id?:          string
+	tags?: [_]: string
 }
 #AwsServiceDiscoveryPublicDnsNamespaceResource: {
 	name:         string
+	arn?:         string
 	description?: string
+	hosted_zone?: string
+	id?:          string
+	tags?: [_]: string
 }
 #AwsServiceDiscoveryServiceResource: {
-	name:         string
-	description?: string
+	name:          string
+	arn?:          string
+	description?:  string
+	id?:           string
+	namespace_id?: string
+	tags?: [_]: string
 	dns_config?: [{
 		namespace_id:    string
 		routing_policy?: string
@@ -6638,6 +9060,10 @@ package aws
 }
 #AwsServicecatalogPortfolioResource: {
 	name:           string
+	arn?:           string
+	created_time?:  string
+	description?:   string
+	id?:            string
 	provider_name?: string
 	tags?: [_]: string
 	timeouts?: {
@@ -6647,29 +9073,60 @@ package aws
 	}
 }
 #AwsServicequotasServiceQuotaResource: {
-	quota_code:   string
-	service_code: string
-	value:        number
+	quota_code:      string
+	service_code:    string
+	value:           number
+	adjustable?:     bool
+	arn?:            string
+	default_value?:  number
+	id?:             string
+	quota_name?:     string
+	request_id?:     string
+	request_status?: string
+	service_name?:   string
 }
-#AwsSesActiveReceiptRuleSetResource: rule_set_name: string
-#AwsSesConfigurationSetResource: name:              string
-#AwsSesDomainDkimResource: domain:                  string
-#AwsSesDomainIdentityResource: domain:              string
+#AwsSesActiveReceiptRuleSetResource: {
+	rule_set_name: string
+	id?:           string
+}
+#AwsSesConfigurationSetResource: {
+	name: string
+	id?:  string
+}
+#AwsSesDomainDkimResource: {
+	domain: string
+	dkim_tokens?: [string, ...]
+	id?: string
+}
+#AwsSesDomainIdentityResource: {
+	domain:              string
+	arn?:                string
+	id?:                 string
+	verification_token?: string
+}
 #AwsSesDomainIdentityVerificationResource: {
 	domain: string
+	arn?:   string
+	id?:    string
 	timeouts?: create?: string
 }
 #AwsSesDomainMailFromResource: {
 	domain:                  string
 	mail_from_domain:        string
 	behavior_on_mx_failure?: string
+	id?:                     string
 }
-#AwsSesEmailIdentityResource: email: string
+#AwsSesEmailIdentityResource: {
+	email: string
+	arn?:  string
+	id?:   string
+}
 #AwsSesEventDestinationResource: {
 	configuration_set_name: string
 	matching_types: [string, ...]
 	name:     string
 	enabled?: bool
+	id?:      string
 	cloudwatch_destination?: [{
 		default_value:  string
 		dimension_name: string
@@ -6686,6 +9143,7 @@ package aws
 #AwsSesIdentityNotificationTopicResource: {
 	identity:                  string
 	notification_type:         string
+	id?:                       string
 	include_original_headers?: bool
 	topic_arn?:                string
 }
@@ -6693,17 +9151,24 @@ package aws
 	identity: string
 	name:     string
 	policy:   string
+	id?:      string
 }
 #AwsSesReceiptFilterResource: {
 	cidr:   string
 	name:   string
 	policy: string
+	arn?:   string
+	id?:    string
 }
 #AwsSesReceiptRuleResource: {
 	name:          string
 	rule_set_name: string
 	after?:        string
+	enabled?:      bool
+	id?:           string
 	recipients?: [string, ...]
+	scan_enabled?: bool
+	tls_policy?:   string
 	add_header_action?: [{
 		header_name:  string
 		header_value: string
@@ -6718,9 +9183,10 @@ package aws
 		topic_arn?:      string
 	}, ...]
 	lambda_action?: [{
-		function_arn: string
-		position:     number
-		topic_arn?:   string
+		function_arn:     string
+		position:         number
+		invocation_type?: string
+		topic_arn?:       string
 	}, ...]
 	s3_action?: [{
 		bucket_name:        string
@@ -6744,41 +9210,58 @@ package aws
 		topic_arn?:       string
 	}, ...]
 }
-#AwsSesReceiptRuleSetResource: rule_set_name: string
+#AwsSesReceiptRuleSetResource: {
+	rule_set_name: string
+	id?:           string
+}
 #AwsSesTemplateResource: {
 	name:     string
 	html?:    string
+	id?:      string
 	subject?: string
 	text?:    string
 }
 #AwsSfnActivityResource: {
-	name: string
+	name:           string
+	creation_date?: string
+	id?:            string
 	tags?: [_]: string
 }
 #AwsSfnStateMachineResource: {
-	definition: string
-	name:       string
-	role_arn:   string
+	definition:     string
+	name:           string
+	role_arn:       string
+	arn?:           string
+	creation_date?: string
+	id?:            string
+	status?:        string
 	tags?: [_]: string
 }
 #AwsShieldProtectionResource: {
 	name:         string
 	resource_arn: string
+	id?:          string
 }
-#AwsSimpledbDomainResource: name: string
+#AwsSimpledbDomainResource: {
+	name: string
+	id?:  string
+}
 #AwsSnapshotCreateVolumePermissionResource: {
 	account_id:  string
 	snapshot_id: string
+	id?:         string
 }
 #AwsSnsPlatformApplicationResource: {
 	name:                              string
 	platform:                          string
 	platform_credential:               string
+	arn?:                              string
 	event_delivery_failure_topic_arn?: string
 	event_endpoint_created_topic_arn?: string
 	event_endpoint_deleted_topic_arn?: string
 	event_endpoint_updated_topic_arn?: string
 	failure_feedback_role_arn?:        string
+	id?:                               string
 	platform_principal?:               string
 	success_feedback_role_arn?:        string
 	success_feedback_sample_rate?:     string
@@ -6788,6 +9271,7 @@ package aws
 	default_sms_type?:                      string
 	delivery_status_iam_role_arn?:          string
 	delivery_status_success_sampling_rate?: string
+	id?:                                    string
 	monthly_spend_limit?:                   string
 	usage_report_s3_bucket?:                string
 }
@@ -6795,16 +9279,20 @@ package aws
 	application_failure_feedback_role_arn?:    string
 	application_success_feedback_role_arn?:    string
 	application_success_feedback_sample_rate?: number
+	arn?:                                      string
 	delivery_policy?:                          string
 	display_name?:                             string
 	http_failure_feedback_role_arn?:           string
 	http_success_feedback_role_arn?:           string
 	http_success_feedback_sample_rate?:        number
+	id?:                                       string
 	kms_master_key_id?:                        string
 	lambda_failure_feedback_role_arn?:         string
 	lambda_success_feedback_role_arn?:         string
 	lambda_success_feedback_sample_rate?:      number
+	name?:                                     string
 	name_prefix?:                              string
+	policy?:                                   string
 	sqs_failure_feedback_role_arn?:            string
 	sqs_success_feedback_role_arn?:            string
 	sqs_success_feedback_sample_rate?:         number
@@ -6813,32 +9301,41 @@ package aws
 #AwsSnsTopicPolicyResource: {
 	arn:    string
 	policy: string
+	id?:    string
 }
 #AwsSnsTopicSubscriptionResource: {
 	endpoint:                         string
 	protocol:                         string
 	topic_arn:                        string
+	arn?:                             string
 	confirmation_timeout_in_minutes?: number
 	delivery_policy?:                 string
 	endpoint_auto_confirms?:          bool
 	filter_policy?:                   string
+	id?:                              string
 	raw_message_delivery?:            bool
 }
 #AwsSpotDatafeedSubscriptionResource: {
 	bucket:  string
+	id?:     string
 	prefix?: string
 }
 #AwsSpotFleetRequestResource: {
 	iam_fleet_role:                      string
 	target_capacity:                     number
 	allocation_strategy?:                string
+	client_token?:                       string
 	excess_capacity_termination_policy?: string
 	fleet_type?:                         string
+	id?:                                 string
 	instance_interruption_behaviour?:    string
 	instance_pools_to_use_count?:        number
-	replace_unhealthy_instances?:        bool
-	spot_price?:                         string
+	load_balancers?: [string, ...]
+	replace_unhealthy_instances?: bool
+	spot_price?:                  string
+	spot_request_state?:          string
 	tags?: [_]: string
+	target_group_arns?: [string, ...]
 	terminate_instances_with_expiration?: bool
 	valid_from?:                          string
 	valid_until?:                         string
@@ -6847,18 +9344,29 @@ package aws
 		ami:                          string
 		instance_type:                string
 		associate_public_ip_address?: bool
+		availability_zone?:           string
 		ebs_optimized?:               bool
 		iam_instance_profile?:        string
 		iam_instance_profile_arn?:    string
+		key_name?:                    string
 		monitoring?:                  bool
+		placement_group?:             string
 		placement_tenancy?:           string
 		spot_price?:                  string
+		subnet_id?:                   string
 		tags?: [_]: string
-		user_data?:         string
+		user_data?: string
+		vpc_security_group_ids?: [string, ...]
 		weighted_capacity?: string
 		ebs_block_device?: [{
 			device_name:            string
 			delete_on_termination?: bool
+			encrypted?:             bool
+			iops?:                  number
+			kms_key_id?:            string
+			snapshot_id?:           string
+			volume_size?:           number
+			volume_type?:           string
 		}, ...]
 		ephemeral_block_device?: [{
 			device_name:  string
@@ -6866,6 +9374,11 @@ package aws
 		}, ...]
 		root_block_device?: [{
 			delete_on_termination?: bool
+			encrypted?:             bool
+			iops?:                  number
+			kms_key_id?:            string
+			volume_size?:           number
+			volume_type?:           string
 		}, ...]
 	}, ...]
 	launch_template_config?: [{
@@ -6877,6 +9390,10 @@ package aws
 		overrides?: [{
 			availability_zone?: string
 			instance_type?:     string
+			priority?:          number
+			spot_price?:        string
+			subnet_id?:         string
+			weighted_capacity?: number
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -6887,23 +9404,52 @@ package aws
 #AwsSpotInstanceRequestResource: {
 	ami:                                   string
 	instance_type:                         string
+	arn?:                                  string
+	associate_public_ip_address?:          bool
+	availability_zone?:                    string
 	block_duration_minutes?:               number
+	cpu_core_count?:                       number
+	cpu_threads_per_core?:                 number
 	disable_api_termination?:              bool
 	ebs_optimized?:                        bool
 	get_password_data?:                    bool
 	hibernation?:                          bool
+	host_id?:                              string
 	iam_instance_profile?:                 string
+	id?:                                   string
 	instance_initiated_shutdown_behavior?: string
 	instance_interruption_behaviour?:      string
-	launch_group?:                         string
-	monitoring?:                           bool
-	source_dest_check?:                    bool
-	spot_price?:                           string
-	spot_type?:                            string
+	instance_state?:                       string
+	ipv6_address_count?:                   number
+	ipv6_addresses?: [string, ...]
+	key_name?:                     string
+	launch_group?:                 string
+	monitoring?:                   bool
+	network_interface_id?:         string
+	outpost_arn?:                  string
+	password_data?:                string
+	placement_group?:              string
+	primary_network_interface_id?: string
+	private_dns?:                  string
+	private_ip?:                   string
+	public_dns?:                   string
+	public_ip?:                    string
+	security_groups?: [string, ...]
+	source_dest_check?:  bool
+	spot_bid_status?:    string
+	spot_instance_id?:   string
+	spot_price?:         string
+	spot_request_state?: string
+	spot_type?:          string
+	subnet_id?:          string
 	tags?: [_]: string
+	tenancy?:          string
 	user_data?:        string
 	user_data_base64?: string
+	valid_from?:       string
+	valid_until?:      string
 	volume_tags?: [_]: string
+	vpc_security_group_ids?: [string, ...]
 	wait_for_fulfillment?: bool
 	credit_specification?: [{
 		cpu_credits?: string
@@ -6911,13 +9457,24 @@ package aws
 	ebs_block_device?: [{
 		device_name:            string
 		delete_on_termination?: bool
+		encrypted?:             bool
+		iops?:                  number
+		kms_key_id?:            string
+		snapshot_id?:           string
+		volume_id?:             string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	ephemeral_block_device?: [{
 		device_name:   string
 		no_device?:    bool
 		virtual_name?: string
 	}, ...]
-	metadata_options?: [{}, ...]
+	metadata_options?: [{
+		http_endpoint?:               string
+		http_put_response_hop_limit?: number
+		http_tokens?:                 string
+	}, ...]
 	network_interface?: [{
 		device_index:           number
 		network_interface_id:   string
@@ -6925,6 +9482,13 @@ package aws
 	}, ...]
 	root_block_device?: [{
 		delete_on_termination?: bool
+		device_name?:           string
+		encrypted?:             bool
+		iops?:                  number
+		kms_key_id?:            string
+		volume_id?:             string
+		volume_size?:           number
+		volume_type?:           string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -6932,38 +9496,53 @@ package aws
 	}
 }
 #AwsSqsQueueResource: {
-	content_based_deduplication?: bool
-	delay_seconds?:               number
-	fifo_queue?:                  bool
-	kms_master_key_id?:           string
-	max_message_size?:            number
-	message_retention_seconds?:   number
-	name_prefix?:                 string
-	receive_wait_time_seconds?:   number
-	redrive_policy?:              string
+	arn?:                               string
+	content_based_deduplication?:       bool
+	delay_seconds?:                     number
+	fifo_queue?:                        bool
+	id?:                                string
+	kms_data_key_reuse_period_seconds?: number
+	kms_master_key_id?:                 string
+	max_message_size?:                  number
+	message_retention_seconds?:         number
+	name?:                              string
+	name_prefix?:                       string
+	policy?:                            string
+	receive_wait_time_seconds?:         number
+	redrive_policy?:                    string
 	tags?: [_]: string
 	visibility_timeout_seconds?: number
 }
 #AwsSqsQueuePolicyResource: {
 	policy:    string
 	queue_url: string
+	id?:       string
 }
 #AwsSsmActivationResource: {
 	iam_role:            string
+	activation_code?:    string
 	description?:        string
+	expiration_date?:    string
+	expired?:            bool
+	id?:                 string
 	name?:               string
+	registration_count?: number
 	registration_limit?: number
 	tags?: [_]: string
 }
 #AwsSsmAssociationResource: {
 	name:                              string
+	association_id?:                   string
 	association_name?:                 string
 	automation_target_parameter_name?: string
 	compliance_severity?:              string
+	document_version?:                 string
+	id?:                               string
 	instance_id?:                      string
 	max_concurrency?:                  string
 	max_errors?:                       string
-	schedule_expression?:              string
+	parameters?: [_]: string
+	schedule_expression?: string
 	output_location?: [{
 		s3_bucket_name: string
 		s3_key_prefix?: string
@@ -6974,12 +9553,31 @@ package aws
 	}, ...]
 }
 #AwsSsmDocumentResource: {
-	content:          string
-	document_type:    string
-	name:             string
-	document_format?: string
+	content:           string
+	document_type:     string
+	name:              string
+	arn?:              string
+	created_date?:     string
+	default_version?:  string
+	description?:      string
+	document_format?:  string
+	document_version?: string
+	hash?:             string
+	hash_type?:        string
+	id?:               string
+	latest_version?:   string
+	owner?:            string
+	parameter?: [{
+		default_value: string
+		description:   string
+		name:          string
+		type:          string
+	}, ...]
 	permissions?: [_]: string
-	tags?: [_]:        string
+	platform_types?: [string, ...]
+	schema_version?: string
+	status?:         string
+	tags?: [_]: string
 	target_type?: string
 	attachments_source?: [{
 		key: string
@@ -6996,6 +9594,7 @@ package aws
 	description?:                string
 	enabled?:                    bool
 	end_date?:                   string
+	id?:                         string
 	schedule_timezone?:          string
 	start_date?:                 string
 	tags?: [_]: string
@@ -7004,6 +9603,7 @@ package aws
 	resource_type:      string
 	window_id:          string
 	description?:       string
+	id?:                string
 	name?:              string
 	owner_information?: string
 	targets?: [{
@@ -7019,6 +9619,7 @@ package aws
 	task_type:        string
 	window_id:        string
 	description?:     string
+	id?:              string
 	name?:            string
 	priority?:        number
 	logging_info?: [{
@@ -7076,16 +9677,21 @@ package aws
 	type:             string
 	value:            string
 	allowed_pattern?: string
+	arn?:             string
 	description?:     string
+	id?:              string
+	key_id?:          string
 	overwrite?:       bool
 	tags?: [_]: string
-	tier?: string
+	tier?:    string
+	version?: number
 }
 #AwsSsmPatchBaselineResource: {
 	name: string
 	approved_patches?: [string, ...]
 	approved_patches_compliance_level?: string
 	description?:                       string
+	id?:                                string
 	operating_system?:                  string
 	rejected_patches?: [string, ...]
 	tags?: [_]: string
@@ -7106,9 +9712,11 @@ package aws
 #AwsSsmPatchGroupResource: {
 	baseline_id: string
 	patch_group: string
+	id?:         string
 }
 #AwsSsmResourceDataSyncResource: {
 	name: string
+	id?:  string
 	s3_destination?: [{
 		bucket_name:  string
 		region:       string
@@ -7120,22 +9728,36 @@ package aws
 #AwsStoragegatewayCacheResource: {
 	disk_id:     string
 	gateway_arn: string
+	id?:         string
 }
 #AwsStoragegatewayCachedIscsiVolumeResource: {
-	gateway_arn:          string
-	network_interface_id: string
-	target_name:          string
-	volume_size_in_bytes: number
-	snapshot_id?:         string
-	source_volume_arn?:   string
+	gateway_arn:             string
+	network_interface_id:    string
+	target_name:             string
+	volume_size_in_bytes:    number
+	arn?:                    string
+	chap_enabled?:           bool
+	id?:                     string
+	lun_number?:             number
+	network_interface_port?: number
+	snapshot_id?:            string
+	source_volume_arn?:      string
 	tags?: [_]: string
+	target_arn?: string
+	volume_arn?: string
+	volume_id?:  string
 }
 #AwsStoragegatewayGatewayResource: {
 	gateway_name:              string
 	gateway_timezone:          string
+	activation_key?:           string
+	arn?:                      string
 	cloudwatch_log_group_arn?: string
+	gateway_id?:               string
+	gateway_ip_address?:       string
 	gateway_type?:             string
 	gateway_vpc_endpoint?:     string
+	id?:                       string
 	medium_changer_type?:      string
 	smb_guest_password?:       string
 	tags?: [_]: string
@@ -7152,11 +9774,15 @@ package aws
 	gateway_arn:              string
 	location_arn:             string
 	role_arn:                 string
+	arn?:                     string
 	default_storage_class?:   string
+	fileshare_id?:            string
 	guess_mime_type_enabled?: bool
+	id?:                      string
 	kms_encrypted?:           bool
 	kms_key_arn?:             string
 	object_acl?:              string
+	path?:                    string
 	read_only?:               bool
 	requester_pays?:          bool
 	squash?:                  string
@@ -7177,13 +9803,17 @@ package aws
 	gateway_arn:              string
 	location_arn:             string
 	role_arn:                 string
+	arn?:                     string
 	authentication?:          string
 	default_storage_class?:   string
+	fileshare_id?:            string
 	guess_mime_type_enabled?: bool
+	id?:                      string
 	invalid_user_list?: [string, ...]
 	kms_encrypted?:  bool
 	kms_key_arn?:    string
 	object_acl?:     string
+	path?:           string
 	read_only?:      bool
 	requester_pays?: bool
 	tags?: [_]: string
@@ -7197,17 +9827,26 @@ package aws
 #AwsStoragegatewayUploadBufferResource: {
 	disk_id:     string
 	gateway_arn: string
+	id?:         string
 }
 #AwsStoragegatewayWorkingStorageResource: {
 	disk_id:     string
 	gateway_arn: string
+	id?:         string
 }
 #AwsSubnetResource: {
 	cidr_block:                       string
 	vpc_id:                           string
+	arn?:                             string
 	assign_ipv6_address_on_creation?: bool
+	availability_zone?:               string
+	availability_zone_id?:            string
+	id?:                              string
+	ipv6_cidr_block?:                 string
+	ipv6_cidr_block_association_id?:  string
 	map_public_ip_on_launch?:         bool
 	outpost_arn?:                     string
+	owner_id?:                        string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -7216,14 +9855,21 @@ package aws
 }
 #AwsSwfDomainResource: {
 	workflow_execution_retention_period_in_days: string
+	arn?:                                        string
 	description?:                                string
+	id?:                                         string
+	name?:                                       string
 	name_prefix?:                                string
 	tags?: [_]: string
 }
 #AwsTransferServerResource: {
+	arn?:                    string
+	endpoint?:               string
 	endpoint_type?:          string
 	force_destroy?:          bool
 	host_key?:               string
+	host_key_fingerprint?:   string
+	id?:                     string
 	identity_provider_type?: string
 	invocation_role?:        string
 	logging_role?:           string
@@ -7237,12 +9883,15 @@ package aws
 	body:      string
 	server_id: string
 	user_name: string
+	id?:       string
 }
 #AwsTransferUserResource: {
 	role:            string
 	server_id:       string
 	user_name:       string
+	arn?:            string
 	home_directory?: string
+	id?:             string
 	policy?:         string
 	tags?: [_]: string
 }
@@ -7251,32 +9900,66 @@ package aws
 	instance_id:   string
 	volume_id:     string
 	force_detach?: bool
+	id?:           string
 	skip_destroy?: bool
 }
 #AwsVpcResource: {
 	cidr_block:                        string
+	arn?:                              string
 	assign_generated_ipv6_cidr_block?: bool
+	default_network_acl_id?:           string
+	default_route_table_id?:           string
+	default_security_group_id?:        string
+	dhcp_options_id?:                  string
+	enable_classiclink?:               bool
+	enable_classiclink_dns_support?:   bool
+	enable_dns_hostnames?:             bool
 	enable_dns_support?:               bool
+	id?:                               string
 	instance_tenancy?:                 string
+	ipv6_association_id?:              string
+	ipv6_cidr_block?:                  string
+	main_route_table_id?:              string
+	owner_id?:                         string
 	tags?: [_]: string
 }
 #AwsVpcDhcpOptionsResource: {
+	arn?:         string
 	domain_name?: string
 	domain_name_servers?: [string, ...]
+	id?: string
 	netbios_name_servers?: [string, ...]
 	netbios_node_type?: string
 	ntp_servers?: [string, ...]
+	owner_id?: string
 	tags?: [_]: string
 }
 #AwsVpcDhcpOptionsAssociationResource: {
 	dhcp_options_id: string
 	vpc_id:          string
+	id?:             string
 }
 #AwsVpcEndpointResource: {
-	service_name:         string
-	vpc_id:               string
-	auto_accept?:         bool
+	service_name: string
+	vpc_id:       string
+	arn?:         string
+	auto_accept?: bool
+	cidr_blocks?: [string, ...]
+	dns_entry?: [{
+		dns_name:       string
+		hosted_zone_id: string
+	}, ...]
+	id?: string
+	network_interface_ids?: [string, ...]
+	owner_id?:            string
+	policy?:              string
+	prefix_list_id?:      string
 	private_dns_enabled?: bool
+	requester_managed?:   bool
+	route_table_ids?: [string, ...]
+	security_group_ids?: [string, ...]
+	state?: string
+	subnet_ids?: [string, ...]
 	tags?: [_]: string
 	vpc_endpoint_type?: string
 	timeouts?: {
@@ -7288,25 +9971,41 @@ package aws
 #AwsVpcEndpointConnectionNotificationResource: {
 	connection_events: [string, ...]
 	connection_notification_arn: string
+	id?:                         string
+	notification_type?:          string
+	state?:                      string
 	vpc_endpoint_id?:            string
 	vpc_endpoint_service_id?:    string
 }
 #AwsVpcEndpointRouteTableAssociationResource: {
 	route_table_id:  string
 	vpc_endpoint_id: string
+	id?:             string
 }
 #AwsVpcEndpointServiceResource: {
 	acceptance_required: bool
 	network_load_balancer_arns: [string, ...]
+	allowed_principals?: [string, ...]
+	arn?: string
+	availability_zones?: [string, ...]
+	base_endpoint_dns_names?: [string, ...]
+	id?:                    string
+	manages_vpc_endpoints?: bool
+	private_dns_name?:      string
+	service_name?:          string
+	service_type?:          string
+	state?:                 string
 	tags?: [_]: string
 }
 #AwsVpcEndpointServiceAllowedPrincipalResource: {
 	principal_arn:           string
 	vpc_endpoint_service_id: string
+	id?:                     string
 }
 #AwsVpcEndpointSubnetAssociationResource: {
 	subnet_id:       string
 	vpc_endpoint_id: string
+	id?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -7315,15 +10014,20 @@ package aws
 #AwsVpcIpv4CidrBlockAssociationResource: {
 	cidr_block: string
 	vpc_id:     string
+	id?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #AwsVpcPeeringConnectionResource: {
-	peer_vpc_id:  string
-	vpc_id:       string
-	auto_accept?: bool
+	peer_vpc_id:    string
+	vpc_id:         string
+	accept_status?: string
+	auto_accept?:   bool
+	id?:            string
+	peer_owner_id?: string
+	peer_region?:   string
 	tags?: [_]: string
 	accepter?: [{
 		allow_classic_link_to_remote_vpc?: bool
@@ -7343,8 +10047,14 @@ package aws
 }
 #AwsVpcPeeringConnectionAccepterResource: {
 	vpc_peering_connection_id: string
+	accept_status?:            string
 	auto_accept?:              bool
+	id?:                       string
+	peer_owner_id?:            string
+	peer_region?:              string
+	peer_vpc_id?:              string
 	tags?: [_]: string
+	vpc_id?: string
 	accepter?: [{
 		allow_classic_link_to_remote_vpc?: bool
 		allow_remote_vpc_dns_resolution?:  bool
@@ -7358,6 +10068,7 @@ package aws
 }
 #AwsVpcPeeringConnectionOptionsResource: {
 	vpc_peering_connection_id: string
+	id?:                       string
 	accepter?: [{
 		allow_classic_link_to_remote_vpc?: bool
 		allow_remote_vpc_dns_resolution?:  bool
@@ -7370,30 +10081,69 @@ package aws
 	}, ...]
 }
 #AwsVpnConnectionResource: {
-	customer_gateway_id: string
-	type:                string
+	customer_gateway_id:             string
+	type:                            string
+	arn?:                            string
+	customer_gateway_configuration?: string
+	id?:                             string
+	routes?: [{
+		destination_cidr_block: string
+		source:                 string
+		state:                  string
+	}, ...]
+	static_routes_only?: bool
 	tags?: [_]: string
-	transit_gateway_id?: string
-	vpn_gateway_id?:     string
+	transit_gateway_attachment_id?: string
+	transit_gateway_id?:            string
+	tunnel1_address?:               string
+	tunnel1_bgp_asn?:               string
+	tunnel1_bgp_holdtime?:          number
+	tunnel1_cgw_inside_address?:    string
+	tunnel1_inside_cidr?:           string
+	tunnel1_preshared_key?:         string
+	tunnel1_vgw_inside_address?:    string
+	tunnel2_address?:               string
+	tunnel2_bgp_asn?:               string
+	tunnel2_bgp_holdtime?:          number
+	tunnel2_cgw_inside_address?:    string
+	tunnel2_inside_cidr?:           string
+	tunnel2_preshared_key?:         string
+	tunnel2_vgw_inside_address?:    string
+	vgw_telemetry?: [{
+		accepted_route_count: number
+		last_status_change:   string
+		outside_ip_address:   string
+		status:               string
+		status_message:       string
+	}, ...]
+	vpn_gateway_id?: string
 }
 #AwsVpnConnectionRouteResource: {
 	destination_cidr_block: string
 	vpn_connection_id:      string
+	id?:                    string
 }
 #AwsVpnGatewayResource: {
+	amazon_side_asn?:   string
+	arn?:               string
 	availability_zone?: string
+	id?:                string
 	tags?: [_]: string
+	vpc_id?: string
 }
 #AwsVpnGatewayAttachmentResource: {
 	vpc_id:         string
 	vpn_gateway_id: string
+	id?:            string
 }
 #AwsVpnGatewayRoutePropagationResource: {
 	route_table_id: string
 	vpn_gateway_id: string
+	id?:            string
 }
 #AwsWafByteMatchSetResource: {
 	name: string
+	id?:  string
 	byte_match_tuples?: [{
 		positional_constraint: string
 		text_transformation:   string
@@ -7406,6 +10156,8 @@ package aws
 }
 #AwsWafGeoMatchSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	geo_match_constraint?: [{
 		type:  string
 		value: string
@@ -7413,6 +10165,8 @@ package aws
 }
 #AwsWafIpsetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	ip_set_descriptors?: [{
 		type:  string
 		value: string
@@ -7423,6 +10177,8 @@ package aws
 	name:        string
 	rate_key:    string
 	rate_limit:  number
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	predicates?: [{
 		data_id: string
@@ -7432,6 +10188,8 @@ package aws
 }
 #AwsWafRegexMatchSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	regex_match_tuple?: [{
 		regex_pattern_set_id: string
 		text_transformation:  string
@@ -7443,11 +10201,15 @@ package aws
 }
 #AwsWafRegexPatternSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	regex_pattern_strings?: [string, ...]
 }
 #AwsWafRuleResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	predicates?: [{
 		data_id: string
@@ -7458,6 +10220,8 @@ package aws
 #AwsWafRuleGroupResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	activated_rule?: [{
 		priority: number
@@ -7470,6 +10234,8 @@ package aws
 }
 #AwsWafSizeConstraintSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	size_constraints?: [{
 		comparison_operator: string
 		size:                number
@@ -7482,6 +10248,7 @@ package aws
 }
 #AwsWafSqlInjectionMatchSetResource: {
 	name: string
+	id?:  string
 	sql_injection_match_tuples?: [{
 		text_transformation: string
 		field_to_match?: [{
@@ -7493,6 +10260,8 @@ package aws
 #AwsWafWebAclResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	default_action?: [{
 		type: string
@@ -7520,6 +10289,8 @@ package aws
 }
 #AwsWafXssMatchSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	xss_match_tuples?: [{
 		text_transformation: string
 		field_to_match?: [{
@@ -7530,6 +10301,7 @@ package aws
 }
 #AwsWafregionalByteMatchSetResource: {
 	name: string
+	id?:  string
 	byte_match_tuple?: [{
 		positional_constraint: string
 		text_transformation:   string
@@ -7551,6 +10323,7 @@ package aws
 }
 #AwsWafregionalGeoMatchSetResource: {
 	name: string
+	id?:  string
 	geo_match_constraint?: [{
 		type:  string
 		value: string
@@ -7558,6 +10331,8 @@ package aws
 }
 #AwsWafregionalIpsetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	ip_set_descriptor?: [{
 		type:  string
 		value: string
@@ -7568,6 +10343,8 @@ package aws
 	name:        string
 	rate_key:    string
 	rate_limit:  number
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	predicate?: [{
 		data_id: string
@@ -7577,6 +10354,7 @@ package aws
 }
 #AwsWafregionalRegexMatchSetResource: {
 	name: string
+	id?:  string
 	regex_match_tuple?: [{
 		regex_pattern_set_id: string
 		text_transformation:  string
@@ -7588,11 +10366,14 @@ package aws
 }
 #AwsWafregionalRegexPatternSetResource: {
 	name: string
+	id?:  string
 	regex_pattern_strings?: [string, ...]
 }
 #AwsWafregionalRuleResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	predicate?: [{
 		data_id: string
@@ -7603,6 +10384,8 @@ package aws
 #AwsWafregionalRuleGroupResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	activated_rule?: [{
 		priority: number
@@ -7615,6 +10398,8 @@ package aws
 }
 #AwsWafregionalSizeConstraintSetResource: {
 	name: string
+	arn?: string
+	id?:  string
 	size_constraints?: [{
 		comparison_operator: string
 		size:                number
@@ -7627,6 +10412,7 @@ package aws
 }
 #AwsWafregionalSqlInjectionMatchSetResource: {
 	name: string
+	id?:  string
 	sql_injection_match_tuple?: [{
 		text_transformation: string
 		field_to_match?: [{
@@ -7638,6 +10424,8 @@ package aws
 #AwsWafregionalWebAclResource: {
 	metric_name: string
 	name:        string
+	arn?:        string
+	id?:         string
 	tags?: [_]: string
 	default_action?: [{
 		type: string
@@ -7666,9 +10454,11 @@ package aws
 #AwsWafregionalWebAclAssociationResource: {
 	resource_arn: string
 	web_acl_id:   string
+	id?:          string
 }
 #AwsWafregionalXssMatchSetResource: {
 	name: string
+	id?:  string
 	xss_match_tuple?: [{
 		text_transformation: string
 		field_to_match?: [{
@@ -7682,23 +10472,7394 @@ package aws
 	name:               string
 	scope:              string
 	addresses?: [string, ...]
+	arn?:         string
 	description?: string
+	id?:          string
+	lock_token?:  string
 	tags?: [_]: string
 }
 #AwsWafv2RegexPatternSetResource: {
 	name:         string
 	scope:        string
+	arn?:         string
 	description?: string
+	id?:          string
+	lock_token?:  string
 	tags?: [_]: string
 	regular_expression?: [{
 		regex_string: string
 	}, ...]
 }
+#AwsWafv2RuleGroupResource: {
+	capacity:     number
+	name:         string
+	scope:        string
+	arn?:         string
+	description?: string
+	id?:          string
+	lock_token?:  string
+	tags?: [_]: string
+	rule?: [{
+		name:     string
+		priority: number
+		action?: [{
+			allow?: [{}, ...]
+			block?: [{}, ...]
+			count?: [{}, ...]
+		}, ...]
+		statement?: [{
+			and_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			byte_match_statement?: [{
+				positional_constraint: string
+				search_string:         string
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			geo_match_statement?: [{
+				country_codes: [string, ...]
+			}, ...]
+			ip_set_reference_statement?: [{
+				arn: string
+			}, ...]
+			not_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			or_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			regex_pattern_set_reference_statement?: [{
+				arn: string
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			size_constraint_statement?: [{
+				comparison_operator: string
+				size:                number
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			sqli_match_statement?: [{
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			xss_match_statement?: [{
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+		}, ...]
+		visibility_config?: [{
+			cloudwatch_metrics_enabled: bool
+			metric_name:                string
+			sampled_requests_enabled:   bool
+		}, ...]
+	}, ...]
+	visibility_config?: [{
+		cloudwatch_metrics_enabled: bool
+		metric_name:                string
+		sampled_requests_enabled:   bool
+	}, ...]
+}
+#AwsWafv2WebAclResource: {
+	name:         string
+	scope:        string
+	arn?:         string
+	capacity?:    number
+	description?: string
+	id?:          string
+	lock_token?:  string
+	tags?: [_]: string
+	default_action?: [{
+		allow?: [{}, ...]
+		block?: [{}, ...]
+	}, ...]
+	rule?: [{
+		name:     string
+		priority: number
+		action?: [{
+			allow?: [{}, ...]
+			block?: [{}, ...]
+			count?: [{}, ...]
+		}, ...]
+		override_action?: [{
+			count?: [{}, ...]
+			none?: [{}, ...]
+		}, ...]
+		statement?: [{
+			and_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			byte_match_statement?: [{
+				positional_constraint: string
+				search_string:         string
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			geo_match_statement?: [{
+				country_codes: [string, ...]
+			}, ...]
+			ip_set_reference_statement?: [{
+				arn: string
+			}, ...]
+			managed_rule_group_statement?: [{
+				name:        string
+				vendor_name: string
+				excluded_rule?: [{
+					name: string
+				}, ...]
+			}, ...]
+			not_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			or_statement?: [{
+				statement?: [{
+					and_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			rate_based_statement?: [{
+				limit:               number
+				aggregate_key_type?: string
+				scope_down_statement?: [{
+					and_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					byte_match_statement?: [{
+						positional_constraint: string
+						search_string:         string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					geo_match_statement?: [{
+						country_codes: [string, ...]
+					}, ...]
+					ip_set_reference_statement?: [{
+						arn: string
+					}, ...]
+					not_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					or_statement?: [{
+						statement?: [{
+							and_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							byte_match_statement?: [{
+								positional_constraint: string
+								search_string:         string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							geo_match_statement?: [{
+								country_codes: [string, ...]
+							}, ...]
+							ip_set_reference_statement?: [{
+								arn: string
+							}, ...]
+							not_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							or_statement?: [{
+								statement?: [{
+									byte_match_statement?: [{
+										positional_constraint: string
+										search_string:         string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									geo_match_statement?: [{
+										country_codes: [string, ...]
+									}, ...]
+									ip_set_reference_statement?: [{
+										arn: string
+									}, ...]
+									regex_pattern_set_reference_statement?: [{
+										arn: string
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									size_constraint_statement?: [{
+										comparison_operator: string
+										size:                number
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									sqli_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+									xss_match_statement?: [{
+										field_to_match?: [{
+											all_query_arguments?: [{}, ...]
+											body?: [{}, ...]
+											method?: [{}, ...]
+											query_string?: [{}, ...]
+											single_header?: [{
+												name: string
+											}, ...]
+											single_query_argument?: [{
+												name: string
+											}, ...]
+											uri_path?: [{}, ...]
+										}, ...]
+										text_transformation?: [{
+											priority: number
+											type:     string
+										}, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+							regex_pattern_set_reference_statement?: [{
+								arn: string
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							size_constraint_statement?: [{
+								comparison_operator: string
+								size:                number
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							sqli_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+							xss_match_statement?: [{
+								field_to_match?: [{
+									all_query_arguments?: [{}, ...]
+									body?: [{}, ...]
+									method?: [{}, ...]
+									query_string?: [{}, ...]
+									single_header?: [{
+										name: string
+									}, ...]
+									single_query_argument?: [{
+										name: string
+									}, ...]
+									uri_path?: [{}, ...]
+								}, ...]
+								text_transformation?: [{
+									priority: number
+									type:     string
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					regex_pattern_set_reference_statement?: [{
+						arn: string
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					size_constraint_statement?: [{
+						comparison_operator: string
+						size:                number
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					sqli_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+					xss_match_statement?: [{
+						field_to_match?: [{
+							all_query_arguments?: [{}, ...]
+							body?: [{}, ...]
+							method?: [{}, ...]
+							query_string?: [{}, ...]
+							single_header?: [{
+								name: string
+							}, ...]
+							single_query_argument?: [{
+								name: string
+							}, ...]
+							uri_path?: [{}, ...]
+						}, ...]
+						text_transformation?: [{
+							priority: number
+							type:     string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			regex_pattern_set_reference_statement?: [{
+				arn: string
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			rule_group_reference_statement?: [{
+				arn: string
+				excluded_rule?: [{
+					name: string
+				}, ...]
+			}, ...]
+			size_constraint_statement?: [{
+				comparison_operator: string
+				size:                number
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			sqli_match_statement?: [{
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+			xss_match_statement?: [{
+				field_to_match?: [{
+					all_query_arguments?: [{}, ...]
+					body?: [{}, ...]
+					method?: [{}, ...]
+					query_string?: [{}, ...]
+					single_header?: [{
+						name: string
+					}, ...]
+					single_query_argument?: [{
+						name: string
+					}, ...]
+					uri_path?: [{}, ...]
+				}, ...]
+				text_transformation?: [{
+					priority: number
+					type:     string
+				}, ...]
+			}, ...]
+		}, ...]
+		visibility_config?: [{
+			cloudwatch_metrics_enabled: bool
+			metric_name:                string
+			sampled_requests_enabled:   bool
+		}, ...]
+	}, ...]
+	visibility_config?: [{
+		cloudwatch_metrics_enabled: bool
+		metric_name:                string
+		sampled_requests_enabled:   bool
+	}, ...]
+}
+#AwsWafv2WebAclAssociationResource: {
+	resource_arn: string
+	web_acl_arn:  string
+	id?:          string
+}
+#AwsWafv2WebAclLoggingConfigurationResource: {
+	log_destination_configs: [string, ...]
+	resource_arn: string
+	id?:          string
+	redacted_fields?: [{
+		all_query_arguments?: [{}, ...]
+		body?: [{}, ...]
+		method?: [{}, ...]
+		query_string?: [{}, ...]
+		single_header?: [{
+			name: string
+		}, ...]
+		single_query_argument?: [{
+			name: string
+		}, ...]
+		uri_path?: [{}, ...]
+	}, ...]
+}
 #AwsWorklinkFleetResource: {
 	name:                            string
+	arn?:                            string
 	audit_stream_arn?:               string
+	company_code?:                   string
+	created_time?:                   string
 	device_ca_certificate?:          string
 	display_name?:                   string
+	id?:                             string
+	last_updated_time?:              string
 	optimize_for_end_user_location?: bool
 	identity_provider?: [{
 		saml_metadata: string
@@ -7711,13 +17872,26 @@ package aws
 	}, ...]
 }
 #AwsWorklinkWebsiteCertificateAuthorityAssociationResource: {
-	certificate:   string
-	fleet_arn:     string
-	display_name?: string
+	certificate:    string
+	fleet_arn:      string
+	display_name?:  string
+	id?:            string
+	website_ca_id?: string
 }
 #AwsWorkspacesDirectoryResource: {
-	directory_id: string
+	directory_id:        string
+	alias?:              string
+	customer_user_name?: string
+	directory_name?:     string
+	directory_type?:     string
+	dns_ip_addresses?: [string, ...]
+	iam_role_id?: string
+	id?:          string
+	ip_group_ids?: [string, ...]
+	registration_code?: string
+	subnet_ids?: [string, ...]
 	tags?: [_]: string
+	workspace_security_group_id?: string
 	self_service_permissions?: [{
 		change_compute_type?:  bool
 		increase_volume_size?: bool
@@ -7729,6 +17903,7 @@ package aws
 #AwsWorkspacesIpGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 	rules?: [{
 		source:       string
@@ -7739,15 +17914,20 @@ package aws
 	bundle_id:                       string
 	directory_id:                    string
 	user_name:                       string
+	computer_name?:                  string
+	id?:                             string
+	ip_address?:                     string
 	root_volume_encryption_enabled?: bool
+	state?:                          string
 	tags?: [_]: string
 	user_volume_encryption_enabled?: bool
 	volume_encryption_key?:          string
 	workspace_properties?: [{
-		compute_type_name?:    string
-		root_volume_size_gib?: number
-		running_mode?:         string
-		user_volume_size_gib?: number
+		compute_type_name?:                         string
+		root_volume_size_gib?:                      number
+		running_mode?:                              string
+		running_mode_auto_stop_timeout_in_minutes?: number
+		user_volume_size_gib?:                      number
 	}, ...]
 }
 #AwsXraySamplingRuleResource: {
@@ -7761,7 +17941,9 @@ package aws
 	service_type:   string
 	url_path:       string
 	version:        number
+	arn?:           string
 	attributes?: [_]: string
+	id?:        string
 	rule_name?: string
 }
 #Resources: {
@@ -7962,9 +18144,14 @@ package aws
 	aws_ebs_volume?: [_]:                                          #AwsEbsVolumeResource
 	aws_ec2_availability_zone_group?: [_]:                         #AwsEc2AvailabilityZoneGroupResource
 	aws_ec2_capacity_reservation?: [_]:                            #AwsEc2CapacityReservationResource
+	aws_ec2_client_vpn_authorization_rule?: [_]:                   #AwsEc2ClientVpnAuthorizationRuleResource
 	aws_ec2_client_vpn_endpoint?: [_]:                             #AwsEc2ClientVpnEndpointResource
 	aws_ec2_client_vpn_network_association?: [_]:                  #AwsEc2ClientVpnNetworkAssociationResource
+	aws_ec2_client_vpn_route?: [_]:                                #AwsEc2ClientVpnRouteResource
 	aws_ec2_fleet?: [_]:                                           #AwsEc2FleetResource
+	aws_ec2_local_gateway_route?: [_]:                             #AwsEc2LocalGatewayRouteResource
+	aws_ec2_local_gateway_route_table_vpc_association?: [_]:       #AwsEc2LocalGatewayRouteTableVpcAssociationResource
+	aws_ec2_tag?: [_]:                                             #AwsEc2TagResource
 	aws_ec2_traffic_mirror_filter?: [_]:                           #AwsEc2TrafficMirrorFilterResource
 	aws_ec2_traffic_mirror_filter_rule?: [_]:                      #AwsEc2TrafficMirrorFilterRuleResource
 	aws_ec2_traffic_mirror_session?: [_]:                          #AwsEc2TrafficMirrorSessionResource
@@ -8222,6 +18409,7 @@ package aws
 	aws_sagemaker_notebook_instance?: [_]:                         #AwsSagemakerNotebookInstanceResource
 	aws_sagemaker_notebook_instance_lifecycle_configuration?: [_]: #AwsSagemakerNotebookInstanceLifecycleConfigurationResource
 	aws_secretsmanager_secret?: [_]:                               #AwsSecretsmanagerSecretResource
+	aws_secretsmanager_secret_rotation?: [_]:                      #AwsSecretsmanagerSecretRotationResource
 	aws_secretsmanager_secret_version?: [_]:                       #AwsSecretsmanagerSecretVersionResource
 	aws_security_group?: [_]:                                      #AwsSecurityGroupResource
 	aws_security_group_rule?: [_]:                                 #AwsSecurityGroupRuleResource
@@ -8332,6 +18520,10 @@ package aws
 	aws_wafregional_xss_match_set?: [_]:                           #AwsWafregionalXssMatchSetResource
 	aws_wafv2_ip_set?: [_]:                                        #AwsWafv2IpSetResource
 	aws_wafv2_regex_pattern_set?: [_]:                             #AwsWafv2RegexPatternSetResource
+	aws_wafv2_rule_group?: [_]:                                    #AwsWafv2RuleGroupResource
+	aws_wafv2_web_acl?: [_]:                                       #AwsWafv2WebAclResource
+	aws_wafv2_web_acl_association?: [_]:                           #AwsWafv2WebAclAssociationResource
+	aws_wafv2_web_acl_logging_configuration?: [_]:                 #AwsWafv2WebAclLoggingConfigurationResource
 	aws_worklink_fleet?: [_]:                                      #AwsWorklinkFleetResource
 	aws_worklink_website_certificate_authority_association?: [_]:  #AwsWorklinkWebsiteCertificateAuthorityAssociationResource
 	aws_workspaces_directory?: [_]:                                #AwsWorkspacesDirectoryResource

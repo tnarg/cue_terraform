@@ -3,105 +3,426 @@ package ucloud
 
 #UcloudDbInstancesDataSource: {
 	availability_zone?: string
-	name_regex?:        string
-	output_file?:       string
+	db_instances?: [{
+		availability_zone: string
+		backup_begin_time: number
+		backup_black_list: [string, ...]
+		backup_count:     number
+		backup_date:      string
+		charge_type:      string
+		create_time:      string
+		engine:           string
+		engine_version:   string
+		expire_time:      string
+		id:               string
+		instance_storage: number
+		instance_type:    string
+		modify_time:      string
+		name:             string
+		port:             number
+		private_ip:       string
+		standby_zone:     string
+		status:           string
+		subnet_id:        string
+		tag:              string
+		vpc_id:           string
+	}, ...]
+	id?: string
+	ids?: [string, ...]
+	name_regex?:  string
+	output_file?: string
+	total_count?: number
 }
 #UcloudDbParameterGroupsDataSource: {
 	availability_zone?: string
+	id?:                string
 	multi_az?:          bool
 	name_regex?:        string
 	output_file?:       string
+	parameter_groups?: [{
+		availability_zone: string
+		engine:            string
+		engine_version:    string
+		id:                string
+		is_default:        bool
+		name:              string
+	}, ...]
+	total_count?: number
 }
 #UcloudDisksDataSource: {
 	availability_zone?: string
 	disk_type?:         string
-	name_regex?:        string
-	output_file?:       string
-}
-#UcloudEipsDataSource: {
+	disks?: [{
+		availability_zone: string
+		charge_type:       string
+		create_time:       string
+		disk_size:         number
+		disk_type:         string
+		expire_time:       string
+		id:                string
+		name:              string
+		status:            string
+		tag:               string
+	}, ...]
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
+	total_count?: number
+}
+#UcloudEipsDataSource: {
+	eips?: [{
+		bandwidth:   number
+		charge_mode: string
+		charge_type: string
+		create_time: string
+		expire_time: string
+		ip_set: [{
+			internet_type: string
+			ip:            string
+		}, ...]
+		name:   string
+		remark: string
+		status: string
+		tag:    string
+	}, ...]
+	id?: string
+	ids?: [string, ...]
+	name_regex?:  string
+	output_file?: string
+	total_count?: number
 }
 #UcloudImagesDataSource: {
 	availability_zone?: string
-	image_id?:          string
-	image_type?:        string
-	most_recent?:       bool
-	name_regex?:        string
-	os_type?:           string
-	output_file?:       string
+	id?:                string
+	ids?: [string, ...]
+	image_id?:   string
+	image_type?: string
+	images?: [{
+		availability_zone: string
+		create_time:       string
+		description:       string
+		features: [string, ...]
+		id:      string
+		name:    string
+		os_name: string
+		os_type: string
+		size:    number
+		status:  string
+		type:    string
+	}, ...]
+	most_recent?: bool
+	name_regex?:  string
+	os_type?:     string
+	output_file?: string
+	total_count?: number
 }
 #UcloudInstancesDataSource: {
 	availability_zone?: string
-	name_regex?:        string
-	output_file?:       string
-	tag?:               string
+	id?:                string
+	ids?: [string, ...]
+	instances?: [{
+		auto_renew:        bool
+		availability_zone: string
+		charge_type:       string
+		cpu:               number
+		create_time:       string
+		disk_set: [{
+			id:      string
+			is_boot: bool
+			size:    number
+			type:    string
+		}, ...]
+		expire_time:   string
+		id:            string
+		instance_type: string
+		ip_set: [{
+			internet_type: string
+			ip:            string
+		}, ...]
+		memory:     number
+		name:       string
+		private_ip: string
+		remark:     string
+		status:     string
+		subnet_id:  string
+		tag:        string
+		vpc_id:     string
+	}, ...]
+	name_regex?:  string
+	output_file?: string
+	tag?:         string
+	total_count?: number
 }
 #UcloudLbAttachmentsDataSource: {
 	listener_id:      string
 	load_balancer_id: string
-	output_file?:     string
+	id?:              string
+	ids?: [string, ...]
+	lb_attachments?: [{
+		id:          string
+		port:        number
+		private_ip:  string
+		resource_id: string
+		status:      string
+	}, ...]
+	output_file?: string
+	total_count?: number
 }
 #UcloudLbListenersDataSource: {
 	load_balancer_id: string
-	name_regex?:      string
-	output_file?:     string
+	id?:              string
+	ids?: [string, ...]
+	lb_listeners?: [{
+		domain:            string
+		health_check_type: string
+		id:                string
+		idle_timeout:      number
+		listen_type:       string
+		method:            string
+		name:              string
+		path:              string
+		persistence:       string
+		persistence_type:  string
+		port:              number
+		protocol:          string
+		status:            string
+	}, ...]
+	name_regex?:  string
+	output_file?: string
+	total_count?: number
 }
 #UcloudLbRulesDataSource: {
 	listener_id:      string
 	load_balancer_id: string
-	output_file?:     string
+	id?:              string
+	ids?: [string, ...]
+	lb_rules?: [{
+		domain: string
+		id:     string
+		path:   string
+	}, ...]
+	output_file?: string
+	total_count?: number
 }
 #UcloudLbSslsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	lb_ssls?: [{
+		create_time: string
+		id:          string
+		name:        string
+	}, ...]
 	name_regex?:  string
 	output_file?: string
+	total_count?: number
 }
 #UcloudLbsDataSource: {
+	id?: string
+	ids?: [string, ...]
+	lbs?: [{
+		create_time: string
+		id:          string
+		internal:    bool
+		ip_set: [{
+			internet_type: string
+			ip:            string
+		}, ...]
+		name:       string
+		private_ip: string
+		remark:     string
+		subnet_id:  string
+		tag:        string
+		vpc_id:     string
+	}, ...]
 	name_regex?:  string
 	output_file?: string
+	subnet_id?:   string
+	total_count?: number
+	vpc_id?:      string
 }
 #UcloudNatGatewaysDataSource: {
-	name_regex?:  string
+	id?: string
+	ids?: [string, ...]
+	name_regex?: string
+	nat_gateways?: [{
+		create_time: string
+		id:          string
+		ip_set: [{
+			internet_type: string
+			ip:            string
+		}, ...]
+		name:           string
+		remark:         string
+		security_group: string
+		subnet_ids: [string, ...]
+		tag:    string
+		vpc_id: string
+	}, ...]
 	output_file?: string
+	total_count?: number
 }
 #UcloudProjectsDataSource: {
+	id?:          string
 	is_finance?:  bool
 	name_regex?:  string
 	output_file?: string
+	projects?: [{
+		create_time:    string
+		id:             string
+		member_count:   number
+		name:           string
+		parent_id:      string
+		parent_name:    string
+		resource_count: number
+	}, ...]
+	total_count?: number
 }
 #UcloudSecurityGroupsDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
+	security_groups?: [{
+		create_time: string
+		id:          string
+		name:        string
+		remark:      string
+		rules: [{
+			cidr_block: string
+			policy:     string
+			port_range: string
+			priority:   string
+			protocol:   string
+		}, ...]
+		tag:  string
+		type: string
+	}, ...]
+	total_count?: number
 	type?:        string
 }
 #UcloudSubnetsDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
+	subnets?: [{
+		cidr_block:  string
+		create_time: string
+		id:          string
+		name:        string
+		remark:      string
+		tag:         string
+		vpc_id:      string
+	}, ...]
 	tag?:         string
+	total_count?: number
 	vpc_id?:      string
 }
 #UcloudVpcsDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
 	tag?:         string
+	total_count?: number
+	vpcs?: [{
+		cidr_blocks: [string, ...]
+		create_time: string
+		id:          string
+		name:        string
+		tag:         string
+		update_time: string
+	}, ...]
 }
 #UcloudVpnConnectionsDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
 	tag?:         string
+	total_count?: number
+	vpn_connections?: [{
+		create_time:         string
+		customer_gateway_id: string
+		id:                  string
+		ike_config: [{
+			authentication_algorithm: string
+			dh_group:                 string
+			encryption_algorithm:     string
+			exchange_mode:            string
+			ike_version:              string
+			local_id:                 string
+			pre_shared_key:           string
+			remote_id:                string
+			sa_life_time:             number
+		}, ...]
+		ipsec_config: [{
+			authentication_algorithm: string
+			encryption_algorithm:     string
+			local_subnet_ids: [string, ...]
+			pfs_dh_group: string
+			protocol:     string
+			remote_subnets: [string, ...]
+			sa_life_time:       number
+			sa_life_time_bytes: number
+		}, ...]
+		name:           string
+		remark:         string
+		tag:            string
+		vpc_id:         string
+		vpn_gateway_id: string
+	}, ...]
 }
 #UcloudVpnCustomerGatewaysDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
 	tag?:         string
+	total_count?: number
+	vpn_customer_gateways?: [{
+		create_time: string
+		id:          string
+		ip_address:  string
+		name:        string
+		remark:      string
+		tag:         string
+	}, ...]
 }
 #UcloudVpnGatewaysDataSource: {
+	id?: string
+	ids?: [string, ...]
 	name_regex?:  string
 	output_file?: string
 	tag?:         string
+	total_count?: number
 	vpc_id?:      string
+	vpn_gateways?: [{
+		auto_renew:  bool
+		charge_type: string
+		create_time: string
+		expire_time: string
+		grade:       string
+		id:          string
+		ip_set: [{
+			internet_type: string
+			ip:            string
+		}, ...]
+		name:   string
+		remark: string
+		tag:    string
+		vpc_id: string
+	}, ...]
 }
-#UcloudZonesDataSource: output_file?: string
+#UcloudZonesDataSource: {
+	id?:          string
+	output_file?: string
+	total_count?: number
+	zones?: [{
+		id: string
+	}, ...]
+}
 #DataSources: {
 	ucloud_db_instances?: [_]:          #UcloudDbInstancesDataSource
 	ucloud_db_parameter_groups?: [_]:   #UcloudDbParameterGroupsDataSource

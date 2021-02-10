@@ -5,6 +5,7 @@ package newrelic
 	name: string
 	type: string
 	configuration?: [_]: string
+	id?: string
 	config?: [{
 		api_key?:       string
 		auth_password?: string
@@ -38,6 +39,7 @@ package newrelic
 	condition_scope?:             string
 	enabled?:                     bool
 	gc_metric?:                   string
+	id?:                          string
 	runbook_url?:                 string
 	user_defined_metric?:         string
 	user_defined_value_function?: string
@@ -53,16 +55,21 @@ package newrelic
 #NewrelicAlertPolicyResource: {
 	name: string
 	channel_ids?: [number, ...]
+	created_at?:          string
+	id?:                  string
 	incident_preference?: string
+	updated_at?:          string
 }
 #NewrelicAlertPolicyChannelResource: {
 	policy_id:   number
 	channel_id?: number
 	channel_ids?: [number, ...]
+	id?: string
 }
 #NewrelicApplicationLabelResource: {
 	category: string
 	name:     string
+	id?:      string
 	links?: [{
 		applications?: [number, ...]
 		servers?: [number, ...]
@@ -73,12 +80,15 @@ package newrelic
 	enable_real_user_monitoring: bool
 	end_user_apdex_threshold:    number
 	name:                        string
+	id?:                         string
 }
 #NewrelicDashboardResource: {
 	title:              string
+	dashboard_url?:     string
 	editable?:          string
 	grid_column_count?: number
 	icon?:              string
+	id?:                string
 	visibility?:        string
 	filter?: [{
 		event_types: [string, ...]
@@ -99,9 +109,11 @@ package newrelic
 		notes?:            string
 		nrql?:             string
 		order_by?:         string
+		raw_metric_name?:  string
 		source?:           string
 		threshold_red?:    number
 		threshold_yellow?: number
+		widget_id?:        number
 		width?:            number
 		compare_with?: [{
 			offset_duration: string
@@ -123,11 +135,15 @@ package newrelic
 	policy_id:              number
 	type:                   string
 	comparison?:            string
+	created_at?:            number
 	enabled?:               bool
+	event?:                 string
+	id?:                    string
 	integration_provider?:  string
 	process_where?:         string
 	runbook_url?:           string
 	select?:                string
+	updated_at?:            number
 	violation_close_timer?: number
 	where?:                 string
 	critical?: [{
@@ -141,20 +157,24 @@ package newrelic
 		value?:         number
 	}, ...]
 }
-#NewrelicInsightsEventResource: event?: [{
-	type:       string
-	timestamp?: number
-	attribute?: [{
-		key:   string
-		value: string
-		type?: string
+#NewrelicInsightsEventResource: {
+	id?: string
+	event?: [{
+		type:       string
+		timestamp?: number
+		attribute?: [{
+			key:   string
+			value: string
+			type?: string
+		}, ...]
 	}, ...]
-}, ...]
+}
 #NewrelicNrqlAlertConditionResource: {
 	name:                          string
 	policy_id:                     number
 	enabled?:                      bool
 	expected_groups?:              number
+	id?:                           string
 	ignore_overlap?:               bool
 	runbook_url?:                  string
 	type?:                         string
@@ -182,6 +202,7 @@ package newrelic
 	policy_id:          number
 	value_function:     string
 	enabled?:           bool
+	id?:                string
 	runbook_url?:       string
 	term?: [{
 		duration:      number
@@ -196,12 +217,15 @@ package newrelic
 	name:         string
 	policy_id:    number
 	enabled?:     bool
+	id?:          string
 	runbook_url?: string
 }
 #NewrelicSyntheticsLabelResource: {
 	monitor_id: string
 	type:       string
 	value:      string
+	href?:      string
+	id?:        string
 }
 #NewrelicSyntheticsMonitorResource: {
 	frequency: number
@@ -210,6 +234,7 @@ package newrelic
 	status:                     string
 	type:                       string
 	bypass_head_request?:       bool
+	id?:                        string
 	sla_threshold?:             number
 	treat_redirect_as_failure?: bool
 	uri?:                       string
@@ -219,15 +244,26 @@ package newrelic
 #NewrelicSyntheticsMonitorScriptResource: {
 	monitor_id: string
 	text:       string
+	id?:        string
 }
 #NewrelicSyntheticsSecureCredentialResource: {
-	key:          string
-	value:        string
-	description?: string
+	key:           string
+	value:         string
+	created_at?:   string
+	description?:  string
+	id?:           string
+	last_updated?: string
 }
 #NewrelicWorkloadResource: {
-	account_id: number
-	name:       string
+	account_id:                     number
+	name:                           string
+	composite_entity_search_query?: string
+	entity_guids?: [string, ...]
+	guid?:      string
+	id?:        string
+	permalink?: string
+	scope_account_ids?: [number, ...]
+	workload_id?: number
 	entity_search_query?: [{
 		query: string
 	}, ...]

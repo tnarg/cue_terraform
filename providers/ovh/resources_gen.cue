@@ -2,9 +2,18 @@
 package ovh
 
 #OvhCloudNetworkPrivateResource: {
-	name:       string
-	project_id: string
-	vlan_id?:   number
+	name:        string
+	id?:         string
+	project_id?: string
+	regions?: [string, ...]
+	regions_status?: [{
+		region: string
+		status: string
+	}, ...]
+	service_name?: string
+	status?:       string
+	type?:         string
+	vlan_id?:      number
 }
 #OvhCloudNetworkPrivateSubnetResource: {
 	end:         string
@@ -12,19 +21,113 @@ package ovh
 	network_id:  string
 	region:      string
 	start:       string
+	cidr?:       string
 	dhcp?:       bool
-	no_gateway?: bool
+	gateway_ip?: string
+	id?:         string
+	ip_pools?: [{
+		dhcp:    bool
+		end:     string
+		network: string
+		region:  string
+		start:   string
+	}, ...]
+	no_gateway?:   bool
+	project_id?:   string
+	service_name?: string
+}
+#OvhCloudProjectNetworkPrivateResource: {
+	name:        string
+	id?:         string
 	project_id?: string
+	regions?: [string, ...]
+	regions_status?: [{
+		region: string
+		status: string
+	}, ...]
+	service_name?: string
+	status?:       string
+	type?:         string
+	vlan_id?:      number
+}
+#OvhCloudProjectNetworkPrivateSubnetResource: {
+	end:         string
+	network:     string
+	network_id:  string
+	region:      string
+	start:       string
+	cidr?:       string
+	dhcp?:       bool
+	gateway_ip?: string
+	id?:         string
+	ip_pools?: [{
+		dhcp:    bool
+		end:     string
+		network: string
+		region:  string
+		start:   string
+	}, ...]
+	no_gateway?:   bool
+	project_id?:   string
+	service_name?: string
+}
+#OvhCloudProjectUserResource: {
+	creation_date?: string
+	description?:   string
+	id?:            string
+	openstack_rc?: [_]: string
+	password?:   string
+	project_id?: string
+	role_name?:  string
+	role_names?: [string, ...]
+	roles?: [{
+		description: string
+		id:          string
+		name:        string
+		permissions: [string, ...]
+	}, ...]
+	service_name?: string
+	status?:       string
+	username?:     string
 }
 #OvhCloudUserResource: {
-	project_id:   string
-	description?: string
+	creation_date?: string
+	description?:   string
+	id?:            string
+	openstack_rc?: [_]: string
+	password?:   string
+	project_id?: string
+	role_name?:  string
+	role_names?: [string, ...]
+	roles?: [{
+		description: string
+		id:          string
+		name:        string
+		permissions: [string, ...]
+	}, ...]
+	service_name?: string
+	status?:       string
+	username?:     string
+}
+#OvhDedicatedCephAclResource: {
+	netmask:      string
+	network:      string
+	service_name: string
+	family?:      string
+	id?:          string
 }
 #OvhDedicatedServerInstallTaskResource: {
 	service_name:           string
 	template_name:          string
 	bootid_on_destroy?:     number
+	comment?:               string
+	done_date?:             string
+	function?:              string
+	id?:                    string
+	last_update?:           string
 	partition_scheme_name?: string
+	start_date?:            string
+	status?:                string
 	details?: [{
 		change_log?:                      string
 		custom_hostname?:                 string
@@ -46,12 +149,26 @@ package ovh
 #OvhDedicatedServerRebootTaskResource: {
 	keepers: [string, ...]
 	service_name: string
+	comment?:     string
+	done_date?:   string
+	function?:    string
+	id?:          string
+	last_update?: string
+	start_date?:  string
+	status?:      string
 }
-#OvhDedicatedServerUpdateResource: service_name: string
+#OvhDedicatedServerUpdateResource: {
+	service_name: string
+	boot_id?:     number
+	id?:          string
+	monitoring?:  bool
+	state?:       string
+}
 #OvhDomainZoneRecordResource: {
 	fieldtype:  string
 	target:     string
 	zone:       string
+	id?:        string
 	subdomain?: string
 	ttl?:       number
 }
@@ -60,6 +177,7 @@ package ovh
 	type:         string
 	zone:         string
 	description?: string
+	id?:          string
 	keywords?:    string
 	subdomain?:   string
 	title?:       string
@@ -67,6 +185,7 @@ package ovh
 #OvhIpReverseResource: {
 	ip:         string
 	reverse:    string
+	id?:        string
 	ipreverse?: string
 }
 #OvhIploadbalancingHttpFarmResource: {
@@ -74,6 +193,7 @@ package ovh
 	zone:              string
 	balance?:          string
 	display_name?:     string
+	id?:               string
 	port?:             number
 	stickiness?:       string
 	vrack_network_id?: number
@@ -96,7 +216,9 @@ package ovh
 	status:                  string
 	backup?:                 bool
 	chain?:                  string
+	cookie?:                 string
 	display_name?:           string
+	id?:                     string
 	port?:                   number
 	probe?:                  bool
 	proxy_protocol_version?: string
@@ -104,16 +226,24 @@ package ovh
 	weight?:                 number
 }
 #OvhIploadbalancingHttpFrontendResource: {
-	port:          string
-	service_name:  string
-	zone:          string
-	disabled?:     bool
-	display_name?: string
-	ssl?:          bool
+	port:         string
+	service_name: string
+	zone:         string
+	allowed_source?: [string, ...]
+	dedicated_ipfo?: [string, ...]
+	default_farm_id?:   number
+	default_ssl_id?:    number
+	disabled?:          bool
+	display_name?:      string
+	id?:                string
+	redirect_location?: string
+	ssl?:               bool
 }
 #OvhIploadbalancingHttpRouteResource: {
 	service_name:  string
 	display_name?: string
+	frontend_id?:  number
+	id?:           string
 	weight?:       number
 	action?: [{
 		type:    string
@@ -127,6 +257,7 @@ package ovh
 	route_id:      string
 	service_name:  string
 	display_name?: string
+	id?:           string
 	negate?:       bool
 	pattern?:      string
 	sub_field?:    string
@@ -134,12 +265,14 @@ package ovh
 #OvhIploadbalancingRefreshResource: {
 	keepers: [string, ...]
 	service_name: string
+	id?:          string
 }
 #OvhIploadbalancingTcpFarmResource: {
 	service_name:      string
 	zone:              string
 	balance?:          string
 	display_name?:     string
+	id?:               string
 	port?:             number
 	stickiness?:       string
 	vrack_network_id?: number
@@ -163,6 +296,7 @@ package ovh
 	backup?:                 bool
 	chain?:                  string
 	display_name?:           string
+	id?:                     string
 	port?:                   number
 	probe?:                  bool
 	proxy_protocol_version?: string
@@ -170,12 +304,17 @@ package ovh
 	weight?:                 number
 }
 #OvhIploadbalancingTcpFrontendResource: {
-	port:          string
-	service_name:  string
-	zone:          string
-	disabled?:     bool
-	display_name?: string
-	ssl?:          bool
+	port:         string
+	service_name: string
+	zone:         string
+	allowed_source?: [string, ...]
+	dedicated_ipfo?: [string, ...]
+	default_farm_id?: number
+	default_ssl_id?:  number
+	disabled?:        bool
+	display_name?:    string
+	id?:              string
+	ssl?:             bool
 }
 #OvhIploadbalancingVrackNetworkResource: {
 	nat_ip:        string
@@ -183,11 +322,45 @@ package ovh
 	subnet:        string
 	display_name?: string
 	farm_id?: [number, ...]
+	id?:               string
+	vlan?:             number
+	vrack_network_id?: number
+}
+#OvhMeIdentityUserResource: {
+	email:                 string
+	login:                 string
+	password:              string
+	creation?:             string
+	description?:          string
+	group?:                string
+	id?:                   string
+	last_update?:          string
+	password_last_update?: string
+	status?:               string
 }
 #OvhMeInstallationTemplateResource: {
 	base_template_name: string
 	default_language:   string
 	template_name:      string
+	available_languages?: [string, ...]
+	beta?:         bool
+	bit_format?:   number
+	category?:     string
+	deprecated?:   bool
+	description?:  string
+	distribution?: string
+	family?:       string
+	filesystems?: [string, ...]
+	hard_raid_configuration?:          bool
+	id?:                               string
+	last_modification?:                string
+	lvm_ready?:                        bool
+	remove_default_partition_schemes?: bool
+	supports_distribution_kernel?:     bool
+	supports_gpt_label?:               bool
+	supports_rtm?:                     bool
+	supports_sql_server?:              bool
+	supports_uefi?:                    string
 	customization?: [{
 		change_log?:                      string
 		custom_hostname?:                 string
@@ -202,6 +375,7 @@ package ovh
 	name:          string
 	priority:      number
 	template_name: string
+	id?:           string
 }
 #OvhMeInstallationTemplatePartitionSchemeHardwareRaidResource: {
 	disks: [string, ...]
@@ -210,6 +384,7 @@ package ovh
 	scheme_name:   string
 	step:          number
 	template_name: string
+	id?:           string
 }
 #OvhMeInstallationTemplatePartitionSchemePartitionResource: {
 	filesystem:    string
@@ -219,54 +394,53 @@ package ovh
 	size:          number
 	template_name: string
 	type:          string
+	id?:           string
+	raid?:         string
+	volume_name?:  string
+}
+#OvhMeIpxeScriptResource: {
+	name:         string
+	script:       string
+	description?: string
+	id?:          string
 }
 #OvhMeSshKeyResource: {
 	key:      string
 	key_name: string
-}
-#OvhPubliccloudPrivateNetworkResource: {
-	name:       string
-	project_id: string
-	vlan_id?:   number
-}
-#OvhPubliccloudPrivateNetworkSubnetResource: {
-	end:         string
-	network:     string
-	network_id:  string
-	region:      string
-	start:       string
-	dhcp?:       bool
-	no_gateway?: bool
-	project_id?: string
-}
-#OvhPubliccloudUserResource: {
-	project_id:   string
-	description?: string
+	default?: bool
+	id?:      string
 }
 #OvhVrackCloudprojectResource: {
-	project_id?: string
-	vrack_id?:   string
+	id?:           string
+	project_id?:   string
+	service_name?: string
+	vrack_id?:     string
 }
 #OvhVrackDedicatedServerResource: {
-	server_id: string
-	vrack_id:  string
+	server_id:     string
+	id?:           string
+	service_name?: string
+	vrack_id?:     string
 }
 #OvhVrackDedicatedServerInterfaceResource: {
-	interface_id: string
-	vrack_id:     string
+	interface_id:  string
+	id?:           string
+	service_name?: string
+	vrack_id?:     string
 }
 #OvhVrackIploadbalancingResource: {
 	ip_loadbalancing: string
 	service_name:     string
-}
-#OvhVrackPubliccloudAttachmentResource: {
-	project_id?: string
-	vrack_id?:   string
+	id?:              string
 }
 #Resources: {
 	ovh_cloud_network_private?: [_]:                                   #OvhCloudNetworkPrivateResource
 	ovh_cloud_network_private_subnet?: [_]:                            #OvhCloudNetworkPrivateSubnetResource
+	ovh_cloud_project_network_private?: [_]:                           #OvhCloudProjectNetworkPrivateResource
+	ovh_cloud_project_network_private_subnet?: [_]:                    #OvhCloudProjectNetworkPrivateSubnetResource
+	ovh_cloud_project_user?: [_]:                                      #OvhCloudProjectUserResource
 	ovh_cloud_user?: [_]:                                              #OvhCloudUserResource
+	ovh_dedicated_ceph_acl?: [_]:                                      #OvhDedicatedCephAclResource
 	ovh_dedicated_server_install_task?: [_]:                           #OvhDedicatedServerInstallTaskResource
 	ovh_dedicated_server_reboot_task?: [_]:                            #OvhDedicatedServerRebootTaskResource
 	ovh_dedicated_server_update?: [_]:                                 #OvhDedicatedServerUpdateResource
@@ -283,17 +457,15 @@ package ovh
 	ovh_iploadbalancing_tcp_farm_server?: [_]:                         #OvhIploadbalancingTcpFarmServerResource
 	ovh_iploadbalancing_tcp_frontend?: [_]:                            #OvhIploadbalancingTcpFrontendResource
 	ovh_iploadbalancing_vrack_network?: [_]:                           #OvhIploadbalancingVrackNetworkResource
+	ovh_me_identity_user?: [_]:                                        #OvhMeIdentityUserResource
 	ovh_me_installation_template?: [_]:                                #OvhMeInstallationTemplateResource
 	ovh_me_installation_template_partition_scheme?: [_]:               #OvhMeInstallationTemplatePartitionSchemeResource
 	ovh_me_installation_template_partition_scheme_hardware_raid?: [_]: #OvhMeInstallationTemplatePartitionSchemeHardwareRaidResource
 	ovh_me_installation_template_partition_scheme_partition?: [_]:     #OvhMeInstallationTemplatePartitionSchemePartitionResource
+	ovh_me_ipxe_script?: [_]:                                          #OvhMeIpxeScriptResource
 	ovh_me_ssh_key?: [_]:                                              #OvhMeSshKeyResource
-	ovh_publiccloud_private_network?: [_]:                             #OvhPubliccloudPrivateNetworkResource
-	ovh_publiccloud_private_network_subnet?: [_]:                      #OvhPubliccloudPrivateNetworkSubnetResource
-	ovh_publiccloud_user?: [_]:                                        #OvhPubliccloudUserResource
 	ovh_vrack_cloudproject?: [_]:                                      #OvhVrackCloudprojectResource
 	ovh_vrack_dedicated_server?: [_]:                                  #OvhVrackDedicatedServerResource
 	ovh_vrack_dedicated_server_interface?: [_]:                        #OvhVrackDedicatedServerInterfaceResource
 	ovh_vrack_iploadbalancing?: [_]:                                   #OvhVrackIploadbalancingResource
-	ovh_vrack_publiccloud_attachment?: [_]:                            #OvhVrackPubliccloudAttachmentResource
 }

@@ -2,36 +2,50 @@
 package cloudstack
 
 #CloudstackAffinityGroupResource: {
-	name:     string
-	type:     string
-	project?: string
+	name:         string
+	type:         string
+	description?: string
+	id?:          string
+	project?:     string
 }
 #CloudstackDiskResource: {
 	name:                string
 	zone:                string
 	attach?:             bool
+	device_id?:          number
 	disk_offering?:      string
+	id?:                 string
+	project?:            string
 	shrink_ok?:          bool
+	size?:               number
 	virtual_machine_id?: string
 }
 #CloudstackEgressFirewallResource: {
 	network_id:   string
+	id?:          string
 	managed?:     bool
 	parallelism?: number
 	rule?: [{
 		cidr_list: [string, ...]
-		protocol: string
+		protocol:   string
+		icmp_code?: number
+		icmp_type?: number
 		ports?: [string, ...]
+		uuids?: [_]: string
 	}, ...]
 }
 #CloudstackFirewallResource: {
 	ip_address_id: string
+	id?:           string
 	managed?:      bool
 	parallelism?:  number
 	rule?: [{
 		cidr_list: [string, ...]
-		protocol: string
+		protocol:   string
+		icmp_code?: number
+		icmp_type?: number
 		ports?: [string, ...]
+		uuids?: [_]: string
 	}, ...]
 }
 #CloudstackInstanceResource: {
@@ -40,16 +54,27 @@ package cloudstack
 	zone:             string
 	affinity_group_ids?: [string, ...]
 	affinity_group_names?: [string, ...]
-	expunge?: bool
-	keypair?: string
+	display_name?:   string
+	expunge?:        bool
+	group?:          string
+	id?:             string
+	ip_address?:     string
+	keypair?:        string
+	name?:           string
+	network_id?:     string
+	project?:        string
+	root_disk_size?: number
 	security_group_ids?: [string, ...]
 	security_group_names?: [string, ...]
 	start_vm?:  bool
 	user_data?: string
 }
 #CloudstackIpaddressResource: {
+	id?:          string
+	ip_address?:  string
 	is_portable?: bool
 	network_id?:  string
+	project?:     string
 	vpc_id?:      string
 	zone?:        string
 }
@@ -61,42 +86,63 @@ package cloudstack
 	private_port:    number
 	public_port:     number
 	certificate_id?: string
+	description?:    string
+	id?:             string
 	network_id?:     string
+	project?:        string
+	protocol?:       string
 }
 #CloudstackNetworkResource: {
-	cidr:             string
-	name:             string
-	network_offering: string
-	zone:             string
-	acl_id?:          string
-	source_nat_ip?:   bool
-	vlan?:            number
-	vpc_id?:          string
+	cidr:              string
+	name:              string
+	network_offering:  string
+	zone:              string
+	acl_id?:           string
+	display_text?:     string
+	endip?:            string
+	gateway?:          string
+	id?:               string
+	network_domain?:   string
+	project?:          string
+	source_nat_ip?:    bool
+	source_nat_ip_id?: string
+	startip?:          string
+	vlan?:             number
+	vpc_id?:           string
 }
 #CloudstackNetworkAclResource: {
-	name:     string
-	vpc_id:   string
-	project?: string
+	name:         string
+	vpc_id:       string
+	description?: string
+	id?:          string
+	project?:     string
 }
 #CloudstackNetworkAclRuleResource: {
 	acl_id:       string
+	id?:          string
 	managed?:     bool
 	parallelism?: number
 	project?:     string
 	rule?: [{
 		cidr_list: [string, ...]
-		protocol: string
-		action?:  string
+		protocol:   string
+		action?:    string
+		icmp_code?: number
+		icmp_type?: number
 		ports?: [string, ...]
 		traffic_type?: string
+		uuids?: [_]: string
 	}, ...]
 }
 #CloudstackNicResource: {
 	network_id:         string
 	virtual_machine_id: string
+	id?:                string
+	ip_address?:        string
 }
 #CloudstackPortForwardResource: {
 	ip_address_id: string
+	id?:           string
 	managed?:      bool
 	project?:      string
 	forward?: [{
@@ -104,6 +150,7 @@ package cloudstack
 		protocol:           string
 		public_port:        number
 		virtual_machine_id: string
+		uuid?:              string
 		vm_guest_ip?:       string
 	}, ...]
 }
@@ -114,64 +161,111 @@ package cloudstack
 	netmask:              string
 	vlan:                 string
 	vpc_id:               string
+	id?:                  string
 	network_offering?:    string
 	physical_network_id?: string
 }
-#CloudstackSecondaryIpaddressResource: virtual_machine_id: string
-#CloudstackSecurityGroupResource: name:                    string
+#CloudstackSecondaryIpaddressResource: {
+	virtual_machine_id: string
+	id?:                string
+	ip_address?:        string
+	nic_id?:            string
+}
+#CloudstackSecurityGroupResource: {
+	name:         string
+	description?: string
+	id?:          string
+	project?:     string
+}
 #CloudstackSecurityGroupRuleResource: {
 	security_group_id: string
+	id?:               string
 	parallelism?:      number
 	project?:          string
 	rule?: [{
 		protocol: string
 		cidr_list?: [string, ...]
+		icmp_code?: number
+		icmp_type?: number
 		ports?: [string, ...]
 		traffic_type?: string
 		user_security_group_list?: [string, ...]
+		uuids?: [_]: string
 	}, ...]
 }
 #CloudstackSshKeypairResource: {
-	name:        string
-	project?:    string
-	public_key?: string
+	name:         string
+	fingerprint?: string
+	id?:          string
+	private_key?: string
+	project?:     string
+	public_key?:  string
 }
 #CloudstackStaticNatResource: {
 	ip_address_id:      string
 	virtual_machine_id: string
+	id?:                string
+	project?:           string
+	vm_guest_ip?:       string
 }
 #CloudstackStaticRouteResource: {
 	cidr:       string
 	gateway_id: string
+	id?:        string
 }
 #CloudstackTemplateResource: {
-	format:            string
-	hypervisor:        string
-	name:              string
-	os_type:           string
-	url:               string
-	is_ready_timeout?: number
-	zone?:             string
+	format:                   string
+	hypervisor:               string
+	name:                     string
+	os_type:                  string
+	url:                      string
+	display_text?:            string
+	id?:                      string
+	is_dynamically_scalable?: bool
+	is_extractable?:          bool
+	is_featured?:             bool
+	is_public?:               bool
+	is_ready?:                bool
+	is_ready_timeout?:        number
+	password_enabled?:        bool
+	project?:                 string
+	zone?:                    string
 }
 #CloudstackVpcResource: {
-	cidr:         string
-	name:         string
-	vpc_offering: string
-	zone:         string
+	cidr:            string
+	name:            string
+	vpc_offering:    string
+	zone:            string
+	display_text?:   string
+	id?:             string
+	network_domain?: string
+	project?:        string
+	source_nat_ip?:  string
+	tags?: [_]: string
 }
 #CloudstackVpnConnectionResource: {
 	customer_gateway_id: string
 	vpn_gateway_id:      string
+	id?:                 string
 }
 #CloudstackVpnCustomerGatewayResource: {
-	cidr:       string
-	esp_policy: string
-	gateway:    string
-	ike_policy: string
-	ipsec_psk:  string
-	name:       string
+	cidr:          string
+	esp_policy:    string
+	gateway:       string
+	ike_policy:    string
+	ipsec_psk:     string
+	name:          string
+	dpd?:          bool
+	esp_lifetime?: number
+	id?:           string
+	ike_lifetime?: number
+	project?:      string
 }
-#CloudstackVpnGatewayResource: vpc_id: string
+#CloudstackVpnGatewayResource: {
+	vpc_id:     string
+	id?:        string
+	public_ip?: string
+}
 #Resources: {
 	cloudstack_affinity_group?: [_]:       #CloudstackAffinityGroupResource
 	cloudstack_disk?: [_]:                 #CloudstackDiskResource

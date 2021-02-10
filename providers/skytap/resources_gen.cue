@@ -5,6 +5,7 @@ package skytap
 	description:       string
 	name:              string
 	template_id:       string
+	id?:               string
 	outbound_traffic?: bool
 	routable?:         bool
 	shutdown_at_time?: string
@@ -16,6 +17,7 @@ package skytap
 	label?: [{
 		category: string
 		value:    string
+		id?:      string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -26,6 +28,7 @@ package skytap
 #SkytapIcnrTunnelResource: {
 	source: number
 	target: number
+	id?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -35,6 +38,7 @@ package skytap
 #SkytapLabelCategoryResource: {
 	name:         string
 	single_value: bool
+	id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -46,6 +50,8 @@ package skytap
 	environment_id: string
 	name:           string
 	subnet:         string
+	gateway?:       string
+	id?:            string
 	tunnelable?:    bool
 	timeouts?: {
 		create?: string
@@ -56,6 +62,7 @@ package skytap
 #SkytapProjectResource: {
 	name:                  string
 	auto_add_role_name?:   string
+	id?:                   string
 	show_project_members?: bool
 	summary?:              string
 	timeouts?: {
@@ -68,23 +75,41 @@ package skytap
 	environment_id: string
 	template_id:    string
 	vm_id:          string
-	user_data?:     string
+	cpus?:          number
+	id?:            string
+	max_cpus?:      number
+	max_ram?:       number
+	name?:          string
+	os_disk_size?:  number
+	ram?:           number
+	service_ips?: [_]:   string
+	service_ports?: [_]: number
+	user_data?: string
 	disk?: [{
-		name: string
-		size: number
+		name:        string
+		size:        number
+		controller?: string
+		id?:         string
+		lun?:        string
+		type?:       string
 	}, ...]
 	label?: [{
 		category: string
 		value:    string
+		id?:      string
 	}, ...]
 	network_interface?: [{
 		hostname:       string
 		interface_type: string
 		ip:             string
 		network_id:     string
+		id?:            string
 		published_service?: [{
-			internal_port: number
-			name:          string
+			internal_port:  number
+			name:           string
+			external_ip?:   string
+			external_port?: number
+			id?:            string
 		}, ...]
 	}, ...]
 	timeouts?: {

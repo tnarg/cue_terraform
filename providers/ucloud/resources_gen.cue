@@ -8,9 +8,26 @@ package ucloud
 	instance_storage:           number
 	instance_type:              string
 	allow_stopping_for_update?: bool
-	backup_count?:              number
-	duration?:                  number
-	standby_zone?:              string
+	backup_begin_time?:         number
+	backup_black_list?: [string, ...]
+	backup_count?:    number
+	backup_date?:     string
+	charge_type?:     string
+	create_time?:     string
+	duration?:        number
+	expire_time?:     string
+	id?:              string
+	modify_time?:     string
+	name?:            string
+	parameter_group?: string
+	password?:        string
+	port?:            number
+	private_ip?:      string
+	standby_zone?:    string
+	status?:          string
+	subnet_id?:       string
+	tag?:             string
+	vpc_id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -20,36 +37,98 @@ package ucloud
 #UcloudDiskResource: {
 	availability_zone: string
 	disk_size:         number
+	charge_type?:      string
+	create_time?:      string
 	disk_type?:        string
 	duration?:         number
+	expire_time?:      string
+	id?:               string
+	name?:             string
+	status?:           string
 	tag?:              string
 }
 #UcloudDiskAttachmentResource: {
 	availability_zone: string
 	disk_id:           string
 	instance_id:       string
+	id?:               string
 }
 #UcloudEipResource: {
 	internet_type: string
+	bandwidth?:    number
+	charge_mode?:  string
+	charge_type?:  string
+	create_time?:  string
 	duration?:     number
-	tag?:          string
+	expire_time?:  string
+	id?:           string
+	ip_set?: [{
+		internet_type: string
+		ip:            string
+	}, ...]
+	name?:      string
+	public_ip?: string
+	remark?:    string
+	resource?: [_]: string
+	status?: string
+	tag?:    string
 }
 #UcloudEipAssociationResource: {
-	eip_id:      string
-	resource_id: string
+	eip_id:         string
+	resource_id:    string
+	id?:            string
+	resource_type?: string
 }
 #UcloudInstanceResource: {
 	availability_zone:           string
 	image_id:                    string
 	instance_type:               string
 	allow_stopping_for_update?:  bool
+	auto_renew?:                 bool
+	boot_disk_size?:             number
+	boot_disk_type?:             string
+	charge_type?:                string
+	cpu?:                        number
+	cpu_platform?:               string
+	create_time?:                string
+	data_disk_size?:             number
+	data_disk_type?:             string
 	delete_disks_with_instance?: bool
-	duration?:                   number
-	tag?:                        string
-	user_data?:                  string
+	delete_eips_with_instance?:  bool
+	disk_set?: [{
+		id:      string
+		is_boot: bool
+		size:    number
+		type:    string
+	}, ...]
+	duration?:    number
+	expire_time?: string
+	id?:          string
+	ip_set?: [{
+		internet_type: string
+		ip:            string
+	}, ...]
+	isolation_group?:  string
+	memory?:           number
+	min_cpu_platform?: string
+	name?:             string
+	private_ip?:       string
+	remark?:           string
+	root_password?:    string
+	security_group?:   string
+	status?:           string
+	subnet_id?:        string
+	tag?:              string
+	user_data?:        string
+	vpc_id?:           string
 	data_disks?: [{
 		size: number
 		type: string
+	}, ...]
+	network_interface?: [{
+		eip_bandwidth:     number
+		eip_charge_mode:   string
+		eip_internet_type: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -57,53 +136,107 @@ package ucloud
 		update?: string
 	}
 }
-#UcloudIsolationGroupResource: {}
+#UcloudIsolationGroupResource: {
+	id?:     string
+	name?:   string
+	remark?: string
+}
 #UcloudLbResource: {
 	charge_type?: string
-	tag?:         string
+	create_time?: string
+	expire_time?: string
+	id?:          string
+	internal?:    bool
+	ip_set?: [{
+		internet_type: string
+		ip:            string
+	}, ...]
+	listen_type?:    string
+	name?:           string
+	private_ip?:     string
+	remark?:         string
+	security_group?: string
+	subnet_id?:      string
+	tag?:            string
+	vpc_id?:         string
 }
 #UcloudLbAttachmentResource: {
 	listener_id:      string
 	load_balancer_id: string
 	resource_id:      string
+	id?:              string
 	port?:            number
+	private_ip?:      string
+	resource_type?:   string
+	status?:          string
 }
 #UcloudLbListenerResource: {
-	load_balancer_id:  string
-	protocol:          string
-	method?:           string
-	persistence_type?: string
+	load_balancer_id:   string
+	protocol:           string
+	domain?:            string
+	health_check_type?: string
+	id?:                string
+	idle_timeout?:      number
+	listen_type?:       string
+	method?:            string
+	name?:              string
+	path?:              string
+	persistence?:       string
+	persistence_type?:  string
+	port?:              number
+	status?:            string
 }
 #UcloudLbRuleResource: {
 	backend_ids: [string, ...]
 	listener_id:      string
 	load_balancer_id: string
 	domain?:          string
+	id?:              string
 	path?:            string
 }
 #UcloudLbSslResource: {
-	private_key: string
-	user_cert:   string
-	ca_cert?:    string
+	private_key:  string
+	user_cert:    string
+	ca_cert?:     string
+	create_time?: string
+	id?:          string
+	name?:        string
 }
 #UcloudLbSslAttachmentResource: {
 	listener_id:      string
 	load_balancer_id: string
 	ssl_id:           string
+	id?:              string
 }
 #UcloudMemcacheInstanceResource: {
 	availability_zone: string
 	instance_type:     string
+	charge_type?:      string
+	create_time?:      string
 	duration?:         number
+	expire_time?:      string
+	id?:               string
+	ip_set?: [{
+		ip:   string
+		port: number
+	}, ...]
+	name?:      string
+	status?:    string
+	subnet_id?: string
+	tag?:       string
+	vpc_id?:    string
 }
 #UcloudNatGatewayResource: {
 	eip_id:            string
 	enable_white_list: bool
 	security_group:    string
 	subnet_ids: [string, ...]
-	vpc_id: string
-	name?:  string
-	tag?:   string
+	vpc_id:       string
+	create_time?: string
+	id?:          string
+	name?:        string
+	remark?:      string
+	tag?:         string
 	white_list?: [string, ...]
 }
 #UcloudNatGatewayRuleResource: {
@@ -113,15 +246,35 @@ package ucloud
 	protocol:       string
 	src_eip_id:     string
 	src_port_range: string
+	id?:            string
+	name?:          string
 }
 #UcloudRedisInstanceResource: {
 	availability_zone: string
 	instance_type:     string
+	charge_type?:      string
+	create_time?:      string
 	duration?:         number
-	password?:         string
+	engine_version?:   string
+	expire_time?:      string
+	id?:               string
+	ip_set?: [{
+		ip:   string
+		port: number
+	}, ...]
+	name?:      string
+	password?:  string
+	status?:    string
+	subnet_id?: string
+	tag?:       string
+	vpc_id?:    string
 }
 #UcloudSecurityGroupResource: {
-	tag?: string
+	create_time?: string
+	id?:          string
+	name?:        string
+	remark?:      string
+	tag?:         string
 	rules?: [{
 		cidr_block?: string
 		policy?:     string
@@ -131,34 +284,60 @@ package ucloud
 	}, ...]
 }
 #UcloudSubnetResource: {
-	cidr_block: string
-	vpc_id:     string
-	tag?:       string
+	cidr_block:   string
+	vpc_id:       string
+	create_time?: string
+	id?:          string
+	name?:        string
+	remark?:      string
+	tag?:         string
 }
 #UcloudUdpnConnectionResource: {
 	peer_region:  string
 	bandwidth?:   number
 	charge_type?: string
+	create_time?: string
 	duration?:    number
+	expire_time?: string
+	id?:          string
 }
 #UcloudVipResource: {
-	subnet_id: string
-	vpc_id:    string
-	tag?:      string
+	subnet_id:    string
+	vpc_id:       string
+	create_time?: string
+	id?:          string
+	ip_address?:  string
+	name?:        string
+	remark?:      string
+	tag?:         string
 }
 #UcloudVpcResource: {
 	cidr_blocks: [string, ...]
-	tag?: string
+	create_time?: string
+	id?:          string
+	name?:        string
+	network_info?: [{
+		cidr_block: string
+	}, ...]
+	remark?:      string
+	tag?:         string
+	update_time?: string
 }
 #UcloudVpcPeeringConnectionResource: {
-	peer_vpc_id: string
-	vpc_id:      string
+	peer_vpc_id:      string
+	vpc_id:           string
+	id?:              string
+	peer_project_id?: string
+	peer_region?:     string
 }
 #UcloudVpnConnectionResource: {
 	customer_gateway_id: string
 	vpc_id:              string
 	vpn_gateway_id:      string
+	create_time?:        string
+	id?:                 string
 	name?:               string
+	remark?:             string
 	tag?:                string
 	ike_config?: [{
 		pre_shared_key:            string
@@ -167,6 +346,8 @@ package ucloud
 		encryption_algorithm?:     string
 		exchange_mode?:            string
 		ike_version?:              string
+		local_id?:                 string
+		remote_id?:                string
 		sa_life_time?:             number
 	}, ...]
 	ipsec_config?: [{
@@ -177,18 +358,29 @@ package ucloud
 		pfs_dh_group?:             string
 		protocol?:                 string
 		sa_life_time?:             number
+		sa_life_time_bytes?:       number
 	}, ...]
 }
 #UcloudVpnCustomerGatewayResource: {
-	ip_address: string
-	tag?:       string
+	ip_address:   string
+	create_time?: string
+	id?:          string
+	name?:        string
+	remark?:      string
+	tag?:         string
 }
 #UcloudVpnGatewayResource: {
-	eip_id:    string
-	grade:     string
-	vpc_id:    string
-	duration?: number
-	tag?:      string
+	eip_id:       string
+	grade:        string
+	vpc_id:       string
+	charge_type?: string
+	create_time?: string
+	duration?:    number
+	expire_time?: string
+	id?:          string
+	name?:        string
+	remark?:      string
+	tag?:         string
 }
 #Resources: {
 	ucloud_db_instance?: [_]:            #UcloudDbInstanceResource

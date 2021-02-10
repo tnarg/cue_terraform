@@ -2,7 +2,16 @@
 package openstack
 
 #OpenstackBlockstorageQuotasetV2Resource: {
-	project_id: string
+	project_id:            string
+	backup_gigabytes?:     number
+	backups?:              number
+	gigabytes?:            number
+	groups?:               number
+	id?:                   string
+	per_volume_gigabytes?: number
+	region?:               string
+	snapshots?:            number
+	volumes?:              number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -10,7 +19,16 @@ package openstack
 	}
 }
 #OpenstackBlockstorageQuotasetV3Resource: {
-	project_id: string
+	project_id:            string
+	backup_gigabytes?:     number
+	backups?:              number
+	gigabytes?:            number
+	groups?:               number
+	id?:                   string
+	per_volume_gigabytes?: number
+	region?:               string
+	snapshots?:            number
+	volumes?:              number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -21,14 +39,19 @@ package openstack
 	host_name:    string
 	volume_id:    string
 	attach_mode?: string
-	device?:      string
-	initiator?:   string
-	instance_id?: string
-	ip_address?:  string
-	multipath?:   bool
-	os_type?:     string
-	platform?:    string
-	wwnn?:        string
+	data?: [_]: string
+	device?:             string
+	driver_volume_type?: string
+	id?:                 string
+	initiator?:          string
+	instance_id?:        string
+	ip_address?:         string
+	mount_point_base?:   string
+	multipath?:          bool
+	os_type?:            string
+	platform?:           string
+	region?:             string
+	wwnn?:               string
 	wwpn?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -39,13 +62,18 @@ package openstack
 	host_name:    string
 	volume_id:    string
 	attach_mode?: string
-	device?:      string
-	initiator?:   string
-	ip_address?:  string
-	multipath?:   bool
-	os_type?:     string
-	platform?:    string
-	wwnn?:        string
+	data?: [_]: string
+	device?:             string
+	driver_volume_type?: string
+	id?:                 string
+	initiator?:          string
+	ip_address?:         string
+	mount_point_base?:   string
+	multipath?:          bool
+	os_type?:            string
+	platform?:           string
+	region?:             string
+	wwnn?:               string
 	wwpn?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -53,26 +81,46 @@ package openstack
 	}
 }
 #OpenstackBlockstorageVolumeV1Resource: {
-	size:           number
-	description?:   string
-	image_id?:      string
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?: string
+	description?:       string
+	id?:                string
+	image_id?:          string
+	metadata?: [_]: string
 	name?:          string
+	region?:        string
 	snapshot_id?:   string
 	source_vol_id?: string
+	volume_type?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpenstackBlockstorageVolumeV2Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	consistency_group_id?: string
 	description?:          string
+	id?:                   string
 	image_id?:             string
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
+	volume_type?:    string
 	scheduler_hints?: [{
 		additional_properties?: [_]: string
 		different_host?: [string, ...]
@@ -86,16 +134,26 @@ package openstack
 	}
 }
 #OpenstackBlockstorageVolumeV3Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	consistency_group_id?: string
 	description?:          string
 	enable_online_resize?: bool
+	id?:                   string
 	image_id?:             string
-	multiattach?:          bool
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	multiattach?:    bool
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
+	volume_type?:    string
 	scheduler_hints?: [{
 		additional_properties?: [_]: string
 		different_host?: [string, ...]
@@ -108,17 +166,35 @@ package openstack
 		delete?: string
 	}
 }
+#OpenstackComputeAggregateV2Resource: {
+	name: string
+	hosts?: [string, ...]
+	id?: string
+	metadata?: [_]: string
+	zone?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OpenstackComputeFlavorAccessV2Resource: {
 	flavor_id: string
 	tenant_id: string
+	id?:       string
+	region?:   string
 }
 #OpenstackComputeFlavorV2Resource: {
-	disk:          number
-	name:          string
-	ram:           number
-	vcpus:         number
-	ephemeral?:    number
+	disk:       number
+	name:       string
+	ram:        number
+	vcpus:      number
+	ephemeral?: number
+	extra_specs?: [_]: string
+	flavor_id?:    string
+	id?:           string
 	is_public?:    bool
+	region?:       string
 	rx_tx_factor?: number
 	swap?:         number
 }
@@ -126,20 +202,42 @@ package openstack
 	floating_ip:            string
 	instance_id:            string
 	fixed_ip?:              string
+	id?:                    string
+	region?:                string
 	wait_until_associated?: bool
 	timeouts?: create?: string
 }
-#OpenstackComputeFloatingipV2Resource: pool: string
+#OpenstackComputeFloatingipV2Resource: {
+	pool:         string
+	address?:     string
+	fixed_ip?:    string
+	id?:          string
+	instance_id?: string
+	region?:      string
+}
 #OpenstackComputeInstanceV2Resource: {
-	name:                     string
-	admin_pass?:              string
+	name:          string
+	access_ip_v4?: string
+	access_ip_v6?: string
+	admin_pass?:   string
+	all_metadata?: [_]: string
+	all_tags?: [string, ...]
+	availability_zone?:       string
 	availability_zone_hints?: string
 	config_drive?:            bool
+	flavor_id?:               string
+	flavor_name?:             string
 	floating_ip?:             string
 	force_delete?:            bool
+	id?:                      string
+	image_id?:                string
+	image_name?:              string
 	key_pair?:                string
 	metadata?: [_]: string
-	power_state?:         string
+	network_mode?: string
+	power_state?:  string
+	region?:       string
+	security_groups?: [string, ...]
 	stop_before_destroy?: bool
 	tags?: [string, ...]
 	user_data?: string
@@ -157,6 +255,13 @@ package openstack
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		floating_ip?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	personality?: [{
 		content: string
@@ -165,6 +270,7 @@ package openstack
 	scheduler_hints?: [{
 		additional_properties?: [_]: string
 		build_near_host_ip?: string
+		different_cell?: [string, ...]
 		different_host?: [string, ...]
 		group?: string
 		query?: [string, ...]
@@ -182,22 +288,49 @@ package openstack
 	}, ...]
 	volume?: [{
 		volume_id: string
+		device?:   string
+		id?:       string
 	}, ...]
 }
 #OpenstackComputeInterfaceAttachV2Resource: {
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	network_id?: string
+	port_id?:    string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpenstackComputeKeypairV2Resource: {
-	name: string
+	name:         string
+	fingerprint?: string
+	id?:          string
+	private_key?: string
+	public_key?:  string
+	region?:      string
 	value_specs?: [_]: string
 }
 #OpenstackComputeQuotasetV2Resource: {
-	project_id: string
+	project_id:                   string
+	cores?:                       number
+	fixed_ips?:                   number
+	floating_ips?:                number
+	id?:                          string
+	injected_file_content_bytes?: number
+	injected_file_path_bytes?:    number
+	injected_files?:              number
+	instances?:                   number
+	key_pairs?:                   number
+	metadata_items?:              number
+	ram?:                         number
+	region?:                      string
+	security_group_rules?:        number
+	security_groups?:             number
+	server_group_members?:        number
+	server_groups?:               number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -207,32 +340,71 @@ package openstack
 #OpenstackComputeSecgroupV2Resource: {
 	description: string
 	name:        string
+	id?:         string
+	region?:     string
 	rule?: [{
 		from_port:      number
 		ip_protocol:    string
 		to_port:        number
 		cidr?:          string
 		from_group_id?: string
+		id?:            string
 		self?:          bool
 	}, ...]
 	timeouts?: delete?: string
 }
 #OpenstackComputeServergroupV2Resource: {
 	name: string
+	id?:  string
+	members?: [string, ...]
 	policies?: [string, ...]
+	region?: string
 	value_specs?: [_]: string
 }
 #OpenstackComputeVolumeAttachV2Resource: {
 	instance_id:  string
 	volume_id:    string
+	device?:      string
+	id?:          string
 	multiattach?: bool
+	region?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
+	vendor_options?: [{
+		ignore_volume_confirmation?: bool
+	}, ...]
 }
 #OpenstackContainerinfraClusterV1Resource: {
-	cluster_template_id: string
+	cluster_template_id:  string
+	api_address?:         string
+	coe_version?:         string
+	container_version?:   string
+	create_timeout?:      number
+	created_at?:          string
+	discovery_url?:       string
+	docker_volume_size?:  number
+	fixed_network?:       string
+	fixed_subnet?:        string
+	flavor?:              string
+	floating_ip_enabled?: bool
+	id?:                  string
+	keypair?:             string
+	kubeconfig?: [_]: string
+	labels?: [_]:     string
+	master_addresses?: [string, ...]
+	master_count?:  number
+	master_flavor?: string
+	merge_labels?:  bool
+	name?:          string
+	node_addresses?: [string, ...]
+	node_count?: number
+	project_id?: string
+	region?:     string
+	stack_id?:   string
+	updated_at?: string
+	user_id?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -244,6 +416,8 @@ package openstack
 	image:                  string
 	name:                   string
 	apiserver_port?:        number
+	cluster_distro?:        string
+	created_at?:            string
 	dns_nameserver?:        string
 	docker_storage_driver?: string
 	docker_volume_size?:    number
@@ -254,15 +428,22 @@ package openstack
 	floating_ip_enabled?:   bool
 	http_proxy?:            string
 	https_proxy?:           string
+	id?:                    string
 	insecure_registry?:     string
 	keypair_id?:            string
 	labels?: [_]: string
 	master_flavor?:     string
 	master_lb_enabled?: bool
+	network_driver?:    string
 	no_proxy?:          string
+	project_id?:        string
 	public?:            bool
+	region?:            string
 	registry_enabled?:  bool
+	server_type?:       string
 	tls_disabled?:      bool
+	updated_at?:        string
+	user_id?:           string
 	volume_driver?:     string
 	timeouts?: {
 		create?: string
@@ -272,6 +453,8 @@ package openstack
 #OpenstackDbConfigurationV1Resource: {
 	description: string
 	name:        string
+	id?:         string
+	region?:     string
 	configuration?: [{
 		name:  string
 		value: string
@@ -288,6 +471,8 @@ package openstack
 #OpenstackDbDatabaseV1Resource: {
 	instance_id: string
 	name:        string
+	id?:         string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -297,6 +482,9 @@ package openstack
 	name:              string
 	size:              number
 	configuration_id?: string
+	flavor_id?:        string
+	id?:               string
+	region?:           string
 	database?: [{
 		name:     string
 		charset?: string
@@ -327,7 +515,10 @@ package openstack
 	instance_id: string
 	name:        string
 	password:    string
-	host?:       string
+	databases?: [string, ...]
+	host?:   string
+	id?:     string
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -337,7 +528,11 @@ package openstack
 	name:         string
 	zone_id:      string
 	description?: string
+	id?:          string
 	records?: [string, ...]
+	region?: string
+	ttl?:    number
+	type?:   string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -348,9 +543,15 @@ package openstack
 #OpenstackDnsZoneV2Resource: {
 	name: string
 	attributes?: [_]: string
-	description?: string
-	email?:       string
+	description?:          string
+	disable_status_check?: bool
+	email?:                string
+	id?:                   string
 	masters?: [string, ...]
+	project_id?: string
+	region?:     string
+	ttl?:        number
+	type?:       string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -361,9 +562,13 @@ package openstack
 #OpenstackFwFirewallV1Resource: {
 	policy_id:       string
 	admin_state_up?: bool
-	description?:    string
-	name?:           string
-	no_routers?:     bool
+	associated_routers?: [string, ...]
+	description?: string
+	id?:          string
+	name?:        string
+	no_routers?:  bool
+	region?:      string
+	tenant_id?:   string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -374,9 +579,12 @@ package openstack
 #OpenstackFwPolicyV1Resource: {
 	audited?:     bool
 	description?: string
+	id?:          string
 	name?:        string
+	region?:      string
 	rules?: [string, ...]
-	shared?: bool
+	shared?:    bool
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -390,96 +598,186 @@ package openstack
 	destination_ip_address?: string
 	destination_port?:       string
 	enabled?:                bool
+	id?:                     string
 	ip_version?:             number
 	name?:                   string
+	region?:                 string
 	source_ip_address?:      string
 	source_port?:            string
 	tenant_id?:              string
 	value_specs?: [_]: string
 }
 #OpenstackIdentityApplicationCredentialV3Resource: {
-	name:          string
-	description?:  string
-	expires_at?:   string
+	name:         string
+	description?: string
+	expires_at?:  string
+	id?:          string
+	project_id?:  string
+	region?:      string
+	roles?: [string, ...]
+	secret?:       string
 	unrestricted?: bool
 	access_rules?: [{
 		method:  string
 		path:    string
 		service: string
+		id?:     string
 	}, ...]
+}
+#OpenstackIdentityEc2CredentialV3Resource: {
+	access?:     string
+	id?:         string
+	project_id?: string
+	region?:     string
+	secret?:     string
+	trust_id?:   string
+	user_id?:    string
 }
 #OpenstackIdentityEndpointV3Resource: {
 	endpoint_region: string
 	service_id:      string
 	url:             string
+	id?:             string
 	interface?:      string
 	name?:           string
+	region?:         string
+	service_name?:   string
+	service_type?:   string
+}
+#OpenstackIdentityGroupV3Resource: {
+	name:         string
+	description?: string
+	domain_id?:   string
+	id?:          string
+	region?:      string
 }
 #OpenstackIdentityProjectV3Resource: {
 	description?: string
+	domain_id?:   string
 	enabled?:     bool
+	id?:          string
 	is_domain?:   bool
 	name?:        string
+	parent_id?:   string
+	region?:      string
 	tags?: [string, ...]
 }
 #OpenstackIdentityRoleAssignmentV3Resource: {
 	role_id:     string
 	domain_id?:  string
 	group_id?:   string
+	id?:         string
 	project_id?: string
+	region?:     string
 	user_id?:    string
 }
-#OpenstackIdentityRoleV3Resource: name: string
+#OpenstackIdentityRoleV3Resource: {
+	name:       string
+	domain_id?: string
+	id?:        string
+	region?:    string
+}
 #OpenstackIdentityServiceV3Resource: {
 	name:         string
 	type:         string
 	description?: string
 	enabled?:     bool
+	id?:          string
+	region?:      string
+}
+#OpenstackIdentityUserMembershipV3Resource: {
+	group_id: string
+	user_id:  string
+	id?:      string
+	region?:  string
 }
 #OpenstackIdentityUserV3Resource: {
-	description?: string
-	enabled?:     bool
+	default_project_id?: string
+	description?:        string
+	domain_id?:          string
+	enabled?:            bool
 	extra?: [_]: string
+	id?:                                    string
 	ignore_change_password_upon_first_use?: bool
 	ignore_lockout_failure_attempts?:       bool
 	ignore_password_expiry?:                bool
 	multi_factor_auth_enabled?:             bool
 	name?:                                  string
 	password?:                              string
+	region?:                                string
 	multi_factor_auth_rule?: [{
 		rule: [string, ...]
 	}, ...]
 }
 #OpenstackImagesImageAccessAcceptV2Resource: {
-	image_id: string
-	status:   string
+	image_id:    string
+	status:      string
+	created_at?: string
+	id?:         string
+	member_id?:  string
+	region?:     string
+	schema?:     string
+	updated_at?: string
 }
 #OpenstackImagesImageAccessV2Resource: {
-	image_id:  string
-	member_id: string
+	image_id:    string
+	member_id:   string
+	created_at?: string
+	id?:         string
+	region?:     string
+	schema?:     string
+	status?:     string
+	updated_at?: string
 }
 #OpenstackImagesImageV2Resource: {
 	container_format:  string
 	disk_format:       string
 	name:              string
+	checksum?:         string
+	created_at?:       string
+	file?:             string
+	id?:               string
 	image_cache_path?: string
+	image_id?:         string
 	image_source_url?: string
 	local_file_path?:  string
-	min_disk_gb?:      number
-	min_ram_mb?:       number
-	protected?:        bool
+	metadata?: [_]: string
+	min_disk_gb?: number
+	min_ram_mb?:  number
+	owner?:       string
+	properties?: [_]: string
+	protected?:  bool
+	region?:     string
+	schema?:     string
+	size_bytes?: number
+	status?:     string
 	tags?: [string, ...]
+	update_at?:       string
+	updated_at?:      string
 	verify_checksum?: bool
 	visibility?:      string
 	web_download?:    bool
 	timeouts?: create?: string
 }
 #OpenstackKeymanagerContainerV1Resource: {
-	type:  string
-	name?: string
+	type: string
+	consumers?: [{
+		name: string
+		url:  string
+	}, ...]
+	container_ref?: string
+	created_at?:    string
+	creator_id?:    string
+	id?:            string
+	name?:          string
+	region?:        string
+	status?:        string
+	updated_at?:    string
 	acl?: [{
 		read?: [{
+			created_at?:     string
 			project_access?: bool
+			updated_at?:     string
 			users?: [string, ...]
 		}, ...]
 	}, ...]
@@ -494,7 +792,18 @@ package openstack
 	}
 }
 #OpenstackKeymanagerOrderV1Resource: {
-	type: string
+	type:                string
+	container_ref?:      string
+	created?:            string
+	creator_id?:         string
+	id?:                 string
+	order_ref?:          string
+	region?:             string
+	secret_ref?:         string
+	status?:             string
+	sub_status?:         string
+	sub_status_message?: string
+	updated?:            string
 	meta?: [{
 		algorithm:             string
 		bit_length:            number
@@ -509,14 +818,30 @@ package openstack
 	}
 }
 #OpenstackKeymanagerSecretV1Resource: {
+	algorithm?: string
+	all_metadata?: [_]: string
+	bit_length?: number
+	content_types?: [_]: string
+	created_at?: string
+	creator_id?: string
 	expiration?: string
+	id?:         string
 	metadata?: [_]: string
+	mode?:                     string
 	name?:                     string
+	payload?:                  string
 	payload_content_encoding?: string
 	payload_content_type?:     string
+	region?:                   string
+	secret_ref?:               string
+	secret_type?:              string
+	status?:                   string
+	updated_at?:               string
 	acl?: [{
 		read?: [{
+			created_at?:     string
 			project_access?: bool
+			updated_at?:     string
 			users?: [string, ...]
 		}, ...]
 	}, ...]
@@ -531,9 +856,13 @@ package openstack
 	listener_id:       string
 	admin_state_up?:   bool
 	description?:      string
+	id?:               string
 	name?:             string
+	position?:         number
 	redirect_pool_id?: string
 	redirect_url?:     string
+	region?:           string
+	tenant_id?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -546,8 +875,12 @@ package openstack
 	type:            string
 	value:           string
 	admin_state_up?: bool
+	id?:             string
 	invert?:         bool
 	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -555,14 +888,25 @@ package openstack
 	}
 }
 #OpenstackLbListenerV2Resource: {
-	loadbalancer_id:            string
-	protocol:                   string
-	protocol_port:              number
-	admin_state_up?:            bool
+	loadbalancer_id: string
+	protocol:        string
+	protocol_port:   number
+	admin_state_up?: bool
+	allowed_cidrs?: [string, ...]
+	connection_limit?:          number
+	default_pool_id?:           string
 	default_tls_container_ref?: string
 	description?:               string
+	id?:                        string
 	insert_headers?: [_]: string
+	name?:   string
+	region?: string
 	sni_container_refs?: [string, ...]
+	tenant_id?:              string
+	timeout_client_data?:    number
+	timeout_member_connect?: number
+	timeout_member_data?:    number
+	timeout_tcp_inspect?:    number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -570,11 +914,19 @@ package openstack
 	}
 }
 #OpenstackLbLoadbalancerV2Resource: {
-	vip_subnet_id:   string
-	admin_state_up?: bool
-	description?:    string
-	flavor_id?:      string
-	name?:           string
+	admin_state_up?:        bool
+	description?:           string
+	flavor_id?:             string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	security_group_ids?: [string, ...]
+	tenant_id?:      string
+	vip_address?:    string
+	vip_network_id?: string
+	vip_port_id?:    string
+	vip_subnet_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -582,10 +934,14 @@ package openstack
 	}
 }
 #OpenstackLbMemberV1Resource: {
-	address:    string
-	pool_id:    string
-	port:       number
-	tenant_id?: string
+	address:         string
+	pool_id:         string
+	port:            number
+	admin_state_up?: bool
+	id?:             string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -596,8 +952,12 @@ package openstack
 	pool_id:         string
 	protocol_port:   number
 	admin_state_up?: bool
+	id?:             string
 	name?:           string
+	region?:         string
 	subnet_id?:      string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -606,10 +966,13 @@ package openstack
 }
 #OpenstackLbMembersV2Resource: {
 	pool_id: string
+	id?:     string
+	region?: string
 	member?: [{
 		address:         string
 		protocol_port:   number
 		admin_state_up?: bool
+		id?:             string
 		name?:           string
 		subnet_id?:      string
 		weight?:         number
@@ -625,8 +988,12 @@ package openstack
 	max_retries:     number
 	timeout:         number
 	type:            string
+	admin_state_up?: string
 	expected_codes?: string
 	http_method?:    string
+	id?:             string
+	region?:         string
+	tenant_id?:      string
 	url_path?:       string
 	timeouts?: {
 		create?: string
@@ -634,13 +1001,20 @@ package openstack
 	}
 }
 #OpenstackLbMonitorV2Resource: {
-	delay:           number
-	max_retries:     number
-	pool_id:         string
-	timeout:         number
-	type:            string
-	admin_state_up?: bool
-	name?:           string
+	delay:             number
+	max_retries:       number
+	pool_id:           string
+	timeout:           number
+	type:              string
+	admin_state_up?:   bool
+	expected_codes?:   string
+	http_method?:      string
+	id?:               string
+	max_retries_down?: number
+	name?:             string
+	region?:           string
+	tenant_id?:        string
+	url_path?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -648,12 +1022,16 @@ package openstack
 	}
 }
 #OpenstackLbPoolV1Resource: {
-	lb_method: string
-	name:      string
-	protocol:  string
-	subnet_id: string
+	lb_method:    string
+	name:         string
+	protocol:     string
+	subnet_id:    string
+	id?:          string
+	lb_provider?: string
 	member?: [string, ...]
 	monitor_ids?: [string, ...]
+	region?:    string
+	tenant_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -664,9 +1042,12 @@ package openstack
 	protocol:         string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	listener_id?:     string
 	loadbalancer_id?: string
 	name?:            string
+	region?:          string
+	tenant_id?:       string
 	persistence?: [{
 		type:         string
 		cookie_name?: string
@@ -678,13 +1059,21 @@ package openstack
 	}
 }
 #OpenstackLbVipV1Resource: {
-	name:         string
-	pool_id:      string
-	port:         number
-	protocol:     string
-	subnet_id:    string
-	floating_ip?: string
+	name:            string
+	pool_id:         string
+	port:            number
+	protocol:        string
+	subnet_id:       string
+	address?:        string
+	admin_state_up?: bool
+	conn_limit?:     number
+	description?:    string
+	floating_ip?:    string
+	id?:             string
 	persistence?: [_]: string
+	port_id?:   string
+	region?:    string
+	tenant_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -692,7 +1081,11 @@ package openstack
 }
 #OpenstackNetworkingAddressscopeV2Resource: {
 	name:        string
+	id?:         string
 	ip_version?: number
+	project_id?: string
+	region?:     string
+	shared?:     bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -701,12 +1094,24 @@ package openstack
 #OpenstackNetworkingFloatingipAssociateV2Resource: {
 	floating_ip: string
 	port_id:     string
+	fixed_ip?:   string
+	id?:         string
+	region?:     string
 }
 #OpenstackNetworkingFloatingipV2Resource: {
-	pool:         string
+	pool:     string
+	address?: string
+	all_tags?: [string, ...]
 	description?: string
+	dns_domain?:  string
+	dns_name?:    string
+	fixed_ip?:    string
+	id?:          string
+	port_id?:     string
+	region?:      string
 	subnet_id?:   string
 	tags?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -714,9 +1119,22 @@ package openstack
 	}
 }
 #OpenstackNetworkingNetworkV2Resource: {
-	description?: string
-	name?:        string
+	admin_state_up?: bool
+	all_tags?: [string, ...]
+	availability_zone_hints?: [string, ...]
+	description?:           string
+	dns_domain?:            string
+	external?:              bool
+	id?:                    string
+	mtu?:                   number
+	name?:                  string
+	port_security_enabled?: bool
+	qos_policy_id?:         string
+	region?:                string
+	shared?:                bool
 	tags?: [string, ...]
+	tenant_id?:        string
+	transparent_vlan?: bool
 	value_specs?: [_]: string
 	segments?: [{
 		network_type?:     string
@@ -731,24 +1149,45 @@ package openstack
 #OpenstackNetworkingPortSecgroupAssociateV2Resource: {
 	port_id: string
 	security_group_ids: [string, ...]
+	all_security_group_ids?: [string, ...]
 	enforce?: bool
+	id?:      string
+	region?:  string
 }
 #OpenstackNetworkingPortV2Resource: {
-	network_id:          string
-	description?:        string
-	name?:               string
-	no_fixed_ip?:        bool
-	no_security_groups?: bool
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	all_security_group_ids?: [string, ...]
+	all_tags?: [string, ...]
+	description?:  string
+	device_id?:    string
+	device_owner?: string
+	dns_assignment?: [{
+		[_]: string
+	}, ...]
+	dns_name?:              string
+	id?:                    string
+	mac_address?:           string
+	name?:                  string
+	no_fixed_ip?:           bool
+	no_security_groups?:    bool
+	port_security_enabled?: bool
+	qos_policy_id?:         string
+	region?:                string
 	security_group_ids?: [string, ...]
 	tags?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	allowed_address_pairs?: [{
 		ip_address:   string
 		mac_address?: string
 	}, ...]
 	binding?: [{
-		host_id?:   string
-		profile?:   string
+		host_id?: string
+		profile?: string
+		vif_details?: [_]: string
+		vif_type?:  string
 		vnic_type?: string
 	}, ...]
 	extra_dhcp_option?: [{
@@ -769,7 +1208,9 @@ package openstack
 	max_kbps:        number
 	qos_policy_id:   string
 	direction?:      string
+	id?:             string
 	max_burst_kbps?: number
+	region?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -778,6 +1219,8 @@ package openstack
 #OpenstackNetworkingQosDscpMarkingRuleV2Resource: {
 	dscp_mark:     number
 	qos_policy_id: string
+	id?:           string
+	region?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -787,17 +1230,26 @@ package openstack
 	min_kbps:      number
 	qos_policy_id: string
 	direction?:    string
+	id?:           string
+	region?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpenstackNetworkingQosPolicyV2Resource: {
-	description?: string
-	is_default?:  bool
-	name?:        string
-	shared?:      bool
+	all_tags?: [string, ...]
+	created_at?:      string
+	description?:     string
+	id?:              string
+	is_default?:      bool
+	name?:            string
+	project_id?:      string
+	region?:          string
+	revision_number?: number
+	shared?:          bool
 	tags?: [string, ...]
+	updated_at?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -805,7 +1257,18 @@ package openstack
 	}
 }
 #OpenstackNetworkingQuotaV2Resource: {
-	project_id: string
+	project_id:           string
+	floatingip?:          number
+	id?:                  string
+	network?:             number
+	port?:                number
+	rbac_policy?:         number
+	region?:              string
+	router?:              number
+	security_group?:      number
+	security_group_rule?: number
+	subnet?:              number
+	subnetpool?:          number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -817,9 +1280,16 @@ package openstack
 	object_id:     string
 	object_type:   string
 	target_tenant: string
+	id?:           string
+	project_id?:   string
+	region?:       string
 }
 #OpenstackNetworkingRouterInterfaceV2Resource: {
-	router_id: string
+	router_id:  string
+	id?:        string
+	port_id?:   string
+	region?:    string
+	subnet_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -829,14 +1299,28 @@ package openstack
 	destination_cidr: string
 	next_hop:         string
 	router_id:        string
+	id?:              string
+	region?:          string
 }
 #OpenstackNetworkingRouterV2Resource: {
-	description?: string
-	name?:        string
+	admin_state_up?: bool
+	all_tags?: [string, ...]
+	availability_zone_hints?: [string, ...]
+	description?:         string
+	distributed?:         bool
+	enable_snat?:         bool
+	external_gateway?:    string
+	external_network_id?: string
+	external_subnet_ids?: [string, ...]
+	id?:     string
+	name?:   string
+	region?: string
 	tags?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	external_fixed_ip?: [{
-		subnet_id?: string
+		ip_address?: string
+		subnet_id?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -851,30 +1335,53 @@ package openstack
 	ethertype:         string
 	security_group_id: string
 	description?:      string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
 	timeouts?: delete?: string
 }
 #OpenstackNetworkingSecgroupV2Resource: {
-	name:                  string
+	name: string
+	all_tags?: [string, ...]
 	delete_default_rules?: bool
+	description?:          string
+	id?:                   string
+	region?:               string
 	tags?: [string, ...]
+	tenant_id?: string
 	timeouts?: delete?: string
 }
 #OpenstackNetworkingSubnetRouteV2Resource: {
 	destination_cidr: string
 	next_hop:         string
 	subnet_id:        string
+	id?:              string
+	region?:          string
 }
 #OpenstackNetworkingSubnetV2Resource: {
-	network_id:   string
+	network_id: string
+	all_tags?: [string, ...]
+	cidr?:        string
 	description?: string
 	dns_nameservers?: [string, ...]
-	enable_dhcp?:   bool
-	ip_version?:    number
-	name?:          string
-	no_gateway?:    bool
-	prefix_length?: number
-	subnetpool_id?: string
+	enable_dhcp?:       bool
+	gateway_ip?:        string
+	id?:                string
+	ip_version?:        number
+	ipv6_address_mode?: string
+	ipv6_ra_mode?:      string
+	name?:              string
+	no_gateway?:        bool
+	prefix_length?:     number
+	region?:            string
+	subnetpool_id?:     string
 	tags?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	allocation_pool?: [{
 		end:   string
@@ -897,11 +1404,22 @@ package openstack
 	name: string
 	prefixes: [string, ...]
 	address_scope_id?: string
-	default_quota?:    number
-	description?:      string
-	is_default?:       bool
-	shared?:           bool
+	all_tags?: [string, ...]
+	created_at?:        string
+	default_prefixlen?: number
+	default_quota?:     number
+	description?:       string
+	id?:                string
+	ip_version?:        number
+	is_default?:        bool
+	max_prefixlen?:     number
+	min_prefixlen?:     number
+	project_id?:        string
+	region?:            string
+	revision_number?:   number
+	shared?:            bool
 	tags?: [string, ...]
+	updated_at?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -911,9 +1429,13 @@ package openstack
 #OpenstackNetworkingTrunkV2Resource: {
 	port_id:         string
 	admin_state_up?: bool
-	description?:    string
-	name?:           string
+	all_tags?: [string, ...]
+	description?: string
+	id?:          string
+	name?:        string
+	region?:      string
 	tags?: [string, ...]
+	tenant_id?: string
 	sub_port?: [{
 		port_id:           string
 		segmentation_id:   number
@@ -932,7 +1454,9 @@ package openstack
 	container_write?:    string
 	content_type?:       string
 	force_destroy?:      bool
+	id?:                 string
 	metadata?: [_]: string
+	region?: string
 	versioning?: [{
 		location: string
 		type:     string
@@ -942,28 +1466,57 @@ package openstack
 	container_name:       string
 	name:                 string
 	content?:             string
+	content_disposition?: string
+	content_encoding?:    string
+	content_length?:      number
+	content_type?:        string
 	copy_from?:           string
+	date?:                string
 	delete_after?:        number
+	delete_at?:           string
 	detect_content_type?: bool
+	etag?:                string
+	id?:                  string
+	last_modified?:       string
 	metadata?: [_]: string
-	source?: string
+	object_manifest?: string
+	region?:          string
+	source?:          string
+	trans_id?:        string
 }
 #OpenstackObjectstorageTempurlV1Resource: {
 	container:   string
 	object:      string
 	ttl:         number
+	id?:         string
 	method?:     string
 	regenerate?: bool
+	region?:     string
 	split?:      string
+	url?:        string
 }
 #OpenstackOrchestrationStackV1Resource: {
 	name: string
-	template_opts: [_]:     string
+	template_opts: [_]: string
+	capabilities?: [string, ...]
+	creation_time?:    string
+	description?:      string
+	disable_rollback?: bool
 	environment_opts?: [_]: string
-	parameters?: [_]:       string
+	id?: string
+	notification_topics?: [string, ...]
+	parameters?: [_]: string
+	region?:        string
+	status?:        string
+	status_reason?: string
+	tags?: [string, ...]
+	template_description?: string
+	timeout?:              number
+	updated_time?:         string
 	outputs?: [{
 		output_key:   string
 		output_value: string
+		description?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -976,9 +1529,12 @@ package openstack
 	description?: string
 	dns_ip?:      string
 	domain?:      string
+	id?:          string
 	name?:        string
 	ou?:          string
 	password?:    string
+	project_id?:  string
+	region?:      string
 	server?:      string
 	user?:        string
 	timeouts?: {
@@ -992,6 +1548,9 @@ package openstack
 	access_to:    string
 	access_type:  string
 	share_id:     string
+	access_key?:  string
+	id?:          string
+	region?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -999,13 +1558,28 @@ package openstack
 	}
 }
 #OpenstackSharedfilesystemShareV2Resource: {
-	name:         string
-	share_proto:  string
-	size:         number
-	description?: string
-	is_public?:   bool
+	name:        string
+	share_proto: string
+	size:        number
+	all_metadata?: [_]: string
+	availability_zone?: string
+	description?:       string
+	export_locations?: [{
+		path:      string
+		preferred: string
+	}, ...]
+	has_replicas?: bool
+	host?:         string
+	id?:           string
+	is_public?:    bool
 	metadata?: [_]: string
-	snapshot_id?: string
+	project_id?:       string
+	region?:           string
+	replication_type?: string
+	share_network_id?: string
+	share_server_id?:  string
+	share_type?:       string
+	snapshot_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1015,9 +1589,16 @@ package openstack
 #OpenstackSharedfilesystemSharenetworkV2Resource: {
 	neutron_net_id:    string
 	neutron_subnet_id: string
+	cidr?:             string
 	description?:      string
+	id?:               string
+	ip_version?:       number
 	name?:             string
+	network_type?:     string
+	project_id?:       string
+	region?:           string
 	security_service_ids?: [string, ...]
+	segmentation_id?: number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1027,7 +1608,11 @@ package openstack
 #OpenstackVpnaasEndpointGroupV2Resource: {
 	description?: string
 	endpoints?: [string, ...]
-	name?: string
+	id?:        string
+	name?:      string
+	region?:    string
+	tenant_id?: string
+	type?:      string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1039,27 +1624,50 @@ package openstack
 	auth_algorithm?:          string
 	description?:             string
 	encryption_algorithm?:    string
+	id?:                      string
 	ike_version?:             string
 	name?:                    string
 	pfs?:                     string
 	phase1_negotiation_mode?: string
+	region?:                  string
+	tenant_id?:               string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
 }
 #OpenstackVpnaasIpsecPolicyV2Resource: {
-	description?: string
-	name?:        string
+	auth_algorithm?:       string
+	description?:          string
+	encapsulation_mode?:   string
+	encryption_algorithm?: string
+	id?:                   string
+	name?:                 string
+	pfs?:                  string
+	region?:               string
+	tenant_id?:            string
+	transform_protocol?:   string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
 }
 #OpenstackVpnaasServiceV2Resource: {
 	router_id:       string
 	admin_state_up?: bool
 	description?:    string
+	external_v4_ip?: string
+	external_v6_ip?: string
+	id?:             string
 	name?:           string
+	region?:         string
+	status?:         string
 	subnet_id?:      string
+	tenant_id?:      string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1076,13 +1684,22 @@ package openstack
 	vpnservice_id:      string
 	admin_state_up?:    bool
 	description?:       string
+	id?:                string
+	initiator?:         string
 	local_ep_group_id?: string
 	local_id?:          string
+	mtu?:               number
 	name?:              string
 	peer_cidrs?: [string, ...]
 	peer_ep_group_id?: string
+	region?:           string
+	tenant_id?:        string
 	value_specs?: [_]: string
-	dpd?: [{}, ...]
+	dpd?: [{
+		action?:   string
+		interval?: number
+		timeout?:  number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1097,6 +1714,7 @@ package openstack
 	openstack_blockstorage_volume_v1?: [_]:                   #OpenstackBlockstorageVolumeV1Resource
 	openstack_blockstorage_volume_v2?: [_]:                   #OpenstackBlockstorageVolumeV2Resource
 	openstack_blockstorage_volume_v3?: [_]:                   #OpenstackBlockstorageVolumeV3Resource
+	openstack_compute_aggregate_v2?: [_]:                     #OpenstackComputeAggregateV2Resource
 	openstack_compute_flavor_access_v2?: [_]:                 #OpenstackComputeFlavorAccessV2Resource
 	openstack_compute_flavor_v2?: [_]:                        #OpenstackComputeFlavorV2Resource
 	openstack_compute_floatingip_associate_v2?: [_]:          #OpenstackComputeFloatingipAssociateV2Resource
@@ -1120,11 +1738,14 @@ package openstack
 	openstack_fw_policy_v1?: [_]:                             #OpenstackFwPolicyV1Resource
 	openstack_fw_rule_v1?: [_]:                               #OpenstackFwRuleV1Resource
 	openstack_identity_application_credential_v3?: [_]:       #OpenstackIdentityApplicationCredentialV3Resource
+	openstack_identity_ec2_credential_v3?: [_]:               #OpenstackIdentityEc2CredentialV3Resource
 	openstack_identity_endpoint_v3?: [_]:                     #OpenstackIdentityEndpointV3Resource
+	openstack_identity_group_v3?: [_]:                        #OpenstackIdentityGroupV3Resource
 	openstack_identity_project_v3?: [_]:                      #OpenstackIdentityProjectV3Resource
 	openstack_identity_role_assignment_v3?: [_]:              #OpenstackIdentityRoleAssignmentV3Resource
 	openstack_identity_role_v3?: [_]:                         #OpenstackIdentityRoleV3Resource
 	openstack_identity_service_v3?: [_]:                      #OpenstackIdentityServiceV3Resource
+	openstack_identity_user_membership_v3?: [_]:              #OpenstackIdentityUserMembershipV3Resource
 	openstack_identity_user_v3?: [_]:                         #OpenstackIdentityUserV3Resource
 	openstack_images_image_access_accept_v2?: [_]:            #OpenstackImagesImageAccessAcceptV2Resource
 	openstack_images_image_access_v2?: [_]:                   #OpenstackImagesImageAccessV2Resource

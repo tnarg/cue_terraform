@@ -2,13 +2,42 @@
 package alicloud
 
 #AlicloudActiontrailResource: {
-	name:                string
-	oss_bucket_name:     string
-	role_name:           string
-	event_rw?:           string
-	oss_key_prefix?:     string
-	sls_project_arn?:    string
-	sls_write_role_arn?: string
+	event_rw?:              string
+	id?:                    string
+	is_organization_trail?: bool
+	mns_topic_arn?:         string
+	name?:                  string
+	oss_bucket_name?:       string
+	oss_key_prefix?:        string
+	role_name?:             string
+	sls_project_arn?:       string
+	sls_write_role_arn?:    string
+	status?:                string
+	trail_name?:            string
+	trail_region?:          string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#AlicloudActiontrailTrailResource: {
+	event_rw?:              string
+	id?:                    string
+	is_organization_trail?: bool
+	mns_topic_arn?:         string
+	name?:                  string
+	oss_bucket_name?:       string
+	oss_key_prefix?:        string
+	role_name?:             string
+	sls_project_arn?:       string
+	sls_write_role_arn?:    string
+	status?:                string
+	trail_name?:            string
+	trail_region?:          string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
 }
 #AlicloudAdbAccountResource: {
 	account_name:            string
@@ -16,13 +45,16 @@ package alicloud
 	account_description?:    string
 	account_password?:       string
 	account_type?:           string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
 }
 #AlicloudAdbBackupPolicyResource: {
 	db_cluster_id: string
 	preferred_backup_period: [string, ...]
-	preferred_backup_time: string
+	preferred_backup_time:    string
+	backup_retention_period?: string
+	id?:                      string
 }
 #AlicloudAdbClusterResource: {
 	db_cluster_category: string
@@ -31,39 +63,110 @@ package alicloud
 	db_node_storage:     number
 	vswitch_id:          string
 	auto_renew_period?:  number
+	connection_string?:  string
 	db_cluster_version?: string
 	description?:        string
+	id?:                 string
+	maintain_time?:      string
 	pay_type?:           string
 	period?:             number
 	renewal_status?:     string
+	security_ips?: [string, ...]
 	tags?: [_]: string
+	zone_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
-#AlicloudAdbConnectionResource: db_cluster_id: string
+#AlicloudAdbConnectionResource: {
+	db_cluster_id:      string
+	connection_prefix?: string
+	connection_string?: string
+	id?:                string
+	ip_address?:        string
+	port?:              string
+}
+#AlicloudAlidnsDomainResource: {
+	domain_name: string
+	dns_servers?: [string, ...]
+	domain_id?:         string
+	group_id?:          string
+	group_name?:        string
+	id?:                string
+	lang?:              string
+	puny_code?:         string
+	remark?:            string
+	resource_group_id?: string
+	tags?: [_]:         string
+	timeouts?: delete?: string
+}
+#AlicloudAlidnsDomainAttachmentResource: {
+	domain_names: [string, ...]
+	instance_id: string
+	id?:         string
+}
 #AlicloudAlidnsDomainGroupResource: {
-	group_name: string
-	lang?:      string
+	domain_group_name?: string
+	group_name?:        string
+	id?:                string
+	lang?:              string
+}
+#AlicloudAlidnsInstanceResource: {
+	dns_security:    string
+	domain_numbers:  string
+	version_code:    string
+	id?:             string
+	payment_type?:   string
+	period?:         number
+	renew_period?:   number
+	renewal_status?: string
+	version_name?:   string
+}
+#AlicloudAlidnsRecordResource: {
+	domain_name:     string
+	rr:              string
+	type:            string
+	value:           string
+	id?:             string
+	lang?:           string
+	line?:           string
+	priority?:       number
+	remark?:         string
+	status?:         string
+	ttl?:            number
+	user_client_ip?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudAlikafkaConsumerGroupResource: {
 	consumer_id: string
 	instance_id: string
+	id?:         string
 	tags?: [_]: string
 }
 #AlicloudAlikafkaInstanceResource: {
-	deploy_type: number
-	disk_size:   number
-	disk_type:   number
-	io_max:      number
-	topic_quota: number
-	vswitch_id:  string
-	eip_max?:    number
-	paid_type?:  string
-	spec_type?:  string
+	deploy_type:      number
+	disk_size:        number
+	disk_type:        number
+	io_max:           number
+	topic_quota:      number
+	vswitch_id:       string
+	config?:          string
+	eip_max?:         number
+	end_point?:       string
+	id?:              string
+	name?:            string
+	paid_type?:       string
+	security_group?:  string
+	service_version?: string
+	spec_type?:       string
 	tags?: [_]: string
+	vpc_id?:  string
+	zone_id?: string
 }
 #AlicloudAlikafkaSaslAclResource: {
 	acl_operation_type:        string
@@ -72,10 +175,13 @@ package alicloud
 	acl_resource_type:         string
 	instance_id:               string
 	username:                  string
+	host?:                     string
+	id?:                       string
 }
 #AlicloudAlikafkaSaslUserResource: {
 	instance_id:             string
 	username:                string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
 	password?: string
@@ -85,6 +191,7 @@ package alicloud
 	remark:         string
 	topic:          string
 	compact_topic?: bool
+	id?:            string
 	local_topic?:   bool
 	partition_num?: number
 	tags?: [_]: string
@@ -95,6 +202,8 @@ package alicloud
 	group_id:     string
 	name:         string
 	service_type: string
+	api_id?:      string
+	id?:          string
 	stage_names?: [string, ...]
 	constant_parameters?: [{
 		in:           string
@@ -153,6 +262,7 @@ package alicloud
 #AlicloudApiGatewayAppResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [_]: string
 }
 #AlicloudApiGatewayAppAttachmentResource: {
@@ -160,16 +270,21 @@ package alicloud
 	app_id:     string
 	group_id:   string
 	stage_name: string
+	id?:        string
 }
 #AlicloudApiGatewayGroupResource: {
 	description: string
 	name:        string
+	id?:         string
+	sub_domain?: string
+	vpc_domain?: string
 }
 #AlicloudApiGatewayVpcAccessResource: {
 	instance_id: string
 	name:        string
 	port:        number
 	vpc_id:      string
+	id?:         string
 }
 #AlicloudAutoProvisioningGroupResource: {
 	launch_template_id:                   string
@@ -179,6 +294,7 @@ package alicloud
 	default_target_capacity_type?:        string
 	description?:                         string
 	excess_capacity_termination_policy?:  string
+	id?:                                  string
 	launch_template_version?:             string
 	max_spot_price?:                      number
 	pay_as_you_go_allocation_strategy?:   string
@@ -192,37 +308,110 @@ package alicloud
 	valid_from?:                          string
 	valid_until?:                         string
 	launch_template_config?: [{
-		max_price:          string
-		vswitch_id:         string
-		instance_type?:     string
-		priority?:          string
-		weighted_capacity?: string
+		max_price:         string
+		vswitch_id:        string
+		weighted_capacity: string
+		instance_type?:    string
+		priority?:         string
 	}, ...]
+}
+#AlicloudBrainIndustrialPidOrganizationResource: {
+	pid_organization_name:       string
+	id?:                         string
+	parent_pid_organization_id?: string
+}
+#AlicloudBrainIndustrialPidProjectResource: {
+	pid_organisation_id: string
+	pid_project_name:    string
+	id?:                 string
+	pid_project_desc?:   string
 }
 #AlicloudCasCertificateResource: {
 	cert: string
 	key:  string
 	name: string
+	id?:  string
+}
+#AlicloudCassandraClusterResource: {
+	instance_type:        string
+	major_version:        string
+	node_count:           number
+	pay_type:             string
+	vswitch_id:           string
+	auto_renew?:          bool
+	auto_renew_period?:   number
+	cluster_name?:        string
+	data_center_name?:    string
+	disk_size?:           number
+	disk_type?:           string
+	enable_public?:       bool
+	id?:                  string
+	ip_white?:            string
+	maintain_end_time?:   string
+	maintain_start_time?: string
+	password?:            string
+	period?:              number
+	period_unit?:         string
+	public_points?: [string, ...]
+	security_groups?: [string, ...]
+	status?: string
+	tags?: [_]: string
+	zone_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudCassandraDataCenterResource: {
+	cluster_id:         string
+	instance_type:      string
+	node_count:         number
+	pay_type:           string
+	vswitch_id:         string
+	auto_renew?:        bool
+	auto_renew_period?: number
+	data_center_id?:    string
+	data_center_name?:  string
+	disk_size?:         number
+	disk_type?:         string
+	enable_public?:     bool
+	id?:                string
+	period?:            number
+	period_unit?:       string
+	public_points?: [string, ...]
+	status?:  string
+	zone_id?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudCdnDomainResource: {
 	cdn_type:    string
 	domain_name: string
 	block_ips?: [string, ...]
+	id?:                   string
 	optimize_enable?:      string
 	page_compress_enable?: string
 	range_enable?:         string
+	scope?:                string
 	source_port?:          number
 	source_type?:          string
 	sources?: [string, ...]
 	video_seek_enable?: string
 	auth_config?: [{
-		auth_type?: string
-		timeout?:   number
+		auth_type?:  string
+		master_key?: string
+		slave_key?:  string
+		timeout?:    number
 	}, ...]
 	cache_config?: [{
 		cache_content: string
 		cache_type:    string
 		ttl:           number
+		cache_id?:     string
 		weight?:       number
 	}, ...]
 	certificate_config?: [{
@@ -233,13 +422,16 @@ package alicloud
 	http_header_config?: [{
 		header_key:   string
 		header_value: string
+		header_id?:   string
 	}, ...]
 	page_404_config?: [{
 		custom_page_url?: string
+		error_code?:      string
 		page_type?:       string
 	}, ...]
 	parameter_filter_config?: [{
 		enable?: string
+		hash_key_args?: [string, ...]
 	}, ...]
 	refer_config?: [{
 		refer_list: [string, ...]
@@ -250,14 +442,19 @@ package alicloud
 #AlicloudCdnDomainConfigResource: {
 	domain_name:   string
 	function_name: string
+	id?:           string
 	function_args?: [{
 		arg_name:  string
 		arg_value: string
 	}, ...]
 }
 #AlicloudCdnDomainNewResource: {
-	cdn_type:    string
-	domain_name: string
+	cdn_type:           string
+	domain_name:        string
+	cname?:             string
+	id?:                string
+	resource_group_id?: string
+	scope?:             string
 	tags?: [_]: string
 	certificate_config?: [{
 		cert_name?:                 string
@@ -279,22 +476,35 @@ package alicloud
 	bandwidth_limit: number
 	instance_id:     string
 	region_ids: [string, ...]
+	id?: string
 	timeouts?: {
 		delete?: string
 		update?: string
 	}
 }
 #AlicloudCenBandwidthPackageResource: {
-	bandwidth: number
-	geographic_region_ids: [string, ...]
-	charge_type?: string
-	description?: string
-	name?:        string
-	period?:      number
+	bandwidth:                   number
+	cen_bandwidth_package_name?: string
+	charge_type?:                string
+	description?:                string
+	expired_time?:               string
+	geographic_region_a_id?:     string
+	geographic_region_b_id?:     string
+	geographic_region_ids?: [string, ...]
+	id?:           string
+	name?:         string
+	payment_type?: string
+	period?:       number
+	status?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudCenBandwidthPackageAttachmentResource: {
 	bandwidth_package_id: string
 	instance_id:          string
+	id?:                  string
 }
 #AlicloudCenFlowlogResource: {
 	cen_id:         string
@@ -302,11 +512,16 @@ package alicloud
 	project_name:   string
 	description?:   string
 	flow_log_name?: string
+	id?:            string
 	status?:        string
 }
 #AlicloudCenInstanceResource: {
-	description?: string
-	name?:        string
+	cen_instance_name?: string
+	description?:       string
+	id?:                string
+	name?:              string
+	protection_level?:  string
+	status?:            string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -316,24 +531,37 @@ package alicloud
 #AlicloudCenInstanceAttachmentResource: {
 	child_instance_id:        string
 	child_instance_region_id: string
+	child_instance_type:      string
 	instance_id:              string
+	cen_owner_id?:            number
+	child_instance_owner_id?: number
+	id?:                      string
+	status?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudCenInstanceGrantResource: {
 	cen_id:            string
 	cen_owner_id:      string
 	child_instance_id: string
+	id?:               string
 }
 #AlicloudCenPrivateZoneResource: {
 	access_region_id: string
 	cen_id:           string
 	host_region_id:   string
 	host_vpc_id:      string
+	id?:              string
+	status?:          string
 	timeouts?: create?: string
 }
 #AlicloudCenRouteEntryResource: {
 	cidr_block:     string
 	instance_id:    string
 	route_table_id: string
+	id?:            string
 }
 #AlicloudCenRouteMapResource: {
 	cen_id:                  string
@@ -351,34 +579,70 @@ package alicloud
 	destination_instance_ids?: [string, ...]
 	destination_instance_ids_reverse_match?: bool
 	destination_route_table_ids?: [string, ...]
+	id?: string
 	match_asns?: [string, ...]
 	match_community_set?: [string, ...]
 	next_priority?: number
 	operate_community_set?: [string, ...]
 	preference?: number
 	prepend_as_path?: [string, ...]
+	route_map_id?: string
 	route_types?: [string, ...]
 	source_child_instance_types?: [string, ...]
 	source_instance_ids?: [string, ...]
 	source_instance_ids_reverse_match?: bool
 	source_region_ids?: [string, ...]
 	source_route_table_ids?: [string, ...]
+	status?: string
 	timeouts?: create?: string
+}
+#AlicloudCenRouteServiceResource: {
+	access_region_id: string
+	cen_id:           string
+	host:             string
+	host_region_id:   string
+	host_vpc_id:      string
+	description?:     string
+	id?:              string
+	status?:          string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudCenVbrHealthCheckResource: {
+	cen_id:                  string
+	health_check_target_ip:  string
+	vbr_instance_id:         string
+	vbr_instance_region_id:  string
+	health_check_interval?:  number
+	health_check_source_ip?: string
+	healthy_threshold?:      number
+	id?:                     string
+	vbr_instance_owner_id?:  number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudCloudConnectNetworkResource: {
 	is_default:   bool
 	cidr_block?:  string
 	description?: string
+	id?:          string
 	name?:        string
 }
 #AlicloudCloudConnectNetworkAttachmentResource: {
 	ccn_id: string
 	sag_id: string
+	id?:    string
 }
 #AlicloudCloudConnectNetworkGrantResource: {
 	ccn_id:  string
 	cen_id:  string
 	cen_uid: string
+	id?:     string
 }
 #AlicloudCmsAlarmResource: {
 	contact_groups: [string, ...]
@@ -386,26 +650,112 @@ package alicloud
 	metric:              string
 	name:                string
 	project:             string
-	threshold:           string
 	effective_interval?: string
 	enabled?:            bool
 	end_time?:           number
+	id?:                 string
 	notify_type?:        number
 	operator?:           string
 	period?:             number
 	silence_time?:       number
 	start_time?:         number
 	statistics?:         string
+	status?:             string
+	threshold?:          string
 	triggered_count?:    number
 	webhook?:            string
+	escalations_critical?: [{
+		comparison_operator?: string
+		statistics?:          string
+		threshold?:           string
+		times?:               number
+	}, ...]
+	escalations_info?: [{
+		comparison_operator?: string
+		statistics?:          string
+		threshold?:           string
+		times?:               number
+	}, ...]
+	escalations_warn?: [{
+		comparison_operator?: string
+		statistics?:          string
+		threshold?:           string
+		times?:               number
+	}, ...]
+}
+#AlicloudCmsAlarmContactResource: {
+	alarm_contact_name:      string
+	describe:                string
+	channels_aliim?:         string
+	channels_ding_web_hook?: string
+	channels_mail?:          string
+	channels_sms?:           string
+	id?:                     string
+	lang?:                   string
+}
+#AlicloudCmsAlarmContactGroupResource: {
+	alarm_contact_group_name: string
+	contacts?: [string, ...]
+	describe?:          string
+	enable_subscribed?: bool
+	id?:                string
+}
+#AlicloudCmsGroupMetricRuleResource: {
+	category:               string
+	group_id:               string
+	group_metric_rule_name: string
+	metric_name:            string
+	namespace:              string
+	rule_id:                string
+	contact_groups?:        string
+	dimensions?:            string
+	effective_interval?:    string
+	email_subject?:         string
+	id?:                    string
+	interval?:              string
+	no_effective_interval?: string
+	period?:                number
+	silence_time?:          number
+	status?:                string
+	webhook?:               string
+	escalations?: [{
+		critical?: [{
+			comparison_operator?: string
+			statistics?:          string
+			threshold?:           string
+			times?:               number
+		}, ...]
+		info?: [{
+			comparison_operator?: string
+			statistics?:          string
+			threshold?:           string
+			times?:               number
+		}, ...]
+		warn?: [{
+			comparison_operator?: string
+			statistics?:          string
+			threshold?:           string
+			times?:               number
+		}, ...]
+	}, ...]
+}
+#AlicloudCmsMonitorGroupResource: {
+	monitor_group_name: string
+	contact_groups?: [string, ...]
+	id?: string
+	tags?: [_]: string
 }
 #AlicloudCmsSiteMonitorResource: {
 	address:   string
 	task_name: string
 	task_type: string
 	alert_ids?: [string, ...]
+	create_time?:  string
+	id?:           string
 	interval?:     number
 	options_json?: string
+	task_state?:   string
+	update_time?:  string
 	isp_cities?: [{
 		city: string
 		isp:  string
@@ -414,28 +764,83 @@ package alicloud
 #AlicloudCommonBandwidthPackageResource: {
 	bandwidth:             number
 	description?:          string
+	id?:                   string
 	internet_charge_type?: string
+	isp?:                  string
 	name?:                 string
 	ratio?:                number
+	resource_group_id?:    string
 }
 #AlicloudCommonBandwidthPackageAttachmentResource: {
 	bandwidth_package_id: string
 	instance_id:          string
+	id?:                  string
+}
+#AlicloudConfigConfigurationRecorderResource: {
+	enterprise_edition?:         bool
+	id?:                         string
+	organization_enable_status?: string
+	organization_master_id?:     number
+	resource_types?: [string, ...]
+	status?: string
+	timeouts?: update?: string
+}
+#AlicloudConfigDeliveryChannelResource: {
+	delivery_channel_assume_role_arn: string
+	delivery_channel_target_arn:      string
+	delivery_channel_type:            string
+	delivery_channel_condition?:      string
+	delivery_channel_name?:           string
+	description?:                     string
+	id?:                              string
+	status?:                          number
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#AlicloudConfigRuleResource: {
+	risk_level: number
+	rule_name:  string
+	scope_compliance_resource_types: [string, ...]
+	source_detail_message_type: string
+	source_identifier:          string
+	source_owner:               string
+	description?:               string
+	id?:                        string
+	input_parameters?: [_]: string
+	member_id?:                          number
+	multi_account?:                      bool
+	scope_compliance_resource_id?:       string
+	source_maximum_execution_frequency?: string
 }
 #AlicloudContainerClusterResource: {
 	cidr_block:     string
 	instance_type:  string
 	password:       string
 	vswitch_id:     string
+	agent_version?: string
 	disk_category?: string
 	disk_size?:     number
+	id?:            string
 	image_id?:      string
 	is_outdated?:   bool
+	name?:          string
 	name_prefix?:   string
 	need_slb?:      bool
 	node_number?:   number
-	release_eip?:   bool
-	size?:          number
+	nodes?: [{
+		eip:        string
+		id:         string
+		name:       string
+		private_ip: string
+		status:     string
+	}, ...]
+	release_eip?:       bool
+	security_group_id?: string
+	size?:              number
+	slb_id?:            string
+	vpc_id?:            string
 }
 #AlicloudCopyImageResource: {
 	source_image_id:  string
@@ -443,17 +848,53 @@ package alicloud
 	description?:     string
 	encrypted?:       bool
 	force?:           bool
+	id?:              string
+	image_name?:      string
 	kms_key_id?:      string
+	name?:            string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#AlicloudCrEeNamespaceResource: {
+	auto_create:        bool
+	default_visibility: string
+	instance_id:        string
+	name:               string
+	id?:                string
+}
+#AlicloudCrEeRepoResource: {
+	instance_id: string
+	name:        string
+	namespace:   string
+	repo_type:   string
+	summary:     string
+	detail?:     string
+	id?:         string
+	repo_id?:    string
+}
+#AlicloudCrEeSyncRuleResource: {
+	instance_id:           string
+	name:                  string
+	namespace_name:        string
+	tag_filter:            string
+	target_instance_id:    string
+	target_namespace_name: string
+	target_region_id:      string
+	id?:                   string
+	repo_name?:            string
+	rule_id?:              string
+	sync_direction?:       string
+	sync_scope?:           string
+	target_repo_name?:     string
+}
 #AlicloudCrNamespaceResource: {
 	auto_create:        bool
 	default_visibility: string
 	name:               string
+	id?:                string
 }
 #AlicloudCrRepoResource: {
 	name:      string
@@ -461,6 +902,8 @@ package alicloud
 	repo_type: string
 	summary:   string
 	detail?:   string
+	domain_list?: [_]: string
+	id?: string
 }
 #AlicloudCsApplicationResource: {
 	cluster_name:        string
@@ -468,137 +911,65 @@ package alicloud
 	template:            string
 	blue_green?:         bool
 	blue_green_confirm?: bool
+	default_domain?:     string
 	description?:        string
 	environment?: [_]: string
+	id?:           string
 	latest_image?: bool
-	version?:      string
+	services?: [{
+		id:      string
+		name:    string
+		status:  string
+		version: string
+	}, ...]
+	version?: string
 }
-#AlicloudCsKubernetesResource: {
-	master_instance_types: [string, ...]
-	master_vswitch_ids: [string, ...]
+#AlicloudCsEdgeKubernetesResource: {
 	worker_instance_types: [string, ...]
 	worker_number: number
 	worker_vswitch_ids: [string, ...]
-	client_cert?:            string
-	client_key?:             string
-	cluster_ca_cert?:        string
-	cluster_network_type?:   string
-	cpu_policy?:             string
-	enable_ssh?:             bool
-	force_update?:           bool
-	image_id?:               string
-	install_cloud_monitor?:  bool
-	key_name?:               string
-	kms_encrypted_password?: string
-	kms_encryption_context?: [_]: string
-	kube_config?:                 string
-	master_auto_renew?:           bool
-	master_auto_renew_period?:    number
-	master_disk_category?:        string
-	master_disk_size?:            number
-	master_instance_charge_type?: string
-	master_instance_type?:        string
-	master_period?:               number
-	master_period_unit?:          string
-	name_prefix?:                 string
-	new_nat_gateway?:             bool
-	node_cidr_mask?:              number
-	nodes?: [string, ...]
-	password?: string
-	pod_cidr?: string
-	pod_vswitch_ids?: [string, ...]
-	proxy_mode?:           string
-	service_cidr?:         string
-	slb_internet_enabled?: bool
-	user_ca?:              string
-	user_data?:            string
-	version?:              string
-	vswitch_id?:           string
-	vswitch_ids?: [string, ...]
-	worker_auto_renew?:           bool
-	worker_auto_renew_period?:    number
-	worker_data_disk_category?:   string
-	worker_data_disk_size?:       number
+	availability_zone?: string
+	certificate_authority?: [_]: string
+	client_cert?:     string
+	client_key?:      string
+	cluster_ca_cert?: string
+	connections?: [_]: string
+	deletion_protection?:          bool
+	force_update?:                 bool
+	id?:                           string
+	install_cloud_monitor?:        bool
+	is_enterprise_security_group?: bool
+	key_name?:                     string
+	kube_config?:                  string
+	name?:                         string
+	name_prefix?:                  string
+	nat_gateway_id?:               string
+	new_nat_gateway?:              bool
+	node_cidr_mask?:               number
+	password?:                     string
+	pod_cidr?:                     string
+	proxy_mode?:                   string
+	rds_instances?: [string, ...]
+	resource_group_id?:           string
+	security_group_id?:           string
+	service_cidr?:                string
+	slb_internet?:                string
+	slb_internet_enabled?:        bool
+	slb_intranet?:                string
+	user_data?:                   string
+	version?:                     string
+	vpc_id?:                      string
 	worker_disk_category?:        string
 	worker_disk_size?:            number
 	worker_instance_charge_type?: string
-	worker_instance_type?:        string
-	worker_numbers?: [number, ...]
-	worker_period?:      number
-	worker_period_unit?: string
-	addons?: [{
-		config?: string
-		name?:   string
+	worker_nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
 	}, ...]
-	log_config?: [{
-		type:     string
-		project?: string
-	}, ...]
-	timeouts?: {
-		create?: string
-		delete?: string
-		update?: string
-	}
-}
-#AlicloudCsKubernetesAutoscalerResource: {
-	cluster_id:              string
-	cool_down_duration:      string
-	defer_scale_in_duration: string
-	utilization:             string
-	nodepools?: [{
-		id?:     string
-		labels?: string
-		taints?: string
-	}, ...]
-	timeouts?: {
-		create?: string
-		delete?: string
-		update?: string
-	}
-}
-#AlicloudCsManagedKubernetesResource: {
-	worker_instance_types: [string, ...]
-	worker_number: number
-	worker_vswitch_ids: [string, ...]
-	client_cert?:            string
-	client_key?:             string
-	cluster_ca_cert?:        string
-	cluster_network_type?:   string
-	cpu_policy?:             string
-	enable_ssh?:             bool
-	force_update?:           bool
-	image_id?:               string
-	install_cloud_monitor?:  bool
-	key_name?:               string
-	kms_encrypted_password?: string
-	kms_encryption_context?: [_]: string
-	kube_config?:     string
-	name_prefix?:     string
-	new_nat_gateway?: bool
-	node_cidr_mask?:  number
-	password?:        string
-	pod_cidr?:        string
-	pod_vswitch_ids?: [string, ...]
-	proxy_mode?:           string
-	service_cidr?:         string
-	slb_internet_enabled?: bool
-	user_ca?:              string
-	user_data?:            string
-	vswitch_ids?: [string, ...]
-	worker_auto_renew?:           bool
-	worker_auto_renew_period?:    number
-	worker_data_disk_category?:   string
-	worker_data_disk_size?:       number
-	worker_disk_category?:        string
-	worker_disk_size?:            number
-	worker_instance_charge_type?: string
-	worker_instance_type?:        string
-	worker_numbers?: [number, ...]
-	worker_period?:      number
-	worker_period_unit?: string
 	addons?: [{
 		config?:   string
-		disabled?: string
+		disabled?: bool
 		name?:     string
 	}, ...]
 	log_config?: [{
@@ -610,21 +981,352 @@ package alicloud
 		delete?: string
 		update?: string
 	}
+	worker_data_disks?: [{
+		auto_snapshot_policy_id?: string
+		category?:                string
+		device?:                  string
+		encrypted?:               string
+		kms_key_id?:              string
+		name?:                    string
+		size?:                    string
+		snapshot_id?:             string
+	}, ...]
+}
+#AlicloudCsKubernetesResource: {
+	master_instance_types: [string, ...]
+	master_vswitch_ids: [string, ...]
+	worker_instance_types: [string, ...]
+	worker_number: number
+	worker_vswitch_ids: [string, ...]
+	api_audiences?: [string, ...]
+	availability_zone?: string
+	certificate_authority?: [_]: string
+	client_cert?:          string
+	client_key?:           string
+	cluster_ca_cert?:      string
+	cluster_domain?:       string
+	cluster_network_type?: string
+	connections?: [_]: string
+	cpu_policy?:                   string
+	custom_san?:                   string
+	deletion_protection?:          bool
+	enable_ssh?:                   bool
+	exclude_autoscaler_nodes?:     bool
+	force_update?:                 bool
+	id?:                           string
+	image_id?:                     string
+	install_cloud_monitor?:        bool
+	is_enterprise_security_group?: bool
+	key_name?:                     string
+	kms_encrypted_password?:       string
+	kms_encryption_context?: [_]: string
+	kube_config?:                 string
+	master_auto_renew?:           bool
+	master_auto_renew_period?:    number
+	master_disk_category?:        string
+	master_disk_size?:            number
+	master_instance_charge_type?: string
+	master_instance_type?:        string
+	master_nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+	}, ...]
+	master_period?:      number
+	master_period_unit?: string
+	name?:               string
+	name_prefix?:        string
+	nat_gateway_id?:     string
+	new_nat_gateway?:    bool
+	node_cidr_mask?:     number
+	node_name_mode?:     string
+	node_port_range?:    string
+	nodes?: [string, ...]
+	os_type?:  string
+	password?: string
+	platform?: string
+	pod_cidr?: string
+	pod_vswitch_ids?: [string, ...]
+	proxy_mode?: string
+	rds_instances?: [string, ...]
+	resource_group_id?: string
+	runtime?: [_]: string
+	security_group_id?:      string
+	service_account_issuer?: string
+	service_cidr?:           string
+	slb_id?:                 string
+	slb_internet?:           string
+	slb_internet_enabled?:   bool
+	slb_intranet?:           string
+	tags?: [_]: string
+	timezone?:   string
+	user_ca?:    string
+	user_data?:  string
+	version?:    string
+	vpc_id?:     string
+	vswitch_id?: string
+	vswitch_ids?: [string, ...]
+	worker_auto_renew?:           bool
+	worker_auto_renew_period?:    number
+	worker_data_disk_category?:   string
+	worker_data_disk_size?:       number
+	worker_disk_category?:        string
+	worker_disk_size?:            number
+	worker_instance_charge_type?: string
+	worker_instance_type?:        string
+	worker_nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+	}, ...]
+	worker_numbers?: [number, ...]
+	worker_period?:        number
+	worker_period_unit?:   string
+	worker_ram_role_name?: string
+	addons?: [{
+		config?:   string
+		disabled?: bool
+		name?:     string
+	}, ...]
+	log_config?: [{
+		type:     string
+		project?: string
+	}, ...]
+	taints?: [{
+		effect?: string
+		key?:    string
+		value?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	worker_data_disks?: [{
+		auto_snapshot_policy_id?: string
+		category?:                string
+		device?:                  string
+		encrypted?:               string
+		kms_key_id?:              string
+		name?:                    string
+		size?:                    string
+		snapshot_id?:             string
+	}, ...]
+}
+#AlicloudCsKubernetesAutoscalerResource: {
+	cluster_id:              string
+	cool_down_duration:      string
+	defer_scale_in_duration: string
+	utilization:             string
+	id?:                     string
+	use_ecs_ram_role_token?: bool
+	nodepools?: [{
+		id?:     string
+		labels?: string
+		taints?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudCsKubernetesNodePoolResource: {
+	cluster_id: string
+	instance_types: [string, ...]
+	name: string
+	vswitch_ids: [string, ...]
+	id?:                     string
+	image_id?:               string
+	key_name?:               string
+	kms_encrypted_password?: string
+	node_count?:             number
+	node_name_mode?:         string
+	password?:               string
+	scaling_group_id?:       string
+	security_group_id?:      string
+	system_disk_category?:   string
+	system_disk_size?:       number
+	tags?: [_]: string
+	user_data?: string
+	vpc_id?:    string
+	data_disks?: [{
+		auto_snapshot_policy_id?: string
+		category?:                string
+		device?:                  string
+		encrypted?:               string
+		kms_key_id?:              string
+		name?:                    string
+		size?:                    number
+		snapshot_id?:             string
+	}, ...]
+	labels?: [{
+		key:    string
+		value?: string
+	}, ...]
+	management?: [{
+		max_unavailable:   number
+		auto_repair?:      bool
+		auto_upgrade?:     bool
+		surge?:            number
+		surge_percentage?: number
+	}, ...]
+	scaling_config?: [{
+		max_size:                  number
+		min_size:                  number
+		eip_bandwidth?:            number
+		eip_internet_charge_type?: string
+		is_bond_eip?:              bool
+		type?:                     string
+	}, ...]
+	taints?: [{
+		key:     string
+		effect?: string
+		value?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudCsManagedKubernetesResource: {
+	worker_vswitch_ids: [string, ...]
+	api_audiences?: [string, ...]
+	availability_zone?: string
+	certificate_authority?: [_]: string
+	client_cert?:          string
+	client_key?:           string
+	cluster_ca_cert?:      string
+	cluster_domain?:       string
+	cluster_network_type?: string
+	cluster_spec?:         string
+	connections?: [_]: string
+	cpu_policy?:                   string
+	custom_san?:                   string
+	deletion_protection?:          bool
+	enable_ssh?:                   bool
+	encryption_provider_key?:      string
+	exclude_autoscaler_nodes?:     bool
+	force_update?:                 bool
+	id?:                           string
+	image_id?:                     string
+	install_cloud_monitor?:        bool
+	is_enterprise_security_group?: bool
+	key_name?:                     string
+	kms_encrypted_password?:       string
+	kms_encryption_context?: [_]: string
+	kube_config?:     string
+	name?:            string
+	name_prefix?:     string
+	nat_gateway_id?:  string
+	new_nat_gateway?: bool
+	node_cidr_mask?:  number
+	node_name_mode?:  string
+	node_port_range?: string
+	os_type?:         string
+	password?:        string
+	platform?:        string
+	pod_cidr?:        string
+	pod_vswitch_ids?: [string, ...]
+	proxy_mode?: string
+	rds_instances?: [string, ...]
+	resource_group_id?: string
+	runtime?: [_]: string
+	security_group_id?:      string
+	service_account_issuer?: string
+	service_cidr?:           string
+	slb_id?:                 string
+	slb_internet?:           string
+	slb_internet_enabled?:   bool
+	slb_intranet?:           string
+	tags?: [_]: string
+	timezone?:  string
+	user_ca?:   string
+	user_data?: string
+	version?:   string
+	vpc_id?:    string
+	vswitch_ids?: [string, ...]
+	worker_auto_renew?:           bool
+	worker_auto_renew_period?:    number
+	worker_data_disk_category?:   string
+	worker_data_disk_size?:       number
+	worker_disk_category?:        string
+	worker_disk_size?:            number
+	worker_instance_charge_type?: string
+	worker_instance_type?:        string
+	worker_instance_types?: [string, ...]
+	worker_nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+	}, ...]
+	worker_number?: number
+	worker_numbers?: [number, ...]
+	worker_period?:        number
+	worker_period_unit?:   string
+	worker_ram_role_name?: string
+	addons?: [{
+		config?:   string
+		disabled?: bool
+		name?:     string
+	}, ...]
+	log_config?: [{
+		type:     string
+		project?: string
+	}, ...]
+	maintenance_window?: [{
+		duration:         string
+		enable:           bool
+		maintenance_time: string
+		weekly_period:    string
+	}, ...]
+	taints?: [{
+		effect?: string
+		key?:    string
+		value?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	worker_data_disks?: [{
+		auto_snapshot_policy_id?: string
+		category?:                string
+		device?:                  string
+		encrypted?:               string
+		kms_key_id?:              string
+		name?:                    string
+		size?:                    string
+		snapshot_id?:             string
+	}, ...]
 }
 #AlicloudCsServerlessKubernetesResource: {
 	vpc_id:                          string
-	vswitch_id:                      string
 	client_cert?:                    string
 	client_key?:                     string
 	cluster_ca_cert?:                string
 	deletion_protection?:            bool
 	endpoint_public_access_enabled?: bool
 	force_update?:                   bool
+	id?:                             string
 	kube_config?:                    string
+	name?:                           string
 	name_prefix?:                    string
 	new_nat_gateway?:                bool
 	private_zone?:                   bool
+	resource_group_id?:              string
+	security_group_id?:              string
 	tags?: [_]: string
+	version?:    string
+	vswitch_id?: string
+	vswitch_ids?: [string, ...]
+	addons?: [{
+		config?:   string
+		disabled?: bool
+		name?:     string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -635,30 +1337,53 @@ package alicloud
 	instance_type:  string
 	password:       string
 	vswitch_id:     string
+	agent_version?: string
 	disk_category?: string
 	disk_size?:     number
+	id?:            string
 	image_id?:      string
 	is_outdated?:   bool
+	name?:          string
 	name_prefix?:   string
 	need_slb?:      bool
 	node_number?:   number
-	release_eip?:   bool
-	size?:          number
+	nodes?: [{
+		eip:        string
+		id:         string
+		name:       string
+		private_ip: string
+		status:     string
+	}, ...]
+	release_eip?:       bool
+	security_group_id?: string
+	size?:              number
+	slb_id?:            string
+	vpc_id?:            string
 }
 #AlicloudDatahubProjectResource: {
-	name:     string
-	comment?: string
+	name:              string
+	comment?:          string
+	create_time?:      string
+	id?:               string
+	last_modify_time?: string
 }
 #AlicloudDatahubSubscriptionResource: {
-	project_name: string
-	topic_name:   string
-	comment?:     string
+	project_name:      string
+	topic_name:        string
+	comment?:          string
+	create_time?:      string
+	id?:               string
+	last_modify_time?: string
+	sub_id?:           string
 }
 #AlicloudDatahubTopicResource: {
-	name:         string
-	project_name: string
-	comment?:     string
-	life_cycle?:  number
+	name:              string
+	project_name:      string
+	comment?:          string
+	create_time?:      string
+	id?:               string
+	last_modify_time?: string
+	life_cycle?:       number
 	record_schema?: [_]: string
 	record_type?: string
 	shard_count?: number
@@ -667,31 +1392,55 @@ package alicloud
 	instance_id:             string
 	name:                    string
 	description?:            string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
 	password?: string
+	type?:     string
 }
 #AlicloudDbAccountPrivilegeResource: {
 	account_name: string
 	db_names: [string, ...]
 	instance_id: string
+	id?:         string
 	privilege?:  string
 }
 #AlicloudDbBackupPolicyResource: {
-	instance_id:                  string
+	instance_id:                      string
+	archive_backup_keep_count?:       number
+	archive_backup_keep_policy?:      string
+	archive_backup_retention_period?: number
+	backup_period?: [string, ...]
 	backup_retention_period?:     number
+	backup_time?:                 string
+	compress_type?:               string
+	enable_backup_log?:           bool
 	high_space_usage_protection?: string
-	preferred_backup_time?:       string
+	id?:                          string
+	local_log_retention_hours?:   number
+	local_log_retention_space?:   number
+	log_backup?:                  bool
+	log_backup_frequency?:        string
+	log_backup_retention_period?: number
+	log_retention_period?:        number
+	preferred_backup_period?: [string, ...]
+	preferred_backup_time?: string
+	retention_period?:      number
 }
 #AlicloudDbConnectionResource: {
-	instance_id: string
-	port?:       string
+	instance_id:        string
+	connection_prefix?: string
+	connection_string?: string
+	id?:                string
+	ip_address?:        string
+	port?:              string
 }
 #AlicloudDbDatabaseResource: {
 	instance_id:    string
 	name:           string
 	character_set?: string
 	description?:   string
+	id?:            string
 }
 #AlicloudDbInstanceResource: {
 	engine:                      string
@@ -700,15 +1449,33 @@ package alicloud
 	instance_type:               string
 	auto_renew?:                 bool
 	auto_renew_period?:          number
+	auto_upgrade_minor_version?: string
+	connection_string?:          string
+	db_instance_storage_type?:   string
+	encryption_key?:             string
 	force_restart?:              bool
+	id?:                         string
 	instance_charge_type?:       string
 	instance_name?:              string
+	maintain_time?:              string
+	monitoring_period?:          number
 	period?:                     number
-	security_ip_mode?:           string
+	port?:                       string
+	resource_group_id?:          string
+	security_group_id?:          string
+	security_group_ids?: [string, ...]
+	security_ip_mode?: string
+	security_ips?: [string, ...]
 	sql_collector_config_value?: number
 	sql_collector_status?:       string
+	ssl_action?:                 string
+	ssl_status?:                 string
 	tags?: [_]: string
-	vswitch_id?: string
+	tde_status?:      string
+	vswitch_id?:      string
+	zone_id?:         string
+	zone_id_slave_a?: string
+	zone_id_slave_b?: string
 	parameters?: [{
 		name:  string
 		value: string
@@ -723,6 +1490,10 @@ package alicloud
 	distribution_type:  string
 	instance_id:        string
 	connection_prefix?: string
+	connection_string?: string
+	id?:                string
+	max_delay_time?:    number
+	port?:              number
 	weight?: [_]: string
 }
 #AlicloudDbReadonlyInstanceResource: {
@@ -730,11 +1501,46 @@ package alicloud
 	instance_storage:      number
 	instance_type:         string
 	master_db_instance_id: string
+	connection_string?:    string
+	engine?:               string
+	id?:                   string
+	instance_name?:        string
+	port?:                 string
+	resource_group_id?:    string
 	tags?: [_]: string
 	vswitch_id?: string
+	zone_id?:    string
 	parameters?: [{
 		name:  string
 		value: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudDcdnDomainResource: {
+	domain_name:        string
+	cert_name?:         string
+	cert_type?:         string
+	check_url?:         string
+	force_set?:         string
+	id?:                string
+	resource_group_id?: string
+	scope?:             string
+	security_token?:    string
+	ssl_pri?:           string
+	ssl_protocol?:      string
+	ssl_pub?:           string
+	status?:            string
+	top_level_domain?:  string
+	sources?: [{
+		content:   string
+		type:      string
+		port?:     number
+		priority?: string
+		weight?:   string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -747,6 +1553,7 @@ package alicloud
 	ip_count:        number
 	ip_type:         string
 	base_bandwidth?: number
+	id?:             string
 	name?:           string
 	period?:         number
 	type?:           string
@@ -758,7 +1565,24 @@ package alicloud
 	name:              string
 	port_count:        string
 	service_bandwidth: string
+	id?:               string
 	period?:           number
+}
+#AlicloudDdoscooSchedulerRuleResource: {
+	rule_name:          string
+	rule_type:          number
+	cname?:             string
+	id?:                string
+	param?:             string
+	resource_group_id?: string
+	rules?: [{
+		priority?:   number
+		region_id?:  string
+		status?:     number
+		type?:       string
+		value?:      string
+		value_type?: number
+	}, ...]
 }
 #AlicloudDiskResource: {
 	availability_zone:     string
@@ -769,14 +1593,20 @@ package alicloud
 	description?:          string
 	enable_auto_snapshot?: bool
 	encrypted?:            bool
+	id?:                   string
+	kms_key_id?:           string
 	name?:                 string
+	performance_level?:    string
 	resource_group_id?:    string
 	snapshot_id?:          string
+	status?:               string
 	tags?: [_]: string
 }
 #AlicloudDiskAttachmentResource: {
-	disk_id:     string
-	instance_id: string
+	disk_id:      string
+	instance_id:  string
+	device_name?: string
+	id?:          string
 }
 #AlicloudDmsEnterpriseInstanceResource: {
 	database_password: string
@@ -785,7 +1615,6 @@ package alicloud
 	env_type:          string
 	export_timeout:    number
 	host:              string
-	instance_alias:    string
 	instance_source:   string
 	instance_type:     string
 	network_type:      string
@@ -793,58 +1622,276 @@ package alicloud
 	query_timeout:     number
 	safe_rule:         string
 	data_link_name?:   string
+	dba_id?:           string
+	dba_nick_name?:    string
 	ddl_online?:       number
+	ecs_instance_id?:  string
 	ecs_region?:       string
+	id?:               string
+	instance_alias?:   string
+	instance_id?:      string
+	instance_name?:    string
+	safe_rule_id?:     string
 	sid?:              string
+	skip_test?:        bool
+	state?:            string
+	status?:           string
 	tid?:              number
 	use_dsql?:         number
 	vpc_id?:           string
+	timeouts?: create?: string
+}
+#AlicloudDmsEnterpriseUserResource: {
+	uid:                string
+	id?:                string
+	max_execute_count?: number
+	max_result_count?:  number
+	mobile?:            string
+	nick_name?:         string
+	role_names?: [string, ...]
+	status?:    string
+	tid?:       number
+	user_name?: string
 }
 #AlicloudDnsResource: {
-	name:               string
+	name: string
+	dns_server?: [string, ...]
+	domain_id?:         string
 	group_id?:          string
+	id?:                string
 	resource_group_id?: string
 }
 #AlicloudDnsDomainResource: {
-	domain_name:        string
+	domain_name: string
+	dns_servers?: [string, ...]
+	domain_id?:         string
 	group_id?:          string
+	group_name?:        string
+	id?:                string
 	lang?:              string
+	puny_code?:         string
 	remark?:            string
 	resource_group_id?: string
-	tags?: [_]: string
+	tags?: [_]:         string
+	timeouts?: delete?: string
 }
 #AlicloudDnsDomainAttachmentResource: {
 	domain_names: [string, ...]
 	instance_id: string
+	id?:         string
 }
-#AlicloudDnsGroupResource: name: string
+#AlicloudDnsGroupResource: {
+	name: string
+	id?:  string
+}
 #AlicloudDnsInstanceResource: {
 	dns_security:    string
 	domain_numbers:  string
 	version_code:    string
+	id?:             string
+	payment_type?:   string
 	period?:         number
 	renew_period?:   number
 	renewal_status?: string
+	version_name?:   string
 }
 #AlicloudDnsRecordResource: {
 	host_record: string
 	name:        string
 	type:        string
 	value:       string
+	id?:         string
+	locked?:     bool
 	priority?:   number
 	routing?:    string
+	status?:     string
 	ttl?:        number
 }
 #AlicloudDrdsInstanceResource: {
 	description:           string
 	instance_series:       string
 	specification:         string
+	vswitch_id:            string
+	zone_id:               string
+	id?:                   string
 	instance_charge_type?: string
-	vswitch_id?:           string
-	zone_id?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
+		update?: string
+	}
+}
+#AlicloudEciContainerGroupResource: {
+	container_group_name: string
+	security_group_id:    string
+	vswitch_id:           string
+	cpu?:                 number
+	id?:                  string
+	instance_type?:       string
+	memory?:              number
+	ram_role_name?:       string
+	resource_group_id?:   string
+	restart_policy?:      string
+	status?:              string
+	tags?: [_]: string
+	zone_id?: string
+	containers?: [{
+		image: string
+		name:  string
+		args?: [string, ...]
+		commands?: [string, ...]
+		cpu?:               number
+		gpu?:               number
+		image_pull_policy?: string
+		memory?:            number
+		ready?:             bool
+		restart_count?:     number
+		working_dir?:       string
+		environment_vars?: [{
+			key?:   string
+			value?: string
+		}, ...]
+		ports?: [{
+			port?:     number
+			protocol?: string
+		}, ...]
+		volume_mounts?: [{
+			mount_path?: string
+			name?:       string
+			read_only?:  bool
+		}, ...]
+	}, ...]
+	dns_config?: [{
+		name_servers?: [string, ...]
+		searches?: [string, ...]
+		options?: [{
+			name?:  string
+			value?: string
+		}, ...]
+	}, ...]
+	eci_security_context?: [{
+		sysctls?: [{
+			name?:  string
+			value?: string
+		}, ...]
+	}, ...]
+	host_aliases?: [{
+		hostnames?: [string, ...]
+		ip?: string
+	}, ...]
+	init_containers?: [{
+		args?: [string, ...]
+		commands?: [string, ...]
+		cpu?:               number
+		gpu?:               number
+		image?:             string
+		image_pull_policy?: string
+		memory?:            number
+		name?:              string
+		ready?:             bool
+		restart_count?:     number
+		working_dir?:       string
+		environment_vars?: [{
+			key?:   string
+			value?: string
+		}, ...]
+		ports?: [{
+			port?:     number
+			protocol?: string
+		}, ...]
+		volume_mounts?: [{
+			mount_path?: string
+			name?:       string
+			read_only?:  bool
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+	volumes?: [{
+		disk_volume_disk_id?:  string
+		disk_volume_fs_type?:  string
+		flex_volume_driver?:   string
+		flex_volume_fs_type?:  string
+		flex_volume_options?:  string
+		name?:                 string
+		nfs_volume_path?:      string
+		nfs_volume_read_only?: bool
+		nfs_volume_server?:    string
+		type?:                 string
+		config_file_volume_config_file_to_paths?: [{
+			content?: string
+			path?:    string
+		}, ...]
+	}, ...]
+}
+#AlicloudEciImageCacheResource: {
+	image_cache_name: string
+	images: [string, ...]
+	security_group_id:   string
+	vswitch_id:          string
+	container_group_id?: string
+	eip_instance_id?:    string
+	id?:                 string
+	image_cache_size?:   number
+	resource_group_id?:  string
+	retention_days?:     number
+	status?:             string
+	zone_id?:            string
+	image_registry_credential?: [{
+		password?:  string
+		server?:    string
+		user_name?: string
+	}, ...]
+	timeouts?: create?: string
+}
+#AlicloudEciOpenapiImageCacheResource: {
+	image_cache_name: string
+	images: [string, ...]
+	security_group_id:   string
+	vswitch_id:          string
+	container_group_id?: string
+	eip_instance_id?:    string
+	id?:                 string
+	image_cache_size?:   number
+	resource_group_id?:  string
+	retention_days?:     number
+	status?:             string
+	zone_id?:            string
+	image_registry_credential?: [{
+		password?:  string
+		server?:    string
+		user_name?: string
+	}, ...]
+	timeouts?: create?: string
+}
+#AlicloudEcsDedicatedHostResource: {
+	dedicated_host_type:    string
+	action_on_maintenance?: string
+	auto_placement?:        string
+	auto_release_time?:     string
+	auto_renew?:            bool
+	auto_renew_period?:     number
+	dedicated_host_name?:   string
+	description?:           string
+	detail_fee?:            bool
+	dry_run?:               bool
+	expired_time?:          string
+	id?:                    string
+	payment_type?:          string
+	resource_group_id?:     string
+	sale_cycle?:            string
+	status?:                string
+	tags?: [_]: string
+	zone_id?: string
+	network_attributes?: [{
+		slb_udp_timeout?: number
+		udp_timeout?:     number
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
 	}
 }
 #AlicloudEdasApplicationResource: {
@@ -856,72 +1903,189 @@ package alicloud
 	ecu_info?: [string, ...]
 	group_id?:          string
 	health_check_url?:  string
+	id?:                string
 	logical_region_id?: string
 	package_version?:   string
 	war_url?:           string
 }
 #AlicloudEdasApplicationDeploymentResource: {
-	app_id:           string
-	group_id:         string
-	war_url:          string
-	package_version?: string
+	app_id:                string
+	group_id:              string
+	war_url:               string
+	id?:                   string
+	last_package_version?: string
+	package_version?:      string
 }
 #AlicloudEdasApplicationScaleResource: {
 	app_id:       string
 	deploy_group: string
 	ecu_info: [string, ...]
+	ecc_info?:     string
 	force_status?: bool
+	id?:           string
 }
 #AlicloudEdasClusterResource: {
 	cluster_name:       string
 	cluster_type:       number
 	network_mode:       number
+	id?:                string
 	logical_region_id?: string
 	vpc_id?:            string
 }
 #AlicloudEdasDeployGroupResource: {
-	app_id:     string
-	group_name: string
+	app_id:      string
+	group_name:  string
+	group_type?: number
+	id?:         string
 }
 #AlicloudEdasInstanceClusterAttachmentResource: {
 	cluster_id: string
 	instance_ids: [string, ...]
+	cluster_member_ids?: [_]: string
+	ecu_map?: [_]:            string
+	id?: string
+	status_map?: [_]: number
+}
+#AlicloudEdasK8SApplicationResource: {
+	application_name:         string
+	cluster_id:               string
+	application_descriotion?: string
+	command?:                 string
+	command_args?: [string, ...]
+	edas_container_version?: string
+	envs?: [_]: string
+	id?:                    string
+	image_url?:             string
+	internet_slb_id?:       string
+	internet_slb_port?:     number
+	internet_slb_protocol?: string
+	internet_target_port?:  number
+	jdk?:                   string
+	limit_m_cpu?:           number
+	limit_mem?:             number
+	liveness?:              string
+	local_volume?:          string
+	logical_region_id?:     string
+	mount_descs?:           string
+	namespace?:             string
+	nas_id?:                string
+	package_type?:          string
+	package_url?:           string
+	package_version?:       string
+	post_start?:            string
+	pre_stop?:              string
+	readiness?:             string
+	replicas?:              number
+	requests_m_cpu?:        number
+	requests_mem?:          number
+	web_container?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudEdasK8SClusterResource: {
+	cs_cluster_id:          string
+	cluster_import_status?: number
+	cluster_name?:          string
+	cluster_type?:          number
+	id?:                    string
+	namespace_id?:          string
+	network_mode?:          number
+	vpc_id?:                string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudEdasSlbAttachmentResource: {
 	app_id:            string
 	slb_id:            string
 	slb_ip:            string
 	type:              string
+	id?:               string
 	listener_port?:    number
+	slb_status?:       string
 	vserver_group_id?: string
+	vswitch_id?:       string
 }
 #AlicloudEipResource: {
 	bandwidth?:            number
 	description?:          string
+	id?:                   string
 	instance_charge_type?: string
 	internet_charge_type?: string
+	ip_address?:           string
+	isp?:                  string
 	name?:                 string
 	period?:               number
+	resource_group_id?:    string
+	status?:               string
 	tags?: [_]: string
 }
 #AlicloudEipAssociationResource: {
-	allocation_id: string
-	instance_id:   string
+	allocation_id:       string
+	instance_id:         string
+	force?:              bool
+	id?:                 string
+	instance_type?:      string
+	private_ip_address?: string
+}
+#AlicloudEipanycastAnycastEipAddressResource: {
+	service_location:          string
+	anycast_eip_address_name?: string
+	bandwidth?:                number
+	description?:              string
+	id?:                       string
+	internet_charge_type?:     string
+	payment_type?:             string
+	status?:                   string
+	timeouts?: create?: string
+}
+#AlicloudEipanycastAnycastEipAddressAttachmentResource: {
+	anycast_id:              string
+	bind_instance_id:        string
+	bind_instance_region_id: string
+	bind_instance_type:      string
+	bind_time?:              string
+	id?:                     string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudElasticsearchInstanceResource: {
-	data_node_amount:        number
-	data_node_disk_size:     number
-	data_node_disk_type:     string
-	data_node_spec:          string
-	version:                 string
-	vswitch_id:              string
-	description?:            string
-	instance_charge_type?:   string
+	data_node_amount:               number
+	data_node_disk_size:            number
+	data_node_disk_type:            string
+	data_node_spec:                 string
+	version:                        string
+	vswitch_id:                     string
+	client_node_amount?:            number
+	client_node_spec?:              string
+	data_node_disk_encrypted?:      bool
+	description?:                   string
+	domain?:                        string
+	enable_kibana_private_network?: bool
+	enable_kibana_public_network?:  bool
+	enable_public?:                 bool
+	id?:                            string
+	instance_charge_type?:          string
+	kibana_domain?:                 string
+	kibana_port?:                   number
+	kibana_private_whitelist?: [string, ...]
+	kibana_whitelist?: [string, ...]
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
 	master_node_spec?: string
 	password?:         string
 	period?:           number
+	port?:             number
+	private_whitelist?: [string, ...]
+	protocol?: string
+	public_whitelist?: [string, ...]
+	resource_group_id?: string
+	status?:            string
 	tags?: [_]: string
 	zone_count?: number
 	timeouts?: {
@@ -939,10 +2103,12 @@ package alicloud
 	deposit_type?:             string
 	eas_enable?:               bool
 	high_availability_enable?: bool
+	id?:                       string
 	is_open_public_ip?:        bool
 	key_pair_name?:            string
 	master_pwd?:               string
 	option_software_list?: [string, ...]
+	period?:             number
 	related_cluster_id?: string
 	security_group_id?:  string
 	ssh_enable?:         bool
@@ -984,83 +2150,119 @@ package alicloud
 	cloud_monitor_group_id?: number
 	comparison_operator?:    string
 	description?:            string
-	enable?:                 bool
-	evaluation_count?:       number
-	metric_type?:            string
-	period?:                 number
-	statistics?:             string
+	dimensions?: [_]: string
+	enable?:           bool
+	evaluation_count?: number
+	id?:               string
+	metric_type?:      string
+	name?:             string
+	period?:           number
+	state?:            string
+	statistics?:       string
 }
 #AlicloudEssAttachmentResource: {
 	instance_ids: [string, ...]
 	scaling_group_id: string
 	force?:           bool
+	id?:              string
 }
 #AlicloudEssLifecycleHookResource: {
-	lifecycle_transition: string
-	scaling_group_id:     string
-	default_result?:      string
-	heartbeat_timeout?:   number
+	lifecycle_transition:   string
+	scaling_group_id:       string
+	default_result?:        string
+	heartbeat_timeout?:     number
+	id?:                    string
+	name?:                  string
+	notification_arn?:      string
+	notification_metadata?: string
 }
 #AlicloudEssNotificationResource: {
 	notification_arn: string
 	notification_types: [string, ...]
 	scaling_group_id: string
+	id?:              string
 }
 #AlicloudEssScalingConfigurationResource: {
-	image_id:         string
-	scaling_group_id: string
-	enable?:          bool
-	force_delete?:    bool
+	scaling_group_id:      string
+	active?:               bool
+	credit_specification?: string
+	enable?:               bool
+	force_delete?:         bool
+	id?:                   string
+	image_id?:             string
+	image_name?:           string
 	instance_ids?: [string, ...]
 	instance_name?: string
 	instance_type?: string
 	instance_types?: [string, ...]
 	internet_charge_type?:       string
+	internet_max_bandwidth_in?:  number
 	internet_max_bandwidth_out?: number
 	io_optimized?:               string
 	is_outdated?:                bool
 	key_name?:                   string
 	kms_encrypted_password?:     string
 	kms_encryption_context?: [_]: string
-	override?:          bool
-	password?:          string
-	password_inherit?:  bool
-	role_name?:         string
-	security_group_id?: string
+	override?:                   bool
+	password?:                   string
+	password_inherit?:           bool
+	role_name?:                  string
+	scaling_configuration_name?: string
+	security_group_id?:          string
 	security_group_ids?: [string, ...]
-	system_disk_category?: string
-	system_disk_size?:     number
+	substitute?:                          string
+	system_disk_auto_snapshot_policy_id?: string
+	system_disk_category?:                string
+	system_disk_description?:             string
+	system_disk_name?:                    string
+	system_disk_size?:                    number
 	tags?: [_]: string
 	user_data?: string
 	data_disk?: [{
-		category?:             string
-		delete_with_instance?: bool
-		device?:               string
-		size?:                 number
-		snapshot_id?:          string
+		auto_snapshot_policy_id?: string
+		category?:                string
+		delete_with_instance?:    bool
+		description?:             string
+		device?:                  string
+		encrypted?:               bool
+		kms_key_id?:              string
+		name?:                    string
+		size?:                    number
+		snapshot_id?:             string
 	}, ...]
 }
 #AlicloudEssScalingGroupResource: {
 	max_size: number
 	min_size: number
 	db_instance_ids?: [string, ...]
-	default_cooldown?: number
-	desired_capacity?: number
+	default_cooldown?:          number
+	desired_capacity?:          number
+	group_deletion_protection?: bool
+	id?:                        string
 	loadbalancer_ids?: [string, ...]
-	multi_az_policy?:    string
-	scaling_group_name?: string
-	vswitch_id?:         string
+	multi_az_policy?:                          string
+	on_demand_base_capacity?:                  number
+	on_demand_percentage_above_base_capacity?: number
+	removal_policies?: [string, ...]
+	scaling_group_name?:   string
+	spot_instance_pools?:  number
+	spot_instance_remedy?: bool
+	vswitch_id?:           string
 	vswitch_ids?: [string, ...]
 }
 #AlicloudEssScalingRuleResource: {
-	scaling_group_id:   string
-	adjustment_type?:   string
-	adjustment_value?:  number
-	cooldown?:          number
-	disable_scale_in?:  bool
-	metric_name?:       string
-	scaling_rule_type?: string
-	target_value?:      number
+	scaling_group_id:           string
+	adjustment_type?:           string
+	adjustment_value?:          number
+	ari?:                       string
+	cooldown?:                  number
+	disable_scale_in?:          bool
+	estimated_instance_warmup?: number
+	id?:                        string
+	metric_name?:               string
+	scaling_rule_name?:         string
+	scaling_rule_type?:         string
+	target_value?:              number
 	step_adjustment?: [{
 		metric_interval_lower_bound?: string
 		metric_interval_upper_bound?: string
@@ -1070,6 +2272,7 @@ package alicloud
 #AlicloudEssScalinggroupVserverGroupsResource: {
 	scaling_group_id: string
 	force?:           bool
+	id?:              string
 	vserver_groups?: [{
 		loadbalancer_id: string
 		vserver_attributes?: [{
@@ -1080,68 +2283,319 @@ package alicloud
 	}, ...]
 }
 #AlicloudEssScheduleResource: {
-	launch_time:             string
-	scheduled_action:        string
+	description?:            string
+	desired_capacity?:       number
+	id?:                     string
 	launch_expiration_time?: number
+	launch_time?:            string
+	max_value?:              number
+	min_value?:              number
+	recurrence_end_time?:    string
+	recurrence_type?:        string
+	recurrence_value?:       string
+	scaling_group_id?:       string
+	scheduled_action?:       string
 	scheduled_task_name?:    string
 	task_enabled?:           bool
 }
 #AlicloudEssScheduledTaskResource: {
-	launch_time:             string
-	scheduled_action:        string
+	description?:            string
+	desired_capacity?:       number
+	id?:                     string
 	launch_expiration_time?: number
+	launch_time?:            string
+	max_value?:              number
+	min_value?:              number
+	recurrence_end_time?:    string
+	recurrence_type?:        string
+	recurrence_value?:       string
+	scaling_group_id?:       string
+	scheduled_action?:       string
 	scheduled_task_name?:    string
 	task_enabled?:           bool
 }
+#AlicloudFcAliasResource: {
+	alias_name:      string
+	service_name:    string
+	service_version: string
+	description?:    string
+	id?:             string
+	routing_config?: [{
+		additional_version_weights?: [_]: number
+	}, ...]
+}
+#AlicloudFcCustomDomainResource: {
+	domain_name:         string
+	protocol:            string
+	account_id?:         string
+	api_version?:        string
+	created_time?:       string
+	id?:                 string
+	last_modified_time?: string
+	cert_config?: [{
+		cert_name:   string
+		certificate: string
+		private_key: string
+	}, ...]
+	route_config?: [{
+		function_name: string
+		path:          string
+		service_name:  string
+		methods?: [string, ...]
+		qualifier?: string
+	}, ...]
+}
 #AlicloudFcFunctionResource: {
-	handler:      string
-	runtime:      string
-	service:      string
-	description?: string
+	handler:        string
+	runtime:        string
+	service:        string
+	ca_port?:       number
+	code_checksum?: string
+	description?:   string
 	environment_variables?: [_]: string
-	filename?:    string
-	memory_size?: number
-	name_prefix?: string
-	oss_bucket?:  string
-	oss_key?:     string
-	timeout?:     number
+	filename?:               string
+	function_id?:            string
+	id?:                     string
+	initialization_timeout?: number
+	initializer?:            string
+	instance_concurrency?:   number
+	instance_type?:          string
+	last_modified?:          string
+	memory_size?:            number
+	name?:                   string
+	name_prefix?:            string
+	oss_bucket?:             string
+	oss_key?:                string
+	timeout?:                number
+	custom_container_config?: [{
+		image:    string
+		args?:    string
+		command?: string
+	}, ...]
+}
+#AlicloudFcFunctionAsyncInvokeConfigResource: {
+	function_name:                 string
+	service_name:                  string
+	created_time?:                 string
+	id?:                           string
+	last_modified_time?:           string
+	maximum_event_age_in_seconds?: number
+	maximum_retry_attempts?:       number
+	qualifier?:                    string
+	destination_config?: [{
+		on_failure?: [{
+			destination: string
+		}, ...]
+		on_success?: [{
+			destination: string
+		}, ...]
+	}, ...]
 }
 #AlicloudFcServiceResource: {
 	description?:     string
+	id?:              string
 	internet_access?: bool
+	last_modified?:   string
+	name?:            string
 	name_prefix?:     string
+	publish?:         bool
 	role?:            string
+	service_id?:      string
+	version?:         string
 	log_config?: [{
 		logstore: string
 		project:  string
 	}, ...]
+	nas_config?: [{
+		group_id: number
+		user_id:  number
+		mount_points?: [{
+			mount_dir:   string
+			server_addr: string
+		}, ...]
+	}, ...]
 	vpc_config?: [{
 		security_group_id: string
 		vswitch_ids: [string, ...]
+		vpc_id?: string
 	}, ...]
 }
 #AlicloudFcTriggerResource: {
-	function:     string
-	service:      string
-	type:         string
-	config?:      string
-	config_mns?:  string
-	name_prefix?: string
-	role?:        string
-	source_arn?:  string
+	function:       string
+	service:        string
+	type:           string
+	config?:        string
+	config_mns?:    string
+	id?:            string
+	last_modified?: string
+	name?:          string
+	name_prefix?:   string
+	role?:          string
+	source_arn?:    string
+	trigger_id?:    string
+}
+#AlicloudFnfFlowResource: {
+	definition:          string
+	description:         string
+	name:                string
+	type:                string
+	flow_id?:            string
+	id?:                 string
+	last_modified_time?: string
+	role_arn?:           string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudFnfScheduleResource: {
+	cron_expression:     string
+	flow_name:           string
+	schedule_name:       string
+	description?:        string
+	enable?:             bool
+	id?:                 string
+	last_modified_time?: string
+	payload?:            string
+	schedule_id?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudForwardEntryResource: {
-	external_ip:      string
-	external_port:    string
-	forward_table_id: string
-	internal_ip:      string
-	internal_port:    string
-	ip_protocol:      string
+	external_ip:       string
+	external_port:     string
+	forward_table_id:  string
+	internal_ip:       string
+	internal_port:     string
+	ip_protocol:       string
+	forward_entry_id?: string
+	id?:               string
+	name?:             string
+}
+#AlicloudGaAcceleratorResource: {
+	duration:          number
+	spec:              string
+	accelerator_name?: string
+	auto_use_coupon?:  bool
+	description?:      string
+	id?:               string
+	status?:           string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#AlicloudGaBandwidthPackageResource: {
+	bandwidth:                  number
+	type:                       string
+	auto_pay?:                  bool
+	auto_use_coupon?:           bool
+	bandwidth_package_name?:    string
+	bandwidth_type?:            string
+	billing_type?:              string
+	cbn_geographic_region_ida?: string
+	cbn_geographic_region_idb?: string
+	description?:               string
+	duration?:                  string
+	id?:                        string
+	payment_type?:              string
+	ratio?:                     number
+	status?:                    string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#AlicloudGaBandwidthPackageAttachmentResource: {
+	accelerator_id:       string
+	bandwidth_package_id: string
+	accelerators?: [string, ...]
+	id?:     string
+	status?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudGaEndpointGroupResource: {
+	accelerator_id:                 string
+	endpoint_group_region:          string
+	listener_id:                    string
+	description?:                   string
+	endpoint_group_type?:           string
+	endpoint_request_protocol?:     string
+	health_check_interval_seconds?: number
+	health_check_path?:             string
+	health_check_port?:             number
+	health_check_protocol?:         string
+	id?:                            string
+	name?:                          string
+	status?:                        string
+	threshold_count?:               number
+	traffic_percentage?:            number
+	endpoint_configurations?: [{
+		endpoint:                      string
+		type:                          string
+		weight:                        number
+		enable_clientip_preservation?: bool
+	}, ...]
+	port_overrides?: [{
+		endpoint_port?: number
+		listener_port?: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudGaIpSetResource: {
+	accelerate_region_id: string
+	accelerator_id:       string
+	bandwidth?:           number
+	id?:                  string
+	ip_address_list?: [string, ...]
+	ip_version?: string
+	status?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudGaListenerResource: {
+	accelerator_id:   string
+	client_affinity?: string
+	description?:     string
+	id?:              string
 	name?:            string
+	protocol?:        string
+	proxy_protocol?:  bool
+	status?:          string
+	certificates?: [{
+		id?: string
+	}, ...]
+	port_ranges?: [{
+		from_port: number
+		to_port:   number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudGpdbConnectionResource: {
-	instance_id: string
-	port?:       string
+	instance_id:        string
+	connection_prefix?: string
+	connection_string?: string
+	id?:                string
+	ip_address?:        string
+	port?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1149,48 +2603,95 @@ package alicloud
 	}
 }
 #AlicloudGpdbInstanceResource: {
-	instance_class:       string
-	instance_group_count: string
-	description?:         string
-	tags?: [_]:         string
+	instance_class:        string
+	instance_group_count:  string
+	availability_zone?:    string
+	description?:          string
+	engine?:               string
+	engine_version?:       string
+	id?:                   string
+	instance_charge_type?: string
+	security_ip_list?: [string, ...]
+	tags?: [_]: string
+	vswitch_id?: string
 	timeouts?: create?: string
 }
 #AlicloudHavipResource: {
 	vswitch_id:   string
 	description?: string
+	id?:          string
+	ip_address?:  string
 }
 #AlicloudHavipAttachmentResource: {
 	havip_id:    string
 	instance_id: string
+	id?:         string
 }
 #AlicloudHbaseInstanceResource: {
-	core_disk_type:          string
-	core_instance_type:      string
-	engine_version:          string
-	master_instance_type:    string
-	name:                    string
-	core_disk_size?:         number
-	core_instance_quantity?: number
-	deletion_protection?:    bool
-	engine?:                 string
-	pay_type?:               string
+	core_instance_type:        string
+	engine_version:            string
+	master_instance_type:      string
+	name:                      string
+	account?:                  string
+	auto_renew?:               bool
+	cold_storage_size?:        number
+	core_disk_size?:           number
+	core_disk_type?:           string
+	core_instance_quantity?:   number
+	deletion_protection?:      bool
+	duration?:                 number
+	engine?:                   string
+	id?:                       string
+	immediate_delete_flag?:    bool
+	ip_white?:                 string
+	maintain_end_time?:        string
+	maintain_start_time?:      string
+	master_instance_quantity?: number
+	password?:                 string
+	pay_type?:                 string
+	security_groups?: [string, ...]
+	slb_conn_addrs?: [{
+		conn_addr:      string
+		conn_addr_port: string
+		net_type:       string
+	}, ...]
 	tags?: [_]: string
+	ui_proxy_conn_addrs?: [{
+		conn_addr:      string
+		conn_addr_port: string
+		net_type:       string
+	}, ...]
 	vswitch_id?: string
+	zk_conn_addrs?: [{
+		conn_addr:      string
+		conn_addr_port: string
+		net_type:       string
+	}, ...]
+	zone_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
+		update?: string
 	}
 }
 #AlicloudImageResource: {
 	architecture?:      string
 	description?:       string
 	force?:             bool
+	id?:                string
+	image_name?:        string
 	instance_id?:       string
+	name?:              string
 	platform?:          string
 	resource_group_id?: string
 	snapshot_id?:       string
 	tags?: [_]: string
-	disk_device_mapping?: [{}, ...]
+	disk_device_mapping?: [{
+		device?:      string
+		disk_type?:   string
+		size?:        number
+		snapshot_id?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1202,7 +2703,10 @@ package alicloud
 	description?:     string
 	encrypted?:       bool
 	force?:           bool
+	id?:              string
+	image_name?:      string
 	kms_key_id?:      string
+	name?:            string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1212,18 +2716,22 @@ package alicloud
 #AlicloudImageExportResource: {
 	image_id:    string
 	oss_bucket:  string
+	id?:         string
 	oss_prefix?: string
 	timeouts?: create?: string
 }
 #AlicloudImageImportResource: {
 	architecture?: string
 	description?:  string
+	id?:           string
 	image_name?:   string
 	license_type?: string
 	os_type?:      string
 	platform?:     string
 	disk_device_mapping?: [{
+		device?:          string
 		disk_image_size?: number
+		format?:          string
 		oss_bucket?:      string
 		oss_object?:      string
 	}, ...]
@@ -1235,6 +2743,7 @@ package alicloud
 #AlicloudImageSharePermissionResource: {
 	account_id: string
 	image_id:   string
+	id?:        string
 }
 #AlicloudInstanceResource: {
 	image_id:      string
@@ -1243,32 +2752,47 @@ package alicloud
 	allocate_public_ip?:         bool
 	auto_release_time?:          string
 	auto_renew_period?:          number
+	availability_zone?:          string
+	credit_specification?:       string
 	deletion_protection?:        bool
 	description?:                string
 	dry_run?:                    bool
 	force_delete?:               bool
+	host_name?:                  string
+	id?:                         string
 	include_data_disks?:         bool
 	instance_charge_type?:       string
 	instance_name?:              string
 	internet_charge_type?:       string
+	internet_max_bandwidth_in?:  number
 	internet_max_bandwidth_out?: number
 	io_optimized?:               string
 	is_outdated?:                bool
+	key_name?:                   string
 	kms_encrypted_password?:     string
 	kms_encryption_context?: [_]: string
 	password?:                            string
 	period?:                              number
 	period_unit?:                         string
+	private_ip?:                          string
+	public_ip?:                           string
 	renewal_status?:                      string
 	resource_group_id?:                   string
+	role_name?:                           string
 	security_enhancement_strategy?:       string
 	spot_price_limit?:                    number
 	spot_strategy?:                       string
+	status?:                              string
+	subnet_id?:                           string
 	system_disk_auto_snapshot_policy_id?: string
 	system_disk_category?:                string
+	system_disk_description?:             string
+	system_disk_name?:                    string
+	system_disk_performance_level?:       string
 	system_disk_size?:                    number
 	tags?: [_]: string
-	user_data?:  string
+	user_data?: string
+	volume_tags?: [_]: string
 	vswitch_id?: string
 	data_disks?: [{
 		size:                     number
@@ -1277,7 +2801,9 @@ package alicloud
 		delete_with_instance?:    bool
 		description?:             string
 		encrypted?:               bool
+		kms_key_id?:              string
 		name?:                    string
+		performance_level?:       string
 		snapshot_id?:             string
 	}, ...]
 	timeouts?: {
@@ -1287,7 +2813,10 @@ package alicloud
 	}
 }
 #AlicloudKeyPairResource: {
+	finger_print?:      string
+	id?:                string
 	key_file?:          string
+	key_name?:          string
 	key_name_prefix?:   string
 	public_key?:        string
 	resource_group_id?: string
@@ -1297,32 +2826,67 @@ package alicloud
 	instance_ids: [string, ...]
 	key_name: string
 	force?:   bool
+	id?:      string
 }
 #AlicloudKmsAliasResource: {
 	alias_name: string
 	key_id:     string
+	id?:        string
 }
 #AlicloudKmsCiphertextResource: {
-	key_id:    string
-	plaintext: string
+	key_id:           string
+	plaintext:        string
+	ciphertext_blob?: string
 	encryption_context?: [_]: string
+	id?: string
 }
 #AlicloudKmsKeyResource: {
+	arn?:                     string
+	automatic_rotation?:      string
+	creation_date?:           string
+	creator?:                 string
+	delete_date?:             string
 	deletion_window_in_days?: number
 	description?:             string
+	id?:                      string
 	is_enabled?:              bool
+	key_spec?:                string
+	key_state?:               string
 	key_usage?:               string
+	last_rotation_date?:      string
+	material_expire_time?:    string
+	next_rotation_date?:      string
+	origin?:                  string
+	pending_window_in_days?:  number
+	primary_key_version?:     string
+	protection_level?:        string
+	rotation_interval?:       string
+}
+#AlicloudKmsKeyVersionResource: {
+	key_id:          string
+	creation_date?:  string
+	id?:             string
+	key_version_id?: string
 }
 #AlicloudKmsSecretResource: {
 	secret_data:                    string
 	secret_name:                    string
 	version_id:                     string
+	arn?:                           string
 	description?:                   string
 	encryption_key_id?:             string
 	force_delete_without_recovery?: bool
+	id?:                            string
+	planned_delete_time?:           string
 	recovery_window_in_days?:       number
 	secret_data_type?:              string
 	tags?: [_]: string
+	version_stages?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudKvstoreAccountResource: {
 	account_name:            string
@@ -1331,52 +2895,117 @@ package alicloud
 	account_privilege?:      string
 	account_type?:           string
 	description?:            string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
+	status?: string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
 }
 #AlicloudKvstoreBackupPolicyResource: {
-	instance_id:  string
+	instance_id: string
+	backup_period?: [string, ...]
 	backup_time?: string
+	id?:          string
+	timeouts?: update?: string
 }
-#AlicloudKvstoreInstanceResource: {
-	instance_class:          string
-	auto_renew?:             bool
-	auto_renew_period?:      number
-	backup_id?:              string
-	engine_version?:         string
-	instance_charge_type?:   string
-	instance_name?:          string
-	instance_type?:          string
-	kms_encrypted_password?: string
-	kms_encryption_context?: [_]: string
-	password?: string
-	period?:   number
-	tags?: [_]: string
-	vswitch_id?: string
-	parameters?: [{
-		name:  string
-		value: string
-	}, ...]
+#AlicloudKvstoreConnectionResource: {
+	connection_string_prefix: string
+	instance_id:              string
+	port:                     string
+	connection_string?:       string
+	id?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
+#AlicloudKvstoreInstanceResource: {
+	auto_renew?:        bool
+	auto_renew_period?: number
+	auto_use_coupon?:   bool
+	availability_zone?: string
+	backup_id?:         string
+	backup_period?: [string, ...]
+	backup_time?:   string
+	bandwidth?:     number
+	business_info?: string
+	capacity?:      number
+	config?: [_]: string
+	connection_domain?:           string
+	connection_string?:           string
+	connection_string_prefix?:    string
+	coupon_no?:                   string
+	db_instance_name?:            string
+	dedicated_host_group_id?:     string
+	enable_backup_log?:           number
+	enable_public?:               bool
+	end_time?:                    string
+	engine_version?:              string
+	force_upgrade?:               bool
+	global_instance?:             bool
+	global_instance_id?:          string
+	id?:                          string
+	instance_charge_type?:        string
+	instance_class?:              string
+	instance_name?:               string
+	instance_release_protection?: bool
+	instance_type?:               string
+	kms_encrypted_password?:      string
+	kms_encryption_context?: [_]: string
+	maintain_end_time?:           string
+	maintain_start_time?:         string
+	modify_mode?:                 number
+	node_type?:                   string
+	order_type?:                  string
+	password?:                    string
+	payment_type?:                string
+	period?:                      string
+	port?:                        number
+	private_connection_prefix?:   string
+	private_ip?:                  string
+	qps?:                         number
+	resource_group_id?:           string
+	restore_time?:                string
+	security_group_id?:           string
+	security_ip_group_attribute?: string
+	security_ip_group_name?:      string
+	security_ips?: [string, ...]
+	srcdb_instance_id?: string
+	ssl_enable?:        string
+	status?:            string
+	tags?: [_]: string
+	vpc_auth_mode?: string
+	vswitch_id?:    string
+	zone_id?:       string
+	parameters?: [{
+		name:  string
+		value: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
 #AlicloudLaunchTemplateResource: {
+	name:                           string
 	auto_release_time?:             string
 	description?:                   string
 	host_name?:                     string
+	id?:                            string
 	image_id?:                      string
 	image_owner_alias?:             string
 	instance_charge_type?:          string
 	instance_name?:                 string
 	instance_type?:                 string
 	internet_charge_type?:          string
+	internet_max_bandwidth_in?:     number
 	internet_max_bandwidth_out?:    number
 	io_optimized?:                  string
 	key_pair_name?:                 string
-	name?:                          string
 	network_type?:                  string
 	ram_role_name?:                 string
 	resource_group_id?:             string
@@ -1417,6 +3046,7 @@ package alicloud
 	dashboard:          string
 	project_name:       string
 	alert_description?: string
+	id?:                string
 	mute_until?:        number
 	notify_threshold?:  number
 	schedule_interval?: string
@@ -1441,19 +3071,30 @@ package alicloud
 #AlicloudLogAuditResource: {
 	aliuid:       string
 	display_name: string
+	id?:          string
 	multi_account?: [string, ...]
 	variable_map?: [_]: string
+}
+#AlicloudLogDashboardResource: {
+	char_list:      string
+	dashboard_name: string
+	project_name:   string
+	display_name?:  string
+	id?:            string
 }
 #AlicloudLogMachineGroupResource: {
 	identify_list: [string, ...]
 	name:           string
 	project:        string
+	id?:            string
 	identify_type?: string
 	topic?:         string
 }
 #AlicloudLogProjectResource: {
 	name:         string
 	description?: string
+	id?:          string
+	tags?: [_]: string
 }
 #AlicloudLogStoreResource: {
 	name:                   string
@@ -1461,13 +3102,21 @@ package alicloud
 	append_meta?:           bool
 	auto_split?:            bool
 	enable_web_tracking?:   bool
+	id?:                    string
 	max_split_shard_count?: number
 	retention_period?:      number
 	shard_count?:           number
+	shards?: [{
+		begin_key: string
+		end_key:   string
+		id:        number
+		status:    string
+	}, ...]
 }
 #AlicloudLogStoreIndexResource: {
 	logstore: string
 	project:  string
+	id?:      string
 	field_search?: [{
 		name:              string
 		alias?:            string
@@ -1493,6 +3142,7 @@ package alicloud
 	logtail_config_name: string
 	machine_group_name:  string
 	project:             string
+	id?:                 string
 }
 #AlicloudLogtailConfigResource: {
 	input_detail: string
@@ -1501,6 +3151,7 @@ package alicloud
 	name:         string
 	output_type:  string
 	project:      string
+	id?:          string
 	log_sample?:  string
 }
 #AlicloudMarketOrderResource: {
@@ -1510,17 +3161,22 @@ package alicloud
 	components?: [_]: string
 	coupon_id?: string
 	duration?:  number
+	id?:        string
 	pay_type?:  string
 	quantity?:  number
 }
 #AlicloudMaxcomputeProjectResource: {
-	name:               string
 	order_type:         string
 	specification_type: string
+	id?:                string
+	name?:              string
+	project_name?:      string
+	timeouts?: delete?: string
 }
 #AlicloudMnsQueueResource: {
 	name:                      string
 	delay_seconds?:            number
+	id?:                       string
 	maximum_message_size?:     number
 	message_retention_period?: number
 	polling_wait_seconds?:     number
@@ -1528,6 +3184,7 @@ package alicloud
 }
 #AlicloudMnsTopicResource: {
 	name:                  string
+	id?:                   string
 	logging_enabled?:      bool
 	maximum_message_size?: number
 }
@@ -1536,20 +3193,37 @@ package alicloud
 	name:                   string
 	topic_name:             string
 	filter_tag?:            string
+	id?:                    string
 	notify_content_format?: string
 	notify_strategy?:       string
 }
 #AlicloudMongodbInstanceResource: {
-	db_instance_class:       string
-	db_instance_storage:     number
-	engine_version:          string
-	account_password?:       string
+	db_instance_class:   string
+	db_instance_storage: number
+	engine_version:      string
+	account_password?:   string
+	backup_period?: [string, ...]
+	backup_time?:            string
+	id?:                     string
 	instance_charge_type?:   string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
-	name?: string
+	maintain_end_time?:   string
+	maintain_start_time?: string
+	name?:                string
+	period?:              number
+	replica_set_name?:    string
+	replication_factor?:  number
+	retention_period?:    number
+	security_group_id?:   string
+	security_ip_list?: [string, ...]
+	ssl_action?:     string
+	ssl_status?:     string
+	storage_engine?: string
 	tags?: [_]: string
 	tde_status?: string
+	vswitch_id?: string
+	zone_id?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1557,30 +3231,71 @@ package alicloud
 	}
 }
 #AlicloudMongodbShardingInstanceResource: {
-	engine_version:          string
-	account_password?:       string
+	engine_version:    string
+	account_password?: string
+	backup_period?: [string, ...]
+	backup_time?:            string
+	id?:                     string
+	instance_charge_type?:   string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
-	name?:       string
+	name?:              string
+	period?:            number
+	retention_period?:  number
+	security_group_id?: string
+	security_ip_list?: [string, ...]
+	storage_engine?: string
+	tags?: [_]: string
 	tde_status?: string
 	vswitch_id?: string
 	zone_id?:    string
 	mongo_list?: [{
-		node_class: string
+		node_class:      string
+		connect_string?: string
+		node_id?:        string
+		port?:           number
 	}, ...]
 	shard_list?: [{
 		node_class:   string
 		node_storage: number
+		node_id?:     string
 	}, ...]
 }
+#AlicloudMseClusterResource: {
+	cluster_specification: string
+	cluster_type:          string
+	cluster_version:       string
+	instance_count:        number
+	net_type:              string
+	acl_entry_list?: [string, ...]
+	cluster_alias_name?:        string
+	disk_type?:                 string
+	id?:                        string
+	private_slb_specification?: string
+	pub_network_flow?:          string
+	pub_slb_specification?:     string
+	status?:                    string
+	vswitch_id?:                string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
 #AlicloudNasAccessGroupResource: {
-	name:         string
-	type:         string
-	description?: string
+	access_group_name?: string
+	access_group_type?: string
+	description?:       string
+	file_system_type?:  string
+	id?:                string
+	name?:              string
+	type?:              string
+	timeouts?: create?: string
 }
 #AlicloudNasAccessRuleResource: {
 	access_group_name: string
 	source_cidr_ip:    string
+	access_rule_id?:   string
+	id?:               string
 	priority?:         number
 	rw_access_type?:   string
 	user_access_type?: string
@@ -1589,30 +3304,47 @@ package alicloud
 	protocol_type: string
 	storage_type:  string
 	description?:  string
+	id?:           string
 }
 #AlicloudNasMountTargetResource: {
-	access_group_name: string
-	file_system_id:    string
-	vswitch_id?:       string
+	access_group_name:  string
+	file_system_id:     string
+	id?:                string
+	security_group_id?: string
+	status?:            string
+	vswitch_id?:        string
+	timeouts?: create?: string
 }
 #AlicloudNatGatewayResource: {
-	vpc_id:         string
-	description?:   string
-	period?:        number
-	spec?:          string
-	specification?: string
+	vpc_id:                 string
+	bandwidth_package_ids?: string
+	description?:           string
+	forward_table_ids?:     string
+	id?:                    string
+	instance_charge_type?:  string
+	name?:                  string
+	nat_type?:              string
+	period?:                number
+	snat_table_ids?:        string
+	spec?:                  string
+	specification?:         string
+	vswitch_id?:            string
 	bandwidth_packages?: [{
-		bandwidth: number
-		ip_count:  number
+		bandwidth:            number
+		ip_count:             number
+		public_ip_addresses?: string
+		zone?:                string
 	}, ...]
 }
 #AlicloudNetworkAclResource: {
 	vpc_id:       string
 	description?: string
+	id?:          string
 	name?:        string
 }
 #AlicloudNetworkAclAttachmentResource: {
 	network_acl_id: string
+	id?:            string
 	resources?: [{
 		resource_id:   string
 		resource_type: string
@@ -1620,6 +3352,7 @@ package alicloud
 }
 #AlicloudNetworkAclEntriesResource: {
 	network_acl_id: string
+	id?:            string
 	egress?: [{
 		description?:         string
 		destination_cidr_ip?: string
@@ -1641,40 +3374,123 @@ package alicloud
 }
 #AlicloudNetworkInterfaceResource: {
 	security_groups: [string, ...]
-	vswitch_id:         string
-	description?:       string
-	name?:              string
+	vswitch_id:   string
+	description?: string
+	id?:          string
+	mac?:         string
+	name?:        string
+	private_ip?:  string
+	private_ips?: [string, ...]
+	private_ips_count?: number
 	resource_group_id?: string
 	tags?: [_]: string
 }
 #AlicloudNetworkInterfaceAttachmentResource: {
 	instance_id:          string
 	network_interface_id: string
+	id?:                  string
 }
 #AlicloudOnsGroupResource: {
-	group_id:     string
 	instance_id:  string
+	group_id?:    string
+	group_name?:  string
+	group_type?:  string
+	id?:          string
 	read_enable?: bool
 	remark?:      string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudOnsInstanceResource: {
-	name:    string
-	remark?: string
+	id?:              string
+	instance_name?:   string
+	instance_status?: number
+	instance_type?:   number
+	name?:            string
+	release_time?:    string
+	remark?:          string
+	status?:          number
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudOnsTopicResource: {
 	instance_id:  string
 	message_type: number
-	topic:        string
+	id?:          string
 	perm?:        number
 	remark?:      string
+	tags?: [_]: string
+	topic?:      string
+	topic_name?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudOosExecutionResource: {
+	template_name:        string
+	counters?:            string
+	create_date?:         string
+	description?:         string
+	end_date?:            string
+	executed_by?:         string
+	id?:                  string
+	is_parent?:           bool
+	loop_mode?:           string
+	mode?:                string
+	outputs?:             string
+	parameters?:          string
+	parent_execution_id?: string
+	ram_role?:            string
+	safety_check?:        string
+	start_date?:          string
+	status?:              string
+	status_message?:      string
+	template_content?:    string
+	template_id?:         string
+	template_version?:    string
+	update_date?:         string
+	timeouts?: create?: string
+}
+#AlicloudOosTemplateResource: {
+	content:                 string
+	template_name:           string
+	auto_delete_executions?: bool
+	created_by?:             string
+	created_date?:           string
+	description?:            string
+	has_trigger?:            bool
+	id?:                     string
+	share_type?:             string
+	tags?: [_]: string
+	template_format?:  string
+	template_id?:      string
+	template_type?:    string
+	template_version?: string
+	updated_by?:       string
+	updated_date?:     string
+	version_name?:     string
 }
 #AlicloudOssBucketResource: {
-	acl?:              string
-	bucket?:           string
-	force_destroy?:    bool
-	logging_isenable?: bool
-	policy?:           string
-	storage_class?:    string
+	acl?:               string
+	bucket?:            string
+	creation_date?:     string
+	extranet_endpoint?: string
+	force_destroy?:     bool
+	id?:                string
+	intranet_endpoint?: string
+	location?:          string
+	logging_isenable?:  bool
+	owner?:             string
+	policy?:            string
+	redundancy_type?:   string
+	storage_class?:     string
 	tags?: [_]: string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
@@ -1685,7 +3501,8 @@ package alicloud
 	}, ...]
 	lifecycle_rule?: [{
 		enabled: bool
-		prefix:  string
+		id?:     string
+		prefix?: string
 		expiration?: [{
 			date?: string
 			days?: number
@@ -1702,9 +3519,11 @@ package alicloud
 	}, ...]
 	referer_config?: [{
 		referers: [string, ...]
+		allow_empty?: bool
 	}, ...]
 	server_side_encryption_rule?: [{
-		sse_algorithm: string
+		sse_algorithm:      string
+		kms_master_key_id?: string
 	}, ...]
 	versioning?: [{
 		status: string
@@ -1722,16 +3541,22 @@ package alicloud
 	content?:                string
 	content_disposition?:    string
 	content_encoding?:       string
+	content_length?:         string
 	content_md5?:            string
+	content_type?:           string
+	etag?:                   string
 	expires?:                string
+	id?:                     string
 	kms_key_id?:             string
 	server_side_encryption?: string
 	source?:                 string
+	version_id?:             string
 }
 #AlicloudOtsInstanceResource: {
 	name:           string
 	accessed_by?:   string
 	description?:   string
+	id?:            string
 	instance_type?: string
 	tags?: [_]: string
 }
@@ -1739,6 +3564,8 @@ package alicloud
 	instance_name: string
 	vpc_name:      string
 	vswitch_id:    string
+	id?:           string
+	vpc_id?:       string
 }
 #AlicloudOtsTableResource: {
 	instance_name:                  string
@@ -1746,6 +3573,7 @@ package alicloud
 	table_name:                     string
 	time_to_live:                   number
 	deviation_cell_version_in_sec?: string
+	id?:                            string
 	primary_key?: [{
 		name: string
 		type: string
@@ -1757,6 +3585,7 @@ package alicloud
 	db_cluster_id:           string
 	account_description?:    string
 	account_type?:           string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
 }
@@ -1765,9 +3594,13 @@ package alicloud
 	db_cluster_id: string
 	db_names: [string, ...]
 	account_privilege?: string
+	id?:                string
 }
 #AlicloudPolardbBackupPolicyResource: {
-	db_cluster_id:          string
+	db_cluster_id:            string
+	backup_retention_period?: string
+	id?:                      string
+	preferred_backup_period?: [string, ...]
 	preferred_backup_time?: string
 }
 #AlicloudPolardbClusterResource: {
@@ -1775,13 +3608,21 @@ package alicloud
 	db_type:            string
 	db_version:         string
 	auto_renew_period?: number
+	collector_status?:  string
+	connection_string?: string
+	db_node_count?:     number
 	description?:       string
+	id?:                string
+	maintain_time?:     string
 	modify_type?:       string
 	pay_type?:          string
 	period?:            number
 	renewal_status?:    string
+	resource_group_id?: string
+	security_ips?: [string, ...]
 	tags?: [_]: string
 	vswitch_id?: string
+	zone_id?:    string
 	parameters?: [{
 		name:  string
 		value: string
@@ -1797,50 +3638,174 @@ package alicloud
 	db_name:             string
 	character_set_name?: string
 	db_description?:     string
+	id?:                 string
 }
 #AlicloudPolardbEndpointResource: {
 	db_cluster_id:       string
 	endpoint_type:       string
 	auto_add_new_nodes?: string
-	read_write_mode?:    string
+	endpoint_config?: [_]: string
+	id?: string
+	nodes?: [string, ...]
+	read_write_mode?: string
 }
 #AlicloudPolardbEndpointAddressResource: {
-	db_cluster_id:  string
-	db_endpoint_id: string
-	net_type?:      string
+	db_cluster_id:      string
+	db_endpoint_id:     string
+	connection_prefix?: string
+	connection_string?: string
+	id?:                string
+	ip_address?:        string
+	net_type?:          string
+	port?:              string
+}
+#AlicloudPrivatelinkVpcEndpointResource: {
+	security_group_ids: [string, ...]
+	vpc_id:                    string
+	bandwidth?:                number
+	connection_status?:        string
+	dry_run?:                  bool
+	endpoint_business_status?: string
+	endpoint_description?:     string
+	endpoint_domain?:          string
+	id?:                       string
+	service_id?:               string
+	service_name?:             string
+	status?:                   string
+	vpc_endpoint_name?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudPrivatelinkVpcEndpointConnectionResource: {
+	endpoint_id: string
+	service_id:  string
+	bandwidth?:  number
+	dry_run?:    bool
+	id?:         string
+	status?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudPrivatelinkVpcEndpointServiceResource: {
+	auto_accept_connection?:  bool
+	connect_bandwidth?:       number
+	dry_run?:                 bool
+	id?:                      string
+	payer?:                   string
+	service_business_status?: string
+	service_description?:     string
+	service_domain?:          string
+	status?:                  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudPrivatelinkVpcEndpointServiceResourceResource: {
+	resource_id:   string
+	resource_type: string
+	service_id:    string
+	dry_run?:      bool
+	id?:           string
+	timeouts?: create?: string
+}
+#AlicloudPrivatelinkVpcEndpointServiceUserResource: {
+	service_id: string
+	user_id:    string
+	dry_run?:   bool
+	id?:        string
+}
+#AlicloudPrivatelinkVpcEndpointZoneResource: {
+	endpoint_id: string
+	vswitch_id:  string
+	dry_run?:    bool
+	id?:         string
+	status?:     string
+	zone_id?:    string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #AlicloudPvtzZoneResource: {
-	lang?:           string
-	name?:           string
-	proxy_pattern?:  string
-	remark?:         string
-	user_client_ip?: string
+	creation_time?:     string
+	id?:                string
+	is_ptr?:            bool
+	lang?:              string
+	name?:              string
+	proxy_pattern?:     string
+	record_count?:      number
+	remark?:            string
+	resource_group_id?: string
+	update_time?:       string
+	user_client_ip?:    string
+	zone_name?:         string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudPvtzZoneAttachmentResource: {
 	zone_id:         string
+	id?:             string
 	lang?:           string
 	user_client_ip?: string
+	vpc_ids?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 	vpcs?: [{
-		vpc_id: string
+		vpc_id:     string
+		region_id?: string
 	}, ...]
 }
 #AlicloudPvtzZoneRecordResource: {
-	resource_record: string
-	type:            string
-	value:           string
-	zone_id:         string
-	priority?:       number
-	ttl?:            number
+	type:             string
+	value:            string
+	zone_id:          string
+	id?:              string
+	lang?:            string
+	priority?:        number
+	record_id?:       number
+	remark?:          string
+	resource_record?: string
+	rr?:              string
+	status?:          string
+	ttl?:             number
+	user_client_ip?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #AlicloudRamAccessKeyResource: {
-	pgp_key?:     string
-	secret_file?: string
-	status?:      string
-	user_name?:   string
+	encrypted_secret?: string
+	id?:               string
+	key_fingerprint?:  string
+	pgp_key?:          string
+	secret?:           string
+	secret_file?:      string
+	status?:           string
+	user_name?:        string
 }
-#AlicloudRamAccountAliasResource: account_alias: string
+#AlicloudRamAccountAliasResource: {
+	account_alias: string
+	id?:           string
+}
 #AlicloudRamAccountPasswordPolicyResource: {
 	hard_expiry?:                  bool
+	id?:                           string
 	max_login_attempts?:           number
 	max_password_age?:             number
 	minimum_password_length?:      number
@@ -1850,52 +3815,86 @@ package alicloud
 	require_symbols?:              bool
 	require_uppercase_characters?: bool
 }
-#AlicloudRamAliasResource: account_alias: string
+#AlicloudRamAliasResource: {
+	account_alias: string
+	id?:           string
+}
 #AlicloudRamGroupResource: {
 	name:      string
 	comments?: string
 	force?:    bool
+	id?:       string
 }
 #AlicloudRamGroupMembershipResource: {
 	group_name: string
 	user_names: [string, ...]
+	id?: string
 }
 #AlicloudRamGroupPolicyAttachmentResource: {
 	group_name:  string
 	policy_name: string
 	policy_type: string
+	id?:         string
 }
 #AlicloudRamLoginProfileResource: {
 	password:                 string
 	user_name:                string
+	id?:                      string
 	mfa_bind_required?:       bool
 	password_reset_required?: bool
 }
 #AlicloudRamPolicyResource: {
-	name:         string
-	description?: string
-	force?:       bool
-	version?:     string
+	attachment_count?: number
+	default_version?:  string
+	description?:      string
+	document?:         string
+	force?:            bool
+	id?:               string
+	name?:             string
+	policy_document?:  string
+	policy_name?:      string
+	rotate_strategy?:  string
+	type?:             string
+	version?:          string
+	version_id?:       string
 	statement?: [{
 		action: [string, ...]
 		effect: string
 		resource: [string, ...]
 	}, ...]
+	timeouts?: delete?: string
 }
 #AlicloudRamRoleResource: {
-	name:         string
-	description?: string
-	force?:       bool
-	version?:     string
+	name:                  string
+	arn?:                  string
+	description?:          string
+	document?:             string
+	force?:                bool
+	id?:                   string
+	max_session_duration?: number
+	ram_users?: [string, ...]
+	role_id?: string
+	services?: [string, ...]
+	version?: string
 }
 #AlicloudRamRoleAttachmentResource: {
 	instance_ids: [string, ...]
 	role_name: string
+	id?:       string
 }
 #AlicloudRamRolePolicyAttachmentResource: {
 	policy_name: string
 	policy_type: string
 	role_name:   string
+	id?:         string
+}
+#AlicloudRamSamlProviderResource: {
+	saml_provider_name:             string
+	arn?:                           string
+	description?:                   string
+	encodedsaml_metadata_document?: string
+	id?:                            string
+	update_date?:                   string
 }
 #AlicloudRamUserResource: {
 	name:          string
@@ -1903,93 +3902,285 @@ package alicloud
 	display_name?: string
 	email?:        string
 	force?:        bool
+	id?:           string
 	mobile?:       string
 }
 #AlicloudRamUserPolicyAttachmentResource: {
 	policy_name: string
 	policy_type: string
 	user_name:   string
+	id?:         string
 }
 #AlicloudReservedInstanceResource: {
-	instance_type:  string
-	description?:   string
-	name?:          string
-	offering_type?: string
-	period?:        number
-	period_unit?:   string
-	scope?:         string
-	zone_id?:       string
+	instance_type:      string
+	description?:       string
+	id?:                string
+	instance_amount?:   number
+	name?:              string
+	offering_type?:     string
+	period?:            number
+	period_unit?:       string
+	platform?:          string
+	resource_group_id?: string
+	scope?:             string
+	zone_id?:           string
 }
 #AlicloudResourceManagerAccountResource: {
-	display_name:      string
-	folder_id?:        string
-	payer_account_id?: string
+	display_name:           string
+	account_name_prefix?:   string
+	folder_id?:             string
+	id?:                    string
+	join_method?:           string
+	join_time?:             string
+	modify_time?:           string
+	payer_account_id?:      string
+	resource_directory_id?: string
+	status?:                string
+	type?:                  string
 }
-#AlicloudResourceManagerFolderResource: folder_name: string
+#AlicloudResourceManagerFolderResource: {
+	folder_name:       string
+	id?:               string
+	parent_folder_id?: string
+}
 #AlicloudResourceManagerHandshakeResource: {
-	target_entity: string
-	target_type:   string
-	note?:         string
+	target_entity:          string
+	target_type:            string
+	expire_time?:           string
+	id?:                    string
+	master_account_id?:     string
+	master_account_name?:   string
+	modify_time?:           string
+	note?:                  string
+	resource_directory_id?: string
+	status?:                string
 }
 #AlicloudResourceManagerPolicyResource: {
-	policy_document: string
-	policy_name:     string
-	description?:    string
+	policy_document:  string
+	policy_name:      string
+	default_version?: string
+	description?:     string
+	id?:              string
+	policy_type?:     string
+}
+#AlicloudResourceManagerPolicyAttachmentResource: {
+	policy_name:       string
+	policy_type:       string
+	principal_name:    string
+	principal_type:    string
+	resource_group_id: string
+	id?:               string
 }
 #AlicloudResourceManagerPolicyVersionResource: {
 	policy_document:     string
 	policy_name:         string
+	create_date?:        string
+	id?:                 string
 	is_default_version?: bool
+	version_id?:         string
 }
-#AlicloudResourceManagerResourceDirectoryResource: {}
+#AlicloudResourceManagerResourceDirectoryResource: {
+	id?:                  string
+	master_account_id?:   string
+	master_account_name?: string
+	root_folder_id?:      string
+}
 #AlicloudResourceManagerResourceGroupResource: {
 	display_name: string
-	name:         string
+	account_id?:  string
+	create_date?: string
+	id?:          string
+	name?:        string
+	region_statuses?: [{
+		region_id: string
+		status:    string
+	}, ...]
+	resource_group_name?: string
+	status?:              string
 	timeouts?: create?: string
+}
+#AlicloudResourceManagerResourceShareResource: {
+	resource_share_name:   string
+	id?:                   string
+	resource_share_owner?: string
+	status?:               string
+	timeouts?: delete?: string
 }
 #AlicloudResourceManagerRoleResource: {
 	assume_role_policy_document: string
 	role_name:                   string
+	arn?:                        string
+	create_date?:                string
 	description?:                string
+	id?:                         string
 	max_session_duration?:       number
+	role_id?:                    string
+	update_date?:                string
+}
+#AlicloudResourceManagerSharedResourceResource: {
+	resource_id:       string
+	resource_share_id: string
+	resource_type:     string
+	id?:               string
+	status?:           string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudResourceManagerSharedTargetResource: {
+	resource_share_id: string
+	target_id:         string
+	id?:               string
+	status?:           string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#AlicloudRosChangeSetResource: {
+	change_set_name:   string
+	change_set_type?:  string
+	description?:      string
+	disable_rollback?: bool
+	id?:               string
+	notification_urls?: [string, ...]
+	ram_role_name?:                   string
+	replacement_option?:              string
+	stack_id?:                        string
+	stack_name?:                      string
+	stack_policy_body?:               string
+	stack_policy_during_update_body?: string
+	stack_policy_during_update_url?:  string
+	stack_policy_url?:                string
+	status?:                          string
+	template_body?:                   string
+	template_url?:                    string
+	timeout_in_minutes?:              number
+	use_previous_parameters?:         bool
+	parameters?: [{
+		parameter_key:   string
+		parameter_value: string
+	}, ...]
+	timeouts?: create?: string
+}
+#AlicloudRosStackResource: {
+	stack_name:           string
+	create_option?:       string
+	deletion_protection?: string
+	disable_rollback?:    bool
+	id?:                  string
+	notification_urls?: [string, ...]
+	ram_role_name?:        string
+	replacement_option?:   string
+	retain_all_resources?: bool
+	retain_resources?: [string, ...]
+	stack_policy_body?:               string
+	stack_policy_during_update_body?: string
+	stack_policy_during_update_url?:  string
+	stack_policy_url?:                string
+	status?:                          string
+	tags?: [_]: string
+	template_body?:           string
+	template_url?:            string
+	template_version?:        string
+	timeout_in_minutes?:      number
+	use_previous_parameters?: bool
+	parameters?: [{
+		parameter_value: string
+		parameter_key?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#AlicloudRosStackGroupResource: {
+	stack_group_name:          string
+	account_ids?:              string
+	administration_role_name?: string
+	description?:              string
+	execution_role_name?:      string
+	id?:                       string
+	operation_description?:    string
+	operation_preferences?:    string
+	region_ids?:               string
+	stack_group_id?:           string
+	status?:                   string
+	template_body?:            string
+	template_url?:             string
+	template_version?:         string
+	parameters?: [{
+		parameter_key?:   string
+		parameter_value?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#AlicloudRosTemplateResource: {
+	template_name: string
+	description?:  string
+	id?:           string
+	tags?: [_]: string
+	template_body?: string
+	template_url?:  string
 }
 #AlicloudRouteEntryResource: {
 	route_table_id:         string
 	destination_cidrblock?: string
+	id?:                    string
 	name?:                  string
 	nexthop_id?:            string
 	nexthop_type?:          string
+	router_id?:             string
 }
 #AlicloudRouteTableResource: {
 	vpc_id:       string
 	description?: string
+	id?:          string
 	name?:        string
 	tags?: [_]: string
 }
 #AlicloudRouteTableAttachmentResource: {
 	route_table_id: string
 	vswitch_id:     string
+	id?:            string
 }
 #AlicloudRouterInterfaceResource: {
-	opposite_region:           string
-	role:                      string
-	router_id:                 string
-	router_type:               string
-	description?:              string
-	health_check_source_ip?:   string
-	health_check_target_ip?:   string
-	instance_charge_type?:     string
-	name?:                     string
-	opposite_access_point_id?: string
-	period?:                   number
-	specification?:            string
+	opposite_region:              string
+	role:                         string
+	router_id:                    string
+	router_type:                  string
+	access_point_id?:             string
+	description?:                 string
+	health_check_source_ip?:      string
+	health_check_target_ip?:      string
+	id?:                          string
+	instance_charge_type?:        string
+	name?:                        string
+	opposite_access_point_id?:    string
+	opposite_interface_id?:       string
+	opposite_interface_owner_id?: string
+	opposite_router_id?:          string
+	opposite_router_type?:        string
+	period?:                      number
+	specification?:               string
 }
 #AlicloudRouterInterfaceConnectionResource: {
-	interface_id:          string
-	opposite_interface_id: string
-	opposite_router_type?: string
+	interface_id:                 string
+	opposite_interface_id:        string
+	id?:                          string
+	opposite_interface_owner_id?: string
+	opposite_router_id?:          string
+	opposite_router_type?:        string
 }
-#AlicloudSagAclResource: name: string
+#AlicloudSagAclResource: {
+	name: string
+	id?:  string
+}
 #AlicloudSagAclRuleResource: {
 	acl_id:            string
 	dest_cidr:         string
@@ -2000,6 +4191,7 @@ package alicloud
 	source_cidr:       string
 	source_port_range: string
 	description?:      string
+	id?:               string
 	priority?:         number
 }
 #AlicloudSagClientUserResource: {
@@ -2007,8 +4199,11 @@ package alicloud
 	sag_id:                  string
 	user_mail:               string
 	client_ip?:              string
+	id?:                     string
 	kms_encrypted_password?: string
 	kms_encryption_context?: [_]: string
+	password?:  string
+	user_name?: string
 }
 #AlicloudSagDnatEntryResource: {
 	external_port: string
@@ -2018,13 +4213,18 @@ package alicloud
 	sag_id:        string
 	type:          string
 	external_ip?:  string
+	id?:           string
 }
-#AlicloudSagQosResource: name: string
+#AlicloudSagQosResource: {
+	name: string
+	id?:  string
+}
 #AlicloudSagQosCarResource: {
 	limit_type:             string
 	priority:               number
 	qos_id:                 string
 	description?:           string
+	id?:                    string
 	max_bandwidth_abs?:     number
 	max_bandwidth_percent?: number
 	min_bandwidth_abs?:     number
@@ -2042,6 +4242,7 @@ package alicloud
 	source_port_range: string
 	description?:      string
 	end_time?:         string
+	id?:               string
 	name?:             string
 	start_time?:       string
 }
@@ -2049,9 +4250,13 @@ package alicloud
 	cidr_block: string
 	sag_id:     string
 	snat_ip:    string
+	id?:        string
 }
 #AlicloudSecurityGroupResource: {
 	description?:         string
+	id?:                  string
+	inner_access?:        bool
+	inner_access_policy?: string
 	name?:                string
 	resource_group_id?:   string
 	security_group_type?: string
@@ -2064,6 +4269,8 @@ package alicloud
 	type:                        string
 	cidr_ip?:                    string
 	description?:                string
+	id?:                         string
+	nic_type?:                   string
 	policy?:                     string
 	port_range?:                 string
 	priority?:                   number
@@ -2071,20 +4278,29 @@ package alicloud
 	source_security_group_id?:   string
 }
 #AlicloudSlbResource: {
+	address?:              string
 	address_ip_version?:   string
+	address_type?:         string
 	bandwidth?:            number
 	delete_protection?:    string
+	id?:                   string
 	instance_charge_type?: string
+	internet?:             bool
 	internet_charge_type?: string
+	master_zone_id?:       string
 	name?:                 string
 	period?:               number
+	resource_group_id?:    string
+	slave_zone_id?:        string
 	specification?:        string
 	tags?: [_]: string
 	vswitch_id?: string
 }
 #AlicloudSlbAclResource: {
-	name:        string
-	ip_version?: string
+	name:               string
+	id?:                string
+	ip_version?:        string
+	resource_group_id?: string
 	tags?: [_]: string
 	entry_list?: [{
 		entry:    string
@@ -2094,22 +4310,28 @@ package alicloud
 #AlicloudSlbAttachmentResource: {
 	instance_ids: [string, ...]
 	load_balancer_id:              string
+	backend_servers?:              string
 	delete_protection_validation?: bool
+	id?:                           string
 	server_type?:                  string
 	weight?:                       number
 }
 #AlicloudSlbBackendServerResource: {
 	load_balancer_id:              string
 	delete_protection_validation?: bool
+	id?:                           string
 	backend_servers?: [{
-		server_id: string
-		weight:    number
-		type?:     string
+		server_id:  string
+		weight:     number
+		server_ip?: string
+		type?:      string
 	}, ...]
 }
 #AlicloudSlbCaCertificateResource: {
-	ca_certificate: string
-	name?:          string
+	ca_certificate:     string
+	id?:                string
+	name?:              string
+	resource_group_id?: string
 	tags?: [_]: string
 }
 #AlicloudSlbDomainExtensionResource: {
@@ -2118,6 +4340,7 @@ package alicloud
 	load_balancer_id:              string
 	server_certificate_id:         string
 	delete_protection_validation?: bool
+	id?:                           string
 }
 #AlicloudSlbListenerResource: {
 	frontend_port:                 number
@@ -2128,6 +4351,7 @@ package alicloud
 	acl_type?:                     string
 	backend_port?:                 number
 	bandwidth?:                    number
+	ca_certificate_id?:            string
 	cookie?:                       string
 	cookie_timeout?:               number
 	delete_protection_validation?: bool
@@ -2137,27 +4361,34 @@ package alicloud
 	forward_port?:                 number
 	gzip?:                         bool
 	health_check?:                 string
+	health_check_connect_port?:    number
 	health_check_domain?:          string
 	health_check_http_code?:       string
 	health_check_interval?:        number
+	health_check_method?:          string
 	health_check_timeout?:         number
 	health_check_type?:            string
 	health_check_uri?:             string
 	healthy_threshold?:            number
+	id?:                           string
 	idle_timeout?:                 number
 	instance_port?:                number
 	lb_port?:                      number
 	lb_protocol?:                  string
+	listener_forward?:             string
 	master_slave_server_group_id?: string
 	persistence_timeout?:          number
 	request_timeout?:              number
 	scheduler?:                    string
+	server_certificate_id?:        string
 	server_group_id?:              string
+	ssl_certificate_id?:           string
 	sticky_session?:               string
 	sticky_session_type?:          string
 	tls_cipher_policy?:            string
 	unhealthy_threshold?:          number
 	x_forwarded_for?: [{
+		retrive_client_ip?: bool
 		retrive_slb_id?:    bool
 		retrive_slb_ip?:    bool
 		retrive_slb_proto?: bool
@@ -2167,6 +4398,7 @@ package alicloud
 	load_balancer_id:              string
 	name:                          string
 	delete_protection_validation?: bool
+	id?:                           string
 	servers?: [{
 		port:         number
 		server_id:    string
@@ -2185,12 +4417,14 @@ package alicloud
 	delete_protection_validation?: bool
 	domain?:                       string
 	health_check?:                 string
+	health_check_connect_port?:    number
 	health_check_domain?:          string
 	health_check_http_code?:       string
 	health_check_interval?:        number
 	health_check_timeout?:         number
 	health_check_uri?:             string
 	healthy_threshold?:            number
+	id?:                           string
 	listener_sync?:                string
 	name?:                         string
 	scheduler?:                    string
@@ -2205,14 +4439,17 @@ package alicloud
 	alicloud_certificate_id?:        string
 	alicloud_certificate_name?:      string
 	alicloud_certificate_region_id?: string
+	id?:                             string
 	name?:                           string
 	private_key?:                    string
+	resource_group_id?:              string
 	server_certificate?:             string
 	tags?: [_]: string
 }
 #AlicloudSlbServerGroupResource: {
 	load_balancer_id:              string
 	delete_protection_validation?: bool
+	id?:                           string
 	name?:                         string
 	servers?: [{
 		port: number
@@ -2222,9 +4459,11 @@ package alicloud
 	}, ...]
 }
 #AlicloudSnapshotResource: {
-	disk_id:      string
-	description?: string
-	name?:        string
+	disk_id:            string
+	description?:       string
+	id?:                string
+	name?:              string
+	resource_group_id?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2235,34 +4474,48 @@ package alicloud
 	repeat_weekdays: [string, ...]
 	retention_days: number
 	time_points: [string, ...]
+	id?:   string
 	name?: string
 }
 #AlicloudSnatEntryResource: {
 	snat_ip:            string
 	snat_table_id:      string
+	id?:                string
+	snat_entry_id?:     string
 	snat_entry_name?:   string
 	source_cidr?:       string
 	source_vswitch_id?: string
 }
 #AlicloudSslVpnClientCertResource: {
 	ssl_vpn_server_id: string
+	ca_cert?:          string
+	client_cert?:      string
+	client_config?:    string
+	client_key?:       string
+	id?:               string
 	name?:             string
+	status?:           string
 }
 #AlicloudSslVpnServerResource: {
-	client_ip_pool: string
-	local_subnet:   string
-	vpn_gateway_id: string
-	cipher?:        string
-	compress?:      bool
-	name?:          string
-	port?:          number
-	protocol?:      string
+	client_ip_pool:   string
+	local_subnet:     string
+	vpn_gateway_id:   string
+	cipher?:          string
+	compress?:        bool
+	connections?:     number
+	id?:              string
+	internet_ip?:     string
+	max_connections?: number
+	name?:            string
+	port?:            number
+	protocol?:        string
 }
 #AlicloudSubnetResource: {
 	availability_zone: string
 	cidr_block:        string
 	vpc_id:            string
 	description?:      string
+	id?:               string
 	name?:             string
 	tags?: [_]: string
 	timeouts?: {
@@ -2270,10 +4523,34 @@ package alicloud
 		delete?: string
 	}
 }
+#AlicloudTsdbInstanceResource: {
+	instance_class:   string
+	instance_storage: string
+	payment_type:     string
+	vswitch_id:       string
+	app_key?:         string
+	disk_category?:   string
+	duration?:        string
+	engine_type?:     string
+	id?:              string
+	instance_alias?:  string
+	status?:          string
+	zone_id?:         string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
 #AlicloudVpcResource: {
-	cidr_block:   string
-	description?: string
-	name?:        string
+	cidr_block:         string
+	description?:       string
+	id?:                string
+	name?:              string
+	resource_group_id?: string
+	route_table_id?:    string
+	router_id?:         string
+	router_table_id?:   string
+	secondary_cidr_blocks?: [string, ...]
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2286,7 +4563,9 @@ package alicloud
 	remote_subnet: [string, ...]
 	vpn_gateway_id:      string
 	effect_immediately?: bool
+	id?:                 string
 	name?:               string
+	status?:             string
 	ike_config?: [{
 		ike_auth_alg?:  string
 		ike_enc_alg?:   string
@@ -2308,17 +4587,24 @@ package alicloud
 #AlicloudVpnCustomerGatewayResource: {
 	ip_address:   string
 	description?: string
+	id?:          string
 	name?:        string
 }
 #AlicloudVpnGatewayResource: {
 	bandwidth:             number
 	vpc_id:                string
+	business_status?:      string
 	description?:          string
 	enable_ipsec?:         bool
 	enable_ssl?:           bool
+	id?:                   string
 	instance_charge_type?: string
+	internet_ip?:          string
+	name?:                 string
 	period?:               number
 	ssl_connections?:      number
+	status?:               string
+	vswitch_id?:           string
 }
 #AlicloudVpnRouteEntryResource: {
 	next_hop:       string
@@ -2326,12 +4612,14 @@ package alicloud
 	route_dest:     string
 	vpn_gateway_id: string
 	weight:         number
+	id?:            string
 }
 #AlicloudVswitchResource: {
 	availability_zone: string
 	cidr_block:        string
 	vpc_id:            string
 	description?:      string
+	id?:               string
 	name?:             string
 	tags?: [_]: string
 	timeouts?: {
@@ -2340,21 +4628,24 @@ package alicloud
 	}
 }
 #AlicloudWafDomainResource: {
-	domain:            string
 	instance_id:       string
 	is_access_product: string
-	source_ips: [string, ...]
-	cluster_type?:    string
-	connection_time?: number
+	cluster_type?:     string
+	cname?:            string
+	connection_time?:  number
+	domain?:           string
+	domain_name?:      string
 	http2_port?: [string, ...]
 	http_port?: [string, ...]
 	http_to_user_ip?: string
 	https_port?: [string, ...]
 	https_redirect?:    string
+	id?:                string
 	load_balancing?:    string
 	read_time?:         number
 	resource_group_id?: string
-	write_time?:        number
+	source_ips?: [string, ...]
+	write_time?: number
 	log_headers?: [{
 		key?:   string
 		value?: string
@@ -2371,18 +4662,22 @@ package alicloud
 	prefessional_service: string
 	subscription_type:    string
 	waf_log:              string
+	id?:                  string
 	modify_type?:         string
 	period?:              number
 	renew_period?:        number
 	renewal_status?:      string
 	resource_group_id?:   string
+	status?:              number
 }
 #AlicloudYundunBastionhostInstanceResource: {
 	description:  string
 	license_code: string
 	security_group_ids: [string, ...]
-	vswitch_id: string
-	period?:    number
+	vswitch_id:         string
+	id?:                string
+	period?:            number
+	resource_group_id?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2390,10 +4685,12 @@ package alicloud
 	}
 }
 #AlicloudYundunDbauditInstanceResource: {
-	description: string
-	plan_code:   string
-	vswitch_id:  string
-	period?:     number
+	description:        string
+	plan_code:          string
+	vswitch_id:         string
+	id?:                string
+	period?:            number
+	resource_group_id?: string
 	tags?: [_]: string
 	timeouts?: {
 		create?: string
@@ -2401,229 +4698,296 @@ package alicloud
 	}
 }
 #Resources: {
-	alicloud_actiontrail?: [_]:                         #AlicloudActiontrailResource
-	alicloud_adb_account?: [_]:                         #AlicloudAdbAccountResource
-	alicloud_adb_backup_policy?: [_]:                   #AlicloudAdbBackupPolicyResource
-	alicloud_adb_cluster?: [_]:                         #AlicloudAdbClusterResource
-	alicloud_adb_connection?: [_]:                      #AlicloudAdbConnectionResource
-	alicloud_alidns_domain_group?: [_]:                 #AlicloudAlidnsDomainGroupResource
-	alicloud_alikafka_consumer_group?: [_]:             #AlicloudAlikafkaConsumerGroupResource
-	alicloud_alikafka_instance?: [_]:                   #AlicloudAlikafkaInstanceResource
-	alicloud_alikafka_sasl_acl?: [_]:                   #AlicloudAlikafkaSaslAclResource
-	alicloud_alikafka_sasl_user?: [_]:                  #AlicloudAlikafkaSaslUserResource
-	alicloud_alikafka_topic?: [_]:                      #AlicloudAlikafkaTopicResource
-	alicloud_api_gateway_api?: [_]:                     #AlicloudApiGatewayApiResource
-	alicloud_api_gateway_app?: [_]:                     #AlicloudApiGatewayAppResource
-	alicloud_api_gateway_app_attachment?: [_]:          #AlicloudApiGatewayAppAttachmentResource
-	alicloud_api_gateway_group?: [_]:                   #AlicloudApiGatewayGroupResource
-	alicloud_api_gateway_vpc_access?: [_]:              #AlicloudApiGatewayVpcAccessResource
-	alicloud_auto_provisioning_group?: [_]:             #AlicloudAutoProvisioningGroupResource
-	alicloud_cas_certificate?: [_]:                     #AlicloudCasCertificateResource
-	alicloud_cdn_domain?: [_]:                          #AlicloudCdnDomainResource
-	alicloud_cdn_domain_config?: [_]:                   #AlicloudCdnDomainConfigResource
-	alicloud_cdn_domain_new?: [_]:                      #AlicloudCdnDomainNewResource
-	alicloud_cen_bandwidth_limit?: [_]:                 #AlicloudCenBandwidthLimitResource
-	alicloud_cen_bandwidth_package?: [_]:               #AlicloudCenBandwidthPackageResource
-	alicloud_cen_bandwidth_package_attachment?: [_]:    #AlicloudCenBandwidthPackageAttachmentResource
-	alicloud_cen_flowlog?: [_]:                         #AlicloudCenFlowlogResource
-	alicloud_cen_instance?: [_]:                        #AlicloudCenInstanceResource
-	alicloud_cen_instance_attachment?: [_]:             #AlicloudCenInstanceAttachmentResource
-	alicloud_cen_instance_grant?: [_]:                  #AlicloudCenInstanceGrantResource
-	alicloud_cen_private_zone?: [_]:                    #AlicloudCenPrivateZoneResource
-	alicloud_cen_route_entry?: [_]:                     #AlicloudCenRouteEntryResource
-	alicloud_cen_route_map?: [_]:                       #AlicloudCenRouteMapResource
-	alicloud_cloud_connect_network?: [_]:               #AlicloudCloudConnectNetworkResource
-	alicloud_cloud_connect_network_attachment?: [_]:    #AlicloudCloudConnectNetworkAttachmentResource
-	alicloud_cloud_connect_network_grant?: [_]:         #AlicloudCloudConnectNetworkGrantResource
-	alicloud_cms_alarm?: [_]:                           #AlicloudCmsAlarmResource
-	alicloud_cms_site_monitor?: [_]:                    #AlicloudCmsSiteMonitorResource
-	alicloud_common_bandwidth_package?: [_]:            #AlicloudCommonBandwidthPackageResource
-	alicloud_common_bandwidth_package_attachment?: [_]: #AlicloudCommonBandwidthPackageAttachmentResource
-	alicloud_container_cluster?: [_]:                   #AlicloudContainerClusterResource
-	alicloud_copy_image?: [_]:                          #AlicloudCopyImageResource
-	alicloud_cr_namespace?: [_]:                        #AlicloudCrNamespaceResource
-	alicloud_cr_repo?: [_]:                             #AlicloudCrRepoResource
-	alicloud_cs_application?: [_]:                      #AlicloudCsApplicationResource
-	alicloud_cs_kubernetes?: [_]:                       #AlicloudCsKubernetesResource
-	alicloud_cs_kubernetes_autoscaler?: [_]:            #AlicloudCsKubernetesAutoscalerResource
-	alicloud_cs_managed_kubernetes?: [_]:               #AlicloudCsManagedKubernetesResource
-	alicloud_cs_serverless_kubernetes?: [_]:            #AlicloudCsServerlessKubernetesResource
-	alicloud_cs_swarm?: [_]:                            #AlicloudCsSwarmResource
-	alicloud_datahub_project?: [_]:                     #AlicloudDatahubProjectResource
-	alicloud_datahub_subscription?: [_]:                #AlicloudDatahubSubscriptionResource
-	alicloud_datahub_topic?: [_]:                       #AlicloudDatahubTopicResource
-	alicloud_db_account?: [_]:                          #AlicloudDbAccountResource
-	alicloud_db_account_privilege?: [_]:                #AlicloudDbAccountPrivilegeResource
-	alicloud_db_backup_policy?: [_]:                    #AlicloudDbBackupPolicyResource
-	alicloud_db_connection?: [_]:                       #AlicloudDbConnectionResource
-	alicloud_db_database?: [_]:                         #AlicloudDbDatabaseResource
-	alicloud_db_instance?: [_]:                         #AlicloudDbInstanceResource
-	alicloud_db_read_write_splitting_connection?: [_]:  #AlicloudDbReadWriteSplittingConnectionResource
-	alicloud_db_readonly_instance?: [_]:                #AlicloudDbReadonlyInstanceResource
-	alicloud_ddosbgp_instance?: [_]:                    #AlicloudDdosbgpInstanceResource
-	alicloud_ddoscoo_instance?: [_]:                    #AlicloudDdoscooInstanceResource
-	alicloud_disk?: [_]:                                #AlicloudDiskResource
-	alicloud_disk_attachment?: [_]:                     #AlicloudDiskAttachmentResource
-	alicloud_dms_enterprise_instance?: [_]:             #AlicloudDmsEnterpriseInstanceResource
-	alicloud_dns?: [_]:                                 #AlicloudDnsResource
-	alicloud_dns_domain?: [_]:                          #AlicloudDnsDomainResource
-	alicloud_dns_domain_attachment?: [_]:               #AlicloudDnsDomainAttachmentResource
-	alicloud_dns_group?: [_]:                           #AlicloudDnsGroupResource
-	alicloud_dns_instance?: [_]:                        #AlicloudDnsInstanceResource
-	alicloud_dns_record?: [_]:                          #AlicloudDnsRecordResource
-	alicloud_drds_instance?: [_]:                       #AlicloudDrdsInstanceResource
-	alicloud_edas_application?: [_]:                    #AlicloudEdasApplicationResource
-	alicloud_edas_application_deployment?: [_]:         #AlicloudEdasApplicationDeploymentResource
-	alicloud_edas_application_scale?: [_]:              #AlicloudEdasApplicationScaleResource
-	alicloud_edas_cluster?: [_]:                        #AlicloudEdasClusterResource
-	alicloud_edas_deploy_group?: [_]:                   #AlicloudEdasDeployGroupResource
-	alicloud_edas_instance_cluster_attachment?: [_]:    #AlicloudEdasInstanceClusterAttachmentResource
-	alicloud_edas_slb_attachment?: [_]:                 #AlicloudEdasSlbAttachmentResource
-	alicloud_eip?: [_]:                                 #AlicloudEipResource
-	alicloud_eip_association?: [_]:                     #AlicloudEipAssociationResource
-	alicloud_elasticsearch_instance?: [_]:              #AlicloudElasticsearchInstanceResource
-	alicloud_emr_cluster?: [_]:                         #AlicloudEmrClusterResource
-	alicloud_ess_alarm?: [_]:                           #AlicloudEssAlarmResource
-	alicloud_ess_attachment?: [_]:                      #AlicloudEssAttachmentResource
-	alicloud_ess_lifecycle_hook?: [_]:                  #AlicloudEssLifecycleHookResource
-	alicloud_ess_notification?: [_]:                    #AlicloudEssNotificationResource
-	alicloud_ess_scaling_configuration?: [_]:           #AlicloudEssScalingConfigurationResource
-	alicloud_ess_scaling_group?: [_]:                   #AlicloudEssScalingGroupResource
-	alicloud_ess_scaling_rule?: [_]:                    #AlicloudEssScalingRuleResource
-	alicloud_ess_scalinggroup_vserver_groups?: [_]:     #AlicloudEssScalinggroupVserverGroupsResource
-	alicloud_ess_schedule?: [_]:                        #AlicloudEssScheduleResource
-	alicloud_ess_scheduled_task?: [_]:                  #AlicloudEssScheduledTaskResource
-	alicloud_fc_function?: [_]:                         #AlicloudFcFunctionResource
-	alicloud_fc_service?: [_]:                          #AlicloudFcServiceResource
-	alicloud_fc_trigger?: [_]:                          #AlicloudFcTriggerResource
-	alicloud_forward_entry?: [_]:                       #AlicloudForwardEntryResource
-	alicloud_gpdb_connection?: [_]:                     #AlicloudGpdbConnectionResource
-	alicloud_gpdb_instance?: [_]:                       #AlicloudGpdbInstanceResource
-	alicloud_havip?: [_]:                               #AlicloudHavipResource
-	alicloud_havip_attachment?: [_]:                    #AlicloudHavipAttachmentResource
-	alicloud_hbase_instance?: [_]:                      #AlicloudHbaseInstanceResource
-	alicloud_image?: [_]:                               #AlicloudImageResource
-	alicloud_image_copy?: [_]:                          #AlicloudImageCopyResource
-	alicloud_image_export?: [_]:                        #AlicloudImageExportResource
-	alicloud_image_import?: [_]:                        #AlicloudImageImportResource
-	alicloud_image_share_permission?: [_]:              #AlicloudImageSharePermissionResource
-	alicloud_instance?: [_]:                            #AlicloudInstanceResource
-	alicloud_key_pair?: [_]:                            #AlicloudKeyPairResource
-	alicloud_key_pair_attachment?: [_]:                 #AlicloudKeyPairAttachmentResource
-	alicloud_kms_alias?: [_]:                           #AlicloudKmsAliasResource
-	alicloud_kms_ciphertext?: [_]:                      #AlicloudKmsCiphertextResource
-	alicloud_kms_key?: [_]:                             #AlicloudKmsKeyResource
-	alicloud_kms_secret?: [_]:                          #AlicloudKmsSecretResource
-	alicloud_kvstore_account?: [_]:                     #AlicloudKvstoreAccountResource
-	alicloud_kvstore_backup_policy?: [_]:               #AlicloudKvstoreBackupPolicyResource
-	alicloud_kvstore_instance?: [_]:                    #AlicloudKvstoreInstanceResource
-	alicloud_launch_template?: [_]:                     #AlicloudLaunchTemplateResource
-	alicloud_log_alert?: [_]:                           #AlicloudLogAlertResource
-	alicloud_log_audit?: [_]:                           #AlicloudLogAuditResource
-	alicloud_log_machine_group?: [_]:                   #AlicloudLogMachineGroupResource
-	alicloud_log_project?: [_]:                         #AlicloudLogProjectResource
-	alicloud_log_store?: [_]:                           #AlicloudLogStoreResource
-	alicloud_log_store_index?: [_]:                     #AlicloudLogStoreIndexResource
-	alicloud_logtail_attachment?: [_]:                  #AlicloudLogtailAttachmentResource
-	alicloud_logtail_config?: [_]:                      #AlicloudLogtailConfigResource
-	alicloud_market_order?: [_]:                        #AlicloudMarketOrderResource
-	alicloud_maxcompute_project?: [_]:                  #AlicloudMaxcomputeProjectResource
-	alicloud_mns_queue?: [_]:                           #AlicloudMnsQueueResource
-	alicloud_mns_topic?: [_]:                           #AlicloudMnsTopicResource
-	alicloud_mns_topic_subscription?: [_]:              #AlicloudMnsTopicSubscriptionResource
-	alicloud_mongodb_instance?: [_]:                    #AlicloudMongodbInstanceResource
-	alicloud_mongodb_sharding_instance?: [_]:           #AlicloudMongodbShardingInstanceResource
-	alicloud_nas_access_group?: [_]:                    #AlicloudNasAccessGroupResource
-	alicloud_nas_access_rule?: [_]:                     #AlicloudNasAccessRuleResource
-	alicloud_nas_file_system?: [_]:                     #AlicloudNasFileSystemResource
-	alicloud_nas_mount_target?: [_]:                    #AlicloudNasMountTargetResource
-	alicloud_nat_gateway?: [_]:                         #AlicloudNatGatewayResource
-	alicloud_network_acl?: [_]:                         #AlicloudNetworkAclResource
-	alicloud_network_acl_attachment?: [_]:              #AlicloudNetworkAclAttachmentResource
-	alicloud_network_acl_entries?: [_]:                 #AlicloudNetworkAclEntriesResource
-	alicloud_network_interface?: [_]:                   #AlicloudNetworkInterfaceResource
-	alicloud_network_interface_attachment?: [_]:        #AlicloudNetworkInterfaceAttachmentResource
-	alicloud_ons_group?: [_]:                           #AlicloudOnsGroupResource
-	alicloud_ons_instance?: [_]:                        #AlicloudOnsInstanceResource
-	alicloud_ons_topic?: [_]:                           #AlicloudOnsTopicResource
-	alicloud_oss_bucket?: [_]:                          #AlicloudOssBucketResource
-	alicloud_oss_bucket_object?: [_]:                   #AlicloudOssBucketObjectResource
-	alicloud_ots_instance?: [_]:                        #AlicloudOtsInstanceResource
-	alicloud_ots_instance_attachment?: [_]:             #AlicloudOtsInstanceAttachmentResource
-	alicloud_ots_table?: [_]:                           #AlicloudOtsTableResource
-	alicloud_polardb_account?: [_]:                     #AlicloudPolardbAccountResource
-	alicloud_polardb_account_privilege?: [_]:           #AlicloudPolardbAccountPrivilegeResource
-	alicloud_polardb_backup_policy?: [_]:               #AlicloudPolardbBackupPolicyResource
-	alicloud_polardb_cluster?: [_]:                     #AlicloudPolardbClusterResource
-	alicloud_polardb_database?: [_]:                    #AlicloudPolardbDatabaseResource
-	alicloud_polardb_endpoint?: [_]:                    #AlicloudPolardbEndpointResource
-	alicloud_polardb_endpoint_address?: [_]:            #AlicloudPolardbEndpointAddressResource
-	alicloud_pvtz_zone?: [_]:                           #AlicloudPvtzZoneResource
-	alicloud_pvtz_zone_attachment?: [_]:                #AlicloudPvtzZoneAttachmentResource
-	alicloud_pvtz_zone_record?: [_]:                    #AlicloudPvtzZoneRecordResource
-	alicloud_ram_access_key?: [_]:                      #AlicloudRamAccessKeyResource
-	alicloud_ram_account_alias?: [_]:                   #AlicloudRamAccountAliasResource
-	alicloud_ram_account_password_policy?: [_]:         #AlicloudRamAccountPasswordPolicyResource
-	alicloud_ram_alias?: [_]:                           #AlicloudRamAliasResource
-	alicloud_ram_group?: [_]:                           #AlicloudRamGroupResource
-	alicloud_ram_group_membership?: [_]:                #AlicloudRamGroupMembershipResource
-	alicloud_ram_group_policy_attachment?: [_]:         #AlicloudRamGroupPolicyAttachmentResource
-	alicloud_ram_login_profile?: [_]:                   #AlicloudRamLoginProfileResource
-	alicloud_ram_policy?: [_]:                          #AlicloudRamPolicyResource
-	alicloud_ram_role?: [_]:                            #AlicloudRamRoleResource
-	alicloud_ram_role_attachment?: [_]:                 #AlicloudRamRoleAttachmentResource
-	alicloud_ram_role_policy_attachment?: [_]:          #AlicloudRamRolePolicyAttachmentResource
-	alicloud_ram_user?: [_]:                            #AlicloudRamUserResource
-	alicloud_ram_user_policy_attachment?: [_]:          #AlicloudRamUserPolicyAttachmentResource
-	alicloud_reserved_instance?: [_]:                   #AlicloudReservedInstanceResource
-	alicloud_resource_manager_account?: [_]:            #AlicloudResourceManagerAccountResource
-	alicloud_resource_manager_folder?: [_]:             #AlicloudResourceManagerFolderResource
-	alicloud_resource_manager_handshake?: [_]:          #AlicloudResourceManagerHandshakeResource
-	alicloud_resource_manager_policy?: [_]:             #AlicloudResourceManagerPolicyResource
-	alicloud_resource_manager_policy_version?: [_]:     #AlicloudResourceManagerPolicyVersionResource
-	alicloud_resource_manager_resource_directory?: [_]: #AlicloudResourceManagerResourceDirectoryResource
-	alicloud_resource_manager_resource_group?: [_]:     #AlicloudResourceManagerResourceGroupResource
-	alicloud_resource_manager_role?: [_]:               #AlicloudResourceManagerRoleResource
-	alicloud_route_entry?: [_]:                         #AlicloudRouteEntryResource
-	alicloud_route_table?: [_]:                         #AlicloudRouteTableResource
-	alicloud_route_table_attachment?: [_]:              #AlicloudRouteTableAttachmentResource
-	alicloud_router_interface?: [_]:                    #AlicloudRouterInterfaceResource
-	alicloud_router_interface_connection?: [_]:         #AlicloudRouterInterfaceConnectionResource
-	alicloud_sag_acl?: [_]:                             #AlicloudSagAclResource
-	alicloud_sag_acl_rule?: [_]:                        #AlicloudSagAclRuleResource
-	alicloud_sag_client_user?: [_]:                     #AlicloudSagClientUserResource
-	alicloud_sag_dnat_entry?: [_]:                      #AlicloudSagDnatEntryResource
-	alicloud_sag_qos?: [_]:                             #AlicloudSagQosResource
-	alicloud_sag_qos_car?: [_]:                         #AlicloudSagQosCarResource
-	alicloud_sag_qos_policy?: [_]:                      #AlicloudSagQosPolicyResource
-	alicloud_sag_snat_entry?: [_]:                      #AlicloudSagSnatEntryResource
-	alicloud_security_group?: [_]:                      #AlicloudSecurityGroupResource
-	alicloud_security_group_rule?: [_]:                 #AlicloudSecurityGroupRuleResource
-	alicloud_slb?: [_]:                                 #AlicloudSlbResource
-	alicloud_slb_acl?: [_]:                             #AlicloudSlbAclResource
-	alicloud_slb_attachment?: [_]:                      #AlicloudSlbAttachmentResource
-	alicloud_slb_backend_server?: [_]:                  #AlicloudSlbBackendServerResource
-	alicloud_slb_ca_certificate?: [_]:                  #AlicloudSlbCaCertificateResource
-	alicloud_slb_domain_extension?: [_]:                #AlicloudSlbDomainExtensionResource
-	alicloud_slb_listener?: [_]:                        #AlicloudSlbListenerResource
-	alicloud_slb_master_slave_server_group?: [_]:       #AlicloudSlbMasterSlaveServerGroupResource
-	alicloud_slb_rule?: [_]:                            #AlicloudSlbRuleResource
-	alicloud_slb_server_certificate?: [_]:              #AlicloudSlbServerCertificateResource
-	alicloud_slb_server_group?: [_]:                    #AlicloudSlbServerGroupResource
-	alicloud_snapshot?: [_]:                            #AlicloudSnapshotResource
-	alicloud_snapshot_policy?: [_]:                     #AlicloudSnapshotPolicyResource
-	alicloud_snat_entry?: [_]:                          #AlicloudSnatEntryResource
-	alicloud_ssl_vpn_client_cert?: [_]:                 #AlicloudSslVpnClientCertResource
-	alicloud_ssl_vpn_server?: [_]:                      #AlicloudSslVpnServerResource
-	alicloud_subnet?: [_]:                              #AlicloudSubnetResource
-	alicloud_vpc?: [_]:                                 #AlicloudVpcResource
-	alicloud_vpn_connection?: [_]:                      #AlicloudVpnConnectionResource
-	alicloud_vpn_customer_gateway?: [_]:                #AlicloudVpnCustomerGatewayResource
-	alicloud_vpn_gateway?: [_]:                         #AlicloudVpnGatewayResource
-	alicloud_vpn_route_entry?: [_]:                     #AlicloudVpnRouteEntryResource
-	alicloud_vswitch?: [_]:                             #AlicloudVswitchResource
-	alicloud_waf_domain?: [_]:                          #AlicloudWafDomainResource
-	alicloud_waf_instance?: [_]:                        #AlicloudWafInstanceResource
-	alicloud_yundun_bastionhost_instance?: [_]:         #AlicloudYundunBastionhostInstanceResource
-	alicloud_yundun_dbaudit_instance?: [_]:             #AlicloudYundunDbauditInstanceResource
+	alicloud_actiontrail?: [_]:                               #AlicloudActiontrailResource
+	alicloud_actiontrail_trail?: [_]:                         #AlicloudActiontrailTrailResource
+	alicloud_adb_account?: [_]:                               #AlicloudAdbAccountResource
+	alicloud_adb_backup_policy?: [_]:                         #AlicloudAdbBackupPolicyResource
+	alicloud_adb_cluster?: [_]:                               #AlicloudAdbClusterResource
+	alicloud_adb_connection?: [_]:                            #AlicloudAdbConnectionResource
+	alicloud_alidns_domain?: [_]:                             #AlicloudAlidnsDomainResource
+	alicloud_alidns_domain_attachment?: [_]:                  #AlicloudAlidnsDomainAttachmentResource
+	alicloud_alidns_domain_group?: [_]:                       #AlicloudAlidnsDomainGroupResource
+	alicloud_alidns_instance?: [_]:                           #AlicloudAlidnsInstanceResource
+	alicloud_alidns_record?: [_]:                             #AlicloudAlidnsRecordResource
+	alicloud_alikafka_consumer_group?: [_]:                   #AlicloudAlikafkaConsumerGroupResource
+	alicloud_alikafka_instance?: [_]:                         #AlicloudAlikafkaInstanceResource
+	alicloud_alikafka_sasl_acl?: [_]:                         #AlicloudAlikafkaSaslAclResource
+	alicloud_alikafka_sasl_user?: [_]:                        #AlicloudAlikafkaSaslUserResource
+	alicloud_alikafka_topic?: [_]:                            #AlicloudAlikafkaTopicResource
+	alicloud_api_gateway_api?: [_]:                           #AlicloudApiGatewayApiResource
+	alicloud_api_gateway_app?: [_]:                           #AlicloudApiGatewayAppResource
+	alicloud_api_gateway_app_attachment?: [_]:                #AlicloudApiGatewayAppAttachmentResource
+	alicloud_api_gateway_group?: [_]:                         #AlicloudApiGatewayGroupResource
+	alicloud_api_gateway_vpc_access?: [_]:                    #AlicloudApiGatewayVpcAccessResource
+	alicloud_auto_provisioning_group?: [_]:                   #AlicloudAutoProvisioningGroupResource
+	alicloud_brain_industrial_pid_organization?: [_]:         #AlicloudBrainIndustrialPidOrganizationResource
+	alicloud_brain_industrial_pid_project?: [_]:              #AlicloudBrainIndustrialPidProjectResource
+	alicloud_cas_certificate?: [_]:                           #AlicloudCasCertificateResource
+	alicloud_cassandra_cluster?: [_]:                         #AlicloudCassandraClusterResource
+	alicloud_cassandra_data_center?: [_]:                     #AlicloudCassandraDataCenterResource
+	alicloud_cdn_domain?: [_]:                                #AlicloudCdnDomainResource
+	alicloud_cdn_domain_config?: [_]:                         #AlicloudCdnDomainConfigResource
+	alicloud_cdn_domain_new?: [_]:                            #AlicloudCdnDomainNewResource
+	alicloud_cen_bandwidth_limit?: [_]:                       #AlicloudCenBandwidthLimitResource
+	alicloud_cen_bandwidth_package?: [_]:                     #AlicloudCenBandwidthPackageResource
+	alicloud_cen_bandwidth_package_attachment?: [_]:          #AlicloudCenBandwidthPackageAttachmentResource
+	alicloud_cen_flowlog?: [_]:                               #AlicloudCenFlowlogResource
+	alicloud_cen_instance?: [_]:                              #AlicloudCenInstanceResource
+	alicloud_cen_instance_attachment?: [_]:                   #AlicloudCenInstanceAttachmentResource
+	alicloud_cen_instance_grant?: [_]:                        #AlicloudCenInstanceGrantResource
+	alicloud_cen_private_zone?: [_]:                          #AlicloudCenPrivateZoneResource
+	alicloud_cen_route_entry?: [_]:                           #AlicloudCenRouteEntryResource
+	alicloud_cen_route_map?: [_]:                             #AlicloudCenRouteMapResource
+	alicloud_cen_route_service?: [_]:                         #AlicloudCenRouteServiceResource
+	alicloud_cen_vbr_health_check?: [_]:                      #AlicloudCenVbrHealthCheckResource
+	alicloud_cloud_connect_network?: [_]:                     #AlicloudCloudConnectNetworkResource
+	alicloud_cloud_connect_network_attachment?: [_]:          #AlicloudCloudConnectNetworkAttachmentResource
+	alicloud_cloud_connect_network_grant?: [_]:               #AlicloudCloudConnectNetworkGrantResource
+	alicloud_cms_alarm?: [_]:                                 #AlicloudCmsAlarmResource
+	alicloud_cms_alarm_contact?: [_]:                         #AlicloudCmsAlarmContactResource
+	alicloud_cms_alarm_contact_group?: [_]:                   #AlicloudCmsAlarmContactGroupResource
+	alicloud_cms_group_metric_rule?: [_]:                     #AlicloudCmsGroupMetricRuleResource
+	alicloud_cms_monitor_group?: [_]:                         #AlicloudCmsMonitorGroupResource
+	alicloud_cms_site_monitor?: [_]:                          #AlicloudCmsSiteMonitorResource
+	alicloud_common_bandwidth_package?: [_]:                  #AlicloudCommonBandwidthPackageResource
+	alicloud_common_bandwidth_package_attachment?: [_]:       #AlicloudCommonBandwidthPackageAttachmentResource
+	alicloud_config_configuration_recorder?: [_]:             #AlicloudConfigConfigurationRecorderResource
+	alicloud_config_delivery_channel?: [_]:                   #AlicloudConfigDeliveryChannelResource
+	alicloud_config_rule?: [_]:                               #AlicloudConfigRuleResource
+	alicloud_container_cluster?: [_]:                         #AlicloudContainerClusterResource
+	alicloud_copy_image?: [_]:                                #AlicloudCopyImageResource
+	alicloud_cr_ee_namespace?: [_]:                           #AlicloudCrEeNamespaceResource
+	alicloud_cr_ee_repo?: [_]:                                #AlicloudCrEeRepoResource
+	alicloud_cr_ee_sync_rule?: [_]:                           #AlicloudCrEeSyncRuleResource
+	alicloud_cr_namespace?: [_]:                              #AlicloudCrNamespaceResource
+	alicloud_cr_repo?: [_]:                                   #AlicloudCrRepoResource
+	alicloud_cs_application?: [_]:                            #AlicloudCsApplicationResource
+	alicloud_cs_edge_kubernetes?: [_]:                        #AlicloudCsEdgeKubernetesResource
+	alicloud_cs_kubernetes?: [_]:                             #AlicloudCsKubernetesResource
+	alicloud_cs_kubernetes_autoscaler?: [_]:                  #AlicloudCsKubernetesAutoscalerResource
+	alicloud_cs_kubernetes_node_pool?: [_]:                   #AlicloudCsKubernetesNodePoolResource
+	alicloud_cs_managed_kubernetes?: [_]:                     #AlicloudCsManagedKubernetesResource
+	alicloud_cs_serverless_kubernetes?: [_]:                  #AlicloudCsServerlessKubernetesResource
+	alicloud_cs_swarm?: [_]:                                  #AlicloudCsSwarmResource
+	alicloud_datahub_project?: [_]:                           #AlicloudDatahubProjectResource
+	alicloud_datahub_subscription?: [_]:                      #AlicloudDatahubSubscriptionResource
+	alicloud_datahub_topic?: [_]:                             #AlicloudDatahubTopicResource
+	alicloud_db_account?: [_]:                                #AlicloudDbAccountResource
+	alicloud_db_account_privilege?: [_]:                      #AlicloudDbAccountPrivilegeResource
+	alicloud_db_backup_policy?: [_]:                          #AlicloudDbBackupPolicyResource
+	alicloud_db_connection?: [_]:                             #AlicloudDbConnectionResource
+	alicloud_db_database?: [_]:                               #AlicloudDbDatabaseResource
+	alicloud_db_instance?: [_]:                               #AlicloudDbInstanceResource
+	alicloud_db_read_write_splitting_connection?: [_]:        #AlicloudDbReadWriteSplittingConnectionResource
+	alicloud_db_readonly_instance?: [_]:                      #AlicloudDbReadonlyInstanceResource
+	alicloud_dcdn_domain?: [_]:                               #AlicloudDcdnDomainResource
+	alicloud_ddosbgp_instance?: [_]:                          #AlicloudDdosbgpInstanceResource
+	alicloud_ddoscoo_instance?: [_]:                          #AlicloudDdoscooInstanceResource
+	alicloud_ddoscoo_scheduler_rule?: [_]:                    #AlicloudDdoscooSchedulerRuleResource
+	alicloud_disk?: [_]:                                      #AlicloudDiskResource
+	alicloud_disk_attachment?: [_]:                           #AlicloudDiskAttachmentResource
+	alicloud_dms_enterprise_instance?: [_]:                   #AlicloudDmsEnterpriseInstanceResource
+	alicloud_dms_enterprise_user?: [_]:                       #AlicloudDmsEnterpriseUserResource
+	alicloud_dns?: [_]:                                       #AlicloudDnsResource
+	alicloud_dns_domain?: [_]:                                #AlicloudDnsDomainResource
+	alicloud_dns_domain_attachment?: [_]:                     #AlicloudDnsDomainAttachmentResource
+	alicloud_dns_group?: [_]:                                 #AlicloudDnsGroupResource
+	alicloud_dns_instance?: [_]:                              #AlicloudDnsInstanceResource
+	alicloud_dns_record?: [_]:                                #AlicloudDnsRecordResource
+	alicloud_drds_instance?: [_]:                             #AlicloudDrdsInstanceResource
+	alicloud_eci_container_group?: [_]:                       #AlicloudEciContainerGroupResource
+	alicloud_eci_image_cache?: [_]:                           #AlicloudEciImageCacheResource
+	alicloud_eci_openapi_image_cache?: [_]:                   #AlicloudEciOpenapiImageCacheResource
+	alicloud_ecs_dedicated_host?: [_]:                        #AlicloudEcsDedicatedHostResource
+	alicloud_edas_application?: [_]:                          #AlicloudEdasApplicationResource
+	alicloud_edas_application_deployment?: [_]:               #AlicloudEdasApplicationDeploymentResource
+	alicloud_edas_application_scale?: [_]:                    #AlicloudEdasApplicationScaleResource
+	alicloud_edas_cluster?: [_]:                              #AlicloudEdasClusterResource
+	alicloud_edas_deploy_group?: [_]:                         #AlicloudEdasDeployGroupResource
+	alicloud_edas_instance_cluster_attachment?: [_]:          #AlicloudEdasInstanceClusterAttachmentResource
+	alicloud_edas_k8s_application?: [_]:                      #AlicloudEdasK8SApplicationResource
+	alicloud_edas_k8s_cluster?: [_]:                          #AlicloudEdasK8SClusterResource
+	alicloud_edas_slb_attachment?: [_]:                       #AlicloudEdasSlbAttachmentResource
+	alicloud_eip?: [_]:                                       #AlicloudEipResource
+	alicloud_eip_association?: [_]:                           #AlicloudEipAssociationResource
+	alicloud_eipanycast_anycast_eip_address?: [_]:            #AlicloudEipanycastAnycastEipAddressResource
+	alicloud_eipanycast_anycast_eip_address_attachment?: [_]: #AlicloudEipanycastAnycastEipAddressAttachmentResource
+	alicloud_elasticsearch_instance?: [_]:                    #AlicloudElasticsearchInstanceResource
+	alicloud_emr_cluster?: [_]:                               #AlicloudEmrClusterResource
+	alicloud_ess_alarm?: [_]:                                 #AlicloudEssAlarmResource
+	alicloud_ess_attachment?: [_]:                            #AlicloudEssAttachmentResource
+	alicloud_ess_lifecycle_hook?: [_]:                        #AlicloudEssLifecycleHookResource
+	alicloud_ess_notification?: [_]:                          #AlicloudEssNotificationResource
+	alicloud_ess_scaling_configuration?: [_]:                 #AlicloudEssScalingConfigurationResource
+	alicloud_ess_scaling_group?: [_]:                         #AlicloudEssScalingGroupResource
+	alicloud_ess_scaling_rule?: [_]:                          #AlicloudEssScalingRuleResource
+	alicloud_ess_scalinggroup_vserver_groups?: [_]:           #AlicloudEssScalinggroupVserverGroupsResource
+	alicloud_ess_schedule?: [_]:                              #AlicloudEssScheduleResource
+	alicloud_ess_scheduled_task?: [_]:                        #AlicloudEssScheduledTaskResource
+	alicloud_fc_alias?: [_]:                                  #AlicloudFcAliasResource
+	alicloud_fc_custom_domain?: [_]:                          #AlicloudFcCustomDomainResource
+	alicloud_fc_function?: [_]:                               #AlicloudFcFunctionResource
+	alicloud_fc_function_async_invoke_config?: [_]:           #AlicloudFcFunctionAsyncInvokeConfigResource
+	alicloud_fc_service?: [_]:                                #AlicloudFcServiceResource
+	alicloud_fc_trigger?: [_]:                                #AlicloudFcTriggerResource
+	alicloud_fnf_flow?: [_]:                                  #AlicloudFnfFlowResource
+	alicloud_fnf_schedule?: [_]:                              #AlicloudFnfScheduleResource
+	alicloud_forward_entry?: [_]:                             #AlicloudForwardEntryResource
+	alicloud_ga_accelerator?: [_]:                            #AlicloudGaAcceleratorResource
+	alicloud_ga_bandwidth_package?: [_]:                      #AlicloudGaBandwidthPackageResource
+	alicloud_ga_bandwidth_package_attachment?: [_]:           #AlicloudGaBandwidthPackageAttachmentResource
+	alicloud_ga_endpoint_group?: [_]:                         #AlicloudGaEndpointGroupResource
+	alicloud_ga_ip_set?: [_]:                                 #AlicloudGaIpSetResource
+	alicloud_ga_listener?: [_]:                               #AlicloudGaListenerResource
+	alicloud_gpdb_connection?: [_]:                           #AlicloudGpdbConnectionResource
+	alicloud_gpdb_instance?: [_]:                             #AlicloudGpdbInstanceResource
+	alicloud_havip?: [_]:                                     #AlicloudHavipResource
+	alicloud_havip_attachment?: [_]:                          #AlicloudHavipAttachmentResource
+	alicloud_hbase_instance?: [_]:                            #AlicloudHbaseInstanceResource
+	alicloud_image?: [_]:                                     #AlicloudImageResource
+	alicloud_image_copy?: [_]:                                #AlicloudImageCopyResource
+	alicloud_image_export?: [_]:                              #AlicloudImageExportResource
+	alicloud_image_import?: [_]:                              #AlicloudImageImportResource
+	alicloud_image_share_permission?: [_]:                    #AlicloudImageSharePermissionResource
+	alicloud_instance?: [_]:                                  #AlicloudInstanceResource
+	alicloud_key_pair?: [_]:                                  #AlicloudKeyPairResource
+	alicloud_key_pair_attachment?: [_]:                       #AlicloudKeyPairAttachmentResource
+	alicloud_kms_alias?: [_]:                                 #AlicloudKmsAliasResource
+	alicloud_kms_ciphertext?: [_]:                            #AlicloudKmsCiphertextResource
+	alicloud_kms_key?: [_]:                                   #AlicloudKmsKeyResource
+	alicloud_kms_key_version?: [_]:                           #AlicloudKmsKeyVersionResource
+	alicloud_kms_secret?: [_]:                                #AlicloudKmsSecretResource
+	alicloud_kvstore_account?: [_]:                           #AlicloudKvstoreAccountResource
+	alicloud_kvstore_backup_policy?: [_]:                     #AlicloudKvstoreBackupPolicyResource
+	alicloud_kvstore_connection?: [_]:                        #AlicloudKvstoreConnectionResource
+	alicloud_kvstore_instance?: [_]:                          #AlicloudKvstoreInstanceResource
+	alicloud_launch_template?: [_]:                           #AlicloudLaunchTemplateResource
+	alicloud_log_alert?: [_]:                                 #AlicloudLogAlertResource
+	alicloud_log_audit?: [_]:                                 #AlicloudLogAuditResource
+	alicloud_log_dashboard?: [_]:                             #AlicloudLogDashboardResource
+	alicloud_log_machine_group?: [_]:                         #AlicloudLogMachineGroupResource
+	alicloud_log_project?: [_]:                               #AlicloudLogProjectResource
+	alicloud_log_store?: [_]:                                 #AlicloudLogStoreResource
+	alicloud_log_store_index?: [_]:                           #AlicloudLogStoreIndexResource
+	alicloud_logtail_attachment?: [_]:                        #AlicloudLogtailAttachmentResource
+	alicloud_logtail_config?: [_]:                            #AlicloudLogtailConfigResource
+	alicloud_market_order?: [_]:                              #AlicloudMarketOrderResource
+	alicloud_maxcompute_project?: [_]:                        #AlicloudMaxcomputeProjectResource
+	alicloud_mns_queue?: [_]:                                 #AlicloudMnsQueueResource
+	alicloud_mns_topic?: [_]:                                 #AlicloudMnsTopicResource
+	alicloud_mns_topic_subscription?: [_]:                    #AlicloudMnsTopicSubscriptionResource
+	alicloud_mongodb_instance?: [_]:                          #AlicloudMongodbInstanceResource
+	alicloud_mongodb_sharding_instance?: [_]:                 #AlicloudMongodbShardingInstanceResource
+	alicloud_mse_cluster?: [_]:                               #AlicloudMseClusterResource
+	alicloud_nas_access_group?: [_]:                          #AlicloudNasAccessGroupResource
+	alicloud_nas_access_rule?: [_]:                           #AlicloudNasAccessRuleResource
+	alicloud_nas_file_system?: [_]:                           #AlicloudNasFileSystemResource
+	alicloud_nas_mount_target?: [_]:                          #AlicloudNasMountTargetResource
+	alicloud_nat_gateway?: [_]:                               #AlicloudNatGatewayResource
+	alicloud_network_acl?: [_]:                               #AlicloudNetworkAclResource
+	alicloud_network_acl_attachment?: [_]:                    #AlicloudNetworkAclAttachmentResource
+	alicloud_network_acl_entries?: [_]:                       #AlicloudNetworkAclEntriesResource
+	alicloud_network_interface?: [_]:                         #AlicloudNetworkInterfaceResource
+	alicloud_network_interface_attachment?: [_]:              #AlicloudNetworkInterfaceAttachmentResource
+	alicloud_ons_group?: [_]:                                 #AlicloudOnsGroupResource
+	alicloud_ons_instance?: [_]:                              #AlicloudOnsInstanceResource
+	alicloud_ons_topic?: [_]:                                 #AlicloudOnsTopicResource
+	alicloud_oos_execution?: [_]:                             #AlicloudOosExecutionResource
+	alicloud_oos_template?: [_]:                              #AlicloudOosTemplateResource
+	alicloud_oss_bucket?: [_]:                                #AlicloudOssBucketResource
+	alicloud_oss_bucket_object?: [_]:                         #AlicloudOssBucketObjectResource
+	alicloud_ots_instance?: [_]:                              #AlicloudOtsInstanceResource
+	alicloud_ots_instance_attachment?: [_]:                   #AlicloudOtsInstanceAttachmentResource
+	alicloud_ots_table?: [_]:                                 #AlicloudOtsTableResource
+	alicloud_polardb_account?: [_]:                           #AlicloudPolardbAccountResource
+	alicloud_polardb_account_privilege?: [_]:                 #AlicloudPolardbAccountPrivilegeResource
+	alicloud_polardb_backup_policy?: [_]:                     #AlicloudPolardbBackupPolicyResource
+	alicloud_polardb_cluster?: [_]:                           #AlicloudPolardbClusterResource
+	alicloud_polardb_database?: [_]:                          #AlicloudPolardbDatabaseResource
+	alicloud_polardb_endpoint?: [_]:                          #AlicloudPolardbEndpointResource
+	alicloud_polardb_endpoint_address?: [_]:                  #AlicloudPolardbEndpointAddressResource
+	alicloud_privatelink_vpc_endpoint?: [_]:                  #AlicloudPrivatelinkVpcEndpointResource
+	alicloud_privatelink_vpc_endpoint_connection?: [_]:       #AlicloudPrivatelinkVpcEndpointConnectionResource
+	alicloud_privatelink_vpc_endpoint_service?: [_]:          #AlicloudPrivatelinkVpcEndpointServiceResource
+	alicloud_privatelink_vpc_endpoint_service_resource?: [_]: #AlicloudPrivatelinkVpcEndpointServiceResourceResource
+	alicloud_privatelink_vpc_endpoint_service_user?: [_]:     #AlicloudPrivatelinkVpcEndpointServiceUserResource
+	alicloud_privatelink_vpc_endpoint_zone?: [_]:             #AlicloudPrivatelinkVpcEndpointZoneResource
+	alicloud_pvtz_zone?: [_]:                                 #AlicloudPvtzZoneResource
+	alicloud_pvtz_zone_attachment?: [_]:                      #AlicloudPvtzZoneAttachmentResource
+	alicloud_pvtz_zone_record?: [_]:                          #AlicloudPvtzZoneRecordResource
+	alicloud_ram_access_key?: [_]:                            #AlicloudRamAccessKeyResource
+	alicloud_ram_account_alias?: [_]:                         #AlicloudRamAccountAliasResource
+	alicloud_ram_account_password_policy?: [_]:               #AlicloudRamAccountPasswordPolicyResource
+	alicloud_ram_alias?: [_]:                                 #AlicloudRamAliasResource
+	alicloud_ram_group?: [_]:                                 #AlicloudRamGroupResource
+	alicloud_ram_group_membership?: [_]:                      #AlicloudRamGroupMembershipResource
+	alicloud_ram_group_policy_attachment?: [_]:               #AlicloudRamGroupPolicyAttachmentResource
+	alicloud_ram_login_profile?: [_]:                         #AlicloudRamLoginProfileResource
+	alicloud_ram_policy?: [_]:                                #AlicloudRamPolicyResource
+	alicloud_ram_role?: [_]:                                  #AlicloudRamRoleResource
+	alicloud_ram_role_attachment?: [_]:                       #AlicloudRamRoleAttachmentResource
+	alicloud_ram_role_policy_attachment?: [_]:                #AlicloudRamRolePolicyAttachmentResource
+	alicloud_ram_saml_provider?: [_]:                         #AlicloudRamSamlProviderResource
+	alicloud_ram_user?: [_]:                                  #AlicloudRamUserResource
+	alicloud_ram_user_policy_attachment?: [_]:                #AlicloudRamUserPolicyAttachmentResource
+	alicloud_reserved_instance?: [_]:                         #AlicloudReservedInstanceResource
+	alicloud_resource_manager_account?: [_]:                  #AlicloudResourceManagerAccountResource
+	alicloud_resource_manager_folder?: [_]:                   #AlicloudResourceManagerFolderResource
+	alicloud_resource_manager_handshake?: [_]:                #AlicloudResourceManagerHandshakeResource
+	alicloud_resource_manager_policy?: [_]:                   #AlicloudResourceManagerPolicyResource
+	alicloud_resource_manager_policy_attachment?: [_]:        #AlicloudResourceManagerPolicyAttachmentResource
+	alicloud_resource_manager_policy_version?: [_]:           #AlicloudResourceManagerPolicyVersionResource
+	alicloud_resource_manager_resource_directory?: [_]:       #AlicloudResourceManagerResourceDirectoryResource
+	alicloud_resource_manager_resource_group?: [_]:           #AlicloudResourceManagerResourceGroupResource
+	alicloud_resource_manager_resource_share?: [_]:           #AlicloudResourceManagerResourceShareResource
+	alicloud_resource_manager_role?: [_]:                     #AlicloudResourceManagerRoleResource
+	alicloud_resource_manager_shared_resource?: [_]:          #AlicloudResourceManagerSharedResourceResource
+	alicloud_resource_manager_shared_target?: [_]:            #AlicloudResourceManagerSharedTargetResource
+	alicloud_ros_change_set?: [_]:                            #AlicloudRosChangeSetResource
+	alicloud_ros_stack?: [_]:                                 #AlicloudRosStackResource
+	alicloud_ros_stack_group?: [_]:                           #AlicloudRosStackGroupResource
+	alicloud_ros_template?: [_]:                              #AlicloudRosTemplateResource
+	alicloud_route_entry?: [_]:                               #AlicloudRouteEntryResource
+	alicloud_route_table?: [_]:                               #AlicloudRouteTableResource
+	alicloud_route_table_attachment?: [_]:                    #AlicloudRouteTableAttachmentResource
+	alicloud_router_interface?: [_]:                          #AlicloudRouterInterfaceResource
+	alicloud_router_interface_connection?: [_]:               #AlicloudRouterInterfaceConnectionResource
+	alicloud_sag_acl?: [_]:                                   #AlicloudSagAclResource
+	alicloud_sag_acl_rule?: [_]:                              #AlicloudSagAclRuleResource
+	alicloud_sag_client_user?: [_]:                           #AlicloudSagClientUserResource
+	alicloud_sag_dnat_entry?: [_]:                            #AlicloudSagDnatEntryResource
+	alicloud_sag_qos?: [_]:                                   #AlicloudSagQosResource
+	alicloud_sag_qos_car?: [_]:                               #AlicloudSagQosCarResource
+	alicloud_sag_qos_policy?: [_]:                            #AlicloudSagQosPolicyResource
+	alicloud_sag_snat_entry?: [_]:                            #AlicloudSagSnatEntryResource
+	alicloud_security_group?: [_]:                            #AlicloudSecurityGroupResource
+	alicloud_security_group_rule?: [_]:                       #AlicloudSecurityGroupRuleResource
+	alicloud_slb?: [_]:                                       #AlicloudSlbResource
+	alicloud_slb_acl?: [_]:                                   #AlicloudSlbAclResource
+	alicloud_slb_attachment?: [_]:                            #AlicloudSlbAttachmentResource
+	alicloud_slb_backend_server?: [_]:                        #AlicloudSlbBackendServerResource
+	alicloud_slb_ca_certificate?: [_]:                        #AlicloudSlbCaCertificateResource
+	alicloud_slb_domain_extension?: [_]:                      #AlicloudSlbDomainExtensionResource
+	alicloud_slb_listener?: [_]:                              #AlicloudSlbListenerResource
+	alicloud_slb_master_slave_server_group?: [_]:             #AlicloudSlbMasterSlaveServerGroupResource
+	alicloud_slb_rule?: [_]:                                  #AlicloudSlbRuleResource
+	alicloud_slb_server_certificate?: [_]:                    #AlicloudSlbServerCertificateResource
+	alicloud_slb_server_group?: [_]:                          #AlicloudSlbServerGroupResource
+	alicloud_snapshot?: [_]:                                  #AlicloudSnapshotResource
+	alicloud_snapshot_policy?: [_]:                           #AlicloudSnapshotPolicyResource
+	alicloud_snat_entry?: [_]:                                #AlicloudSnatEntryResource
+	alicloud_ssl_vpn_client_cert?: [_]:                       #AlicloudSslVpnClientCertResource
+	alicloud_ssl_vpn_server?: [_]:                            #AlicloudSslVpnServerResource
+	alicloud_subnet?: [_]:                                    #AlicloudSubnetResource
+	alicloud_tsdb_instance?: [_]:                             #AlicloudTsdbInstanceResource
+	alicloud_vpc?: [_]:                                       #AlicloudVpcResource
+	alicloud_vpn_connection?: [_]:                            #AlicloudVpnConnectionResource
+	alicloud_vpn_customer_gateway?: [_]:                      #AlicloudVpnCustomerGatewayResource
+	alicloud_vpn_gateway?: [_]:                               #AlicloudVpnGatewayResource
+	alicloud_vpn_route_entry?: [_]:                           #AlicloudVpnRouteEntryResource
+	alicloud_vswitch?: [_]:                                   #AlicloudVswitchResource
+	alicloud_waf_domain?: [_]:                                #AlicloudWafDomainResource
+	alicloud_waf_instance?: [_]:                              #AlicloudWafInstanceResource
+	alicloud_yundun_bastionhost_instance?: [_]:               #AlicloudYundunBastionhostInstanceResource
+	alicloud_yundun_dbaudit_instance?: [_]:                   #AlicloudYundunDbauditInstanceResource
 }

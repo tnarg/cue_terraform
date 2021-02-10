@@ -2,34 +2,152 @@
 package cobbler
 
 #CobblerDistroResource: {
-	breed:      string
-	initrd:     string
-	kernel:     string
-	name:       string
-	os_version: string
+	breed:                string
+	initrd:               string
+	kernel:               string
+	name:                 string
+	os_version:           string
+	arch?:                string
+	boot_files?:          string
+	comment?:             string
+	fetchable_files?:     string
+	id?:                  string
+	kernel_options?:      string
+	kernel_options_post?: string
+	mgmt_classes?: [string, ...]
+	owners?: [string, ...]
+	redhat_management_key?:    string
+	redhat_management_server?: string
+	template_files?:           string
 }
 #CobblerKickstartFileResource: {
 	body: string
 	name: string
+	id?:  string
 }
 #CobblerProfileResource: {
-	distro: string
-	name:   string
+	distro:               string
+	name:                 string
+	boot_files?:          string
+	comment?:             string
+	enable_gpxe?:         bool
+	enable_menu?:         bool
+	fetchable_files?:     string
+	id?:                  string
+	kernel_options?:      string
+	kernel_options_post?: string
+	kickstart?:           string
+	ks_meta?:             string
+	mgmt_classes?: [string, ...]
+	mgmt_parameters?: string
+	name_servers?: [string, ...]
+	name_servers_search?: [string, ...]
+	owners?: [string, ...]
+	parent?:                   string
+	proxy?:                    string
+	redhat_management_key?:    string
+	redhat_management_server?: string
+	repos?: [string, ...]
+	server?:                     string
+	template_files?:             string
+	template_remote_kickstarts?: number
+	virt_auto_boot?:             string
+	virt_bridge?:                string
+	virt_cpus?:                  string
+	virt_disk_driver?:           string
+	virt_file_size?:             string
+	virt_path?:                  string
+	virt_ram?:                   string
+	virt_type?:                  string
 }
 #CobblerRepoResource: {
 	breed:  string
 	mirror: string
 	name:   string
+	apt_components?: [string, ...]
+	apt_dists?: [string, ...]
+	arch?:             string
+	comment?:          string
+	createrepo_flags?: string
+	environment?:      string
+	id?:               string
+	keep_updated?:     bool
+	mirror_locally?:   bool
+	owners?: [string, ...]
+	proxy?: string
+	rpm_list?: [string, ...]
 }
 #CobblerSnippetResource: {
 	body: string
 	name: string
+	id?:  string
 }
 #CobblerSystemResource: {
-	name:    string
-	profile: string
+	name:                 string
+	profile:              string
+	boot_files?:          string
+	comment?:             string
+	enable_gpxe?:         bool
+	fetchable_files?:     string
+	gateway?:             string
+	hostname?:            string
+	id?:                  string
+	image?:               string
+	ipv6_default_device?: string
+	kernel_options?:      string
+	kernel_options_post?: string
+	kickstart?:           string
+	ks_meta?:             string
+	ldap_enabled?:        bool
+	ldap_type?:           string
+	mgmt_classes?: [string, ...]
+	mgmt_parameters?: string
+	monit_enabled?:   bool
+	name_servers?: [string, ...]
+	name_servers_search?: [string, ...]
+	netboot_enabled?: bool
+	owners?: [string, ...]
+	power_address?:              string
+	power_id?:                   string
+	power_pass?:                 string
+	power_type?:                 string
+	power_user?:                 string
+	proxy?:                      string
+	redhat_management_key?:      string
+	redhat_management_server?:   string
+	status?:                     string
+	template_files?:             string
+	template_remote_kickstarts?: number
+	virt_auto_boot?:             string
+	virt_cpus?:                  string
+	virt_disk_driver?:           string
+	virt_file_size?:             string
+	virt_path?:                  string
+	virt_pxe_boot?:              number
+	virt_ram?:                   string
+	virt_type?:                  string
 	interface?: [{
-		name: string
+		name:          string
+		bonding_opts?: string
+		bridge_opts?:  string
+		cnames?: [string, ...]
+		dhcp_tag?:             string
+		dns_name?:             string
+		gateway?:              string
+		interface_master?:     string
+		interface_type?:       string
+		ip_address?:           string
+		ipv6_address?:         string
+		ipv6_default_gateway?: string
+		ipv6_mtu?:             string
+		ipv6_secondaries?: [string, ...]
+		ipv6_static_routes?: [string, ...]
+		mac_address?: string
+		management?:  bool
+		netmask?:     string
+		static?:      bool
+		static_routes?: [string, ...]
+		virt_bridge?: string
 	}, ...]
 }
 #Resources: {

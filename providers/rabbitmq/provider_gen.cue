@@ -2,9 +2,11 @@
 package rabbitmq
 
 #Provider: rabbitmq: {
-	endpoint:     string
-	password:     string
-	username:     string
-	cacert_file?: string
-	insecure?:    bool
+	endpoint:         string
+	password:         string
+	username:         string
+	cacert_file?:     string
+	clientcert_file?: string
+	clientkey_file?:  string
+	insecure?:        bool
 }

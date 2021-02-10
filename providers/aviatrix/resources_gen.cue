@@ -19,6 +19,7 @@ package aviatrix
 	awsgov_secret_key?:                   string
 	gcloud_project_credentials_filepath?: string
 	gcloud_project_id?:                   string
+	id?:                                  string
 	oci_api_private_key_filepath?:        string
 	oci_compartment_id?:                  string
 	oci_tenancy_id?:                      string
@@ -28,6 +29,7 @@ package aviatrix
 	email:    string
 	password: string
 	username: string
+	id?:      string
 }
 #AviatrixArmPeerResource: {
 	account_name1:             string
@@ -36,6 +38,15 @@ package aviatrix
 	vnet_name_resource_group2: string
 	vnet_reg1:                 string
 	vnet_reg2:                 string
+	id?:                       string
+	vnet_cidr1?: [string, ...]
+	vnet_cidr2?: [string, ...]
+}
+#AviatrixAwsGuardDutyResource: {
+	account_name: string
+	region:       string
+	excluded_ips?: [string, ...]
+	id?: string
 }
 #AviatrixAwsPeerResource: {
 	account_name1: string
@@ -44,8 +55,11 @@ package aviatrix
 	vpc_id2:       string
 	vpc_reg1:      string
 	vpc_reg2:      string
+	id?:           string
 	rtb_list1?: [string, ...]
+	rtb_list1_output?: [string, ...]
 	rtb_list2?: [string, ...]
+	rtb_list2_output?: [string, ...]
 }
 #AviatrixAwsTgwResource: {
 	account_name:       string
@@ -53,6 +67,9 @@ package aviatrix
 	region:             string
 	tgw_name:           string
 	attached_aviatrix_transit_gateway?: [string, ...]
+	cloud_type?:                        number
+	enable_multicast?:                  bool
+	id?:                                string
 	manage_transit_gateway_attachment?: bool
 	manage_vpc_attachment?:             bool
 	security_domains?: [{
@@ -80,16 +97,19 @@ package aviatrix
 	security_domain_name:           string
 	tgw_name:                       string
 	enable_learned_cidrs_approval?: bool
+	id?:                            string
 }
 #AviatrixAwsTgwPeeringResource: {
 	tgw_name1: string
 	tgw_name2: string
+	id?:       string
 }
 #AviatrixAwsTgwPeeringDomainConnResource: {
 	domain_name1: string
 	domain_name2: string
 	tgw_name1:    string
 	tgw_name2:    string
+	id?:          string
 }
 #AviatrixAwsTgwTransitGatewayAttachmentResource: {
 	region:               string
@@ -97,6 +117,7 @@ package aviatrix
 	transit_gateway_name: string
 	vpc_account_name:     string
 	vpc_id:               string
+	id?:                  string
 }
 #AviatrixAwsTgwVpcAttachmentResource: {
 	region:                           string
@@ -107,6 +128,9 @@ package aviatrix
 	customized_route_advertisement?:  string
 	customized_routes?:               string
 	disable_local_route_propagation?: bool
+	id?:                              string
+	route_tables?:                    string
+	subnets?:                         string
 }
 #AviatrixAwsTgwVpnConnResource: {
 	connection_name:                string
@@ -115,12 +139,14 @@ package aviatrix
 	tgw_name:                       string
 	connection_type?:               string
 	enable_learned_cidrs_approval?: bool
+	id?:                            string
 	inside_ip_cidr_tun_1?:          string
 	inside_ip_cidr_tun_2?:          string
 	pre_shared_key_tun_1?:          string
 	pre_shared_key_tun_2?:          string
 	remote_as_number?:              string
 	remote_cidr?:                   string
+	vpn_id?:                        string
 }
 #AviatrixAzurePeerResource: {
 	account_name1:             string
@@ -129,29 +155,145 @@ package aviatrix
 	vnet_name_resource_group2: string
 	vnet_reg1:                 string
 	vnet_reg2:                 string
+	id?:                       string
+	vnet_cidr1?: [string, ...]
+	vnet_cidr2?: [string, ...]
 }
 #AviatrixAzureSpokeNativePeeringResource: {
 	spoke_account_name:   string
 	spoke_region:         string
 	spoke_vpc_id:         string
 	transit_gateway_name: string
+	id?:                  string
+}
+#AviatrixAzureVngConnResource: {
+	connection_name:      string
+	primary_gateway_name: string
+	attached?:            bool
+	id?:                  string
+	vng_name?:            string
+	vpc_id?:              string
+}
+#AviatrixCloudwatchAgentResource: {
+	cloudwatch_role_arn: string
+	region:              string
+	excluded_gateways?: [string, ...]
+	id?:             string
+	log_group_name?: string
+	status?:         string
 }
 #AviatrixControllerConfigResource: {
-	backup_account_name?:        string
-	backup_bucket_name?:         string
-	backup_cloud_type?:          number
-	backup_configuration?:       bool
-	fqdn_exception_rule?:        bool
-	http_access?:                bool
-	multiple_backups?:           bool
-	security_group_management?:  bool
-	sg_management_account_name?: string
-	target_version?:             string
+	aws_guard_duty_scanning_interval?:    number
+	backup_account_name?:                 string
+	backup_bucket_name?:                  string
+	backup_cloud_type?:                   number
+	backup_configuration?:                bool
+	ca_certificate_file_path?:            string
+	enable_vpc_dns_server?:               bool
+	fqdn_exception_rule?:                 bool
+	http_access?:                         bool
+	id?:                                  string
+	multiple_backups?:                    bool
+	security_group_management?:           bool
+	server_private_key_file_path?:        string
+	server_public_certificate_file_path?: string
+	sg_management_account_name?:          string
+	target_version?:                      string
+	version?:                             string
+}
+#AviatrixControllerPrivateOobResource: {
+	enable_private_oob?: bool
+	id?:                 string
+}
+#AviatrixDatadogAgentResource: {
+	api_key: string
+	excluded_gateways?: [string, ...]
+	id?:     string
+	site?:   string
+	status?: string
+}
+#AviatrixDeviceAwsTgwAttachmentResource: {
+	aws_tgw_name:         string
+	connection_name:      string
+	device_bgp_asn:       number
+	device_name:          string
+	security_domain_name: string
+	id?:                  string
+}
+#AviatrixDeviceInterfaceConfigResource: {
+	device_name:                     string
+	wan_primary_interface:           string
+	wan_primary_interface_public_ip: string
+	id?:                             string
+}
+#AviatrixDeviceRegistrationResource: {
+	name:         string
+	public_ip:    string
+	username:     string
+	address_1?:   string
+	address_2?:   string
+	city?:        string
+	country?:     string
+	description?: string
+	host_os?:     string
+	id?:          string
+	key_file?:    string
+	password?:    string
+	ssh_port?:    number
+	state?:       string
+	zip_code?:    string
+}
+#AviatrixDeviceTagResource: {
+	config: string
+	device_names: [string, ...]
+	name: string
+	id?:  string
+}
+#AviatrixDeviceTransitGatewayAttachmentResource: {
+	connection_name:                string
+	device_bgp_asn:                 number
+	device_name:                    string
+	transit_gateway_bgp_asn:        number
+	transit_gateway_name:           string
+	enable_global_accelerator?:     bool
+	enable_learned_cidrs_approval?: bool
+	id?:                            string
+	local_tunnel_ip?:               string
+	manual_bgp_advertised_cidrs?: [string, ...]
+	phase1_authentication?: string
+	phase1_dh_groups?:      string
+	phase1_encryption?:     string
+	phase2_authentication?: string
+	phase2_dh_groups?:      string
+	phase2_encryption?:     string
+	pre_shared_key?:        string
+	remote_tunnel_ip?:      string
+}
+#AviatrixDeviceVirtualWanAttachmentResource: {
+	account_name:    string
+	connection_name: string
+	device_bgp_asn:  number
+	device_name:     string
+	hub_name:        string
+	resource_group:  string
+	id?:             string
+}
+#AviatrixFilebeatForwarderResource: {
+	port:         number
+	server:       string
+	config_file?: string
+	excluded_gateways?: [string, ...]
+	id?:              string
+	status?:          string
+	trusted_ca_file?: string
 }
 #AviatrixFirenetResource: {
-	vpc_id:              string
-	egress_enabled?:     bool
-	inspection_enabled?: bool
+	vpc_id:                                string
+	egress_enabled?:                       bool
+	hashing_algorithm?:                    string
+	id?:                                   string
+	inspection_enabled?:                   bool
+	manage_firewall_instance_association?: bool
 	firewall_instance_association?: [{
 		firenet_gw_name:       string
 		instance_id:           string
@@ -164,9 +306,11 @@ package aviatrix
 	}, ...]
 }
 #AviatrixFirewallResource: {
-	gw_name:           string
-	base_log_enabled?: bool
-	base_policy?:      string
+	gw_name:                   string
+	base_log_enabled?:         bool
+	base_policy?:              string
+	id?:                       string
+	manage_firewall_policies?: bool
 	policy?: [{
 		action:       string
 		dst_ip:       string
@@ -178,43 +322,102 @@ package aviatrix
 	}, ...]
 }
 #AviatrixFirewallInstanceResource: {
-	egress_subnet:          string
-	firenet_gw_name:        string
-	firewall_image:         string
-	firewall_name:          string
-	firewall_size:          string
-	management_subnet:      string
-	vpc_id:                 string
-	bootstrap_bucket_name?: string
-	iam_role?:              string
-	key_name?:              string
-	password?:              string
-	username?:              string
+	egress_subnet:           string
+	firewall_image:          string
+	firewall_name:           string
+	firewall_size:           string
+	vpc_id:                  string
+	bootstrap_bucket_name?:  string
+	bootstrap_storage_name?: string
+	container_folder?:       string
+	egress_interface?:       string
+	file_share_folder?:      string
+	firenet_gw_name?:        string
+	firewall_image_version?: string
+	iam_role?:               string
+	id?:                     string
+	instance_id?:            string
+	key_name?:               string
+	lan_interface?:          string
+	management_interface?:   string
+	management_subnet?:      string
+	password?:               string
+	public_ip?:              string
+	sas_url_config?:         string
+	sas_url_license?:        string
+	share_directory?:        string
+	sic_key?:                string
+	ssh_public_key?:         string
+	storage_access_key?:     string
+	user_data?:              string
+	username?:               string
+	zone?:                   string
+}
+#AviatrixFirewallInstanceAssociationResource: {
+	instance_id:           string
+	vpc_id:                string
+	attached?:             bool
+	egress_interface?:     string
+	firenet_gw_name?:      string
+	firewall_name?:        string
+	id?:                   string
+	lan_interface?:        string
+	management_interface?: string
+	vendor_type?:          string
 }
 #AviatrixFirewallManagementAccessResource: {
 	management_access_resource_name: string
 	transit_firenet_gateway_name:    string
+	id?:                             string
+}
+#AviatrixFirewallPolicyResource: {
+	action:       string
+	dst_ip:       string
+	gw_name:      string
+	port:         string
+	src_ip:       string
+	description?: string
+	id?:          string
+	log_enabled?: bool
+	protocol?:    string
 }
 #AviatrixFirewallTagResource: {
 	firewall_tag: string
+	id?:          string
 	cidr_list?: [{
 		cidr:          string
 		cidr_tag_name: string
 	}, ...]
 }
 #AviatrixFqdnResource: {
-	fqdn_tag:      string
-	fqdn_enabled?: bool
-	fqdn_mode?:    string
+	fqdn_tag:             string
+	fqdn_enabled?:        bool
+	fqdn_mode?:           string
+	id?:                  string
+	manage_domain_names?: bool
 	domain_names?: [{
-		fqdn:  string
-		port:  string
-		proto: string
+		fqdn:    string
+		port:    string
+		proto:   string
+		action?: string
 	}, ...]
 	gw_filter_tag_list?: [{
 		gw_name: string
 		source_ip_list?: [string, ...]
 	}, ...]
+}
+#AviatrixFqdnPassThroughResource: {
+	gw_name: string
+	pass_through_cidrs: [string, ...]
+	id?: string
+}
+#AviatrixFqdnTagRuleResource: {
+	fqdn:          string
+	fqdn_tag_name: string
+	port:          string
+	protocol:      string
+	action?:       string
+	id?:           string
 }
 #AviatrixGatewayResource: {
 	account_name:                         string
@@ -227,17 +430,27 @@ package aviatrix
 	additional_cidrs?:                    string
 	additional_cidrs_designated_gateway?: string
 	allocate_new_eip?:                    bool
+	cloud_instance_id?:                   string
 	customer_managed_keys?:               string
 	duo_api_hostname?:                    string
 	duo_integration_key?:                 string
 	duo_push_mode?:                       string
 	duo_secret_key?:                      string
+	eip?:                                 string
+	elb_dns_name?:                        string
+	elb_name?:                            string
 	enable_designated_gateway?:           bool
 	enable_elb?:                          bool
 	enable_encrypt_volume?:               bool
 	enable_ldap?:                         bool
+	enable_monitor_gateway_subnets?:      bool
+	enable_public_subnet_filtering?:      bool
 	enable_vpc_dns_server?:               bool
 	enable_vpn_nat?:                      bool
+	fqdn_lan_cidr?:                       string
+	fqdn_lan_interface?:                  string
+	id?:                                  string
+	idle_timeout?:                        number
 	insane_mode?:                         bool
 	insane_mode_az?:                      string
 	ldap_base_dn?:                        string
@@ -246,26 +459,42 @@ package aviatrix
 	ldap_server?:                         string
 	ldap_username_attribute?:             string
 	max_vpn_conn?:                        string
-	name_servers?:                        string
-	okta_token?:                          string
-	okta_url?:                            string
-	okta_username_suffix?:                string
-	otp_mode?:                            string
-	peering_ha_gw_size?:                  string
-	peering_ha_insane_mode_az?:           string
-	peering_ha_subnet?:                   string
-	peering_ha_zone?:                     string
-	saml_enabled?:                        bool
-	search_domains?:                      string
-	single_az_ha?:                        bool
-	single_ip_snat?:                      bool
-	split_tunnel?:                        bool
+	monitor_exclude_list?: [string, ...]
+	name_servers?:                                string
+	okta_token?:                                  string
+	okta_url?:                                    string
+	okta_username_suffix?:                        string
+	otp_mode?:                                    string
+	peering_ha_cloud_instance_id?:                string
+	peering_ha_eip?:                              string
+	peering_ha_gw_name?:                          string
+	peering_ha_gw_size?:                          string
+	peering_ha_insane_mode_az?:                   string
+	peering_ha_private_ip?:                       string
+	peering_ha_subnet?:                           string
+	peering_ha_zone?:                             string
+	private_ip?:                                  string
+	public_dns_server?:                           string
+	public_subnet_filtering_guard_duty_enforced?: bool
+	public_subnet_filtering_ha_route_tables?: [string, ...]
+	public_subnet_filtering_route_tables?: [string, ...]
+	renegotiation_interval?: number
+	saml_enabled?:           bool
+	search_domains?:         string
+	security_group_id?:      string
+	single_az_ha?:           bool
+	single_ip_snat?:         bool
+	split_tunnel?:           bool
 	tag_list?: [string, ...]
-	vpn_access?: bool
-	vpn_cidr?:   string
+	vpn_access?:   bool
+	vpn_cidr?:     string
+	vpn_protocol?: string
+	zone?:         string
 }
 #AviatrixGatewayDnatResource: {
-	gw_name: string
+	gw_name:     string
+	id?:         string
+	sync_to_ha?: bool
 	dnat_policy?: [{
 		connection?:  string
 		dnat_ips?:    string
@@ -281,8 +510,10 @@ package aviatrix
 	}, ...]
 }
 #AviatrixGatewaySnatResource: {
-	gw_name:    string
-	snat_mode?: string
+	gw_name:     string
+	id?:         string
+	snat_mode?:  string
+	sync_to_ha?: bool
 	snat_policy?: [{
 		connection?:  string
 		dst_cidr?:    string
@@ -303,29 +534,89 @@ package aviatrix
 	domain_name:  string
 	elb_dns_names: [string, ...]
 	service_name: string
+	id?:          string
 }
-#AviatrixRbacGroupResource: group_name: string
+#AviatrixNetflowAgentResource: {
+	port:      number
+	server_ip: string
+	excluded_gateways?: [string, ...]
+	id?:      string
+	status?:  string
+	version?: number
+}
+#AviatrixPeriodicPingResource: {
+	gw_name:    string
+	interval:   number
+	ip_address: string
+	id?:        string
+}
+#AviatrixProxyConfigResource: {
+	http_proxy:            string
+	https_proxy:           string
+	id?:                   string
+	proxy_ca_certificate?: string
+}
+#AviatrixRbacGroupResource: {
+	group_name:   string
+	id?:          string
+	local_login?: bool
+}
 #AviatrixRbacGroupAccessAccountAttachmentResource: {
 	access_account_name: string
 	group_name:          string
+	id?:                 string
 }
 #AviatrixRbacGroupPermissionAttachmentResource: {
 	group_name:      string
 	permission_name: string
+	id?:             string
 }
 #AviatrixRbacGroupUserAttachmentResource: {
 	group_name: string
 	user_name:  string
+	id?:        string
+}
+#AviatrixRemoteSyslogResource: {
+	port:                 number
+	server:               string
+	ca_certificate_file?: string
+	excluded_gateways?: [string, ...]
+	id?:                      string
+	index?:                   number
+	notls?:                   bool
+	private_key_file?:        string
+	protocol?:                string
+	public_certificate_file?: string
+	status?:                  string
+	template?:                string
 }
 #AviatrixSamlEndpointResource: {
 	endpoint_name:                 string
-	idp_metadata:                  string
 	idp_metadata_type:             string
 	access_set_by?:                string
 	controller_login?:             bool
 	custom_entity_id?:             string
 	custom_saml_request_template?: string
+	id?:                           string
+	idp_metadata?:                 string
+	idp_metadata_url?:             string
 	rbac_groups?: [string, ...]
+	sign_authn_requests?: bool
+}
+#AviatrixSegmentationSecurityDomainResource: {
+	domain_name: string
+	id?:         string
+}
+#AviatrixSegmentationSecurityDomainAssociationResource: {
+	attachment_name:      string
+	security_domain_name: string
+	transit_gateway_name: string
+	id?:                  string
+}
+#AviatrixSegmentationSecurityDomainConnectionPolicyResource: {
+	domain_name_1: string
+	domain_name_2: string
+	id?:           string
 }
 #AviatrixSite2CloudResource: {
 	connection_name:                  string
@@ -333,7 +624,6 @@ package aviatrix
 	primary_cloud_gateway_name:       string
 	remote_gateway_ip:                string
 	remote_gateway_type:              string
-	remote_subnet_cidr:               string
 	tunnel_type:                      string
 	vpc_id:                           string
 	backup_gateway_name?:             string
@@ -342,88 +632,19 @@ package aviatrix
 	backup_remote_gateway_latitude?:  number
 	backup_remote_gateway_longitude?: number
 	custom_algorithms?:               bool
+	custom_mapped?:                   bool
 	enable_active_active?:            bool
 	enable_dead_peer_detection?:      bool
+	enable_ikev2?:                    bool
+	forward_traffic_to_transit?:      bool
 	ha_enabled?:                      bool
-	local_subnet_virtual?:            string
-	phase_1_authentication?:          string
-	phase_1_dh_groups?:               string
-	phase_1_encryption?:              string
-	phase_2_authentication?:          string
-	phase_2_dh_groups?:               string
-	phase_2_encryption?:              string
-	pre_shared_key?:                  string
-	private_route_encryption?:        bool
-	remote_gateway_latitude?:         number
-	remote_gateway_longitude?:        number
-	remote_subnet_virtual?:           string
-	route_table_list?: [string, ...]
-	ssl_server_pool?: string
-}
-#AviatrixSpokeGatewayResource: {
-	account_name:                      string
-	cloud_type:                        number
-	gw_name:                           string
-	gw_size:                           string
-	subnet:                            string
-	vpc_id:                            string
-	vpc_reg:                           string
-	allocate_new_eip?:                 bool
-	customer_managed_keys?:            string
-	customized_spoke_vpc_routes?:      string
-	enable_active_mesh?:               bool
-	enable_encrypt_volume?:            bool
-	enable_vpc_dns_server?:            bool
-	filtered_spoke_vpc_routes?:        string
-	ha_gw_size?:                       string
-	ha_insane_mode_az?:                string
-	ha_subnet?:                        string
-	ha_zone?:                          string
-	included_advertised_spoke_routes?: string
-	insane_mode?:                      bool
-	insane_mode_az?:                   string
-	single_az_ha?:                     bool
-	single_ip_snat?:                   bool
-	tag_list?: [string, ...]
-	transit_gw?: string
-}
-#AviatrixSpokeVpcResource: {
-	account_name:  string
-	cloud_type:    number
-	gw_name:       string
-	subnet:        string
-	vpc_id:        string
-	vpc_reg:       string
-	vpc_size:      string
-	enable_nat?:   string
-	ha_gw_size?:   string
-	ha_subnet?:    string
-	ha_zone?:      string
-	single_az_ha?: string
-	tag_list?: [string, ...]
-	transit_gw?: string
-}
-#AviatrixTransPeerResource: {
-	nexthop:        string
-	reachable_cidr: string
-	source:         string
-}
-#AviatrixTransitExternalDeviceConnResource: {
-	connection_name:           string
-	gw_name:                   string
-	remote_gateway_ip:         string
-	vpc_id:                    string
-	backup_bgp_remote_as_num?: string
-	backup_direct_connect?:    bool
-	backup_pre_shared_key?:    string
-	backup_remote_gateway_ip?: string
-	bgp_local_as_num?:         string
-	bgp_remote_as_num?:        string
-	connection_type?:          string
-	custom_algorithms?:        bool
-	direct_connect?:           bool
-	enable_edge_segmentation?: bool
-	ha_enabled?:               bool
+	id?:                              string
+	local_destination_real_cidrs?: [string, ...]
+	local_destination_virtual_cidrs?: [string, ...]
+	local_source_real_cidrs?: [string, ...]
+	local_source_virtual_cidrs?: [string, ...]
+	local_subnet_cidr?:        string
+	local_subnet_virtual?:     string
 	phase_1_authentication?:   string
 	phase_1_dh_groups?:        string
 	phase_1_encryption?:       string
@@ -431,11 +652,153 @@ package aviatrix
 	phase_2_dh_groups?:        string
 	phase_2_encryption?:       string
 	pre_shared_key?:           string
-	remote_subnet?:            string
+	private_route_encryption?: bool
+	remote_destination_real_cidrs?: [string, ...]
+	remote_destination_virtual_cidrs?: [string, ...]
+	remote_gateway_latitude?:  number
+	remote_gateway_longitude?: number
+	remote_source_real_cidrs?: [string, ...]
+	remote_source_virtual_cidrs?: [string, ...]
+	remote_subnet_cidr?:    string
+	remote_subnet_virtual?: string
+	route_table_list?: [string, ...]
+	ssl_server_pool?: string
+}
+#AviatrixSplunkLoggingResource: {
+	custom_input_config?:       string
+	custom_output_config_file?: string
+	excluded_gateways?: [string, ...]
+	id?:     string
+	port?:   number
+	server?: string
+	status?: string
+}
+#AviatrixSpokeGatewayResource: {
+	account_name:                       string
+	cloud_type:                         number
+	gw_name:                            string
+	gw_size:                            string
+	subnet:                             string
+	vpc_id:                             string
+	vpc_reg:                            string
+	allocate_new_eip?:                  bool
+	cloud_instance_id?:                 string
+	customer_managed_keys?:             string
+	customized_spoke_vpc_routes?:       string
+	eip?:                               string
+	enable_active_mesh?:                bool
+	enable_encrypt_volume?:             bool
+	enable_monitor_gateway_subnets?:    bool
+	enable_private_oob?:                bool
+	enable_vpc_dns_server?:             bool
+	filtered_spoke_vpc_routes?:         string
+	ha_cloud_instance_id?:              string
+	ha_eip?:                            string
+	ha_gw_name?:                        string
+	ha_gw_size?:                        string
+	ha_insane_mode_az?:                 string
+	ha_private_ip?:                     string
+	ha_subnet?:                         string
+	ha_zone?:                           string
+	id?:                                string
+	included_advertised_spoke_routes?:  string
+	insane_mode?:                       bool
+	insane_mode_az?:                    string
+	manage_transit_gateway_attachment?: bool
+	monitor_exclude_list?: [string, ...]
+	oob_availability_zone?: string
+	oob_management_subnet?: string
+	private_ip?:            string
+	security_group_id?:     string
+	single_az_ha?:          bool
+	single_ip_snat?:        bool
+	tag_list?: [string, ...]
+	transit_gw?: string
+	zone?:       string
+}
+#AviatrixSpokeTransitAttachmentResource: {
+	spoke_gw_name:   string
+	transit_gw_name: string
+	id?:             string
+	route_tables?: [string, ...]
+}
+#AviatrixSpokeVpcResource: {
+	account_name:       string
+	cloud_type:         number
+	gw_name:            string
+	subnet:             string
+	vpc_id:             string
+	vpc_reg:            string
+	vpc_size:           string
+	cloud_instance_id?: string
+	enable_nat?:        string
+	ha_gw_size?:        string
+	ha_subnet?:         string
+	ha_zone?:           string
+	id?:                string
+	single_az_ha?:      string
+	tag_list?: [string, ...]
+	transit_gw?: string
+}
+#AviatrixSumologicForwarderResource: {
+	access_id:             string
+	access_key:            string
+	custom_configuration?: string
+	excluded_gateways?: [string, ...]
+	id?:              string
+	source_category?: string
+	status?:          string
+}
+#AviatrixTransPeerResource: {
+	nexthop:        string
+	reachable_cidr: string
+	source:         string
+	id?:            string
+}
+#AviatrixTransitExternalDeviceConnResource: {
+	connection_name:                string
+	gw_name:                        string
+	vpc_id:                         string
+	backup_bgp_remote_as_num?:      string
+	backup_direct_connect?:         bool
+	backup_local_lan_ip?:           string
+	backup_local_tunnel_cidr?:      string
+	backup_pre_shared_key?:         string
+	backup_remote_gateway_ip?:      string
+	backup_remote_lan_ip?:          string
+	backup_remote_tunnel_cidr?:     string
+	bgp_local_as_num?:              string
+	bgp_remote_as_num?:             string
+	connection_type?:               string
+	custom_algorithms?:             bool
+	direct_connect?:                bool
+	enable_edge_segmentation?:      bool
+	enable_ikev2?:                  bool
+	enable_learned_cidrs_approval?: bool
+	ha_enabled?:                    bool
+	id?:                            string
+	local_lan_ip?:                  string
+	local_tunnel_cidr?:             string
+	manual_bgp_advertised_cidrs?: [string, ...]
+	phase_1_authentication?:       string
+	phase_1_dh_groups?:            string
+	phase_1_encryption?:           string
+	phase_2_authentication?:       string
+	phase_2_dh_groups?:            string
+	phase_2_encryption?:           string
+	pre_shared_key?:               string
+	remote_gateway_ip?:            string
+	remote_lan_ip?:                string
+	remote_subnet?:                string
+	remote_tunnel_cidr?:           string
+	remote_vpc_name?:              string
+	switch_to_ha_standby_gateway?: bool
+	tunnel_protocol?:              string
 }
 #AviatrixTransitFirenetPolicyResource: {
 	inspected_resource_name:      string
 	transit_firenet_gateway_name: string
+	id?:                          string
 }
 #AviatrixTransitGatewayResource: {
 	account_name:                      string
@@ -446,33 +809,70 @@ package aviatrix
 	vpc_id:                            string
 	vpc_reg:                           string
 	allocate_new_eip?:                 bool
+	bgp_ecmp?:                         bool
 	bgp_manual_spoke_advertise_cidrs?: string
+	bgp_polling_time?:                 string
+	cloud_instance_id?:                string
 	connected_transit?:                bool
 	customer_managed_keys?:            string
 	customized_spoke_vpc_routes?:      string
+	customized_transit_vpc_routes?: [string, ...]
+	eip?:                              string
 	enable_active_mesh?:               bool
+	enable_active_standby?:            bool
 	enable_advertise_transit_cidr?:    bool
+	enable_bgp_over_lan?:              bool
+	enable_egress_transit_firenet?:    bool
 	enable_encrypt_volume?:            bool
 	enable_firenet?:                   bool
+	enable_gateway_load_balancer?:     bool
 	enable_hybrid_connection?:         bool
 	enable_learned_cidrs_approval?:    bool
+	enable_monitor_gateway_subnets?:   bool
+	enable_private_oob?:               bool
+	enable_segmentation?:              bool
 	enable_transit_firenet?:           bool
 	enable_vpc_dns_server?:            bool
 	excluded_advertised_spoke_routes?: string
 	filtered_spoke_vpc_routes?:        string
+	ha_cloud_instance_id?:             string
+	ha_eip?:                           string
+	ha_gw_name?:                       string
 	ha_gw_size?:                       string
 	ha_insane_mode_az?:                string
+	ha_lan_interface_cidr?:            string
+	ha_private_ip?:                    string
 	ha_subnet?:                        string
 	ha_zone?:                          string
+	id?:                               string
 	insane_mode?:                      bool
 	insane_mode_az?:                   string
-	single_az_ha?:                     bool
-	single_ip_snat?:                   bool
+	lan_interface_cidr?:               string
+	learned_cidrs_approval_mode?:      string
+	local_as_number?:                  string
+	monitor_exclude_list?: [string, ...]
+	oob_availability_zone?: string
+	oob_management_subnet?: string
+	prepend_as_path?: [string, ...]
+	private_ip?:        string
+	security_group_id?: string
+	single_az_ha?:      bool
+	single_ip_snat?:    bool
 	tag_list?: [string, ...]
+	zone?: string
 }
 #AviatrixTransitGatewayPeeringResource: {
-	transit_gateway_name1: string
-	transit_gateway_name2: string
+	transit_gateway_name1:                string
+	transit_gateway_name2:                string
+	enable_peering_over_private_network?: bool
+	enable_single_tunnel_mode?:           bool
+	gateway1_excluded_network_cidrs?: [string, ...]
+	gateway1_excluded_tgw_connections?: [string, ...]
+	gateway2_excluded_network_cidrs?: [string, ...]
+	gateway2_excluded_tgw_connections?: [string, ...]
+	id?: string
+	prepend_as_path1?: [string, ...]
+	prepend_as_path2?: [string, ...]
 }
 #AviatrixTransitVpcResource: {
 	account_name:               string
@@ -489,41 +889,75 @@ package aviatrix
 	ha_gw_size?:                string
 	ha_insane_mode_az?:         string
 	ha_subnet?:                 string
+	id?:                        string
 	insane_mode?:               bool
 	insane_mode_az?:            string
 	tag_list?: [string, ...]
 }
 #AviatrixTunnelResource: {
-	gw_name1:   string
-	gw_name2:   string
-	enable_ha?: bool
+	gw_name1:          string
+	gw_name2:          string
+	enable_ha?:        bool
+	id?:               string
+	peering_hastatus?: string
+	peering_link?:     string
+	peering_state?:    string
 }
 #AviatrixVgwConnResource: {
-	bgp_local_as_num: string
-	bgp_vgw_account:  string
-	bgp_vgw_id:       string
-	bgp_vgw_region:   string
-	conn_name:        string
-	gw_name:          string
-	vpc_id:           string
+	bgp_local_as_num:               string
+	bgp_vgw_account:                string
+	bgp_vgw_id:                     string
+	bgp_vgw_region:                 string
+	conn_name:                      string
+	gw_name:                        string
+	vpc_id:                         string
+	enable_learned_cidrs_approval?: bool
+	id?:                            string
+	manual_bgp_advertised_cidrs?: [string, ...]
 }
 #AviatrixVpcResource: {
-	account_name:          string
-	cloud_type:            number
-	name:                  string
-	aviatrix_firenet_vpc?: bool
-	aviatrix_transit_vpc?: bool
-	cidr?:                 string
-	region?:               string
+	account_name:               string
+	cloud_type:                 number
+	name:                       string
+	aviatrix_firenet_vpc?:      bool
+	aviatrix_transit_vpc?:      bool
+	azure_vnet_resource_id?:    string
+	cidr?:                      string
+	enable_native_gwlb?:        bool
+	enable_private_oob_subnet?: bool
+	id?:                        string
+	num_of_subnet_pairs?:       number
+	private_subnets?: [{
+		cidr:      string
+		name:      string
+		subnet_id: string
+	}, ...]
+	public_subnets?: [{
+		cidr:      string
+		name:      string
+		subnet_id: string
+	}, ...]
+	region?:         string
+	resource_group?: string
+	subnet_size?:    number
+	vpc_id?:         string
 	subnets?: [{
-		cidr?:   string
-		name?:   string
-		region?: string
+		cidr?:      string
+		name?:      string
+		region?:    string
+		subnet_id?: string
 	}, ...]
 }
+#AviatrixVpnCertDownloadResource: {
+	download_enabled?: bool
+	id?:               string
+	saml_endpoints?: [string, ...]
+}
 #AviatrixVpnProfileResource: {
-	name:       string
-	base_rule?: string
+	name:                    string
+	base_rule?:              string
+	id?:                     string
+	manage_user_attachment?: bool
 	users?: [string, ...]
 	policy?: [{
 		action: string
@@ -533,56 +967,90 @@ package aviatrix
 	}, ...]
 }
 #AviatrixVpnUserResource: {
-	gw_name:        string
-	user_name:      string
-	vpc_id:         string
+	user_name:               string
+	dns_name?:               string
+	gw_name?:                string
+	id?:                     string
+	manage_user_attachment?: bool
+	profiles?: [string, ...]
 	saml_endpoint?: string
 	user_email?:    string
+	vpc_id?:        string
 }
-#AviatrixVpnUserAcceleratorResource: elb_name: string
+#AviatrixVpnUserAcceleratorResource: {
+	elb_name: string
+	id?:      string
+}
 #Resources: {
-	aviatrix_account?: [_]:                              #AviatrixAccountResource
-	aviatrix_account_user?: [_]:                         #AviatrixAccountUserResource
-	aviatrix_arm_peer?: [_]:                             #AviatrixArmPeerResource
-	aviatrix_aws_peer?: [_]:                             #AviatrixAwsPeerResource
-	aviatrix_aws_tgw?: [_]:                              #AviatrixAwsTgwResource
-	aviatrix_aws_tgw_directconnect?: [_]:                #AviatrixAwsTgwDirectconnectResource
-	aviatrix_aws_tgw_peering?: [_]:                      #AviatrixAwsTgwPeeringResource
-	aviatrix_aws_tgw_peering_domain_conn?: [_]:          #AviatrixAwsTgwPeeringDomainConnResource
-	aviatrix_aws_tgw_transit_gateway_attachment?: [_]:   #AviatrixAwsTgwTransitGatewayAttachmentResource
-	aviatrix_aws_tgw_vpc_attachment?: [_]:               #AviatrixAwsTgwVpcAttachmentResource
-	aviatrix_aws_tgw_vpn_conn?: [_]:                     #AviatrixAwsTgwVpnConnResource
-	aviatrix_azure_peer?: [_]:                           #AviatrixAzurePeerResource
-	aviatrix_azure_spoke_native_peering?: [_]:           #AviatrixAzureSpokeNativePeeringResource
-	aviatrix_controller_config?: [_]:                    #AviatrixControllerConfigResource
-	aviatrix_firenet?: [_]:                              #AviatrixFirenetResource
-	aviatrix_firewall?: [_]:                             #AviatrixFirewallResource
-	aviatrix_firewall_instance?: [_]:                    #AviatrixFirewallInstanceResource
-	aviatrix_firewall_management_access?: [_]:           #AviatrixFirewallManagementAccessResource
-	aviatrix_firewall_tag?: [_]:                         #AviatrixFirewallTagResource
-	aviatrix_fqdn?: [_]:                                 #AviatrixFqdnResource
-	aviatrix_gateway?: [_]:                              #AviatrixGatewayResource
-	aviatrix_gateway_dnat?: [_]:                         #AviatrixGatewayDnatResource
-	aviatrix_gateway_snat?: [_]:                         #AviatrixGatewaySnatResource
-	aviatrix_geo_vpn?: [_]:                              #AviatrixGeoVpnResource
-	aviatrix_rbac_group?: [_]:                           #AviatrixRbacGroupResource
-	aviatrix_rbac_group_access_account_attachment?: [_]: #AviatrixRbacGroupAccessAccountAttachmentResource
-	aviatrix_rbac_group_permission_attachment?: [_]:     #AviatrixRbacGroupPermissionAttachmentResource
-	aviatrix_rbac_group_user_attachment?: [_]:           #AviatrixRbacGroupUserAttachmentResource
-	aviatrix_saml_endpoint?: [_]:                        #AviatrixSamlEndpointResource
-	aviatrix_site2cloud?: [_]:                           #AviatrixSite2CloudResource
-	aviatrix_spoke_gateway?: [_]:                        #AviatrixSpokeGatewayResource
-	aviatrix_spoke_vpc?: [_]:                            #AviatrixSpokeVpcResource
-	aviatrix_trans_peer?: [_]:                           #AviatrixTransPeerResource
-	aviatrix_transit_external_device_conn?: [_]:         #AviatrixTransitExternalDeviceConnResource
-	aviatrix_transit_firenet_policy?: [_]:               #AviatrixTransitFirenetPolicyResource
-	aviatrix_transit_gateway?: [_]:                      #AviatrixTransitGatewayResource
-	aviatrix_transit_gateway_peering?: [_]:              #AviatrixTransitGatewayPeeringResource
-	aviatrix_transit_vpc?: [_]:                          #AviatrixTransitVpcResource
-	aviatrix_tunnel?: [_]:                               #AviatrixTunnelResource
-	aviatrix_vgw_conn?: [_]:                             #AviatrixVgwConnResource
-	aviatrix_vpc?: [_]:                                  #AviatrixVpcResource
-	aviatrix_vpn_profile?: [_]:                          #AviatrixVpnProfileResource
-	aviatrix_vpn_user?: [_]:                             #AviatrixVpnUserResource
-	aviatrix_vpn_user_accelerator?: [_]:                 #AviatrixVpnUserAcceleratorResource
+	aviatrix_account?: [_]:                                        #AviatrixAccountResource
+	aviatrix_account_user?: [_]:                                   #AviatrixAccountUserResource
+	aviatrix_arm_peer?: [_]:                                       #AviatrixArmPeerResource
+	aviatrix_aws_guard_duty?: [_]:                                 #AviatrixAwsGuardDutyResource
+	aviatrix_aws_peer?: [_]:                                       #AviatrixAwsPeerResource
+	aviatrix_aws_tgw?: [_]:                                        #AviatrixAwsTgwResource
+	aviatrix_aws_tgw_directconnect?: [_]:                          #AviatrixAwsTgwDirectconnectResource
+	aviatrix_aws_tgw_peering?: [_]:                                #AviatrixAwsTgwPeeringResource
+	aviatrix_aws_tgw_peering_domain_conn?: [_]:                    #AviatrixAwsTgwPeeringDomainConnResource
+	aviatrix_aws_tgw_transit_gateway_attachment?: [_]:             #AviatrixAwsTgwTransitGatewayAttachmentResource
+	aviatrix_aws_tgw_vpc_attachment?: [_]:                         #AviatrixAwsTgwVpcAttachmentResource
+	aviatrix_aws_tgw_vpn_conn?: [_]:                               #AviatrixAwsTgwVpnConnResource
+	aviatrix_azure_peer?: [_]:                                     #AviatrixAzurePeerResource
+	aviatrix_azure_spoke_native_peering?: [_]:                     #AviatrixAzureSpokeNativePeeringResource
+	aviatrix_azure_vng_conn?: [_]:                                 #AviatrixAzureVngConnResource
+	aviatrix_cloudwatch_agent?: [_]:                               #AviatrixCloudwatchAgentResource
+	aviatrix_controller_config?: [_]:                              #AviatrixControllerConfigResource
+	aviatrix_controller_private_oob?: [_]:                         #AviatrixControllerPrivateOobResource
+	aviatrix_datadog_agent?: [_]:                                  #AviatrixDatadogAgentResource
+	aviatrix_device_aws_tgw_attachment?: [_]:                      #AviatrixDeviceAwsTgwAttachmentResource
+	aviatrix_device_interface_config?: [_]:                        #AviatrixDeviceInterfaceConfigResource
+	aviatrix_device_registration?: [_]:                            #AviatrixDeviceRegistrationResource
+	aviatrix_device_tag?: [_]:                                     #AviatrixDeviceTagResource
+	aviatrix_device_transit_gateway_attachment?: [_]:              #AviatrixDeviceTransitGatewayAttachmentResource
+	aviatrix_device_virtual_wan_attachment?: [_]:                  #AviatrixDeviceVirtualWanAttachmentResource
+	aviatrix_filebeat_forwarder?: [_]:                             #AviatrixFilebeatForwarderResource
+	aviatrix_firenet?: [_]:                                        #AviatrixFirenetResource
+	aviatrix_firewall?: [_]:                                       #AviatrixFirewallResource
+	aviatrix_firewall_instance?: [_]:                              #AviatrixFirewallInstanceResource
+	aviatrix_firewall_instance_association?: [_]:                  #AviatrixFirewallInstanceAssociationResource
+	aviatrix_firewall_management_access?: [_]:                     #AviatrixFirewallManagementAccessResource
+	aviatrix_firewall_policy?: [_]:                                #AviatrixFirewallPolicyResource
+	aviatrix_firewall_tag?: [_]:                                   #AviatrixFirewallTagResource
+	aviatrix_fqdn?: [_]:                                           #AviatrixFqdnResource
+	aviatrix_fqdn_pass_through?: [_]:                              #AviatrixFqdnPassThroughResource
+	aviatrix_fqdn_tag_rule?: [_]:                                  #AviatrixFqdnTagRuleResource
+	aviatrix_gateway?: [_]:                                        #AviatrixGatewayResource
+	aviatrix_gateway_dnat?: [_]:                                   #AviatrixGatewayDnatResource
+	aviatrix_gateway_snat?: [_]:                                   #AviatrixGatewaySnatResource
+	aviatrix_geo_vpn?: [_]:                                        #AviatrixGeoVpnResource
+	aviatrix_netflow_agent?: [_]:                                  #AviatrixNetflowAgentResource
+	aviatrix_periodic_ping?: [_]:                                  #AviatrixPeriodicPingResource
+	aviatrix_proxy_config?: [_]:                                   #AviatrixProxyConfigResource
+	aviatrix_rbac_group?: [_]:                                     #AviatrixRbacGroupResource
+	aviatrix_rbac_group_access_account_attachment?: [_]:           #AviatrixRbacGroupAccessAccountAttachmentResource
+	aviatrix_rbac_group_permission_attachment?: [_]:               #AviatrixRbacGroupPermissionAttachmentResource
+	aviatrix_rbac_group_user_attachment?: [_]:                     #AviatrixRbacGroupUserAttachmentResource
+	aviatrix_remote_syslog?: [_]:                                  #AviatrixRemoteSyslogResource
+	aviatrix_saml_endpoint?: [_]:                                  #AviatrixSamlEndpointResource
+	aviatrix_segmentation_security_domain?: [_]:                   #AviatrixSegmentationSecurityDomainResource
+	aviatrix_segmentation_security_domain_association?: [_]:       #AviatrixSegmentationSecurityDomainAssociationResource
+	aviatrix_segmentation_security_domain_connection_policy?: [_]: #AviatrixSegmentationSecurityDomainConnectionPolicyResource
+	aviatrix_site2cloud?: [_]:                                     #AviatrixSite2CloudResource
+	aviatrix_splunk_logging?: [_]:                                 #AviatrixSplunkLoggingResource
+	aviatrix_spoke_gateway?: [_]:                                  #AviatrixSpokeGatewayResource
+	aviatrix_spoke_transit_attachment?: [_]:                       #AviatrixSpokeTransitAttachmentResource
+	aviatrix_spoke_vpc?: [_]:                                      #AviatrixSpokeVpcResource
+	aviatrix_sumologic_forwarder?: [_]:                            #AviatrixSumologicForwarderResource
+	aviatrix_trans_peer?: [_]:                                     #AviatrixTransPeerResource
+	aviatrix_transit_external_device_conn?: [_]:                   #AviatrixTransitExternalDeviceConnResource
+	aviatrix_transit_firenet_policy?: [_]:                         #AviatrixTransitFirenetPolicyResource
+	aviatrix_transit_gateway?: [_]:                                #AviatrixTransitGatewayResource
+	aviatrix_transit_gateway_peering?: [_]:                        #AviatrixTransitGatewayPeeringResource
+	aviatrix_transit_vpc?: [_]:                                    #AviatrixTransitVpcResource
+	aviatrix_tunnel?: [_]:                                         #AviatrixTunnelResource
+	aviatrix_vgw_conn?: [_]:                                       #AviatrixVgwConnResource
+	aviatrix_vpc?: [_]:                                            #AviatrixVpcResource
+	aviatrix_vpn_cert_download?: [_]:                              #AviatrixVpnCertDownloadResource
+	aviatrix_vpn_profile?: [_]:                                    #AviatrixVpnProfileResource
+	aviatrix_vpn_user?: [_]:                                       #AviatrixVpnUserResource
+	aviatrix_vpn_user_accelerator?: [_]:                           #AviatrixVpnUserAcceleratorResource
 }

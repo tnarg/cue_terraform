@@ -9,6 +9,7 @@ package panos
 	password?:           string
 	port?:               number
 	protocol?:           string
+	target?:             string
 	timeout?:            number
 	username?:           string
 	verify_certificate?: bool

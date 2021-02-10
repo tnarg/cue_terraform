@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "cue-terraform-gen_lib",
     srcs = [
         "cue.go",
         "main.go",
@@ -9,16 +9,16 @@ go_library(
     importpath = "github.com/tnarg/cue_terraform/codegen/cmd/cue-terraform-gen",
     visibility = ["//visibility:private"],
     deps = [
-        "@com_github_iancoleman_strcase//:go_default_library",
-        "@com_github_zclconf_go_cty//cty:go_default_library",
-        "@org_cuelang_go//cue/ast:go_default_library",
-        "@org_cuelang_go//cue/format:go_default_library",
-        "@org_cuelang_go//cue/token:go_default_library",
+        "@com_github_iancoleman_strcase//:strcase",
+        "@com_github_zclconf_go_cty//cty",
+        "@org_cuelang_go//cue/ast",
+        "@org_cuelang_go//cue/format",
+        "@org_cuelang_go//cue/token",
     ],
 )
 
 go_binary(
     name = "cue-terraform-gen",
-    embed = [":go_default_library"],
+    embed = [":cue-terraform-gen_lib"],
     visibility = ["//visibility:public"],
 )

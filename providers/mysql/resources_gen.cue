@@ -5,11 +5,13 @@ package mysql
 	name:                   string
 	default_character_set?: string
 	default_collation?:     string
+	id?:                    string
 }
 #MysqlGrantResource: {
 	database: string
 	grant?:   bool
 	host?:    string
+	id?:      string
 	privileges?: [string, ...]
 	role?: string
 	roles?: [string, ...]
@@ -17,19 +19,26 @@ package mysql
 	tls_option?: string
 	user?:       string
 }
-#MysqlRoleResource: name: string
+#MysqlRoleResource: {
+	name: string
+	id?:  string
+}
 #MysqlUserResource: {
 	user:                string
 	auth_plugin?:        string
 	host?:               string
+	id?:                 string
 	password?:           string
 	plaintext_password?: string
 	tls_option?:         string
 }
 #MysqlUserPasswordResource: {
-	pgp_key: string
-	user:    string
-	host?:   string
+	pgp_key:             string
+	user:                string
+	encrypted_password?: string
+	host?:               string
+	id?:                 string
+	key_fingerprint?:    string
 }
 #Resources: {
 	mysql_database?: [_]:      #MysqlDatabaseResource

@@ -16,4 +16,6 @@ package nsxt
 	retry_on_status_codes?: [number, ...]
 	tolerate_partial_success?: bool
 	username?:                 string
+	vmc_auth_host?:            string
+	vmc_token?:                string
 }

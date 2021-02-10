@@ -8,7 +8,9 @@ package stackpath
 	slug:     string
 	annotations?: [_]: string
 	description?: string
+	id?:          string
 	labels?: [_]: string
+	version?: string
 	egress?: [{
 		action:       string
 		description?: string
@@ -99,6 +101,8 @@ package stackpath
 #StackpathComputeWorkloadResource: {
 	name: string
 	slug: string
+	annotations?: [_]: string
+	id?: string
 	labels?: [_]: string
 	container?: [{
 		image: string
@@ -381,9 +385,11 @@ package stackpath
 	}, ...]
 }
 #StackpathObjectStorageBucketResource: {
-	label:       string
-	region:      string
-	visibility?: string
+	label:         string
+	region:        string
+	endpoint_url?: string
+	id?:           string
+	visibility?:   string
 }
 #Resources: {
 	stackpath_compute_network_policy?: [_]: #StackpathComputeNetworkPolicyResource

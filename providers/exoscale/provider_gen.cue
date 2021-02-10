@@ -6,6 +6,7 @@ package exoscale
 	config?:           string
 	delay?:            number
 	dns_endpoint?:     string
+	environment?:      string
 	gzip_user_data?:   bool
 	key?:              string
 	profile?:          string

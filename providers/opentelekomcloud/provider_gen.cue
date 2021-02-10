@@ -15,6 +15,7 @@ package opentelekomcloud
 	endpoint_type?:      string
 	insecure?:           bool
 	key?:                string
+	max_retries?:        number
 	password?:           string
 	region?:             string
 	secret_key?:         string

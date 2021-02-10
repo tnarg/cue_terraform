@@ -2,27 +2,65 @@
 package ncloud
 
 #NcloudBlockStorageResource: {
-	server_instance_no: string
-	size:               number
-	description?:       string
-	name?:              string
+	server_instance_no:    string
+	size:                  number
+	description?:          string
+	device_name?:          string
+	disk_detail_type?:     string
+	disk_type?:            string
+	id?:                   string
+	instance_no?:          string
+	instance_operation?:   string
+	instance_status?:      string
+	instance_status_name?: string
+	name?:                 string
+	product_code?:         string
+	server_name?:          string
+	type?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #NcloudBlockStorageSnapshotResource: {
-	block_storage_instance_no: string
+	block_storage_instance_no:           string
+	description?:                        string
+	id?:                                 string
+	instance_description?:               string
+	instance_no?:                        string
+	instance_operation?:                 string
+	instance_status?:                    string
+	instance_status_name?:               string
+	name?:                               string
+	original_block_storage_instance_no?: string
+	original_block_storage_name?:        string
+	os_information?:                     string
+	server_image_product_code?:          string
+	volume_size?:                        number
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #NcloudLoadBalancerResource: {
-	description?: string
-	name?:        string
-	region?:      string
+	algorithm_type?:       string
+	certificate_name?:     string
+	connection_timeout?:   number
+	description?:          string
+	domain_name?:          string
+	id?:                   string
+	instance_no?:          string
+	instance_operation?:   string
+	instance_status?:      string
+	instance_status_name?: string
+	internet_line_type?:   string
+	is_http_keep_alive?:   bool
+	load_balanced_server_instance_list?: [string, ...]
+	name?:               string
+	network_usage_type?: string
+	region?:             string
 	server_instance_no_list?: [string, ...]
+	virtual_ip?: string
 	rule_list?: [{
 		load_balancer_port:     number
 		protocol_type:          string
@@ -42,13 +80,17 @@ package ncloud
 	privatekey:            string
 	publickey_certificate: string
 	certificate_chain?:    string
+	id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #NcloudLoginKeyResource: {
-	key_name: string
+	key_name:     string
+	fingerprint?: string
+	id?:          string
+	private_key?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -62,7 +104,21 @@ package ncloud
 	cifs_user_password?:            string
 	custom_ip_list?: [string, ...]
 	description?: string
+	id?:          string
+	instance_custom_ip_list?: [string, ...]
+	instance_status?:           string
+	is_event_configuration?:    bool
+	is_snapshot_configuration?: bool
+	region?:                    string
 	server_instance_no_list?: [string, ...]
+	snapshot_volume_size?:      number
+	snapshot_volume_use_ratio?: number
+	snapshot_volume_use_size?:  number
+	volume_name?:               string
+	volume_total_size?:         number
+	volume_use_ratio?:          number
+	volume_use_size?:           number
+	zone?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -72,28 +128,61 @@ package ncloud
 	port_forwarding_external_port:     number
 	port_forwarding_internal_port:     number
 	server_instance_no:                string
+	id?:                               string
 	port_forwarding_configuration_no?: string
+	port_forwarding_public_ip?:        string
+	zone?:                             string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #NcloudPublicIpResource: {
-	description?:        string
-	server_instance_no?: string
+	description?:          string
+	id?:                   string
+	instance_no?:          string
+	instance_operation?:   string
+	instance_status?:      string
+	instance_status_name?: string
+	internet_line_type?:   string
+	kind_type?:            string
+	public_ip?:            string
+	server_instance_no?:   string
+	zone?:                 string
 }
 #NcloudServerResource: {
 	access_control_group_configuration_no_list?: [string, ...]
-	description?:                   string
-	fee_system_type_code?:          string
-	is_protect_server_termination?: bool
-	login_key_name?:                string
-	member_server_image_no?:        string
-	name?:                          string
-	raid_type_name?:                string
-	server_image_product_code?:     string
-	server_product_code?:           string
-	user_data?:                     string
+	base_block_storage_disk_detail_type?: string
+	base_block_storage_disk_type?:        string
+	base_block_storage_size?:             number
+	cpu_count?:                           number
+	description?:                         string
+	fee_system_type_code?:                string
+	id?:                                  string
+	instance_no?:                         string
+	instance_operation?:                  string
+	instance_status?:                     string
+	instance_status_name?:                string
+	internet_line_type?:                  string
+	is_fee_charging_monitoring?:          bool
+	is_protect_server_termination?:       bool
+	login_key_name?:                      string
+	member_server_image_no?:              string
+	memory_size?:                         number
+	name?:                                string
+	platform_type?:                       string
+	port_forwarding_external_port?:       string
+	port_forwarding_internal_port?:       string
+	port_forwarding_public_ip?:           string
+	private_ip?:                          string
+	public_ip?:                           string
+	raid_type_name?:                      string
+	region?:                              string
+	server_image_name?:                   string
+	server_image_product_code?:           string
+	server_product_code?:                 string
+	user_data?:                           string
+	zone?:                                string
 	tag_list?: [{
 		tag_key:   string
 		tag_value: string
@@ -102,6 +191,13 @@ package ncloud
 		create?: string
 		delete?: string
 	}
+}
+#NcloudVpcResource: {
+	ipv4_cidr_block: string
+	name:            string
+	id?:             string
+	status?:         string
+	vpc_no?:         string
 }
 #Resources: {
 	ncloud_block_storage?: [_]:                 #NcloudBlockStorageResource
@@ -113,4 +209,5 @@ package ncloud
 	ncloud_port_forwarding_rule?: [_]:          #NcloudPortForwardingRuleResource
 	ncloud_public_ip?: [_]:                     #NcloudPublicIpResource
 	ncloud_server?: [_]:                        #NcloudServerResource
+	ncloud_vpc?: [_]:                           #NcloudVpcResource
 }

@@ -5,28 +5,52 @@ package avi
 	external_only:                   bool
 	level:                           string
 	name:                            string
+	action_script_config_ref?:       string
 	autoscale_trigger_notification?: bool
+	description?:                    string
+	email_config_ref?:               string
+	id?:                             string
+	snmp_trap_profile_ref?:          string
+	syslog_config_ref?:              string
+	tenant_ref?:                     string
+	uuid?:                           string
 }
 #AviAlertconfigResource: {
-	category:        string
-	name:            string
-	source:          string
-	enabled?:        bool
-	expiry_time?:    number
-	rolling_window?: number
-	threshold?:      number
-	throttle?:       number
+	category:          string
+	name:              string
+	source:            string
+	action_group_ref?: string
+	autoscale_alert?:  bool
+	description?:      string
+	enabled?:          bool
+	expiry_time?:      number
+	id?:               string
+	obj_uuid?:         string
+	object_type?:      string
+	recommendation?:   string
+	rolling_window?:   number
+	summary?:          string
+	tenant_ref?:       string
+	threshold?:        number
+	throttle?:         number
+	uuid?:             string
 	alert_rule?: [{
-		operator?: string
+		event_match_filter?: string
+		operator?:           string
 		conn_app_log_rule?: [{
-			filter_string: string
+			filter_string:  string
+			filter_action?: string
 		}, ...]
 		metrics_rule?: [{
+			duration?:  number
+			metric_id?: string
 			metric_threshold?: [{
 				comparator: string
+				threshold?: number
 			}, ...]
 		}, ...]
 		sys_event_rule?: [{
+			event_id?: string
 			not_cond?: bool
 			event_details?: [{
 				comparator:          string
@@ -37,19 +61,36 @@ package avi
 	}, ...]
 }
 #AviAlertemailconfigResource: {
-	name:      string
-	to_emails: string
+	name:         string
+	to_emails:    string
+	cc_emails?:   string
+	description?: string
+	id?:          string
+	tenant_ref?:  string
+	uuid?:        string
 }
-#AviAlertscriptconfigResource: name: string
+#AviAlertscriptconfigResource: {
+	name:           string
+	action_script?: string
+	id?:            string
+	tenant_ref?:    string
+	uuid?:          string
+}
 #AviAlertsyslogconfigResource: {
-	name: string
+	name:         string
+	description?: string
+	id?:          string
+	tenant_ref?:  string
+	uuid?:        string
 	syslog_servers?: [{
-		syslog_server:       string
-		udp:                 bool
-		anon_auth?:          bool
-		format?:             string
-		syslog_server_port?: number
-		tls_enable?:         bool
+		syslog_server:                string
+		udp:                          bool
+		anon_auth?:                   bool
+		format?:                      string
+		pkiprofile_ref?:              string
+		ssl_key_and_certificate_ref?: string
+		syslog_server_port?:          number
+		tls_enable?:                  bool
 	}, ...]
 }
 #AviAnalyticsprofileResource: {
@@ -72,6 +113,7 @@ package avi
 	conn_server_lossy_timeo_rexmt_threshold?:         number
 	conn_server_lossy_total_rexmt_threshold?:         number
 	conn_server_lossy_zero_win_size_event_threshold?: number
+	description?:                                     string
 	disable_ondemand_metrics?:                        bool
 	disable_se_analytics?:                            bool
 	disable_server_analytics?:                        bool
@@ -119,9 +161,12 @@ package avi
 	hs_security_tls11_score?:                 number
 	hs_security_tls12_score?:                 number
 	hs_security_weak_signature_algo_penalty?: number
+	id?:                                      string
 	ondemand_metrics_idle_timeout?:           number
 	resp_code_block?: [string, ...]
 	sip_log_depth?: number
+	tenant_ref?:    string
+	uuid?:          string
 	client_log_config?: [{
 		enable_significant_log_collection?: bool
 		filtered_log_processing?:           string
@@ -129,11 +174,13 @@ package avi
 		significant_log_processing?:        string
 	}, ...]
 	client_log_streaming_config?: [{
+		external_server?:      string
 		external_server_port?: number
 		log_types_to_send?:    string
 		max_logs_per_second?:  number
 		protocol?:             string
 		format_config?: [{
+			format?: string
 			included_fields?: [string, ...]
 		}, ...]
 		syslog_config?: [{
@@ -152,6 +199,8 @@ package avi
 		header_field_rules?: [{
 			action?:  string
 			enabled?: bool
+			index?:   number
+			name?:    string
 			match?: [{
 				match_criteria: string
 				match_str?: [string, ...]
@@ -161,6 +210,8 @@ package avi
 		waf_field_rules?: [{
 			action?:  string
 			enabled?: bool
+			index?:   number
+			name?:    string
 			match?: [{
 				match_criteria: string
 				match_str?: [string, ...]
@@ -172,38 +223,65 @@ package avi
 #AviApplicationpersistenceprofileResource: {
 	name:                     string
 	persistence_type:         string
+	description?:             string
+	id?:                      string
 	is_federated?:            bool
 	server_hm_down_recovery?: string
+	tenant_ref?:              string
+	uuid?:                    string
 	app_cookie_persistence_profile?: [{
-		prst_hdr_name: string
-		timeout?:      number
+		prst_hdr_name:   string
+		encryption_key?: string
+		timeout?:        number
 	}, ...]
-	hdr_persistence_profile?: [{}, ...]
+	hdr_persistence_profile?: [{
+		prst_hdr_name?: string
+	}, ...]
 	http_cookie_persistence_profile?: [{
 		always_send_cookie?: bool
-		key?: [{}, ...]
+		cookie_name?:        string
+		encryption_key?:     string
+		timeout?:            number
+		key?: [{
+			aes_key?:  string
+			hmac_key?: string
+			name?:     string
+		}, ...]
 	}, ...]
 	ip_persistence_profile?: [{
+		ip_mask?:               number
 		ip_persistent_timeout?: number
 	}, ...]
 }
 #AviApplicationprofileResource: {
 	name:                  string
 	type:                  string
+	cloud_config_cksum?:   string
+	created_by?:           string
+	description?:          string
+	id?:                   string
 	preserve_client_ip?:   bool
 	preserve_client_port?: bool
+	tenant_ref?:           string
+	uuid?:                 string
 	dns_service_profile?: [{
 		aaaa_empty_response?:  bool
 		admin_email?:          string
 		dns_over_tcp_enabled?: bool
 		domain_names?: [string, ...]
-		ecs_stripping_enabled?: bool
-		edns?:                  bool
-		error_response?:        string
-		negative_caching_ttl?:  number
-		num_dns_ip?:            number
-		ttl?:                   number
-		dns_zones?: [{}, ...]
+		ecs_stripping_enabled?:         bool
+		edns?:                          bool
+		edns_client_subnet_prefix_len?: number
+		error_response?:                string
+		name_server?:                   string
+		negative_caching_ttl?:          number
+		num_dns_ip?:                    number
+		ttl?:                           number
+		dns_zones?: [{
+			admin_email?: string
+			domain_name?: string
+			name_server?: string
+		}, ...]
 	}, ...]
 	dos_rl_profile?: [{
 		dos_profile?: [{
@@ -216,11 +294,10 @@ package avi
 		}, ...]
 		rl_profile?: [{
 			client_ip_connections_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -231,28 +308,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			client_ip_failed_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -263,28 +352,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			client_ip_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -295,28 +396,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			client_ip_scanners_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -327,28 +440,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			client_ip_to_uri_failed_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -359,28 +484,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			client_ip_to_uri_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -391,28 +528,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			custom_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -423,28 +572,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			http_header_rate_limits?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -455,28 +616,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			uri_failed_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -487,28 +660,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 			uri_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -519,28 +704,40 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
 				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
+				}, ...]
 			}, ...]
 			uri_scanners_requests_rate_limit?: [{
-				burst_sz?:          number
-				count?:             number
 				explicit_tracking?: bool
 				fine_grain?:        bool
-				period?:            number
+				http_cookie?:       string
+				http_header?:       string
 				action?: [{
 					status_code?: string
 					type?:        string
@@ -551,20 +748,33 @@ package avi
 					redirect?: [{
 						protocol:     string
 						keep_query?:  bool
+						port?:        number
 						status_code?: string
 						host?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 						path?: [{
 							type: string
 							tokens?: [{
-								type: string
+								type:         string
+								end_index?:   number
+								start_index?: number
+								str_value?:   string
 							}, ...]
 						}, ...]
 					}, ...]
+				}, ...]
+				rate_limiter?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
 				}, ...]
 			}, ...]
 		}, ...]
@@ -606,6 +816,7 @@ package avi
 		max_rps_unknown_cip?:                              number
 		max_rps_unknown_uri?:                              number
 		max_rps_uri?:                                      number
+		pki_profile_ref?:                                  string
 		post_accept_timeout?:                              number
 		reset_conn_http_on_ssl_port?:                      bool
 		respond_with_100_continue?:                        bool
@@ -645,11 +856,14 @@ package avi
 			compression:                   bool
 			remove_accept_encoding_header: bool
 			type:                          string
+			compressible_content_ref?:     string
 			filter?: [{
-				index:  number
-				level:  string
-				name:   string
-				match?: string
+				index:         number
+				level:         string
+				name:          string
+				devices_ref?:  string
+				ip_addrs_ref?: string
+				match?:        string
 				user_agent?: [string, ...]
 				ip_addr_prefixes?: [{
 					mask: number
@@ -676,80 +890,152 @@ package avi
 		}, ...]
 		ssl_client_certificate_action?: [{
 			close_connection?: bool
-			headers?: [{}, ...]
+			headers?: [{
+				request_header?:       string
+				request_header_value?: string
+			}, ...]
 		}, ...]
 	}, ...]
 	sip_service_profile?: [{
 		transaction_timeout?: number
 	}, ...]
 	tcp_app_profile?: [{
+		pki_profile_ref?:             string
 		proxy_protocol_enabled?:      bool
 		proxy_protocol_version?:      string
 		ssl_client_certificate_mode?: string
 	}, ...]
 }
 #AviAuthprofileResource: {
-	name: string
-	type: string
+	name:          string
+	type:          string
+	description?:  string
+	id?:           string
+	pa_agent_ref?: string
+	tenant_ref?:   string
+	uuid?:         string
 	http?: [{
 		cache_expiration_time?: number
+		request_header?:        string
 		require_user_groups?: [string, ...]
 	}, ...]
 	ldap?: [{
+		base_dn?:               string
 		bind_as_administrator?: bool
 		email_attribute?:       string
 		full_name_attribute?:   string
 		port?:                  number
+		security_mode?:         string
 		server?: [string, ...]
 		settings?: [{
+			admin_bind_dn?:           string
 			group_filter?:            string
 			group_member_attribute?:  string
 			group_member_is_full_dn?: bool
+			group_search_dn?:         string
 			group_search_scope?:      string
 			ignore_referrals?:        bool
+			password?:                string
 			user_attributes?: [string, ...]
+			user_id_attribute?: string
+			user_search_dn?:    string
 			user_search_scope?: string
 		}, ...]
 		user_bind?: [{
-			token?: string
+			dn_template?: string
+			token?:       string
 			user_attributes?: [string, ...]
+			user_id_attribute?: string
 		}, ...]
 	}, ...]
 	saml?: [{
-		idp?: [{}, ...]
+		idp?: [{
+			metadata?: string
+		}, ...]
 		sp?: [{
+			fqdn?:               string
+			org_display_name?:   string
+			org_name?:           string
+			org_url?:            string
+			saml_entity_type?:   string
+			tech_contact_email?: string
+			tech_contact_name?:  string
 			sp_nodes?: [{
-				name: string
+				name:                                 string
+				entity_id?:                           string
+				signing_ssl_key_and_certificate_ref?: string
+				single_signon_url?:                   string
 			}, ...]
 		}, ...]
 	}, ...]
 	tacacs_plus?: [{
-		port?: number
+		password?: string
+		port?:     number
 		server?: [string, ...]
 		service?: string
-		authorization_attrs?: [{}, ...]
+		authorization_attrs?: [{
+			mandatory?: bool
+			name?:      string
+			value?:     string
+		}, ...]
 	}, ...]
 }
 #AviAutoscalelaunchconfigResource: {
 	name:              string
+	description?:      string
+	id?:               string
+	image_id?:         string
+	tenant_ref?:       string
 	use_external_asg?: bool
+	uuid?:             string
 	mesos?: [{
 		force?: bool
 	}, ...]
-	openstack?: [{}, ...]
+	openstack?: [{
+		heat_scale_down_url?: string
+		heat_scale_up_url?:   string
+	}, ...]
 }
-#AviBackupResource: file_name: string
+#AviBackupResource: {
+	file_name:          string
+	backup_config_ref?: string
+	id?:                string
+	local_file_url?:    string
+	remote_file_url?:   string
+	scheduler_ref?:     string
+	tenant_ref?:        string
+	timestamp?:         string
+	uuid?:              string
+}
 #AviBackupconfigurationResource: {
 	name:                    string
+	aws_access_key?:         string
+	aws_bucket_id?:          string
+	aws_secret_access?:      string
+	backup_file_prefix?:     string
+	backup_passphrase?:      string
+	id?:                     string
 	maximum_backups_stored?: number
+	remote_directory?:       string
+	remote_hostname?:        string
+	save_local?:             bool
+	ssh_user_ref?:           string
+	tenant_ref?:             string
+	upload_to_remote_host?:  bool
+	upload_to_s3?:           bool
+	uuid?:                   string
 }
 #AviCertificatemanagementprofileResource: {
 	name:        string
 	script_path: string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
 	script_params?: [{
 		name:          string
 		is_dynamic?:   bool
 		is_sensitive?: bool
+		value?:        string
 	}, ...]
 }
 #AviCloudResource: {
@@ -758,62 +1044,98 @@ package avi
 	apic_mode?:                    bool
 	autoscale_polling_interval?:   number
 	dhcp_enabled?:                 bool
+	dns_provider_ref?:             string
 	dns_resolution_on_se?:         bool
+	east_west_dns_provider_ref?:   string
+	east_west_ipam_provider_ref?:  string
+	enable_vip_on_all_interfaces?: bool
 	enable_vip_static_routes?:     bool
+	id?:                           string
 	ip6_autocfg_enabled?:          bool
+	ipam_provider_ref?:            string
+	license_tier?:                 string
+	license_type?:                 string
 	mtu?:                          number
+	obj_name_prefix?:              string
 	prefer_static_routes?:         bool
+	se_group_template_ref?:        string
 	state_based_dns_registration?: bool
+	tenant_ref?:                   string
+	uuid?:                         string
 	apic_configuration?: [{
 		apic_admin_tenant?: string
+		apic_domain?:       string
 		apic_name?: [string, ...]
+		apic_password?:  string
+		apic_username?:  string
 		context_aware?:  string
 		se_tunnel_mode?: bool
 	}, ...]
 	aws_configuration?: [{
 		vpc_id:                      string
+		access_key_id?:              string
 		asg_poll_interval?:          number
 		free_elasticips?:            bool
+		iam_assume_role?:            string
 		publish_vip_to_public_zone?: bool
 		region?:                     string
 		route53_integration?:        bool
+		secret_access_key?:          string
 		ttl?:                        number
 		use_iam_roles?:              bool
 		use_sns_sqs?:                bool
+		vpc?:                        string
 		ebs_encryption?: [{
-			mode?: string
+			master_key?: string
+			mode?:       string
 		}, ...]
 		s3_encryption?: [{
-			mode?: string
+			master_key?: string
+			mode?:       string
 		}, ...]
 		sqs_encryption?: [{
-			mode?: string
+			master_key?: string
+			mode?:       string
 		}, ...]
 		zones?: [{
-			availability_zone: string
-			mgmt_network_name: string
+			availability_zone:  string
+			mgmt_network_name:  string
+			mgmt_network_uuid?: string
 		}, ...]
 	}, ...]
 	azure_configuration?: [{
 		availability_zones?: [string, ...]
-		use_azure_dns?:     bool
-		use_enhanced_ha?:   bool
-		use_managed_disks?: bool
-		use_standard_alb?:  bool
-		network_info?: [{}, ...]
+		cloud_credentials_ref?: string
+		location?:              string
+		resource_group?:        string
+		subscription_id?:       string
+		use_azure_dns?:         bool
+		use_enhanced_ha?:       bool
+		use_managed_disks?:     bool
+		use_standard_alb?:      bool
+		network_info?: [{
+			management_network_id?: string
+			se_network_id?:         string
+			virtual_network_id?:    string
+		}, ...]
 	}, ...]
 	cloudstack_configuration?: [{
-		access_key_id:     string
-		api_url:           string
-		mgmt_network_name: string
-		secret_access_key: string
-		hypervisor?:       string
+		access_key_id:      string
+		api_url:            string
+		mgmt_network_name:  string
+		secret_access_key:  string
+		cntr_public_ip?:    string
+		hypervisor?:        string
+		mgmt_network_uuid?: string
 	}, ...]
 	custom_tags?: [{
-		tag_key: string
+		tag_key:  string
+		tag_val?: string
 	}, ...]
 	docker_configuration?: [{
 		app_sync_frequency?:                 number
+		ca_tls_key_and_certificate_ref?:     string
+		client_tls_key_and_certificate_ref?: string
 		container_port_match_http_service?:  bool
 		coredump_directory?:                 string
 		disable_auto_backend_service_sync?:  bool
@@ -822,17 +1144,21 @@ package avi
 		enable_event_subscription?:          bool
 		feproxy_container_port_as_service?:  bool
 		feproxy_vips_enable_proxy_arp?:      bool
+		fleet_endpoint?:                     string
 		http_container_ports?: [number, ...]
 		se_deployment_method?:               string
 		se_spawn_rate?:                      number
 		se_volume?:                          string
 		services_accessible_all_interfaces?: bool
+		ssh_user_ref?:                       string
 		ucp_nodes?: [string, ...]
 		use_container_ip_port?: bool
 		use_controller_image?:  bool
 		docker_registry_se?: [{
+			password?: string
 			private?:  bool
 			registry?: string
+			username?: string
 			oshift_registry?: [{
 				registry_namespace?: string
 				registry_service?:   string
@@ -851,28 +1177,69 @@ package avi
 		}, ...]
 		se_exclude_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		se_include_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 	}, ...]
 	gcp_configuration?: [{
+		cloud_credentials_ref?: string
+		encryption_key_id?:     string
 		firewall_target_tags?: [string, ...]
-		match_se_group_subnet?: bool
+		gcs_bucket_name?: string
+		gcs_project_id?:  string
+		region_name?:     string
+		se_project_id?:   string
 		zones?: [string, ...]
 		network_config?: [{
-			inband?: [{}, ...]
-			one_arm?: [{}, ...]
-			two_arm?: [{}, ...]
+			config?: string
+			inband?: [{
+				vpc_network_name?: string
+				vpc_project_id?:   string
+				vpc_subnet_name?:  string
+			}, ...]
+			one_arm?: [{
+				data_vpc_network_name?:       string
+				data_vpc_project_id?:         string
+				data_vpc_subnet_name?:        string
+				management_vpc_network_name?: string
+				management_vpc_subnet_name?:  string
+			}, ...]
+			two_arm?: [{
+				backend_data_vpc_network_name?:  string
+				backend_data_vpc_subnet_name?:   string
+				frontend_data_vpc_network_name?: string
+				frontend_data_vpc_project_id?:   string
+				frontend_data_vpc_subnet_name?:  string
+				management_vpc_network_name?:    string
+				management_vpc_subnet_name?:     string
+			}, ...]
+		}, ...]
+		vip_allocation_strategy?: [{
+			mode?: string
+			ilb?: [{
+				cloud_router_names?: [string, ...]
+			}, ...]
+			routes?: [{
+				match_se_group_subnet?: bool
+			}, ...]
 		}, ...]
 	}, ...]
 	linuxserver_configuration?: [{
 		se_inband_mgmt?:      bool
+		se_log_disk_path?:    string
 		se_log_disk_size_gb?: number
+		se_sys_disk_path?:    string
 		se_sys_disk_size_gb?: number
+		ssh_user_ref?:        string
 		hosts?: [{
+			node_availability_zone?: string
+			se_group_ref?:           string
 			host_attr?: [{
-				attr_key: string
+				attr_key:  string
+				attr_val?: string
 			}, ...]
 			host_ip?: [{
 				addr: string
@@ -881,17 +1248,24 @@ package avi
 		}, ...]
 	}, ...]
 	nsx_configuration?: [{
-		nsx_poll_time?: number
+		avi_nsx_prefix?:       string
+		nsx_manager_name?:     string
+		nsx_manager_password?: string
+		nsx_manager_username?: string
+		nsx_poll_time?:        number
 	}, ...]
 	openstack_configuration?: [{
 		admin_tenant:             string
 		mgmt_network_name:        string
 		privilege:                string
 		username:                 string
+		admin_tenant_uuid?:       string
 		allowed_address_pairs?:   bool
 		anti_affinity?:           bool
+		auth_url?:                string
 		config_drive?:            bool
 		contrail_disable_policy?: bool
+		contrail_endpoint?:       string
 		contrail_plugin?:         bool
 		external_networks?:       bool
 		free_floatingips?:        bool
@@ -899,13 +1273,21 @@ package avi
 		img_format?:              string
 		import_keystone_tenants?: bool
 		insecure?:                bool
+		keystone_host?:           string
 		map_admin_to_cloudadmin?: bool
+		mgmt_network_uuid?:       string
 		name_owner?:              bool
 		neutron_rbac?:            bool
+		nuage_organization?:      string
+		nuage_password?:          string
 		nuage_port?:              number
+		nuage_username?:          string
 		nuage_virtualip?:         bool
+		nuage_vsd_host?:          string
+		password?:                string
 		port_security?:           bool
 		prov_name?: [string, ...]
+		region?:                 string
 		security_groups?:        bool
 		tenant_se?:              bool
 		use_admin_url?:          bool
@@ -913,15 +1295,18 @@ package avi
 		use_keystone_auth?:      bool
 		use_nuagevip?:           bool
 		custom_se_image_properties?: [{
-			name: string
+			name:   string
+			value?: string
 		}, ...]
 		hypervisor_properties?: [{
 			hypervisor: string
 			image_properties?: [{
-				name: string
+				name:   string
+				value?: string
 			}, ...]
 		}, ...]
 		provider_vip_networks?: [{
+			os_network_uuid?: string
 			os_tenant_uuids?: [string, ...]
 		}, ...]
 		role_mapping?: [{
@@ -932,6 +1317,9 @@ package avi
 	oshiftk8s_configuration?: [{
 		app_sync_frequency?:                   number
 		auto_assign_fqdn?:                     bool
+		ca_tls_key_and_certificate_ref?:       string
+		client_tls_key_and_certificate_ref?:   string
+		cluster_tag?:                          string
 		container_port_match_http_service?:    bool
 		coredump_directory?:                   string
 		default_service_as_east_west_service?: bool
@@ -946,16 +1334,23 @@ package avi
 		http_container_ports?: [number, ...]
 		l4_health_monitoring?: bool
 		master_nodes?: [string, ...]
+		node_availability_zone_label?:     string
 		num_shards?:                       number
 		override_service_ports?:           bool
+		persistent_volume_claim?:          string
 		sdn_overlay?:                      bool
 		se_deployment_method?:             string
+		se_image_pull_secret?:             string
 		se_namespace?:                     string
+		se_priority_class?:                string
 		se_restart_batch_size?:            number
 		se_restart_force?:                 bool
 		se_volume?:                        string
 		secure_egress_mode?:               bool
+		service_account_token?:            string
+		shard_prefix?:                     string
 		shared_virtualservice_namespace?:  bool
+		ssh_user_ref?:                     string
 		sync_not_ready_addresses?:         bool
 		use_controller_image?:             bool
 		use_resource_definition_as_ssot?:  bool
@@ -969,8 +1364,10 @@ package avi
 			}, ...]
 		}, ...]
 		docker_registry_se?: [{
+			password?: string
 			private?:  bool
 			registry?: string
+			username?: string
 			oshift_registry?: [{
 				registry_namespace?: string
 				registry_service?:   string
@@ -987,15 +1384,24 @@ package avi
 				type: string
 			}, ...]
 		}, ...]
-		ing_exclude_attributes?: [{}, ...]
-		ing_include_attributes?: [{}, ...]
+		ing_exclude_attributes?: [{
+			attribute?: string
+			value?:     string
+		}, ...]
+		ing_include_attributes?: [{
+			attribute?: string
+			value?:     string
+		}, ...]
 		ns_exclude_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		ns_include_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		routes?: [{
+			if_name?:           string
 			network_namespace?: string
 			nexthop?: [{
 				addr: string
@@ -1011,12 +1417,18 @@ package avi
 		}, ...]
 		se_exclude_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		se_include_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		se_pod_tolerations?: [{
-			operator?: string
+			effect?:             string
+			key?:                string
+			operator?:           string
+			toleration_seconds?: number
+			value?:              string
 		}, ...]
 		vip_default_gateway?: [{
 			addr: string
@@ -1024,10 +1436,13 @@ package avi
 		}, ...]
 	}, ...]
 	proxy_configuration?: [{
-		host: string
-		port: number
+		host:      string
+		port:      number
+		password?: string
+		username?: string
 	}, ...]
 	rancher_configuration?: [{
+		access_key?:                         string
 		app_sync_frequency?:                 number
 		container_port_match_http_service?:  bool
 		coredump_directory?:                 string
@@ -1037,17 +1452,22 @@ package avi
 		enable_event_subscription?:          bool
 		feproxy_container_port_as_service?:  bool
 		feproxy_vips_enable_proxy_arp?:      bool
+		fleet_endpoint?:                     string
 		http_container_ports?: [number, ...]
 		rancher_servers?: [string, ...]
 		se_deployment_method?:               string
 		se_spawn_rate?:                      number
 		se_volume?:                          string
+		secret_key?:                         string
 		services_accessible_all_interfaces?: bool
+		ssh_user_ref?:                       string
 		use_container_ip_port?:              bool
 		use_controller_image?:               bool
 		docker_registry_se?: [{
+			password?: string
 			private?:  bool
 			registry?: string
+			username?: string
 			oshift_registry?: [{
 				registry_namespace?: string
 				registry_service?:   string
@@ -1065,13 +1485,25 @@ package avi
 			}, ...]
 		}, ...]
 		nuage_controller?: [{
-			nuage_port?: number
+			nuage_organization?: string
+			nuage_password?:     string
+			nuage_port?:         number
+			nuage_username?:     string
+			nuage_vsd_host?:     string
+			se_domain?:          string
+			se_enterprise?:      string
+			se_network?:         string
+			se_policy_group?:    string
+			se_user?:            string
+			se_zone?:            string
 		}, ...]
 		se_exclude_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 		se_include_attributes?: [{
 			attribute: string
+			value?:    string
 		}, ...]
 	}, ...]
 	vca_configuration?: [{
@@ -1085,7 +1517,13 @@ package avi
 		vca_vdc:          string
 	}, ...]
 	vcenter_configuration?: [{
-		privilege: string
+		privilege:                     string
+		datacenter?:                   string
+		management_network?:           string
+		password?:                     string
+		username?:                     string
+		vcenter_template_se_location?: string
+		vcenter_url?:                  string
 		management_ip_subnet?: [{
 			mask: number
 			ip_addr?: [{
@@ -1096,24 +1534,53 @@ package avi
 	}, ...]
 }
 #AviCloudconnectoruserResource: {
-	name: string
-	azure_serviceprincipal?: [{}, ...]
-	azure_userpass?: [{}, ...]
-	gcp_credentials?: [{}, ...]
-	oci_credentials?: [{}, ...]
-	tencent_credentials?: [{}, ...]
+	name:         string
+	id?:          string
+	password?:    string
+	private_key?: string
+	public_key?:  string
+	tenant_ref?:  string
+	uuid?:        string
+	azure_serviceprincipal?: [{
+		application_id?:       string
+		authentication_token?: string
+		tenant_id?:            string
+	}, ...]
+	azure_userpass?: [{
+		password?:    string
+		tenant_name?: string
+		username?:    string
+	}, ...]
+	gcp_credentials?: [{
+		service_account_keyfile_data?: string
+	}, ...]
+	oci_credentials?: [{
+		fingerprint?: string
+		key_content?: string
+		pass_phrase?: string
+		user?:        string
+	}, ...]
+	tencent_credentials?: [{
+		secret_id?:  string
+		secret_key?: string
+	}, ...]
 }
 #AviCloudpropertiesResource: {
 	cc_vtypes?: [string, ...]
+	id?:   string
+	uuid?: string
 	cc_props?: [{
 		rpc_poll_interval?: number
 		rpc_queue_size?:    number
 	}, ...]
 	hyp_props?: [{
-		htype: string
+		htype:            string
+		max_ips_per_nic?: number
+		max_nics?:        number
 	}, ...]
 	info?: [{
-		vtype: string
+		vtype:                string
+		flavor_regex_filter?: string
 		htypes?: [string, ...]
 		cca_props?: [{
 			async_retries?:        number
@@ -1144,6 +1611,7 @@ package avi
 			dead_se_detection_timer?:                    number
 			default_minimum_api_timeout?:                number
 			dns_refresh_period?:                         number
+			dummy?:                                      number
 			enable_api_sharding?:                        bool
 			enable_memory_balancer?:                     bool
 			fatal_error_lease_time?:                     number
@@ -1153,9 +1621,11 @@ package avi
 			max_seq_vnic_failures?:                      number
 			permission_scoped_shared_admin_networks?:    bool
 			persistence_key_rotate_period?:              number
+			portal_token?:                               string
 			process_locked_useraccounts_timeout_period?: number
 			process_pki_profile_timeout_period?:         number
 			query_host_fail?:                            number
+			safenet_hsm_version?:                        string
 			se_create_timeout?:                          number
 			se_failover_attempt_interval?:               number
 			se_from_marketplace?:                        string
@@ -1172,6 +1642,7 @@ package avi
 			unresponsive_se_reboot?:           number
 			upgrade_dns_ttl?:                  number
 			upgrade_lease_time?:               number
+			uuid?:                             string
 			vnic_op_fail_time?:                number
 			vs_apic_scaleout_timeout?:         number
 			vs_awaiting_se_timeout?:           number
@@ -1187,9 +1658,18 @@ package avi
 			warmstart_vs_resync_wait_time?:    number
 		}, ...]
 		flavor_props?: [{
-			id:      string
-			name:    string
-			public?: bool
+			id:                string
+			name:              string
+			cost?:             string
+			disk_gb?:          number
+			enhanced_nw?:      bool
+			is_recommended?:   bool
+			max_ip6s_per_nic?: number
+			max_ips_per_nic?:  number
+			max_nics?:         number
+			public?:           bool
+			ram_mb?:           number
+			vcpus?:            number
 			meta?: [{
 				key:   string
 				value: string
@@ -1199,11 +1679,23 @@ package avi
 }
 #AviClusterResource: {
 	name:                        string
+	id?:                         string
 	rejoin_nodes_automatically?: bool
-	cluster_state?: [{}, ...]
+	tenant_ref?:                 string
+	uuid?:                       string
+	cluster_state?: [{
+		progress?: number
+		state?:    string
+		up_since?: string
+	}, ...]
 	nodes?: [{
 		categories?: [string, ...]
-		name?: string
+		name?:        string
+		password?:    string
+		vm_hostname?: string
+		vm_mor?:      string
+		vm_name?:     string
+		vm_uuid?:     string
 		ip?: [{
 			addr: string
 			type: string
@@ -1219,15 +1711,28 @@ package avi
 	}, ...]
 }
 #AviClusterclouddetailsResource: {
-	name: string
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
 	azure_info?: [{
 		cloud_credential_ref: string
 		subscription_id:      string
 	}, ...]
 }
 #AviControllerportalregistrationResource: {
-	asset?: [{}, ...]
-	portal_auth?: [{}, ...]
+	id?:         string
+	name?:       string
+	tenant_ref?: string
+	uuid?:       string
+	asset?: [{
+		asset_id?: string
+	}, ...]
+	portal_auth?: [{
+		access_token?: string
+		instance_url?: string
+		jwt_token?:    string
+	}, ...]
 }
 #AviControllerpropertiesResource: {
 	allow_admin_network_updates?:                bool
@@ -1249,18 +1754,22 @@ package avi
 	dead_se_detection_timer?:                    number
 	default_minimum_api_timeout?:                number
 	dns_refresh_period?:                         number
+	dummy?:                                      number
 	enable_api_sharding?:                        bool
 	enable_memory_balancer?:                     bool
 	fatal_error_lease_time?:                     number
+	id?:                                         string
 	max_dead_se_in_grp?:                         number
 	max_pcap_per_tenant?:                        number
 	max_seq_attach_ip_failures?:                 number
 	max_seq_vnic_failures?:                      number
 	permission_scoped_shared_admin_networks?:    bool
 	persistence_key_rotate_period?:              number
+	portal_token?:                               string
 	process_locked_useraccounts_timeout_period?: number
 	process_pki_profile_timeout_period?:         number
 	query_host_fail?:                            number
+	safenet_hsm_version?:                        string
 	se_create_timeout?:                          number
 	se_failover_attempt_interval?:               number
 	se_from_marketplace?:                        string
@@ -1277,6 +1786,7 @@ package avi
 	unresponsive_se_reboot?:           number
 	upgrade_dns_ttl?:                  number
 	upgrade_lease_time?:               number
+	uuid?:                             string
 	vnic_op_fail_time?:                number
 	vs_apic_scaleout_timeout?:         number
 	vs_awaiting_se_timeout?:           number
@@ -1291,139 +1801,210 @@ package avi
 	warmstart_se_reconnect_wait_time?: number
 	warmstart_vs_resync_wait_time?:    number
 }
-#AviControllersiteResource: port?:                 number
-#AviCustomerportalinfoResource: polling_interval?: number
-#AviCustomipamdnsprofileResource: script_params?: [{
-	name:          string
-	is_dynamic?:   bool
-	is_sensitive?: bool
-}, ...]
-#AviDnspolicyResource: rule?: [{
-	enable?: bool
-	action?: [{
-		allow?: [{
-			allow?:      bool
-			reset_conn?: bool
-		}, ...]
-		dns_rate_limit?: [{
-			burst_size?: number
-			count?:      number
-			fine_grain?: bool
-			period?:     number
-			action?: [{
-				type?: string
-			}, ...]
-		}, ...]
-		gslb_site_selection?: [{
-			fallback_site_names?: [string, ...]
-			is_site_preferred?: bool
-		}, ...]
-		pool_switching?: [{}, ...]
-		response?: [{
-			authoritative?: bool
-			rcode?:         string
-			truncation?:    bool
-			resource_record_sets?: [{
-				section?: string
-				resource_record_set?: [{
-					cname?: [{
-						cname: string
-					}, ...]
-					ip6_addresses?: [{
-						ip6_address?: [{
-							addr: string
-							type: string
-						}, ...]
-					}, ...]
-					ip_addresses?: [{
-						ip_address?: [{
-							addr: string
-							type: string
-						}, ...]
-					}, ...]
-					nses?: [{
-						nsname: string
-						ip6_address?: [{
-							addr: string
-							type: string
-						}, ...]
-						ip_address?: [{
-							addr: string
-							type: string
-						}, ...]
-					}, ...]
-				}, ...]
-			}, ...]
-		}, ...]
+#AviControllersiteResource: {
+	address?:    string
+	id?:         string
+	name?:       string
+	port?:       number
+	tenant_ref?: string
+	uuid?:       string
+}
+#AviCustomerportalinfoResource: {
+	id?:               string
+	polling_interval?: number
+	portal_url?:       string
+	uuid?:             string
+}
+#AviCustomipamdnsprofileResource: {
+	id?:         string
+	name?:       string
+	script_uri?: string
+	tenant_ref?: string
+	uuid?:       string
+	script_params?: [{
+		name:          string
+		is_dynamic?:   bool
+		is_sensitive?: bool
+		value?:        string
 	}, ...]
-	match?: [{
-		client_ip_address?: [{
-			use_edns_client_subnet_ip?: bool
-			client_ip?: [{
-				match_criteria: string
-				group_refs?: [string, ...]
-				addrs?: [{
-					addr: string
-					type: string
+}
+#AviDnspolicyResource: {
+	created_by?:  string
+	description?: string
+	id?:          string
+	name?:        string
+	tenant_ref?:  string
+	uuid?:        string
+	rule?: [{
+		enable?: bool
+		index?:  number
+		log?:    bool
+		name?:   string
+		action?: [{
+			allow?: [{
+				allow?:      bool
+				reset_conn?: bool
+			}, ...]
+			dns_rate_limiter?: [{
+				action?: [{
+					type?: string
 				}, ...]
-				prefixes?: [{
-					mask: number
-					ip_addr?: [{
+				rate_limiter_object?: [{
+					burst_sz?: number
+					count?:    number
+					name?:     string
+					period?:   number
+				}, ...]
+			}, ...]
+			gslb_site_selection?: [{
+				fallback_site_names?: [string, ...]
+				is_site_preferred?: bool
+				site_name?:         string
+			}, ...]
+			pool_switching?: [{
+				pool_group_ref?: string
+				pool_ref?:       string
+			}, ...]
+			response?: [{
+				authoritative?: bool
+				rcode?:         string
+				truncation?:    bool
+				resource_record_sets?: [{
+					section?: string
+					resource_record_set?: [{
+						fqdn?: string
+						ttl?:  number
+						type?: string
+						cname?: [{
+							cname: string
+						}, ...]
+						ip6_addresses?: [{
+							ip6_address?: [{
+								addr: string
+								type: string
+							}, ...]
+						}, ...]
+						ip_addresses?: [{
+							ip_address?: [{
+								addr: string
+								type: string
+							}, ...]
+						}, ...]
+						nses?: [{
+							nsname: string
+							ip6_address?: [{
+								addr: string
+								type: string
+							}, ...]
+							ip_address?: [{
+								addr: string
+								type: string
+							}, ...]
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+		match?: [{
+			client_ip_address?: [{
+				use_edns_client_subnet_ip?: bool
+				client_ip?: [{
+					match_criteria: string
+					group_refs?: [string, ...]
+					addrs?: [{
 						addr: string
 						type: string
 					}, ...]
-				}, ...]
-				ranges?: [{
-					begin?: [{
-						addr: string
-						type: string
+					prefixes?: [{
+						mask: number
+						ip_addr?: [{
+							addr: string
+							type: string
+						}, ...]
 					}, ...]
-					end?: [{
-						addr: string
-						type: string
+					ranges?: [{
+						begin?: [{
+							addr: string
+							type: string
+						}, ...]
+						end?: [{
+							addr: string
+							type: string
+						}, ...]
 					}, ...]
 				}, ...]
 			}, ...]
-		}, ...]
-		geo_location?: [{
-			use_edns_client_subnet_ip?: bool
-		}, ...]
-		protocol?: [{}, ...]
-		query_name?: [{
-			query_domain_names?: [string, ...]
-			string_group_refs?: [string, ...]
-		}, ...]
-		query_type?: [{
-			query_type?: [string, ...]
-		}, ...]
-	}, ...]
-}, ...]
-#AviErrorpagebodyResource: format?: string
-#AviErrorpageprofileResource: error_pages?: [{
-	enable?: bool
-	match?: [{
-		match_criteria: string
-		status_codes?: [number, ...]
-		ranges?: [{
-			begin: number
-			end:   number
+			geo_location?: [{
+				geolocation_name?:          string
+				geolocation_tag?:           string
+				match_criteria?:            string
+				use_edns_client_subnet_ip?: bool
+			}, ...]
+			protocol?: [{
+				match_criteria?: string
+				protocol?:       string
+			}, ...]
+			query_name?: [{
+				match_criteria?: string
+				query_domain_names?: [string, ...]
+				string_group_refs?: [string, ...]
+			}, ...]
+			query_type?: [{
+				match_criteria?: string
+				query_type?: [string, ...]
+			}, ...]
 		}, ...]
 	}, ...]
-}, ...]
+}
+#AviErrorpagebodyResource: {
+	error_page_body?: string
+	format?:          string
+	id?:              string
+	name?:            string
+	tenant_ref?:      string
+	uuid?:            string
+}
+#AviErrorpageprofileResource: {
+	id?:         string
+	name?:       string
+	tenant_ref?: string
+	uuid?:       string
+	error_pages?: [{
+		enable?:              bool
+		error_page_body_ref?: string
+		error_redirect?:      string
+		index?:               number
+		match?: [{
+			match_criteria: string
+			status_codes?: [number, ...]
+			ranges?: [{
+				begin: number
+				end:   number
+			}, ...]
+		}, ...]
+	}, ...]
+}
 #AviFileserviceResource: {
 	local_file: string
 	uri:        string
+	id?:        string
 	upload?:    bool
 }
 #AviGslbResource: {
-	name:                   string
-	async_interval?:        number
-	clear_on_max_retries?:  number
-	error_resync_interval?: number
-	is_federated?:          bool
-	maintenance_mode?:      bool
-	send_interval?:         number
-	view_id?:               number
+	name:                                     string
+	async_interval?:                          number
+	clear_on_max_retries?:                    number
+	description?:                             string
+	error_resync_interval?:                   number
+	id?:                                      string
+	is_federated?:                            bool
+	leader_cluster_uuid?:                     string
+	maintenance_mode?:                        bool
+	send_interval?:                           number
+	send_interval_prior_to_maintenance_mode?: number
+	tenant_ref?:                              string
+	uuid?:                                    string
+	view_id?:                                 number
 	client_ip_addr_group?: [{
 		type?: string
 		addrs?: [{
@@ -1448,59 +2029,100 @@ package avi
 			}, ...]
 		}, ...]
 	}, ...]
-	dns_configs?: [{}, ...]
+	dns_configs?: [{
+		domain_name?: string
+	}, ...]
 	sites?: [{
+		address?:          string
+		cluster_uuid?:     string
 		enabled?:          bool
 		hm_shard_enabled?: bool
 		member_type?:      string
+		name?:             string
+		password?:         string
 		port?:             number
+		ratio?:            number
+		username?:         string
+		uuid?:             string
 		dns_vses?: [{
+			dns_vs_uuid?: string
 			domain_names?: [string, ...]
 		}, ...]
 		hm_proxies?: [{
 			proxy_type?: string
+			site_uuid?:  string
 		}, ...]
 		ip_addresses?: [{
 			addr: string
 			type: string
 		}, ...]
 		location?: [{
-			location?: [{}, ...]
+			source?: string
+			location?: [{
+				latitude?:  number
+				longitude?: number
+				name?:      string
+				tag?:       string
+			}, ...]
 		}, ...]
 	}, ...]
 	third_party_sites?: [{
 		enabled?: bool
+		name?:    string
+		ratio?:   number
+		uuid?:    string
 		hm_proxies?: [{
 			proxy_type?: string
+			site_uuid?:  string
 		}, ...]
 		location?: [{
-			location?: [{}, ...]
+			source?: string
+			location?: [{
+				latitude?:  number
+				longitude?: number
+				name?:      string
+				tag?:       string
+			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviGslbgeodbprofileResource: {
 	name:          string
+	description?:  string
+	id?:           string
 	is_federated?: bool
+	tenant_ref?:   string
+	uuid?:         string
 	entries?: [{
 		priority?: number
 		file?: [{
-			format?: string
+			filename?: string
+			format?:   string
 		}, ...]
 	}, ...]
 }
 #AviGslbserviceResource: {
-	name:                              string
-	controller_health_status_enabled?: bool
+	name:                                 string
+	application_persistence_profile_ref?: string
+	controller_health_status_enabled?:    bool
+	created_by?:                          string
+	description?:                         string
 	domain_names?: [string, ...]
 	enabled?: bool
 	health_monitor_refs?: [string, ...]
 	health_monitor_scope?:     string
+	hm_off?:                   bool
+	id?:                       string
 	is_federated?:             bool
 	min_members?:              number
+	num_dns_ip?:               number
 	pool_algorithm?:           string
 	resolve_cname?:            bool
 	site_persistence_enabled?: bool
+	tenant_ref?:               string
+	ttl?:                      number
 	use_edns_client_subnet?:   bool
+	uuid?:                     string
 	wildcard_match?:           bool
 	down_response?: [{
 		type?: string
@@ -1514,19 +2136,36 @@ package avi
 		}, ...]
 	}, ...]
 	groups?: [{
-		algorithm?: string
-		enabled?:   bool
-		priority?:  number
+		algorithm?:             string
+		consistent_hash_mask?:  number
+		consistent_hash_mask6?: number
+		description?:           string
+		enabled?:               bool
+		fallback_algorithm?:    string
+		name?:                  string
+		priority?:              number
 		members?: [{
+			cloud_uuid?:         string
+			cluster_uuid?:       string
+			description?:        string
 			enabled?:            bool
+			fqdn?:               string
+			hostname?:           string
 			ratio?:              number
 			resolve_fqdn_to_v6?: bool
+			vs_uuid?:            string
 			ip?: [{
 				addr: string
 				type: string
 			}, ...]
 			location?: [{
-				location?: [{}, ...]
+				source?: string
+				location?: [{
+					latitude?:  number
+					longitude?: number
+					name?:      string
+					tag?:       string
+				}, ...]
 			}, ...]
 			public_ip?: [{
 				ip?: [{
@@ -1538,10 +2177,16 @@ package avi
 	}, ...]
 }
 #AviHardwaresecuritymodulegroupResource: {
-	name: string
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
 	hsm?: [{
 		type: string
 		cloudhsm?: [{
+			cluster_cert?:         string
+			crypto_user_name?:     string
+			crypto_user_password?: string
 			hsm_ip?: [string, ...]
 		}, ...]
 		nethsm?: [{
@@ -1564,72 +2209,133 @@ package avi
 		}, ...]
 		sluna?: [{
 			is_ha:                  bool
+			ha_group_num?:          number
+			server_pem?:            string
 			use_dedicated_network?: bool
 			node_info?: [{
-				client_ip: string
+				client_ip:             string
+				chrystoki_conf?:       string
+				client_cert?:          string
+				client_priv_key?:      string
+				session_major_number?: number
+				session_minor_number?: number
 			}, ...]
 			server?: [{
-				remote_ip:   string
-				server_cert: string
+				remote_ip:                string
+				server_cert:              string
+				index?:                   number
+				partition_passwd?:        string
+				partition_serial_number?: string
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviHealthmonitorResource: {
-	name:               string
-	type:               string
-	failed_checks?:     number
-	is_federated?:      bool
-	receive_timeout?:   number
-	send_interval?:     number
-	successful_checks?: number
+	name:                      string
+	type:                      string
+	allow_duplicate_monitors?: bool
+	description?:              string
+	disable_quickstart?:       bool
+	failed_checks?:            number
+	id?:                       string
+	is_federated?:             bool
+	monitor_port?:             number
+	receive_timeout?:          number
+	send_interval?:            number
+	successful_checks?:        number
+	tenant_ref?:               string
+	uuid?:                     string
 	dns_monitor?: [{
-		query_name:   string
-		qtype?:       string
-		rcode?:       string
-		record_type?: string
+		query_name:       string
+		qtype?:           string
+		rcode?:           string
+		record_type?:     string
+		response_string?: string
 	}, ...]
 	external_monitor?: [{
-		command_code: string
+		command_code:        string
+		command_parameters?: string
+		command_path?:       string
+		command_variables?:  string
 	}, ...]
 	http_monitor?: [{
 		exact_http_request?: bool
 		http_request?:       string
+		http_response?:      string
 		http_response_code?: [string, ...]
 		maintenance_code?: [number, ...]
-		ssl_attributes?: [{}, ...]
+		maintenance_response?: string
+		ssl_attributes?: [{
+			pki_profile_ref?:             string
+			server_name?:                 string
+			ssl_key_and_certificate_ref?: string
+			ssl_profile_ref?:             string
+		}, ...]
 	}, ...]
 	https_monitor?: [{
 		exact_http_request?: bool
 		http_request?:       string
+		http_response?:      string
 		http_response_code?: [string, ...]
 		maintenance_code?: [number, ...]
-		ssl_attributes?: [{}, ...]
+		maintenance_response?: string
+		ssl_attributes?: [{
+			pki_profile_ref?:             string
+			server_name?:                 string
+			ssl_key_and_certificate_ref?: string
+			ssl_profile_ref?:             string
+		}, ...]
 	}, ...]
-	radius_monitor?: [{}, ...]
+	radius_monitor?: [{
+		password?:      string
+		shared_secret?: string
+		username?:      string
+	}, ...]
 	sip_monitor?: [{
 		sip_monitor_transport?: string
 		sip_request_code?:      string
 		sip_response?:          string
 	}, ...]
 	tcp_monitor?: [{
-		tcp_half_open?: bool
+		maintenance_response?: string
+		tcp_half_open?:        bool
+		tcp_request?:          string
+		tcp_response?:         string
 	}, ...]
-	udp_monitor?: [{}, ...]
+	udp_monitor?: [{
+		maintenance_response?: string
+		udp_request?:          string
+		udp_response?:         string
+	}, ...]
 }
 #AviHttppolicysetResource: {
 	name:                string
+	cloud_config_cksum?: string
+	created_by?:         string
+	description?:        string
+	id?:                 string
 	is_internal_policy?: bool
+	tenant_ref?:         string
+	uuid?:               string
 	http_request_policy?: [{
 		rules?: [{
-			enable: bool
-			index:  number
-			name:   string
+			enable:       bool
+			index:        number
+			name:         string
+			all_headers?: bool
+			log?:         bool
 			hdr_action?: [{
 				action: string
-				cookie?: [{}, ...]
+				cookie?: [{
+					name?:  string
+					value?: string
+				}, ...]
 				hdr?: [{
-					value?: [{}, ...]
+					name?: string
+					value?: [{
+						val?: string
+						var?: string
+					}, ...]
 				}, ...]
 			}, ...]
 			match?: [{
@@ -1662,6 +2368,7 @@ package avi
 					match_criteria: string
 					name:           string
 					match_case?:    string
+					value?:         string
 				}, ...]
 				hdrs?: [{
 					hdr:            string
@@ -1706,17 +2413,24 @@ package avi
 			redirect_action?: [{
 				protocol:     string
 				keep_query?:  bool
+				port?:        number
 				status_code?: string
 				host?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 			}, ...]
@@ -1724,26 +2438,38 @@ package avi
 				host_hdr?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				query?: [{
+					add_string?: string
 					keep_query?: bool
 				}, ...]
 			}, ...]
 			switching_action?: [{
-				action: string
+				action:          string
+				pool_group_ref?: string
+				pool_ref?:       string
+				status_code?:    string
 				file?: [{
 					content_type: string
 					file_content: string
 				}, ...]
 				server?: [{
+					hostname?: string
+					port?:     number
 					ip?: [{
 						addr: string
 						type: string
@@ -1754,29 +2480,45 @@ package avi
 	}, ...]
 	http_response_policy?: [{
 		rules?: [{
-			enable: bool
-			index:  number
-			name:   string
+			enable:       bool
+			index:        number
+			name:         string
+			all_headers?: bool
+			log?:         bool
 			hdr_action?: [{
 				action: string
-				cookie?: [{}, ...]
+				cookie?: [{
+					name?:  string
+					value?: string
+				}, ...]
 				hdr?: [{
-					value?: [{}, ...]
+					name?: string
+					value?: [{
+						val?: string
+						var?: string
+					}, ...]
 				}, ...]
 			}, ...]
 			loc_hdr_action?: [{
 				protocol:    string
 				keep_query?: bool
+				port?:       number
 				host?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 			}, ...]
@@ -1810,6 +2552,7 @@ package avi
 					match_criteria: string
 					name:           string
 					match_case?:    string
+					value?:         string
 				}, ...]
 				hdrs?: [{
 					hdr:            string
@@ -1877,18 +2620,18 @@ package avi
 			enable: bool
 			index:  number
 			name:   string
+			log?:   bool
 			action?: [{
-				action: string
+				action:       string
+				https_port?:  number
+				status_code?: string
 				file?: [{
 					content_type: string
 					file_content: string
 				}, ...]
-				rate_limit?: [{
-					burst_sz?:          number
-					count?:             number
-					explicit_tracking?: bool
-					fine_grain?:        bool
-					period?:            number
+				rate_profile?: [{
+					per_client_ip?: bool
+					per_uri_path?:  bool
 					action?: [{
 						status_code?: string
 						type?:        string
@@ -1899,20 +2642,33 @@ package avi
 						redirect?: [{
 							protocol:     string
 							keep_query?:  bool
+							port?:        number
 							status_code?: string
 							host?: [{
 								type: string
 								tokens?: [{
-									type: string
+									type:         string
+									end_index?:   number
+									start_index?: number
+									str_value?:   string
 								}, ...]
 							}, ...]
 							path?: [{
 								type: string
 								tokens?: [{
-									type: string
+									type:         string
+									end_index?:   number
+									start_index?: number
+									str_value?:   string
 								}, ...]
 							}, ...]
 						}, ...]
+					}, ...]
+					rate_limiter?: [{
+						burst_sz?: number
+						count?:    number
+						name?:     string
+						period?:   number
 					}, ...]
 				}, ...]
 			}, ...]
@@ -1946,6 +2702,7 @@ package avi
 					match_criteria: string
 					name:           string
 					match_case?:    string
+					value?:         string
 				}, ...]
 				hdrs?: [{
 					hdr:            string
@@ -1991,14 +2748,39 @@ package avi
 	}, ...]
 }
 #AviImageResource: {
-	uber_bundle?: bool
+	controller_patch_uuid?: string
+	id?:                    string
+	name?:                  string
+	se_patch_uuid?:         string
+	status?:                string
+	tenant_ref?:            string
+	type?:                  string
+	uber_bundle?:           bool
+	uuid?:                  string
 	controller_info?: [{
-		build?: [{}, ...]
+		hash?: string
+		path?: string
+		build?: [{
+			build_no?:      number
+			date?:          string
+			min_version?:   string
+			patch_version?: string
+			product?:       string
+			product_name?:  string
+			tag?:           string
+			version?:       string
+		}, ...]
 		patch?: [{
-			reboot_list?: [{}, ...]
+			patch_type?: string
+			reboot?:     bool
+			reboot_list?: [{
+				patch_version?: string
+				reboot?:        bool
+			}, ...]
 		}, ...]
 	}, ...]
 	migrations?: [{
+		api_version?:                        string
 		controller_host_min_free_disk_size?: number
 		controller_min_free_disk_size?:      number
 		max_active_versions?:                number
@@ -2009,21 +2791,46 @@ package avi
 		versions?: [string, ...]
 	}, ...]
 	se_info?: [{
-		build?: [{}, ...]
+		hash?: string
+		path?: string
+		build?: [{
+			build_no?:      number
+			date?:          string
+			min_version?:   string
+			patch_version?: string
+			product?:       string
+			product_name?:  string
+			tag?:           string
+			version?:       string
+		}, ...]
 		patch?: [{
-			reboot_list?: [{}, ...]
+			patch_type?: string
+			reboot?:     bool
+			reboot_list?: [{
+				patch_version?: string
+				reboot?:        bool
+			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviIpaddrgroupResource: {
-	name: string
+	name:           string
+	apic_epg_name?: string
 	country_codes?: [string, ...]
+	description?:           string
+	id?:                    string
+	marathon_app_name?:     string
+	marathon_service_port?: number
+	tenant_ref?:            string
+	uuid?:                  string
 	addrs?: [{
 		addr: string
 		type: string
 	}, ...]
 	ip_ports?: [{
-		port: number
+		port:      number
+		hostname?: string
+		name?:     string
 		ip?: [{
 			addr: string
 			type: string
@@ -2051,14 +2858,22 @@ package avi
 	name:                string
 	type:                string
 	allocate_ip_in_vrf?: bool
+	id?:                 string
+	tenant_ref?:         string
+	uuid?:               string
 	aws_profile?: [{
-		vpc_id: string
+		vpc_id:         string
+		access_key_id?: string
 		egress_service_subnets?: [string, ...]
+		iam_assume_role?:            string
 		publish_vip_to_public_zone?: bool
+		region?:                     string
+		secret_access_key?:          string
 		ttl?:                        number
 		usable_domains?: [string, ...]
 		usable_network_uuids?: [string, ...]
 		use_iam_roles?: bool
+		vpc?:           string
 		zones?: [{
 			availability_zone: string
 			usable_network_uuids?: [string, ...]
@@ -2066,20 +2881,32 @@ package avi
 	}, ...]
 	azure_profile?: [{
 		egress_service_subnets?: [string, ...]
+		resource_group?:  string
+		subscription_id?: string
 		usable_domains?: [string, ...]
 		usable_network_uuids?: [string, ...]
 		use_enhanced_ha?:  bool
 		use_standard_alb?: bool
 		virtual_network_ids?: [string, ...]
-		azure_serviceprincipal?: [{}, ...]
-		azure_userpass?: [{}, ...]
+		azure_serviceprincipal?: [{
+			application_id?:       string
+			authentication_token?: string
+			tenant_id?:            string
+		}, ...]
+		azure_userpass?: [{
+			password?:    string
+			tenant_name?: string
+			username?:    string
+		}, ...]
 	}, ...]
 	custom_profile?: [{
+		custom_ipam_dns_profile_ref?: string
 		usable_domains?: [string, ...]
 		dynamic_params?: [{
 			name:          string
 			is_dynamic?:   bool
 			is_sensitive?: bool
+			value?:        string
 		}, ...]
 		usable_subnets?: [{
 			mask: number
@@ -2090,9 +2917,13 @@ package avi
 		}, ...]
 	}, ...]
 	gcp_profile?: [{
-		match_se_group_subnet?: bool
+		match_se_group_subnet?:   bool
+		network_host_project_id?: string
+		region_name?:             string
+		se_project_id?:           string
 		usable_network_refs?: [string, ...]
-		use_gcp_network?: bool
+		use_gcp_network?:  bool
+		vpc_network_name?: string
 	}, ...]
 	infoblox_profile?: [{
 		password:      string
@@ -2105,6 +2936,7 @@ package avi
 			name:          string
 			is_dynamic?:   bool
 			is_sensitive?: bool
+			value?:        string
 		}, ...]
 		ip_address?: [{
 			addr: string
@@ -2128,32 +2960,67 @@ package avi
 		}, ...]
 	}, ...]
 	internal_profile?: [{
-		ttl?: number
+		dns_virtualservice_ref?: string
+		ttl?:                    number
 		usable_network_refs?: [string, ...]
 		dns_service_domain?: [{
 			domain_name:   string
 			num_dns_ip?:   number
 			pass_through?: bool
+			record_ttl?:   number
 		}, ...]
 	}, ...]
-	oci_profile?: [{}, ...]
-	openstack_profile?: [{}, ...]
+	oci_profile?: [{
+		cloud_credentials_ref?: string
+		region?:                string
+		tenancy?:               string
+		vcn_compartment_id?:    string
+		vcn_id?:                string
+	}, ...]
+	openstack_profile?: [{
+		keystone_host?:    string
+		password?:         string
+		region?:           string
+		tenant?:           string
+		username?:         string
+		vip_network_name?: string
+	}, ...]
 	proxy_configuration?: [{
-		host: string
-		port: number
+		host:      string
+		port:      number
+		password?: string
+		username?: string
 	}, ...]
 	tencent_profile?: [{
+		cloud_credentials_ref?: string
+		region?:                string
 		usable_subnet_ids?: [string, ...]
-		zones?: [{}, ...]
+		vpc_id?: string
+		zones?: [{
+			availability_zone?: string
+			usable_subnet_id?:  string
+		}, ...]
 	}, ...]
 }
 #AviL4PolicysetResource: {
+	created_by?:         string
+	description?:        string
+	id?:                 string
 	is_internal_policy?: bool
+	name?:               string
+	tenant_ref?:         string
+	uuid?:               string
 	l4_connection_policy?: [{
 		rules?: [{
 			enable?: bool
+			index?:  number
+			name?:   string
 			action?: [{
-				select_pool?: [{}, ...]
+				select_pool?: [{
+					action_type?:    string
+					pool_group_ref?: string
+					pool_ref?:       string
+				}, ...]
 			}, ...]
 			match?: [{
 				client_ip?: [{
@@ -2182,110 +3049,137 @@ package avi
 					}, ...]
 				}, ...]
 				port?: [{
+					match_criteria?: string
 					ports?: [number, ...]
 					port_ranges?: [{
 						end:   number
 						start: number
 					}, ...]
 				}, ...]
-				protocol?: [{}, ...]
+				protocol?: [{
+					match_criteria?: string
+					protocol?:       string
+				}, ...]
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviMicroservicegroupResource: {
-	name: string
+	name:         string
+	created_by?:  string
+	description?: string
+	id?:          string
 	service_refs?: [string, ...]
+	tenant_ref?: string
+	uuid?:       string
 }
-#AviNatpolicyResource: rules?: [{
-	action?: [{
-		nat_info?: [{
-			nat_ip?: [{
-				addr: string
-				type: string
-			}, ...]
-			nat_ip_range?: [{
-				begin?: [{
+#AviNatpolicyResource: {
+	created_by?:  string
+	description?: string
+	id?:          string
+	name?:        string
+	tenant_ref?:  string
+	uuid?:        string
+	rules?: [{
+		created_by?: string
+		enable?:     bool
+		index?:      number
+		name?:       string
+		action?: [{
+			type?: string
+			nat_info?: [{
+				nat_ip?: [{
 					addr: string
 					type: string
 				}, ...]
-				end?: [{
+				nat_ip_range?: [{
+					begin?: [{
+						addr: string
+						type: string
+					}, ...]
+					end?: [{
+						addr: string
+						type: string
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+		match?: [{
+			destination_ip?: [{
+				match_criteria: string
+				group_refs?: [string, ...]
+				addrs?: [{
 					addr: string
 					type: string
+				}, ...]
+				prefixes?: [{
+					mask: number
+					ip_addr?: [{
+						addr: string
+						type: string
+					}, ...]
+				}, ...]
+				ranges?: [{
+					begin?: [{
+						addr: string
+						type: string
+					}, ...]
+					end?: [{
+						addr: string
+						type: string
+					}, ...]
+				}, ...]
+			}, ...]
+			services?: [{
+				destination_port?: [{
+					match_criteria: string
+					ports?: [number, ...]
+				}, ...]
+				source_port?: [{
+					match_criteria: string
+					ports?: [number, ...]
+				}, ...]
+			}, ...]
+			source_ip?: [{
+				match_criteria: string
+				group_refs?: [string, ...]
+				addrs?: [{
+					addr: string
+					type: string
+				}, ...]
+				prefixes?: [{
+					mask: number
+					ip_addr?: [{
+						addr: string
+						type: string
+					}, ...]
+				}, ...]
+				ranges?: [{
+					begin?: [{
+						addr: string
+						type: string
+					}, ...]
+					end?: [{
+						addr: string
+						type: string
+					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
 	}, ...]
-	match?: [{
-		destination_ip?: [{
-			match_criteria: string
-			group_refs?: [string, ...]
-			addrs?: [{
-				addr: string
-				type: string
-			}, ...]
-			prefixes?: [{
-				mask: number
-				ip_addr?: [{
-					addr: string
-					type: string
-				}, ...]
-			}, ...]
-			ranges?: [{
-				begin?: [{
-					addr: string
-					type: string
-				}, ...]
-				end?: [{
-					addr: string
-					type: string
-				}, ...]
-			}, ...]
-		}, ...]
-		services?: [{
-			destination_port?: [{
-				match_criteria: string
-				ports?: [number, ...]
-			}, ...]
-			source_port?: [{
-				match_criteria: string
-				ports?: [number, ...]
-			}, ...]
-		}, ...]
-		source_ip?: [{
-			match_criteria: string
-			group_refs?: [string, ...]
-			addrs?: [{
-				addr: string
-				type: string
-			}, ...]
-			prefixes?: [{
-				mask: number
-				ip_addr?: [{
-					addr: string
-					type: string
-				}, ...]
-			}, ...]
-			ranges?: [{
-				begin?: [{
-					addr: string
-					type: string
-				}, ...]
-				end?: [{
-					addr: string
-					type: string
-				}, ...]
-			}, ...]
-		}, ...]
-	}, ...]
-}, ...]
+}
 #AviNetworkResource: {
 	name:                        string
+	cloud_ref?:                  string
 	dhcp_enabled?:               bool
 	exclude_discovered_subnets?: bool
+	id?:                         string
 	ip6_autocfg_enabled?:        bool
 	synced_from_se?:             bool
+	tenant_ref?:                 string
+	uuid?:                       string
 	vcenter_dvs?:                bool
+	vrf_context_ref?:            string
 	configured_subnets?: [{
 		prefix?: [{
 			mask: number
@@ -2310,12 +3204,17 @@ package avi
 		}, ...]
 	}, ...]
 	labels?: [{
-		key: string
+		key:    string
+		value?: string
 	}, ...]
 }
 #AviNetworkprofileResource: {
 	name:               string
 	connection_mirror?: bool
+	description?:       string
+	id?:                string
+	tenant_ref?:        string
+	uuid?:              string
 	profile?: [{
 		type: string
 		tcp_fast_path_profile?: [{
@@ -2337,10 +3236,13 @@ package avi
 			ip_dscp?:                            number
 			keepalive_in_halfclose_state?:       bool
 			max_retransmissions?:                number
+			max_segment_size?:                   number
 			max_syn_retransmissions?:            number
+			min_rexmt_timeout?:                  number
 			nagles_algorithm?:                   bool
 			reassembly_queue_size?:              number
 			receive_window?:                     number
+			reorder_threshold?:                  number
 			slow_start_scaling_factor?:          number
 			time_wait_delay?:                    number
 			use_interface_mtu?:                  bool
@@ -2359,99 +3261,167 @@ package avi
 		}, ...]
 	}, ...]
 }
-#AviNetworksecuritypolicyResource: rules?: [{
-	action: string
-	enable: bool
-	index:  number
-	name:   string
-	age?:   number
-	log?:   bool
-	match?: [{
-		client_ip?: [{
-			match_criteria: string
-			group_refs?: [string, ...]
-			addrs?: [{
-				addr: string
-				type: string
-			}, ...]
-			prefixes?: [{
-				mask: number
-				ip_addr?: [{
+#AviNetworksecuritypolicyResource: {
+	cloud_config_cksum?: string
+	created_by?:         string
+	description?:        string
+	id?:                 string
+	name?:               string
+	tenant_ref?:         string
+	uuid?:               string
+	rules?: [{
+		action:      string
+		enable:      bool
+		index:       number
+		name:        string
+		age?:        number
+		created_by?: string
+		log?:        bool
+		match?: [{
+			client_ip?: [{
+				match_criteria: string
+				group_refs?: [string, ...]
+				addrs?: [{
 					addr: string
 					type: string
 				}, ...]
-			}, ...]
-			ranges?: [{
-				begin?: [{
-					addr: string
-					type: string
+				prefixes?: [{
+					mask: number
+					ip_addr?: [{
+						addr: string
+						type: string
+					}, ...]
 				}, ...]
-				end?: [{
-					addr: string
-					type: string
+				ranges?: [{
+					begin?: [{
+						addr: string
+						type: string
+					}, ...]
+					end?: [{
+						addr: string
+						type: string
+					}, ...]
 				}, ...]
 			}, ...]
+			microservice?: [{
+				match_criteria: string
+				group_ref?:     string
+			}, ...]
+			vs_port?: [{
+				match_criteria: string
+				ports?: [number, ...]
+			}, ...]
 		}, ...]
-		microservice?: [{
-			match_criteria: string
-		}, ...]
-		vs_port?: [{
-			match_criteria: string
-			ports?: [number, ...]
+		rl_param?: [{
+			burst_size: number
+			max_rate:   number
 		}, ...]
 	}, ...]
-	rl_param?: [{
-		burst_size: number
-		max_rate:   number
+}
+#AviNetworkserviceResource: {
+	cloud_ref?:    string
+	id?:           string
+	name?:         string
+	se_group_ref?: string
+	service_type?: string
+	tenant_ref?:   string
+	uuid?:         string
+	vrf_ref?:      string
+	routing_service?: [{
+		advertise_backend_networks?:   bool
+		enable_routing?:               bool
+		enable_vip_on_all_interfaces?: bool
+		enable_vmac?:                  bool
+		graceful_restart?:             bool
+		nat_policy_ref?:               string
+		routing_by_linux_ipstack?:     bool
+		floating_intf_ip?: [{
+			addr: string
+			type: string
+		}, ...]
+		floating_intf_ip_se_2?: [{
+			addr: string
+			type: string
+		}, ...]
+		flowtable_profile?: [{
+			tcp_closed_timeout?:           number
+			tcp_connection_setup_timeout?: number
+			tcp_half_closed_timeout?:      number
+			tcp_idle_timeout?:             number
+			tcp_reset_timeout?:            number
+			udp_idle_timeout?:             number
+		}, ...]
 	}, ...]
-}, ...]
-#AviNetworkserviceResource: routing_service?: [{
-	advertise_backend_networks?:   bool
-	enable_routing?:               bool
-	enable_vip_on_all_interfaces?: bool
-	enable_vmac?:                  bool
-	graceful_restart?:             bool
-	routing_by_linux_ipstack?:     bool
-	floating_intf_ip?: [{
-		addr: string
-		type: string
+}
+#AviObjectaccesspolicyResource: {
+	id?:         string
+	name?:       string
+	tenant_ref?: string
+	uuid?:       string
+	rules?: [{
+		name?: string
+		obj_types?: [string, ...]
+		privilege?: string
+		matches?: [{
+			label_key?: string
+			label_values?: [string, ...]
+		}, ...]
 	}, ...]
-	floating_intf_ip_se_2?: [{
-		addr: string
-		type: string
+}
+#AviPingaccessagentResource: {
+	description?:          string
+	id?:                   string
+	name?:                 string
+	pingaccess_pool_ref?:  string
+	properties_file_data?: string
+	tenant_ref?:           string
+	uuid?:                 string
+	primary_server?: [{
+		hostname?: string
+		port?:     number
+		ip?: [{
+			addr: string
+			type: string
+		}, ...]
 	}, ...]
-	flowtable_profile?: [{
-		tcp_closed_timeout?:           number
-		tcp_connection_setup_timeout?: number
-		tcp_half_closed_timeout?:      number
-		tcp_idle_timeout?:             number
-		tcp_reset_timeout?:            number
-		udp_idle_timeout?:             number
-	}, ...]
-}, ...]
-#AviObjectaccesspolicyResource: rules?: [{
-	obj_types?: [string, ...]
-	matches?: [{
-		label_values?: [string, ...]
-	}, ...]
-}, ...]
-#AviPingaccessagentResource: primary_server?: [{
-	ip?: [{
-		addr: string
-		type: string
-	}, ...]
-}, ...]
+}
 #AviPkiprofileResource: {
 	name:                    string
+	created_by?:             string
 	crl_check?:              bool
+	id?:                     string
 	ignore_peer_chain?:      bool
 	is_federated?:           bool
+	tenant_ref?:             string
+	uuid?:                   string
 	validate_only_leaf_crl?: bool
 	ca_certs?: [{
-		days_until_expire?: number
-		expiry_status?:     string
+		certificate?:                 string
+		certificate_signing_request?: string
+		chain_verified?:              bool
+		days_until_expire?:           number
+		expiry_status?:               string
+		fingerprint?:                 string
+		not_after?:                   string
+		not_before?:                  string
+		public_key?:                  string
+		self_signed?:                 bool
+		serial_number?:               string
+		signature?:                   string
+		signature_algorithm?:         string
 		subject_alt_names?: [string, ...]
-		issuer?: [{}, ...]
+		text?:    string
+		version?: string
+		issuer?: [{
+			common_name?:        string
+			country?:            string
+			distinguished_name?: string
+			email_address?:      string
+			locality?:           string
+			organization?:       string
+			organization_unit?:  string
+			state?:              string
+		}, ...]
 		key_params?: [{
 			algorithm: string
 			ec_params?: [{
@@ -2462,17 +3432,43 @@ package avi
 				key_size?: string
 			}, ...]
 		}, ...]
-		subject?: [{}, ...]
+		subject?: [{
+			common_name?:        string
+			country?:            string
+			distinguished_name?: string
+			email_address?:      string
+			locality?:           string
+			organization?:       string
+			organization_unit?:  string
+			state?:              string
+		}, ...]
 	}, ...]
-	crls?: [{}, ...]
+	crls?: [{
+		body?:               string
+		common_name?:        string
+		distinguished_name?: string
+		etag?:               string
+		fingerprint?:        string
+		last_refreshed?:     string
+		last_update?:        string
+		next_update?:        string
+		server_url?:         string
+		text?:               string
+		update_interval?:    number
+	}, ...]
 }
 #AviPoolResource: {
-	name:           string
-	apic_epg_name?: string
+	name:                                 string
+	analytics_profile_ref?:               string
+	apic_epg_name?:                       string
+	application_persistence_profile_ref?: string
+	autoscale_launch_config_ref?:         string
 	autoscale_networks?: [string, ...]
+	autoscale_policy_ref?:            string
 	capacity_estimation?:             bool
 	capacity_estimation_ttfb_thresh?: number
 	cloud_config_cksum?:              string
+	cloud_ref?:                       string
 	connection_ramp_duration?:        number
 	created_by?:                      string
 	default_server_port?:             number
@@ -2482,11 +3478,14 @@ package avi
 	east_west?: bool
 	enabled?:   bool
 	external_autoscale_groups?: [string, ...]
-	fewest_tasks_feedback_delay?:           number
-	graceful_disable_timeout?:              number
+	fewest_tasks_feedback_delay?: number
+	graceful_disable_timeout?:    number
+	health_monitor_refs?: [string, ...]
 	host_check_enabled?:                    bool
+	id?:                                    string
 	ignore_servers?:                        bool
 	inline_health_monitor?:                 bool
+	ipaddrgroup_ref?:                       string
 	lb_algorithm?:                          string
 	lb_algorithm_consistent_hash_hdr?:      string
 	lb_algorithm_core_nonaffinity?:         number
@@ -2496,6 +3495,7 @@ package avi
 	min_health_monitors_up?:                number
 	min_servers_up?:                        number
 	nsx_securitygroup?: [string, ...]
+	pki_profile_ref?:                    string
 	request_queue_depth?:                number
 	request_queue_enabled?:              bool
 	rewrite_host_header_to_server_name?: bool
@@ -2504,7 +3504,12 @@ package avi
 	server_timeout?:                     number
 	service_metadata?:                   string
 	sni_enabled?:                        bool
+	ssl_key_and_certificate_ref?:        string
+	ssl_profile_ref?:                    string
+	tenant_ref?:                         string
 	use_service_port?:                   bool
+	uuid?:                               string
+	vrf_ref?:                            string
 	analytics_policy?: [{
 		enable_realtime_metrics?: bool
 	}, ...]
@@ -2525,16 +3530,17 @@ package avi
 		}, ...]
 		redirect?: [{
 			host:         string
+			path?:        string
 			protocol?:    string
+			query?:       string
 			status_code?: string
 		}, ...]
 	}, ...]
 	max_conn_rate_per_server?: [{
-		burst_sz?:          number
-		count?:             number
 		explicit_tracking?: bool
 		fine_grain?:        bool
-		period?:            number
+		http_cookie?:       string
+		http_header?:       string
 		action?: [{
 			status_code?: string
 			type?:        string
@@ -2545,24 +3551,38 @@ package avi
 			redirect?: [{
 				protocol:     string
 				keep_query?:  bool
+				port?:        number
 				status_code?: string
 				host?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
+		rate_limiter?: [{
+			burst_sz?: number
+			count?:    number
+			name?:     string
+			period?:   number
+		}, ...]
 	}, ...]
 	networks?: [{
-		network_ref: string
+		network_ref:    string
+		server_filter?: string
 	}, ...]
 	placement_networks?: [{
 		network_ref: string
@@ -2589,12 +3609,24 @@ package avi
 		}, ...]
 	}, ...]
 	servers?: [{
-		enabled?:               bool
-		ratio?:                 number
-		resolve_server_by_dns?: bool
-		rewrite_host_header?:   bool
-		static?:                bool
-		verify_network?:        bool
+		autoscaling_group_name?:    string
+		availability_zone?:         string
+		description?:               string
+		enabled?:                   bool
+		external_orchestration_id?: string
+		external_uuid?:             string
+		hostname?:                  string
+		mac_address?:               string
+		nw_ref?:                    string
+		port?:                      number
+		prst_hdr_val?:              string
+		ratio?:                     number
+		resolve_server_by_dns?:     bool
+		rewrite_host_header?:       bool
+		server_node?:               string
+		static?:                    bool
+		verify_network?:            bool
+		vm_ref?:                    string
 		discovered_networks?: [{
 			network_ref: string
 			subnet?: [{
@@ -2616,13 +3648,28 @@ package avi
 			addr: string
 			type: string
 		}, ...]
-		location?: [{}, ...]
+		location?: [{
+			latitude?:  number
+			longitude?: number
+			name?:      string
+			tag?:       string
+		}, ...]
 	}, ...]
 }
 #AviPoolgroupResource: {
 	name:                      string
+	cloud_config_cksum?:       string
+	cloud_ref?:                string
+	created_by?:               string
+	deployment_policy_ref?:    string
+	description?:              string
+	id?:                       string
 	implicit_priority_labels?: bool
 	min_servers?:              number
+	priority_labels_ref?:      string
+	service_metadata?:         string
+	tenant_ref?:               string
+	uuid?:                     string
 	fail_action?: [{
 		type: string
 		local_rsp?: [{
@@ -2634,53 +3681,108 @@ package avi
 		}, ...]
 		redirect?: [{
 			host:         string
+			path?:        string
 			protocol?:    string
+			query?:       string
 			status_code?: string
 		}, ...]
 	}, ...]
 	members?: [{
-		pool_ref: string
-		ratio?:   number
+		pool_ref:          string
+		deployment_state?: string
+		priority_label?:   string
+		ratio?:            number
 	}, ...]
 }
 #AviPoolgroupdeploymentpolicyResource: {
 	name:                         string
 	auto_disable_old_prod_pools?: bool
+	description?:                 string
 	evaluation_duration?:         number
+	id?:                          string
 	scheme?:                      string
 	target_test_traffic_ratio?:   number
+	tenant_ref?:                  string
 	test_traffic_ratio_rampup?:   number
+	uuid?:                        string
+	webhook_ref?:                 string
 	rules?: [{
 		metric_id?: string
 		operator?:  string
+		threshold?: number
 	}, ...]
 }
-#AviPortalfileuploadResource: {}
+#AviPortalfileuploadResource: {
+	case_id?:      string
+	error?:        string
+	file_path?:    string
+	id?:           string
+	name?:         string
+	s3_directory?: string
+	status?:       string
+	tenant_ref?:   string
+	uuid?:         string
+}
 #AviPrioritylabelsResource: {
-	name: string
+	name:         string
+	cloud_ref?:   string
+	description?: string
+	id?:          string
+	tenant_ref?:  string
+	uuid?:        string
 	equivalent_labels?: [{
 		labels?: [string, ...]
 	}, ...]
 }
-#AviProtocolparserResource: {}
+#AviProtocolparserResource: {
+	description?: string
+	id?:          string
+	name?:        string
+	parser_code?: string
+	tenant_ref?:  string
+	uuid?:        string
+}
 #AviRoleResource: {
-	name: string
-	privileges?: [{}, ...]
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
+	privileges?: [{
+		resource?: string
+		type?:     string
+	}, ...]
 }
 #AviSchedulerResource: {
-	name:              string
-	enabled?:          bool
-	scheduler_action?: string
+	name:               string
+	backup_config_ref?: string
+	enabled?:           bool
+	end_date_time?:     string
+	frequency?:         number
+	frequency_unit?:    string
+	id?:                string
+	run_mode?:          string
+	run_script_ref?:    string
+	scheduler_action?:  string
+	start_date_time?:   string
+	tenant_ref?:        string
+	uuid?:              string
 }
 #AviSecuritypolicyResource: {
 	name:                           string
+	description?:                   string
 	dns_policy_index?:              number
+	id?:                            string
 	network_security_policy_index?: number
 	oper_mode?:                     string
+	tenant_ref?:                    string
+	uuid?:                          string
 	dns_attacks?: [{
+		oper_mode?: string
 		attacks?: [{
+			attack_vector?:      string
 			enabled?:            bool
 			max_mitigation_age?: number
+			threshold?:          number
 			mitigation_action?: [{
 				deny?: bool
 			}, ...]
@@ -2690,6 +3792,8 @@ package avi
 	udp_attacks?: [{}, ...]
 }
 #AviSepropertiesResource: {
+	id?:   string
+	uuid?: string
 	se_agent_properties?: [{
 		controller_echo_miss_aggressive_limit?:  number
 		controller_echo_miss_limit?:             number
@@ -2806,6 +3910,12 @@ package avi
 		log_agent_sleep_interval?:                      number
 		log_agent_unknown_vs_timer?:                    number
 		log_message_max_file_list_size?:                number
+		mcache_enabled?:                                bool
+		mcache_fetch_enabled?:                          bool
+		mcache_store_in_enabled?:                       bool
+		mcache_store_in_max_size?:                      number
+		mcache_store_in_min_size?:                      number
+		mcache_store_out_enabled?:                      bool
 		ngx_free_connection_stack?:                     bool
 		persistence_mem_max?:                           number
 		scaleout_udp_per_pkt?:                          bool
@@ -2893,7 +4003,9 @@ package avi
 	external_orchestration_id?: string
 	external_uuid?:             string
 	hostname?:                  string
+	id?:                        string
 	mac_address?:               string
+	nw_ref?:                    string
 	port?:                      number
 	prst_hdr_val?:              string
 	ratio?:                     number
@@ -2903,6 +4015,7 @@ package avi
 	static?:                    bool
 	type?:                      string
 	verify_network?:            bool
+	vm_ref?:                    string
 	discovered_networks?: [{
 		network_ref: string
 		subnet?: [{
@@ -2920,36 +4033,60 @@ package avi
 			}, ...]
 		}, ...]
 	}, ...]
-	location?: [{}, ...]
+	location?: [{
+		latitude?:  number
+		longitude?: number
+		name?:      string
+		tag?:       string
+	}, ...]
 }
 #AviServerautoscalepolicyResource: {
 	name:                          string
+	description?:                  string
+	id?:                           string
 	intelligent_autoscale?:        bool
 	intelligent_scalein_margin?:   number
 	intelligent_scaleout_margin?:  number
 	max_scalein_adjustment_step?:  number
 	max_scaleout_adjustment_step?: number
+	max_size?:                     number
+	min_size?:                     number
 	scalein_alertconfig_refs?: [string, ...]
 	scalein_cooldown?: number
 	scaleout_alertconfig_refs?: [string, ...]
 	scaleout_cooldown?:  number
+	tenant_ref?:         string
 	use_predicted_load?: bool
+	uuid?:               string
 }
 #AviServiceengineResource: {
+	availability_zone?:  string
+	cloud_ref?:          string
 	container_mode?:     bool
 	container_type?:     string
 	controller_created?: bool
+	controller_ip?:      string
 	enable_state?:       string
+	flavor?:             string
+	host_ref?:           string
+	hypervisor?:         string
+	id?:                 string
 	name?:               string
+	se_group_ref?:       string
+	tenant_ref?:         string
+	uuid?:               string
 	data_vnics?: [{
 		mac_address:              string
+		adapter?:                 string
 		aggregator_chgd?:         bool
 		can_se_dp_takeover?:      bool
+		connected?:               bool
 		del_pending?:             bool
 		delete_vnic?:             bool
 		dhcp_enabled?:            bool
 		dp_deletion_done?:        bool
 		enabled?:                 bool
+		if_name?:                 string
 		ip6_autocfg_enabled?:     bool
 		is_asm?:                  bool
 		is_avi_internal_network?: bool
@@ -2957,12 +4094,19 @@ package avi
 		is_mgmt?:                 bool
 		is_portchannel?:          bool
 		link_up?:                 bool
+		linux_name?:              string
 		mtu?:                     number
+		network_name?:            string
+		network_ref?:             string
+		pci_id?:                  string
+		port_uuid?:               string
 		vlan_id?:                 number
 		vrf_id?:                  number
+		vrf_ref?:                 string
 		members?: [{
-			if_name: string
-			active?: bool
+			if_name:      string
+			active?:      bool
+			mac_address?: string
 		}, ...]
 		vlan_interfaces?: [{
 			if_name:              string
@@ -2971,6 +4115,7 @@ package avi
 			ip6_autocfg_enabled?: bool
 			is_mgmt?:             bool
 			vlan_id?:             number
+			vrf_ref?:             string
 			vnic_networks?: [{
 				mode:        string
 				ctlr_alloc?: bool
@@ -2997,13 +4142,16 @@ package avi
 	}, ...]
 	mgmt_vnic?: [{
 		mac_address:              string
+		adapter?:                 string
 		aggregator_chgd?:         bool
 		can_se_dp_takeover?:      bool
+		connected?:               bool
 		del_pending?:             bool
 		delete_vnic?:             bool
 		dhcp_enabled?:            bool
 		dp_deletion_done?:        bool
 		enabled?:                 bool
+		if_name?:                 string
 		ip6_autocfg_enabled?:     bool
 		is_asm?:                  bool
 		is_avi_internal_network?: bool
@@ -3011,12 +4159,19 @@ package avi
 		is_mgmt?:                 bool
 		is_portchannel?:          bool
 		link_up?:                 bool
+		linux_name?:              string
 		mtu?:                     number
+		network_name?:            string
+		network_ref?:             string
+		pci_id?:                  string
+		port_uuid?:               string
 		vlan_id?:                 number
 		vrf_id?:                  number
+		vrf_ref?:                 string
 		members?: [{
-			if_name: string
-			active?: bool
+			if_name:      string
+			active?:      bool
+			mac_address?: string
 		}, ...]
 		vlan_interfaces?: [{
 			if_name:              string
@@ -3025,6 +4180,7 @@ package avi
 			ip6_autocfg_enabled?: bool
 			is_mgmt?:             bool
 			vlan_id?:             number
+			vrf_ref?:             string
 			vnic_networks?: [{
 				mode:        string
 				ctlr_alloc?: bool
@@ -3050,16 +4206,21 @@ package avi
 		}, ...]
 	}, ...]
 	resources?: [{
-		disk:      number
-		memory:    number
-		num_vcpus: number
+		disk:              number
+		memory:            number
+		num_vcpus:         number
+		cores_per_socket?: number
+		hyper_threading?:  bool
+		sockets?:          number
 	}, ...]
 }
 #AviServiceenginegroupResource: {
 	name:                          string
+	accelerated_networking?:       bool
 	active_standby?:               bool
 	aggressive_failure_detection?: bool
 	algo?:                         string
+	allow_burst?:                  bool
 	app_cache_percent?:            number
 	app_learning_memory_percent?:  number
 	archive_shm_limit?:            number
@@ -3072,6 +4233,8 @@ package avi
 	auto_redistribute_active_standby_load?: bool
 	bgp_state_update_interval?:             number
 	buffer_se?:                             number
+	cloud_ref?:                             string
+	compress_ip_rules_for_each_ns_subnet?:  bool
 	config_debugs_on_all_cores?:            bool
 	connection_memory_percentage?:          number
 	core_shm_app_cache?:                    bool
@@ -3080,8 +4243,10 @@ package avi
 	cpu_socket_affinity?:                   bool
 	custom_securitygroups_data?: [string, ...]
 	custom_securitygroups_mgmt?: [string, ...]
+	data_network_id?:                      string
 	datascript_timeout?:                   number
 	dedicated_dispatcher_core?:            bool
+	description?:                          string
 	disable_avi_securitygroups?:           bool
 	disable_csum_offloads?:                bool
 	disable_gro?:                          bool
@@ -3094,20 +4259,32 @@ package avi
 	enable_gratarp_permanent?:             bool
 	enable_hsm_priming?:                   bool
 	enable_multi_lb?:                      bool
+	enable_pcap_tx_ring?:                  bool
+	ephemeral_portrange_end?:              number
+	ephemeral_portrange_start?:            number
 	extra_config_multiplier?:              number
 	extra_shared_config_memory?:           number
 	flow_table_new_syn_max_entries?:       number
 	free_list_size?:                       number
 	gratarp_permanent_periodicity?:        number
 	ha_mode?:                              string
+	hardwaresecuritymodulegroup_ref?:      string
 	heap_minimum_config_memory?:           number
 	hm_on_standby?:                        bool
+	host_attribute_key?:                   string
+	host_attribute_value?:                 string
 	host_gateway_monitor?:                 bool
+	hypervisor?:                           string
+	id?:                                   string
 	ignore_rtt_threshold?:                 number
 	ingress_access_data?:                  string
 	ingress_access_mgmt?:                  string
+	instance_flavor?:                      string
 	least_load_core_selection?:            bool
+	license_tier?:                         string
+	license_type?:                         string
 	log_disksz?:                           number
+	max_concurrent_external_hm?:           number
 	max_cpu_usage?:                        number
 	max_memory_per_mempool?:               number
 	max_public_ips_per_lb?:                number
@@ -3119,6 +4296,7 @@ package avi
 	mem_reserve?:                          bool
 	memory_for_config_update?:             number
 	memory_per_se?:                        number
+	mgmt_network_ref?:                     string
 	min_cpu_usage?:                        number
 	min_scaleout_per_vs?:                  number
 	min_se?:                               number
@@ -3128,11 +4306,14 @@ package avi
 	num_dispatcher_cores?:                 number
 	num_flow_cores_sum_changes_to_ignore?: number
 	openstack_availability_zones?: [string, ...]
+	openstack_mgmt_network_name?:             string
+	openstack_mgmt_network_uuid?:             string
 	os_reserved_memory?:                      number
 	pcap_tx_mode?:                            string
 	per_app?:                                 bool
 	placement_mode?:                          string
 	reboot_on_panic?:                         bool
+	se_bandwidth_type?:                       string
 	se_deprovision_delay?:                    number
 	se_dp_vnic_queue_stall_event_sleep?:      number
 	se_dp_vnic_queue_stall_threshold?:        number
@@ -3145,6 +4326,7 @@ package avi
 	se_ipc_udp_port?:                         number
 	se_kni_burst_factor?:                     number
 	se_lro?:                                  bool
+	se_mtu?:                                  number
 	se_name_prefix?:                          string
 	se_pcap_lookahead?:                       bool
 	se_pcap_pkt_count?:                       number
@@ -3172,7 +4354,10 @@ package avi
 	shm_minimum_config_memory?:               number
 	significant_log_throttle?:                number
 	ssl_preprocess_sni_hostname?:             bool
+	tenant_ref?:                              string
 	udf_log_throttle?:                        number
+	use_standard_alb?:                        bool
+	uuid?:                                    string
 	vcenter_datastore_mode?:                  string
 	vcenter_datastores_include?:              bool
 	vcenter_folder?:                          string
@@ -3188,13 +4373,18 @@ package avi
 	waf_mempool?:                             bool
 	waf_mempool_size?:                        number
 	custom_tag?: [{
-		tag_key: string
+		tag_key:  string
+		tag_val?: string
 	}, ...]
 	iptables?: [{
 		chain: string
 		table: string
 		rules?: [{
-			action: string
+			action:            string
+			input_interface?:  string
+			output_interface?: string
+			proto?:            string
+			tag?:              string
 			dnat_ip?: [{
 				addr: string
 				type: string
@@ -3242,6 +4432,10 @@ package avi
 			min_value: number
 		}, ...]
 	}, ...]
+	se_rl_prop?: [{
+		msf_num_stages?: number
+		msf_stage_size?: number
+	}, ...]
 	se_tracert_port_range?: [{
 		end:   number
 		start: number
@@ -3273,7 +4467,9 @@ package avi
 	}, ...]
 	vip_asg?: [{
 		configuration?: [{
-			zones?: [{}, ...]
+			zones?: [{
+				subnet_uuid?: string
+			}, ...]
 		}, ...]
 		policy?: [{
 			dns_cooldown?: number
@@ -3288,10 +4484,14 @@ package avi
 	}, ...]
 }
 #AviSnmptrapprofileResource: {
-	name: string
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
 	trap_servers?: [{
-		port?:    number
-		version?: string
+		community?: string
+		port?:      number
+		version?:   string
 		ip_addr?: [{
 			addr: string
 			type: string
@@ -3301,21 +4501,58 @@ package avi
 			auth_type?:       string
 			priv_passphrase?: string
 			priv_type?:       string
+			username?:        string
 		}, ...]
 	}, ...]
 }
 #AviSslkeyandcertificateResource: {
-	name:                string
-	certificate_base64?: bool
-	format?:             string
-	key_base64?:         bool
-	status?:             string
-	ca_certs?: [{}, ...]
+	name:                                string
+	certificate_base64?:                 bool
+	certificate_management_profile_ref?: string
+	created_by?:                         string
+	enckey_base64?:                      string
+	enckey_name?:                        string
+	format?:                             string
+	hardwaresecuritymodulegroup_ref?:    string
+	id?:                                 string
+	key?:                                string
+	key_base64?:                         bool
+	key_passphrase?:                     string
+	status?:                             string
+	tenant_ref?:                         string
+	type?:                               string
+	uuid?:                               string
+	ca_certs?: [{
+		ca_ref?: string
+		name?:   string
+	}, ...]
 	certificate?: [{
-		days_until_expire?: number
-		expiry_status?:     string
+		certificate?:                 string
+		certificate_signing_request?: string
+		chain_verified?:              bool
+		days_until_expire?:           number
+		expiry_status?:               string
+		fingerprint?:                 string
+		not_after?:                   string
+		not_before?:                  string
+		public_key?:                  string
+		self_signed?:                 bool
+		serial_number?:               string
+		signature?:                   string
+		signature_algorithm?:         string
 		subject_alt_names?: [string, ...]
-		issuer?: [{}, ...]
+		text?:    string
+		version?: string
+		issuer?: [{
+			common_name?:        string
+			country?:            string
+			distinguished_name?: string
+			email_address?:      string
+			locality?:           string
+			organization?:       string
+			organization_unit?:  string
+			state?:              string
+		}, ...]
 		key_params?: [{
 			algorithm: string
 			ec_params?: [{
@@ -3326,12 +4563,22 @@ package avi
 				key_size?: string
 			}, ...]
 		}, ...]
-		subject?: [{}, ...]
+		subject?: [{
+			common_name?:        string
+			country?:            string
+			distinguished_name?: string
+			email_address?:      string
+			locality?:           string
+			organization?:       string
+			organization_unit?:  string
+			state?:              string
+		}, ...]
 	}, ...]
 	dynamic_params?: [{
 		name:          string
 		is_dynamic?:   bool
 		is_sensitive?: bool
+		value?:        string
 	}, ...]
 	key_params?: [{
 		algorithm: string
@@ -3349,26 +4596,42 @@ package avi
 	accepted_ciphers?: string
 	cipher_enums?: [string, ...]
 	ciphersuites?:                  string
+	description?:                   string
+	dhparam?:                       string
 	enable_early_data?:             bool
 	enable_ssl_session_reuse?:      bool
+	id?:                            string
 	prefer_client_cipher_ordering?: bool
 	send_close_notify?:             bool
 	ssl_session_timeout?:           number
+	tenant_ref?:                    string
 	type?:                          string
+	uuid?:                          string
 	accepted_versions?: [{
 		type: string
 	}, ...]
-	ssl_rating?: [{}, ...]
+	ssl_rating?: [{
+		compatibility_rating?: string
+		performance_rating?:   string
+		security_score?:       string
+	}, ...]
 	tags?: [{
 		value: string
 		type?: string
 	}, ...]
 }
 #AviSsopolicyResource: {
-	type?: string
+	id?:         string
+	name?:       string
+	tenant_ref?: string
+	type?:       string
+	uuid?:       string
 	authentication_policy?: [{
+		default_auth_profile_ref?: string
 		authn_rules?: [{
 			enable?: bool
+			index?:  number
+			name?:   string
 			action?: [{
 				type?: string
 			}, ...]
@@ -3415,12 +4678,15 @@ package avi
 	authorization_policy?: [{
 		authz_rules?: [{
 			enable?: bool
+			index?:  number
+			name?:   string
 			action?: [{
 				status_code?: string
 				type?:        string
 			}, ...]
 			match?: [{
 				attr_matches?: [{
+					attribute_name?: string
 					attribute_value_list?: [{
 						match_criteria: string
 						match_str?: [string, ...]
@@ -3449,34 +4715,53 @@ package avi
 #AviStringgroupResource: {
 	name:           string
 	type:           string
+	description?:   string
+	id?:            string
 	longest_match?: bool
+	tenant_ref?:    string
+	uuid?:          string
 	kv?: [{
-		key: string
+		key:    string
+		value?: string
 	}, ...]
 }
 #AviSystemconfigurationResource: {
 	default_license_tier?: string
 	dns_virtualservice_refs?: [string, ...]
 	docker_mode?: bool
+	id?:          string
 	ssh_ciphers?: [string, ...]
 	ssh_hmacs?: [string, ...]
+	uuid?:                      string
 	welcome_workflow_complete?: bool
 	admin_auth_configuration?: [{
 		allow_local_user_login?: bool
+		auth_profile_ref?:       string
 		mapping_rules?: [{
-			index: number
+			index:          number
+			assign_policy?: string
+			assign_role?:   string
+			assign_tenant?: string
+			is_superuser?:  bool
 			object_access_policy_refs?: [string, ...]
+			policy_attribute_name?: string
+			role_attribute_name?:   string
 			role_refs?: [string, ...]
+			tenant_attribute_name?: string
 			tenant_refs?: [string, ...]
 			attribute_match?: [{
+				criteria?: string
+				name?:     string
 				values?: [string, ...]
 			}, ...]
 			group_match?: [{
+				criteria?: string
 				groups?: [string, ...]
 			}, ...]
 		}, ...]
 	}, ...]
 	dns_configuration?: [{
+		search_domain?: string
 		server_list?: [{
 			addr: string
 			type: string
@@ -3484,6 +4769,8 @@ package avi
 	}, ...]
 	email_configuration?: [{
 		smtp_type:         string
+		auth_password?:    string
+		auth_username?:    string
 		disable_tls?:      bool
 		from_email?:       string
 		mail_server_name?: string
@@ -3495,7 +4782,9 @@ package avi
 		tenant_vrf?:                   bool
 	}, ...]
 	linux_configuration?: [{
+		banner?:   string
 		cis_mode?: bool
+		motd?:     string
 	}, ...]
 	mgmt_ip_access_control?: [{
 		api_access?: [{
@@ -3626,13 +4915,16 @@ package avi
 	}, ...]
 	ntp_configuration?: [{
 		ntp_authentication_keys?: [{
-			algorithm?: string
+			algorithm?:  string
+			key?:        string
+			key_number?: number
 		}, ...]
 		ntp_server_list?: [{
 			addr: string
 			type: string
 		}, ...]
 		ntp_servers?: [{
+			key_number?: number
 			server?: [{
 				addr: string
 				type: string
@@ -3647,51 +4939,84 @@ package avi
 		enable_clickjacking_protection?: bool
 		enable_http?:                    bool
 		enable_https?:                   bool
+		http_port?:                      number
+		https_port?:                     number
 		password_strength_check?:        bool
 		redirect_to_https?:              bool
 		sslkeyandcertificate_refs?: [string, ...]
+		sslprofile_ref?:      string
 		use_uuid_from_input?: bool
 	}, ...]
 	proxy_configuration?: [{
-		host: string
-		port: number
+		host:      string
+		port:      number
+		password?: string
+		username?: string
 	}, ...]
 	secure_channel_configuration?: [{
 		sslkeyandcertificate_refs?: [string, ...]
 	}, ...]
 	snmp_configuration?: [{
+		community?:          string
 		large_trap_payload?: bool
 		sys_contact?:        string
+		sys_location?:       string
 		version?:            string
 		snmp_v3_config?: [{
+			engine_id?: string
 			user?: [{
 				auth_passphrase?: string
 				auth_type?:       string
 				priv_passphrase?: string
 				priv_type?:       string
+				username?:        string
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviTenantResource: {
-	name:   string
-	local?: bool
+	name:         string
+	created_by?:  string
+	description?: string
+	id?:          string
+	local?:       bool
+	uuid?:        string
 	config_settings?: [{
 		se_in_provider_context?:       bool
 		tenant_access_to_provider_se?: bool
 		tenant_vrf?:                   bool
 	}, ...]
 }
-#AviTestsedatastorelevel1Resource: name: string
-#AviTestsedatastorelevel2Resource: {
-	name: string
-	test_se_datastore_level_3_refs?: [string, ...]
+#AviTestsedatastorelevel1Resource: {
+	name:                           string
+	id?:                            string
+	tenant_ref?:                    string
+	test_se_datastore_level_2_ref?: string
+	uuid?:                          string
 }
-#AviTestsedatastorelevel3Resource: name: string
+#AviTestsedatastorelevel2Resource: {
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	test_se_datastore_level_3_refs?: [string, ...]
+	uuid?: string
+}
+#AviTestsedatastorelevel3Resource: {
+	name:        string
+	id?:         string
+	tenant_ref?: string
+	uuid?:       string
+}
 #AviTrafficcloneprofileResource: {
 	name:                string
+	cloud_ref?:          string
+	id?:                 string
 	preserve_client_ip?: bool
+	tenant_ref?:         string
+	uuid?:               string
 	clone_servers?: [{
+		mac?:         string
+		network_ref?: string
 		ip_address?: [{
 			addr: string
 			type: string
@@ -3706,10 +5031,34 @@ package avi
 	}, ...]
 }
 #AviUpgradestatusinfoResource: {
-	enable_patch_rollback?: bool
-	enable_rollback?:       bool
-	progress?:              number
+	duration?:                 number
+	enable_patch_rollback?:    bool
+	enable_rollback?:          bool
+	end_time?:                 string
+	enqueue_time?:             string
+	id?:                       string
+	image_ref?:                string
+	name?:                     string
+	node_type?:                string
+	obj_cloud_ref?:            string
+	patch_image_ref?:          string
+	patch_version?:            string
+	previous_image_ref?:       string
+	previous_patch_image_ref?: string
+	previous_patch_version?:   string
+	previous_version?:         string
+	progress?:                 number
+	start_time?:               string
+	system?:                   bool
+	tasks_completed?:          number
+	tenant_ref?:               string
+	total_tasks?:              number
+	upgrade_ops?:              string
+	uuid?:                     string
+	version?:                  string
 	params?: [{
+		image_ref?: string
+		patch_ref?: string
 		se_group_options?: [{
 			action_on_error?: string
 			disruptive?:      bool
@@ -3720,19 +5069,53 @@ package avi
 			skip_suspended?:  bool
 		}, ...]
 	}, ...]
-	patch_list?: [{}, ...]
-	previous_patch_list?: [{}, ...]
+	patch_list?: [{
+		patch_image_ref?: string
+		patch_version?:   string
+	}, ...]
+	previous_patch_list?: [{
+		patch_image_ref?: string
+		patch_version?:   string
+	}, ...]
 	se_upgrade_events?: [{
+		from_se_ref?:  string
+		num_se?:       number
+		num_se_group?: number
+		num_vs?:       number
 		reason?: [string, ...]
+		se_group_ha_mode?: string
+		se_group_ref?:     string
+		se_ref?:           string
+		task?:             string
+		to_se_ref?:        string
+		traffic_status?:   string
+		vs_ref?:           string
 	}, ...]
 	seg_status?: [{
+		controller_version?: string
 		disrupted_vs_ref?: [string, ...]
+		duration?:     string
+		end_time?:     string
+		enqueue_time?: string
+		ha_mode?:      string
+		in_progress?:  bool
 		notes?: [string, ...]
+		num_se?:                       number
+		num_se_with_no_vs?:            number
+		num_se_with_vs_not_scaledout?: number
+		num_se_with_vs_scaledout?:     number
+		num_vs?:                       number
+		num_vs_disrupted?:             number
+		progress?:                     number
 		reason?: [string, ...]
+		request_time?: string
 		se_already_upgraded_at_start?: [string, ...]
 		se_disconnected_at_start?: [string, ...]
+		se_group_name?: string
+		se_group_uuid?: string
 		se_ip_missing_at_start?: [string, ...]
 		se_poweredoff_at_start?: [string, ...]
+		se_reboot_in_progress_ref?: string
 		se_upgrade_completed?: [string, ...]
 		se_upgrade_failed?: [string, ...]
 		se_upgrade_in_progress?: [string, ...]
@@ -3742,25 +5125,55 @@ package avi
 		se_with_no_vs?: [string, ...]
 		se_with_vs_not_scaledout?: [string, ...]
 		se_with_vs_scaledout?: [string, ...]
+		start_time?:     string
+		state?:          string
+		tenant_ref?:     string
+		thread?:         string
+		traffic_status?: string
 		vs_migrate_in_progress_ref?: [string, ...]
 		vs_scalein_in_progress_ref?: [string, ...]
 		vs_scaleout_in_progress_ref?: [string, ...]
+		worker?: string
 		se_upgrade_errors?: [{
+			from_se_ref?:  string
+			num_se?:       number
+			num_se_group?: number
+			num_vs?:       number
 			reason?: [string, ...]
+			se_group_ha_mode?: string
+			se_group_ref?:     string
+			se_ref?:           string
+			task?:             string
+			to_se_ref?:        string
+			traffic_status?:   string
+			vs_ref?:           string
 		}, ...]
 		vs_errors?: [{
 			reason?: [string, ...]
+			se_group_ha_mode?: string
+			se_group_ref?:     string
+			tenant_ref?:       string
+			traffic_status?:   string
+			vip_id?:           string
+			vs_ref?:           string
 		}, ...]
 	}, ...]
 	state?: [{
+		reason?: string
+		state?:  string
 		last_changed_time?: [{
 			secs:  number
 			usecs: number
 		}, ...]
 	}, ...]
 	upgrade_events?: [{
+		task?: string
 		nodes_events?: [{
-			status?: bool
+			duration?:   number
+			end_time?:   string
+			message?:    string
+			start_time?: string
+			status?:     bool
 			sub_tasks?: [string, ...]
 			ip?: [{
 				addr: string
@@ -3772,7 +5185,23 @@ package avi
 #AviUpgradestatussummaryResource: {
 	enable_patch_rollback?: bool
 	enable_rollback?:       bool
+	end_time?:              string
+	id?:                    string
+	image_ref?:             string
+	name?:                  string
+	node_type?:             string
+	obj_cloud_ref?:         string
+	patch_image_ref?:       string
+	start_time?:            string
+	tasks_completed?:       number
+	tenant_ref?:            string
+	total_tasks?:           number
+	upgrade_ops?:           string
+	uuid?:                  string
+	version?:               string
 	state?: [{
+		reason?: string
+		state?:  string
 		last_changed_time?: [{
 			secs:  number
 			usecs: number
@@ -3782,6 +5211,7 @@ package avi
 #AviUseraccountResource: {
 	email?:        string
 	full_name?:    string
+	id?:           string
 	local?:        bool
 	name?:         string
 	old_password?: string
@@ -3792,37 +5222,73 @@ package avi
 	name:                           string
 	account_lock_timeout?:          number
 	credentials_timeout_threshold?: number
+	id?:                            string
 	max_concurrent_sessions?:       number
 	max_login_failure_count?:       number
 	max_password_history_count?:    number
+	uuid?:                          string
 }
 #AviVirtualserviceResource: {
 	name:                                string
 	active_standby_se_tag?:              string
 	allow_invalid_client_cert?:          bool
+	analytics_profile_ref?:              string
+	apic_contract_graph?:                string
+	application_profile_ref?:            string
 	bulk_sync_kvcache?:                  bool
 	close_client_conn_on_config_update?: bool
+	cloud_config_cksum?:                 string
+	cloud_ref?:                          string
 	cloud_type?:                         string
+	created_by?:                         string
 	delay_fairness?:                     bool
+	description?:                        string
 	east_west_placement?:                bool
 	enable_autogw?:                      bool
+	enable_rhi?:                         bool
+	enable_rhi_snat?:                    bool
 	enabled?:                            bool
+	error_page_profile_ref?:             string
 	flow_dist?:                          string
 	flow_label_type?:                    string
+	fqdn?:                               string
+	host_name_xlate?:                    string
+	id?:                                 string
 	ign_pool_net_reach?:                 bool
 	limit_doser?:                        bool
 	max_cps_per_client?:                 number
+	microservice_ref?:                   string
+	min_pools_up?:                       number
+	network_profile_ref?:                string
+	network_security_policy_ref?:        string
 	nsx_securitygroup?: [string, ...]
+	pool_group_ref?:                   string
+	pool_ref?:                         string
 	remove_listening_port_on_vs_down?: bool
 	scaleout_ecmp?:                    bool
+	se_group_ref?:                     string
+	security_policy_ref?:              string
+	server_network_profile_ref?:       string
+	service_metadata?:                 string
 	ssl_key_and_certificate_refs?: [string, ...]
-	ssl_sess_cache_avg_size?: number
-	traffic_enabled?:         bool
-	type?:                    string
-	use_bridge_ip_as_vip?:    bool
-	use_vip_as_snat?:         bool
+	ssl_profile_ref?:               string
+	ssl_sess_cache_avg_size?:       number
+	sso_policy_ref?:                string
+	tenant_ref?:                    string
+	test_se_datastore_level_1_ref?: string
+	traffic_clone_profile_ref?:     string
+	traffic_enabled?:               bool
+	type?:                          string
+	use_bridge_ip_as_vip?:          bool
+	use_vip_as_snat?:               bool
+	uuid?:                          string
 	vh_domain_name?: [string, ...]
-	weight?: number
+	vh_parent_vs_uuid?:        string
+	vrf_context_ref?:          string
+	vsvip_cloud_config_cksum?: string
+	vsvip_ref?:                string
+	waf_policy_ref?:           string
+	weight?:                   number
 	analytics_policy?: [{
 		all_headers?:              bool
 		client_insights?:          string
@@ -3913,6 +5379,9 @@ package avi
 		}, ...]
 	}, ...]
 	client_auth?: [{
+		auth_profile_ref?: string
+		realm?:            string
+		type?:             string
 		request_uri_path?: [{
 			match_criteria: string
 			match_str?: [string, ...]
@@ -3920,11 +5389,10 @@ package avi
 		}, ...]
 	}, ...]
 	connections_rate_limit?: [{
-		burst_sz?:          number
-		count?:             number
 		explicit_tracking?: bool
 		fine_grain?:        bool
-		period?:            number
+		http_cookie?:       string
+		http_header?:       string
 		action?: [{
 			status_code?: string
 			type?:        string
@@ -3935,53 +5403,85 @@ package avi
 			redirect?: [{
 				protocol:     string
 				keep_query?:  bool
+				port?:        number
 				status_code?: string
 				host?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 			}, ...]
+		}, ...]
+		rate_limiter?: [{
+			burst_sz?: number
+			count?:    number
+			name?:     string
+			period?:   number
 		}, ...]
 	}, ...]
 	content_rewrite?: [{
 		request_rewrite_enabled?:  bool
 		response_rewrite_enabled?: bool
+		rewritable_content_ref?:   string
 		req_match_replace_pair?: [{
-			replacement_string?: [{}, ...]
+			match_string?: string
+			replacement_string?: [{
+				type?: string
+				val?:  string
+			}, ...]
 		}, ...]
 		rsp_match_replace_pair?: [{
-			replacement_string?: [{}, ...]
+			match_string?: string
+			replacement_string?: [{
+				type?: string
+				val?:  string
+			}, ...]
 		}, ...]
 	}, ...]
 	dns_info?: [{
 		algorithm?:               string
+		fqdn?:                    string
 		num_records_in_response?: number
+		ttl?:                     number
 		type?:                    string
 		cname?: [{
 			cname: string
 		}, ...]
 	}, ...]
-	dns_policies?: [{}, ...]
+	dns_policies?: [{
+		dns_policy_ref?: string
+		index?:          number
+	}, ...]
 	http_policies?: [{
 		http_policy_set_ref: string
 		index:               number
 	}, ...]
-	l4_policies?: [{}, ...]
-	performance_limits?: [{}, ...]
+	l4_policies?: [{
+		index?:             number
+		l4_policy_set_ref?: string
+	}, ...]
+	performance_limits?: [{
+		max_concurrent_connections?: number
+		max_throughput?:             number
+	}, ...]
 	requests_rate_limit?: [{
-		burst_sz?:          number
-		count?:             number
 		explicit_tracking?: bool
 		fine_grain?:        bool
-		period?:            number
+		http_cookie?:       string
+		http_header?:       string
 		action?: [{
 			status_code?: string
 			type?:        string
@@ -3992,34 +5492,60 @@ package avi
 			redirect?: [{
 				protocol:     string
 				keep_query?:  bool
+				port?:        number
 				status_code?: string
 				host?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 				path?: [{
 					type: string
 					tokens?: [{
-						type: string
+						type:         string
+						end_index?:   number
+						start_index?: number
+						str_value?:   string
 					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
+		rate_limiter?: [{
+			burst_sz?: number
+			count?:    number
+			name?:     string
+			period?:   number
+		}, ...]
 	}, ...]
 	saml_sp_config?: [{
-		cookie_timeout?: number
-		key?: [{}, ...]
+		cookie_name?:                         string
+		cookie_timeout?:                      number
+		entity_id?:                           string
+		signing_ssl_key_and_certificate_ref?: string
+		single_signon_url?:                   string
+		key?: [{
+			aes_key?:  string
+			hmac_key?: string
+			name?:     string
+		}, ...]
 	}, ...]
 	service_pool_select?: [{
 		service_port:            number
+		service_pool_group_ref?: string
+		service_pool_ref?:       string
 		service_port_range_end?: number
+		service_protocol?:       string
 	}, ...]
 	services?: [{
-		port:            number
-		enable_ssl?:     bool
-		port_range_end?: number
+		port:                              number
+		enable_ssl?:                       bool
+		override_application_profile_ref?: string
+		override_network_profile_ref?:     string
+		port_range_end?:                   number
 	}, ...]
 	sideband_profile?: [{
 		sideband_max_request_body_size?: number
@@ -4033,6 +5559,7 @@ package avi
 		type: string
 	}, ...]
 	ssl_profile_selectors?: [{
+		ssl_profile_ref?: string
 		client_ip_list?: [{
 			match_criteria: string
 			group_refs?: [string, ...]
@@ -4060,11 +5587,14 @@ package avi
 		}, ...]
 	}, ...]
 	static_dns_records?: [{
-		type:       string
-		algorithm?: string
-		delegated?: bool
+		type:         string
+		algorithm?:   string
+		delegated?:   bool
+		description?: string
 		fqdn?: [string, ...]
+		metadata?:                string
 		num_records_in_response?: number
+		ttl?:                     number
 		wildcard_match?:          bool
 		cname?: [{
 			cname: string
@@ -4080,6 +5610,10 @@ package avi
 				addr: string
 				type: string
 			}, ...]
+		}, ...]
+		mx_records?: [{
+			host?:     string
+			priority?: number
 		}, ...]
 		ns?: [{
 			nsname: string
@@ -4098,15 +5632,29 @@ package avi
 			target?:   string
 			weight?:   number
 		}, ...]
+		txt_records?: [{
+			text_str?: string
+		}, ...]
 	}, ...]
-	topology_policies?: [{}, ...]
+	topology_policies?: [{
+		dns_policy_ref?: string
+		index?:          number
+	}, ...]
 	vip?: [{
 		auto_allocate_floating_ip?: bool
 		auto_allocate_ip?:          bool
 		auto_allocate_ip_type?:     string
+		availability_zone?:         string
 		avi_allocated_fip?:         bool
 		avi_allocated_vip?:         bool
 		enabled?:                   bool
+		floating_subnet6_uuid?:     string
+		floating_subnet_uuid?:      string
+		network_ref?:               string
+		port_uuid?:                 string
+		subnet6_uuid?:              string
+		subnet_uuid?:               string
+		vip_id?:                    string
 		discovered_networks?: [{
 			network_ref: string
 			subnet?: [{
@@ -4141,6 +5689,9 @@ package avi
 			type: string
 		}, ...]
 		ipam_network_subnet?: [{
+			network_ref?:  string
+			subnet6_uuid?: string
+			subnet_uuid?:  string
 			subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4157,6 +5708,7 @@ package avi
 			}, ...]
 		}, ...]
 		placement_networks?: [{
+			network_ref?: string
 			subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4194,7 +5746,12 @@ package avi
 }
 #AviVrfcontextResource: {
 	name:            string
+	cloud_ref?:      string
+	description?:    string
+	id?:             string
 	system_default?: bool
+	tenant_ref?:     string
+	uuid?:           string
 	bgp_profile?: [{
 		ibgp:     bool
 		local_as: number
@@ -4221,6 +5778,12 @@ package avi
 			bfd?:                    bool
 			connect_timer?:          number
 			ebgp_multihop?:          number
+			hold_time?:              number
+			keepalive_interval?:     number
+			local_as?:               number
+			md5_secret?:             string
+			network_ref?:            string
+			remote_as?:              number
 			shutdown?:               bool
 			peer_ip?: [{
 				addr: string
@@ -4276,10 +5839,13 @@ package avi
 		gateway_monitor_success_threshold?: number
 	}, ...]
 	labels?: [{
-		key: string
+		key:    string
+		value?: string
 	}, ...]
 	static_routes?: [{
-		route_id: string
+		route_id:                 string
+		disable_gateway_monitor?: bool
+		if_name?:                 string
 		next_hop?: [{
 			addr: string
 			type: string
@@ -4294,23 +5860,43 @@ package avi
 	}, ...]
 }
 #AviVsdatascriptsetResource: {
-	name: string
+	name:         string
+	created_by?:  string
+	description?: string
+	id?:          string
 	ipgroup_refs?: [string, ...]
 	pool_group_refs?: [string, ...]
 	pool_refs?: [string, ...]
 	protocol_parser_refs?: [string, ...]
 	string_group_refs?: [string, ...]
+	tenant_ref?: string
+	uuid?:       string
 	datascript?: [{
 		evt:    string
 		script: string
 	}, ...]
+	rate_limiters?: [{
+		burst_sz?: number
+		count?:    number
+		name?:     string
+		period?:   number
+	}, ...]
 }
 #AviVsvipResource: {
-	name:                 string
-	east_west_placement?: bool
+	name:                      string
+	cloud_ref?:                string
+	east_west_placement?:      bool
+	id?:                       string
+	tenant_ref?:               string
+	use_standard_alb?:         bool
+	uuid?:                     string
+	vrf_context_ref?:          string
+	vsvip_cloud_config_cksum?: string
 	dns_info?: [{
 		algorithm?:               string
+		fqdn?:                    string
 		num_records_in_response?: number
+		ttl?:                     number
 		type?:                    string
 		cname?: [{
 			cname: string
@@ -4320,9 +5906,17 @@ package avi
 		auto_allocate_floating_ip?: bool
 		auto_allocate_ip?:          bool
 		auto_allocate_ip_type?:     string
+		availability_zone?:         string
 		avi_allocated_fip?:         bool
 		avi_allocated_vip?:         bool
 		enabled?:                   bool
+		floating_subnet6_uuid?:     string
+		floating_subnet_uuid?:      string
+		network_ref?:               string
+		port_uuid?:                 string
+		subnet6_uuid?:              string
+		subnet_uuid?:               string
+		vip_id?:                    string
 		discovered_networks?: [{
 			network_ref: string
 			subnet?: [{
@@ -4357,6 +5951,9 @@ package avi
 			type: string
 		}, ...]
 		ipam_network_subnet?: [{
+			network_ref?:  string
+			subnet6_uuid?: string
+			subnet_uuid?:  string
 			subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4373,6 +5970,7 @@ package avi
 			}, ...]
 		}, ...]
 		placement_networks?: [{
+			network_ref?: string
 			subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4404,60 +6002,23 @@ package avi
 		}, ...]
 	}, ...]
 }
-#AviWafcrsResource: groups?: [{
-	index:   number
-	enable?: bool
-	exclude_list?: [{
-		client_subnet?: [{
-			mask: number
-			ip_addr?: [{
-				addr: string
-				type: string
-			}, ...]
-		}, ...]
-		match_element_criteria?: [{
-			match_case?: string
-			match_op?:   string
-		}, ...]
-		uri_match_criteria?: [{
-			match_case?: string
-			match_op?:   string
-		}, ...]
-	}, ...]
-	rules?: [{
+#AviWafcrsResource: {
+	description?:  string
+	id?:           string
+	integrity?:    string
+	name?:         string
+	release_date?: string
+	tenant_ref?:   string
+	uuid?:         string
+	version?:      string
+	groups?: [{
 		index:   number
 		enable?: bool
-		tags?: [string, ...]
+		name?:   string
 		exclude_list?: [{
-			client_subnet?: [{
-				mask: number
-				ip_addr?: [{
-					addr: string
-					type: string
-				}, ...]
-			}, ...]
-			match_element_criteria?: [{
-				match_case?: string
-				match_op?:   string
-			}, ...]
-			uri_match_criteria?: [{
-				match_case?: string
-				match_op?:   string
-			}, ...]
-		}, ...]
-	}, ...]
-}, ...]
-#AviWafpolicyResource: {
-	name:                   string
-	allow_mode_delegation?: bool
-	enable_app_learning?:   bool
-	failure_mode?:          string
-	mode?:                  string
-	paranoia_level?:        string
-	crs_groups?: [{
-		index:   number
-		enable?: bool
-		exclude_list?: [{
+			description?:   string
+			match_element?: string
+			uri_path?:      string
 			client_subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4475,10 +6036,86 @@ package avi
 			}, ...]
 		}, ...]
 		rules?: [{
-			index:   number
-			enable?: bool
+			index:    number
+			enable?:  bool
+			mode?:    string
+			name?:    string
+			rule?:    string
+			rule_id?: string
 			tags?: [string, ...]
 			exclude_list?: [{
+				description?:   string
+				match_element?: string
+				uri_path?:      string
+				client_subnet?: [{
+					mask: number
+					ip_addr?: [{
+						addr: string
+						type: string
+					}, ...]
+				}, ...]
+				match_element_criteria?: [{
+					match_case?: string
+					match_op?:   string
+				}, ...]
+				uri_match_criteria?: [{
+					match_case?: string
+					match_op?:   string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+}
+#AviWafpolicyResource: {
+	name:                   string
+	allow_mode_delegation?: bool
+	created_by?:            string
+	description?:           string
+	enable_app_learning?:   bool
+	failure_mode?:          string
+	id?:                    string
+	mode?:                  string
+	paranoia_level?:        string
+	tenant_ref?:            string
+	uuid?:                  string
+	waf_crs_ref?:           string
+	waf_profile_ref?:       string
+	crs_groups?: [{
+		index:   number
+		enable?: bool
+		name?:   string
+		exclude_list?: [{
+			description?:   string
+			match_element?: string
+			uri_path?:      string
+			client_subnet?: [{
+				mask: number
+				ip_addr?: [{
+					addr: string
+					type: string
+				}, ...]
+			}, ...]
+			match_element_criteria?: [{
+				match_case?: string
+				match_op?:   string
+			}, ...]
+			uri_match_criteria?: [{
+				match_case?: string
+				match_op?:   string
+			}, ...]
+		}, ...]
+		rules?: [{
+			index:    number
+			enable?:  bool
+			mode?:    string
+			name?:    string
+			rule?:    string
+			rule_id?: string
+			tags?: [string, ...]
+			exclude_list?: [{
+				description?:   string
+				match_element?: string
+				uri_path?:      string
 				client_subnet?: [{
 					mask: number
 					ip_addr?: [{
@@ -4503,7 +6140,11 @@ package avi
 	post_crs_groups?: [{
 		index:   number
 		enable?: bool
+		name?:   string
 		exclude_list?: [{
+			description?:   string
+			match_element?: string
+			uri_path?:      string
 			client_subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4521,10 +6162,17 @@ package avi
 			}, ...]
 		}, ...]
 		rules?: [{
-			index:   number
-			enable?: bool
+			index:    number
+			enable?:  bool
+			mode?:    string
+			name?:    string
+			rule?:    string
+			rule_id?: string
 			tags?: [string, ...]
 			exclude_list?: [{
+				description?:   string
+				match_element?: string
+				uri_path?:      string
 				client_subnet?: [{
 					mask: number
 					ip_addr?: [{
@@ -4546,7 +6194,11 @@ package avi
 	pre_crs_groups?: [{
 		index:   number
 		enable?: bool
+		name?:   string
 		exclude_list?: [{
+			description?:   string
+			match_element?: string
+			uri_path?:      string
 			client_subnet?: [{
 				mask: number
 				ip_addr?: [{
@@ -4564,10 +6216,17 @@ package avi
 			}, ...]
 		}, ...]
 		rules?: [{
-			index:   number
-			enable?: bool
+			index:    number
+			enable?:  bool
+			mode?:    string
+			name?:    string
+			rule?:    string
+			rule_id?: string
 			tags?: [string, ...]
 			exclude_list?: [{
+				description?:   string
+				match_element?: string
+				uri_path?:      string
 				client_subnet?: [{
 					mask: number
 					ip_addr?: [{
@@ -4589,7 +6248,10 @@ package avi
 	whitelist?: [{
 		rules?: [{
 			actions?: [string, ...]
-			enable?: bool
+			description?: string
+			enable?:      bool
+			index?:       number
+			name?:        string
 			match?: [{
 				client_ip?: [{
 					match_criteria: string
@@ -4620,6 +6282,7 @@ package avi
 					match_criteria: string
 					name:           string
 					match_case?:    string
+					value?:         string
 				}, ...]
 				hdrs?: [{
 					hdr:            string
@@ -4665,11 +6328,19 @@ package avi
 	}, ...]
 }
 #AviWafpolicypsmgroupResource: {
+	description?:       string
 	enable?:            bool
 	hit_action?:        string
+	id?:                string
 	is_learning_group?: bool
 	miss_action?:       string
+	name?:              string
+	tenant_ref?:        string
+	uuid?:              string
 	locations?: [{
+		description?: string
+		index?:       number
+		name?:        string
 		match?: [{
 			host?: [{
 				match_criteria: string
@@ -4688,17 +6359,31 @@ package avi
 			}, ...]
 		}, ...]
 		rules?: [{
-			enable?:         bool
-			match_case?:     string
-			paranoia_level?: string
+			description?:            string
+			enable?:                 bool
+			index?:                  number
+			match_case?:             string
+			match_value_max_length?: number
+			match_value_pattern?:    string
+			mode?:                   string
+			name?:                   string
+			paranoia_level?:         string
+			rule_id?:                string
 			match_elements?: [{
-				excluded?: bool
+				excluded?:    bool
+				index?:       number
+				name?:        string
+				sub_element?: string
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #AviWafprofileResource: {
-	name: string
+	name:         string
+	description?: string
+	id?:          string
+	tenant_ref?:  string
+	uuid?:        string
 	config?: [{
 		allowed_http_versions?: [string, ...]
 		allowed_methods?: [string, ...]
@@ -4711,6 +6396,7 @@ package avi
 		max_execution_time?:                   number
 		min_confidence?:                       string
 		regex_match_limit?:                    number
+		regex_recursion_limit?:                number
 		request_body_default_action?:          string
 		request_hdr_default_action?:           string
 		response_body_default_action?:         string
@@ -4735,9 +6421,20 @@ package avi
 			update_interval?:         number
 		}, ...]
 	}, ...]
-	files?: [{}, ...]
+	files?: [{
+		data?: string
+		name?: string
+	}, ...]
 }
-#AviWebhookResource: name: string
+#AviWebhookResource: {
+	name:                string
+	callback_url?:       string
+	description?:        string
+	id?:                 string
+	tenant_ref?:         string
+	uuid?:               string
+	verification_token?: string
+}
 #Resources: {
 	avi_actiongroupconfig?: [_]:             #AviActiongroupconfigResource
 	avi_alertconfig?: [_]:                   #AviAlertconfigResource

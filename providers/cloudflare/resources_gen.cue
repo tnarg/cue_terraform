@@ -2,39 +2,62 @@
 package cloudflare
 
 #CloudflareAccessApplicationResource: {
-	domain:            string
-	name:              string
-	zone_id:           string
-	session_duration?: string
+	domain:      string
+	name:        string
+	account_id?: string
+	allowed_idps?: [string, ...]
+	aud?:                       string
+	auto_redirect_to_identity?: bool
+	custom_deny_message?:       string
+	custom_deny_url?:           string
+	enable_binding_cookie?:     bool
+	id?:                        string
+	session_duration?:          string
+	zone_id?:                   string
+	cors_headers?: [{
+		allow_all_headers?: bool
+		allow_all_methods?: bool
+		allow_all_origins?: bool
+		allow_credentials?: bool
+		allowed_headers?: [string, ...]
+		allowed_methods?: [string, ...]
+		allowed_origins?: [string, ...]
+		max_age?: number
+	}, ...]
 }
 #CloudflareAccessGroupResource: {
-	account_id: string
-	name:       string
+	name:        string
+	account_id?: string
+	id?:         string
+	zone_id?:    string
 	exclude?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -44,29 +67,32 @@ package cloudflare
 	}, ...]
 	include?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -76,29 +102,32 @@ package cloudflare
 	}, ...]
 	require?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -108,9 +137,11 @@ package cloudflare
 	}, ...]
 }
 #CloudflareAccessIdentityProviderResource: {
-	account_id: string
-	name:       string
-	type:       string
+	name:        string
+	type:        string
+	account_id?: string
+	id?:         string
+	zone_id?:    string
 	config?: [{
 		apps_domain?: string
 		attributes?: [string, ...]
@@ -126,6 +157,7 @@ package cloudflare
 		issuer_url?:           string
 		okta_account?:         string
 		onelogin_account?:     string
+		redirect_url?:         string
 		sign_request?:         bool
 		sso_target_url?:       string
 		support_groups?:       bool
@@ -136,33 +168,38 @@ package cloudflare
 	application_id: string
 	decision:       string
 	name:           string
-	zone_id:        string
+	account_id?:    string
+	id?:            string
 	precedence?:    number
+	zone_id?:       string
 	exclude?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -172,29 +209,32 @@ package cloudflare
 	}, ...]
 	include?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -204,29 +244,32 @@ package cloudflare
 	}, ...]
 	require?: [{
 		any_valid_service_token?: bool
+		auth_method?:             string
 		certificate?:             bool
 		common_name?:             string
 		email?: [string, ...]
 		email_domain?: [string, ...]
 		everyone?: bool
+		geo?: [string, ...]
 		group?: [string, ...]
 		ip?: [string, ...]
 		service_token?: [string, ...]
 		azure?: [{
-			id?:                   string
+			id?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		github?: [{
 			identity_provider_id?: string
 			name?:                 string
+			teams?: [string, ...]
 		}, ...]
 		gsuite?: [{
-			email?:                string
+			email?: [string, ...]
 			identity_provider_id?: string
 		}, ...]
 		okta?: [{
 			identity_provider_id?: string
-			name?:                 string
+			name?: [string, ...]
 		}, ...]
 		saml?: [{
 			attribute_name?:       string
@@ -237,33 +280,144 @@ package cloudflare
 }
 #CloudflareAccessRuleResource: {
 	configuration: [_]: string
-	mode:   string
-	notes?: string
+	mode:     string
+	id?:      string
+	notes?:   string
+	zone_id?: string
 }
 #CloudflareAccessServiceTokenResource: {
-	account_id: string
-	name:       string
+	name:           string
+	account_id?:    string
+	client_id?:     string
+	client_secret?: string
+	id?:            string
+	zone_id?:       string
 }
 #CloudflareAccountMemberResource: {
 	email_address: string
 	role_ids: [string, ...]
+	id?: string
+}
+#CloudflareApiTokenResource: {
+	name:         string
+	id?:          string
+	issued_on?:   string
+	modified_on?: string
+	status?:      string
+	value?:       string
+	condition?: [{
+		request_ip?: [{
+			in?: [string, ...]
+			not_in?: [string, ...]
+		}, ...]
+	}, ...]
+	policy?: [{
+		permission_groups: [string, ...]
+		resources: [_]: string
+		effect?: string
+	}, ...]
 }
 #CloudflareArgoResource: {
 	zone_id:         string
+	id?:             string
 	smart_routing?:  string
 	tiered_caching?: string
 }
-#CloudflareByoIpPrefixResource: prefix_id: string
+#CloudflareArgoTunnelResource: {
+	account_id: string
+	name:       string
+	secret:     string
+	id?:        string
+}
+#CloudflareAuthenticatedOriginPullsResource: {
+	enabled:                                 bool
+	zone_id:                                 string
+	authenticated_origin_pulls_certificate?: string
+	hostname?:                               string
+	id?:                                     string
+}
+#CloudflareAuthenticatedOriginPullsCertificateResource: {
+	certificate:    string
+	private_key:    string
+	type:           string
+	zone_id:        string
+	expires_on?:    string
+	id?:            string
+	issuer?:        string
+	serial_number?: string
+	signature?:     string
+	status?:        string
+	uploaded_on?:   string
+	timeouts?: create?: string
+}
+#CloudflareByoIpPrefixResource: {
+	prefix_id:      string
+	advertisement?: string
+	description?:   string
+	id?:            string
+}
+#CloudflareCertificatePackResource: {
+	hosts: [string, ...]
+	type:                   string
+	zone_id:                string
+	certificate_authority?: string
+	cloudflare_branding?:   bool
+	id?:                    string
+	validation_method?:     string
+	validity_days?:         number
+}
+#CloudflareCustomHostnameResource: {
+	hostname:              string
+	zone_id:               string
+	custom_origin_server?: string
+	id?:                   string
+	ownership_verification?: [_]:      string
+	ownership_verification_http?: [_]: string
+	status?: string
+	ssl?: [{
+		certificate_authority?: string
+		cname_name?:            string
+		cname_target?:          string
+		custom_certificate?:    string
+		custom_key?:            string
+		method?:                string
+		status?:                string
+		type?:                  string
+		wildcard?:              bool
+		settings?: [{
+			ciphers?: [string, ...]
+			http2?:           string
+			min_tls_version?: string
+			tls13?:           string
+		}, ...]
+	}, ...]
+}
+#CloudflareCustomHostnameFallbackOriginResource: {
+	origin:  string
+	zone_id: string
+	id?:     string
+	status?: string
+}
 #CloudflareCustomPagesResource: {
 	type:        string
 	url:         string
 	account_id?: string
+	id?:         string
 	state?:      string
 	zone_id?:    string
 }
 #CloudflareCustomSslResource: {
 	zone_id: string
 	custom_ssl_options?: [_]: string
+	expires_on?: string
+	hosts?: [string, ...]
+	id?:          string
+	issuer?:      string
+	modified_on?: string
+	priority?:    number
+	signature?:   string
+	status?:      string
+	uploaded_on?: string
 	custom_ssl_priority?: [{
 		id?:       string
 		priority?: number
@@ -273,6 +427,7 @@ package cloudflare
 	expression:   string
 	zone_id:      string
 	description?: string
+	id?:          string
 	paused?:      bool
 	ref?:         string
 }
@@ -281,23 +436,29 @@ package cloudflare
 	filter_id:    string
 	zone_id:      string
 	description?: string
+	id?:          string
 	paused?:      bool
 	priority?:    number
 	products?: [string, ...]
 }
 #CloudflareHealthcheckResource: {
-	address:                string
-	name:                   string
-	type:                   string
-	zone_id:                string
-	allow_insecure?:        bool
+	address:         string
+	name:            string
+	type:            string
+	zone_id:         string
+	allow_insecure?: bool
+	check_regions?: [string, ...]
 	consecutive_fails?:     number
 	consecutive_successes?: number
+	created_on?:            string
 	description?:           string
 	expected_body?:         string
 	expected_codes?: [string, ...]
 	follow_redirects?: bool
+	id?:               string
 	interval?:         number
+	method?:           string
+	modified_on?:      string
 	notification_email_addresses?: [string, ...]
 	notification_suspended?: bool
 	path?:                   string
@@ -309,16 +470,35 @@ package cloudflare
 		header: string
 		values: [string, ...]
 	}, ...]
+	timeouts?: create?: string
+}
+#CloudflareIpListResource: {
+	account_id:   string
+	kind:         string
+	name:         string
+	description?: string
+	id?:          string
+	item?: [{
+		value:    string
+		comment?: string
+	}, ...]
 }
 #CloudflareLoadBalancerResource: {
 	default_pool_ids: [string, ...]
 	fallback_pool_id:  string
 	name:              string
 	zone_id:           string
+	created_on?:       string
 	description?:      string
 	enabled?:          bool
+	id?:               string
+	modified_on?:      string
 	proxied?:          bool
 	session_affinity?: string
+	session_affinity_attributes?: [_]: string
+	session_affinity_ttl?: number
+	steering_policy?:      string
+	ttl?:                  number
 	pop_pools?: [{
 		pool_ids: [string, ...]
 		pop: string
@@ -330,12 +510,18 @@ package cloudflare
 }
 #CloudflareLoadBalancerMonitorResource: {
 	allow_insecure?:   bool
+	created_on?:       string
 	description?:      string
 	expected_body?:    string
 	expected_codes?:   string
 	follow_redirects?: bool
+	id?:               string
 	interval?:         number
+	method?:           string
+	modified_on?:      string
+	path?:             string
 	port?:             number
+	probe_zone?:       string
 	retries?:          number
 	timeout?:          number
 	type?:             string
@@ -345,10 +531,14 @@ package cloudflare
 	}, ...]
 }
 #CloudflareLoadBalancerPoolResource: {
-	name:                string
+	name: string
+	check_regions?: [string, ...]
+	created_on?:         string
 	description?:        string
 	enabled?:            bool
+	id?:                 string
 	minimum_origins?:    number
+	modified_on?:        string
 	monitor?:            string
 	notification_email?: string
 	origins?: [{
@@ -361,6 +551,7 @@ package cloudflare
 #CloudflareLogpullRetentionResource: {
 	enabled: bool
 	zone_id: string
+	id?:     string
 }
 #CloudflareLogpushJobResource: {
 	dataset:             string
@@ -368,22 +559,38 @@ package cloudflare
 	ownership_challenge: string
 	zone_id:             string
 	enabled?:            bool
+	id?:                 string
 	logpull_options?:    string
 	name?:               string
 }
 #CloudflareLogpushOwnershipChallengeResource: {
-	destination_conf: string
-	zone_id:          string
+	destination_conf:              string
+	zone_id:                       string
+	id?:                           string
+	ownership_challenge_filename?: string
+}
+#CloudflareMagicFirewallRulesetResource: {
+	account_id:   string
+	name:         string
+	description?: string
+	id?:          string
+	rules?: [{
+		[_]: string
+	}, ...]
 }
 #CloudflareOriginCaCertificateResource: {
 	csr: string
 	hostnames: [string, ...]
 	request_type:        string
+	certificate?:        string
+	expires_on?:         string
+	id?:                 string
 	requested_validity?: number
 }
 #CloudflarePageRuleResource: {
 	target:    string
 	zone_id:   string
+	id?:       string
 	priority?: number
 	status?:   string
 	actions?: [{
@@ -421,11 +628,32 @@ package cloudflare
 		true_client_ip_header?:       string
 		waf?:                         string
 		cache_key_fields?: [{
-			cookie?: [{}, ...]
-			header?: [{}, ...]
-			host?: [{}, ...]
-			query_string?: [{}, ...]
-			user?: [{}, ...]
+			cookie?: [{
+				check_presence?: [string, ...]
+				include?: [string, ...]
+			}, ...]
+			header?: [{
+				check_presence?: [string, ...]
+				exclude?: [string, ...]
+				include?: [string, ...]
+			}, ...]
+			host?: [{
+				resolved?: bool
+			}, ...]
+			query_string?: [{
+				exclude?: [string, ...]
+				ignore?: bool
+				include?: [string, ...]
+			}, ...]
+			user?: [{
+				device_type?: bool
+				geo?:         bool
+				lang?:        bool
+			}, ...]
+		}, ...]
+		cache_ttl_by_status?: [{
+			codes: string
+			ttl:   number
 		}, ...]
 		forwarding_url?: [{
 			status_code: number
@@ -445,6 +673,7 @@ package cloudflare
 	bypass_url_patterns?: [string, ...]
 	description?: string
 	disabled?:    bool
+	id?:          string
 	action?: [{
 		mode:     string
 		timeout?: number
@@ -457,17 +686,39 @@ package cloudflare
 		by?: string
 	}, ...]
 	match?: [{
-		request?: [{}, ...]
-		response?: [{}, ...]
+		request?: [{
+			methods?: [string, ...]
+			schemes?: [string, ...]
+			url_pattern?: string
+		}, ...]
+		response?: [{
+			headers?: [{
+				[_]: string
+			}, ...]
+			origin_traffic?: bool
+			statuses?: [number, ...]
+		}, ...]
 	}, ...]
 }
 #CloudflareRecordResource: {
-	name:    string
-	type:    string
-	zone_id: string
+	name:        string
+	type:        string
+	zone_id:     string
+	created_on?: string
 	data?: [_]: string
-	priority?: number
-	proxied?:  bool
+	hostname?: string
+	id?:       string
+	metadata?: [_]: string
+	modified_on?: string
+	priority?:    number
+	proxiable?:   bool
+	proxied?:     bool
+	ttl?:         number
+	value?:       string
+	timeouts?: {
+		create?: string
+		update?: string
+	}
 }
 #CloudflareSpectrumApplicationResource: {
 	protocol:              string
@@ -475,6 +726,7 @@ package cloudflare
 	argo_smart_routing?:   bool
 	edge_ip_connectivity?: string
 	edge_ips?: [string, ...]
+	id?:          string
 	ip_firewall?: bool
 	origin_direct?: [string, ...]
 	origin_port?:    number
@@ -488,52 +740,120 @@ package cloudflare
 	origin_dns?: [{
 		name: string
 	}, ...]
+	origin_port_range?: [{
+		end:   number
+		start: number
+	}, ...]
 }
 #CloudflareWafGroupResource: {
-	group_id: string
-	zone_id:  string
-	mode?:    string
+	group_id:    string
+	zone_id:     string
+	id?:         string
+	mode?:       string
+	package_id?: string
+}
+#CloudflareWafOverrideResource: {
+	rules: [_]: string
+	urls: [string, ...]
+	zone_id:      string
+	description?: string
+	groups?: [_]: string
+	id?:          string
+	override_id?: string
+	paused?:      bool
+	priority?:    number
+	rewrite_action?: [_]: string
 }
 #CloudflareWafPackageResource: {
 	package_id:   string
 	zone_id:      string
 	action_mode?: string
+	id?:          string
 	sensitivity?: string
 }
 #CloudflareWafRuleResource: {
-	mode:    string
-	rule_id: string
-	zone_id: string
+	mode:        string
+	rule_id:     string
+	zone_id:     string
+	group_id?:   string
+	id?:         string
+	package_id?: string
+}
+#CloudflareWorkerCronTriggerResource: {
+	schedules: [string, ...]
+	script_name: string
+	id?:         string
 }
 #CloudflareWorkerRouteResource: {
 	pattern:      string
 	zone_id:      string
+	id?:          string
 	script_name?: string
 }
 #CloudflareWorkerScriptResource: {
 	content: string
 	name:    string
+	id?:     string
 	kv_namespace_binding?: [{
 		name:         string
 		namespace_id: string
+	}, ...]
+	plain_text_binding?: [{
+		name: string
+		text: string
+	}, ...]
+	secret_text_binding?: [{
+		name: string
+		text: string
+	}, ...]
+	webassembly_binding?: [{
+		module: string
+		name:   string
 	}, ...]
 }
 #CloudflareWorkersKvResource: {
 	key:          string
 	namespace_id: string
 	value:        string
+	id?:          string
 }
-#CloudflareWorkersKvNamespaceResource: title: string
+#CloudflareWorkersKvNamespaceResource: {
+	title: string
+	id?:   string
+}
 #CloudflareZoneResource: {
 	zone:        string
+	id?:         string
 	jump_start?: bool
-	paused?:     bool
-	type?:       string
+	meta?: [_]: string
+	name_servers?: [string, ...]
+	paused?: bool
+	plan?:   string
+	status?: string
+	type?:   string
+	vanity_name_servers?: [string, ...]
+	verification_key?: string
+}
+#CloudflareZoneDnssecResource: {
+	zone_id:           string
+	algorithm?:        string
+	digest?:           string
+	digest_algorithm?: string
+	digest_type?:      string
+	ds?:               string
+	flags?:            number
+	id?:               string
+	key_tag?:          number
+	key_type?:         string
+	modified_on?:      string
+	public_key?:       string
+	status?:           string
 }
 #CloudflareZoneLockdownResource: {
 	urls: [string, ...]
 	zone_id:      string
 	description?: string
+	id?:          string
 	paused?:      bool
 	priority?:    number
 	configurations?: [{
@@ -543,7 +863,117 @@ package cloudflare
 }
 #CloudflareZoneSettingsOverrideResource: {
 	zone_id: string
+	id?:     string
+	initial_settings?: [{
+		always_online:            string
+		always_use_https:         string
+		automatic_https_rewrites: string
+		brotli:                   string
+		browser_cache_ttl:        number
+		browser_check:            string
+		cache_level:              string
+		challenge_ttl:            number
+		cname_flattening:         string
+		development_mode:         string
+		email_obfuscation:        string
+		h2_prioritization:        string
+		hotlink_protection:       string
+		http2:                    string
+		http3:                    string
+		image_resizing:           string
+		ip_geolocation:           string
+		ipv6:                     string
+		max_upload:               number
+		min_tls_version:          string
+		minify: [{
+			css:  string
+			html: string
+			js:   string
+		}, ...]
+		mirage: string
+		mobile_redirect: [{
+			mobile_subdomain: string
+			status:           string
+			strip_uri:        bool
+		}, ...]
+		opportunistic_encryption:    string
+		opportunistic_onion:         string
+		origin_error_page_pass_thru: string
+		polish:                      string
+		prefetch_preload:            string
+		privacy_pass:                string
+		pseudo_ipv4:                 string
+		response_buffering:          string
+		rocket_loader:               string
+		security_header: [{
+			enabled:            bool
+			include_subdomains: bool
+			max_age:            number
+			nosniff:            bool
+			preload:            bool
+		}, ...]
+		security_level:              string
+		server_side_exclude:         string
+		sort_query_string_for_cache: string
+		ssl:                         string
+		tls_1_2_only:                string
+		tls_1_3:                     string
+		tls_client_auth:             string
+		true_client_ip_header:       string
+		universal_ssl:               string
+		waf:                         string
+		webp:                        string
+		websockets:                  string
+		zero_rtt:                    string
+	}, ...]
+	initial_settings_read_at?: string
+	readonly_settings?: [string, ...]
+	zone_status?: string
+	zone_type?:   string
 	settings?: [{
+		always_online?:               string
+		always_use_https?:            string
+		automatic_https_rewrites?:    string
+		brotli?:                      string
+		browser_cache_ttl?:           number
+		browser_check?:               string
+		cache_level?:                 string
+		challenge_ttl?:               number
+		cname_flattening?:            string
+		development_mode?:            string
+		email_obfuscation?:           string
+		h2_prioritization?:           string
+		hotlink_protection?:          string
+		http2?:                       string
+		http3?:                       string
+		image_resizing?:              string
+		ip_geolocation?:              string
+		ipv6?:                        string
+		max_upload?:                  number
+		min_tls_version?:             string
+		mirage?:                      string
+		opportunistic_encryption?:    string
+		opportunistic_onion?:         string
+		origin_error_page_pass_thru?: string
+		polish?:                      string
+		prefetch_preload?:            string
+		privacy_pass?:                string
+		pseudo_ipv4?:                 string
+		response_buffering?:          string
+		rocket_loader?:               string
+		security_level?:              string
+		server_side_exclude?:         string
+		sort_query_string_for_cache?: string
+		ssl?:                         string
+		tls_1_2_only?:                string
+		tls_1_3?:                     string
+		tls_client_auth?:             string
+		true_client_ip_header?:       string
+		universal_ssl?:               string
+		waf?:                         string
+		webp?:                        string
+		websockets?:                  string
+		zero_rtt?:                    string
 		minify?: [{
 			css:  string
 			html: string
@@ -554,43 +984,61 @@ package cloudflare
 			status:           string
 			strip_uri:        bool
 		}, ...]
-		security_header?: [{}, ...]
+		security_header?: [{
+			enabled?:            bool
+			include_subdomains?: bool
+			max_age?:            number
+			nosniff?:            bool
+			preload?:            bool
+		}, ...]
 	}, ...]
 }
 #Resources: {
-	cloudflare_access_application?: [_]:          #CloudflareAccessApplicationResource
-	cloudflare_access_group?: [_]:                #CloudflareAccessGroupResource
-	cloudflare_access_identity_provider?: [_]:    #CloudflareAccessIdentityProviderResource
-	cloudflare_access_policy?: [_]:               #CloudflareAccessPolicyResource
-	cloudflare_access_rule?: [_]:                 #CloudflareAccessRuleResource
-	cloudflare_access_service_token?: [_]:        #CloudflareAccessServiceTokenResource
-	cloudflare_account_member?: [_]:              #CloudflareAccountMemberResource
-	cloudflare_argo?: [_]:                        #CloudflareArgoResource
-	cloudflare_byo_ip_prefix?: [_]:               #CloudflareByoIpPrefixResource
-	cloudflare_custom_pages?: [_]:                #CloudflareCustomPagesResource
-	cloudflare_custom_ssl?: [_]:                  #CloudflareCustomSslResource
-	cloudflare_filter?: [_]:                      #CloudflareFilterResource
-	cloudflare_firewall_rule?: [_]:               #CloudflareFirewallRuleResource
-	cloudflare_healthcheck?: [_]:                 #CloudflareHealthcheckResource
-	cloudflare_load_balancer?: [_]:               #CloudflareLoadBalancerResource
-	cloudflare_load_balancer_monitor?: [_]:       #CloudflareLoadBalancerMonitorResource
-	cloudflare_load_balancer_pool?: [_]:          #CloudflareLoadBalancerPoolResource
-	cloudflare_logpull_retention?: [_]:           #CloudflareLogpullRetentionResource
-	cloudflare_logpush_job?: [_]:                 #CloudflareLogpushJobResource
-	cloudflare_logpush_ownership_challenge?: [_]: #CloudflareLogpushOwnershipChallengeResource
-	cloudflare_origin_ca_certificate?: [_]:       #CloudflareOriginCaCertificateResource
-	cloudflare_page_rule?: [_]:                   #CloudflarePageRuleResource
-	cloudflare_rate_limit?: [_]:                  #CloudflareRateLimitResource
-	cloudflare_record?: [_]:                      #CloudflareRecordResource
-	cloudflare_spectrum_application?: [_]:        #CloudflareSpectrumApplicationResource
-	cloudflare_waf_group?: [_]:                   #CloudflareWafGroupResource
-	cloudflare_waf_package?: [_]:                 #CloudflareWafPackageResource
-	cloudflare_waf_rule?: [_]:                    #CloudflareWafRuleResource
-	cloudflare_worker_route?: [_]:                #CloudflareWorkerRouteResource
-	cloudflare_worker_script?: [_]:               #CloudflareWorkerScriptResource
-	cloudflare_workers_kv?: [_]:                  #CloudflareWorkersKvResource
-	cloudflare_workers_kv_namespace?: [_]:        #CloudflareWorkersKvNamespaceResource
-	cloudflare_zone?: [_]:                        #CloudflareZoneResource
-	cloudflare_zone_lockdown?: [_]:               #CloudflareZoneLockdownResource
-	cloudflare_zone_settings_override?: [_]:      #CloudflareZoneSettingsOverrideResource
+	cloudflare_access_application?: [_]:                     #CloudflareAccessApplicationResource
+	cloudflare_access_group?: [_]:                           #CloudflareAccessGroupResource
+	cloudflare_access_identity_provider?: [_]:               #CloudflareAccessIdentityProviderResource
+	cloudflare_access_policy?: [_]:                          #CloudflareAccessPolicyResource
+	cloudflare_access_rule?: [_]:                            #CloudflareAccessRuleResource
+	cloudflare_access_service_token?: [_]:                   #CloudflareAccessServiceTokenResource
+	cloudflare_account_member?: [_]:                         #CloudflareAccountMemberResource
+	cloudflare_api_token?: [_]:                              #CloudflareApiTokenResource
+	cloudflare_argo?: [_]:                                   #CloudflareArgoResource
+	cloudflare_argo_tunnel?: [_]:                            #CloudflareArgoTunnelResource
+	cloudflare_authenticated_origin_pulls?: [_]:             #CloudflareAuthenticatedOriginPullsResource
+	cloudflare_authenticated_origin_pulls_certificate?: [_]: #CloudflareAuthenticatedOriginPullsCertificateResource
+	cloudflare_byo_ip_prefix?: [_]:                          #CloudflareByoIpPrefixResource
+	cloudflare_certificate_pack?: [_]:                       #CloudflareCertificatePackResource
+	cloudflare_custom_hostname?: [_]:                        #CloudflareCustomHostnameResource
+	cloudflare_custom_hostname_fallback_origin?: [_]:        #CloudflareCustomHostnameFallbackOriginResource
+	cloudflare_custom_pages?: [_]:                           #CloudflareCustomPagesResource
+	cloudflare_custom_ssl?: [_]:                             #CloudflareCustomSslResource
+	cloudflare_filter?: [_]:                                 #CloudflareFilterResource
+	cloudflare_firewall_rule?: [_]:                          #CloudflareFirewallRuleResource
+	cloudflare_healthcheck?: [_]:                            #CloudflareHealthcheckResource
+	cloudflare_ip_list?: [_]:                                #CloudflareIpListResource
+	cloudflare_load_balancer?: [_]:                          #CloudflareLoadBalancerResource
+	cloudflare_load_balancer_monitor?: [_]:                  #CloudflareLoadBalancerMonitorResource
+	cloudflare_load_balancer_pool?: [_]:                     #CloudflareLoadBalancerPoolResource
+	cloudflare_logpull_retention?: [_]:                      #CloudflareLogpullRetentionResource
+	cloudflare_logpush_job?: [_]:                            #CloudflareLogpushJobResource
+	cloudflare_logpush_ownership_challenge?: [_]:            #CloudflareLogpushOwnershipChallengeResource
+	cloudflare_magic_firewall_ruleset?: [_]:                 #CloudflareMagicFirewallRulesetResource
+	cloudflare_origin_ca_certificate?: [_]:                  #CloudflareOriginCaCertificateResource
+	cloudflare_page_rule?: [_]:                              #CloudflarePageRuleResource
+	cloudflare_rate_limit?: [_]:                             #CloudflareRateLimitResource
+	cloudflare_record?: [_]:                                 #CloudflareRecordResource
+	cloudflare_spectrum_application?: [_]:                   #CloudflareSpectrumApplicationResource
+	cloudflare_waf_group?: [_]:                              #CloudflareWafGroupResource
+	cloudflare_waf_override?: [_]:                           #CloudflareWafOverrideResource
+	cloudflare_waf_package?: [_]:                            #CloudflareWafPackageResource
+	cloudflare_waf_rule?: [_]:                               #CloudflareWafRuleResource
+	cloudflare_worker_cron_trigger?: [_]:                    #CloudflareWorkerCronTriggerResource
+	cloudflare_worker_route?: [_]:                           #CloudflareWorkerRouteResource
+	cloudflare_worker_script?: [_]:                          #CloudflareWorkerScriptResource
+	cloudflare_workers_kv?: [_]:                             #CloudflareWorkersKvResource
+	cloudflare_workers_kv_namespace?: [_]:                   #CloudflareWorkersKvNamespaceResource
+	cloudflare_zone?: [_]:                                   #CloudflareZoneResource
+	cloudflare_zone_dnssec?: [_]:                            #CloudflareZoneDnssecResource
+	cloudflare_zone_lockdown?: [_]:                          #CloudflareZoneLockdownResource
+	cloudflare_zone_settings_override?: [_]:                 #CloudflareZoneSettingsOverrideResource
 }

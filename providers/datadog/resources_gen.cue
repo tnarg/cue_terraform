@@ -2,11 +2,15 @@
 package datadog
 
 #DatadogDashboardResource: {
-	layout_type:   string
-	title:         string
+	layout_type: string
+	title:       string
+	dashboard_lists?: [number, ...]
+	dashboard_lists_removed?: [number, ...]
 	description?:  string
+	id?:           string
 	is_read_only?: bool
 	notify_list?: [string, ...]
+	url?: string
 	template_variable?: [{
 		name:     string
 		default?: string
@@ -20,6 +24,7 @@ package datadog
 		}, ...]
 	}, ...]
 	widget?: [{
+		id?: number
 		layout?: [_]: string
 		alert_graph_definition?: [{
 			alert_id: string
@@ -43,6 +48,10 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				change_type?:   string
 				compare_to?:    string
@@ -52,23 +61,33 @@ package datadog
 				q?:             string
 				show_present?:  bool
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
 					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -76,6 +95,36 @@ package datadog
 					filter_by?: [string, ...]
 					limit?:     number
 					search_by?: string
+				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
@@ -91,6 +140,8 @@ package datadog
 			title_size?:  string
 		}, ...]
 		distribution_definition?: [{
+			legend_size?: string
+			show_legend?: bool
 			time?: [_]: string
 			title?:       string
 			title_align?: string
@@ -98,23 +149,33 @@ package datadog
 			request?: [{
 				q?: string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
 					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -123,21 +184,53 @@ package datadog
 					limit?:     number
 					search_by?: string
 				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
 				style?: [{
 					palette?: string
 				}, ...]
 			}, ...]
 		}, ...]
 		event_stream_definition?: [{
-			query:       string
-			event_size?: string
+			query:           string
+			event_size?:     string
+			tags_execution?: string
 			time?: [_]: string
 			title?:       string
 			title_align?: string
 			title_size?:  string
 		}, ...]
 		event_timeline_definition?: [{
-			query: string
+			query:           string
+			tags_execution?: string
 			time?: [_]: string
 			title?:       string
 			title_align?: string
@@ -153,6 +246,7 @@ package datadog
 			layout_type: string
 			title?:      string
 			widget?: [{
+				id?: number
 				layout?: [_]: string
 				alert_graph_definition?: [{
 					alert_id: string
@@ -176,6 +270,10 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						change_type?:   string
 						compare_to?:    string
@@ -185,23 +283,33 @@ package datadog
 						q?:             string
 						show_present?:  bool
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
 							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -209,6 +317,36 @@ package datadog
 							filter_by?: [string, ...]
 							limit?:     number
 							search_by?: string
+						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 					}, ...]
 				}, ...]
@@ -224,6 +362,8 @@ package datadog
 					title_size?:  string
 				}, ...]
 				distribution_definition?: [{
+					legend_size?: string
+					show_legend?: bool
 					time?: [_]: string
 					title?:       string
 					title_align?: string
@@ -231,23 +371,33 @@ package datadog
 					request?: [{
 						q?: string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
 							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -256,21 +406,53 @@ package datadog
 							limit?:     number
 							search_by?: string
 						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
 						style?: [{
 							palette?: string
 						}, ...]
 					}, ...]
 				}, ...]
 				event_stream_definition?: [{
-					query:       string
-					event_size?: string
+					query:           string
+					event_size?:     string
+					tags_execution?: string
 					time?: [_]: string
 					title?:       string
 					title_align?: string
 					title_size?:  string
 				}, ...]
 				event_timeline_definition?: [{
-					query: string
+					query:           string
+					tags_execution?: string
 					time?: [_]: string
 					title?:       string
 					title_align?: string
@@ -283,30 +465,50 @@ package datadog
 					text_align?: string
 				}, ...]
 				heatmap_definition?: [{
+					legend_size?: string
+					show_legend?: bool
 					time?: [_]: string
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
+					event?: [{
+						q:               string
+						tags_execution?: string
+					}, ...]
 					request?: [{
 						q?: string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
 							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -314,6 +516,36 @@ package datadog
 							filter_by?: [string, ...]
 							limit?:     number
 							search_by?: string
+						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						style?: [{
 							palette?: string
@@ -336,27 +568,41 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						fill?: [{
 							q?: string
 							apm_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
 								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 							log_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
 								}, ...]
 							}, ...]
 							process_query?: [{
@@ -364,28 +610,68 @@ package datadog
 								filter_by?: [string, ...]
 								limit?:     number
 								search_by?: string
+							}, ...]
+							rum_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
+							}, ...]
+							security_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 						}, ...]
 						size?: [{
 							q?: string
 							apm_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
 								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 							log_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
 								}, ...]
 							}, ...]
 							process_query?: [{
@@ -393,6 +679,36 @@ package datadog
 								filter_by?: [string, ...]
 								limit?:     number
 								search_by?: string
+							}, ...]
+							rum_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
+							}, ...]
+							security_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 						}, ...]
 					}, ...]
@@ -412,13 +728,21 @@ package datadog
 					sizing?: string
 				}, ...]
 				log_stream_definition?: [{
-					logset: string
 					columns?: [string, ...]
-					query?: string
+					indexes?: [string, ...]
+					logset?:              string
+					message_display?:     string
+					query?:               string
+					show_date_column?:    bool
+					show_message_column?: bool
 					time?: [_]: string
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					sort?: [{
+						column: string
+						order:  string
+					}, ...]
 				}, ...]
 				manage_status_definition?: [{
 					query:                string
@@ -444,24 +768,49 @@ package datadog
 					tick_pos?:         string
 				}, ...]
 				query_table_definition?: [{
+					has_search_bar?: string
 					time?: [_]: string
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						aggregator?: string
 						alias?:      string
-						limit?:      number
-						order?:      string
-						q?:          string
+						cell_display_mode?: [string, ...]
+						limit?: number
+						order?: string
+						q?:     string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						apm_stats_query?: [{
+							env:         string
+							name:        string
+							primary_tag: string
+							row_type:    string
+							service:     string
+							resource?:   string
+							columns?: [{
+								name:               string
+								alias?:             string
+								cell_display_mode?: string
+								order?:             string
 							}, ...]
 						}, ...]
 						conditional_formats?: [{
@@ -472,16 +821,22 @@ package datadog
 							custom_fg_color?: string
 							hide_value?:      bool
 							image_url?:       string
+							metric?:          string
 							timeframe?:       string
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -489,6 +844,36 @@ package datadog
 							filter_by?: [string, ...]
 							limit?:     number
 							search_by?: string
+						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 					}, ...]
 				}, ...]
@@ -501,17 +886,26 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						aggregator?: string
 						q?:          string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						conditional_formats?: [{
@@ -522,16 +916,22 @@ package datadog
 							custom_fg_color?: string
 							hide_value?:      bool
 							image_url?:       string
+							metric?:          string
 							timeframe?:       string
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -539,6 +939,36 @@ package datadog
 							filter_by?: [string, ...]
 							limit?:     number
 							search_by?: string
+						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 					}, ...]
 				}, ...]
@@ -548,28 +978,42 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						x?: [{
 							aggregator?: string
 							q?:          string
 							apm_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
 								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 							log_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
 								}, ...]
 							}, ...]
 							process_query?: [{
@@ -577,29 +1021,69 @@ package datadog
 								filter_by?: [string, ...]
 								limit?:     number
 								search_by?: string
+							}, ...]
+							rum_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
+							}, ...]
+							security_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 						}, ...]
 						y?: [{
 							aggregator?: string
 							q?:          string
 							apm_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
 								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 							log_query?: [{
-								compute: [_]: string
 								index: string
-								search?: [_]: string
+								compute?: [_]: string
+								search?: [_]:  string
 								group_by?: [{
 									facet?: string
 									limit?: number
 									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
 								}, ...]
 							}, ...]
 							process_query?: [{
@@ -607,6 +1091,36 @@ package datadog
 								filter_by?: [string, ...]
 								limit?:     number
 								search_by?: string
+							}, ...]
+							rum_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
+							}, ...]
+							security_query?: [{
+								index: string
+								compute?: [_]: string
+								search?: [_]:  string
+								group_by?: [{
+									facet?: string
+									limit?: number
+									sort?: [_]: string
+								}, ...]
+								multi_compute?: [{
+									aggregation: string
+									facet?:      string
+									interval?:   number
+								}, ...]
 							}, ...]
 						}, ...]
 					}, ...]
@@ -635,6 +1149,17 @@ package datadog
 					title_align?:       string
 					title_size?:        string
 				}, ...]
+				servicemap_definition?: [{
+					filters: [string, ...]
+					service:      string
+					title?:       string
+					title_align?: string
+					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
+				}, ...]
 				timeseries_definition?: [{
 					legend_size?: string
 					show_legend?: bool
@@ -642,8 +1167,13 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					event?: [{
-						q: string
+						q:               string
+						tags_execution?: string
 					}, ...]
 					marker?: [{
 						value:         string
@@ -651,31 +1181,57 @@ package datadog
 						label?:        string
 					}, ...]
 					request?: [{
-						display_type?: string
-						q?:            string
+						display_type?:   string
+						on_right_yaxis?: bool
+						q?:              string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
 							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						metadata?: [{
 							expression:  string
 							alias_name?: string
+						}, ...]
+						network_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						process_query?: [{
 							metric: string
@@ -683,11 +1239,48 @@ package datadog
 							limit?:     number
 							search_by?: string
 						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
 						style?: [{
 							line_type?:  string
 							line_width?: string
 							palette?:    string
 						}, ...]
+					}, ...]
+					right_yaxis?: [{
+						include_zero?: bool
+						label?:        string
+						max?:          string
+						min?:          string
+						scale?:        string
 					}, ...]
 					yaxis?: [{
 						include_zero?: bool
@@ -702,16 +1295,25 @@ package datadog
 					title?:       string
 					title_align?: string
 					title_size?:  string
+					custom_link?: [{
+						label: string
+						link:  string
+					}, ...]
 					request?: [{
 						q?: string
 						apm_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						conditional_formats?: [{
@@ -722,16 +1324,22 @@ package datadog
 							custom_fg_color?: string
 							hide_value?:      bool
 							image_url?:       string
+							metric?:          string
 							timeframe?:       string
 						}, ...]
 						log_query?: [{
-							compute: [_]: string
 							index: string
-							search?: [_]: string
+							compute?: [_]: string
+							search?: [_]:  string
 							group_by?: [{
 								facet?: string
 								limit?: number
 								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
 							}, ...]
 						}, ...]
 						process_query?: [{
@@ -739,6 +1347,36 @@ package datadog
 							filter_by?: [string, ...]
 							limit?:     number
 							search_by?: string
+						}, ...]
+						rum_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
+						}, ...]
+						security_query?: [{
+							index: string
+							compute?: [_]: string
+							search?: [_]:  string
+							group_by?: [{
+								facet?: string
+								limit?: number
+								sort?: [_]: string
+							}, ...]
+							multi_compute?: [{
+								aggregation: string
+								facet?:      string
+								interval?:   number
+							}, ...]
 						}, ...]
 						style?: [{
 							palette?: string
@@ -765,30 +1403,50 @@ package datadog
 			}, ...]
 		}, ...]
 		heatmap_definition?: [{
+			legend_size?: string
+			show_legend?: bool
 			time?: [_]: string
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
+			event?: [{
+				q:               string
+				tags_execution?: string
+			}, ...]
 			request?: [{
 				q?: string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
 					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -796,6 +1454,36 @@ package datadog
 					filter_by?: [string, ...]
 					limit?:     number
 					search_by?: string
+				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				style?: [{
 					palette?: string
@@ -818,27 +1506,41 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				fill?: [{
 					q?: string
 					apm_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
 						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 					log_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
 						}, ...]
 					}, ...]
 					process_query?: [{
@@ -846,28 +1548,68 @@ package datadog
 						filter_by?: [string, ...]
 						limit?:     number
 						search_by?: string
+					}, ...]
+					rum_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
+					}, ...]
+					security_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 				}, ...]
 				size?: [{
 					q?: string
 					apm_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
 						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 					log_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
 						}, ...]
 					}, ...]
 					process_query?: [{
@@ -875,6 +1617,36 @@ package datadog
 						filter_by?: [string, ...]
 						limit?:     number
 						search_by?: string
+					}, ...]
+					rum_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
+					}, ...]
+					security_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 				}, ...]
 			}, ...]
@@ -894,13 +1666,21 @@ package datadog
 			sizing?: string
 		}, ...]
 		log_stream_definition?: [{
-			logset: string
 			columns?: [string, ...]
-			query?: string
+			indexes?: [string, ...]
+			logset?:              string
+			message_display?:     string
+			query?:               string
+			show_date_column?:    bool
+			show_message_column?: bool
 			time?: [_]: string
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			sort?: [{
+				column: string
+				order:  string
+			}, ...]
 		}, ...]
 		manage_status_definition?: [{
 			query:                string
@@ -926,24 +1706,49 @@ package datadog
 			tick_pos?:         string
 		}, ...]
 		query_table_definition?: [{
+			has_search_bar?: string
 			time?: [_]: string
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				aggregator?: string
 				alias?:      string
-				limit?:      number
-				order?:      string
-				q?:          string
+				cell_display_mode?: [string, ...]
+				limit?: number
+				order?: string
+				q?:     string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				apm_stats_query?: [{
+					env:         string
+					name:        string
+					primary_tag: string
+					row_type:    string
+					service:     string
+					resource?:   string
+					columns?: [{
+						name:               string
+						alias?:             string
+						cell_display_mode?: string
+						order?:             string
 					}, ...]
 				}, ...]
 				conditional_formats?: [{
@@ -954,16 +1759,22 @@ package datadog
 					custom_fg_color?: string
 					hide_value?:      bool
 					image_url?:       string
+					metric?:          string
 					timeframe?:       string
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -971,6 +1782,36 @@ package datadog
 					filter_by?: [string, ...]
 					limit?:     number
 					search_by?: string
+				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
@@ -983,17 +1824,26 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				aggregator?: string
 				q?:          string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				conditional_formats?: [{
@@ -1004,16 +1854,22 @@ package datadog
 					custom_fg_color?: string
 					hide_value?:      bool
 					image_url?:       string
+					metric?:          string
 					timeframe?:       string
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -1021,6 +1877,36 @@ package datadog
 					filter_by?: [string, ...]
 					limit?:     number
 					search_by?: string
+				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
@@ -1030,28 +1916,42 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				x?: [{
 					aggregator?: string
 					q?:          string
 					apm_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
 						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 					log_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
 						}, ...]
 					}, ...]
 					process_query?: [{
@@ -1059,29 +1959,69 @@ package datadog
 						filter_by?: [string, ...]
 						limit?:     number
 						search_by?: string
+					}, ...]
+					rum_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
+					}, ...]
+					security_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 				}, ...]
 				y?: [{
 					aggregator?: string
 					q?:          string
 					apm_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
 						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 					log_query?: [{
-						compute: [_]: string
 						index: string
-						search?: [_]: string
+						compute?: [_]: string
+						search?: [_]:  string
 						group_by?: [{
 							facet?: string
 							limit?: number
 							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
 						}, ...]
 					}, ...]
 					process_query?: [{
@@ -1089,6 +2029,36 @@ package datadog
 						filter_by?: [string, ...]
 						limit?:     number
 						search_by?: string
+					}, ...]
+					rum_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
+					}, ...]
+					security_query?: [{
+						index: string
+						compute?: [_]: string
+						search?: [_]:  string
+						group_by?: [{
+							facet?: string
+							limit?: number
+							sort?: [_]: string
+						}, ...]
+						multi_compute?: [{
+							aggregation: string
+							facet?:      string
+							interval?:   number
+						}, ...]
 					}, ...]
 				}, ...]
 			}, ...]
@@ -1117,6 +2087,17 @@ package datadog
 			title_align?:       string
 			title_size?:        string
 		}, ...]
+		servicemap_definition?: [{
+			filters: [string, ...]
+			service:      string
+			title?:       string
+			title_align?: string
+			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
+		}, ...]
 		timeseries_definition?: [{
 			legend_size?: string
 			show_legend?: bool
@@ -1124,8 +2105,13 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			event?: [{
-				q: string
+				q:               string
+				tags_execution?: string
 			}, ...]
 			marker?: [{
 				value:         string
@@ -1133,31 +2119,57 @@ package datadog
 				label?:        string
 			}, ...]
 			request?: [{
-				display_type?: string
-				q?:            string
+				display_type?:   string
+				on_right_yaxis?: bool
+				q?:              string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
 					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				metadata?: [{
 					expression:  string
 					alias_name?: string
+				}, ...]
+				network_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				process_query?: [{
 					metric: string
@@ -1165,11 +2177,48 @@ package datadog
 					limit?:     number
 					search_by?: string
 				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
 				style?: [{
 					line_type?:  string
 					line_width?: string
 					palette?:    string
 				}, ...]
+			}, ...]
+			right_yaxis?: [{
+				include_zero?: bool
+				label?:        string
+				max?:          string
+				min?:          string
+				scale?:        string
 			}, ...]
 			yaxis?: [{
 				include_zero?: bool
@@ -1184,16 +2233,25 @@ package datadog
 			title?:       string
 			title_align?: string
 			title_size?:  string
+			custom_link?: [{
+				label: string
+				link:  string
+			}, ...]
 			request?: [{
 				q?: string
 				apm_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				conditional_formats?: [{
@@ -1204,16 +2262,22 @@ package datadog
 					custom_fg_color?: string
 					hide_value?:      bool
 					image_url?:       string
+					metric?:          string
 					timeframe?:       string
 				}, ...]
 				log_query?: [{
-					compute: [_]: string
 					index: string
-					search?: [_]: string
+					compute?: [_]: string
+					search?: [_]:  string
 					group_by?: [{
 						facet?: string
 						limit?: number
 						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
 					}, ...]
 				}, ...]
 				process_query?: [{
@@ -1221,6 +2285,36 @@ package datadog
 					filter_by?: [string, ...]
 					limit?:     number
 					search_by?: string
+				}, ...]
+				rum_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
+				}, ...]
+				security_query?: [{
+					index: string
+					compute?: [_]: string
+					search?: [_]:  string
+					group_by?: [{
+						facet?: string
+						limit?: number
+						sort?: [_]: string
+					}, ...]
+					multi_compute?: [{
+						aggregation: string
+						facet?:      string
+						interval?:   number
+					}, ...]
 				}, ...]
 				style?: [{
 					palette?: string
@@ -1248,6 +2342,7 @@ package datadog
 }
 #DatadogDashboardListResource: {
 	name: string
+	id?:  string
 	dash_item?: [{
 		dash_id: string
 		type:    string
@@ -1259,6 +2354,7 @@ package datadog
 	disabled?:   bool
 	end?:        number
 	end_date?:   string
+	id?:         string
 	message?:    string
 	monitor_id?: number
 	monitor_tags?: [string, ...]
@@ -1266,8 +2362,9 @@ package datadog
 	start_date?: string
 	timezone?:   string
 	recurrence?: [{
-		period:             number
 		type:               string
+		period?:            number
+		rrule?:             string
 		until_date?:        number
 		until_occurrences?: number
 		week_days?: [string, ...]
@@ -1277,8 +2374,28 @@ package datadog
 	account_id: string
 	role_name:  string
 	account_specific_namespace_rules?: [_]: bool
+	excluded_regions?: [string, ...]
+	external_id?: string
 	filter_tags?: [string, ...]
 	host_tags?: [string, ...]
+	id?: string
+}
+#DatadogIntegrationAwsLambdaArnResource: {
+	account_id: string
+	lambda_arn: string
+	id?:        string
+}
+#DatadogIntegrationAwsLogCollectionResource: {
+	account_id: string
+	services: [string, ...]
+	id?: string
+}
+#DatadogIntegrationAzureResource: {
+	client_id:     string
+	client_secret: string
+	tenant_name:   string
+	host_filters?: string
+	id?:           string
 }
 #DatadogIntegrationGcpResource: {
 	client_email:   string
@@ -1287,10 +2404,12 @@ package datadog
 	private_key_id: string
 	project_id:     string
 	host_filters?:  string
+	id?:            string
 }
 #DatadogIntegrationPagerdutyResource: {
 	subdomain:            string
 	api_token?:           string
+	id?:                  string
 	individual_services?: bool
 	schedules?: [string, ...]
 	services?: [{
@@ -1301,9 +2420,44 @@ package datadog
 #DatadogIntegrationPagerdutyServiceObjectResource: {
 	service_key:  string
 	service_name: string
+	id?:          string
+}
+#DatadogLogsArchiveResource: {
+	name:  string
+	query: string
+	azure?: [_]: string
+	gcs?: [_]:   string
+	id?:           string
+	include_tags?: bool
+	rehydration_tags?: [string, ...]
+	s3?: [_]: string
+	azure_archive?: [{
+		client_id:       string
+		container:       string
+		storage_account: string
+		tenant_id:       string
+		path?:           string
+	}, ...]
+	gcs_archive?: [{
+		bucket:       string
+		client_email: string
+		path:         string
+		project_id:   string
+	}, ...]
+	s3_archive?: [{
+		account_id: string
+		bucket:     string
+		path:       string
+		role_name:  string
+	}, ...]
+}
+#DatadogLogsArchiveOrderResource: {
+	archive_ids?: [string, ...]
+	id?: string
 }
 #DatadogLogsCustomPipelineResource: {
 	name:        string
+	id?:         string
 	is_enabled?: bool
 	filter?: [{
 		query: string
@@ -1325,6 +2479,7 @@ package datadog
 			name?:                 string
 			override_on_conflict?: bool
 			preserve_source?:      bool
+			target_format?:        string
 		}, ...]
 		category_processor?: [{
 			target:      string
@@ -1358,6 +2513,14 @@ package datadog
 				support_rules: string
 			}, ...]
 		}, ...]
+		lookup_processor?: [{
+			lookup_table: [string, ...]
+			source:          string
+			target:          string
+			default_lookup?: string
+			is_enabled?:     bool
+			name?:           string
+		}, ...]
 		message_remapper?: [{
 			sources: [string, ...]
 			is_enabled?: bool
@@ -1386,6 +2549,7 @@ package datadog
 					name?:                 string
 					override_on_conflict?: bool
 					preserve_source?:      bool
+					target_format?:        string
 				}, ...]
 				category_processor?: [{
 					target:      string
@@ -1418,6 +2582,14 @@ package datadog
 						match_rules:   string
 						support_rules: string
 					}, ...]
+				}, ...]
+				lookup_processor?: [{
+					lookup_table: [string, ...]
+					source:          string
+					target:          string
+					default_lookup?: string
+					is_enabled?:     bool
+					name?:           string
 				}, ...]
 				message_remapper?: [{
 					sources: [string, ...]
@@ -1502,6 +2674,7 @@ package datadog
 }
 #DatadogLogsIndexResource: {
 	name: string
+	id?:  string
 	exclusion_filter?: [{
 		is_enabled?: bool
 		name?:       string
@@ -1517,15 +2690,36 @@ package datadog
 #DatadogLogsIndexOrderResource: {
 	indexes: [string, ...]
 	name: string
+	id?:  string
 }
-#DatadogLogsIntegrationPipelineResource: is_enabled?: bool
+#DatadogLogsIntegrationPipelineResource: {
+	id?:         string
+	is_enabled?: bool
+}
+#DatadogLogsMetricResource: {
+	name: string
+	id?:  string
+	compute?: [{
+		aggregation_type: string
+		path?:            string
+	}, ...]
+	filter?: [{
+		query: string
+	}, ...]
+	group_by?: [{
+		path:     string
+		tag_name: string
+	}, ...]
+}
 #DatadogLogsPipelineOrderResource: {
 	name: string
 	pipelines: [string, ...]
+	id?: string
 }
 #DatadogMetricMetadataResource: {
 	metric:           string
 	description?:     string
+	id?:              string
 	per_unit?:        string
 	short_name?:      string
 	statsd_interval?: number
@@ -1539,12 +2733,16 @@ package datadog
 	type:                 string
 	enable_logs_sample?:  bool
 	escalation_message?:  string
+	evaluation_delay?:    number
+	force_delete?:        bool
+	id?:                  string
 	include_tags?:        bool
 	locked?:              bool
 	new_host_delay?:      number
 	no_data_timeframe?:   number
 	notify_audit?:        bool
 	notify_no_data?:      bool
+	priority?:            number
 	renotify_interval?:   number
 	require_full_window?: bool
 	silenced?: [_]: number
@@ -1552,10 +2750,33 @@ package datadog
 	threshold_windows?: [_]: string
 	thresholds?: [_]:        string
 	timeout_h?: number
+	validate?:  bool
+	monitor_threshold_windows?: [{
+		recovery_window?: string
+		trigger_window?:  string
+	}, ...]
+	monitor_thresholds?: [{
+		critical?:          string
+		critical_recovery?: string
+		ok?:                string
+		unknown?:           string
+		warning?:           string
+		warning_recovery?:  string
+	}, ...]
+}
+#DatadogRoleResource: {
+	name:        string
+	id?:         string
+	user_count?: number
+	permission?: [{
+		id:    string
+		name?: string
+	}, ...]
 }
 #DatadogScreenboardResource: {
 	title:      string
 	height?:    string
+	id?:        string
 	read_only?: bool
 	shared?:    bool
 	width?:     string
@@ -1726,13 +2947,51 @@ package datadog
 		}, ...]
 	}, ...]
 }
-#DatadogServiceLevelObjectiveResource: {
-	name:         string
-	type:         string
-	description?: string
-	groups?: [string, ...]
-	monitor_ids?: [number, ...]
+#DatadogSecurityMonitoringDefaultRuleResource: {
+	enabled?: bool
+	id?:      string
+	case?: [{
+		notifications: [string, ...]
+		status: string
+	}, ...]
+}
+#DatadogSecurityMonitoringRuleResource: {
+	message:  string
+	name:     string
+	enabled?: bool
+	id?:      string
 	tags?: [string, ...]
+	case?: [{
+		status:     string
+		condition?: string
+		name?:      string
+		notifications?: [string, ...]
+	}, ...]
+	options?: [{
+		evaluation_window:   number
+		keep_alive:          number
+		max_signal_duration: number
+	}, ...]
+	query?: [{
+		query:        string
+		aggregation?: string
+		distinct_fields?: [string, ...]
+		group_by_fields?: [string, ...]
+		metric?: string
+		name?:   string
+	}, ...]
+}
+#DatadogServiceLevelObjectiveResource: {
+	name:          string
+	type:          string
+	description?:  string
+	force_delete?: bool
+	groups?: [string, ...]
+	id?: string
+	monitor_ids?: [number, ...]
+	monitor_search?: string
+	tags?: [string, ...]
+	validate?: bool
 	query?: [{
 		denominator: string
 		numerator:   string
@@ -1745,25 +3004,120 @@ package datadog
 		warning_display?: string
 	}, ...]
 }
+#DatadogSyntheticsGlobalVariableResource: {
+	name:           string
+	value:          string
+	description?:   string
+	id?:            string
+	parse_test_id?: string
+	secure?:        bool
+	tags?: [string, ...]
+	parse_test_options?: [{
+		type:   string
+		field?: string
+		parser?: [{
+			type:   string
+			value?: string
+		}, ...]
+	}, ...]
+}
+#DatadogSyntheticsPrivateLocationResource: {
+	name:         string
+	config?:      string
+	description?: string
+	id?:          string
+	tags?: [string, ...]
+}
 #DatadogSyntheticsTestResource: {
 	locations: [string, ...]
 	name: string
 	request: [_]: string
 	status: string
-	tags: [string, ...]
-	type: string
+	type:   string
 	assertions?: [{
 		[_]: string
 	}, ...]
 	device_ids?: [string, ...]
-	message?: string
+	id?:         string
+	message?:    string
+	monitor_id?: number
 	options?: [_]:         string
 	request_headers?: [_]: string
+	request_query?: [_]:   string
 	subtype?: string
+	tags?: [string, ...]
+	assertion?: [{
+		operator:  string
+		type:      string
+		property?: string
+		target?:   string
+		targetjsonpath?: [{
+			jsonpath:    string
+			operator:    string
+			targetvalue: string
+		}, ...]
+	}, ...]
+	browser_variable?: [{
+		name:     string
+		type:     string
+		example?: string
+		id?:      string
+		pattern?: string
+	}, ...]
+	config_variable?: [{
+		name:     string
+		type:     string
+		example?: string
+		pattern?: string
+	}, ...]
+	options_list?: [{
+		accept_self_signed?:   bool
+		allow_insecure?:       bool
+		follow_redirects?:     bool
+		min_failure_duration?: number
+		min_location_failed?:  number
+		tick_every?:           number
+		monitor_options?: [{
+			renotify_interval?: number
+		}, ...]
+		retry?: [{
+			count?:    number
+			interval?: number
+		}, ...]
+	}, ...]
+	request_basicauth?: [{
+		password: string
+		username: string
+	}, ...]
+	request_client_certificate?: [{
+		cert?: [{
+			content:   string
+			filename?: string
+		}, ...]
+		key?: [{
+			content:   string
+			filename?: string
+		}, ...]
+	}, ...]
+	step?: [{
+		name:           string
+		params:         string
+		type:           string
+		allow_failure?: bool
+		timeout?:       number
+	}, ...]
+	variable?: [{
+		name:     string
+		type:     string
+		example?: string
+		id?:      string
+		pattern?: string
+	}, ...]
 }
 #DatadogTimeboardResource: {
 	description: string
 	title:       string
+	id?:         string
 	read_only?:  bool
 	graph?: [{
 		title:        string
@@ -1861,29 +3215,46 @@ package datadog
 }
 #DatadogUserResource: {
 	email:        string
-	handle:       string
-	name:         string
 	access_role?: string
 	disabled?:    bool
+	handle?:      string
+	id?:          string
+	is_admin?:    bool
+	name?:        string
 	role?:        string
+	roles?: [string, ...]
+	send_user_invitation?: bool
+	user_invitation_id?:   string
+	verified?:             bool
 }
 #Resources: {
 	datadog_dashboard?: [_]:                            #DatadogDashboardResource
 	datadog_dashboard_list?: [_]:                       #DatadogDashboardListResource
 	datadog_downtime?: [_]:                             #DatadogDowntimeResource
 	datadog_integration_aws?: [_]:                      #DatadogIntegrationAwsResource
+	datadog_integration_aws_lambda_arn?: [_]:           #DatadogIntegrationAwsLambdaArnResource
+	datadog_integration_aws_log_collection?: [_]:       #DatadogIntegrationAwsLogCollectionResource
+	datadog_integration_azure?: [_]:                    #DatadogIntegrationAzureResource
 	datadog_integration_gcp?: [_]:                      #DatadogIntegrationGcpResource
 	datadog_integration_pagerduty?: [_]:                #DatadogIntegrationPagerdutyResource
 	datadog_integration_pagerduty_service_object?: [_]: #DatadogIntegrationPagerdutyServiceObjectResource
+	datadog_logs_archive?: [_]:                         #DatadogLogsArchiveResource
+	datadog_logs_archive_order?: [_]:                   #DatadogLogsArchiveOrderResource
 	datadog_logs_custom_pipeline?: [_]:                 #DatadogLogsCustomPipelineResource
 	datadog_logs_index?: [_]:                           #DatadogLogsIndexResource
 	datadog_logs_index_order?: [_]:                     #DatadogLogsIndexOrderResource
 	datadog_logs_integration_pipeline?: [_]:            #DatadogLogsIntegrationPipelineResource
+	datadog_logs_metric?: [_]:                          #DatadogLogsMetricResource
 	datadog_logs_pipeline_order?: [_]:                  #DatadogLogsPipelineOrderResource
 	datadog_metric_metadata?: [_]:                      #DatadogMetricMetadataResource
 	datadog_monitor?: [_]:                              #DatadogMonitorResource
+	datadog_role?: [_]:                                 #DatadogRoleResource
 	datadog_screenboard?: [_]:                          #DatadogScreenboardResource
+	datadog_security_monitoring_default_rule?: [_]:     #DatadogSecurityMonitoringDefaultRuleResource
+	datadog_security_monitoring_rule?: [_]:             #DatadogSecurityMonitoringRuleResource
 	datadog_service_level_objective?: [_]:              #DatadogServiceLevelObjectiveResource
+	datadog_synthetics_global_variable?: [_]:           #DatadogSyntheticsGlobalVariableResource
+	datadog_synthetics_private_location?: [_]:          #DatadogSyntheticsPrivateLocationResource
 	datadog_synthetics_test?: [_]:                      #DatadogSyntheticsTestResource
 	datadog_timeboard?: [_]:                            #DatadogTimeboardResource
 	datadog_user?: [_]:                                 #DatadogUserResource

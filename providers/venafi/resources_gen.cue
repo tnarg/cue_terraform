@@ -2,14 +2,24 @@
 package venafi
 
 #VenafiCertificateResource: {
-	common_name:        string
-	algorithm?:         string
+	common_name:     string
+	algorithm?:      string
+	certificate?:    string
+	certificate_dn?: string
+	chain?:          string
+	csr_pem?:        string
+	custom_fields?: [_]: string
 	ecdsa_curve?:       string
 	expiration_window?: number
+	id?:                string
+	issuer_hint?:       string
 	key_password?:      string
+	pkcs12?:            string
+	private_key_pem?:   string
 	rsa_bits?:          number
 	san_dns?: [string, ...]
 	san_email?: [string, ...]
 	san_ip?: [string, ...]
+	valid_days?: number
 }
 #Resources: venafi_certificate?: [_]: #VenafiCertificateResource

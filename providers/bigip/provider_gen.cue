@@ -2,10 +2,11 @@
 package bigip
 
 #Provider: bigip: {
-	address:     string
-	password:    string
-	username:    string
-	login_ref?:  string
-	port?:       string
-	token_auth?: bool
+	address:       string
+	password:      string
+	username:      string
+	login_ref?:    string
+	port?:         string
+	teem_disable?: bool
+	token_auth?:   bool
 }

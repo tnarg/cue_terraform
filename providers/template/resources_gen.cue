@@ -4,6 +4,8 @@ package template
 #TemplateCloudinitConfigResource: {
 	base64_encode?: bool
 	gzip?:          bool
+	id?:            string
+	rendered?:      string
 	part?: [{
 		content:       string
 		content_type?: string
@@ -14,10 +16,13 @@ package template
 #TemplateDirResource: {
 	destination_dir: string
 	source_dir:      string
+	id?:             string
 	vars?: [_]: string
 }
 #TemplateFileResource: {
 	filename?: string
+	id?:       string
+	rendered?: string
 	template?: string
 	vars?: [_]: string
 }

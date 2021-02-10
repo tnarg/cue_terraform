@@ -8,19 +8,31 @@ package triton
 	subnet:             string
 	vlan_id:            number
 	description?:       string
+	fabric?:            bool
 	gateway?:           string
+	id?:                string
 	internet_nat?:      bool
+	public?:            bool
+	resolvers?: [string, ...]
+	routes?: [_]: string
 }
 #TritonFirewallRuleResource: {
 	rule:         string
 	description?: string
 	enabled?:     bool
+	global?:      bool
+	id?:          string
 }
 #TritonInstanceTemplateResource: {
 	image:             string
 	package:           string
 	template_name:     string
 	firewall_enabled?: bool
+	id?:               string
+	metadata?: [_]: string
+	networks?: [string, ...]
+	tags?: [_]: string
+	userdata?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -29,7 +41,9 @@ package triton
 	}
 }
 #TritonKeyResource: {
-	key: string
+	key:   string
+	id?:   string
+	name?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -43,11 +57,25 @@ package triton
 	administrator_pw?: string
 	affinity?: [string, ...]
 	cloud_config?:                string
+	compute_node?:                string
+	created?:                     string
+	dataset?:                     string
+	delegate_dataset?:            bool
 	deletion_protection_enabled?: bool
-	firewall_enabled?:            bool
+	disk?:                        number
+	domain_names?: [string, ...]
+	firewall_enabled?: bool
+	id?:               string
+	ips?: [string, ...]
+	memory?: number
 	metadata?: [_]: string
+	name?: string
 	networks?: [string, ...]
+	primaryip?:            string
+	root_authorized_keys?: string
 	tags?: [_]: string
+	type?:        string
+	updated?:     string
 	user_data?:   string
 	user_script?: string
 	cns?: [{
@@ -59,7 +87,13 @@ package triton
 		far_from?: [string, ...]
 	}, ...]
 	nic?: [{
-		network: string
+		network:  string
+		gateway?: string
+		ip?:      string
+		mac?:     string
+		netmask?: string
+		primary?: bool
+		state?:   string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -70,11 +104,15 @@ package triton
 	volume?: [{
 		mountpoint: string
 		name:       string
+		mode?:      string
+		type?:      string
 	}, ...]
 }
 #TritonServiceGroupResource: {
 	group_name: string
 	template:   string
+	capacity?:  number
+	id?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -85,11 +123,14 @@ package triton
 #TritonSnapshotResource: {
 	machine_id: string
 	name:       string
+	id?:        string
+	state?:     string
 }
 #TritonVlanResource: {
 	name:         string
 	vlan_id:      number
 	description?: string
+	id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -98,6 +139,13 @@ package triton
 	}
 }
 #TritonVolumeResource: {
+	filesystem_path?: string
+	id?:              string
+	name?:            string
+	networks?: [string, ...]
+	owner?: string
+	size?:  number
+	state?: string
 	tags?: [_]: string
 	type?: string
 	timeouts?: {

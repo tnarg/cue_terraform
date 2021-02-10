@@ -2,8 +2,8 @@
 package gridscale
 
 #Provider: gridscale: {
-	token:    string
-	uuid:     string
-	api_url?: string
-	timeout?: number
+	api_url?:      string
+	http_headers?: string
+	token?:        string
+	uuid?:         string
 }

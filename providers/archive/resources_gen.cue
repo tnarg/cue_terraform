@@ -5,6 +5,11 @@ package archive
 	output_path: string
 	type:        string
 	excludes?: [string, ...]
+	id?:                      string
+	output_base64sha256?:     string
+	output_md5?:              string
+	output_sha?:              string
+	output_size?:             number
 	source_content?:          string
 	source_content_filename?: string
 	source_dir?:              string

@@ -2,15 +2,77 @@
 package oci
 
 #OciAnalyticsAnalyticsInstanceResource: {
-	compartment_id:     string
-	feature_set:        string
-	license_type:       string
-	name:               string
+	compartment_id: string
+	feature_set:    string
+	license_type:   string
+	name:           string
+	defined_tags?: [_]: string
+	description?:        string
+	email_notification?: string
+	freeform_tags?: [_]: string
+	id?:                string
 	idcs_access_token?: string
+	service_url?:       string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
 	capacity?: [{
 		capacity_type:  string
 		capacity_value: number
 	}, ...]
+	network_endpoint_details?: [{
+		network_endpoint_type: string
+		subnet_id?:            string
+		vcn_id?:               string
+		whitelisted_ips?: [string, ...]
+		whitelisted_vcns?: [{
+			id?: string
+			whitelisted_ips?: [string, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciApigatewayApiResource: {
+	compartment_id: string
+	content?:       string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                 string
+	lifecycle_details?:  string
+	specification_type?: string
+	state?:              string
+	time_created?:       string
+	time_updated?:       string
+	validation_results?: [{
+		name:   string
+		result: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciApigatewayCertificateResource: {
+	certificate:    string
+	compartment_id: string
+	private_key:    string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                        string
+	intermediate_certificates?: string
+	lifecycle_details?:         string
+	state?:                     string
+	subject_names?: [string, ...]
+	time_created?:         string
+	time_not_valid_after?: string
+	time_updated?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -21,24 +83,66 @@ package oci
 	compartment_id: string
 	gateway_id:     string
 	path_prefix:    string
+	defined_tags?: [_]: string
+	display_name?: string
+	endpoint?:     string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
 	specification?: [{
 		logging_policies?: [{
-			access_log?: [{}, ...]
-			execution_log?: [{}, ...]
+			access_log?: [{
+				is_enabled?: bool
+			}, ...]
+			execution_log?: [{
+				is_enabled?: bool
+				log_level?:  string
+			}, ...]
 		}, ...]
 		request_policies?: [{
 			authentication?: [{
 				type: string
+				audiences?: [string, ...]
+				function_id?:                 string
+				is_anonymous_access_allowed?: bool
+				issuers?: [string, ...]
+				max_clock_skew_in_seconds?: number
+				token_auth_scheme?:         string
+				token_header?:              string
+				token_query_param?:         string
 				public_keys?: [{
-					type: string
+					type:                         string
+					is_ssl_verify_disabled?:      bool
+					max_cache_duration_in_hours?: number
+					uri?:                         string
 					keys?: [{
 						format: string
+						alg?:   string
+						e?:     string
+						key?:   string
+						key_ops?: [string, ...]
+						kid?: string
+						kty?: string
+						n?:   string
+						use?: string
 					}, ...]
 				}, ...]
-				verify_claims?: [{}, ...]
+				verify_claims?: [{
+					is_required?: bool
+					key?:         string
+					values?: [string, ...]
+				}, ...]
 			}, ...]
 			cors?: [{
 				allowed_origins: [string, ...]
+				allowed_headers?: [string, ...]
+				allowed_methods?: [string, ...]
+				exposed_headers?: [string, ...]
+				is_allow_credentials_enabled?: bool
+				max_age_in_seconds?:           number
 			}, ...]
 			rate_limiting?: [{
 				rate_in_requests_per_second: number
@@ -47,18 +151,108 @@ package oci
 		}, ...]
 		routes?: [{
 			path: string
+			methods?: [string, ...]
 			backend?: [{
-				type: string
-				headers?: [{}, ...]
+				type:                        string
+				body?:                       string
+				connect_timeout_in_seconds?: number
+				function_id?:                string
+				is_ssl_verify_disabled?:     bool
+				read_timeout_in_seconds?:    number
+				send_timeout_in_seconds?:    number
+				status?:                     number
+				url?:                        string
+				headers?: [{
+					name?:  string
+					value?: string
+				}, ...]
 			}, ...]
 			logging_policies?: [{
-				access_log?: [{}, ...]
-				execution_log?: [{}, ...]
+				access_log?: [{
+					is_enabled?: bool
+				}, ...]
+				execution_log?: [{
+					is_enabled?: bool
+					log_level?:  string
+				}, ...]
 			}, ...]
 			request_policies?: [{
-				authorization?: [{}, ...]
+				authorization?: [{
+					allowed_scope?: [string, ...]
+					type?: string
+				}, ...]
 				cors?: [{
 					allowed_origins: [string, ...]
+					allowed_headers?: [string, ...]
+					allowed_methods?: [string, ...]
+					exposed_headers?: [string, ...]
+					is_allow_credentials_enabled?: bool
+					max_age_in_seconds?:           number
+				}, ...]
+				header_transformations?: [{
+					filter_headers?: [{
+						type: string
+						items?: [{
+							name: string
+						}, ...]
+					}, ...]
+					rename_headers?: [{
+						items?: [{
+							from: string
+							to:   string
+						}, ...]
+					}, ...]
+					set_headers?: [{
+						items?: [{
+							name: string
+							values: [string, ...]
+							if_exists?: string
+						}, ...]
+					}, ...]
+				}, ...]
+				query_parameter_transformations?: [{
+					filter_query_parameters?: [{
+						type: string
+						items?: [{
+							name: string
+						}, ...]
+					}, ...]
+					rename_query_parameters?: [{
+						items?: [{
+							from: string
+							to:   string
+						}, ...]
+					}, ...]
+					set_query_parameters?: [{
+						items?: [{
+							name: string
+							values: [string, ...]
+							if_exists?: string
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			response_policies?: [{
+				header_transformations?: [{
+					filter_headers?: [{
+						type: string
+						items?: [{
+							name: string
+						}, ...]
+					}, ...]
+					rename_headers?: [{
+						items?: [{
+							from: string
+							to:   string
+						}, ...]
+					}, ...]
+					set_headers?: [{
+						items?: [{
+							name: string
+							values: [string, ...]
+							if_exists?: string
+						}, ...]
+					}, ...]
 				}, ...]
 			}, ...]
 		}, ...]
@@ -70,9 +264,22 @@ package oci
 	}
 }
 #OciApigatewayGatewayResource: {
-	compartment_id: string
-	endpoint_type:  string
-	subnet_id:      string
+	compartment_id:  string
+	endpoint_type:   string
+	subnet_id:       string
+	certificate_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	hostname?: string
+	id?:       string
+	ip_addresses?: [{
+		ip_address: string
+	}, ...]
+	lifecycle_details?: string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -82,6 +289,7 @@ package oci
 #OciAuditConfigurationResource: {
 	compartment_id:        string
 	retention_period_days: number
+	id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -89,29 +297,48 @@ package oci
 	}
 }
 #OciAutoscalingAutoScalingConfigurationResource: {
-	compartment_id: string
+	compartment_id:        string
+	cool_down_in_seconds?: number
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                 string
+	is_enabled?:         bool
+	max_resource_count?: number
+	min_resource_count?: number
+	time_created?:       string
 	auto_scaling_resources?: [{
 		id:   string
 		type: string
 	}, ...]
 	policies?: [{
-		policy_type: string
+		policy_type:   string
+		display_name?: string
+		id?:           string
+		is_enabled?:   bool
+		time_created?: string
 		capacity?: [{
-			initial: number
-			max:     number
-			min:     number
+			initial?: number
+			max?:     number
+			min?:     number
+		}, ...]
+		execution_schedule?: [{
+			expression: string
+			timezone:   string
+			type:       string
 		}, ...]
 		rules?: [{
 			display_name: string
+			id?:          string
 			action?: [{
-				type:  string
-				value: number
+				type?:  string
+				value?: number
 			}, ...]
 			metric?: [{
-				metric_type: string
+				metric_type?: string
 				threshold?: [{
-					operator: string
-					value:    number
+					operator?: string
+					value?:    number
 				}, ...]
 			}, ...]
 		}, ...]
@@ -130,9 +357,56 @@ package oci
 	display_name:           string
 	is_high_availability:   bool
 	is_secure:              bool
+	cluster_details?: [{
+		bd_cell_version:      string
+		bda_version:          string
+		bdm_version:          string
+		bds_version:          string
+		big_data_manager_url: string
+		cloudera_manager_url: string
+		csql_cell_version:    string
+		db_version:           string
+		hue_server_url:       string
+		os_version:           string
+		time_created:         string
+		time_refreshed:       string
+	}, ...]
+	created_by?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                      string
+	is_cloud_sql_configured?: bool
+	nodes?: [{
+		attached_block_volumes: [{
+			volume_attachment_id: string
+			volume_size_in_gbs:   string
+		}, ...]
+		availability_domain: string
+		display_name:        string
+		fault_domain:        string
+		image_id:            string
+		instance_id:         string
+		ip_address:          string
+		node_type:           string
+		shape:               string
+		ssh_fingerprint:     string
+		state:               string
+		subnet_id:           string
+		time_created:        string
+	}, ...]
+	number_of_nodes?: number
+	state?:           string
+	time_created?:    string
+	time_updated?:    string
 	cloud_sql_details?: [{
-		block_volume_size_in_gbs: string
-		shape:                    string
+		block_volume_size_in_gbs:              string
+		shape:                                 string
+		ip_address?:                           string
+		is_kerberos_mapped_to_database_users?: bool
+		kerberos_details?: [{
+			keytab_file:    string
+			principal_name: string
+		}, ...]
 	}, ...]
 	master_node?: [{
 		block_volume_size_in_gbs: string
@@ -140,7 +414,10 @@ package oci
 		shape:                    string
 		subnet_id:                string
 	}, ...]
-	network_config?: [{}, ...]
+	network_config?: [{
+		cidr_block?:              string
+		is_nat_gateway_required?: bool
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -159,12 +436,115 @@ package oci
 		subnet_id:                string
 	}, ...]
 }
+#OciBlockchainBlockchainPlatformResource: {
+	compartment_id:        string
+	compute_shape:         string
+	display_name:          string
+	platform_role:         string
+	ca_cert_archive_text?: string
+	component_details?: [{
+		osns: [{
+			ad: string
+			ocpu_allocation_param: [{
+				ocpu_allocation_number: number
+			}, ...]
+			osn_key: string
+			state:   string
+		}, ...]
+		peers: [{
+			ad:    string
+			alias: string
+			host:  string
+			ocpu_allocation_param: [{
+				ocpu_allocation_number: number
+			}, ...]
+			peer_key: string
+			role:     string
+			state:    string
+		}, ...]
+	}, ...]
+	defined_tags?: [_]: string
+	description?:       string
+	federated_user_id?: string
+	freeform_tags?: [_]: string
+	host_ocpu_utilization_info?: [{
+		host:                    string
+		ocpu_capacity_number:    number
+		ocpu_utilization_number: number
+	}, ...]
+	id?:                  string
+	idcs_access_token?:   string
+	is_byol?:             bool
+	is_multi_ad?:         bool
+	lifecycle_details?:   string
+	service_endpoint?:    string
+	service_version?:     string
+	state?:               string
+	storage_size_in_tbs?: number
+	storage_used_in_tbs?: number
+	time_created?:        string
+	time_updated?:        string
+	total_ocpu_capacity?: number
+	replicas?: [{
+		ca_count?:      number
+		console_count?: number
+		proxy_count?:   number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciBlockchainOsnResource: {
+	ad:                     string
+	blockchain_platform_id: string
+	id?:                    string
+	osn_key?:               string
+	state?:                 string
+	ocpu_allocation_param?: [{
+		ocpu_allocation_number: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciBlockchainPeerResource: {
+	ad:                     string
+	blockchain_platform_id: string
+	role:                   string
+	alias?:                 string
+	host?:                  string
+	id?:                    string
+	peer_key?:              string
+	state?:                 string
+	ocpu_allocation_param?: [{
+		ocpu_allocation_number: number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OciBudgetAlertRuleResource: {
 	budget_id:      string
 	threshold:      number
 	threshold_type: string
 	type:           string
-	recipients?:    string
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	message?:      string
+	recipients?:   string
+	state?:        string
+	time_created?: string
+	time_updated?: string
+	version?:      number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -172,9 +552,380 @@ package oci
 	}
 }
 #OciBudgetBudgetResource: {
-	amount:         number
+	amount:            number
+	compartment_id:    string
+	reset_period:      string
+	actual_spend?:     number
+	alert_rule_count?: number
+	defined_tags?: [_]: string
+	description?:      string
+	display_name?:     string
+	forecasted_spend?: number
+	freeform_tags?: [_]: string
+	id?:                    string
+	state?:                 string
+	target_compartment_id?: string
+	target_type?:           string
+	targets?: [string, ...]
+	time_created?:        string
+	time_spend_computed?: string
+	time_updated?:        string
+	version?:             number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCloudGuardCloudGuardConfigurationResource: {
+	compartment_id:         string
+	reporting_region:       string
+	status:                 string
+	id?:                    string
+	self_manage_resources?: bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCloudGuardDetectorRecipeResource: {
+	compartment_id:            string
+	display_name:              string
+	source_detector_recipe_id: string
+	defined_tags?: [_]: string
+	description?: string
+	detector?:    string
+	effective_detector_rules?: [{
+		candidate_responder_rules: [{
+			display_name: string
+			id:           string
+			is_preferred: bool
+		}, ...]
+		description: string
+		details: [{
+			condition: string
+			configurations: [{
+				config_key: string
+				data_type:  string
+				name:       string
+				value:      string
+				values: [{
+					list_type:         string
+					managed_list_type: string
+					value:             string
+				}, ...]
+			}, ...]
+			is_configuration_allowed: bool
+			is_enabled:               bool
+			labels: [string, ...]
+			risk_level: string
+		}, ...]
+		detector:          string
+		detector_rule_id:  string
+		display_name:      string
+		lifecycle_details: string
+		managed_list_types: [string, ...]
+		recommendation: string
+		resource_type:  string
+		service_type:   string
+		state:          string
+		time_created:   string
+		time_updated:   string
+	}, ...]
+	freeform_tags?: [_]: string
+	id?:    string
+	owner?: string
+	state?: string
+	system_tags?: [_]: string
+	time_created?: string
+	time_updated?: string
+	detector_rules?: [{
+		detector_rule_id: string
+		candidate_responder_rules?: [{
+			display_name: string
+			id:           string
+			is_preferred: bool
+		}, ...]
+		description?:       string
+		detector?:          string
+		display_name?:      string
+		lifecycle_details?: string
+		managed_list_types?: [string, ...]
+		recommendation?: string
+		resource_type?:  string
+		service_type?:   string
+		state?:          string
+		time_created?:   string
+		time_updated?:   string
+		details?: [{
+			is_enabled:                bool
+			risk_level:                string
+			condition?:                string
+			is_configuration_allowed?: bool
+			labels?: [string, ...]
+			configurations?: [{
+				config_key: string
+				name:       string
+				data_type?: string
+				value?:     string
+				values?: [{
+					list_type:         string
+					managed_list_type: string
+					value:             string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCloudGuardManagedListResource: {
 	compartment_id: string
-	reset_period:   string
+	display_name:   string
+	defined_tags?: [_]: string
+	description?:   string
+	feed_provider?: string
+	freeform_tags?: [_]: string
+	id?:               string
+	is_editable?:      bool
+	lifecyle_details?: string
+	list_items?: [string, ...]
+	list_type?:              string
+	source_managed_list_id?: string
+	state?:                  string
+	system_tags?: [_]: string
+	time_created?: string
+	time_updated?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCloudGuardResponderRecipeResource: {
+	compartment_id:             string
+	display_name:               string
+	source_responder_recipe_id: string
+	defined_tags?: [_]: string
+	description?: string
+	effective_responder_rules?: [{
+		compartment_id: string
+		description:    string
+		details: [{
+			condition: string
+			configurations: [{
+				config_key: string
+				name:       string
+				value:      string
+			}, ...]
+			is_enabled: bool
+			mode:       string
+		}, ...]
+		display_name:      string
+		lifecycle_details: string
+		policies: [string, ...]
+		responder_rule_id: string
+		state:             string
+		supported_modes: [string, ...]
+		time_created: string
+		time_updated: string
+		type:         string
+	}, ...]
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	owner?:             string
+	state?:             string
+	system_tags?: [_]: string
+	time_created?: string
+	time_updated?: string
+	responder_rules?: [{
+		responder_rule_id:  string
+		compartment_id?:    string
+		description?:       string
+		display_name?:      string
+		lifecycle_details?: string
+		policies?: [string, ...]
+		state?: string
+		supported_modes?: [string, ...]
+		time_created?: string
+		time_updated?: string
+		type?:         string
+		details?: [{
+			is_enabled: bool
+			condition?: string
+			configurations?: [{
+				config_key: string
+				name:       string
+				value:      string
+			}, ...]
+			mode?: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCloudGuardTargetResource: {
+	compartment_id:       string
+	display_name:         string
+	target_resource_id:   string
+	target_resource_type: string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?: string
+	inherited_by_compartments?: [string, ...]
+	lifecyle_details?: string
+	recipe_count?:     number
+	state?:            string
+	system_tags?: [_]: string
+	time_created?: string
+	time_updated?: string
+	target_detector_recipes?: [{
+		detector_recipe_id: string
+		compartment_id?:    string
+		description?:       string
+		detector?:          string
+		display_name?:      string
+		effective_detector_rules?: [{
+			description: string
+			details: [{
+				condition_groups: [{
+					compartment_id: string
+					condition:      string
+				}, ...]
+				configurations: [{
+					config_key: string
+					data_type:  string
+					name:       string
+					value:      string
+					values: [{
+						list_type:         string
+						managed_list_type: string
+						value:             string
+					}, ...]
+				}, ...]
+				is_configuration_allowed: bool
+				is_enabled:               bool
+				labels: [string, ...]
+				risk_level: string
+			}, ...]
+			detector:          string
+			detector_rule_id:  string
+			display_name:      string
+			lifecycle_details: string
+			managed_list_types: [string, ...]
+			recommendation: string
+			resource_type:  string
+			service_type:   string
+			state:          string
+			time_created:   string
+			time_updated:   string
+		}, ...]
+		id?:           string
+		owner?:        string
+		state?:        string
+		time_created?: string
+		time_updated?: string
+		detector_rules?: [{
+			detector_rule_id:   string
+			description?:       string
+			detector?:          string
+			display_name?:      string
+			lifecycle_details?: string
+			managed_list_types?: [string, ...]
+			recommendation?: string
+			resource_type?:  string
+			service_type?:   string
+			state?:          string
+			time_created?:   string
+			time_updated?:   string
+			details?: [{
+				configurations?: [{
+					config_key: string
+					data_type:  string
+					name:       string
+					value:      string
+					values: [{
+						list_type:         string
+						managed_list_type: string
+						value:             string
+					}, ...]
+				}, ...]
+				is_configuration_allowed?: bool
+				is_enabled?:               bool
+				labels?: [string, ...]
+				risk_level?: string
+				condition_groups?: [{
+					compartment_id: string
+					condition:      string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	target_responder_recipes?: [{
+		responder_recipe_id: string
+		compartment_id?:     string
+		description?:        string
+		display_name?:       string
+		effective_responder_rules?: [{
+			compartment_id: string
+			description:    string
+			details: [{
+				condition: string
+				configurations: [{
+					config_key: string
+					name:       string
+					value:      string
+				}, ...]
+				is_enabled: bool
+				mode:       string
+			}, ...]
+			display_name:      string
+			lifecycle_details: string
+			policies: [string, ...]
+			responder_rule_id: string
+			state:             string
+			supported_modes: [string, ...]
+			time_created: string
+			time_updated: string
+			type:         string
+		}, ...]
+		id?:           string
+		owner?:        string
+		time_created?: string
+		time_updated?: string
+		responder_rules?: [{
+			responder_rule_id:  string
+			compartment_id?:    string
+			description?:       string
+			display_name?:      string
+			lifecycle_details?: string
+			policies?: [string, ...]
+			state?: string
+			supported_modes?: [string, ...]
+			time_created?: string
+			time_updated?: string
+			type?:         string
+			details?: [{
+				condition?:  string
+				is_enabled?: bool
+				mode?:       string
+				configurations?: [{
+					config_key: string
+					name:       string
+					value:      string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -186,10 +937,38 @@ package oci
 	kubernetes_version: string
 	name:               string
 	vcn_id:             string
+	available_kubernetes_upgrades?: [string, ...]
+	endpoints?: [{
+		kubernetes: string
+	}, ...]
+	id?:                string
+	kms_key_id?:        string
+	lifecycle_details?: string
+	metadata?: [{
+		created_by_user_id:         string
+		created_by_work_request_id: string
+		deleted_by_user_id:         string
+		deleted_by_work_request_id: string
+		time_created:               string
+		time_deleted:               string
+		time_updated:               string
+		updated_by_user_id:         string
+		updated_by_work_request_id: string
+	}, ...]
+	state?: string
 	options?: [{
-		add_ons?: [{}, ...]
-		admission_controller_options?: [{}, ...]
-		kubernetes_network_config?: [{}, ...]
+		service_lb_subnet_ids?: [string, ...]
+		add_ons?: [{
+			is_kubernetes_dashboard_enabled?: bool
+			is_tiller_enabled?:               bool
+		}, ...]
+		admission_controller_options?: [{
+			is_pod_security_policy_enabled?: bool
+		}, ...]
+		kubernetes_network_config?: [{
+			pods_cidr?:     string
+			services_cidr?: string
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -203,7 +982,40 @@ package oci
 	kubernetes_version: string
 	name:               string
 	node_shape:         string
-	initial_node_labels?: [{}, ...]
+	id?:                string
+	node_image_id?:     string
+	node_image_name?:   string
+	node_metadata?: [_]: string
+	node_source?: [{
+		image_id:    string
+		source_name: string
+		source_type: string
+	}, ...]
+	nodes?: [{
+		availability_domain: string
+		error: [{
+			code:    string
+			message: string
+			status:  string
+		}, ...]
+		fault_domain:       string
+		id:                 string
+		kubernetes_version: string
+		lifecycle_details:  string
+		name:               string
+		node_pool_id:       string
+		private_ip:         string
+		public_ip:          string
+		state:              string
+		subnet_id:          string
+	}, ...]
+	quantity_per_subnet?: number
+	ssh_public_key?:      string
+	subnet_ids?: [string, ...]
+	initial_node_labels?: [{
+		key?:   string
+		value?: string
+	}, ...]
 	node_config_details?: [{
 		size: number
 		placement_configs?: [{
@@ -211,9 +1023,13 @@ package oci
 			subnet_id:           string
 		}, ...]
 	}, ...]
+	node_shape_config?: [{
+		ocpus?: number
+	}, ...]
 	node_source_details?: [{
-		image_id:    string
-		source_type: string
+		image_id:                 string
+		source_type:              string
+		boot_volume_size_in_gbs?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -222,8 +1038,13 @@ package oci
 	}
 }
 #OciCoreAppCatalogListingResourceVersionAgreementResource: {
-	listing_id:               string
-	listing_resource_version: string
+	listing_id:                string
+	listing_resource_version:  string
+	eula_link?:                string
+	id?:                       string
+	oracle_terms_of_use_link?: string
+	signature?:                string
+	time_retrieved?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -232,12 +1053,18 @@ package oci
 }
 #OciCoreAppCatalogSubscriptionResource: {
 	compartment_id:           string
-	eula_link:                string
 	listing_id:               string
 	listing_resource_version: string
 	oracle_terms_of_use_link: string
 	signature:                string
 	time_retrieved:           string
+	display_name?:            string
+	eula_link?:               string
+	id?:                      string
+	listing_resource_id?:     string
+	publisher_name?:          string
+	summary?:                 string
+	time_created?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -245,8 +1072,25 @@ package oci
 	}
 }
 #OciCoreBootVolumeResource: {
-	availability_domain: string
-	compartment_id:      string
+	availability_domain:     string
+	compartment_id:          string
+	auto_tuned_vpus_per_gb?: string
+	backup_policy_id?:       string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	image_id?:             string
+	is_auto_tune_enabled?: bool
+	is_hydrated?:          bool
+	kms_key_id?:           string
+	size_in_gbs?:          string
+	size_in_mbs?:          string
+	state?:                string
+	system_tags?: [_]: string
+	time_created?:    string
+	volume_group_id?: string
+	vpus_per_gb?:     string
 	source_details?: [{
 		id:   string
 		type: string
@@ -258,6 +1102,24 @@ package oci
 	}
 }
 #OciCoreBootVolumeBackupResource: {
+	boot_volume_id?: string
+	compartment_id?: string
+	defined_tags?: [_]: string
+	display_name?:    string
+	expiration_time?: string
+	freeform_tags?: [_]: string
+	id?:                           string
+	image_id?:                     string
+	kms_key_id?:                   string
+	size_in_gbs?:                  string
+	source_boot_volume_backup_id?: string
+	source_type?:                  string
+	state?:                        string
+	system_tags?: [_]: string
+	time_created?:          string
+	time_request_received?: string
+	type?:                  string
+	unique_size_in_gbs?:    string
 	source_details?: [{
 		boot_volume_backup_id: string
 		region:                string
@@ -271,15 +1133,48 @@ package oci
 }
 #OciCoreClusterNetworkResource: {
 	compartment_id: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
+	time_updated?: string
 	instance_pools?: [{
 		instance_configuration_id: string
 		size:                      number
+		compartment_id?:           string
+		defined_tags?: [_]: string
+		display_name?: string
+		freeform_tags?: [_]: string
+		id?: string
+		load_balancers?: [{
+			backend_set_name: string
+			id:               string
+			instance_pool_id: string
+			load_balancer_id: string
+			port:             number
+			state:            string
+			vnic_selection:   string
+		}, ...]
+		placement_configurations?: [{
+			availability_domain: string
+			fault_domains: [string, ...]
+			primary_subnet_id: string
+			secondary_vnic_subnets: [{
+				display_name: string
+				subnet_id:    string
+			}, ...]
+		}, ...]
+		state?:        string
+		time_created?: string
 	}, ...]
 	placement_configuration?: [{
 		availability_domain: string
 		primary_subnet_id:   string
 		secondary_vnic_subnets?: [{
-			subnet_id: string
+			subnet_id:     string
+			display_name?: string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -288,8 +1183,33 @@ package oci
 		update?: string
 	}
 }
+#OciCoreComputeImageCapabilitySchemaResource: {
+	compartment_id:                                      string
+	compute_global_image_capability_schema_version_name: string
+	image_id:                                            string
+	schema_data: [_]: string
+	compute_global_image_capability_schema_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	time_created?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OciCoreConsoleHistoryResource: {
-	instance_id: string
+	instance_id:          string
+	availability_domain?: string
+	compartment_id?:      string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -297,8 +1217,14 @@ package oci
 	}
 }
 #OciCoreCpeResource: {
-	compartment_id: string
-	ip_address:     string
+	compartment_id:       string
+	ip_address:           string
+	cpe_device_shape_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -306,10 +1232,21 @@ package oci
 	}
 }
 #OciCoreCrossConnectResource: {
-	compartment_id:        string
-	location_name:         string
-	port_speed_shape_name: string
-	is_active?:            bool
+	compartment_id:           string
+	location_name:            string
+	port_speed_shape_name:    string
+	cross_connect_group_id?:  string
+	customer_reference_name?: string
+	defined_tags?: [_]: string
+	display_name?:                                string
+	far_cross_connect_or_cross_connect_group_id?: string
+	freeform_tags?: [_]: string
+	id?:                                           string
+	is_active?:                                    bool
+	near_cross_connect_or_cross_connect_group_id?: string
+	port_name?:                                    string
+	state?:                                        string
+	time_created?:                                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -317,7 +1254,14 @@ package oci
 	}
 }
 #OciCoreCrossConnectGroupResource: {
-	compartment_id: string
+	compartment_id:           string
+	customer_reference_name?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -328,6 +1272,15 @@ package oci
 	availability_domain:     string
 	compartment_id:          string
 	dedicated_vm_host_shape: string
+	defined_tags?: [_]: string
+	display_name?: string
+	fault_domain?: string
+	freeform_tags?: [_]: string
+	id?:              string
+	remaining_ocpus?: number
+	state?:           string
+	time_created?:    string
+	total_ocpus?:     number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -336,9 +1289,17 @@ package oci
 }
 #OciCoreDefaultDhcpOptionsResource: {
 	manage_default_resource_id: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	options?: [{
 		type: string
 		custom_dns_servers?: [string, ...]
+		search_domain_names?: [string, ...]
+		server_type?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -348,8 +1309,18 @@ package oci
 }
 #OciCoreDefaultRouteTableResource: {
 	manage_default_resource_id: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	route_rules?: [{
 		network_entity_id: string
+		cidr_block?:       string
+		description?:      string
+		destination?:      string
+		destination_type?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -359,9 +1330,18 @@ package oci
 }
 #OciCoreDefaultSecurityListResource: {
 	manage_default_resource_id: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	egress_security_rules?: [{
-		destination: string
-		protocol:    string
+		destination:       string
+		protocol:          string
+		description?:      string
+		destination_type?: string
+		stateless?:        bool
 		icmp_options?: [{
 			type:  number
 			code?: number
@@ -384,9 +1364,11 @@ package oci
 		}, ...]
 	}, ...]
 	ingress_security_rules?: [{
-		protocol:   string
-		source:     string
-		stateless?: bool
+		protocol:     string
+		source:       string
+		description?: string
+		source_type?: string
+		stateless?:   bool
 		icmp_options?: [{
 			type:  number
 			code?: number
@@ -417,9 +1399,17 @@ package oci
 #OciCoreDhcpOptionsResource: {
 	compartment_id: string
 	vcn_id:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	options?: [{
 		type: string
 		custom_dns_servers?: [string, ...]
+		search_domain_names?: [string, ...]
+		server_type?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -429,6 +1419,13 @@ package oci
 }
 #OciCoreDrgResource: {
 	compartment_id: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	redundancy_status?: string
+	state?:             string
+	time_created?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -436,8 +1433,14 @@ package oci
 	}
 }
 #OciCoreDrgAttachmentResource: {
-	drg_id: string
-	vcn_id: string
+	drg_id:          string
+	vcn_id:          string
+	compartment_id?: string
+	display_name?:   string
+	id?:             string
+	route_table_id?: string
+	state?:          string
+	time_created?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -446,7 +1449,31 @@ package oci
 }
 #OciCoreImageResource: {
 	compartment_id: string
-	instance_id?:   string
+	agent_features?: [{
+		is_management_supported: bool
+		is_monitoring_supported: bool
+	}, ...]
+	base_image_id?:        string
+	create_image_allowed?: bool
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:          string
+	instance_id?: string
+	launch_mode?: string
+	launch_options?: [{
+		boot_volume_type:                    string
+		firmware:                            string
+		is_consistent_volume_naming_enabled: bool
+		is_pv_encryption_in_transit_enabled: bool
+		network_type:                        string
+		remote_data_volume_type:             string
+	}, ...]
+	operating_system?:         string
+	operating_system_version?: string
+	size_in_mbs?:              string
+	state?:                    string
+	time_created?:             string
 	image_source_details?: [{
 		source_type:               string
 		bucket_name?:              string
@@ -464,23 +1491,79 @@ package oci
 	}
 }
 #OciCoreInstanceResource: {
-	availability_domain: string
-	compartment_id:      string
-	shape:               string
+	availability_domain:   string
+	compartment_id:        string
+	shape:                 string
+	boot_volume_id?:       string
+	dedicated_vm_host_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
 	extended_metadata?: [_]: string
-	metadata?: [_]:          string
+	fault_domain?: string
+	freeform_tags?: [_]: string
+	hostname_label?:                      string
+	id?:                                  string
+	image?:                               string
+	ipxe_script?:                         string
+	is_pv_encryption_in_transit_enabled?: bool
+	launch_mode?:                         string
+	metadata?: [_]: string
 	preserve_boot_volume?: bool
-	agent_config?: [{}, ...]
-	create_vnic_details?: [{
-		subnet_id:         string
-		assign_public_ip?: string
-		nsg_ids?: [string, ...]
+	private_ip?:           string
+	public_ip?:            string
+	region?:               string
+	state?:                string
+	subnet_id?:            string
+	system_tags?: [_]: string
+	time_created?:                string
+	time_maintenance_reboot_due?: string
+	agent_config?: [{
+		is_management_disabled?: bool
+		is_monitoring_disabled?: bool
 	}, ...]
-	launch_options?: [{}, ...]
-	shape_config?: [{}, ...]
+	availability_config?: [{
+		recovery_action?: string
+	}, ...]
+	create_vnic_details?: [{
+		assign_public_ip?: string
+		defined_tags?: [_]: string
+		display_name?: string
+		freeform_tags?: [_]: string
+		hostname_label?: string
+		nsg_ids?: [string, ...]
+		private_ip?:             string
+		skip_source_dest_check?: bool
+		subnet_id?:              string
+		vlan_id?:                string
+	}, ...]
+	instance_options?: [{
+		are_legacy_imds_endpoints_disabled?: bool
+	}, ...]
+	launch_options?: [{
+		boot_volume_type?:                    string
+		firmware?:                            string
+		is_consistent_volume_naming_enabled?: bool
+		is_pv_encryption_in_transit_enabled?: bool
+		network_type?:                        string
+		remote_data_volume_type?:             string
+	}, ...]
+	shape_config?: [{
+		gpu_description?:               string
+		gpus?:                          number
+		local_disk_description?:        string
+		local_disks?:                   number
+		local_disks_total_size_in_gbs?: number
+		max_vnic_attachments?:          number
+		memory_in_gbs?:                 number
+		networking_bandwidth_in_gbps?:  number
+		ocpus?:                         number
+		processor_description?:         string
+	}, ...]
 	source_details?: [{
-		source_id:   string
-		source_type: string
+		source_id:                string
+		source_type:              string
+		boot_volume_size_in_gbs?: string
+		kms_key_id?:              string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -490,32 +1573,110 @@ package oci
 }
 #OciCoreInstanceConfigurationResource: {
 	compartment_id: string
+	deferred_fields?: [string, ...]
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	instance_id?:  string
+	source?:       string
+	time_created?: string
 	instance_details?: [{
 		instance_type: string
 		block_volumes?: [{
+			volume_id?: string
 			attach_details?: [{
-				type: string
+				type:                                 string
+				device?:                              string
+				display_name?:                        string
+				is_pv_encryption_in_transit_enabled?: bool
+				is_read_only?:                        bool
+				is_shareable?:                        bool
+				use_chap?:                            bool
 			}, ...]
 			create_details?: [{
+				availability_domain?: string
+				backup_policy_id?:    string
+				compartment_id?:      string
+				defined_tags?: [_]: string
+				display_name?: string
+				freeform_tags?: [_]: string
+				kms_key_id?:  string
+				size_in_gbs?: string
+				vpus_per_gb?: string
 				source_details?: [{
 					type: string
+					id?:  string
 				}, ...]
 			}, ...]
 		}, ...]
 		launch_details?: [{
-			agent_config?: [{}, ...]
-			create_vnic_details?: [{
-				nsg_ids?: [string, ...]
+			availability_domain?:  string
+			compartment_id?:       string
+			dedicated_vm_host_id?: string
+			defined_tags?: [_]: string
+			display_name?: string
+			extended_metadata?: [_]: string
+			fault_domain?: string
+			freeform_tags?: [_]: string
+			ipxe_script?:                         string
+			is_pv_encryption_in_transit_enabled?: bool
+			launch_mode?:                         string
+			metadata?: [_]: string
+			preferred_maintenance_action?: string
+			shape?:                        string
+			agent_config?: [{
+				is_management_disabled?: bool
+				is_monitoring_disabled?: bool
 			}, ...]
-			launch_options?: [{}, ...]
-			shape_config?: [{}, ...]
+			availability_config?: [{
+				recovery_action?: string
+			}, ...]
+			create_vnic_details?: [{
+				assign_public_ip?: bool
+				defined_tags?: [_]: string
+				display_name?: string
+				freeform_tags?: [_]: string
+				hostname_label?: string
+				nsg_ids?: [string, ...]
+				private_ip?:             string
+				skip_source_dest_check?: bool
+				subnet_id?:              string
+			}, ...]
+			instance_options?: [{
+				are_legacy_imds_endpoints_disabled?: bool
+			}, ...]
+			launch_options?: [{
+				boot_volume_type?:                    string
+				firmware?:                            string
+				is_consistent_volume_naming_enabled?: bool
+				is_pv_encryption_in_transit_enabled?: bool
+				network_type?:                        string
+				remote_data_volume_type?:             string
+			}, ...]
+			shape_config?: [{
+				ocpus?: number
+			}, ...]
 			source_details?: [{
-				source_type: string
+				source_type:              string
+				boot_volume_id?:          string
+				boot_volume_size_in_gbs?: string
+				image_id?:                string
 			}, ...]
 		}, ...]
 		secondary_vnics?: [{
+			display_name?: string
+			nic_index?:    number
 			create_vnic_details?: [{
+				assign_public_ip?: bool
+				defined_tags?: [_]: string
+				display_name?: string
+				freeform_tags?: [_]: string
+				hostname_label?: string
 				nsg_ids?: [string, ...]
+				private_ip?:             string
+				skip_source_dest_check?: bool
+				subnet_id?:              string
 			}, ...]
 		}, ...]
 	}, ...]
@@ -526,8 +1687,16 @@ package oci
 	}
 }
 #OciCoreInstanceConsoleConnectionResource: {
-	instance_id: string
-	public_key:  string
+	instance_id:        string
+	public_key:         string
+	compartment_id?:    string
+	connection_string?: string
+	defined_tags?: [_]: string
+	fingerprint?: string
+	freeform_tags?: [_]: string
+	id?:                    string
+	state?:                 string
+	vnc_connection_string?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -538,17 +1707,29 @@ package oci
 	compartment_id:            string
 	instance_configuration_id: string
 	size:                      number
+	actual_size?:              number
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	load_balancers?: [{
-		backend_set_name: string
-		load_balancer_id: string
-		port:             number
-		vnic_selection:   string
+		backend_set_name:  string
+		load_balancer_id:  string
+		port:              number
+		vnic_selection:    string
+		id?:               string
+		instance_pool_id?: string
+		state?:            string
 	}, ...]
 	placement_configurations?: [{
 		availability_domain: string
 		primary_subnet_id:   string
+		fault_domains?: [string, ...]
 		secondary_vnic_subnets?: [{
-			subnet_id: string
+			subnet_id:     string
+			display_name?: string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -560,7 +1741,13 @@ package oci
 #OciCoreInternetGatewayResource: {
 	compartment_id: string
 	vcn_id:         string
-	enabled?:       bool
+	defined_tags?: [_]: string
+	display_name?: string
+	enabled?:      bool
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -572,6 +1759,14 @@ package oci
 	cpe_id:         string
 	drg_id:         string
 	static_routes: [string, ...]
+	cpe_local_identifier?:      string
+	cpe_local_identifier_type?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -579,10 +1774,27 @@ package oci
 	}
 }
 #OciCoreIpsecConnectionTunnelManagementResource: {
-	ipsec_id:  string
-	routing:   string
-	tunnel_id: string
-	bgp_session_info?: [{}, ...]
+	ipsec_id:             string
+	routing:              string
+	tunnel_id:            string
+	compartment_id?:      string
+	cpe_ip?:              string
+	display_name?:        string
+	id?:                  string
+	ike_version?:         string
+	shared_secret?:       string
+	state?:               string
+	status?:              string
+	time_created?:        string
+	time_status_updated?: string
+	vpn_ip?:              string
+	bgp_session_info?: [{
+		bgp_state?:             string
+		customer_bgp_asn?:      string
+		customer_interface_ip?: string
+		oracle_bgp_asn?:        string
+		oracle_interface_ip?:   string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -590,8 +1802,13 @@ package oci
 	}
 }
 #OciCoreListingResourceVersionAgreementResource: {
-	listing_id:               string
-	listing_resource_version: string
+	listing_id:                string
+	listing_resource_version:  string
+	eula_link?:                string
+	id?:                       string
+	oracle_terms_of_use_link?: string
+	signature?:                string
+	time_retrieved?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -601,7 +1818,19 @@ package oci
 #OciCoreLocalPeeringGatewayResource: {
 	compartment_id: string
 	vcn_id:         string
-	peer_id?:       string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                       string
+	is_cross_tenancy_peering?: bool
+	peer_advertised_cidr?:     string
+	peer_advertised_cidr_details?: [string, ...]
+	peer_id?:                string
+	peering_status?:         string
+	peering_status_details?: string
+	route_table_id?:         string
+	state?:                  string
+	time_created?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -611,6 +1840,15 @@ package oci
 #OciCoreNatGatewayResource: {
 	compartment_id: string
 	vcn_id:         string
+	block_traffic?: bool
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	nat_ip?:       string
+	public_ip_id?: string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -620,6 +1858,12 @@ package oci
 #OciCoreNetworkSecurityGroupResource: {
 	compartment_id: string
 	vcn_id:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -630,7 +1874,15 @@ package oci
 	direction:                 string
 	network_security_group_id: string
 	protocol:                  string
+	description?:              string
+	destination?:              string
+	destination_type?:         string
+	id?:                       string
+	is_valid?:                 bool
 	source?:                   string
+	source_type?:              string
+	stateless?:                bool
+	time_created?:             string
 	icmp_options?: [{
 		type:  number
 		code?: number
@@ -662,7 +1914,19 @@ package oci
 	}, ...]
 }
 #OciCorePrivateIpResource: {
-	vnic_id: string
+	availability_domain?: string
+	compartment_id?:      string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	hostname_label?: string
+	id?:             string
+	ip_address?:     string
+	is_primary?:     bool
+	subnet_id?:      string
+	time_created?:   string
+	vlan_id?:        string
+	vnic_id?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -670,9 +1934,47 @@ package oci
 	}
 }
 #OciCorePublicIpResource: {
+	compartment_id:        string
+	lifetime:              string
+	assigned_entity_id?:   string
+	assigned_entity_type?: string
+	availability_domain?:  string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	ip_address?:        string
+	private_ip_id?:     string
+	public_ip_pool_id?: string
+	scope?:             string
+	state?:             string
+	time_created?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCorePublicIpPoolResource: {
 	compartment_id: string
-	lifetime:       string
-	private_ip_id?: string
+	cidr_blocks?: [string, ...]
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCorePublicIpPoolCapacityResource: {
+	byoip_id:          string
+	cidr_block:        string
+	public_ip_pool_id: string
+	id?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -682,6 +1984,17 @@ package oci
 #OciCoreRemotePeeringConnectionResource: {
 	compartment_id: string
 	drg_id:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                       string
+	is_cross_tenancy_peering?: bool
+	peer_id?:                  string
+	peer_region_name?:         string
+	peer_tenancy_id?:          string
+	peering_status?:           string
+	state?:                    string
+	time_created?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -691,8 +2004,18 @@ package oci
 #OciCoreRouteTableResource: {
 	compartment_id: string
 	vcn_id:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	route_rules?: [{
 		network_entity_id: string
+		cidr_block?:       string
+		description?:      string
+		destination?:      string
+		destination_type?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -703,6 +2026,7 @@ package oci
 #OciCoreRouteTableAttachmentResource: {
 	route_table_id: string
 	subnet_id:      string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -712,9 +2036,18 @@ package oci
 #OciCoreSecurityListResource: {
 	compartment_id: string
 	vcn_id:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	egress_security_rules?: [{
-		destination: string
-		protocol:    string
+		destination:       string
+		protocol:          string
+		description?:      string
+		destination_type?: string
+		stateless?:        bool
 		icmp_options?: [{
 			type:  number
 			code?: number
@@ -737,9 +2070,11 @@ package oci
 		}, ...]
 	}, ...]
 	ingress_security_rules?: [{
-		protocol:   string
-		source:     string
-		stateless?: bool
+		protocol:     string
+		source:       string
+		description?: string
+		source_type?: string
+		stateless?:   bool
 		icmp_options?: [{
 			type:  number
 			code?: number
@@ -770,8 +2105,17 @@ package oci
 #OciCoreServiceGatewayResource: {
 	compartment_id: string
 	vcn_id:         string
+	block_traffic?: bool
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:             string
+	route_table_id?: string
+	state?:          string
+	time_created?:   string
 	services?: [{
-		service_id: string
+		service_id:    string
+		service_name?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -783,6 +2127,7 @@ package oci
 	compartment_id: string
 	image_id:       string
 	shape_name:     string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -790,9 +2135,27 @@ package oci
 	}
 }
 #OciCoreSubnetResource: {
-	cidr_block:     string
-	compartment_id: string
-	vcn_id:         string
+	cidr_block:           string
+	compartment_id:       string
+	vcn_id:               string
+	availability_domain?: string
+	defined_tags?: [_]: string
+	dhcp_options_id?: string
+	display_name?:    string
+	dns_label?:       string
+	freeform_tags?: [_]: string
+	id?:                         string
+	ipv6cidr_block?:             string
+	ipv6public_cidr_block?:      string
+	ipv6virtual_router_ip?:      string
+	prohibit_public_ip_on_vnic?: bool
+	route_table_id?:             string
+	security_list_ids?: [string, ...]
+	state?:              string
+	subnet_domain_name?: string
+	time_created?:       string
+	virtual_router_ip?:  string
+	virtual_router_mac?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -800,8 +2163,22 @@ package oci
 	}
 }
 #OciCoreVcnResource: {
-	cidr_block:     string
-	compartment_id: string
+	cidr_block:                string
+	compartment_id:            string
+	default_dhcp_options_id?:  string
+	default_route_table_id?:   string
+	default_security_list_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	dns_label?:    string
+	freeform_tags?: [_]: string
+	id?:                    string
+	ipv6cidr_block?:        string
+	ipv6public_cidr_block?: string
+	is_ipv6enabled?:        bool
+	state?:                 string
+	time_created?:          string
+	vcn_domain_name?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -809,9 +2186,36 @@ package oci
 	}
 }
 #OciCoreVirtualCircuitResource: {
-	compartment_id: string
-	type:           string
-	cross_connect_mappings?: [{}, ...]
+	compartment_id:        string
+	type:                  string
+	bandwidth_shape_name?: string
+	bgp_management?:       string
+	bgp_session_state?:    string
+	customer_asn?:         string
+	customer_bgp_asn?:     number
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	gateway_id?:                string
+	id?:                        string
+	oracle_bgp_asn?:            number
+	provider_service_id?:       string
+	provider_service_key_name?: string
+	provider_state?:            string
+	reference_comment?:         string
+	region?:                    string
+	service_type?:              string
+	state?:                     string
+	time_created?:              string
+	cross_connect_mappings?: [{
+		bgp_md5auth_key?:                         string
+		cross_connect_or_cross_connect_group_id?: string
+		customer_bgp_peering_ip?:                 string
+		customer_bgp_peering_ipv6?:               string
+		oracle_bgp_peering_ip?:                   string
+		oracle_bgp_peering_ipv6?:                 string
+		vlan?:                                    number
+	}, ...]
 	public_prefixes?: [{
 		cidr_block: string
 	}, ...]
@@ -822,8 +2226,42 @@ package oci
 	}
 }
 #OciCoreVirtualNetworkResource: {
-	cidr_block:     string
-	compartment_id: string
+	cidr_block:                string
+	compartment_id:            string
+	default_dhcp_options_id?:  string
+	default_route_table_id?:   string
+	default_security_list_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	dns_label?:    string
+	freeform_tags?: [_]: string
+	id?:                    string
+	ipv6cidr_block?:        string
+	ipv6public_cidr_block?: string
+	is_ipv6enabled?:        bool
+	state?:                 string
+	time_created?:          string
+	vcn_domain_name?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciCoreVlanResource: {
+	availability_domain: string
+	cidr_block:          string
+	compartment_id:      string
+	vcn_id:              string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?: string
+	nsg_ids?: [string, ...]
+	route_table_id?: string
+	state?:          string
+	time_created?:   string
+	vlan_tag?:       number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -831,12 +2269,29 @@ package oci
 	}
 }
 #OciCoreVnicAttachmentResource: {
-	instance_id: string
+	instance_id:          string
+	availability_domain?: string
+	compartment_id?:      string
+	display_name?:        string
+	id?:                  string
+	nic_index?:           number
+	state?:               string
+	subnet_id?:           string
+	time_created?:        string
+	vlan_id?:             string
+	vlan_tag?:            number
+	vnic_id?:             string
 	create_vnic_details?: [{
-		subnet_id:         string
 		assign_public_ip?: string
+		defined_tags?: [_]: string
+		display_name?: string
+		freeform_tags?: [_]: string
+		hostname_label?: string
 		nsg_ids?: [string, ...]
+		private_ip?:             string
 		skip_source_dest_check?: bool
+		subnet_id?:              string
+		vlan_id?:                string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -845,8 +2300,25 @@ package oci
 	}
 }
 #OciCoreVolumeResource: {
-	availability_domain: string
-	compartment_id:      string
+	availability_domain:     string
+	compartment_id:          string
+	auto_tuned_vpus_per_gb?: string
+	backup_policy_id?:       string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	is_auto_tune_enabled?: bool
+	is_hydrated?:          bool
+	kms_key_id?:           string
+	size_in_gbs?:          string
+	size_in_mbs?:          string
+	state?:                string
+	system_tags?: [_]: string
+	time_created?:     string
+	volume_backup_id?: string
+	volume_group_id?:  string
+	vpus_per_gb?:      string
 	source_details?: [{
 		id:   string
 		type: string
@@ -858,9 +2330,25 @@ package oci
 	}
 }
 #OciCoreVolumeAttachmentResource: {
-	attachment_type: string
-	instance_id:     string
-	volume_id:       string
+	attachment_type:                      string
+	instance_id:                          string
+	volume_id:                            string
+	availability_domain?:                 string
+	chap_secret?:                         string
+	chap_username?:                       string
+	compartment_id?:                      string
+	device?:                              string
+	display_name?:                        string
+	id?:                                  string
+	ipv4?:                                string
+	iqn?:                                 string
+	is_pv_encryption_in_transit_enabled?: bool
+	is_read_only?:                        bool
+	is_shareable?:                        bool
+	port?:                                number
+	state?:                               string
+	time_created?:                        string
+	use_chap?:                            bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -868,6 +2356,25 @@ package oci
 	}
 }
 #OciCoreVolumeBackupResource: {
+	compartment_id?: string
+	defined_tags?: [_]: string
+	display_name?:    string
+	expiration_time?: string
+	freeform_tags?: [_]: string
+	id?:                      string
+	kms_key_id?:              string
+	size_in_gbs?:             string
+	size_in_mbs?:             string
+	source_type?:             string
+	source_volume_backup_id?: string
+	state?:                   string
+	system_tags?: [_]: string
+	time_created?:          string
+	time_request_received?: string
+	type?:                  string
+	unique_size_in_gbs?:    string
+	unique_size_in_mbs?:    string
+	volume_id?:             string
 	source_details?: [{
 		region:           string
 		volume_backup_id: string
@@ -881,6 +2388,12 @@ package oci
 }
 #OciCoreVolumeBackupPolicyResource: {
 	compartment_id: string
+	defined_tags?: [_]: string
+	destination_region?: string
+	display_name?:       string
+	freeform_tags?: [_]: string
+	id?:           string
+	time_created?: string
 	schedules?: [{
 		backup_type:       string
 		period:            string
@@ -891,6 +2404,7 @@ package oci
 		month?:            string
 		offset_seconds?:   number
 		offset_type?:      string
+		time_zone?:        string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -899,8 +2413,10 @@ package oci
 	}
 }
 #OciCoreVolumeBackupPolicyAssignmentResource: {
-	asset_id:  string
-	policy_id: string
+	asset_id:      string
+	policy_id:     string
+	id?:           string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -910,6 +2426,16 @@ package oci
 #OciCoreVolumeGroupResource: {
 	availability_domain: string
 	compartment_id:      string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	is_hydrated?:  bool
+	size_in_gbs?:  string
+	size_in_mbs?:  string
+	state?:        string
+	time_created?: string
+	volume_ids?: [string, ...]
 	source_details?: [{
 		type:                    string
 		volume_group_backup_id?: string
@@ -924,22 +2450,54 @@ package oci
 }
 #OciCoreVolumeGroupBackupResource: {
 	volume_group_id: string
+	compartment_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                    string
+	size_in_gbs?:           string
+	size_in_mbs?:           string
+	state?:                 string
+	time_created?:          string
+	time_request_received?: string
+	type?:                  string
+	unique_size_in_gbs?:    string
+	unique_size_in_mbs?:    string
+	volume_backup_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
-#OciDataSafeDataSafeConfigurationResource: timeouts?: {
-	create?: string
-	delete?: string
-	update?: string
+#OciDataSafeDataSafeConfigurationResource: {
+	compartment_id?: string
+	id?:             string
+	is_enabled?:     bool
+	state?:          string
+	time_enabled?:   string
+	url?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #OciDataSafeDataSafePrivateEndpointResource: {
 	compartment_id: string
 	display_name:   string
 	subnet_id:      string
 	vcn_id:         string
+	defined_tags?: [_]: string
+	description?:   string
+	endpoint_fqdn?: string
+	freeform_tags?: [_]: string
+	id?: string
+	nsg_ids?: [string, ...]
+	private_endpoint_id?: string
+	private_endpoint_ip?: string
+	state?:               string
+	time_created?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -947,12 +2505,60 @@ package oci
 	}
 }
 #OciDatabaseAutonomousContainerDatabaseResource: {
-	autonomous_exadata_infrastructure_id: string
-	display_name:                         string
-	patch_model:                          string
-	backup_config?: [{}, ...]
+	display_name:                          string
+	patch_model:                           string
+	autonomous_exadata_infrastructure_id?: string
+	autonomous_vm_cluster_id?:             string
+	availability_domain?:                  string
+	compartment_id?:                       string
+	db_unique_name?:                       string
+	db_version?:                           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                      string
+	infrastructure_type?:     string
+	kms_key_id?:              string
+	last_maintenance_run_id?: string
+	lifecycle_details?:       string
+	maintenance_window?: [{
+		days_of_week: [{
+			name: string
+		}, ...]
+		hours_of_day: [number, ...]
+		lead_time_in_weeks: number
+		months: [{
+			name: string
+		}, ...]
+		preference: string
+		weeks_of_month: [number, ...]
+	}, ...]
+	next_maintenance_run_id?:                         string
+	patch_id?:                                        string
+	peer_autonomous_container_database_display_name?: string
+	peer_autonomous_exadata_infrastructure_id?:       string
+	protection_mode?:                                 string
+	role?:                                            string
+	rotate_key_trigger?:                              bool
+	service_level_agreement_type?:                    string
+	standby_maintenance_buffer_in_days?:              number
+	state?:                                           string
+	time_created?:                                    string
+	vault_id?:                                        string
+	backup_config?: [{
+		recovery_window_in_days?: number
+		backup_destination_details?: [{
+			type:            string
+			id?:             string
+			internet_proxy?: string
+			vpc_password?:   string
+			vpc_user?:       string
+		}, ...]
+	}, ...]
 	maintenance_window_details?: [{
 		preference: string
+		hours_of_day?: [number, ...]
+		lead_time_in_weeks?: number
+		weeks_of_month?: [number, ...]
 		days_of_week?: [{
 			name: string
 		}, ...]
@@ -966,33 +2572,91 @@ package oci
 		update?: string
 	}
 }
-#OciDatabaseAutonomousDataWarehouseResource: {
-	admin_password:           string
-	compartment_id:           string
-	cpu_core_count:           number
-	data_storage_size_in_tbs: number
-	db_name:                  string
+#OciDatabaseAutonomousContainerDatabaseDataguardAssociationOperationResource: {
+	autonomous_container_database_dataguard_association_id: string
+	autonomous_container_database_id:                       string
+	operation:                                              string
+	id?:                                                    string
 	timeouts?: {
 		create?: string
 		delete?: string
-		update?: string
-	}
-}
-#OciDatabaseAutonomousDataWarehouseBackupResource: {
-	autonomous_data_warehouse_id: string
-	display_name:                 string
-	timeouts?: {
-		create?: string
-		delete?: string
-		update?: string
 	}
 }
 #OciDatabaseAutonomousDatabaseResource: {
-	admin_password:           string
-	compartment_id:           string
-	cpu_core_count:           number
-	data_storage_size_in_tbs: number
-	db_name:                  string
+	compartment_id:                    string
+	cpu_core_count:                    number
+	data_storage_size_in_tbs:          number
+	db_name:                           string
+	admin_password?:                   string
+	autonomous_container_database_id?: string
+	autonomous_database_backup_id?:    string
+	autonomous_database_id?:           string
+	available_upgrade_versions?: [string, ...]
+	clone_type?: string
+	connection_strings?: [{
+		all_connection_strings: [_]: string
+		dedicated: string
+		high:      string
+		low:       string
+		medium:    string
+	}, ...]
+	connection_urls?: [{
+		apex_url:                             string
+		machine_learning_user_management_url: string
+		sql_dev_web_url:                      string
+	}, ...]
+	data_safe_status?: string
+	db_version?:       string
+	db_workload?:      string
+	defined_tags?: [_]: string
+	display_name?:                    string
+	failed_data_recovery_in_seconds?: number
+	freeform_tags?: [_]: string
+	id?:                                             string
+	infrastructure_type?:                            string
+	is_auto_scaling_enabled?:                        bool
+	is_data_guard_enabled?:                          bool
+	is_dedicated?:                                   bool
+	is_free_tier?:                                   bool
+	is_preview?:                                     bool
+	is_preview_version_with_service_terms_accepted?: bool
+	is_refreshable_clone?:                           bool
+	license_model?:                                  string
+	lifecycle_details?:                              string
+	nsg_ids?: [string, ...]
+	open_mode?:              string
+	permission_level?:       string
+	private_endpoint?:       string
+	private_endpoint_ip?:    string
+	private_endpoint_label?: string
+	refreshable_mode?:       string
+	refreshable_status?:     string
+	role?:                   string
+	rotate_key_trigger?:     bool
+	service_console_url?:    string
+	source?:                 string
+	source_id?:              string
+	standby_db?: [{
+		lag_time_in_seconds: number
+		lifecycle_details:   string
+		state:               string
+	}, ...]
+	state?:         string
+	subnet_id?:     string
+	switchover_to?: string
+	system_tags?: [_]: string
+	time_created?:                                 string
+	time_deletion_of_free_autonomous_database?:    string
+	time_maintenance_begin?:                       string
+	time_maintenance_end?:                         string
+	time_of_last_failover?:                        string
+	time_of_last_refresh?:                         string
+	time_of_last_refresh_point?:                   string
+	time_of_last_switchover?:                      string
+	time_of_next_refresh?:                         string
+	time_reclamation_of_free_autonomous_database?: string
+	timestamp?:                                    string
+	used_data_storage_size_in_tbs?:                number
 	whitelisted_ips?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -1003,6 +2667,16 @@ package oci
 #OciDatabaseAutonomousDatabaseBackupResource: {
 	autonomous_database_id: string
 	display_name:           string
+	compartment_id?:        string
+	database_size_in_tbs?:  number
+	id?:                    string
+	is_automatic?:          bool
+	is_restorable?:         bool
+	lifecycle_details?:     string
+	state?:                 string
+	time_ended?:            string
+	time_started?:          string
+	type?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1011,7 +2685,10 @@ package oci
 }
 #OciDatabaseAutonomousDatabaseInstanceWalletManagementResource: {
 	autonomous_database_id: string
+	id?:                    string
 	should_rotate?:         bool
+	state?:                 string
+	time_rotated?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1019,7 +2696,10 @@ package oci
 	}
 }
 #OciDatabaseAutonomousDatabaseRegionalWalletManagementResource: {
+	id?:            string
 	should_rotate?: bool
+	state?:         string
+	time_rotated?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1031,9 +2711,36 @@ package oci
 	compartment_id:      string
 	shape:               string
 	subnet_id:           string
+	defined_tags?: [_]: string
+	display_name?: string
+	domain?:       string
+	freeform_tags?: [_]: string
+	hostname?:                string
+	id?:                      string
+	last_maintenance_run_id?: string
+	license_model?:           string
+	lifecycle_details?:       string
+	maintenance_window?: [{
+		days_of_week: [{
+			name: string
+		}, ...]
+		hours_of_day: [number, ...]
+		lead_time_in_weeks: number
+		months: [{
+			name: string
+		}, ...]
+		preference: string
+		weeks_of_month: [number, ...]
+	}, ...]
+	next_maintenance_run_id?: string
 	nsg_ids?: [string, ...]
+	state?:        string
+	time_created?: string
 	maintenance_window_details?: [{
 		preference: string
+		hours_of_day?: [number, ...]
+		lead_time_in_weeks?: number
+		weeks_of_month?: [number, ...]
 		days_of_week?: [{
 			name: string
 		}, ...]
@@ -1047,9 +2754,47 @@ package oci
 		update?: string
 	}
 }
+#OciDatabaseAutonomousVmClusterResource: {
+	compartment_id:                      string
+	display_name:                        string
+	exadata_infrastructure_id:           string
+	vm_cluster_network_id:               string
+	available_cpus?:                     number
+	available_data_storage_size_in_tbs?: number
+	cpus_enabled?:                       number
+	data_storage_size_in_tbs?:           number
+	db_node_storage_size_in_gbs?:        number
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                      string
+	is_local_backup_enabled?: bool
+	license_model?:           string
+	lifecycle_details?:       string
+	memory_size_in_gbs?:      number
+	state?:                   string
+	time_created?:            string
+	time_zone?:               string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OciDatabaseBackupResource: {
-	database_id:  string
-	display_name: string
+	database_id:           string
+	display_name:          string
+	availability_domain?:  string
+	compartment_id?:       string
+	database_edition?:     string
+	database_size_in_gbs?: number
+	id?:                   string
+	lifecycle_details?:    string
+	shape?:                string
+	state?:                string
+	time_ended?:           string
+	time_started?:         string
+	type?:                 string
+	version?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1057,12 +2802,108 @@ package oci
 	}
 }
 #OciDatabaseBackupDestinationResource: {
-	compartment_id:          string
-	display_name:            string
-	type:                    string
-	connection_string?:      string
+	compartment_id: string
+	display_name:   string
+	type:           string
+	associated_databases?: [{
+		db_name: string
+		id:      string
+	}, ...]
+	connection_string?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                     string
+	lifecycle_details?:      string
 	local_mount_point_path?: string
+	nfs_mount_type?:         string
+	nfs_server?: [string, ...]
+	nfs_server_export?: string
+	state?:             string
+	time_created?:      string
 	vpc_users?: [string, ...]
+	mount_type_details?: [{
+		mount_type:              string
+		local_mount_point_path?: string
+		nfs_server?: [string, ...]
+		nfs_server_export?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDatabaseCloudExadataInfrastructureResource: {
+	availability_domain:            string
+	compartment_id:                 string
+	display_name:                   string
+	shape:                          string
+	available_storage_size_in_gbs?: number
+	compute_count?:                 number
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                        string
+	last_maintenance_run_id?:   string
+	lifecycle_details?:         string
+	next_maintenance_run_id?:   string
+	state?:                     string
+	storage_count?:             number
+	time_created?:              string
+	total_storage_size_in_gbs?: number
+	maintenance_window?: [{
+		preference: string
+		hours_of_day?: [number, ...]
+		lead_time_in_weeks?: number
+		weeks_of_month?: [number, ...]
+		days_of_week?: [{
+			name: string
+		}, ...]
+		months?: [{
+			name: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDatabaseCloudVmClusterResource: {
+	backup_subnet_id:                string
+	cloud_exadata_infrastructure_id: string
+	compartment_id:                  string
+	cpu_core_count:                  number
+	display_name:                    string
+	gi_version:                      string
+	hostname:                        string
+	ssh_public_keys: [string, ...]
+	subnet_id:            string
+	availability_domain?: string
+	backup_network_nsg_ids?: [string, ...]
+	cluster_name?:            string
+	data_storage_percentage?: number
+	defined_tags?: [_]: string
+	disk_redundancy?: string
+	domain?:          string
+	freeform_tags?: [_]: string
+	id?:                           string
+	is_local_backup_enabled?:      bool
+	is_sparse_diskgroup_enabled?:  bool
+	last_update_history_entry_id?: string
+	license_model?:                string
+	lifecycle_details?:            string
+	listener_port?:                string
+	node_count?:                   number
+	nsg_ids?: [string, ...]
+	scan_dns_record_id?: string
+	scan_ip_ids?: [string, ...]
+	shape?:               string
+	state?:               string
+	storage_size_in_gbs?: number
+	system_version?:      string
+	time_created?:        string
+	time_zone?:           string
+	vip_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1076,8 +2917,26 @@ package oci
 	delete_standby_db_home_on_delete: string
 	protection_mode:                  string
 	transport_type:                   string
+	apply_lag?:                       string
+	apply_rate?:                      string
+	availability_domain?:             string
 	backup_network_nsg_ids?: [string, ...]
+	display_name?:      string
+	hostname?:          string
+	id?:                string
+	lifecycle_details?: string
 	nsg_ids?: [string, ...]
+	peer_data_guard_association_id?: string
+	peer_database_id?:               string
+	peer_db_home_id?:                string
+	peer_db_system_id?:              string
+	peer_role?:                      string
+	peer_vm_cluster_id?:             string
+	role?:                           string
+	shape?:                          string
+	state?:                          string
+	subnet_id?:                      string
+	time_created?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1085,15 +2944,60 @@ package oci
 	}
 }
 #OciDatabaseDatabaseResource: {
-	db_home_id: string
-	source:     string
+	db_home_id:      string
+	source:          string
+	character_set?:  string
+	compartment_id?: string
+	connection_strings?: [{
+		all_connection_strings: [_]: string
+		cdb_default:    string
+		cdb_ip_default: string
+	}, ...]
+	database_software_image_id?: string
+	db_backup_config?: [{
+		auto_backup_enabled: bool
+		auto_backup_window:  string
+		backup_destination_details: [{
+			id:   string
+			type: string
+		}, ...]
+		recovery_window_in_days: number
+	}, ...]
+	db_name?:        string
+	db_system_id?:   string
+	db_unique_name?: string
+	db_version?:     string
+	db_workload?:    string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                                               string
+	last_backup_timestamp?:                            string
+	lifecycle_details?:                                string
+	ncharacter_set?:                                   string
+	pdb_name?:                                         string
+	source_database_point_in_time_recovery_timestamp?: string
+	state?:                                            string
+	time_created?:                                     string
+	vm_cluster_id?:                                    string
 	database?: [{
-		admin_password:       string
-		db_name:              string
-		backup_id?:           string
-		backup_tde_password?: string
+		admin_password:              string
+		db_name:                     string
+		backup_id?:                  string
+		backup_tde_password?:        string
+		character_set?:              string
+		database_software_image_id?: string
+		db_unique_name?:             string
+		db_workload?:                string
+		defined_tags?: [_]:  string
+		freeform_tags?: [_]: string
+		ncharacter_set?: string
+		pdb_name?:       string
 		db_backup_config?: [{
+			auto_backup_enabled?:     bool
+			auto_backup_window?:      string
+			recovery_window_in_days?: number
 			backup_destination_details?: [{
+				id?:   string
 				type?: string
 			}, ...]
 		}, ...]
@@ -1104,11 +3008,78 @@ package oci
 		update?: string
 	}
 }
+#OciDatabaseDatabaseSoftwareImageResource: {
+	compartment_id:   string
+	database_version: string
+	display_name:     string
+	patch_set:        string
+	database_software_image_included_patches?: [string, ...]
+	database_software_image_one_off_patches?: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                       string
+	image_shape_family?:       string
+	image_type?:               string
+	included_patches_summary?: string
+	lifecycle_details?:        string
+	ls_inventory?:             string
+	state?:                    string
+	time_created?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OciDatabaseDbHomeResource: {
+	compartment_id?:             string
+	database_software_image_id?: string
+	db_home_location?:           string
+	db_system_id?:               string
+	db_version?:                 string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                          string
+	last_patch_history_entry_id?: string
+	lifecycle_details?:           string
+	source?:                      string
+	state?:                       string
+	time_created?:                string
+	vm_cluster_id?:               string
 	database?: [{
-		admin_password: string
+		admin_password:       string
+		backup_id?:           string
+		backup_tde_password?: string
+		character_set?:       string
+		connection_strings?: [{
+			all_connection_strings: [_]: string
+			cdb_default:    string
+			cdb_ip_default: string
+		}, ...]
+		database_id?:                string
+		database_software_image_id?: string
+		db_name?:                    string
+		db_unique_name?:             string
+		db_workload?:                string
+		defined_tags?: [_]:  string
+		freeform_tags?: [_]: string
+		id?:                string
+		lifecycle_details?: string
+		ncharacter_set?:    string
+		one_off_patches?: [string, ...]
+		pdb_name?:                              string
+		state?:                                 string
+		time_created?:                          string
+		time_stamp_for_point_in_time_recovery?: string
 		db_backup_config?: [{
-			backup_destination_details?: [{}, ...]
+			auto_backup_enabled?:     bool
+			auto_backup_window?:      string
+			recovery_window_in_days?: number
+			backup_destination_details?: [{
+				id?:   string
+				type?: string
+			}, ...]
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -1118,8 +3089,13 @@ package oci
 	}
 }
 #OciDatabaseDbNodeConsoleConnectionResource: {
-	db_node_id: string
-	public_key: string
+	db_node_id:         string
+	public_key:         string
+	compartment_id?:    string
+	connection_string?: string
+	fingerprint?:       string
+	id?:                string
+	state?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1129,25 +3105,130 @@ package oci
 #OciDatabaseDbSystemResource: {
 	availability_domain: string
 	compartment_id:      string
-	database_edition:    string
 	hostname:            string
 	shape:               string
 	ssh_public_keys: [string, ...]
 	subnet_id: string
 	backup_network_nsg_ids?: [string, ...]
+	backup_subnet_id?:        string
+	cluster_name?:            string
+	cpu_core_count?:          number
+	data_storage_percentage?: number
+	data_storage_size_in_gb?: number
+	database_edition?:        string
+	defined_tags?: [_]: string
+	disk_redundancy?: string
+	display_name?:    string
+	domain?:          string
+	fault_domains?: [string, ...]
+	freeform_tags?: [_]: string
+	id?: string
+	iorm_config_cache?: [{
+		db_plans: [{
+			db_name:           string
+			flash_cache_limit: string
+			share:             number
+		}, ...]
+		db_system_id:      string
+		lifecycle_details: string
+		objective:         string
+		state:             string
+	}, ...]
+	last_maintenance_run_id?:     string
+	last_patch_history_entry_id?: string
+	license_model?:               string
+	lifecycle_details?:           string
+	listener_port?:               number
+	maintenance_window?: [{
+		days_of_week: [{
+			name: string
+		}, ...]
+		hours_of_day: [number, ...]
+		lead_time_in_weeks: number
+		months: [{
+			name: string
+		}, ...]
+		preference: string
+		weeks_of_month: [number, ...]
+	}, ...]
+	next_maintenance_run_id?: string
+	node_count?:              number
 	nsg_ids?: [string, ...]
+	point_in_time_data_disk_clone_timestamp?: string
+	private_ip?:                              string
+	reco_storage_size_in_gb?:                 number
+	scan_dns_record_id?:                      string
+	scan_ip_ids?: [string, ...]
+	source?:              string
+	source_db_system_id?: string
+	sparse_diskgroup?:    bool
+	state?:               string
+	time_created?:        string
+	time_zone?:           string
+	version?:             string
+	vip_ids?: [string, ...]
 	db_home?: [{
+		database_software_image_id?: string
+		db_home_location?:           string
+		db_version?:                 string
+		defined_tags?: [_]: string
+		display_name?: string
+		freeform_tags?: [_]: string
+		id?:                          string
+		last_patch_history_entry_id?: string
+		lifecycle_details?:           string
+		state?:                       string
+		time_created?:                string
 		database?: [{
-			admin_password: string
+			admin_password:       string
+			backup_id?:           string
+			backup_tde_password?: string
+			character_set?:       string
+			connection_strings?: [{
+				all_connection_strings: [_]: string
+				cdb_default:    string
+				cdb_ip_default: string
+			}, ...]
+			database_id?:                string
+			database_software_image_id?: string
+			db_domain?:                  string
+			db_name?:                    string
+			db_unique_name?:             string
+			db_workload?:                string
+			defined_tags?: [_]:  string
+			freeform_tags?: [_]: string
+			id?:                                    string
+			lifecycle_details?:                     string
+			ncharacter_set?:                        string
+			pdb_name?:                              string
+			state?:                                 string
+			time_created?:                          string
+			time_stamp_for_point_in_time_recovery?: string
 			db_backup_config?: [{
-				backup_destination_details?: [{}, ...]
+				auto_backup_enabled?:     bool
+				auto_backup_window?:      string
+				recovery_window_in_days?: number
+				backup_destination_details?: [{
+					id?:   string
+					type?: string
+				}, ...]
 			}, ...]
 		}, ...]
 	}, ...]
-	db_system_options?: [{}, ...]
+	db_system_options?: [{
+		storage_management?: string
+	}, ...]
 	maintenance_window_details?: [{
-		days_of_week?: [{}, ...]
-		months?: [{}, ...]
+		hours_of_day?: [number, ...]
+		lead_time_in_weeks?: number
+		preference?:         string
+		weeks_of_month?: [number, ...]
+		days_of_week?: [{
+			name?: string
+		}, ...]
+		months?: [{
+			name?: string
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1166,9 +3247,31 @@ package oci
 	infini_band_network_cidr: string
 	netmask:                  string
 	ntp_server: [string, ...]
-	shape:            string
-	time_zone:        string
-	activation_file?: string
+	shape:                        string
+	time_zone:                    string
+	activation_file?:             string
+	corporate_proxy?:             string
+	cpus_enabled?:                number
+	csi_number?:                  string
+	data_storage_size_in_tbs?:    number
+	db_node_storage_size_in_gbs?: number
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                         string
+	lifecycle_details?:          string
+	max_cpu_count?:              number
+	max_data_storage_in_tbs?:    number
+	max_db_node_storage_in_gbs?: number
+	max_memory_in_gbs?:          number
+	memory_size_in_gbs?:         number
+	state?:                      string
+	time_created?:               string
+	contacts?: [{
+		email:         string
+		is_primary:    bool
+		name:          string
+		phone_number?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1176,10 +3279,15 @@ package oci
 	}
 }
 #OciDatabaseExadataIormConfigResource: {
-	db_system_id: string
+	db_system_id:       string
+	id?:                string
+	lifecycle_details?: string
+	objective?:         string
+	state?:             string
 	db_plans?: [{
-		db_name: string
-		share:   number
+		db_name:            string
+		share:              number
+		flash_cache_limit?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1188,7 +3296,40 @@ package oci
 	}
 }
 #OciDatabaseMaintenanceRunResource: {
-	maintenance_run_id: string
+	maintenance_run_id:       string
+	compartment_id?:          string
+	description?:             string
+	display_name?:            string
+	id?:                      string
+	is_enabled?:              bool
+	is_patch_now_enabled?:    bool
+	lifecycle_details?:       string
+	maintenance_subtype?:     string
+	maintenance_type?:        string
+	patch_id?:                string
+	peer_maintenance_run_id?: string
+	state?:                   string
+	target_resource_id?:      string
+	target_resource_type?:    string
+	time_ended?:              string
+	time_scheduled?:          string
+	time_started?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDatabaseMigrationResource: {
+	db_system_id: string
+	additional_migrations?: [{
+		cloud_exadata_infrastructure_id: string
+		cloud_vm_cluster_id:             string
+		db_system_id:                    string
+	}, ...]
+	cloud_exadata_infrastructure_id?: string
+	cloud_vm_cluster_id?:             string
+	id?:                              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1202,7 +3343,23 @@ package oci
 	exadata_infrastructure_id: string
 	gi_version:                string
 	ssh_public_keys: [string, ...]
-	vm_cluster_network_id: string
+	vm_cluster_network_id:        string
+	cpus_enabled?:                number
+	data_storage_size_in_tbs?:    number
+	db_node_storage_size_in_gbs?: number
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                          string
+	is_local_backup_enabled?:     bool
+	is_sparse_diskgroup_enabled?: bool
+	last_patch_history_entry_id?: string
+	license_model?:               string
+	lifecycle_details?:           string
+	memory_size_in_gbs?:          number
+	shape?:                       string
+	state?:                       string
+	time_created?:                string
+	time_zone?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1210,10 +3367,19 @@ package oci
 	}
 }
 #OciDatabaseVmClusterNetworkResource: {
-	compartment_id:               string
-	display_name:                 string
-	exadata_infrastructure_id:    string
+	compartment_id:            string
+	display_name:              string
+	exadata_infrastructure_id: string
+	defined_tags?: [_]: string
+	dns?: [string, ...]
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	ntp?: [string, ...]
+	state?:                       string
+	time_created?:                string
 	validate_vm_cluster_network?: bool
+	vm_cluster_id?:               string
 	scans?: [{
 		hostname: string
 		ips: [string, ...]
@@ -1231,13 +3397,46 @@ package oci
 		network_type: string
 		vlan_id:      string
 		nodes?: [{
-			hostname: string
-			ip:       string
+			hostname:      string
+			ip:            string
+			vip?:          string
+			vip_hostname?: string
 		}, ...]
 	}, ...]
 }
 #OciDatacatalogCatalogResource: {
 	compartment_id: string
+	attached_catalog_private_endpoints?: [string, ...]
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                  string
+	lifecycle_details?:   string
+	number_of_objects?:   number
+	service_api_url?:     string
+	service_console_url?: string
+	state?:               string
+	time_created?:        string
+	time_updated?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDatacatalogCatalogPrivateEndpointResource: {
+	compartment_id: string
+	dns_zones: [string, ...]
+	subnet_id: string
+	attached_catalogs?: [string, ...]
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1249,8 +3448,20 @@ package oci
 	data_asset_key: string
 	display_name:   string
 	properties: [_]: string
-	type_key: string
+	type_key:       string
+	created_by_id?: string
+	description?:   string
 	enc_properties?: [_]: string
+	external_key?:        string
+	id?:                  string
+	is_default?:          bool
+	key?:                 string
+	state?:               string
+	time_created?:        string
+	time_status_updated?: string
+	time_updated?:        string
+	updated_by_id?:       string
+	uri?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1258,9 +3469,20 @@ package oci
 	}
 }
 #OciDatacatalogDataAssetResource: {
-	catalog_id:   string
-	display_name: string
-	type_key:     string
+	catalog_id:     string
+	display_name:   string
+	type_key:       string
+	created_by_id?: string
+	description?:   string
+	external_key?:  string
+	id?:            string
+	key?:           string
+	properties?: [_]: string
+	state?:         string
+	time_created?:  string
+	time_updated?:  string
+	updated_by_id?: string
+	uri?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1276,7 +3498,22 @@ package oci
 	language:       string
 	num_executors:  number
 	spark_version:  string
-	class_name?:    string
+	archive_uri?:   string
+	arguments?: [string, ...]
+	class_name?: string
+	configuration?: [_]: string
+	defined_tags?: [_]:  string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	logs_bucket_uri?:      string
+	owner_principal_id?:   string
+	owner_user_name?:      string
+	private_endpoint_id?:  string
+	state?:                string
+	time_created?:         string
+	time_updated?:         string
+	warehouse_bucket_uri?: string
 	parameters?: [{
 		name:  string
 		value: string
@@ -1291,7 +3528,38 @@ package oci
 	application_id: string
 	compartment_id: string
 	display_name:   string
-	asynchronous?:  bool
+	archive_uri?:   string
+	arguments?: [string, ...]
+	asynchronous?: bool
+	class_name?:   string
+	configuration?: [_]: string
+	data_read_in_bytes?:    string
+	data_written_in_bytes?: string
+	defined_tags?: [_]: string
+	driver_shape?:   string
+	executor_shape?: string
+	file_uri?:       string
+	freeform_tags?: [_]: string
+	id?:                 string
+	language?:           string
+	lifecycle_details?:  string
+	logs_bucket_uri?:    string
+	num_executors?:      number
+	opc_request_id?:     string
+	owner_principal_id?: string
+	owner_user_name?:    string
+	private_endpoint_dns_zones?: [string, ...]
+	private_endpoint_id?:             string
+	private_endpoint_max_host_count?: number
+	private_endpoint_nsg_ids?: [string, ...]
+	private_endpoint_subnet_id?:   string
+	run_duration_in_milliseconds?: string
+	spark_version?:                string
+	state?:                        string
+	time_created?:                 string
+	time_updated?:                 string
+	total_ocpu?:                   number
+	warehouse_bucket_uri?:         string
 	parameters?: [{
 		name:  string
 		value: string
@@ -1302,11 +3570,70 @@ package oci
 		update?: string
 	}
 }
+#OciDataflowPrivateEndpointResource: {
+	compartment_id: string
+	dns_zones: [string, ...]
+	subnet_id: string
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	max_host_count?:    number
+	nsg_ids?: [string, ...]
+	owner_principal_id?: string
+	owner_user_name?:    string
+	state?:              string
+	time_created?:       string
+	time_updated?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDataintegrationWorkspaceResource: {
+	compartment_id: string
+	display_name:   string
+	defined_tags?: [_]: string
+	description?:     string
+	dns_server_ip?:   string
+	dns_server_zone?: string
+	freeform_tags?: [_]: string
+	id?:                         string
+	is_force_operation?:         bool
+	is_private_network_enabled?: bool
+	quiesce_timeout?:            number
+	state?:                      string
+	state_message?:              string
+	subnet_id?:                  string
+	time_created?:               string
+	time_updated?:               string
+	vcn_id?:                     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #OciDatascienceModelResource: {
-	artifact_content_length: string
-	compartment_id:          string
-	model_artifact:          string
-	project_id:              string
+	artifact_content_length:       string
+	compartment_id:                string
+	model_artifact:                string
+	project_id:                    string
+	artifact_content_disposition?: string
+	artifact_content_md5?:         string
+	artifact_last_modified?:       string
+	created_by?:                   string
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	empty_model?:  bool
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1314,7 +3641,13 @@ package oci
 	}
 }
 #OciDatascienceModelProvenanceResource: {
-	model_id: string
+	model_id:         string
+	git_branch?:      string
+	git_commit?:      string
+	id?:              string
+	repository_url?:  string
+	script_dir?:      string
+	training_script?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1324,9 +3657,19 @@ package oci
 #OciDatascienceNotebookSessionResource: {
 	compartment_id: string
 	project_id:     string
+	created_by?:    string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	lifecycle_details?:    string
+	notebook_session_url?: string
+	state?:                string
+	time_created?:         string
 	notebook_session_configuration_details?: [{
-		shape:     string
-		subnet_id: string
+		shape:                      string
+		subnet_id:                  string
+		block_storage_size_in_gbs?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1336,6 +3679,14 @@ package oci
 }
 #OciDatascienceProjectResource: {
 	compartment_id: string
+	created_by?:    string
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1347,8 +3698,33 @@ package oci
 	rtype:           string
 	zone_name_or_id: string
 	compartment_id?: string
+	id?:             string
+	is_protected?:   bool
 	rdata?:          string
+	record_hash?:    string
+	rrset_version?:  string
 	ttl?:            number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciDnsRrsetResource: {
+	domain:          string
+	rtype:           string
+	zone_name_or_id: string
+	compartment_id?: string
+	id?:             string
+	items?: [{
+		domain:         string
+		rdata:          string
+		rtype:          string
+		ttl:            number
+		is_protected?:  bool
+		record_hash?:   string
+		rrset_version?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1359,17 +3735,39 @@ package oci
 	compartment_id: string
 	display_name:   string
 	template:       string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	health_check_monitor_id?: string
+	id?:                      string
+	self?:                    string
+	state?:                   string
+	time_created?:            string
+	ttl?:                     number
 	answers?: [{
-		name:  string
-		rdata: string
-		rtype: string
+		name:         string
+		rdata:        string
+		rtype:        string
+		is_disabled?: bool
+		pool?:        string
 	}, ...]
 	rules?: [{
-		rule_type: string
+		rule_type:      string
+		default_count?: number
+		description?:   string
 		cases?: [{
-			answer_data?: [{}, ...]
+			case_condition?: string
+			count?:          number
+			answer_data?: [{
+				answer_condition?: string
+				should_keep?:      bool
+				value?:            number
+			}, ...]
 		}, ...]
-		default_answer_data?: [{}, ...]
+		default_answer_data?: [{
+			answer_condition?: string
+			should_keep?:      bool
+			value?:            number
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1381,6 +3779,13 @@ package oci
 	domain_name:        string
 	steering_policy_id: string
 	zone_id:            string
+	compartment_id?:    string
+	display_name?:      string
+	id?:                string
+	rtypes?: [string, ...]
+	self?:         string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1392,6 +3797,13 @@ package oci
 	compartment_id: string
 	name:           string
 	secret:         string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	self?:         string
+	state?:        string
+	time_created?: string
+	time_updated?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1402,8 +3814,21 @@ package oci
 	compartment_id: string
 	name:           string
 	zone_type:      string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?: string
+	nameservers?: [{
+		hostname: string
+	}, ...]
+	self?:         string
+	serial?:       number
+	state?:        string
+	time_created?: string
+	version?:      string
 	external_masters?: [{
-		address: string
+		address:      string
+		port?:        number
+		tsig_key_id?: string
 		tsig?: [{
 			algorithm: string
 			name:      string
@@ -1419,6 +3844,12 @@ package oci
 #OciEmailSenderResource: {
 	compartment_id: string
 	email_address:  string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	is_spf?:       bool
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1428,6 +3859,9 @@ package oci
 #OciEmailSuppressionResource: {
 	compartment_id: string
 	email_address:  string
+	id?:            string
+	reason?:        string
+	time_created?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1439,10 +3873,24 @@ package oci
 	condition:      string
 	display_name:   string
 	is_enabled:     bool
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_message?: string
+	state?:             string
+	time_created?:      string
 	actions?: [{
 		actions?: [{
-			action_type: string
-			is_enabled:  bool
+			action_type:        string
+			is_enabled:         bool
+			description?:       string
+			function_id?:       string
+			id?:                string
+			lifecycle_message?: string
+			state?:             string
+			stream_id?:         string
+			topic_id?:          string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -1455,8 +3903,16 @@ package oci
 	export_set_id:  string
 	file_system_id: string
 	path:           string
+	id?:            string
+	state?:         string
+	time_created?:  string
 	export_options?: [{
-		source: string
+		source:                          string
+		access?:                         string
+		anonymous_gid?:                  string
+		anonymous_uid?:                  string
+		identity_squash?:                string
+		require_privileged_source_port?: bool
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1465,7 +3921,16 @@ package oci
 	}
 }
 #OciFileStorageExportSetResource: {
-	mount_target_id: string
+	mount_target_id:      string
+	availability_domain?: string
+	compartment_id?:      string
+	display_name?:        string
+	id?:                  string
+	max_fs_stat_bytes?:   string
+	max_fs_stat_files?:   string
+	state?:               string
+	time_created?:        string
+	vcn_id?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1475,7 +3940,14 @@ package oci
 #OciFileStorageFileSystemResource: {
 	availability_domain: string
 	compartment_id:      string
-	kms_key_id?:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:            string
+	kms_key_id?:    string
+	metered_bytes?: string
+	state?:         string
+	time_created?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1486,6 +3958,18 @@ package oci
 	availability_domain: string
 	compartment_id:      string
 	subnet_id:           string
+	defined_tags?: [_]: string
+	display_name?:  string
+	export_set_id?: string
+	freeform_tags?: [_]: string
+	hostname_label?:    string
+	id?:                string
+	ip_address?:        string
+	lifecycle_details?: string
+	nsg_ids?: [string, ...]
+	private_ip_ids?: [string, ...]
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1495,6 +3979,11 @@ package oci
 #OciFileStorageSnapshotResource: {
 	file_system_id: string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1505,6 +3994,13 @@ package oci
 	compartment_id: string
 	display_name:   string
 	subnet_ids: [string, ...]
+	config?: [_]:        string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
+	time_updated?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1512,10 +4008,21 @@ package oci
 	}
 }
 #OciFunctionsFunctionResource: {
-	application_id: string
-	display_name:   string
-	image:          string
-	memory_in_mbs:  string
+	application_id:  string
+	display_name:    string
+	image:           string
+	memory_in_mbs:   string
+	compartment_id?: string
+	config?: [_]:        string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                 string
+	image_digest?:       string
+	invoke_endpoint?:    string
+	state?:              string
+	time_created?:       string
+	time_updated?:       string
+	timeout_in_seconds?: number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1523,9 +4030,16 @@ package oci
 	}
 }
 #OciFunctionsInvokeFunctionResource: {
-	function_id:             string
-	base64_encode_content?:  bool
-	input_body_source_path?: string
+	function_id:                          string
+	base64_encode_content?:               bool
+	content?:                             string
+	fn_intent?:                           string
+	fn_invoke_type?:                      string
+	id?:                                  string
+	input_body_source_path?:              string
+	invoke_endpoint?:                     string
+	invoke_function_body?:                string
+	invoke_function_body_base64_encoded?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1538,6 +4052,19 @@ package oci
 	interval_in_seconds: number
 	protocol:            string
 	targets: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	headers?: [_]:       string
+	home_region?:        string
+	id?:                 string
+	is_enabled?:         bool
+	method?:             string
+	path?:               string
+	port?:               number
+	results_url?:        string
+	time_created?:       string
+	timeout_in_seconds?: number
+	vantage_point_names?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1548,6 +4075,16 @@ package oci
 	compartment_id: string
 	protocol:       string
 	targets: [string, ...]
+	headers?: [_]: string
+	home_region?:        string
+	id?:                 string
+	method?:             string
+	path?:               string
+	port?:               number
+	results_url?:        string
+	time_created?:       string
+	timeout_in_seconds?: number
+	vantage_point_names?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1560,6 +4097,16 @@ package oci
 	interval_in_seconds: number
 	protocol:            string
 	targets: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	home_region?:        string
+	id?:                 string
+	is_enabled?:         bool
+	port?:               number
+	results_url?:        string
+	time_created?:       string
+	timeout_in_seconds?: number
+	vantage_point_names?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1570,6 +4117,13 @@ package oci
 	compartment_id: string
 	protocol:       string
 	targets: [string, ...]
+	home_region?:        string
+	id?:                 string
+	port?:               number
+	results_url?:        string
+	time_created?:       string
+	timeout_in_seconds?: number
+	vantage_point_names?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1577,8 +4131,13 @@ package oci
 	}
 }
 #OciIdentityApiKeyResource: {
-	key_value: string
-	user_id:   string
+	key_value:        string
+	user_id:          string
+	fingerprint?:     string
+	id?:              string
+	inactive_status?: string
+	state?:           string
+	time_created?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1586,8 +4145,14 @@ package oci
 	}
 }
 #OciIdentityAuthTokenResource: {
-	description: string
-	user_id:     string
+	description:     string
+	user_id:         string
+	id?:             string
+	inactive_state?: string
+	state?:          string
+	time_created?:   string
+	time_expires?:   string
+	token?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1596,7 +4161,18 @@ package oci
 }
 #OciIdentityAuthenticationPolicyResource: {
 	compartment_id: string
-	password_policy?: [{}, ...]
+	id?:            string
+	network_policy?: [{
+		network_source_ids?: [string, ...]
+	}, ...]
+	password_policy?: [{
+		is_lowercase_characters_required?: bool
+		is_numeric_characters_required?:   bool
+		is_special_characters_required?:   bool
+		is_uppercase_characters_required?: bool
+		is_username_containment_allowed?:  bool
+		minimum_password_length?:          number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1604,14 +4180,28 @@ package oci
 	}
 }
 #OciIdentityCompartmentResource: {
-	description:    string
-	name:           string
+	description:     string
+	name:            string
+	compartment_id?: string
+	defined_tags?: [_]: string
 	enable_delete?: bool
+	freeform_tags?: [_]: string
+	id?:             string
+	inactive_state?: string
+	is_accessible?:  bool
+	state?:          string
+	time_created?:   string
 	timeouts?: delete?: string
 }
 #OciIdentityCustomerSecretKeyResource: {
-	display_name: string
-	user_id:      string
+	display_name:    string
+	user_id:         string
+	id?:             string
+	inactive_state?: string
+	key?:            string
+	state?:          string
+	time_created?:   string
+	time_expires?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1623,6 +4213,12 @@ package oci
 	description:    string
 	matching_rule:  string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:             string
+	inactive_state?: string
+	state?:          string
+	time_created?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1630,8 +4226,15 @@ package oci
 	}
 }
 #OciIdentityGroupResource: {
-	description: string
-	name:        string
+	description:     string
+	name:            string
+	compartment_id?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:             string
+	inactive_state?: string
+	state?:          string
+	time_created?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1646,6 +4249,15 @@ package oci
 	name:           string
 	product_type:   string
 	protocol:       string
+	defined_tags?: [_]:        string
+	freeform_attributes?: [_]: string
+	freeform_tags?: [_]:       string
+	id?:                  string
+	inactive_state?:      string
+	redirect_url?:        string
+	signing_certificate?: string
+	state?:               string
+	time_created?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1656,6 +4268,11 @@ package oci
 	group_id:             string
 	identity_provider_id: string
 	idp_group_name:       string
+	compartment_id?:      string
+	id?:                  string
+	inactive_state?:      string
+	state?:               string
+	time_created?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1666,6 +4283,14 @@ package oci
 	compartment_id: string
 	description:    string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:             string
+	inactive_state?: string
+	public_source_list?: [string, ...]
+	services?: [string, ...]
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1681,6 +4306,16 @@ package oci
 	description:    string
 	name:           string
 	statements: [string, ...]
+	ETag?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:             string
+	inactive_state?: string
+	lastUpdateETag?: string
+	policyHash?:     string
+	state?:          string
+	time_created?:   string
+	version_date?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1688,8 +4323,15 @@ package oci
 	}
 }
 #OciIdentitySmtpCredentialResource: {
-	description: string
-	user_id:     string
+	description:     string
+	user_id:         string
+	id?:             string
+	inactive_state?: string
+	password?:       string
+	state?:          string
+	time_created?:   string
+	time_expires?:   string
+	username?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1697,8 +4339,14 @@ package oci
 	}
 }
 #OciIdentitySwiftPasswordResource: {
-	description: string
-	user_id:     string
+	description:     string
+	user_id:         string
+	expires_on?:     string
+	id?:             string
+	inactive_state?: string
+	password?:       string
+	state?:          string
+	time_created?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1709,6 +4357,13 @@ package oci
 	description:      string
 	name:             string
 	tag_namespace_id: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:               string
+	is_cost_tracking?: bool
+	is_retired?:       bool
+	state?:            string
+	time_created?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1720,9 +4375,15 @@ package oci
 	}, ...]
 }
 #OciIdentityTagDefaultResource: {
-	compartment_id:    string
-	tag_definition_id: string
-	value:             string
+	compartment_id:       string
+	tag_definition_id:    string
+	value:                string
+	id?:                  string
+	is_required?:         bool
+	state?:               string
+	tag_definition_name?: string
+	tag_namespace_id?:    string
+	time_created?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1733,6 +4394,12 @@ package oci
 	compartment_id: string
 	description:    string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	is_retired?:   bool
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1740,7 +4407,12 @@ package oci
 	}
 }
 #OciIdentityUiPasswordResource: {
-	user_id: string
+	user_id:          string
+	id?:              string
+	inactive_status?: string
+	password?:        string
+	state?:           string
+	time_created?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1750,6 +4422,24 @@ package oci
 #OciIdentityUserResource: {
 	description: string
 	name:        string
+	capabilities?: [{
+		can_use_api_keys:                 bool
+		can_use_auth_tokens:              bool
+		can_use_console_password:         bool
+		can_use_customer_secret_keys:     bool
+		can_use_oauth2client_credentials: bool
+		can_use_smtp_credentials:         bool
+	}, ...]
+	compartment_id?: string
+	defined_tags?: [_]: string
+	email?:               string
+	external_identifier?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	identity_provider_id?: string
+	inactive_state?:       string
+	state?:                string
+	time_created?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1757,7 +4447,13 @@ package oci
 	}
 }
 #OciIdentityUserCapabilitiesManagementResource: {
-	user_id: string
+	user_id:                       string
+	can_use_api_keys?:             bool
+	can_use_auth_tokens?:          bool
+	can_use_console_password?:     bool
+	can_use_customer_secret_keys?: bool
+	can_use_smtp_credentials?:     bool
+	id?:                           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1765,8 +4461,13 @@ package oci
 	}
 }
 #OciIdentityUserGroupMembershipResource: {
-	group_id: string
-	user_id:  string
+	group_id:        string
+	user_id:         string
+	compartment_id?: string
+	id?:             string
+	inactive_state?: string
+	state?:          string
+	time_created?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1779,7 +4480,17 @@ package oci
 	integration_instance_type: string
 	is_byol:                   bool
 	message_packs:             number
-	idcs_at?:                  string
+	consumption_model?:        string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                     string
+	idcs_at?:                string
+	instance_url?:           string
+	is_file_server_enabled?: bool
+	state?:                  string
+	state_message?:          string
+	time_created?:           string
+	time_updated?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1791,6 +4502,8 @@ package oci
 	key_id:          string
 	plaintext:       string
 	associated_data?: [_]: string
+	ciphertext?: string
+	id?:         string
 	logging_context?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1803,7 +4516,11 @@ package oci
 	include_plaintext_key: bool
 	key_id:                string
 	associated_data?: [_]: string
+	ciphertext?: string
+	id?:         string
 	logging_context?: [_]: string
+	plaintext?:          string
+	plaintext_checksum?: string
 	key_shape?: [{
 		algorithm: string
 		length:    number
@@ -1815,13 +4532,29 @@ package oci
 	}
 }
 #OciKmsKeyResource: {
-	compartment_id:      string
-	display_name:        string
-	management_endpoint: string
-	restore_trigger?:    bool
+	compartment_id:       string
+	display_name:         string
+	management_endpoint:  string
+	current_key_version?: string
+	defined_tags?: [_]: string
+	desired_state?: string
+	freeform_tags?: [_]: string
+	id?:                   string
+	protection_mode?:      string
+	restore_trigger?:      bool
+	restored_from_key_id?: string
+	state?:                string
+	time_created?:         string
+	time_of_deletion?:     string
+	vault_id?:             string
 	key_shape?: [{
 		algorithm: string
 		length:    number
+	}, ...]
+	restore_from_file?: [{
+		content_length:                string
+		restore_key_from_file_details: string
+		content_md5?:                  string
 	}, ...]
 	restore_from_object_store?: [{
 		destination: string
@@ -1837,8 +4570,16 @@ package oci
 	}
 }
 #OciKmsKeyVersionResource: {
-	key_id:              string
-	management_endpoint: string
+	key_id:                string
+	management_endpoint:   string
+	compartment_id?:       string
+	id?:                   string
+	key_version_id?:       string
+	restored_from_key_id?: string
+	state?:                string
+	time_created?:         string
+	time_of_deletion?:     string
+	vault_id?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1849,7 +4590,21 @@ package oci
 	compartment_id:   string
 	display_name:     string
 	vault_type:       string
-	restore_trigger?: bool
+	crypto_endpoint?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                     string
+	management_endpoint?:    string
+	restore_trigger?:        bool
+	restored_from_vault_id?: string
+	state?:                  string
+	time_created?:           string
+	time_of_deletion?:       string
+	restore_from_file?: [{
+		content_length:                  string
+		restore_vault_from_file_details: string
+		content_md5?:                    string
+	}, ...]
 	restore_from_object_store?: [{
 		destination: string
 		bucket?:     string
@@ -1868,6 +4623,11 @@ package oci
 	description:    string
 	name:           string
 	statements: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1879,7 +4639,20 @@ package oci
 	display_name:   string
 	shape:          string
 	subnet_ids: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?: string
+	ip_address_details?: [{
+		ip_address: string
+		is_public:  bool
+	}, ...]
+	ip_addresses?: [string, ...]
+	ip_mode?:    string
+	is_private?: bool
 	network_security_group_ids?: [string, ...]
+	state?: string
+	system_tags?: [_]: string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1892,6 +4665,12 @@ package oci
 	load_balancer_id: string
 	port:             number
 	backup?:          bool
+	drain?:           bool
+	id?:              string
+	name?:            string
+	offline?:         bool
+	state?:           string
+	weight?:          number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1902,20 +4681,45 @@ package oci
 	load_balancer_id: string
 	name:             string
 	policy:           string
-	health_checker?: [{
-		protocol:           string
-		interval_ms?:       number
-		port?:              number
-		retries?:           number
-		timeout_in_millis?: number
+	backend?: [{
+		backup:     bool
+		drain:      bool
+		ip_address: string
+		name:       string
+		offline:    bool
+		port:       number
+		weight:     number
 	}, ...]
-	lb_cookie_session_persistence_configuration?: [{}, ...]
+	id?:    string
+	state?: string
+	health_checker?: [{
+		protocol:             string
+		interval_ms?:         number
+		port?:                number
+		response_body_regex?: string
+		retries?:             number
+		return_code?:         number
+		timeout_in_millis?:   number
+		url_path?:            string
+	}, ...]
+	lb_cookie_session_persistence_configuration?: [{
+		cookie_name?:        string
+		disable_fallback?:   bool
+		domain?:             string
+		is_http_only?:       bool
+		is_secure?:          bool
+		max_age_in_seconds?: number
+		path?:               string
+	}, ...]
 	session_persistence_configuration?: [{
 		cookie_name:       string
 		disable_fallback?: bool
 	}, ...]
 	ssl_configuration?: [{
-		certificate_name:         string
+		certificate_name:   string
+		cipher_suite_name?: string
+		protocols?: [string, ...]
+		server_order_preference?: string
 		verify_depth?:            number
 		verify_peer_certificate?: bool
 	}, ...]
@@ -1929,20 +4733,45 @@ package oci
 	load_balancer_id: string
 	name:             string
 	policy:           string
-	health_checker?: [{
-		protocol:           string
-		interval_ms?:       number
-		port?:              number
-		retries?:           number
-		timeout_in_millis?: number
+	backend?: [{
+		backup:     bool
+		drain:      bool
+		ip_address: string
+		name:       string
+		offline:    bool
+		port:       number
+		weight:     number
 	}, ...]
-	lb_cookie_session_persistence_configuration?: [{}, ...]
+	id?:    string
+	state?: string
+	health_checker?: [{
+		protocol:             string
+		interval_ms?:         number
+		port?:                number
+		response_body_regex?: string
+		retries?:             number
+		return_code?:         number
+		timeout_in_millis?:   number
+		url_path?:            string
+	}, ...]
+	lb_cookie_session_persistence_configuration?: [{
+		cookie_name?:        string
+		disable_fallback?:   bool
+		domain?:             string
+		is_http_only?:       bool
+		is_secure?:          bool
+		max_age_in_seconds?: number
+		path?:               string
+	}, ...]
 	session_persistence_configuration?: [{
 		cookie_name:       string
 		disable_fallback?: bool
 	}, ...]
 	ssl_configuration?: [{
-		certificate_name:         string
+		certificate_name:   string
+		cipher_suite_name?: string
+		protocols?: [string, ...]
+		server_order_preference?: string
 		verify_depth?:            number
 		verify_peer_certificate?: bool
 	}, ...]
@@ -1953,9 +4782,14 @@ package oci
 	}
 }
 #OciLoadBalancerCertificateResource: {
-	certificate_name: string
-	load_balancer_id: string
-	passphrase?:      string
+	certificate_name:    string
+	load_balancer_id:    string
+	ca_certificate?:     string
+	id?:                 string
+	passphrase?:         string
+	private_key?:        string
+	public_certificate?: string
+	state?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1966,6 +4800,8 @@ package oci
 	hostname:         string
 	load_balancer_id: string
 	name:             string
+	id?:              string
+	state?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1978,12 +4814,20 @@ package oci
 	name:                     string
 	port:                     number
 	protocol:                 string
+	hostname_names?: [string, ...]
+	id?:                  string
+	path_route_set_name?: string
+	rule_set_names?: [string, ...]
+	state?: string
 	connection_configuration?: [{
 		idle_timeout_in_seconds:             string
 		backend_tcp_proxy_protocol_version?: number
 	}, ...]
 	ssl_configuration?: [{
-		certificate_name:         string
+		certificate_name:   string
+		cipher_suite_name?: string
+		protocols?: [string, ...]
+		server_order_preference?: string
 		verify_depth?:            number
 		verify_peer_certificate?: bool
 	}, ...]
@@ -1998,7 +4842,20 @@ package oci
 	display_name:   string
 	shape:          string
 	subnet_ids: [string, ...]
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?: string
+	ip_address_details?: [{
+		ip_address: string
+		is_public:  bool
+	}, ...]
+	ip_addresses?: [string, ...]
+	ip_mode?:    string
+	is_private?: bool
 	network_security_group_ids?: [string, ...]
+	state?: string
+	system_tags?: [_]: string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2008,6 +4865,8 @@ package oci
 #OciLoadBalancerPathRouteSetResource: {
 	load_balancer_id: string
 	name:             string
+	id?:              string
+	state?:           string
 	path_routes?: [{
 		backend_set_name: string
 		path:             string
@@ -2024,14 +4883,159 @@ package oci
 #OciLoadBalancerRuleSetResource: {
 	load_balancer_id: string
 	name:             string
+	id?:              string
+	state?:           string
 	items?: [{
 		action: string
+		allowed_methods?: [string, ...]
+		are_invalid_characters_allowed?: bool
+		description?:                    string
+		header?:                         string
+		http_large_header_size_in_kb?:   number
+		prefix?:                         string
+		response_code?:                  number
+		status_code?:                    number
+		suffix?:                         string
+		value?:                          string
 		conditions?: [{
 			attribute_name:  string
 			attribute_value: string
+			operator?:       string
 		}, ...]
-		redirect_uri?: [{}, ...]
+		redirect_uri?: [{
+			host?:     string
+			path?:     string
+			port?:     number
+			protocol?: string
+			query?:    string
+		}, ...]
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciLoadBalancerSslCipherSuiteResource: {
+	ciphers: [string, ...]
+	name:              string
+	id?:               string
+	load_balancer_id?: string
+	state?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciLoggingLogResource: {
+	display_name:    string
+	log_group_id:    string
+	log_type:        string
+	compartment_id?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                 string
+	is_enabled?:         bool
+	retention_duration?: number
+	state?:              string
+	tenancy_id?:         string
+	time_created?:       string
+	time_last_modified?: string
+	configuration?: [{
+		compartment_id?: string
+		source?: [{
+			category:    string
+			resource:    string
+			service:     string
+			source_type: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciLoggingLogGroupResource: {
+	compartment_id: string
+	display_name:   string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:                 string
+	state?:              string
+	time_created?:       string
+	time_last_modified?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciLoggingLogSavedSearchResource: {
+	compartment_id: string
+	name:           string
+	query:          string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:                 string
+	state?:              string
+	time_created?:       string
+	time_last_modified?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciManagementAgentManagementAgentResource: {
+	managed_agent_id: string
+	compartment_id?:  string
+	defined_tags?: [_]: string
+	deploy_plugins_id?: [string, ...]
+	display_name?: string
+	freeform_tags?: [_]: string
+	host?:                     string
+	id?:                       string
+	install_key_id?:           string
+	install_path?:             string
+	is_agent_auto_upgradable?: bool
+	lifecycle_details?:        string
+	platform_name?:            string
+	platform_type?:            string
+	platform_version?:         string
+	plugin_list?: [{
+		plugin_display_name: string
+		plugin_id:           string
+		plugin_name:         string
+		plugin_version:      string
+	}, ...]
+	state?:               string
+	time_created?:        string
+	time_last_heartbeat?: string
+	time_updated?:        string
+	version?:             string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciManagementAgentManagementAgentInstallKeyResource: {
+	compartment_id:             string
+	display_name:               string
+	allowed_key_install_count?: number
+	created_by_principal_id?:   string
+	current_key_install_count?: number
+	id?:                        string
+	key?:                       string
+	lifecycle_details?:         string
+	state?:                     string
+	time_created?:              string
+	time_expires?:              string
+	time_updated?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2044,6 +5048,11 @@ package oci
 	listing_id:      string
 	package_version: string
 	signature:       string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:            string
+	time_accepted?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2054,6 +5063,60 @@ package oci
 	agreement_id:    string
 	listing_id:      string
 	package_version: string
+	author?:         string
+	compartment_id?: string
+	content_url?:    string
+	id?:             string
+	prompt?:         string
+	signature?:      string
+}
+#OciMeteringComputationUsageResource: {
+	granularity:        string
+	tenant_id:          string
+	time_usage_ended:   string
+	time_usage_started: string
+	compartment_depth?: number
+	filter?:            string
+	group_by?: [string, ...]
+	id?: string
+	items?: [{
+		ad:                string
+		compartment_id:    string
+		compartment_name:  string
+		compartment_path:  string
+		computed_amount:   number
+		computed_quantity: number
+		currency:          string
+		discount:          number
+		list_rate:         number
+		overage:           string
+		overages_flag:     string
+		platform:          string
+		region:            string
+		resource_id:       string
+		resource_name:     string
+		service:           string
+		shape:             string
+		sku_name:          string
+		sku_part_number:   string
+		subscription_id:   string
+		tags: [{
+			key:       string
+			namespace: string
+			value:     string
+		}, ...]
+		time_usage_ended:   string
+		time_usage_started: string
+		unit:               string
+		unit_price:         number
+		weight:             number
+	}, ...]
+	query_type?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #OciMonitoringAlarmResource: {
 	compartment_id: string
@@ -2064,9 +5127,101 @@ package oci
 	namespace:             string
 	query:                 string
 	severity:              string
+	body?:                 string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                               string
+	metric_compartment_id_in_subtree?: bool
+	pending_duration?:                 string
+	repeat_notification_duration?:     string
+	resolution?:                       string
+	resource_group?:                   string
+	state?:                            string
+	time_created?:                     string
+	time_updated?:                     string
 	suppression?: [{
 		time_suppress_from:  string
 		time_suppress_until: string
+		description?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciMysqlMysqlBackupResource: {
+	db_system_id:             string
+	backup_size_in_gbs?:      number
+	backup_type?:             string
+	compartment_id?:          string
+	creation_type?:           string
+	data_storage_size_in_gb?: number
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	mysql_version?:     string
+	retention_in_days?: number
+	shape_name?:        string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciMysqlMysqlDbSystemResource: {
+	admin_password:           string
+	admin_username:           string
+	availability_domain:      string
+	compartment_id:           string
+	configuration_id:         string
+	shape_name:               string
+	subnet_id:                string
+	data_storage_size_in_gb?: number
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	endpoints?: [{
+		hostname:   string
+		ip_address: string
+		modes: [string, ...]
+		port:           number
+		port_x:         number
+		status:         string
+		status_details: string
+	}, ...]
+	fault_domain?: string
+	freeform_tags?: [_]: string
+	hostname_label?:    string
+	id?:                string
+	ip_address?:        string
+	lifecycle_details?: string
+	mysql_version?:     string
+	port?:              number
+	port_x?:            number
+	shutdown_type?:     string
+	state?:             string
+	time_created?:      string
+	time_updated?:      string
+	backup_policy?: [{
+		defined_tags?: [_]:  string
+		freeform_tags?: [_]: string
+		is_enabled?:        bool
+		retention_in_days?: number
+		window_start_time?: string
+	}, ...]
+	maintenance?: [{
+		window_start_time: string
+	}, ...]
+	source?: [{
+		source_type: string
+		backup_id?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2075,10 +5230,19 @@ package oci
 	}
 }
 #OciNosqlIndexResource: {
-	name:             string
-	table_name_or_id: string
+	name:               string
+	table_name_or_id:   string
+	compartment_id?:    string
+	id?:                string
+	is_if_not_exists?:  bool
+	lifecycle_details?: string
+	state?:             string
+	table_id?:          string
+	table_name?:        string
 	keys?: [{
-		column_name: string
+		column_name:      string
+		json_field_type?: string
+		json_path?:       string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2090,6 +5254,24 @@ package oci
 	compartment_id: string
 	ddl_statement:  string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                string
+	lifecycle_details?: string
+	schema?: [{
+		columns: [{
+			default_value: string
+			is_nullable:   bool
+			name:          string
+			type:          string
+		}, ...]
+		primary_key: [string, ...]
+		shard_key: [string, ...]
+		ttl: number
+	}, ...]
+	state?:        string
+	time_created?: string
+	time_updated?: string
 	table_limits?: [{
 		max_read_units:     number
 		max_storage_in_gbs: number
@@ -2102,14 +5284,33 @@ package oci
 	}
 }
 #OciObjectstorageBucketResource: {
-	compartment_id: string
-	name:           string
-	namespace:      string
-	access_type?:   string
+	compartment_id:     string
+	name:               string
+	namespace:          string
+	access_type?:       string
+	approximate_count?: string
+	approximate_size?:  string
+	bucket_id?:         string
+	created_by?:        string
+	defined_tags?: [_]: string
+	etag?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	is_read_only?: bool
+	kms_key_id?:   string
 	metadata?: [_]: string
+	object_events_enabled?:        bool
+	object_lifecycle_policy_etag?: string
+	replication_enabled?:          bool
+	storage_tier?:                 string
+	time_created?:                 string
+	versioning?:                   string
 	retention_rules?: [{
-		display_name:      string
-		time_rule_locked?: string
+		display_name:       string
+		retention_rule_id?: string
+		time_created?:      string
+		time_modified?:     string
+		time_rule_locked?:  string
 		duration?: [{
 			time_amount: string
 			time_unit:   string
@@ -2122,7 +5323,10 @@ package oci
 	}
 }
 #OciObjectstorageNamespaceMetadataResource: {
-	namespace: string
+	namespace:                     string
+	default_s3compartment_id?:     string
+	default_swift_compartment_id?: string
+	id?:                           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2138,9 +5342,16 @@ package oci
 	content_disposition?:        string
 	content_encoding?:           string
 	content_language?:           string
+	content_length?:             string
+	content_md5?:                string
+	content_type?:               string
 	delete_all_object_versions?: bool
+	id?:                         string
 	metadata?: [_]: string
-	source?: string
+	source?:          string
+	state?:           string
+	version_id?:      string
+	work_request_id?: string
 	source_uri_details?: [{
 		bucket:                                 string
 		namespace:                              string
@@ -2158,15 +5369,22 @@ package oci
 	}
 }
 #OciObjectstorageObjectLifecyclePolicyResource: {
-	bucket:    string
-	namespace: string
+	bucket:        string
+	namespace:     string
+	id?:           string
+	time_created?: string
 	rules?: [{
 		action:      string
 		is_enabled:  bool
 		name:        string
 		time_amount: string
 		time_unit:   string
-		object_name_filter?: [{}, ...]
+		target?:     string
+		object_name_filter?: [{
+			exclusion_patterns?: [string, ...]
+			inclusion_patterns?: [string, ...]
+			inclusion_prefixes?: [string, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2175,11 +5393,16 @@ package oci
 	}
 }
 #OciObjectstoragePreauthrequestResource: {
-	access_type:  string
-	bucket:       string
-	name:         string
-	namespace:    string
-	time_expires: string
+	access_type:   string
+	bucket:        string
+	name:          string
+	namespace:     string
+	time_expires:  string
+	access_uri?:   string
+	id?:           string
+	object?:       string
+	par_id?:       string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2187,12 +5410,17 @@ package oci
 	}
 }
 #OciObjectstorageReplicationPolicyResource: {
-	bucket:                              string
-	delete_object_in_destination_bucket: string
-	destination_bucket_name:             string
-	destination_region_name:             string
-	name:                                string
-	namespace:                           string
+	bucket:                               string
+	destination_bucket_name:              string
+	destination_region_name:              string
+	name:                                 string
+	namespace:                            string
+	delete_object_in_destination_bucket?: string
+	id?:                                  string
+	status?:                              string
+	status_message?:                      string
+	time_created?:                        string
+	time_last_sync?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2207,16 +5435,92 @@ package oci
 	object_storage_namespace: string
 	tenancy_id:               string
 	tenancy_name:             string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	guid?:                  string
+	id?:                    string
+	idcs_tenancy?:          string
+	instance_access_type?:  string
+	instance_license_type?: string
+	instance_usage_type?:   string
+	service?: [_]: string
+	state?:              string
+	state_message?:      string
+	time_created?:       string
+	time_updated?:       string
+	upgrade_schedule?:   string
+	waf_primary_domain?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
+#OciOcvpEsxiHostResource: {
+	sddc_id:              string
+	compartment_id?:      string
+	compute_instance_id?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
+	time_updated?: string
+	timeouts?: create?: string
+}
+#OciOcvpSddcResource: {
+	compartment_id:              string
+	compute_availability_domain: string
+	esxi_hosts_count:            number
+	nsx_edge_uplink1vlan_id:     string
+	nsx_edge_uplink2vlan_id:     string
+	nsx_edge_vtep_vlan_id:       string
+	nsx_vtep_vlan_id:            string
+	provisioning_subnet_id:      string
+	ssh_authorized_keys:         string
+	vmotion_vlan_id:             string
+	vmware_software_version:     string
+	vsan_vlan_id:                string
+	vsphere_vlan_id:             string
+	actual_esxi_hosts_count?:    number
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                           string
+	instance_display_name_prefix?: string
+	nsx_edge_uplink_ip_id?:        string
+	nsx_manager_fqdn?:             string
+	nsx_manager_initial_password?: string
+	nsx_manager_private_ip_id?:    string
+	nsx_manager_username?:         string
+	nsx_overlay_segment_name?:     string
+	state?:                        string
+	time_created?:                 string
+	time_updated?:                 string
+	vcenter_fqdn?:                 string
+	vcenter_initial_password?:     string
+	vcenter_private_ip_id?:        string
+	vcenter_username?:             string
+	workload_network_cidr?:        string
+	timeouts?: create?: string
+}
 #OciOdaOdaInstanceResource: {
 	compartment_id: string
 	shape_name:     string
-	description?:   string
+	connector_url?: string
+	defined_tags?: [_]: string
+	description?:  string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:                  string
+	lifecycle_sub_state?: string
+	state?:               string
+	state_message?:       string
+	time_created?:        string
+	time_updated?:        string
+	web_app_url?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2226,6 +5530,15 @@ package oci
 #OciOnsNotificationTopicResource: {
 	compartment_id: string
 	name:           string
+	api_endpoint?:  string
+	defined_tags?: [_]: string
+	description?: string
+	etag?:        string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
+	topic_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2237,6 +5550,13 @@ package oci
 	endpoint:       string
 	protocol:       string
 	topic_id:       string
+	created_time?:  string
+	defined_tags?: [_]: string
+	delivery_policy?: string
+	etag?:            string
+	freeform_tags?: [_]: string
+	id?:    string
+	state?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2246,6 +5566,17 @@ package oci
 #OciOsmanagementManagedInstanceGroupResource: {
 	compartment_id: string
 	display_name:   string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:                     string
+	managed_instance_count?: number
+	managed_instances?: [{
+		display_name: string
+		id:           string
+	}, ...]
+	os_family?: string
+	state?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2254,9 +5585,29 @@ package oci
 }
 #OciOsmanagementManagedInstanceManagementResource: {
 	managed_instance_id: string
-	child_software_sources?: [{}, ...]
-	managed_instance_groups?: [{}, ...]
-	parent_software_source?: [{}, ...]
+	compartment_id?:     string
+	description?:        string
+	display_name?:       string
+	id?:                 string
+	last_boot?:          string
+	last_checkin?:       string
+	os_kernel_version?:  string
+	os_name?:            string
+	os_version?:         string
+	status?:             string
+	updates_available?:  number
+	child_software_sources?: [{
+		id?:   string
+		name?: string
+	}, ...]
+	managed_instance_groups?: [{
+		display_name?: string
+		id?:           string
+	}, ...]
+	parent_software_source?: [{
+		id?:   string
+		name?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2267,6 +5618,70 @@ package oci
 	arch_type:      string
 	compartment_id: string
 	display_name:   string
+	associated_managed_instances?: [{
+		display_name: string
+		id:           string
+	}, ...]
+	checksum_type?: string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	gpg_key_fingerprint?: string
+	gpg_key_id?:          string
+	gpg_key_url?:         string
+	id?:                  string
+	maintainer_email?:    string
+	maintainer_name?:     string
+	maintainer_phone?:    string
+	packages?:            number
+	parent_id?:           string
+	parent_name?:         string
+	repo_type?:           string
+	state?:               string
+	status?:              string
+	url?:                 string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciSchServiceConnectorResource: {
+	compartment_id: string
+	display_name:   string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?:               string
+	lifecyle_details?: string
+	state?:            string
+	system_tags?: [_]: string
+	time_created?: string
+	time_updated?: string
+	source?: [{
+		kind: string
+		log_sources?: [{
+			compartment_id: string
+			log_group_id?:  string
+			log_id?:        string
+		}, ...]
+	}, ...]
+	target?: [{
+		kind:                string
+		bucket?:             string
+		compartment_id?:     string
+		function_id?:        string
+		metric?:             string
+		metric_namespace?:   string
+		namespace?:          string
+		object_name_prefix?: string
+		stream_id?:          string
+		topic_id?:           string
+	}, ...]
+	tasks?: [{
+		condition: string
+		kind:      string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2276,6 +5691,12 @@ package oci
 #OciStreamingConnectHarnessResource: {
 	compartment_id: string
 	name:           string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                      string
+	lifecycle_state_details?: string
+	state?:                   string
+	time_created?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2283,8 +5704,18 @@ package oci
 	}
 }
 #OciStreamingStreamResource: {
-	name:       string
-	partitions: number
+	name:            string
+	partitions:      number
+	compartment_id?: string
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:                      string
+	lifecycle_state_details?: string
+	messages_endpoint?:       string
+	retention_in_hours?:      number
+	state?:                   string
+	stream_pool_id?:          string
+	time_created?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2294,11 +5725,29 @@ package oci
 #OciStreamingStreamPoolResource: {
 	compartment_id: string
 	name:           string
+	defined_tags?: [_]: string
+	endpoint_fqdn?: string
+	freeform_tags?: [_]: string
+	id?:                      string
+	is_private?:              bool
+	lifecycle_state_details?: string
+	state?:                   string
+	time_created?:            string
 	custom_encryption_key?: [{
 		kms_key_id: string
+		key_state?: string
 	}, ...]
-	kafka_settings?: [{}, ...]
-	private_endpoint_settings?: [{}, ...]
+	kafka_settings?: [{
+		auto_create_topics_enable?: bool
+		bootstrap_servers?:         string
+		log_retention_hours?:       number
+		num_partitions?:            number
+	}, ...]
+	private_endpoint_settings?: [{
+		nsg_ids?: [string, ...]
+		private_endpoint_ip?: string
+		subnet_id?:           string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2309,6 +5758,12 @@ package oci
 	addresses: [string, ...]
 	compartment_id: string
 	display_name:   string
+	address_count?: number
+	defined_tags?: [_]:  string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2319,6 +5774,47 @@ package oci
 	certificate_data: string
 	compartment_id:   string
 	private_key_data: string
+	defined_tags?: [_]: string
+	display_name?: string
+	extensions?: [{
+		is_critical: bool
+		name:        string
+		value:       string
+	}, ...]
+	freeform_tags?: [_]: string
+	id?:                             string
+	is_trust_verification_disabled?: bool
+	issued_by?:                      string
+	issuer_name?: [{
+		common_name:         string
+		country:             string
+		email_address:       string
+		locality:            string
+		organization:        string
+		organizational_unit: string
+		state_province:      string
+	}, ...]
+	public_key_info?: [{
+		algorithm: string
+		exponent:  number
+		key_size:  number
+	}, ...]
+	serial_number?:       string
+	signature_algorithm?: string
+	state?:               string
+	subject_name?: [{
+		common_name:         string
+		country:             string
+		email_address:       string
+		locality:            string
+		organization:        string
+		organizational_unit: string
+		state_province:      string
+	}, ...]
+	time_created?:          string
+	time_not_valid_after?:  string
+	time_not_valid_before?: string
+	version?:               number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2329,6 +5825,13 @@ package oci
 	compartment_id: string
 	display_name:   string
 	template:       string
+	defined_tags?: [_]: string
+	description?: string
+	freeform_tags?: [_]: string
+	id?: string
+	mod_security_rule_ids?: [string, ...]
+	state?:        string
+	time_created?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2338,11 +5841,38 @@ package oci
 #OciWaasHttpRedirectResource: {
 	compartment_id: string
 	domain:         string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:            string
+	response_code?: number
+	state?:         string
+	time_created?:  string
 	target?: [{
 		host:     string
 		path:     string
 		protocol: string
 		query:    string
+		port?:    number
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#OciWaasProtectionRuleResource: {
+	key:            string
+	waas_policy_id: string
+	action?:        string
+	description?:   string
+	id?:            string
+	labels?: [string, ...]
+	mod_security_rule_ids?: [string, ...]
+	name?: string
+	exclusions?: [{
+		exclusions?: [string, ...]
+		target?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2352,6 +5882,7 @@ package oci
 }
 #OciWaasPurgeCacheResource: {
 	waas_policy_id: string
+	id?:            string
 	resources?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -2362,6 +5893,14 @@ package oci
 #OciWaasWaasPolicyResource: {
 	compartment_id: string
 	domain:         string
+	additional_domains?: [string, ...]
+	cname?: string
+	defined_tags?: [_]: string
+	display_name?: string
+	freeform_tags?: [_]: string
+	id?:           string
+	state?:        string
+	time_created?: string
 	origin_groups?: [{
 		label: string
 		origin_group?: [{
@@ -2380,10 +5919,36 @@ package oci
 		}, ...]
 	}, ...]
 	policy_config?: [{
-		client_address_header?: string
-		health_checks?: [{}, ...]
+		certificate_id?:                string
+		cipher_group?:                  string
+		client_address_header?:         string
+		is_behind_cdn?:                 bool
+		is_cache_control_respected?:    bool
+		is_https_enabled?:              bool
+		is_https_forced?:               bool
+		is_origin_compression_enabled?: bool
+		is_response_buffering_enabled?: bool
+		is_sni_enabled?:                bool
+		tls_protocols?: [string, ...]
+		websocket_path_prefixes?: [string, ...]
+		health_checks?: [{
+			expected_response_code_group?: [string, ...]
+			expected_response_text?: string
+			headers?: [_]: string
+			healthy_threshold?:              number
+			interval_in_seconds?:            number
+			is_enabled?:                     bool
+			is_response_text_check_enabled?: bool
+			method?:                         string
+			path?:                           string
+			timeout_in_seconds?:             number
+			unhealthy_threshold?:            number
+		}, ...]
 		load_balancing_method?: [{
-			method: string
+			method:                      string
+			domain?:                     string
+			expiration_time_in_seconds?: number
+			name?:                       string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -2392,26 +5957,47 @@ package oci
 		update?: string
 	}
 	waf_config?: [{
+		origin?: string
+		origin_groups?: [string, ...]
 		access_rules?: [{
-			action: string
-			name:   string
+			action:                        string
+			name:                          string
+			block_action?:                 string
+			block_error_page_code?:        string
+			block_error_page_description?: string
+			block_error_page_message?:     string
+			block_response_code?:          number
+			bypass_challenges?: [string, ...]
+			captcha_footer?:         string
+			captcha_header?:         string
+			captcha_submit_label?:   string
+			captcha_title?:          string
+			redirect_response_code?: string
+			redirect_url?:           string
 			criteria?: [{
-				condition: string
-				value:     string
+				condition:          string
+				value:              string
+				is_case_sensitive?: bool
 			}, ...]
 			response_header_manipulation?: [{
 				action: string
 				header: string
+				value?: string
 			}, ...]
 		}, ...]
 		address_rate_limiting?: [{
-			is_enabled: bool
+			is_enabled:                     bool
+			allowed_rate_per_address?:      number
+			block_response_code?:           number
+			max_delayed_count_per_address?: number
 		}, ...]
 		caching_rules?: [{
-			action:                   string
-			name:                     string
-			caching_duration?:        string
-			client_caching_duration?: string
+			action:                     string
+			name:                       string
+			caching_duration?:          string
+			client_caching_duration?:   string
+			is_client_caching_enabled?: bool
+			key?:                       string
 			criteria?: [{
 				condition: string
 				value:     string
@@ -2423,213 +6009,320 @@ package oci
 			submit_label:                  string
 			title:                         string
 			url:                           string
+			footer_text?:                  string
+			header_text?:                  string
 		}, ...]
 		custom_protection_rules?: [{
-			exclusions?: [{}, ...]
+			action?: string
+			id?:     string
+			exclusions?: [{
+				exclusions?: [string, ...]
+				target?: string
+			}, ...]
 		}, ...]
 		device_fingerprint_challenge?: [{
-			is_enabled: bool
-			challenge_settings?: [{}, ...]
+			is_enabled:                               bool
+			action?:                                  string
+			action_expiration_in_seconds?:            number
+			failure_threshold?:                       number
+			failure_threshold_expiration_in_seconds?: number
+			max_address_count?:                       number
+			max_address_count_expiration_in_seconds?: number
+			challenge_settings?: [{
+				block_action?:                 string
+				block_error_page_code?:        string
+				block_error_page_description?: string
+				block_error_page_message?:     string
+				block_response_code?:          number
+				captcha_footer?:               string
+				captcha_header?:               string
+				captcha_submit_label?:         string
+				captcha_title?:                string
+			}, ...]
 		}, ...]
 		human_interaction_challenge?: [{
-			is_enabled: bool
-			challenge_settings?: [{}, ...]
+			is_enabled:                               bool
+			action?:                                  string
+			action_expiration_in_seconds?:            number
+			failure_threshold?:                       number
+			failure_threshold_expiration_in_seconds?: number
+			interaction_threshold?:                   number
+			is_nat_enabled?:                          bool
+			recording_period_in_seconds?:             number
+			challenge_settings?: [{
+				block_action?:                 string
+				block_error_page_code?:        string
+				block_error_page_description?: string
+				block_error_page_message?:     string
+				block_response_code?:          number
+				captcha_footer?:               string
+				captcha_header?:               string
+				captcha_submit_label?:         string
+				captcha_title?:                string
+			}, ...]
 			set_http_header?: [{
 				name:  string
 				value: string
 			}, ...]
 		}, ...]
 		js_challenge?: [{
-			is_enabled: bool
-			challenge_settings?: [{}, ...]
+			is_enabled:                    bool
+			action?:                       string
+			action_expiration_in_seconds?: number
+			are_redirects_challenged?:     bool
+			failure_threshold?:            number
+			is_nat_enabled?:               bool
+			challenge_settings?: [{
+				block_action?:                 string
+				block_error_page_code?:        string
+				block_error_page_description?: string
+				block_error_page_message?:     string
+				block_response_code?:          number
+				captcha_footer?:               string
+				captcha_header?:               string
+				captcha_submit_label?:         string
+				captcha_title?:                string
+			}, ...]
 			criteria?: [{
-				condition: string
-				value:     string
+				condition:          string
+				value:              string
+				is_case_sensitive?: bool
 			}, ...]
 			set_http_header?: [{
 				name:  string
 				value: string
 			}, ...]
 		}, ...]
-		protection_settings?: [{}, ...]
+		protection_settings?: [{
+			allowed_http_methods?: [string, ...]
+			block_action?:                       string
+			block_error_page_code?:              string
+			block_error_page_description?:       string
+			block_error_page_message?:           string
+			block_response_code?:                number
+			is_response_inspected?:              bool
+			max_argument_count?:                 number
+			max_name_length_per_argument?:       number
+			max_response_size_in_ki_b?:          number
+			max_total_name_length_of_arguments?: number
+			media_types?: [string, ...]
+			recommendations_period_in_days?: number
+		}, ...]
 		whitelists?: [{
 			name: string
+			address_lists?: [string, ...]
+			addresses?: [string, ...]
 		}, ...]
 	}, ...]
 }
 #Resources: {
-	oci_analytics_analytics_instance?: [_]:                            #OciAnalyticsAnalyticsInstanceResource
-	oci_apigateway_deployment?: [_]:                                   #OciApigatewayDeploymentResource
-	oci_apigateway_gateway?: [_]:                                      #OciApigatewayGatewayResource
-	oci_audit_configuration?: [_]:                                     #OciAuditConfigurationResource
-	oci_autoscaling_auto_scaling_configuration?: [_]:                  #OciAutoscalingAutoScalingConfigurationResource
-	oci_bds_bds_instance?: [_]:                                        #OciBdsBdsInstanceResource
-	oci_budget_alert_rule?: [_]:                                       #OciBudgetAlertRuleResource
-	oci_budget_budget?: [_]:                                           #OciBudgetBudgetResource
-	oci_containerengine_cluster?: [_]:                                 #OciContainerengineClusterResource
-	oci_containerengine_node_pool?: [_]:                               #OciContainerengineNodePoolResource
-	oci_core_app_catalog_listing_resource_version_agreement?: [_]:     #OciCoreAppCatalogListingResourceVersionAgreementResource
-	oci_core_app_catalog_subscription?: [_]:                           #OciCoreAppCatalogSubscriptionResource
-	oci_core_boot_volume?: [_]:                                        #OciCoreBootVolumeResource
-	oci_core_boot_volume_backup?: [_]:                                 #OciCoreBootVolumeBackupResource
-	oci_core_cluster_network?: [_]:                                    #OciCoreClusterNetworkResource
-	oci_core_console_history?: [_]:                                    #OciCoreConsoleHistoryResource
-	oci_core_cpe?: [_]:                                                #OciCoreCpeResource
-	oci_core_cross_connect?: [_]:                                      #OciCoreCrossConnectResource
-	oci_core_cross_connect_group?: [_]:                                #OciCoreCrossConnectGroupResource
-	oci_core_dedicated_vm_host?: [_]:                                  #OciCoreDedicatedVmHostResource
-	oci_core_default_dhcp_options?: [_]:                               #OciCoreDefaultDhcpOptionsResource
-	oci_core_default_route_table?: [_]:                                #OciCoreDefaultRouteTableResource
-	oci_core_default_security_list?: [_]:                              #OciCoreDefaultSecurityListResource
-	oci_core_dhcp_options?: [_]:                                       #OciCoreDhcpOptionsResource
-	oci_core_drg?: [_]:                                                #OciCoreDrgResource
-	oci_core_drg_attachment?: [_]:                                     #OciCoreDrgAttachmentResource
-	oci_core_image?: [_]:                                              #OciCoreImageResource
-	oci_core_instance?: [_]:                                           #OciCoreInstanceResource
-	oci_core_instance_configuration?: [_]:                             #OciCoreInstanceConfigurationResource
-	oci_core_instance_console_connection?: [_]:                        #OciCoreInstanceConsoleConnectionResource
-	oci_core_instance_pool?: [_]:                                      #OciCoreInstancePoolResource
-	oci_core_internet_gateway?: [_]:                                   #OciCoreInternetGatewayResource
-	oci_core_ipsec?: [_]:                                              #OciCoreIpsecResource
-	oci_core_ipsec_connection_tunnel_management?: [_]:                 #OciCoreIpsecConnectionTunnelManagementResource
-	oci_core_listing_resource_version_agreement?: [_]:                 #OciCoreListingResourceVersionAgreementResource
-	oci_core_local_peering_gateway?: [_]:                              #OciCoreLocalPeeringGatewayResource
-	oci_core_nat_gateway?: [_]:                                        #OciCoreNatGatewayResource
-	oci_core_network_security_group?: [_]:                             #OciCoreNetworkSecurityGroupResource
-	oci_core_network_security_group_security_rule?: [_]:               #OciCoreNetworkSecurityGroupSecurityRuleResource
-	oci_core_private_ip?: [_]:                                         #OciCorePrivateIpResource
-	oci_core_public_ip?: [_]:                                          #OciCorePublicIpResource
-	oci_core_remote_peering_connection?: [_]:                          #OciCoreRemotePeeringConnectionResource
-	oci_core_route_table?: [_]:                                        #OciCoreRouteTableResource
-	oci_core_route_table_attachment?: [_]:                             #OciCoreRouteTableAttachmentResource
-	oci_core_security_list?: [_]:                                      #OciCoreSecurityListResource
-	oci_core_service_gateway?: [_]:                                    #OciCoreServiceGatewayResource
-	oci_core_shape_management?: [_]:                                   #OciCoreShapeManagementResource
-	oci_core_subnet?: [_]:                                             #OciCoreSubnetResource
-	oci_core_vcn?: [_]:                                                #OciCoreVcnResource
-	oci_core_virtual_circuit?: [_]:                                    #OciCoreVirtualCircuitResource
-	oci_core_virtual_network?: [_]:                                    #OciCoreVirtualNetworkResource
-	oci_core_vnic_attachment?: [_]:                                    #OciCoreVnicAttachmentResource
-	oci_core_volume?: [_]:                                             #OciCoreVolumeResource
-	oci_core_volume_attachment?: [_]:                                  #OciCoreVolumeAttachmentResource
-	oci_core_volume_backup?: [_]:                                      #OciCoreVolumeBackupResource
-	oci_core_volume_backup_policy?: [_]:                               #OciCoreVolumeBackupPolicyResource
-	oci_core_volume_backup_policy_assignment?: [_]:                    #OciCoreVolumeBackupPolicyAssignmentResource
-	oci_core_volume_group?: [_]:                                       #OciCoreVolumeGroupResource
-	oci_core_volume_group_backup?: [_]:                                #OciCoreVolumeGroupBackupResource
-	oci_data_safe_data_safe_configuration?: [_]:                       #OciDataSafeDataSafeConfigurationResource
-	oci_data_safe_data_safe_private_endpoint?: [_]:                    #OciDataSafeDataSafePrivateEndpointResource
-	oci_database_autonomous_container_database?: [_]:                  #OciDatabaseAutonomousContainerDatabaseResource
-	oci_database_autonomous_data_warehouse?: [_]:                      #OciDatabaseAutonomousDataWarehouseResource
-	oci_database_autonomous_data_warehouse_backup?: [_]:               #OciDatabaseAutonomousDataWarehouseBackupResource
-	oci_database_autonomous_database?: [_]:                            #OciDatabaseAutonomousDatabaseResource
-	oci_database_autonomous_database_backup?: [_]:                     #OciDatabaseAutonomousDatabaseBackupResource
-	oci_database_autonomous_database_instance_wallet_management?: [_]: #OciDatabaseAutonomousDatabaseInstanceWalletManagementResource
-	oci_database_autonomous_database_regional_wallet_management?: [_]: #OciDatabaseAutonomousDatabaseRegionalWalletManagementResource
-	oci_database_autonomous_exadata_infrastructure?: [_]:              #OciDatabaseAutonomousExadataInfrastructureResource
-	oci_database_backup?: [_]:                                         #OciDatabaseBackupResource
-	oci_database_backup_destination?: [_]:                             #OciDatabaseBackupDestinationResource
-	oci_database_data_guard_association?: [_]:                         #OciDatabaseDataGuardAssociationResource
-	oci_database_database?: [_]:                                       #OciDatabaseDatabaseResource
-	oci_database_db_home?: [_]:                                        #OciDatabaseDbHomeResource
-	oci_database_db_node_console_connection?: [_]:                     #OciDatabaseDbNodeConsoleConnectionResource
-	oci_database_db_system?: [_]:                                      #OciDatabaseDbSystemResource
-	oci_database_exadata_infrastructure?: [_]:                         #OciDatabaseExadataInfrastructureResource
-	oci_database_exadata_iorm_config?: [_]:                            #OciDatabaseExadataIormConfigResource
-	oci_database_maintenance_run?: [_]:                                #OciDatabaseMaintenanceRunResource
-	oci_database_vm_cluster?: [_]:                                     #OciDatabaseVmClusterResource
-	oci_database_vm_cluster_network?: [_]:                             #OciDatabaseVmClusterNetworkResource
-	oci_datacatalog_catalog?: [_]:                                     #OciDatacatalogCatalogResource
-	oci_datacatalog_connection?: [_]:                                  #OciDatacatalogConnectionResource
-	oci_datacatalog_data_asset?: [_]:                                  #OciDatacatalogDataAssetResource
-	oci_dataflow_application?: [_]:                                    #OciDataflowApplicationResource
-	oci_dataflow_invoke_run?: [_]:                                     #OciDataflowInvokeRunResource
-	oci_datascience_model?: [_]:                                       #OciDatascienceModelResource
-	oci_datascience_model_provenance?: [_]:                            #OciDatascienceModelProvenanceResource
-	oci_datascience_notebook_session?: [_]:                            #OciDatascienceNotebookSessionResource
-	oci_datascience_project?: [_]:                                     #OciDatascienceProjectResource
-	oci_dns_record?: [_]:                                              #OciDnsRecordResource
-	oci_dns_steering_policy?: [_]:                                     #OciDnsSteeringPolicyResource
-	oci_dns_steering_policy_attachment?: [_]:                          #OciDnsSteeringPolicyAttachmentResource
-	oci_dns_tsig_key?: [_]:                                            #OciDnsTsigKeyResource
-	oci_dns_zone?: [_]:                                                #OciDnsZoneResource
-	oci_email_sender?: [_]:                                            #OciEmailSenderResource
-	oci_email_suppression?: [_]:                                       #OciEmailSuppressionResource
-	oci_events_rule?: [_]:                                             #OciEventsRuleResource
-	oci_file_storage_export?: [_]:                                     #OciFileStorageExportResource
-	oci_file_storage_export_set?: [_]:                                 #OciFileStorageExportSetResource
-	oci_file_storage_file_system?: [_]:                                #OciFileStorageFileSystemResource
-	oci_file_storage_mount_target?: [_]:                               #OciFileStorageMountTargetResource
-	oci_file_storage_snapshot?: [_]:                                   #OciFileStorageSnapshotResource
-	oci_functions_application?: [_]:                                   #OciFunctionsApplicationResource
-	oci_functions_function?: [_]:                                      #OciFunctionsFunctionResource
-	oci_functions_invoke_function?: [_]:                               #OciFunctionsInvokeFunctionResource
-	oci_health_checks_http_monitor?: [_]:                              #OciHealthChecksHttpMonitorResource
-	oci_health_checks_http_probe?: [_]:                                #OciHealthChecksHttpProbeResource
-	oci_health_checks_ping_monitor?: [_]:                              #OciHealthChecksPingMonitorResource
-	oci_health_checks_ping_probe?: [_]:                                #OciHealthChecksPingProbeResource
-	oci_identity_api_key?: [_]:                                        #OciIdentityApiKeyResource
-	oci_identity_auth_token?: [_]:                                     #OciIdentityAuthTokenResource
-	oci_identity_authentication_policy?: [_]:                          #OciIdentityAuthenticationPolicyResource
-	oci_identity_compartment?: [_]:                                    #OciIdentityCompartmentResource
-	oci_identity_customer_secret_key?: [_]:                            #OciIdentityCustomerSecretKeyResource
-	oci_identity_dynamic_group?: [_]:                                  #OciIdentityDynamicGroupResource
-	oci_identity_group?: [_]:                                          #OciIdentityGroupResource
-	oci_identity_identity_provider?: [_]:                              #OciIdentityIdentityProviderResource
-	oci_identity_idp_group_mapping?: [_]:                              #OciIdentityIdpGroupMappingResource
-	oci_identity_network_source?: [_]:                                 #OciIdentityNetworkSourceResource
-	oci_identity_policy?: [_]:                                         #OciIdentityPolicyResource
-	oci_identity_smtp_credential?: [_]:                                #OciIdentitySmtpCredentialResource
-	oci_identity_swift_password?: [_]:                                 #OciIdentitySwiftPasswordResource
-	oci_identity_tag?: [_]:                                            #OciIdentityTagResource
-	oci_identity_tag_default?: [_]:                                    #OciIdentityTagDefaultResource
-	oci_identity_tag_namespace?: [_]:                                  #OciIdentityTagNamespaceResource
-	oci_identity_ui_password?: [_]:                                    #OciIdentityUiPasswordResource
-	oci_identity_user?: [_]:                                           #OciIdentityUserResource
-	oci_identity_user_capabilities_management?: [_]:                   #OciIdentityUserCapabilitiesManagementResource
-	oci_identity_user_group_membership?: [_]:                          #OciIdentityUserGroupMembershipResource
-	oci_integration_integration_instance?: [_]:                        #OciIntegrationIntegrationInstanceResource
-	oci_kms_encrypted_data?: [_]:                                      #OciKmsEncryptedDataResource
-	oci_kms_generated_key?: [_]:                                       #OciKmsGeneratedKeyResource
-	oci_kms_key?: [_]:                                                 #OciKmsKeyResource
-	oci_kms_key_version?: [_]:                                         #OciKmsKeyVersionResource
-	oci_kms_vault?: [_]:                                               #OciKmsVaultResource
-	oci_limits_quota?: [_]:                                            #OciLimitsQuotaResource
-	oci_load_balancer?: [_]:                                           #OciLoadBalancerResource
-	oci_load_balancer_backend?: [_]:                                   #OciLoadBalancerBackendResource
-	oci_load_balancer_backend_set?: [_]:                               #OciLoadBalancerBackendSetResource
-	oci_load_balancer_backendset?: [_]:                                #OciLoadBalancerBackendsetResource
-	oci_load_balancer_certificate?: [_]:                               #OciLoadBalancerCertificateResource
-	oci_load_balancer_hostname?: [_]:                                  #OciLoadBalancerHostnameResource
-	oci_load_balancer_listener?: [_]:                                  #OciLoadBalancerListenerResource
-	oci_load_balancer_load_balancer?: [_]:                             #OciLoadBalancerLoadBalancerResource
-	oci_load_balancer_path_route_set?: [_]:                            #OciLoadBalancerPathRouteSetResource
-	oci_load_balancer_rule_set?: [_]:                                  #OciLoadBalancerRuleSetResource
-	oci_marketplace_accepted_agreement?: [_]:                          #OciMarketplaceAcceptedAgreementResource
-	oci_marketplace_listing_package_agreement?: [_]:                   #OciMarketplaceListingPackageAgreementResource
-	oci_monitoring_alarm?: [_]:                                        #OciMonitoringAlarmResource
-	oci_nosql_index?: [_]:                                             #OciNosqlIndexResource
-	oci_nosql_table?: [_]:                                             #OciNosqlTableResource
-	oci_objectstorage_bucket?: [_]:                                    #OciObjectstorageBucketResource
-	oci_objectstorage_namespace_metadata?: [_]:                        #OciObjectstorageNamespaceMetadataResource
-	oci_objectstorage_object?: [_]:                                    #OciObjectstorageObjectResource
-	oci_objectstorage_object_lifecycle_policy?: [_]:                   #OciObjectstorageObjectLifecyclePolicyResource
-	oci_objectstorage_preauthrequest?: [_]:                            #OciObjectstoragePreauthrequestResource
-	oci_objectstorage_replication_policy?: [_]:                        #OciObjectstorageReplicationPolicyResource
-	oci_oce_oce_instance?: [_]:                                        #OciOceOceInstanceResource
-	oci_oda_oda_instance?: [_]:                                        #OciOdaOdaInstanceResource
-	oci_ons_notification_topic?: [_]:                                  #OciOnsNotificationTopicResource
-	oci_ons_subscription?: [_]:                                        #OciOnsSubscriptionResource
-	oci_osmanagement_managed_instance_group?: [_]:                     #OciOsmanagementManagedInstanceGroupResource
-	oci_osmanagement_managed_instance_management?: [_]:                #OciOsmanagementManagedInstanceManagementResource
-	oci_osmanagement_software_source?: [_]:                            #OciOsmanagementSoftwareSourceResource
-	oci_streaming_connect_harness?: [_]:                               #OciStreamingConnectHarnessResource
-	oci_streaming_stream?: [_]:                                        #OciStreamingStreamResource
-	oci_streaming_stream_pool?: [_]:                                   #OciStreamingStreamPoolResource
-	oci_waas_address_list?: [_]:                                       #OciWaasAddressListResource
-	oci_waas_certificate?: [_]:                                        #OciWaasCertificateResource
-	oci_waas_custom_protection_rule?: [_]:                             #OciWaasCustomProtectionRuleResource
-	oci_waas_http_redirect?: [_]:                                      #OciWaasHttpRedirectResource
-	oci_waas_purge_cache?: [_]:                                        #OciWaasPurgeCacheResource
-	oci_waas_waas_policy?: [_]:                                        #OciWaasWaasPolicyResource
+	oci_analytics_analytics_instance?: [_]:                                           #OciAnalyticsAnalyticsInstanceResource
+	oci_apigateway_api?: [_]:                                                         #OciApigatewayApiResource
+	oci_apigateway_certificate?: [_]:                                                 #OciApigatewayCertificateResource
+	oci_apigateway_deployment?: [_]:                                                  #OciApigatewayDeploymentResource
+	oci_apigateway_gateway?: [_]:                                                     #OciApigatewayGatewayResource
+	oci_audit_configuration?: [_]:                                                    #OciAuditConfigurationResource
+	oci_autoscaling_auto_scaling_configuration?: [_]:                                 #OciAutoscalingAutoScalingConfigurationResource
+	oci_bds_bds_instance?: [_]:                                                       #OciBdsBdsInstanceResource
+	oci_blockchain_blockchain_platform?: [_]:                                         #OciBlockchainBlockchainPlatformResource
+	oci_blockchain_osn?: [_]:                                                         #OciBlockchainOsnResource
+	oci_blockchain_peer?: [_]:                                                        #OciBlockchainPeerResource
+	oci_budget_alert_rule?: [_]:                                                      #OciBudgetAlertRuleResource
+	oci_budget_budget?: [_]:                                                          #OciBudgetBudgetResource
+	oci_cloud_guard_cloud_guard_configuration?: [_]:                                  #OciCloudGuardCloudGuardConfigurationResource
+	oci_cloud_guard_detector_recipe?: [_]:                                            #OciCloudGuardDetectorRecipeResource
+	oci_cloud_guard_managed_list?: [_]:                                               #OciCloudGuardManagedListResource
+	oci_cloud_guard_responder_recipe?: [_]:                                           #OciCloudGuardResponderRecipeResource
+	oci_cloud_guard_target?: [_]:                                                     #OciCloudGuardTargetResource
+	oci_containerengine_cluster?: [_]:                                                #OciContainerengineClusterResource
+	oci_containerengine_node_pool?: [_]:                                              #OciContainerengineNodePoolResource
+	oci_core_app_catalog_listing_resource_version_agreement?: [_]:                    #OciCoreAppCatalogListingResourceVersionAgreementResource
+	oci_core_app_catalog_subscription?: [_]:                                          #OciCoreAppCatalogSubscriptionResource
+	oci_core_boot_volume?: [_]:                                                       #OciCoreBootVolumeResource
+	oci_core_boot_volume_backup?: [_]:                                                #OciCoreBootVolumeBackupResource
+	oci_core_cluster_network?: [_]:                                                   #OciCoreClusterNetworkResource
+	oci_core_compute_image_capability_schema?: [_]:                                   #OciCoreComputeImageCapabilitySchemaResource
+	oci_core_console_history?: [_]:                                                   #OciCoreConsoleHistoryResource
+	oci_core_cpe?: [_]:                                                               #OciCoreCpeResource
+	oci_core_cross_connect?: [_]:                                                     #OciCoreCrossConnectResource
+	oci_core_cross_connect_group?: [_]:                                               #OciCoreCrossConnectGroupResource
+	oci_core_dedicated_vm_host?: [_]:                                                 #OciCoreDedicatedVmHostResource
+	oci_core_default_dhcp_options?: [_]:                                              #OciCoreDefaultDhcpOptionsResource
+	oci_core_default_route_table?: [_]:                                               #OciCoreDefaultRouteTableResource
+	oci_core_default_security_list?: [_]:                                             #OciCoreDefaultSecurityListResource
+	oci_core_dhcp_options?: [_]:                                                      #OciCoreDhcpOptionsResource
+	oci_core_drg?: [_]:                                                               #OciCoreDrgResource
+	oci_core_drg_attachment?: [_]:                                                    #OciCoreDrgAttachmentResource
+	oci_core_image?: [_]:                                                             #OciCoreImageResource
+	oci_core_instance?: [_]:                                                          #OciCoreInstanceResource
+	oci_core_instance_configuration?: [_]:                                            #OciCoreInstanceConfigurationResource
+	oci_core_instance_console_connection?: [_]:                                       #OciCoreInstanceConsoleConnectionResource
+	oci_core_instance_pool?: [_]:                                                     #OciCoreInstancePoolResource
+	oci_core_internet_gateway?: [_]:                                                  #OciCoreInternetGatewayResource
+	oci_core_ipsec?: [_]:                                                             #OciCoreIpsecResource
+	oci_core_ipsec_connection_tunnel_management?: [_]:                                #OciCoreIpsecConnectionTunnelManagementResource
+	oci_core_listing_resource_version_agreement?: [_]:                                #OciCoreListingResourceVersionAgreementResource
+	oci_core_local_peering_gateway?: [_]:                                             #OciCoreLocalPeeringGatewayResource
+	oci_core_nat_gateway?: [_]:                                                       #OciCoreNatGatewayResource
+	oci_core_network_security_group?: [_]:                                            #OciCoreNetworkSecurityGroupResource
+	oci_core_network_security_group_security_rule?: [_]:                              #OciCoreNetworkSecurityGroupSecurityRuleResource
+	oci_core_private_ip?: [_]:                                                        #OciCorePrivateIpResource
+	oci_core_public_ip?: [_]:                                                         #OciCorePublicIpResource
+	oci_core_public_ip_pool?: [_]:                                                    #OciCorePublicIpPoolResource
+	oci_core_public_ip_pool_capacity?: [_]:                                           #OciCorePublicIpPoolCapacityResource
+	oci_core_remote_peering_connection?: [_]:                                         #OciCoreRemotePeeringConnectionResource
+	oci_core_route_table?: [_]:                                                       #OciCoreRouteTableResource
+	oci_core_route_table_attachment?: [_]:                                            #OciCoreRouteTableAttachmentResource
+	oci_core_security_list?: [_]:                                                     #OciCoreSecurityListResource
+	oci_core_service_gateway?: [_]:                                                   #OciCoreServiceGatewayResource
+	oci_core_shape_management?: [_]:                                                  #OciCoreShapeManagementResource
+	oci_core_subnet?: [_]:                                                            #OciCoreSubnetResource
+	oci_core_vcn?: [_]:                                                               #OciCoreVcnResource
+	oci_core_virtual_circuit?: [_]:                                                   #OciCoreVirtualCircuitResource
+	oci_core_virtual_network?: [_]:                                                   #OciCoreVirtualNetworkResource
+	oci_core_vlan?: [_]:                                                              #OciCoreVlanResource
+	oci_core_vnic_attachment?: [_]:                                                   #OciCoreVnicAttachmentResource
+	oci_core_volume?: [_]:                                                            #OciCoreVolumeResource
+	oci_core_volume_attachment?: [_]:                                                 #OciCoreVolumeAttachmentResource
+	oci_core_volume_backup?: [_]:                                                     #OciCoreVolumeBackupResource
+	oci_core_volume_backup_policy?: [_]:                                              #OciCoreVolumeBackupPolicyResource
+	oci_core_volume_backup_policy_assignment?: [_]:                                   #OciCoreVolumeBackupPolicyAssignmentResource
+	oci_core_volume_group?: [_]:                                                      #OciCoreVolumeGroupResource
+	oci_core_volume_group_backup?: [_]:                                               #OciCoreVolumeGroupBackupResource
+	oci_data_safe_data_safe_configuration?: [_]:                                      #OciDataSafeDataSafeConfigurationResource
+	oci_data_safe_data_safe_private_endpoint?: [_]:                                   #OciDataSafeDataSafePrivateEndpointResource
+	oci_database_autonomous_container_database?: [_]:                                 #OciDatabaseAutonomousContainerDatabaseResource
+	oci_database_autonomous_container_database_dataguard_association_operation?: [_]: #OciDatabaseAutonomousContainerDatabaseDataguardAssociationOperationResource
+	oci_database_autonomous_database?: [_]:                                           #OciDatabaseAutonomousDatabaseResource
+	oci_database_autonomous_database_backup?: [_]:                                    #OciDatabaseAutonomousDatabaseBackupResource
+	oci_database_autonomous_database_instance_wallet_management?: [_]:                #OciDatabaseAutonomousDatabaseInstanceWalletManagementResource
+	oci_database_autonomous_database_regional_wallet_management?: [_]:                #OciDatabaseAutonomousDatabaseRegionalWalletManagementResource
+	oci_database_autonomous_exadata_infrastructure?: [_]:                             #OciDatabaseAutonomousExadataInfrastructureResource
+	oci_database_autonomous_vm_cluster?: [_]:                                         #OciDatabaseAutonomousVmClusterResource
+	oci_database_backup?: [_]:                                                        #OciDatabaseBackupResource
+	oci_database_backup_destination?: [_]:                                            #OciDatabaseBackupDestinationResource
+	oci_database_cloud_exadata_infrastructure?: [_]:                                  #OciDatabaseCloudExadataInfrastructureResource
+	oci_database_cloud_vm_cluster?: [_]:                                              #OciDatabaseCloudVmClusterResource
+	oci_database_data_guard_association?: [_]:                                        #OciDatabaseDataGuardAssociationResource
+	oci_database_database?: [_]:                                                      #OciDatabaseDatabaseResource
+	oci_database_database_software_image?: [_]:                                       #OciDatabaseDatabaseSoftwareImageResource
+	oci_database_db_home?: [_]:                                                       #OciDatabaseDbHomeResource
+	oci_database_db_node_console_connection?: [_]:                                    #OciDatabaseDbNodeConsoleConnectionResource
+	oci_database_db_system?: [_]:                                                     #OciDatabaseDbSystemResource
+	oci_database_exadata_infrastructure?: [_]:                                        #OciDatabaseExadataInfrastructureResource
+	oci_database_exadata_iorm_config?: [_]:                                           #OciDatabaseExadataIormConfigResource
+	oci_database_maintenance_run?: [_]:                                               #OciDatabaseMaintenanceRunResource
+	oci_database_migration?: [_]:                                                     #OciDatabaseMigrationResource
+	oci_database_vm_cluster?: [_]:                                                    #OciDatabaseVmClusterResource
+	oci_database_vm_cluster_network?: [_]:                                            #OciDatabaseVmClusterNetworkResource
+	oci_datacatalog_catalog?: [_]:                                                    #OciDatacatalogCatalogResource
+	oci_datacatalog_catalog_private_endpoint?: [_]:                                   #OciDatacatalogCatalogPrivateEndpointResource
+	oci_datacatalog_connection?: [_]:                                                 #OciDatacatalogConnectionResource
+	oci_datacatalog_data_asset?: [_]:                                                 #OciDatacatalogDataAssetResource
+	oci_dataflow_application?: [_]:                                                   #OciDataflowApplicationResource
+	oci_dataflow_invoke_run?: [_]:                                                    #OciDataflowInvokeRunResource
+	oci_dataflow_private_endpoint?: [_]:                                              #OciDataflowPrivateEndpointResource
+	oci_dataintegration_workspace?: [_]:                                              #OciDataintegrationWorkspaceResource
+	oci_datascience_model?: [_]:                                                      #OciDatascienceModelResource
+	oci_datascience_model_provenance?: [_]:                                           #OciDatascienceModelProvenanceResource
+	oci_datascience_notebook_session?: [_]:                                           #OciDatascienceNotebookSessionResource
+	oci_datascience_project?: [_]:                                                    #OciDatascienceProjectResource
+	oci_dns_record?: [_]:                                                             #OciDnsRecordResource
+	oci_dns_rrset?: [_]:                                                              #OciDnsRrsetResource
+	oci_dns_steering_policy?: [_]:                                                    #OciDnsSteeringPolicyResource
+	oci_dns_steering_policy_attachment?: [_]:                                         #OciDnsSteeringPolicyAttachmentResource
+	oci_dns_tsig_key?: [_]:                                                           #OciDnsTsigKeyResource
+	oci_dns_zone?: [_]:                                                               #OciDnsZoneResource
+	oci_email_sender?: [_]:                                                           #OciEmailSenderResource
+	oci_email_suppression?: [_]:                                                      #OciEmailSuppressionResource
+	oci_events_rule?: [_]:                                                            #OciEventsRuleResource
+	oci_file_storage_export?: [_]:                                                    #OciFileStorageExportResource
+	oci_file_storage_export_set?: [_]:                                                #OciFileStorageExportSetResource
+	oci_file_storage_file_system?: [_]:                                               #OciFileStorageFileSystemResource
+	oci_file_storage_mount_target?: [_]:                                              #OciFileStorageMountTargetResource
+	oci_file_storage_snapshot?: [_]:                                                  #OciFileStorageSnapshotResource
+	oci_functions_application?: [_]:                                                  #OciFunctionsApplicationResource
+	oci_functions_function?: [_]:                                                     #OciFunctionsFunctionResource
+	oci_functions_invoke_function?: [_]:                                              #OciFunctionsInvokeFunctionResource
+	oci_health_checks_http_monitor?: [_]:                                             #OciHealthChecksHttpMonitorResource
+	oci_health_checks_http_probe?: [_]:                                               #OciHealthChecksHttpProbeResource
+	oci_health_checks_ping_monitor?: [_]:                                             #OciHealthChecksPingMonitorResource
+	oci_health_checks_ping_probe?: [_]:                                               #OciHealthChecksPingProbeResource
+	oci_identity_api_key?: [_]:                                                       #OciIdentityApiKeyResource
+	oci_identity_auth_token?: [_]:                                                    #OciIdentityAuthTokenResource
+	oci_identity_authentication_policy?: [_]:                                         #OciIdentityAuthenticationPolicyResource
+	oci_identity_compartment?: [_]:                                                   #OciIdentityCompartmentResource
+	oci_identity_customer_secret_key?: [_]:                                           #OciIdentityCustomerSecretKeyResource
+	oci_identity_dynamic_group?: [_]:                                                 #OciIdentityDynamicGroupResource
+	oci_identity_group?: [_]:                                                         #OciIdentityGroupResource
+	oci_identity_identity_provider?: [_]:                                             #OciIdentityIdentityProviderResource
+	oci_identity_idp_group_mapping?: [_]:                                             #OciIdentityIdpGroupMappingResource
+	oci_identity_network_source?: [_]:                                                #OciIdentityNetworkSourceResource
+	oci_identity_policy?: [_]:                                                        #OciIdentityPolicyResource
+	oci_identity_smtp_credential?: [_]:                                               #OciIdentitySmtpCredentialResource
+	oci_identity_swift_password?: [_]:                                                #OciIdentitySwiftPasswordResource
+	oci_identity_tag?: [_]:                                                           #OciIdentityTagResource
+	oci_identity_tag_default?: [_]:                                                   #OciIdentityTagDefaultResource
+	oci_identity_tag_namespace?: [_]:                                                 #OciIdentityTagNamespaceResource
+	oci_identity_ui_password?: [_]:                                                   #OciIdentityUiPasswordResource
+	oci_identity_user?: [_]:                                                          #OciIdentityUserResource
+	oci_identity_user_capabilities_management?: [_]:                                  #OciIdentityUserCapabilitiesManagementResource
+	oci_identity_user_group_membership?: [_]:                                         #OciIdentityUserGroupMembershipResource
+	oci_integration_integration_instance?: [_]:                                       #OciIntegrationIntegrationInstanceResource
+	oci_kms_encrypted_data?: [_]:                                                     #OciKmsEncryptedDataResource
+	oci_kms_generated_key?: [_]:                                                      #OciKmsGeneratedKeyResource
+	oci_kms_key?: [_]:                                                                #OciKmsKeyResource
+	oci_kms_key_version?: [_]:                                                        #OciKmsKeyVersionResource
+	oci_kms_vault?: [_]:                                                              #OciKmsVaultResource
+	oci_limits_quota?: [_]:                                                           #OciLimitsQuotaResource
+	oci_load_balancer?: [_]:                                                          #OciLoadBalancerResource
+	oci_load_balancer_backend?: [_]:                                                  #OciLoadBalancerBackendResource
+	oci_load_balancer_backend_set?: [_]:                                              #OciLoadBalancerBackendSetResource
+	oci_load_balancer_backendset?: [_]:                                               #OciLoadBalancerBackendsetResource
+	oci_load_balancer_certificate?: [_]:                                              #OciLoadBalancerCertificateResource
+	oci_load_balancer_hostname?: [_]:                                                 #OciLoadBalancerHostnameResource
+	oci_load_balancer_listener?: [_]:                                                 #OciLoadBalancerListenerResource
+	oci_load_balancer_load_balancer?: [_]:                                            #OciLoadBalancerLoadBalancerResource
+	oci_load_balancer_path_route_set?: [_]:                                           #OciLoadBalancerPathRouteSetResource
+	oci_load_balancer_rule_set?: [_]:                                                 #OciLoadBalancerRuleSetResource
+	oci_load_balancer_ssl_cipher_suite?: [_]:                                         #OciLoadBalancerSslCipherSuiteResource
+	oci_logging_log?: [_]:                                                            #OciLoggingLogResource
+	oci_logging_log_group?: [_]:                                                      #OciLoggingLogGroupResource
+	oci_logging_log_saved_search?: [_]:                                               #OciLoggingLogSavedSearchResource
+	oci_management_agent_management_agent?: [_]:                                      #OciManagementAgentManagementAgentResource
+	oci_management_agent_management_agent_install_key?: [_]:                          #OciManagementAgentManagementAgentInstallKeyResource
+	oci_marketplace_accepted_agreement?: [_]:                                         #OciMarketplaceAcceptedAgreementResource
+	oci_marketplace_listing_package_agreement?: [_]:                                  #OciMarketplaceListingPackageAgreementResource
+	oci_metering_computation_usage?: [_]:                                             #OciMeteringComputationUsageResource
+	oci_monitoring_alarm?: [_]:                                                       #OciMonitoringAlarmResource
+	oci_mysql_mysql_backup?: [_]:                                                     #OciMysqlMysqlBackupResource
+	oci_mysql_mysql_db_system?: [_]:                                                  #OciMysqlMysqlDbSystemResource
+	oci_nosql_index?: [_]:                                                            #OciNosqlIndexResource
+	oci_nosql_table?: [_]:                                                            #OciNosqlTableResource
+	oci_objectstorage_bucket?: [_]:                                                   #OciObjectstorageBucketResource
+	oci_objectstorage_namespace_metadata?: [_]:                                       #OciObjectstorageNamespaceMetadataResource
+	oci_objectstorage_object?: [_]:                                                   #OciObjectstorageObjectResource
+	oci_objectstorage_object_lifecycle_policy?: [_]:                                  #OciObjectstorageObjectLifecyclePolicyResource
+	oci_objectstorage_preauthrequest?: [_]:                                           #OciObjectstoragePreauthrequestResource
+	oci_objectstorage_replication_policy?: [_]:                                       #OciObjectstorageReplicationPolicyResource
+	oci_oce_oce_instance?: [_]:                                                       #OciOceOceInstanceResource
+	oci_ocvp_esxi_host?: [_]:                                                         #OciOcvpEsxiHostResource
+	oci_ocvp_sddc?: [_]:                                                              #OciOcvpSddcResource
+	oci_oda_oda_instance?: [_]:                                                       #OciOdaOdaInstanceResource
+	oci_ons_notification_topic?: [_]:                                                 #OciOnsNotificationTopicResource
+	oci_ons_subscription?: [_]:                                                       #OciOnsSubscriptionResource
+	oci_osmanagement_managed_instance_group?: [_]:                                    #OciOsmanagementManagedInstanceGroupResource
+	oci_osmanagement_managed_instance_management?: [_]:                               #OciOsmanagementManagedInstanceManagementResource
+	oci_osmanagement_software_source?: [_]:                                           #OciOsmanagementSoftwareSourceResource
+	oci_sch_service_connector?: [_]:                                                  #OciSchServiceConnectorResource
+	oci_streaming_connect_harness?: [_]:                                              #OciStreamingConnectHarnessResource
+	oci_streaming_stream?: [_]:                                                       #OciStreamingStreamResource
+	oci_streaming_stream_pool?: [_]:                                                  #OciStreamingStreamPoolResource
+	oci_waas_address_list?: [_]:                                                      #OciWaasAddressListResource
+	oci_waas_certificate?: [_]:                                                       #OciWaasCertificateResource
+	oci_waas_custom_protection_rule?: [_]:                                            #OciWaasCustomProtectionRuleResource
+	oci_waas_http_redirect?: [_]:                                                     #OciWaasHttpRedirectResource
+	oci_waas_protection_rule?: [_]:                                                   #OciWaasProtectionRuleResource
+	oci_waas_purge_cache?: [_]:                                                       #OciWaasPurgeCacheResource
+	oci_waas_waas_policy?: [_]:                                                       #OciWaasWaasPolicyResource
 }

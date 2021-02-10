@@ -5,12 +5,23 @@ package baiducloud
 	access_key: string
 	secret_key: string
 	region?:    string
+	assume_role?: [{
+		account_id: string
+		role_name:  string
+		acl?:       string
+		user_id?:   string
+	}, ...]
 	endpoints?: [{
 		appblb?: string
 		bcc?:    string
 		bos?:    string
+		cce?:    string
+		ccev2?:  string
 		cfc?:    string
+		dts?:    string
 		eip?:    string
+		rds?:    string
+		scs?:    string
 		vpc?:    string
 	}, ...]
 }

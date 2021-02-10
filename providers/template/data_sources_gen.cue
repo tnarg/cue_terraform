@@ -4,6 +4,8 @@ package template
 #TemplateCloudinitConfigDataSource: {
 	base64_encode?: bool
 	gzip?:          bool
+	id?:            string
+	rendered?:      string
 	part?: [{
 		content:       string
 		content_type?: string
@@ -13,6 +15,8 @@ package template
 }
 #TemplateFileDataSource: {
 	filename?: string
+	id?:       string
+	rendered?: string
 	template?: string
 	vars?: [_]: string
 }

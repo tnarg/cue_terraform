@@ -49,23 +49,32 @@ package vsphere
 	host_cluster_exit_timeout?:          number
 	host_managed?:                       bool
 	host_system_ids?: [string, ...]
+	id?:                                string
 	proactive_ha_automation_level?:     string
 	proactive_ha_enabled?:              bool
 	proactive_ha_moderate_remediation?: string
 	proactive_ha_provider_ids?: [string, ...]
 	proactive_ha_severe_remediation?: string
+	resource_pool_id?:                string
 	tags?: [string, ...]
+	vsan_enabled?: bool
+	vsan_disk_group?: [{
+		cache?: string
+		storage?: [string, ...]
+	}, ...]
 }
 #VsphereComputeClusterHostGroupResource: {
 	compute_cluster_id: string
 	name:               string
 	host_system_ids?: [string, ...]
+	id?: string
 }
 #VsphereComputeClusterVmAffinityRuleResource: {
 	compute_cluster_id: string
 	name:               string
 	virtual_machine_ids: [string, ...]
 	enabled?:   bool
+	id?:        string
 	mandatory?: bool
 }
 #VsphereComputeClusterVmAntiAffinityRuleResource: {
@@ -73,6 +82,7 @@ package vsphere
 	name:               string
 	virtual_machine_ids: [string, ...]
 	enabled?:   bool
+	id?:        string
 	mandatory?: bool
 }
 #VsphereComputeClusterVmDependencyRuleResource: {
@@ -81,11 +91,13 @@ package vsphere
 	name:                     string
 	vm_group_name:            string
 	enabled?:                 bool
+	id?:                      string
 	mandatory?:               bool
 }
 #VsphereComputeClusterVmGroupResource: {
 	compute_cluster_id: string
 	name:               string
+	id?:                string
 	virtual_machine_ids?: [string, ...]
 }
 #VsphereComputeClusterVmHostRuleResource: {
@@ -95,28 +107,50 @@ package vsphere
 	affinity_host_group_name?:      string
 	anti_affinity_host_group_name?: string
 	enabled?:                       bool
+	id?:                            string
 	mandatory?:                     bool
 }
 #VsphereContentLibraryResource: {
 	name: string
 	storage_backing: [string, ...]
 	description?: string
+	id?:          string
+	publication?: [{
+		authentication_method?: string
+		password?:              string
+		publish_url?:           string
+		published?:             bool
+		username?:              string
+	}, ...]
+	subscription?: [{
+		authentication_method?: string
+		automatic_sync?:        bool
+		on_demand?:             bool
+		password?:              string
+		subscription_url?:      string
+		username?:              string
+	}, ...]
 }
 #VsphereContentLibraryItemResource: {
-	file_url: [string, ...]
 	library_id:   string
 	name:         string
 	description?: string
+	file_url?:    string
+	id?:          string
+	source_uuid?: string
 	type?:        string
 }
 #VsphereCustomAttributeResource: {
 	name:                 string
+	id?:                  string
 	managed_object_type?: string
 }
 #VsphereDatacenterResource: {
 	name: string
 	custom_attributes?: [_]: string
 	folder?: string
+	id?:     string
+	moid?:   string
 	tags?: [string, ...]
 }
 #VsphereDatastoreClusterResource: {
@@ -124,6 +158,7 @@ package vsphere
 	name:          string
 	custom_attributes?: [_]: string
 	folder?: string
+	id?:     string
 	sdrs_advanced_options?: [_]: string
 	sdrs_automation_level?:                    string
 	sdrs_default_intra_vm_affinity?:           bool
@@ -151,27 +186,57 @@ package vsphere
 	name:                 string
 	virtual_machine_ids: [string, ...]
 	enabled?:   bool
+	id?:        string
 	mandatory?: bool
 }
 #VsphereDistributedPortGroupResource: {
 	distributed_virtual_switch_uuid: string
 	name:                            string
-	auto_expand?:                    bool
-	block_override_allowed?:         bool
+	active_uplinks?: [string, ...]
+	allow_forged_transmits?: bool
+	allow_mac_changes?:      bool
+	allow_promiscuous?:      bool
+	auto_expand?:            bool
+	block_all_ports?:        bool
+	block_override_allowed?: bool
+	check_beacon?:           bool
+	config_version?:         string
 	custom_attributes?: [_]: string
 	description?:                            string
+	directpath_gen2_allowed?:                bool
+	egress_shaping_average_bandwidth?:       number
+	egress_shaping_burst_size?:              number
+	egress_shaping_enabled?:                 bool
+	egress_shaping_peak_bandwidth?:          number
+	failback?:                               bool
+	id?:                                     string
+	ingress_shaping_average_bandwidth?:      number
+	ingress_shaping_burst_size?:             number
+	ingress_shaping_enabled?:                bool
+	ingress_shaping_peak_bandwidth?:         number
+	key?:                                    string
+	lacp_enabled?:                           bool
+	lacp_mode?:                              string
 	live_port_moving_allowed?:               bool
+	netflow_enabled?:                        bool
 	netflow_override_allowed?:               bool
 	network_resource_pool_key?:              string
 	network_resource_pool_override_allowed?: bool
+	notify_switches?:                        bool
+	number_of_ports?:                        number
 	port_config_reset_at_disconnect?:        bool
 	port_name_format?:                       string
+	port_private_secondary_vlan_id?:         number
 	security_policy_override_allowed?:       bool
 	shaping_override_allowed?:               bool
+	standby_uplinks?: [string, ...]
 	tags?: [string, ...]
+	teaming_policy?:                  string
 	traffic_filter_override_allowed?: bool
+	tx_uplink?:                       bool
 	type?:                            string
 	uplink_teaming_override_allowed?: bool
+	vlan_id?:                         number
 	vlan_override_allowed?:           bool
 	vlan_range?: [{
 		max_vlan: number
@@ -179,28 +244,103 @@ package vsphere
 	}, ...]
 }
 #VsphereDistributedVirtualSwitchResource: {
-	datacenter_id:   string
-	name:            string
-	contact_detail?: string
-	contact_name?:   string
+	datacenter_id: string
+	name:          string
+	active_uplinks?: [string, ...]
+	allow_forged_transmits?: bool
+	allow_mac_changes?:      bool
+	allow_promiscuous?:      bool
+	block_all_ports?:        bool
+	check_beacon?:           bool
+	config_version?:         string
+	contact_detail?:         string
+	contact_name?:           string
 	custom_attributes?: [_]: string
-	description?:                      string
-	folder?:                           string
-	ipv4_address?:                     string
-	link_discovery_operation?:         string
-	link_discovery_protocol?:          string
-	netflow_active_flow_timeout?:      number
-	netflow_collector_ip_address?:     string
-	netflow_collector_port?:           number
-	netflow_idle_flow_timeout?:        number
-	netflow_internal_flows_only?:      bool
-	netflow_observation_domain_id?:    number
-	netflow_sampling_rate?:            number
-	network_resource_control_enabled?: bool
+	description?:                       string
+	directpath_gen2_allowed?:           bool
+	egress_shaping_average_bandwidth?:  number
+	egress_shaping_burst_size?:         number
+	egress_shaping_enabled?:            bool
+	egress_shaping_peak_bandwidth?:     number
+	failback?:                          bool
+	faulttolerance_maximum_mbit?:       number
+	faulttolerance_reservation_mbit?:   number
+	faulttolerance_share_count?:        number
+	faulttolerance_share_level?:        string
+	folder?:                            string
+	hbr_maximum_mbit?:                  number
+	hbr_reservation_mbit?:              number
+	hbr_share_count?:                   number
+	hbr_share_level?:                   string
+	id?:                                string
+	ignore_other_pvlan_mappings?:       bool
+	ingress_shaping_average_bandwidth?: number
+	ingress_shaping_burst_size?:        number
+	ingress_shaping_enabled?:           bool
+	ingress_shaping_peak_bandwidth?:    number
+	ipv4_address?:                      string
+	iscsi_maximum_mbit?:                number
+	iscsi_reservation_mbit?:            number
+	iscsi_share_count?:                 number
+	iscsi_share_level?:                 string
+	lacp_api_version?:                  string
+	lacp_enabled?:                      bool
+	lacp_mode?:                         string
+	link_discovery_operation?:          string
+	link_discovery_protocol?:           string
+	management_maximum_mbit?:           number
+	management_reservation_mbit?:       number
+	management_share_count?:            number
+	management_share_level?:            string
+	max_mtu?:                           number
+	multicast_filtering_mode?:          string
+	netflow_active_flow_timeout?:       number
+	netflow_collector_ip_address?:      string
+	netflow_collector_port?:            number
+	netflow_enabled?:                   bool
+	netflow_idle_flow_timeout?:         number
+	netflow_internal_flows_only?:       bool
+	netflow_observation_domain_id?:     number
+	netflow_sampling_rate?:             number
+	network_resource_control_enabled?:  bool
+	network_resource_control_version?:  string
+	nfs_maximum_mbit?:                  number
+	nfs_reservation_mbit?:              number
+	nfs_share_count?:                   number
+	nfs_share_level?:                   string
+	notify_switches?:                   bool
+	port_private_secondary_vlan_id?:    number
+	standby_uplinks?: [string, ...]
 	tags?: [string, ...]
+	teaming_policy?: string
+	tx_uplink?:      bool
+	uplinks?: [string, ...]
+	vdp_maximum_mbit?:                number
+	vdp_reservation_mbit?:            number
+	vdp_share_count?:                 number
+	vdp_share_level?:                 string
+	version?:                         string
+	virtualmachine_maximum_mbit?:     number
+	virtualmachine_reservation_mbit?: number
+	virtualmachine_share_count?:      number
+	virtualmachine_share_level?:      string
+	vlan_id?:                         number
+	vmotion_maximum_mbit?:            number
+	vmotion_reservation_mbit?:        number
+	vmotion_share_count?:             number
+	vmotion_share_level?:             string
+	vsan_maximum_mbit?:               number
+	vsan_reservation_mbit?:           number
+	vsan_share_count?:                number
+	vsan_share_level?:                string
 	host?: [{
 		devices: [string, ...]
 		host_system_id: string
+	}, ...]
+	pvlan_mapping?: [{
+		primary_vlan_id:   number
+		pvlan_type:        string
+		secondary_vlan_id: number
 	}, ...]
 	vlan_range?: [{
 		max_vlan: number
@@ -212,12 +352,25 @@ package vsphere
 	host_system_id:        string
 	dpm_automation_level?: string
 	dpm_enabled?:          bool
+	id?:                   string
 }
 #VsphereDrsVmOverrideResource: {
 	compute_cluster_id:    string
 	virtual_machine_id:    string
 	drs_automation_level?: string
 	drs_enabled?:          bool
+	id?:                   string
+}
+#VsphereEntityPermissionsResource: {
+	entity_id:   string
+	entity_type: string
+	id?:         string
+	permissions?: [{
+		is_group:      bool
+		propagate:     bool
+		role_id:       string
+		user_or_group: string
+	}, ...]
 }
 #VsphereFileResource: {
 	datastore:           string
@@ -225,6 +378,7 @@ package vsphere
 	source_file:         string
 	create_directories?: bool
 	datacenter?:         string
+	id?:                 string
 	source_datacenter?:  string
 	source_datastore?:   string
 }
@@ -233,6 +387,7 @@ package vsphere
 	type: string
 	custom_attributes?: [_]: string
 	datacenter_id?: string
+	id?:            string
 	tags?: [string, ...]
 }
 #VsphereHaVmOverrideResource: {
@@ -251,6 +406,7 @@ package vsphere
 	ha_vm_monitoring_use_cluster_defaults?: bool
 	ha_vm_restart_priority?:                string
 	ha_vm_restart_timeout?:                 number
+	id?:                                    string
 }
 #VsphereHostResource: {
 	hostname:         string
@@ -261,6 +417,7 @@ package vsphere
 	connected?:       bool
 	datacenter?:      string
 	force?:           bool
+	id?:              string
 	license?:         string
 	lockdown?:        string
 	maintenance?:     bool
@@ -271,12 +428,20 @@ package vsphere
 	name:                string
 	virtual_switch_name: string
 	active_nics?: [string, ...]
-	allow_forged_transmits?:    bool
-	allow_mac_changes?:         bool
-	allow_promiscuous?:         bool
-	check_beacon?:              bool
-	failback?:                  bool
-	notify_switches?:           bool
+	allow_forged_transmits?: bool
+	allow_mac_changes?:      bool
+	allow_promiscuous?:      bool
+	check_beacon?:           bool
+	computed_policy?: [_]: string
+	failback?:        bool
+	id?:              string
+	key?:             string
+	notify_switches?: bool
+	ports?: [{
+		key: string
+		mac_addresses: [string, ...]
+		type: string
+	}, ...]
 	shaping_average_bandwidth?: number
 	shaping_burst_size?:        number
 	shaping_enabled?:           bool
@@ -297,6 +462,7 @@ package vsphere
 	beacon_interval?:           number
 	check_beacon?:              bool
 	failback?:                  bool
+	id?:                        string
 	link_discovery_operation?:  string
 	link_discovery_protocol?:   string
 	mtu?:                       number
@@ -309,8 +475,13 @@ package vsphere
 	teaming_policy?:            string
 }
 #VsphereLicenseResource: {
-	license_key: string
+	license_key:  string
+	edition_key?: string
+	id?:          string
 	labels?: [_]: string
+	name?:  string
+	total?: number
+	used?:  number
 }
 #VsphereNasDatastoreResource: {
 	host_system_ids: [string, ...]
@@ -318,12 +489,21 @@ package vsphere
 	remote_hosts: [string, ...]
 	remote_path:  string
 	access_mode?: string
+	accessible?:  bool
+	capacity?:    number
 	custom_attributes?: [_]: string
 	datastore_cluster_id?: string
 	folder?:               string
+	free_space?:           number
+	id?:                   string
+	maintenance_mode?:     string
+	multiple_host_access?: bool
+	protocol_endpoint?:    string
 	security_type?:        string
 	tags?: [string, ...]
-	type?: string
+	type?:              string
+	uncommitted_space?: number
+	url?:               string
 }
 #VsphereResourcePoolResource: {
 	name:                    string
@@ -332,16 +512,26 @@ package vsphere
 	cpu_limit?:              number
 	cpu_reservation?:        number
 	cpu_share_level?:        string
+	cpu_shares?:             number
 	custom_attributes?: [_]: string
+	id?:                 string
 	memory_expandable?:  bool
 	memory_limit?:       number
 	memory_reservation?: number
 	memory_share_level?: string
+	memory_shares?:      number
 	tags?: [string, ...]
+}
+#VsphereRoleResource: {
+	name:   string
+	id?:    string
+	label?: string
+	role_privileges?: [string, ...]
 }
 #VsphereStorageDrsVmOverrideResource: {
 	datastore_cluster_id:    string
 	virtual_machine_id:      string
+	id?:                     string
 	sdrs_automation_level?:  string
 	sdrs_enabled?:           string
 	sdrs_intra_vm_affinity?: string
@@ -350,12 +540,14 @@ package vsphere
 	category_id:  string
 	name:         string
 	description?: string
+	id?:          string
 }
 #VsphereTagCategoryResource: {
 	associable_types: [string, ...]
 	cardinality:  string
 	name:         string
 	description?: string
+	id?:          string
 }
 #VsphereVappContainerResource: {
 	name:                    string
@@ -364,11 +556,14 @@ package vsphere
 	cpu_limit?:              number
 	cpu_reservation?:        number
 	cpu_share_level?:        string
+	cpu_shares?:             number
 	custom_attributes?: [_]: string
+	id?:                 string
 	memory_expandable?:  bool
 	memory_limit?:       number
 	memory_reservation?: number
 	memory_share_level?: string
+	memory_shares?:      number
 	parent_folder_id?:   string
 	tags?: [string, ...]
 }
@@ -376,6 +571,7 @@ package vsphere
 	container_id: string
 	target_id:    string
 	custom_attributes?: [_]: string
+	id?:           string
 	start_action?: string
 	start_delay?:  number
 	start_order?:  number
@@ -391,6 +587,7 @@ package vsphere
 	adapter_type?:       string
 	create_directories?: bool
 	datacenter?:         string
+	id?:                 string
 	type?:               string
 }
 #VsphereVirtualMachineResource: {
@@ -401,15 +598,19 @@ package vsphere
 	boot_delay?:                       number
 	boot_retry_delay?:                 number
 	boot_retry_enabled?:               bool
+	change_version?:                   string
 	cpu_hot_add_enabled?:              bool
 	cpu_hot_remove_enabled?:           bool
 	cpu_limit?:                        number
 	cpu_performance_counters_enabled?: bool
 	cpu_reservation?:                  number
+	cpu_share_count?:                  number
 	cpu_share_level?:                  string
 	custom_attributes?: [_]: string
 	datacenter_id?:           string
 	datastore_cluster_id?:    string
+	datastore_id?:            string
+	default_ip_address?:      string
 	efi_secure_boot_enabled?: bool
 	enable_disk_uuid?:        bool
 	enable_logging?:          bool
@@ -419,24 +620,35 @@ package vsphere
 	folder?:          string
 	force_power_off?: bool
 	guest_id?:        string
-	hv_mode?:         string
+	guest_ip_addresses?: [string, ...]
+	hardware_version?:     number
+	host_system_id?:       string
+	hv_mode?:              string
+	id?:                   string
+	ide_controller_count?: number
 	ignored_guest_ips?: [string, ...]
-	latency_sensitivity?:                     string
-	memory?:                                  number
-	memory_hot_add_enabled?:                  bool
-	memory_limit?:                            number
-	memory_reservation?:                      number
-	memory_share_level?:                      string
-	migrate_wait_timeout?:                    number
-	nested_hv_enabled?:                       bool
-	num_cores_per_socket?:                    number
-	num_cpus?:                                number
+	imported?:               bool
+	latency_sensitivity?:    string
+	memory?:                 number
+	memory_hot_add_enabled?: bool
+	memory_limit?:           number
+	memory_reservation?:     number
+	memory_share_count?:     number
+	memory_share_level?:     string
+	migrate_wait_timeout?:   number
+	moid?:                   string
+	nested_hv_enabled?:      bool
+	num_cores_per_socket?:   number
+	num_cpus?:               number
+	pci_device_id?: [string, ...]
 	poweron_timeout?:                         number
+	reboot_required?:                         bool
 	run_tools_scripts_after_power_on?:        bool
 	run_tools_scripts_after_resume?:          bool
 	run_tools_scripts_before_guest_reboot?:   bool
 	run_tools_scripts_before_guest_shutdown?: bool
 	run_tools_scripts_before_guest_standby?:  bool
+	sata_controller_count?:                   number
 	scsi_bus_sharing?:                        string
 	scsi_controller_count?:                   number
 	scsi_type?:                               string
@@ -445,13 +657,19 @@ package vsphere
 	swap_placement_policy?:                   string
 	sync_time_with_host?:                     bool
 	tags?: [string, ...]
+	uuid?: string
+	vapp_transport?: [string, ...]
+	vmware_tools_status?:         string
+	vmx_path?:                    string
 	wait_for_guest_ip_timeout?:   number
 	wait_for_guest_net_routable?: bool
 	wait_for_guest_net_timeout?:  number
 	cdrom?: [{
-		client_device?: bool
-		datastore_id?:  string
-		path?:          string
+		client_device?:  bool
+		datastore_id?:   string
+		device_address?: string
+		key?:            number
+		path?:           string
 	}, ...]
 	clone?: [{
 		template_uuid: string
@@ -499,7 +717,9 @@ package vsphere
 	}, ...]
 	disk?: [{
 		attach?:            bool
+		controller_type?:   string
 		datastore_id?:      string
+		device_address?:    string
 		disk_mode?:         string
 		disk_sharing?:      string
 		eagerly_scrub?:     bool
@@ -508,12 +728,15 @@ package vsphere
 		io_share_count?:    number
 		io_share_level?:    string
 		keep_on_remove?:    bool
+		key?:               number
 		label?:             string
 		name?:              string
+		path?:              string
 		size?:              number
 		storage_policy_id?: string
 		thin_provisioned?:  bool
 		unit_number?:       number
+		uuid?:              string
 		write_through?:     bool
 	}, ...]
 	network_interface?: [{
@@ -521,15 +744,20 @@ package vsphere
 		adapter_type?:          string
 		bandwidth_limit?:       number
 		bandwidth_reservation?: number
+		bandwidth_share_count?: number
 		bandwidth_share_level?: string
+		device_address?:        string
+		key?:                   number
+		mac_address?:           string
 		ovf_mapping?:           string
 		use_static_mac?:        bool
 	}, ...]
 	ovf_deploy?: [{
-		disk_provisioning?:    string
-		ip_allocation_policy?: string
-		ip_protocol?:          string
-		local_ovf_path?:       string
+		allow_unverified_ssl_cert?: bool
+		disk_provisioning?:         string
+		ip_allocation_policy?:      string
+		ip_protocol?:               string
+		local_ovf_path?:            string
 		ovf_network_map?: [_]: string
 		remote_ovf_url?: string
 	}, ...]
@@ -544,21 +772,43 @@ package vsphere
 	snapshot_name:        string
 	virtual_machine_uuid: string
 	consolidate?:         bool
+	id?:                  string
 	remove_children?:     bool
+}
+#VsphereVmStoragePolicyResource: {
+	name:         string
+	description?: string
+	id?:          string
+	tag_rules?: [{
+		tag_category: string
+		tags: [string, ...]
+		include_datastores_with_tags?: bool
+	}, ...]
 }
 #VsphereVmfsDatastoreResource: {
 	disks: [string, ...]
 	host_system_id: string
 	name:           string
+	accessible?:    bool
+	capacity?:      number
 	custom_attributes?: [_]: string
 	datastore_cluster_id?: string
 	folder?:               string
+	free_space?:           number
+	id?:                   string
+	maintenance_mode?:     string
+	multiple_host_access?: bool
 	tags?: [string, ...]
+	uncommitted_space?: number
+	url?:               string
 }
 #VsphereVnicResource: {
 	host:                     string
 	distributed_port_group?:  string
 	distributed_switch_port?: string
+	id?:                      string
+	mac?:                     string
+	mtu?:                     number
 	netstack?:                string
 	portgroup?:               string
 	ipv4?: [{
@@ -592,6 +842,7 @@ package vsphere
 	vsphere_distributed_virtual_switch?: [_]:              #VsphereDistributedVirtualSwitchResource
 	vsphere_dpm_host_override?: [_]:                       #VsphereDpmHostOverrideResource
 	vsphere_drs_vm_override?: [_]:                         #VsphereDrsVmOverrideResource
+	vsphere_entity_permissions?: [_]:                      #VsphereEntityPermissionsResource
 	vsphere_file?: [_]:                                    #VsphereFileResource
 	vsphere_folder?: [_]:                                  #VsphereFolderResource
 	vsphere_ha_vm_override?: [_]:                          #VsphereHaVmOverrideResource
@@ -601,6 +852,7 @@ package vsphere
 	vsphere_license?: [_]:                                 #VsphereLicenseResource
 	vsphere_nas_datastore?: [_]:                           #VsphereNasDatastoreResource
 	vsphere_resource_pool?: [_]:                           #VsphereResourcePoolResource
+	vsphere_role?: [_]:                                    #VsphereRoleResource
 	vsphere_storage_drs_vm_override?: [_]:                 #VsphereStorageDrsVmOverrideResource
 	vsphere_tag?: [_]:                                     #VsphereTagResource
 	vsphere_tag_category?: [_]:                            #VsphereTagCategoryResource
@@ -609,6 +861,7 @@ package vsphere
 	vsphere_virtual_disk?: [_]:                            #VsphereVirtualDiskResource
 	vsphere_virtual_machine?: [_]:                         #VsphereVirtualMachineResource
 	vsphere_virtual_machine_snapshot?: [_]:                #VsphereVirtualMachineSnapshotResource
+	vsphere_vm_storage_policy?: [_]:                       #VsphereVmStoragePolicyResource
 	vsphere_vmfs_datastore?: [_]:                          #VsphereVmfsDatastoreResource
 	vsphere_vnic?: [_]:                                    #VsphereVnicResource
 }

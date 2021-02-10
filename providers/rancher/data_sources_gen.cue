@@ -2,11 +2,38 @@
 package rancher
 
 #RancherCertificateDataSource: {
-	environment_id: string
-	name:           string
+	environment_id:    string
+	name:              string
+	algorithm?:        string
+	cert_fingerprint?: string
+	cn?:               string
+	description?:      string
+	expires_at?:       string
+	id?:               string
+	issued_at?:        string
+	issuer?:           string
+	key_size?:         string
+	serial_number?:    string
+	subject_alternative_names?: [string, ...]
+	version?: string
 }
-#RancherEnvironmentDataSource: name: string
-#RancherSettingDataSource: name:     string
+#RancherEnvironmentDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	member?: [{
+		external_id:      string
+		external_id_type: string
+		role:             string
+	}, ...]
+	orchestration?:       string
+	project_template_id?: string
+}
+#RancherSettingDataSource: {
+	name:   string
+	id?:    string
+	value?: string
+}
 #DataSources: {
 	rancher_certificate?: [_]: #RancherCertificateDataSource
 	rancher_environment?: [_]: #RancherEnvironmentDataSource

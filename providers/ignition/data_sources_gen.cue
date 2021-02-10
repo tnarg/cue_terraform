@@ -8,8 +8,10 @@ package ignition
 	files?: [string, ...]
 	filesystems?: [string, ...]
 	groups?: [string, ...]
+	id?: string
 	links?: [string, ...]
 	networkd?: [string, ...]
+	rendered?: string
 	systemd?: [string, ...]
 	users?: [string, ...]
 	append?: [{
@@ -25,11 +27,15 @@ package ignition
 	filesystem: string
 	path:       string
 	gid?:       number
+	id?:        string
 	mode?:      number
+	rendered?:  string
 	uid?:       number
 }
 #IgnitionDiskDataSource: {
 	device:      string
+	id?:         string
+	rendered?:   string
 	wipe_table?: bool
 	partition?: [{
 		label?:     string
@@ -43,7 +49,9 @@ package ignition
 	filesystem: string
 	path:       string
 	gid?:       number
+	id?:        string
 	mode?:      number
+	rendered?:  string
 	uid?:       number
 	content?: [{
 		content: string
@@ -56,8 +64,10 @@ package ignition
 	}, ...]
 }
 #IgnitionFilesystemDataSource: {
-	name?: string
-	path?: string
+	id?:       string
+	name?:     string
+	path?:     string
+	rendered?: string
 	mount?: [{
 		device: string
 		format: string
@@ -70,7 +80,9 @@ package ignition
 #IgnitionGroupDataSource: {
 	name:           string
 	gid?:           number
+	id?:            string
 	password_hash?: string
+	rendered?:      string
 }
 #IgnitionLinkDataSource: {
 	filesystem: string
@@ -78,23 +90,31 @@ package ignition
 	target:     string
 	gid?:       number
 	hard?:      bool
+	id?:        string
+	rendered?:  string
 	uid?:       number
 }
 #IgnitionNetworkdUnitDataSource: {
-	name:     string
-	content?: string
+	name:      string
+	content?:  string
+	id?:       string
+	rendered?: string
 }
 #IgnitionRaidDataSource: {
 	level: string
 	name:  string
 	devices?: [string, ...]
-	spares?: number
+	id?:       string
+	rendered?: string
+	spares?:   number
 }
 #IgnitionSystemdUnitDataSource: {
-	name:     string
-	content?: string
-	enabled?: bool
-	mask?:    bool
+	name:      string
+	content?:  string
+	enabled?:  bool
+	id?:       string
+	mask?:     bool
+	rendered?: string
 	dropin?: [{
 		name:     string
 		content?: string
@@ -105,11 +125,13 @@ package ignition
 	gecos?: string
 	groups?: [string, ...]
 	home_dir?:       string
+	id?:             string
 	no_create_home?: bool
 	no_log_init?:    bool
 	no_user_group?:  bool
 	password_hash?:  string
 	primary_group?:  string
+	rendered?:       string
 	shell?:          string
 	ssh_authorized_keys?: [string, ...]
 	system?: bool

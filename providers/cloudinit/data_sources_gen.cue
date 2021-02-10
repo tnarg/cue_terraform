@@ -4,6 +4,8 @@ package cloudinit
 #CloudinitConfigDataSource: {
 	base64_encode?: bool
 	gzip?:          bool
+	id?:            string
+	rendered?:      string
 	part?: [{
 		content:       string
 		content_type?: string

@@ -8,10 +8,12 @@ package linode
 	description?: string
 	expire_sec?:  number
 	group?:       string
+	id?:          string
 	master_ips?: [string, ...]
 	refresh_sec?: number
 	retry_sec?:   number
 	soa_email?:   string
+	status?:      string
 	tags?: [string, ...]
 	ttl_sec?: number
 }
@@ -19,6 +21,8 @@ package linode
 	domain_id:   number
 	record_type: string
 	target:      string
+	id?:         string
+	name?:       string
 	port?:       number
 	priority?:   number
 	protocol?:   string
@@ -27,65 +31,137 @@ package linode
 	ttl_sec?:    number
 	weight?:     number
 }
+#LinodeFirewallResource: {
+	linodes: [number, ...]
+	devices?: [{
+		entity_id: number
+		id:        number
+		label:     string
+		type:      string
+		url:       string
+	}, ...]
+	disabled?: bool
+	id?:       string
+	label?:    string
+	status?:   string
+	tags?: [string, ...]
+	inbound?: [{
+		addresses: [string, ...]
+		ports: [string, ...]
+		protocol: string
+	}, ...]
+	outbound?: [{
+		addresses: [string, ...]
+		ports: [string, ...]
+		protocol: string
+	}, ...]
+}
 #LinodeImageResource: {
 	disk_id:      number
 	label:        string
 	linode_id:    number
+	created?:     string
+	created_by?:  string
+	deprecated?:  bool
 	description?: string
+	expiry?:      string
+	id?:          string
+	is_public?:   bool
+	size?:        number
+	type?:        string
+	vendor?:      string
 	timeouts?: create?: string
 }
 #LinodeInstanceResource: {
 	region: string
 	authorized_keys?: [string, ...]
 	authorized_users?: [string, ...]
-	backup_id?:  number
-	group?:      string
-	image?:      string
-	private_ip?: bool
-	root_pass?:  string
+	backup_id?: number
+	backups?: [{
+		enabled: bool
+		schedule: [{
+			day:    string
+			window: string
+		}, ...]
+	}, ...]
+	backups_enabled?:   bool
+	boot_config_label?: string
+	group?:             string
+	id?:                string
+	image?:             string
+	ip_address?:        string
+	ipv4?: [string, ...]
+	ipv6?:               string
+	label?:              string
+	private_ip?:         bool
+	private_ip_address?: string
+	root_pass?:          string
+	specs?: [{
+		disk:     number
+		memory:   number
+		transfer: number
+		vcpus:    number
+	}, ...]
 	stackscript_data?: [_]: string
 	stackscript_id?: number
+	status?:         string
+	swap_size?:      number
 	tags?: [string, ...]
 	type?:             string
 	watchdog_enabled?: bool
-	alerts?: [{}, ...]
+	alerts?: [{
+		cpu?:            number
+		io?:             number
+		network_in?:     number
+		network_out?:    number
+		transfer_quota?: number
+	}, ...]
 	config?: [{
 		label:         string
 		comments?:     string
 		kernel?:       string
 		memory_limit?: number
+		root_device?:  string
 		run_level?:    string
 		virt_mode?:    string
 		devices?: [{
 			sda?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdb?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdc?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdd?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sde?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdf?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdg?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
 			sdh?: [{
+				disk_id?:    number
 				disk_label?: string
 				volume_id?:  number
 			}, ...]
@@ -103,7 +179,13 @@ package linode
 		size:  number
 		authorized_keys?: [string, ...]
 		authorized_users?: [string, ...]
-		root_pass?: string
+		filesystem?: string
+		id?:         number
+		image?:      string
+		read_only?:  bool
+		root_pass?:  string
+		stackscript_data?: [_]: string
+		stackscript_id?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -111,14 +193,36 @@ package linode
 		update?: string
 	}
 }
+#LinodeInstanceIpResource: {
+	linode_id:    number
+	address?:     string
+	gateway?:     string
+	id?:          string
+	prefix?:      number
+	public?:      bool
+	rdns?:        string
+	region?:      string
+	subnet_mask?: string
+	type?:        string
+}
 #LinodeLkeClusterResource: {
 	k8s_version: string
 	label:       string
 	region:      string
+	api_endpoints?: [string, ...]
+	id?:         string
+	kubeconfig?: string
+	status?:     string
 	tags?: [string, ...]
 	pool?: [{
 		count: number
 		type:  string
+		id?:   number
+		nodes?: [{
+			id:          string
+			instance_id: number
+			status:      string
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -129,51 +233,160 @@ package linode
 #LinodeNodebalancerResource: {
 	region:                string
 	client_conn_throttle?: number
+	created?:              string
+	hostname?:             string
+	id?:                   string
+	ipv4?:                 string
+	ipv6?:                 string
 	label?:                string
 	tags?: [string, ...]
+	transfer?: [{
+		in:    number
+		out:   number
+		total: number
+	}, ...]
+	updated?: string
 }
 #LinodeNodebalancerConfigResource: {
 	nodebalancer_id: number
-	port?:           number
-	protocol?:       string
-	ssl_cert?:       string
-	ssl_key?:        string
+	algorithm?:      string
+	check?:          string
+	check_attempts?: number
+	check_body?:     string
+	check_interval?: number
+	check_passive?:  bool
+	check_path?:     string
+	check_timeout?:  number
+	cipher_suite?:   string
+	id?:             string
+	node_status?: [{
+		down: number
+		up:   number
+	}, ...]
+	port?:            number
+	protocol?:        string
+	proxy_protocol?:  string
+	ssl_cert?:        string
+	ssl_commonname?:  string
+	ssl_fingerprint?: string
+	ssl_key?:         string
+	stickiness?:      string
 }
 #LinodeNodebalancerNodeResource: {
 	address:         string
 	config_id:       number
 	label:           string
 	nodebalancer_id: number
+	id?:             string
+	mode?:           string
+	status?:         string
+	weight?:         number
 }
 #LinodeObjectStorageBucketResource: {
 	cluster: string
 	label:   string
+	id?:     string
+	cert?: [{
+		certificate: string
+		private_key: string
+	}, ...]
 }
-#LinodeObjectStorageKeyResource: label: string
+#LinodeObjectStorageKeyResource: {
+	label:       string
+	access_key?: string
+	id?:         string
+	limited?:    bool
+	secret_key?: string
+	bucket_access?: [{
+		bucket_name: string
+		cluster:     string
+		permissions: string
+	}, ...]
+}
+#LinodeObjectStorageObjectResource: {
+	access_key:           string
+	bucket:               string
+	cluster:              string
+	key:                  string
+	secret_key:           string
+	acl?:                 string
+	cache_control?:       string
+	content?:             string
+	content_base64?:      string
+	content_disposition?: string
+	content_encoding?:    string
+	content_language?:    string
+	content_type?:        string
+	etag?:                string
+	force_destroy?:       bool
+	id?:                  string
+	metadata?: [_]: string
+	source?:           string
+	version_id?:       string
+	website_redirect?: string
+}
 #LinodeRdnsResource: {
 	address: string
 	rdns:    string
+	id?:     string
 }
 #LinodeSshkeyResource: {
-	label:   string
-	ssh_key: string
+	label:    string
+	ssh_key:  string
+	created?: string
+	id?:      string
 }
 #LinodeStackscriptResource: {
 	description: string
 	images: [string, ...]
-	label:      string
-	script:     string
-	is_public?: bool
-	rev_note?:  string
+	label:               string
+	script:              string
+	created?:            string
+	deployments_active?: number
+	deployments_total?:  number
+	id?:                 string
+	is_public?:          bool
+	rev_note?:           string
+	updated?:            string
+	user_defined_fields?: [{
+		default: string
+		example: string
+		label:   string
+		many_of: string
+		name:    string
+		one_of:  string
+	}, ...]
+	user_gravatar_id?: string
+	username?:         string
 }
 #LinodeTokenResource: {
-	scopes:  string
-	expiry?: string
-	label?:  string
+	scopes:   string
+	created?: string
+	expiry?:  string
+	id?:      string
+	label?:   string
+	token?:   string
+}
+#LinodeVlanResource: {
+	region: string
+	attached_linodes?: [{
+		id:           number
+		ipv4_address: string
+		mac_address:  string
+	}, ...]
+	cidr_block?:  string
+	description?: string
+	id?:          string
+	linodes?: [number, ...]
 }
 #LinodeVolumeResource: {
-	label:  string
-	region: string
+	label:            string
+	region:           string
+	filesystem_path?: string
+	id?:              string
+	linode_id?:       number
+	size?:            number
+	status?:          string
 	tags?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -184,17 +397,21 @@ package linode
 #Resources: {
 	linode_domain?: [_]:                #LinodeDomainResource
 	linode_domain_record?: [_]:         #LinodeDomainRecordResource
+	linode_firewall?: [_]:              #LinodeFirewallResource
 	linode_image?: [_]:                 #LinodeImageResource
 	linode_instance?: [_]:              #LinodeInstanceResource
+	linode_instance_ip?: [_]:           #LinodeInstanceIpResource
 	linode_lke_cluster?: [_]:           #LinodeLkeClusterResource
 	linode_nodebalancer?: [_]:          #LinodeNodebalancerResource
 	linode_nodebalancer_config?: [_]:   #LinodeNodebalancerConfigResource
 	linode_nodebalancer_node?: [_]:     #LinodeNodebalancerNodeResource
 	linode_object_storage_bucket?: [_]: #LinodeObjectStorageBucketResource
 	linode_object_storage_key?: [_]:    #LinodeObjectStorageKeyResource
+	linode_object_storage_object?: [_]: #LinodeObjectStorageObjectResource
 	linode_rdns?: [_]:                  #LinodeRdnsResource
 	linode_sshkey?: [_]:                #LinodeSshkeyResource
 	linode_stackscript?: [_]:           #LinodeStackscriptResource
 	linode_token?: [_]:                 #LinodeTokenResource
+	linode_vlan?: [_]:                  #LinodeVlanResource
 	linode_volume?: [_]:                #LinodeVolumeResource
 }

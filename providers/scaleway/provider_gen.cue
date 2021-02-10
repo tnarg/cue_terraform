@@ -3,6 +3,7 @@ package scaleway
 
 #Provider: scaleway: {
 	access_key?:      string
+	api_url?:         string
 	organization?:    string
 	organization_id?: string
 	region?:          string

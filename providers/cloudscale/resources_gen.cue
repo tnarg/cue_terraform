@@ -3,12 +3,38 @@ package cloudscale
 
 #CloudscaleFloatingIpResource: {
 	ip_version:     number
-	server:         string
+	href?:          string
+	id?:            string
+	network?:       string
+	next_hop?:      string
 	prefix_length?: number
+	region_slug?:   string
+	reverse_ptr?:   string
+	server?:        string
+	type?:          string
 }
 #CloudscaleNetworkResource: {
 	name:                     string
 	auto_create_ipv4_subnet?: bool
+	href?:                    string
+	id?:                      string
+	mtu?:                     number
+	subnets?: [{
+		cidr: string
+		href: string
+		uuid: string
+	}, ...]
+	zone_slug?: string
+}
+#CloudscaleObjectsUserResource: {
+	display_name: string
+	href?:        string
+	id?:          string
+	keys?: [{
+		access_key: string
+		secret_key: string
+	}, ...]
+	user_id?: string
 }
 #CloudscaleServerResource: {
 	flavor_slug:                string
@@ -16,37 +42,82 @@ package cloudscale
 	name:                       string
 	allow_stopping_for_update?: bool
 	bulk_volume_size_gb?:       number
+	href?:                      string
+	id?:                        string
 	password?:                  string
+	private_ipv4_address?:      string
+	public_ipv4_address?:       string
+	public_ipv6_address?:       string
 	server_group_ids?: [string, ...]
+	server_groups?: [{
+		href: string
+		name: string
+		uuid: string
+	}, ...]
+	ssh_fingerprints?: [string, ...]
+	ssh_host_keys?: [string, ...]
 	ssh_keys?: [string, ...]
+	status?:              string
 	use_ipv6?:            bool
 	use_private_network?: bool
 	use_public_network?:  bool
 	user_data?:           string
 	volume_size_gb?:      number
-	interfaces?: [{
+	volumes?: [{
+		device_path: string
+		size_gb:     number
 		type:        string
-		no_address?: bool
-		addresses?: [{}, ...]
+		uuid:        string
+	}, ...]
+	zone_slug?: string
+	interfaces?: [{
+		type:          string
+		network_href?: string
+		network_name?: string
+		network_uuid?: string
+		no_address?:   bool
+		addresses?: [{
+			address?:       string
+			gateway?:       string
+			prefix_length?: number
+			reverse_ptr?:   string
+			subnet_cidr?:   string
+			subnet_href?:   string
+			subnet_uuid?:   string
+			version?:       number
+		}, ...]
 	}, ...]
 }
 #CloudscaleServerGroupResource: {
-	name: string
-	type: string
+	name:       string
+	type:       string
+	href?:      string
+	id?:        string
+	zone_slug?: string
 }
 #CloudscaleSubnetResource: {
-	cidr:          string
-	network_uuid?: string
+	cidr: string
+	dns_servers?: [string, ...]
+	gateway_address?: string
+	href?:            string
+	id?:              string
+	network_href?:    string
+	network_name?:    string
+	network_uuid?:    string
 }
 #CloudscaleVolumeResource: {
 	name:    string
 	size_gb: number
+	href?:   string
+	id?:     string
 	server_uuids?: [string, ...]
-	type?: string
+	type?:      string
+	zone_slug?: string
 }
 #Resources: {
 	cloudscale_floating_ip?: [_]:  #CloudscaleFloatingIpResource
 	cloudscale_network?: [_]:      #CloudscaleNetworkResource
+	cloudscale_objects_user?: [_]: #CloudscaleObjectsUserResource
 	cloudscale_server?: [_]:       #CloudscaleServerResource
 	cloudscale_server_group?: [_]: #CloudscaleServerGroupResource
 	cloudscale_subnet?: [_]:       #CloudscaleSubnetResource

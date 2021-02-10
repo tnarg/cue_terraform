@@ -2,24 +2,103 @@
 package opc
 
 #OpcComputeImageListEntryDataSource: {
-	image_list: string
-	version:    number
-	entry?:     number
+	image_list:  string
+	version:     number
+	attributes?: string
+	entry?:      number
+	id?:         string
+	machine_images?: [string, ...]
+	uri?: string
 }
-#OpcComputeIpAddressReservationDataSource: name: string
-#OpcComputeIpReservationDataSource: name:        string
+#OpcComputeIpAddressReservationDataSource: {
+	name:             string
+	description?:     string
+	id?:              string
+	ip_address?:      string
+	ip_address_pool?: string
+	tags?: [string, ...]
+	uri?: string
+}
+#OpcComputeIpReservationDataSource: {
+	name:         string
+	id?:          string
+	ip?:          string
+	parent_pool?: string
+	permanent?:   bool
+	tags?: [string, ...]
+	used?: bool
+}
 #OpcComputeMachineImageDataSource: {
-	account: string
-	name:    string
+	account:       string
+	name:          string
+	attributes?:   string
+	description?:  string
+	error_reason?: string
+	file?:         string
+	hypervisor?: [_]: string
+	id?:           string
+	image_format?: string
+	no_upload?:    bool
+	platform?:     string
+	sizes?: [_]: string
+	state?: string
+	uri?:   string
 }
 #OpcComputeNetworkInterfaceDataSource: {
 	instance_id:   string
 	instance_name: string
 	interface:     string
+	dns?: [string, ...]
+	id?:                 string
+	ip_address?:         string
+	ip_network?:         string
+	is_default_gateway?: bool
+	mac_address?:        string
+	model?:              string
+	name_servers?: [string, ...]
+	nat?: [string, ...]
+	search_domains?: [string, ...]
+	sec_lists?: [string, ...]
+	shared_network?: bool
+	vnic?:           string
+	vnic_sets?: [string, ...]
 }
-#OpcComputeSshKeyDataSource: name:                string
-#OpcComputeStorageVolumeSnapshotDataSource: name: string
-#OpcComputeVnicDataSource: name:                  string
+#OpcComputeSshKeyDataSource: {
+	name:     string
+	enabled?: bool
+	id?:      string
+	key?:     string
+}
+#OpcComputeStorageVolumeSnapshotDataSource: {
+	name:                    string
+	account?:                string
+	collocated?:             bool
+	description?:            string
+	id?:                     string
+	machine_image_name?:     string
+	parent_volume_bootable?: bool
+	platform?:               string
+	property?:               string
+	size?:                   string
+	snapshot_id?:            string
+	snapshot_timestamp?:     string
+	start_timestamp?:        string
+	status?:                 string
+	status_detail?:          string
+	status_timestamp?:       string
+	tags?: [string, ...]
+	uri?:         string
+	volume_name?: string
+}
+#OpcComputeVnicDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	mac_address?: string
+	tags?: [string, ...]
+	transit_flag?: bool
+	uri?:          string
+}
 #DataSources: {
 	opc_compute_image_list_entry?: [_]:        #OpcComputeImageListEntryDataSource
 	opc_compute_ip_address_reservation?: [_]:  #OpcComputeIpAddressReservationDataSource

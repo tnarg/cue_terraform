@@ -3,6 +3,7 @@ package huaweicloudstack
 
 #Provider: huaweicloudstack: {
 	auth_url:       string
+	region:         string
 	access_key?:    string
 	cacert_file?:   string
 	cert?:          string
@@ -13,7 +14,6 @@ package huaweicloudstack
 	insecure?:    bool
 	key?:         string
 	password?:    string
-	region?:      string
 	secret_key?:  string
 	tenant_id?:   string
 	tenant_name?: string

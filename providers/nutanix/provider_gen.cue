@@ -8,5 +8,6 @@ package nutanix
 	insecure?:     bool
 	port?:         string
 	proxy_url?:    string
+	session_auth?: bool
 	wait_timeout?: number
 }

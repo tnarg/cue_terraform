@@ -8,6 +8,8 @@ package opentelekomcloud
 	floating_ip_id:         string
 	http_request_pos_id:    number
 	traffic_pos_id:         number
+	id?:                    string
+	region?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -16,6 +18,8 @@ package opentelekomcloud
 }
 #OpentelekomcloudAsConfigurationV1Resource: {
 	scaling_configuration_name: string
+	id?:                        string
+	region?:                    string
 	instance_config?: [{
 		key_name:     string
 		flavor?:      string
@@ -49,18 +53,24 @@ package opentelekomcloud
 	scaling_group_name: string
 	vpc_id:             string
 	available_zones?: [string, ...]
-	cool_down_time?:               number
-	delete_instances?:             string
-	delete_publicip?:              bool
-	desire_instance_number?:       number
-	health_periodic_audit_method?: string
-	health_periodic_audit_time?:   number
-	instance_terminate_policy?:    string
+	cool_down_time?:                     number
+	current_instance_number?:            number
+	delete_instances?:                   string
+	delete_publicip?:                    bool
+	desire_instance_number?:             number
+	health_periodic_audit_grace_period?: number
+	health_periodic_audit_method?:       string
+	health_periodic_audit_time?:         number
+	id?:                                 string
+	instance_terminate_policy?:          string
 	instances?: [string, ...]
 	lb_listener_id?:      string
 	max_instance_number?: number
 	min_instance_number?: number
 	notifications?: [string, ...]
+	region?:                   string
+	scaling_configuration_id?: string
+	status?:                   string
 	lbaas_listeners?: [{
 		pool_id:       string
 		protocol_port: number
@@ -83,6 +93,8 @@ package opentelekomcloud
 	scaling_policy_type: string
 	alarm_id?:           string
 	cool_down_time?:     number
+	id?:                 string
+	region?:             string
 	scaling_policy_action?: [{
 		instance_number?: number
 		operation?:       string
@@ -96,21 +108,61 @@ package opentelekomcloud
 	}, ...]
 }
 #OpentelekomcloudBlockstorageVolumeV2Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	cascade?:              bool
 	consistency_group_id?: string
 	description?:          string
 	device_type?:          string
+	id?:                   string
 	image_id?:             string
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
 	tags?: [_]: string
+	volume_type?: string
+	wwn?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
+}
+#OpentelekomcloudCbrPolicyV3Resource: {
+	name:           string
+	operation_type: string
+	trigger_pattern: [string, ...]
+	enabled?: bool
+	id?:      string
+	region?:  string
+	operation_definition?: [{
+		day_backups?:             number
+		max_backups?:             number
+		month_backups?:           number
+		retention_duration_days?: number
+		timezone?:                string
+		week_backups?:            number
+		year_backups?:            number
+	}, ...]
+}
+#OpentelekomcloudCceAddonV3Resource: {
+	cluster_id:       string
+	template_name:    string
+	template_version: string
+	description?:     string
+	id?:              string
+	name?:            string
+	values?: [{
+		basic: [_]:   string
+		custom?: [_]: string
+	}, ...]
 }
 #OpentelekomcloudCceClusterV3Resource: {
 	cluster_type:           string
@@ -120,11 +172,35 @@ package opentelekomcloud
 	subnet_id:              string
 	vpc_id:                 string
 	annotations?: [_]: string
-	authentication_mode?: string
-	eip?:                 string
+	authenticating_proxy_ca?: string
+	authentication_mode?:     string
+	billing_mode?:            number
+	certificate_clusters?: [{
+		certificate_authority_data: string
+		name:                       string
+		server:                     string
+	}, ...]
+	certificate_users?: [{
+		client_certificate_data: string
+		client_key_data:         string
+		name:                    string
+	}, ...]
+	cluster_version?:        string
+	container_network_cidr?: string
+	description?:            string
+	eip?:                    string
 	extend_param?: [_]: string
-	labels?: [_]:       string
+	external?:                string
+	external_otc?:            string
+	highway_subnet_id?:       string
+	id?:                      string
+	internal?:                string
+	kube_proxy_mode?:         string
+	kubernetes_svc_ip_range?: string
+	labels?: [_]: string
 	multi_az?: bool
+	region?:   string
+	status?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -136,9 +212,32 @@ package opentelekomcloud
 	flavor_id:         string
 	key_pair:          string
 	annotations?: [_]: string
-	labels?: [_]:      string
+	bandwidth_charge_mode?: string
+	bandwidth_size?:        number
+	billing_mode?:          number
+	ecs_performance_type?:  string
+	eip_count?:             number
+	eip_ids?: [string, ...]
+	extend_param_charging_mode?: number
+	id?:                         string
+	iptype?:                     string
+	k8s_tags?: [_]: string
+	labels?: [_]:   string
+	max_pods?:    number
+	name?:        string
+	order_id?:    string
+	os?:          string
 	postinstall?: string
 	preinstall?:  string
+	private_ip?:  string
+	product_id?:  string
+	public_ip?:   string
+	public_key?:  string
+	region?:      string
+	server_id?:   string
+	sharetype?:   string
+	status?:      string
+	tags?: [_]: string
 	data_volumes?: [{
 		size:          number
 		volumetype:    string
@@ -160,6 +259,9 @@ package opentelekomcloud
 	alarm_description?:    string
 	alarm_enabled?:        bool
 	alarm_level?:          number
+	alarm_state?:          string
+	id?:                   string
+	update_time?:          number
 	alarm_actions?: [{
 		notification_list: [string, ...]
 		type: string
@@ -197,10 +299,27 @@ package opentelekomcloud
 #OpentelekomcloudComputeBmsServerV2Resource: {
 	availability_zone: string
 	name:              string
+	access_ip_v4?:     string
+	access_ip_v6?:     string
+	admin_pass?:       string
+	config_drive?:     bool
+	flavor_id?:        string
+	flavor_name?:      string
+	host_id?:          string
+	host_status?:      string
+	id?:               string
+	image_id?:         string
+	image_name?:       string
+	kernel_id?:        string
+	key_pair?:         string
 	metadata?: [_]: string
+	region?: string
+	security_groups?: [string, ...]
 	stop_before_destroy?: bool
 	tags?: [_]: string
+	tenant_id?: string
 	user_data?: string
+	user_id?:   string
 	block_device?: [{
 		source_type:            string
 		boot_index?:            number
@@ -214,6 +333,12 @@ package opentelekomcloud
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -224,6 +349,8 @@ package opentelekomcloud
 #OpentelekomcloudComputeBmsTagsV2Resource: {
 	server_id: string
 	tags: [string, ...]
+	id?:     string
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -233,19 +360,43 @@ package opentelekomcloud
 	floating_ip: string
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	region?:     string
 }
-#OpentelekomcloudComputeFloatingipV2Resource: pool?: string
+#OpentelekomcloudComputeFloatingipV2Resource: {
+	address?:     string
+	fixed_ip?:    string
+	id?:          string
+	instance_id?: string
+	pool?:        string
+	region?:      string
+}
 #OpentelekomcloudComputeInstanceV2Resource: {
 	name:          string
+	access_ip_v4?: string
+	access_ip_v6?: string
 	admin_pass?:   string
-	config_drive?: bool
-	floating_ip?:  string
-	key_pair?:     string
+	all_metadata?: [_]: string
+	auto_recovery?:     bool
+	availability_zone?: string
+	config_drive?:      bool
+	flavor_id?:         string
+	flavor_name?:       string
+	floating_ip?:       string
+	id?:                string
+	image_id?:          string
+	image_name?:        string
+	key_pair?:          string
 	metadata?: [_]: string
+	region?: string
+	security_groups?: [string, ...]
 	stop_before_destroy?: bool
-	tag?: [_]: string
-	tags?: [string, ...]
+	tag?: [_]:  string
+	tags?: [_]: string
 	user_data?: string
+	volume_attached?: [{
+		id: string
+	}, ...]
 	block_device?: [{
 		source_type:            string
 		boot_index?:            number
@@ -259,6 +410,13 @@ package opentelekomcloud
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		floating_ip?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	personality?: [{
 		content: string
@@ -281,34 +439,48 @@ package opentelekomcloud
 	}
 	volume?: [{
 		volume_id: string
+		device?:   string
+		id?:       string
 	}, ...]
 }
 #OpentelekomcloudComputeKeypairV2Resource: {
 	name:        string
+	id?:         string
 	public_key?: string
+	region?:     string
+	shared?:     bool
 	value_specs?: [_]: string
 }
 #OpentelekomcloudComputeSecgroupV2Resource: {
 	description: string
 	name:        string
+	id?:         string
+	region?:     string
 	rule?: [{
 		from_port:      number
 		ip_protocol:    string
 		to_port:        number
 		cidr?:          string
 		from_group_id?: string
+		id?:            string
 		self?:          bool
 	}, ...]
 	timeouts?: delete?: string
 }
 #OpentelekomcloudComputeServergroupV2Resource: {
 	name: string
+	id?:  string
+	members?: [string, ...]
 	policies?: [string, ...]
+	region?: string
 	value_specs?: [_]: string
 }
 #OpentelekomcloudComputeVolumeAttachV2Resource: {
 	instance_id: string
 	volume_id:   string
+	device?:     string
+	id?:         string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -317,8 +489,12 @@ package opentelekomcloud
 #OpentelekomcloudCsbsBackupPolicyV1Resource: {
 	name: string
 	common?: [_]: string
+	created_at?:  string
 	description?: string
+	id?:          string
 	provider_id?: string
+	region?:      string
+	status?:      string
 	resource?: [{
 		id:   string
 		name: string
@@ -327,10 +503,21 @@ package opentelekomcloud
 	scheduled_operation?: [{
 		operation_type:           string
 		trigger_pattern:          string
+		day_backups?:             number
 		description?:             string
 		enabled?:                 bool
+		id?:                      string
 		max_backups?:             number
+		month_backups?:           number
+		name?:                    string
+		permanent?:               bool
 		retention_duration_days?: number
+		timezone?:                string
+		trigger_id?:              string
+		trigger_name?:            string
+		trigger_type?:            string
+		week_backups?:            number
+		year_backups?:            number
 	}, ...]
 	tags?: [{
 		key:   string
@@ -342,8 +529,39 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudCsbsBackupV1Resource: {
-	resource_id:    string
-	resource_type?: string
+	resource_id:       string
+	backup_name?:      string
+	backup_record_id?: string
+	description?:      string
+	id?:               string
+	region?:           string
+	resource_type?:    string
+	status?:           string
+	vm_metadata?: [{
+		cloud_service_type: string
+		disk:               number
+		eip:                string
+		image_type:         string
+		name:               string
+		private_ip:         string
+		ram:                number
+		vcpus:              number
+	}, ...]
+	volume_backups?: [{
+		average_speed:      number
+		bootable:           bool
+		id:                 string
+		image_type:         string
+		incremental:        bool
+		name:               string
+		size:               number
+		snapshot_id:        string
+		source_volume_id:   string
+		source_volume_name: string
+		source_volume_size: number
+		space_saving_ratio: number
+		status:             string
+	}, ...]
 	tags?: [{
 		key:   string
 		value: string
@@ -354,8 +572,22 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudCssClusterV1Resource: {
-	name:             string
+	name:     string
+	created?: string
+	datastore?: [{
+		type:    string
+		version: string
+	}, ...]
+	enable_https?:    bool
+	endpoint?:        string
 	expect_node_num?: number
+	id?:              string
+	nodes?: [{
+		id:   string
+		name: string
+		type: string
+	}, ...]
+	updated?: string
 	node_config?: [{
 		flavor:             string
 		availability_zone?: string
@@ -365,8 +597,9 @@ package opentelekomcloud
 			vpc_id:            string
 		}, ...]
 		volume?: [{
-			size:        number
-			volume_type: string
+			size:            number
+			volume_type:     string
+			encryption_key?: string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -379,7 +612,14 @@ package opentelekomcloud
 	is_send_all_key_operation: bool
 	is_support_smn:            bool
 	operations: [string, ...]
-	topic_id: string
+	topic_id:          string
+	file_prefix_name?: string
+	id?:               string
+	need_notify_user_list?: [string, ...]
+	project_name?: string
+	region?:       string
+	status?:       string
+	tracker_name?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -387,57 +627,180 @@ package opentelekomcloud
 }
 #OpentelekomcloudDcsInstanceV1Resource: {
 	available_zones: [string, ...]
-	backup_at: [number, ...]
-	backup_type:       string
-	begin_at:          string
 	capacity:          number
 	engine:            string
 	engine_version:    string
 	name:              string
 	password:          string
-	period_type:       string
 	product_id:        string
-	save_days:         number
 	security_group_id: string
 	subnet_id:         string
 	vpc_id:            string
 	access_user?:      string
+	backup_at?: [number, ...]
+	backup_type?:         string
+	begin_at?:            string
+	created_at?:          string
+	description?:         string
+	id?:                  string
+	internal_version?:    string
+	ip?:                  string
+	maintain_begin?:      string
+	maintain_end?:        string
+	max_memory?:          number
+	order_id?:            string
+	period_type?:         string
+	port?:                number
+	resource_spec_code?:  string
+	save_days?:           number
+	security_group_name?: string
+	status?:              string
+	subnet_name?:         string
+	used_memory?:         number
+	user_id?:             string
+	user_name?:           string
+	vpc_name?:            string
+	backup_policy?: [{
+		backup_at: [number, ...]
+		begin_at:     string
+		period_type:  string
+		backup_type?: string
+		save_days?:   number
+	}, ...]
+}
+#OpentelekomcloudDdsInstanceV3Resource: {
+	availability_zone:   string
+	mode:                string
+	name:                string
+	password:            string
+	security_group_id:   string
+	subnet_id:           string
+	vpc_id:              string
+	db_username?:        string
+	disk_encryption_id?: string
+	id?:                 string
+	nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+		public_ip:  string
+		role:       string
+		status:     string
+		type:       string
+	}, ...]
+	pay_mode?: string
+	port?:     number
+	region?:   string
+	ssl?:      bool
+	status?:   string
+	backup_strategy?: [{
+		keep_days:  number
+		start_time: string
+	}, ...]
+	datastore?: [{
+		type:            string
+		version:         string
+		storage_engine?: string
+	}, ...]
+	flavor?: [{
+		num:       number
+		spec_code: string
+		type:      string
+		size?:     number
+		storage?:  string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #OpentelekomcloudDehHostV1Resource: {
 	availability_zone: string
 	host_type:         string
 	name:              string
 	auto_placement?:   string
-	available_instance_capacities?: [{}, ...]
+	available_memory?: string
+	available_vcpus?:  string
+	cores?:            string
+	host_type_name?:   string
+	id?:               string
+	instance_total?:   string
+	instance_uuids?: [string, ...]
+	memory?:  string
+	region?:  string
+	sockets?: string
+	status?:  string
+	vcpus?:   string
+	available_instance_capacities?: [{
+		flavor?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudDmsGroupV1Resource: {
-	name:     string
-	queue_id: string
+	name:                   string
+	queue_id:               string
+	available_deadletters?: number
+	available_messages?:    number
+	consumed_messages?:     number
+	id?:                    string
+	produced_deadletters?:  number
+	produced_messages?:     number
 }
 #OpentelekomcloudDmsInstanceV1Resource: {
 	available_zones: [string, ...]
-	engine:             string
-	name:               string
-	product_id:         string
-	security_group_id:  string
-	storage_space:      number
-	subnet_id:          string
-	vpc_id:             string
-	access_user?:       string
-	engine_version?:    string
-	partition_num?:     number
-	password?:          string
-	storage_spec_code?: string
+	engine:               string
+	name:                 string
+	product_id:           string
+	security_group_id:    string
+	storage_space:        number
+	subnet_id:            string
+	vpc_id:               string
+	access_user?:         string
+	connect_address?:     string
+	created_at?:          string
+	description?:         string
+	engine_version?:      string
+	id?:                  string
+	maintain_begin?:      string
+	maintain_end?:        string
+	order_id?:            string
+	partition_num?:       number
+	password?:            string
+	port?:                string
+	resource_spec_code?:  string
+	security_group_name?: string
+	specification?:       string
+	status?:              string
+	storage_spec_code?:   string
+	subnet_name?:         string
+	type?:                string
+	used_storage_space?:  number
+	user_id?:             string
+	vpc_name?:            string
 }
-#OpentelekomcloudDmsQueueV1Resource: name: string
+#OpentelekomcloudDmsQueueV1Resource: {
+	name:               string
+	created?:           string
+	description?:       string
+	group_count?:       number
+	id?:                string
+	max_consume_count?: number
+	max_msg_size_byte?: number
+	produced_messages?: number
+	queue_mode?:        string
+	redrive_policy?:    string
+	reservation?:       number
+	retention_hours?:   number
+}
 #OpentelekomcloudDnsPtrrecordV2Resource: {
 	floatingip_id: string
 	name:          string
+	address?:      string
 	description?:  string
+	id?:           string
 	tags?: [_]: string
 	ttl?: number
 	timeouts?: {
@@ -452,7 +815,11 @@ package opentelekomcloud
 	type:         string
 	zone_id:      string
 	description?: string
-	ttl?:         number
+	id?:          string
+	region?:      string
+	shared?:      bool
+	tags?: [_]: string
+	ttl?: number
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -464,8 +831,12 @@ package opentelekomcloud
 	name:         string
 	description?: string
 	email?:       string
-	ttl?:         number
-	type?:        string
+	id?:          string
+	masters?: [string, ...]
+	region?: string
+	tags?: [_]: string
+	ttl?:  number
+	type?: string
 	value_specs?: [_]: string
 	router?: [{
 		router_id:     string
@@ -483,11 +854,14 @@ package opentelekomcloud
 	image_id:                     string
 	name:                         string
 	vpc_id:                       string
+	auto_recovery?:               bool
 	delete_disks_on_termination?: bool
+	id?:                          string
 	key_name?:                    string
 	password?:                    string
-	system_disk_size?:            number
-	system_disk_type?:            string
+	security_groups?: [string, ...]
+	system_disk_size?: number
+	system_disk_type?: string
 	tags?: [_]: string
 	user_data?: string
 	data_disks?: [{
@@ -496,7 +870,9 @@ package opentelekomcloud
 		snapshot_id?: string
 	}, ...]
 	nics?: [{
-		network_id: string
+		network_id:   string
+		ip_address?:  string
+		mac_address?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -508,14 +884,23 @@ package opentelekomcloud
 	address:     string
 	listener_id: string
 	server_id:   string
+	id?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudElbHealthResource: {
-	listener_id:      string
-	healthcheck_uri?: string
+	listener_id:               string
+	healthcheck_connect_port?: number
+	healthcheck_interval?:     number
+	healthcheck_protocol?:     string
+	healthcheck_timeout?:      number
+	healthcheck_uri?:          string
+	healthy_threshold?:        number
+	id?:                       string
+	region?:                   string
+	unhealthy_threshold?:      number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -531,11 +916,18 @@ package opentelekomcloud
 	protocol_port:    number
 	certificate_id?:  string
 	certificates?: [string, ...]
+	cookie_timeout?:       number
 	description?:          string
+	id?:                   string
+	name?:                 string
+	region?:               string
 	session_sticky?:       bool
 	session_sticky_type?:  string
+	ssl_ciphers?:          string
+	ssl_protocols?:        string
 	tcp_draining?:         bool
 	tcp_draining_timeout?: number
+	tcp_timeout?:          number
 	udp_timeout?:          number
 	timeouts?: {
 		create?: string
@@ -544,14 +936,18 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudElbLoadbalancerResource: {
-	type:            string
-	vpc_id:          string
-	admin_state_up?: bool
-	az?:             string
-	bandwidth?:      number
-	description?:    string
-	name?:           string
-	vip_subnet_id?:  string
+	type:               string
+	vpc_id:             string
+	admin_state_up?:    bool
+	az?:                string
+	bandwidth?:         number
+	description?:       string
+	id?:                string
+	name?:              string
+	region?:            string
+	security_group_id?: string
+	vip_address?:       string
+	vip_subnet_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -561,16 +957,24 @@ package opentelekomcloud
 #OpentelekomcloudEvsVolumeV3Resource: {
 	availability_zone: string
 	volume_type:       string
-	backup_id?:        string
-	cascade?:          bool
-	description?:      string
-	device_type?:      string
-	image_id?:         string
-	kms_id?:           string
-	multiattach?:      bool
-	name?:             string
-	snapshot_id?:      string
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	backup_id?:   string
+	cascade?:     bool
+	description?: string
+	device_type?: string
+	id?:          string
+	image_id?:    string
+	kms_id?:      string
+	multiattach?: bool
+	name?:        string
+	size?:        number
+	snapshot_id?: string
 	tags?: [_]: string
+	wwn?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -580,8 +984,12 @@ package opentelekomcloud
 	admin_state_up?:    bool
 	description?:       string
 	egress_policy_id?:  string
+	id?:                string
 	ingress_policy_id?: string
 	name?:              string
+	ports?: [string, ...]
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -592,9 +1000,12 @@ package opentelekomcloud
 #OpentelekomcloudFwPolicyV2Resource: {
 	audited?:     bool
 	description?: string
+	id?:          string
 	name?:        string
+	region?:      string
 	rules?: [string, ...]
-	shared?: bool
+	shared?:    bool
+	tenant_id?: string
 	value_specs?: [_]:  string
 	timeouts?: create?: string
 }
@@ -605,8 +1016,10 @@ package opentelekomcloud
 	destination_ip_address?: string
 	destination_port?:       string
 	enabled?:                bool
+	id?:                     string
 	ip_version?:             number
 	name?:                   string
+	region?:                 string
 	source_ip_address?:      string
 	source_port?:            string
 	tenant_id?:              string
@@ -615,7 +1028,12 @@ package opentelekomcloud
 #OpentelekomcloudIdentityAgencyV3Resource: {
 	delegated_domain_name: string
 	name:                  string
+	create_time?:          string
+	description?:          string
 	domain_roles?: [string, ...]
+	duration?:    string
+	expire_time?: string
+	id?:          string
 	project_role?: [{
 		project: string
 		roles: [string, ...]
@@ -626,22 +1044,43 @@ package opentelekomcloud
 		update?: string
 	}
 }
+#OpentelekomcloudIdentityCredentialV3Resource: {
+	access?:        string
+	create_time?:   string
+	description?:   string
+	id?:            string
+	last_use_time?: string
+	secret?:        string
+	status?:        string
+	user_id?:       string
+}
 #OpentelekomcloudIdentityGroupMembershipV3Resource: {
 	group: string
 	users: [string, ...]
+	id?: string
 }
 #OpentelekomcloudIdentityGroupV3Resource: {
 	name:         string
 	description?: string
+	domain_id?:   string
+	id?:          string
+	region?:      string
 }
 #OpentelekomcloudIdentityProjectV3Resource: {
 	name:         string
 	description?: string
+	domain_id?:   string
+	enabled?:     bool
+	id?:          string
+	is_domain?:   bool
+	parent_id?:   string
+	region?:      string
 }
 #OpentelekomcloudIdentityRoleAssignmentV3Resource: {
 	role_id:     string
 	domain_id?:  string
 	group_id?:   string
+	id?:         string
 	project_id?: string
 	user_id?:    string
 }
@@ -649,39 +1088,64 @@ package opentelekomcloud
 	description:   string
 	display_layer: string
 	display_name:  string
+	catalog?:      string
+	domain_id?:    string
+	id?:           string
+	name?:         string
 	statement?: [{
 		action: [string, ...]
 		effect: string
 	}, ...]
 }
 #OpentelekomcloudIdentityUserV3Resource: {
-	enabled?:  bool
-	name?:     string
-	password?: string
+	default_project_id?: string
+	domain_id?:          string
+	email?:              string
+	enabled?:            bool
+	id?:                 string
+	name?:               string
+	password?:           string
+	region?:             string
 }
 #OpentelekomcloudImagesImageV2Resource: {
 	container_format:  string
 	disk_format:       string
 	name:              string
+	checksum?:         string
+	created_at?:       string
+	file?:             string
+	id?:               string
 	image_cache_path?: string
 	image_source_url?: string
 	local_file_path?:  string
-	min_disk_gb?:      number
-	min_ram_mb?:       number
-	protected?:        bool
+	metadata?: [_]: string
+	min_disk_gb?: number
+	min_ram_mb?:  number
+	owner?:       string
+	protected?:   bool
+	region?:      string
+	schema?:      string
+	size_bytes?:  number
+	status?:      string
 	tags?: [string, ...]
+	update_at?:  string
 	visibility?: string
 	timeouts?: create?: string
 }
 #OpentelekomcloudImsDataImageV2Resource: {
 	name:         string
 	cmk_id?:      string
+	data_origin?: string
 	description?: string
+	disk_format?: string
+	id?:          string
+	image_size?:  string
 	image_url?:   string
 	min_disk?:    number
 	os_type?:     string
 	tags?: [_]: string
-	volume_id?: string
+	visibility?: string
+	volume_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -690,7 +1154,11 @@ package opentelekomcloud
 #OpentelekomcloudImsImageV2Resource: {
 	name:         string
 	cmk_id?:      string
+	data_origin?: string
 	description?: string
+	disk_format?: string
+	id?:          string
+	image_size?:  string
 	image_url?:   string
 	instance_id?: string
 	is_config?:   bool
@@ -699,24 +1167,38 @@ package opentelekomcloud
 	min_ram?:     number
 	os_version?:  string
 	tags?: [_]: string
-	type?: string
+	type?:       string
+	visibility?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudKmsKeyV1Resource: {
-	key_alias:        string
-	is_enabled?:      bool
-	key_description?: string
-	pending_days?:    string
+	key_alias:                string
+	creation_date?:           string
+	default_key_flag?:        string
+	domain_id?:               string
+	expiration_time?:         string
+	id?:                      string
+	is_enabled?:              bool
+	key_description?:         string
+	origin?:                  string
+	pending_days?:            string
+	realm?:                   string
+	scheduled_deletion_date?: string
 }
 #OpentelekomcloudLbCertificateV2Resource: {
 	certificate:  string
-	private_key:  string
+	create_time?: string
 	description?: string
 	domain?:      string
+	id?:          string
 	name?:        string
+	private_key?: string
+	region?:      string
+	type?:        string
+	update_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -728,9 +1210,13 @@ package opentelekomcloud
 	listener_id:           string
 	admin_state_up?:       bool
 	description?:          string
+	id?:                   string
 	name?:                 string
+	position?:             number
 	redirect_listener_id?: string
 	redirect_pool_id?:     string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -743,7 +1229,11 @@ package opentelekomcloud
 	type:            string
 	value:           string
 	admin_state_up?: bool
+	id?:             string
 	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -751,13 +1241,21 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudLbListenerV2Resource: {
-	loadbalancer_id:            string
-	protocol:                   string
-	protocol_port:              number
-	admin_state_up?:            bool
-	default_tls_container_ref?: string
-	description?:               string
+	loadbalancer_id:              string
+	protocol:                     string
+	protocol_port:                number
+	admin_state_up?:              bool
+	client_ca_tls_container_ref?: string
+	default_pool_id?:             string
+	default_tls_container_ref?:   string
+	description?:                 string
+	http2_enable?:                bool
+	id?:                          string
+	name?:                        string
+	region?:                      string
 	sni_container_refs?: [string, ...]
+	tenant_id?:          string
+	tls_ciphers_policy?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -765,10 +1263,17 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudLbLoadbalancerV2Resource: {
-	vip_subnet_id:   string
-	admin_state_up?: bool
-	description?:    string
-	name?:           string
+	vip_subnet_id:          string
+	admin_state_up?:        bool
+	description?:           string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	security_group_ids?: [string, ...]
+	tenant_id?:   string
+	vip_address?: string
+	vip_port_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -781,7 +1286,11 @@ package opentelekomcloud
 	protocol_port:   number
 	subnet_id:       string
 	admin_state_up?: bool
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -795,7 +1304,14 @@ package opentelekomcloud
 	timeout:         number
 	type:            string
 	admin_state_up?: bool
+	expected_codes?: string
+	http_method?:    string
+	id?:             string
+	monitor_port?:   number
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	url_path?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -807,9 +1323,12 @@ package opentelekomcloud
 	protocol:         string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	listener_id?:     string
 	loadbalancer_id?: string
 	name?:            string
+	region?:          string
+	tenant_id?:       string
 	persistence?: [{
 		type:         string
 		cookie_name?: string
@@ -823,6 +1342,8 @@ package opentelekomcloud
 #OpentelekomcloudLbWhitelistV2Resource: {
 	listener_id:       string
 	enable_whitelist?: bool
+	id?:               string
+	tenant_id?:        string
 	whitelist?:        string
 	timeouts?: {
 		create?: string
@@ -830,64 +1351,99 @@ package opentelekomcloud
 		update?: string
 	}
 }
-#OpentelekomcloudLogtankGroupV2Resource: group_name: string
-#OpentelekomcloudLogtankTopicV2Resource: {
-	group_id:   string
-	topic_name: string
+#OpentelekomcloudLogtankGroupV2Resource: {
+	group_name:   string
+	id?:          string
+	ttl_in_days?: number
 }
-#OpentelekomcloudMaasTaskV1Resource: {
-	enable_kms:   bool
-	thread_num:   number
-	description?: string
-	dst_node?: [{
-		ak:          string
-		bucket:      string
-		region:      string
-		sk:          string
-		object_key?: string
-	}, ...]
-	smn_info?: [{
-		topic_urn: string
-		trigger_conditions: [string, ...]
-		language?: string
-	}, ...]
-	src_node?: [{
-		ak:          string
-		bucket:      string
-		object_key:  string
-		region:      string
-		sk:          string
-		cloud_type?: string
-	}, ...]
-	timeouts?: create?: string
+#OpentelekomcloudLogtankTopicV2Resource: {
+	group_id:       string
+	topic_name:     string
+	id?:            string
+	index_enabled?: bool
 }
 #OpentelekomcloudMrsClusterV1Resource: {
-	available_zone_id:     string
-	billing_type:          number
-	cluster_name:          string
-	core_node_num:         number
-	core_node_size:        string
-	master_node_num:       number
-	master_node_size:      string
-	node_public_cert_name: string
-	safe_mode:             number
-	subnet_id:             string
-	vpc_id:                string
+	available_zone_id:         string
+	billing_type:              number
+	cluster_name:              string
+	core_node_num:             number
+	core_node_size:            string
+	master_node_num:           number
+	master_node_size:          string
+	node_public_cert_name:     string
+	safe_mode:                 number
+	subnet_id:                 string
+	vpc_id:                    string
+	available_zone_name?:      string
+	charging_start_time?:      string
+	cluster_admin_secret?:     string
+	cluster_id?:               string
+	cluster_state?:            string
+	cluster_type?:             number
+	cluster_version?:          string
+	core_data_volume_count?:   number
+	core_data_volume_size?:    number
+	core_data_volume_type?:    string
+	core_node_product_id?:     string
+	core_node_spec_id?:        string
+	create_at?:                string
+	deployment_id?:            string
+	duration?:                 string
+	error_info?:               string
+	external_alternate_ip?:    string
+	external_ip?:              string
+	fee?:                      string
+	hadoop_version?:           string
+	id?:                       string
+	instance_id?:              string
+	internal_ip?:              string
+	log_collection?:           number
+	master_data_volume_count?: number
+	master_data_volume_size?:  number
+	master_data_volume_type?:  string
+	master_node_ip?:           string
+	master_node_product_id?:   string
+	master_node_spec_id?:      string
+	order_id?:                 string
+	private_ip_first?:         string
+	region?:                   string
+	remark?:                   string
+	security_groups_id?:       string
+	slave_security_groups_id?: string
 	tags?: [_]: string
+	tenant_id?:   string
+	update_at?:   string
+	vnc?:         string
+	volume_size?: number
+	volume_type?: string
 	add_jobs?: [{
 		jar_path:                    string
 		job_name:                    string
 		job_type:                    number
 		submit_job_once_cluster_run: bool
+		arguments?:                  string
+		file_action?:                string
+		hive_script_path?:           string
+		hql?:                        string
+		input?:                      string
+		job_log?:                    string
+		output?:                     string
+		shutdown_cluster?:           bool
 	}, ...]
 	bootstrap_scripts?: [{
 		fail_action: string
 		name:        string
 		nodes: [string, ...]
-		uri: string
+		uri:                     string
+		active_master?:          bool
+		before_component_start?: bool
+		parameters?:             string
 	}, ...]
 	component_list?: [{
-		component_name: string
+		component_name:     string
+		component_desc?:    string
+		component_id?:      string
+		component_version?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -895,10 +1451,20 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudMrsJobV1Resource: {
-	cluster_id: string
-	jar_path:   string
-	job_name:   string
-	job_type:   number
+	cluster_id:        string
+	jar_path:          string
+	job_name:          string
+	job_type:          number
+	arguments?:        string
+	hive_script_path?: string
+	id?:               string
+	input?:            string
+	is_protected?:     bool
+	is_public?:        bool
+	job_log?:          string
+	job_state?:        string
+	output?:           string
+	region?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -911,14 +1477,23 @@ package opentelekomcloud
 	internal_service_port: number
 	nat_gateway_id:        string
 	protocol:              string
+	created_at?:           string
+	floating_ip_address?:  string
+	id?:                   string
 	port_id?:              string
 	private_ip?:           string
+	status?:               string
+	tenant_id?:            string
 }
 #OpentelekomcloudNatGatewayV2Resource: {
 	internal_network_id: string
 	name:                string
 	router_id:           string
 	spec:                string
+	description?:        string
+	id?:                 string
+	region?:             string
+	tenant_id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -928,7 +1503,9 @@ package opentelekomcloud
 	floating_ip_id: string
 	nat_gateway_id: string
 	cidr?:          string
+	id?:            string
 	network_id?:    string
+	region?:        string
 	source_type?:   number
 	timeouts?: {
 		create?: string
@@ -938,9 +1515,17 @@ package opentelekomcloud
 #OpentelekomcloudNetworkingFloatingipAssociateV2Resource: {
 	floating_ip: string
 	port_id:     string
+	id?:         string
+	region?:     string
 }
 #OpentelekomcloudNetworkingFloatingipV2Resource: {
-	pool?: string
+	address?:   string
+	fixed_ip?:  string
+	id?:        string
+	pool?:      string
+	port_id?:   string
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -948,7 +1533,12 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudNetworkingNetworkV2Resource: {
-	name?: string
+	admin_state_up?: string
+	id?:             string
+	name?:           string
+	region?:         string
+	shared?:         string
+	tenant_id?:      string
 	value_specs?: [_]: string
 	segments?: [{
 		network_type?:     string
@@ -961,12 +1551,22 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudNetworkingPortV2Resource: {
-	network_id:          string
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	device_id?:          string
+	device_owner?:       string
+	id?:                 string
+	mac_address?:        string
 	name?:               string
 	no_security_groups?: bool
+	region?:             string
+	security_group_ids?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	allowed_address_pairs?: [{
-		ip_address: string
+		ip_address:   string
+		mac_address?: string
 	}, ...]
 	fixed_ip?: [{
 		subnet_id:   string
@@ -979,7 +1579,9 @@ package opentelekomcloud
 }
 #OpentelekomcloudNetworkingRouterInterfaceV2Resource: {
 	router_id:  string
+	id?:        string
 	port_id?:   string
+	region?:    string
 	subnet_id?: string
 	timeouts?: {
 		create?: string
@@ -990,10 +1592,18 @@ package opentelekomcloud
 	destination_cidr: string
 	next_hop:         string
 	router_id:        string
+	id?:              string
+	region?:          string
 }
 #OpentelekomcloudNetworkingRouterV2Resource: {
+	admin_state_up?:   bool
+	distributed?:      bool
+	enable_snat?:      bool
 	external_gateway?: string
+	id?:               string
 	name?:             string
+	region?:           string
+	tenant_id?:        string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1005,11 +1615,23 @@ package opentelekomcloud
 	ethertype:         string
 	security_group_id: string
 	description?:      string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
 	timeouts?: delete?: string
 }
 #OpentelekomcloudNetworkingSecgroupV2Resource: {
 	name:                  string
 	delete_default_rules?: bool
+	description?:          string
+	id?:                   string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: delete?: string
 }
 #OpentelekomcloudNetworkingSubnetV2Resource: {
@@ -1017,9 +1639,13 @@ package opentelekomcloud
 	network_id: string
 	dns_nameservers?: [string, ...]
 	enable_dhcp?: bool
+	gateway_ip?:  string
+	id?:          string
 	ip_version?:  number
 	name?:        string
 	no_gateway?:  bool
+	region?:      string
+	tenant_id?:   string
 	value_specs?: [_]: string
 	allocation_pools?: [{
 		end:   string
@@ -1036,17 +1662,29 @@ package opentelekomcloud
 }
 #OpentelekomcloudNetworkingVipAssociateV2Resource: {
 	port_ids: [string, ...]
-	vip_id: string
+	vip_id:          string
+	id?:             string
+	vip_ip_address?: string
+	vip_subnet_id?:  string
 }
 #OpentelekomcloudNetworkingVipV2Resource: {
-	network_id: string
-	subnet_id:  string
+	network_id:    string
+	subnet_id:     string
+	device_owner?: string
+	id?:           string
+	ip_address?:   string
+	name?:         string
+	status?:       string
+	tenant_id?:    string
 }
 #OpentelekomcloudObsBucketResource: {
-	bucket:         string
-	acl?:           string
-	force_destroy?: bool
-	storage_class?: string
+	bucket:              string
+	acl?:                string
+	bucket_domain_name?: string
+	force_destroy?:      bool
+	id?:                 string
+	region?:             string
+	storage_class?:      string
 	tags?: [_]: string
 	versioning?: bool
 	cors_rule?: [{
@@ -1087,22 +1725,40 @@ package opentelekomcloud
 	}, ...]
 }
 #OpentelekomcloudObsBucketObjectResource: {
-	bucket:        string
-	key:           string
-	acl?:          string
-	content?:      string
-	content_type?: string
-	encryption?:   bool
-	kms_key_id?:   string
-	source?:       string
+	bucket:         string
+	key:            string
+	acl?:           string
+	content?:       string
+	content_type?:  string
+	encryption?:    bool
+	etag?:          string
+	id?:            string
+	kms_key_id?:    string
+	size?:          number
+	source?:        string
+	storage_class?: string
+	version_id?:    string
+}
+#OpentelekomcloudObsBucketPolicyResource: {
+	bucket: string
+	policy: string
+	id?:    string
 }
 #OpentelekomcloudRdsInstanceV1Resource: {
 	availabilityzone: string
 	dbrtpd:           string
 	flavorref:        string
 	vpc:              string
+	created?:         string
 	dbport?:          string
+	hostname?:        string
+	id?:              string
+	name?:            string
+	region?:          string
+	status?:          string
 	tag?: [_]: string
+	type?:    string
+	updated?: string
 	backupstrategy?: [{
 		keepdays?:  number
 		starttime?: string
@@ -1132,47 +1788,72 @@ package opentelekomcloud
 }
 #OpentelekomcloudRdsInstanceV3Resource: {
 	availability_zone: [string, ...]
-	flavor:            string
-	name:              string
-	security_group_id: string
-	subnet_id:         string
-	vpc_id:            string
-	param_group_id?:   string
+	flavor:               string
+	name:                 string
+	security_group_id:    string
+	subnet_id:            string
+	vpc_id:               string
+	created?:             string
+	ha_replication_mode?: string
+	id?:                  string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		role:              string
+		status:            string
+	}, ...]
+	param_group_id?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
 	tag?: [_]: string
 	backup_strategy?: [{
 		start_time: string
+		keep_days?: number
 	}, ...]
 	db?: [{
-		password: string
-		type:     string
-		version:  string
+		password:   string
+		type:       string
+		version:    string
+		port?:      number
+		user_name?: string
 	}, ...]
 	timeouts?: {
 		create?: string
 		update?: string
 	}
 	volume?: [{
-		size: number
-		type: string
+		size:                number
+		type:                string
+		disk_encryption_id?: string
 	}, ...]
 }
 #OpentelekomcloudRdsParametergroupV3Resource: {
-	name:         string
+	name: string
+	configuration_parameters?: [{
+		description:      string
+		name:             string
+		readonly:         bool
+		restart_required: bool
+		type:             string
+		value:            string
+		value_range:      string
+	}, ...]
+	created?:     string
 	description?: string
+	id?:          string
+	updated?:     string
 	values?: [_]: string
 	datastore?: [{
 		type:    string
 		version: string
 	}, ...]
-	timeouts?: {
-		create?: string
-		delete?: string
-	}
 }
 #OpentelekomcloudRtsSoftwareConfigV1Resource: {
 	name:    string
 	config?: string
 	group?:  string
+	id?:     string
 	input_values?: [{
 		[_]: string
 	}, ...]
@@ -1180,25 +1861,44 @@ package opentelekomcloud
 	output_values?: [{
 		[_]: string
 	}, ...]
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudRtsSoftwareDeploymentV1Resource: {
-	config_id:  string
-	server_id:  string
-	tenant_id?: string
+	config_id: string
+	server_id: string
+	action?:   string
+	id?:       string
+	input_values?: [_]:  string
+	output_values?: [_]: string
+	region?:        string
+	status?:        string
+	status_reason?: string
+	tenant_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudRtsStackV1Resource: {
-	name:         string
-	environment?: string
+	name: string
+	capabilities?: [string, ...]
+	disable_rollback?: bool
+	environment?:      string
 	files?: [_]: string
-	template_url?: string
+	id?: string
+	notification_topics?: [string, ...]
+	outputs?: [_]:    string
+	parameters?: [_]: string
+	region?:        string
+	status?:        string
+	status_reason?: string
+	template_body?: string
+	template_url?:  string
+	timeout_mins?:  number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1206,11 +1906,19 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudS3BucketResource: {
-	acl?:           string
-	bucket_prefix?: string
-	force_destroy?: bool
-	policy?:        string
+	acl?:                string
+	arn?:                string
+	bucket?:             string
+	bucket_domain_name?: string
+	bucket_prefix?:      string
+	force_destroy?:      bool
+	hosted_zone_id?:     string
+	id?:                 string
+	policy?:             string
+	region?:             string
 	tags?: [_]: string
+	website_domain?:   string
+	website_endpoint?: string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -1221,6 +1929,7 @@ package opentelekomcloud
 	lifecycle_rule?: [{
 		enabled:                                 bool
 		abort_incomplete_multipart_upload_days?: number
+		id?:                                     string
 		prefix?:                                 string
 		expiration?: [{
 			date?:                         string
@@ -1247,20 +1956,27 @@ package opentelekomcloud
 	}, ...]
 }
 #OpentelekomcloudS3BucketObjectResource: {
-	bucket:               string
-	key:                  string
-	acl?:                 string
-	cache_control?:       string
-	content?:             string
-	content_disposition?: string
-	content_encoding?:    string
-	content_language?:    string
-	source?:              string
-	website_redirect?:    string
+	bucket:                  string
+	key:                     string
+	acl?:                    string
+	cache_control?:          string
+	content?:                string
+	content_disposition?:    string
+	content_encoding?:       string
+	content_language?:       string
+	content_type?:           string
+	etag?:                   string
+	id?:                     string
+	server_side_encryption?: string
+	source?:                 string
+	sse_kms_key_id?:         string
+	version_id?:             string
+	website_redirect?:       string
 }
 #OpentelekomcloudS3BucketPolicyResource: {
 	bucket: string
 	policy: string
+	id?:    string
 }
 #OpentelekomcloudSdrsProtectiongroupV1Resource: {
 	domain_id:                string
@@ -1270,42 +1986,66 @@ package opentelekomcloud
 	target_availability_zone: string
 	description?:             string
 	dr_type?:                 string
+	id?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudSfsFileSystemV2Resource: {
-	access_level: string
-	access_to:    string
-	size:         number
-	access_type?: string
-	is_public?:   bool
+	access_level:        string
+	access_to:           string
+	size:                number
+	access_rule_status?: string
+	access_type?:        string
+	availability_zone?:  string
+	description?:        string
+	export_location?:    string
+	host?:               string
+	id?:                 string
+	is_public?:          bool
 	metadata?: [_]: string
-	name?:        string
-	share_proto?: string
+	name?:            string
+	region?:          string
+	share_access_id?: string
+	share_proto?:     string
+	status?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudSmnSubscriptionV2Resource: {
-	endpoint:  string
-	protocol:  string
-	topic_urn: string
-	remark?:   string
+	endpoint:          string
+	protocol:          string
+	topic_urn:         string
+	id?:               string
+	owner?:            string
+	project_name?:     string
+	remark?:           string
+	status?:           number
+	subscription_urn?: string
 }
 #OpentelekomcloudSmnTopicV2Resource: {
 	name:          string
+	create_time?:  string
 	display_name?: string
+	id?:           string
+	project_name?: string
+	push_policy?:  number
+	topic_urn?:    string
+	update_time?:  string
 }
 #OpentelekomcloudVbsBackupPolicyV2Resource: {
-	name:                string
-	retain_first_backup: string
-	start_time:          string
-	frequency?:          number
-	rentention_day?:     number
-	rentention_num?:     number
+	name:                   string
+	retain_first_backup:    string
+	start_time:             string
+	frequency?:             number
+	id?:                    string
+	policy_resource_count?: number
+	region?:                string
+	rentention_day?:        number
+	rentention_num?:        number
 	resources?: [string, ...]
 	status?: string
 	week_frequency?: [string, ...]
@@ -1321,15 +2061,35 @@ package opentelekomcloud
 #OpentelekomcloudVbsBackupShareV2Resource: {
 	backup_id: string
 	to_project_ids: [string, ...]
+	availability_zone?: string
+	backup_name?:       string
+	backup_status?:     string
+	container?:         string
+	description?:       string
+	id?:                string
+	region?:            string
+	service_metadata?:  string
+	share_ids?: [string, ...]
+	size?:        number
+	snapshot_id?: string
+	volume_id?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudVbsBackupV2Resource: {
-	name:         string
-	volume_id:    string
-	description?: string
+	name:               string
+	volume_id:          string
+	availability_zone?: string
+	container?:         string
+	description?:       string
+	id?:                string
+	region?:            string
+	service_metadata?:  string
+	size?:              number
+	snapshot_id?:       string
+	status?:            string
 	tags?: [{
 		key:   string
 		value: string
@@ -1340,14 +2100,20 @@ package opentelekomcloud
 	}
 }
 #OpentelekomcloudVpcEipV1Resource: {
+	id?:     string
+	region?: string
+	tags?: [_]:        string
 	value_specs?: [_]: string
 	bandwidth?: [{
-		name:       string
-		share_type: string
-		size:       number
+		name:         string
+		share_type:   string
+		size:         number
+		charge_mode?: string
 	}, ...]
 	publicip?: [{
-		type: string
+		type:        string
+		ip_address?: string
+		port_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1360,8 +2126,11 @@ package opentelekomcloud
 	resource_id:   string
 	resource_type: string
 	traffic_type:  string
+	admin_state?:  bool
 	description?:  string
+	id?:           string
 	name?:         string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1370,15 +2139,26 @@ package opentelekomcloud
 #OpentelekomcloudVpcPeeringConnectionAccepterV2Resource: {
 	vpc_peering_connection_id: string
 	accept?:                   bool
+	id?:                       string
+	name?:                     string
+	peer_tenant_id?:           string
+	peer_vpc_id?:              string
+	region?:                   string
+	status?:                   string
+	vpc_id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudVpcPeeringConnectionV2Resource: {
-	name:        string
-	peer_vpc_id: string
-	vpc_id:      string
+	name:            string
+	peer_vpc_id:     string
+	vpc_id:          string
+	id?:             string
+	peer_tenant_id?: string
+	region?:         string
+	status?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1389,26 +2169,42 @@ package opentelekomcloud
 	nexthop:     string
 	type:        string
 	vpc_id:      string
+	id?:         string
+	region?:     string
+	tenant_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudVpcSubnetV1Resource: {
-	cidr:           string
-	gateway_ip:     string
-	name:           string
-	vpc_id:         string
-	dhcp_enable?:   bool
+	cidr:               string
+	gateway_ip:         string
+	name:               string
+	vpc_id:             string
+	availability_zone?: string
+	dhcp_enable?:       bool
+	dns_list?: [string, ...]
+	id?:            string
 	ntp_addresses?: string
+	primary_dns?:   string
+	region?:        string
+	secondary_dns?: string
+	subnet_id?:     string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudVpcV1Resource: {
-	cidr: string
-	name: string
+	cidr:    string
+	name:    string
+	id?:     string
+	region?: string
+	shared?: bool
+	status?: string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1417,7 +2213,11 @@ package opentelekomcloud
 #OpentelekomcloudVpnaasEndpointGroupV2Resource: {
 	description?: string
 	endpoints?: [string, ...]
-	name?: string
+	id?:        string
+	name?:      string
+	region?:    string
+	tenant_id?: string
+	type?:      string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1429,27 +2229,50 @@ package opentelekomcloud
 	auth_algorithm?:          string
 	description?:             string
 	encryption_algorithm?:    string
+	id?:                      string
 	ike_version?:             string
 	name?:                    string
 	pfs?:                     string
 	phase1_negotiation_mode?: string
+	region?:                  string
+	tenant_id?:               string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
 }
 #OpentelekomcloudVpnaasIpsecPolicyV2Resource: {
-	description?: string
-	name?:        string
+	auth_algorithm?:       string
+	description?:          string
+	encapsulation_mode?:   string
+	encryption_algorithm?: string
+	id?:                   string
+	name?:                 string
+	pfs?:                  string
+	region?:               string
+	tenant_id?:            string
+	transform_protocol?:   string
 	value_specs?: [_]: string
-	lifetime?: [{}, ...]
+	lifetime?: [{
+		units?: string
+		value?: number
+	}, ...]
 	timeouts?: create?: string
 }
 #OpentelekomcloudVpnaasServiceV2Resource: {
 	router_id:       string
 	admin_state_up?: bool
 	description?:    string
+	external_v4_ip?: string
+	external_v6_ip?: string
+	id?:             string
 	name?:           string
+	region?:         string
+	status?:         string
 	subnet_id?:      string
+	tenant_id?:      string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -1466,13 +2289,23 @@ package opentelekomcloud
 	vpnservice_id:      string
 	admin_state_up?:    bool
 	description?:       string
+	id?:                string
+	initiator?:         string
 	local_ep_group_id?: string
 	local_id?:          string
+	mtu?:               number
 	name?:              string
 	peer_cidrs?: [string, ...]
 	peer_ep_group_id?: string
+	region?:           string
+	tags?: [_]: string
+	tenant_id?: string
 	value_specs?: [_]: string
-	dpd?: [{}, ...]
+	dpd?: [{
+		action?:   string
+		interval?: number
+		timeout?:  number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1488,6 +2321,8 @@ package opentelekomcloud
 	url:                 string
 	block_content?:      string
 	block_content_type?: string
+	default?:            bool
+	id?:                 string
 	lock_time?:          number
 	tag_category?:       string
 	tag_contents?: [string, ...]
@@ -1501,6 +2336,8 @@ package opentelekomcloud
 	content: string
 	key:     string
 	name:    string
+	id?:     string
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1511,6 +2348,7 @@ package opentelekomcloud
 	index:     string
 	policy_id: string
 	url:       string
+	id?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1519,14 +2357,25 @@ package opentelekomcloud
 #OpentelekomcloudWafDomainV1Resource: {
 	hostname:        string
 	proxy:           bool
+	access_code?:    string
+	access_status?:  number
 	certificate_id?: string
+	cname?:          string
+	id?:             string
+	policy_id?:      string
+	protect_status?: number
+	protocol?:       string
 	sip_header_list?: [string, ...]
 	sip_header_name?: string
+	sub_domain?:      string
+	txt_code?:        string
 	server?: [{
-		address:        string
-		back_protocol:  string
-		front_protocol: string
-		port:           string
+		address:          string
+		port:             string
+		back_protocol?:   string
+		client_protocol?: string
+		front_protocol?:  string
+		server_protocol?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1537,17 +2386,37 @@ package opentelekomcloud
 	policy_id: string
 	rule:      string
 	url:       string
+	id?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OpentelekomcloudWafPolicyV1Resource: {
-	name: string
+	name:            string
+	full_detection?: bool
+	hosts?: [string, ...]
+	id?:    string
+	level?: number
 	action?: [{
 		category: string
 	}, ...]
-	options?: [{}, ...]
+	options?: [{
+		antitamper?:      bool
+		cc?:              bool
+		common?:          bool
+		crawler?:         bool
+		crawler_engine?:  bool
+		crawler_other?:   bool
+		crawler_scanner?: bool
+		crawler_script?:  bool
+		custom?:          bool
+		ignore?:          bool
+		privacy?:         bool
+		webattack?:       bool
+		webshell?:        bool
+		whiteblackip?:    bool
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1557,7 +2426,10 @@ package opentelekomcloud
 	action_category: string
 	name:            string
 	policy_id:       string
+	end?:            string
+	id?:             string
 	priority?:       number
+	start?:          string
 	time?:           bool
 	conditions?: [{
 		category: string
@@ -1574,6 +2446,7 @@ package opentelekomcloud
 	hostname:  string
 	policy_id: string
 	url:       string
+	id?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1582,6 +2455,7 @@ package opentelekomcloud
 #OpentelekomcloudWafWhiteblackipRuleV1Resource: {
 	addr:      string
 	policy_id: string
+	id?:       string
 	white?:    number
 	timeouts?: {
 		create?: string
@@ -1594,6 +2468,8 @@ package opentelekomcloud
 	opentelekomcloud_as_group_v1?: [_]:                        #OpentelekomcloudAsGroupV1Resource
 	opentelekomcloud_as_policy_v1?: [_]:                       #OpentelekomcloudAsPolicyV1Resource
 	opentelekomcloud_blockstorage_volume_v2?: [_]:             #OpentelekomcloudBlockstorageVolumeV2Resource
+	opentelekomcloud_cbr_policy_v3?: [_]:                      #OpentelekomcloudCbrPolicyV3Resource
+	opentelekomcloud_cce_addon_v3?: [_]:                       #OpentelekomcloudCceAddonV3Resource
 	opentelekomcloud_cce_cluster_v3?: [_]:                     #OpentelekomcloudCceClusterV3Resource
 	opentelekomcloud_cce_node_v3?: [_]:                        #OpentelekomcloudCceNodeV3Resource
 	opentelekomcloud_ces_alarmrule?: [_]:                      #OpentelekomcloudCesAlarmruleResource
@@ -1611,6 +2487,7 @@ package opentelekomcloud
 	opentelekomcloud_css_cluster_v1?: [_]:                     #OpentelekomcloudCssClusterV1Resource
 	opentelekomcloud_cts_tracker_v1?: [_]:                     #OpentelekomcloudCtsTrackerV1Resource
 	opentelekomcloud_dcs_instance_v1?: [_]:                    #OpentelekomcloudDcsInstanceV1Resource
+	opentelekomcloud_dds_instance_v3?: [_]:                    #OpentelekomcloudDdsInstanceV3Resource
 	opentelekomcloud_deh_host_v1?: [_]:                        #OpentelekomcloudDehHostV1Resource
 	opentelekomcloud_dms_group_v1?: [_]:                       #OpentelekomcloudDmsGroupV1Resource
 	opentelekomcloud_dms_instance_v1?: [_]:                    #OpentelekomcloudDmsInstanceV1Resource
@@ -1628,6 +2505,7 @@ package opentelekomcloud
 	opentelekomcloud_fw_policy_v2?: [_]:                       #OpentelekomcloudFwPolicyV2Resource
 	opentelekomcloud_fw_rule_v2?: [_]:                         #OpentelekomcloudFwRuleV2Resource
 	opentelekomcloud_identity_agency_v3?: [_]:                 #OpentelekomcloudIdentityAgencyV3Resource
+	opentelekomcloud_identity_credential_v3?: [_]:             #OpentelekomcloudIdentityCredentialV3Resource
 	opentelekomcloud_identity_group_membership_v3?: [_]:       #OpentelekomcloudIdentityGroupMembershipV3Resource
 	opentelekomcloud_identity_group_v3?: [_]:                  #OpentelekomcloudIdentityGroupV3Resource
 	opentelekomcloud_identity_project_v3?: [_]:                #OpentelekomcloudIdentityProjectV3Resource
@@ -1649,7 +2527,6 @@ package opentelekomcloud
 	opentelekomcloud_lb_whitelist_v2?: [_]:                    #OpentelekomcloudLbWhitelistV2Resource
 	opentelekomcloud_logtank_group_v2?: [_]:                   #OpentelekomcloudLogtankGroupV2Resource
 	opentelekomcloud_logtank_topic_v2?: [_]:                   #OpentelekomcloudLogtankTopicV2Resource
-	opentelekomcloud_maas_task_v1?: [_]:                       #OpentelekomcloudMaasTaskV1Resource
 	opentelekomcloud_mrs_cluster_v1?: [_]:                     #OpentelekomcloudMrsClusterV1Resource
 	opentelekomcloud_mrs_job_v1?: [_]:                         #OpentelekomcloudMrsJobV1Resource
 	opentelekomcloud_nat_dnat_rule_v2?: [_]:                   #OpentelekomcloudNatDnatRuleV2Resource
@@ -1669,6 +2546,7 @@ package opentelekomcloud
 	opentelekomcloud_networking_vip_v2?: [_]:                  #OpentelekomcloudNetworkingVipV2Resource
 	opentelekomcloud_obs_bucket?: [_]:                         #OpentelekomcloudObsBucketResource
 	opentelekomcloud_obs_bucket_object?: [_]:                  #OpentelekomcloudObsBucketObjectResource
+	opentelekomcloud_obs_bucket_policy?: [_]:                  #OpentelekomcloudObsBucketPolicyResource
 	opentelekomcloud_rds_instance_v1?: [_]:                    #OpentelekomcloudRdsInstanceV1Resource
 	opentelekomcloud_rds_instance_v3?: [_]:                    #OpentelekomcloudRdsInstanceV3Resource
 	opentelekomcloud_rds_parametergroup_v3?: [_]:              #OpentelekomcloudRdsParametergroupV3Resource

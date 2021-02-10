@@ -2,6 +2,7 @@
 package venafi
 
 #Provider: venafi: {
+	access_token?: string
 	api_key?:      string
 	dev_mode?:     bool
 	tpp_password?: string

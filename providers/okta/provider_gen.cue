@@ -2,12 +2,17 @@
 package okta
 
 #Provider: okta: {
-	api_token:         string
-	org_name:          string
+	api_token?:        string
 	backoff?:          bool
 	base_url?:         string
+	client_id?:        string
+	log_level?:        number
 	max_retries?:      number
 	max_wait_seconds?: number
 	min_wait_seconds?: number
+	org_name?:         string
 	parallelism?:      number
+	private_key?:      string
+	request_timeout?:  number
+	scopes?: [string, ...]
 }

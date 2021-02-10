@@ -5,16 +5,27 @@ package netlify
 	branch:  string
 	site_id: string
 	title:   string
+	id?:     string
+	url?:    string
 }
-#NetlifyDeployKeyResource: {}
+#NetlifyDeployKeyResource: {
+	id?:         string
+	public_key?: string
+}
 #NetlifyHookResource: {
 	data: [_]: string
 	event:   string
 	site_id: string
 	type:    string
+	id?:     string
 }
 #NetlifySiteResource: {
+	account_name?:  string
+	account_slug?:  string
 	custom_domain?: string
+	deploy_url?:    string
+	id?:            string
+	name?:          string
 	repo?: [{
 		provider:       string
 		repo_branch:    string

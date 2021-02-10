@@ -5,6 +5,8 @@ package tencentcloud
 	region:          string
 	secret_id:       string
 	secret_key:      string
+	domain?:         string
+	protocol?:       string
 	security_token?: string
 	assume_role?: [{
 		role_arn:         string

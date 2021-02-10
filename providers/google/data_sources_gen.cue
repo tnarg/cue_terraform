@@ -4,107 +4,1178 @@ package google
 #GoogleActiveFolderDataSource: {
 	display_name: string
 	parent:       string
+	id?:          string
+	name?:        string
 }
-#GoogleBigqueryDefaultServiceAccountDataSource: {}
-#GoogleBillingAccountDataSource: billing_account?: string
-#GoogleClientConfigDataSource: {}
-#GoogleClientOpenidUserinfoDataSource: {}
+#GoogleAppEngineDefaultServiceAccountDataSource: {
+	display_name?: string
+	email?:        string
+	id?:           string
+	name?:         string
+	project?:      string
+	unique_id?:    string
+}
+#GoogleBigqueryDefaultServiceAccountDataSource: {
+	email?:   string
+	id?:      string
+	project?: string
+}
+#GoogleBillingAccountDataSource: {
+	billing_account?: string
+	display_name?:    string
+	id?:              string
+	name?:            string
+	open?:            bool
+	project_ids?: [string, ...]
+}
+#GoogleClientConfigDataSource: {
+	access_token?: string
+	id?:           string
+	project?:      string
+	region?:       string
+	zone?:         string
+}
+#GoogleClientOpenidUserinfoDataSource: {
+	email?: string
+	id?:    string
+}
+#GoogleCloudIdentityGroupMembershipsDataSource: {
+	group: string
+	id?:   string
+	memberships?: [{
+		create_time: string
+		group:       string
+		name:        string
+		preferred_member_key: [{
+			id:        string
+			namespace: string
+		}, ...]
+		roles: [{
+			name: string
+		}, ...]
+		type:        string
+		update_time: string
+	}, ...]
+}
+#GoogleCloudIdentityGroupsDataSource: {
+	parent: string
+	groups?: [{
+		create_time:  string
+		description:  string
+		display_name: string
+		group_key: [{
+			id:        string
+			namespace: string
+		}, ...]
+		labels: [_]: string
+		name:        string
+		parent:      string
+		update_time: string
+	}, ...]
+	id?: string
+}
+#GoogleCloudRunLocationsDataSource: {
+	id?: string
+	locations?: [string, ...]
+	project?: string
+}
+#GoogleCloudRunServiceDataSource: {
+	location:                    string
+	name:                        string
+	autogenerate_revision_name?: bool
+	id?:                         string
+	metadata?: [{
+		annotations: [_]: string
+		generation: number
+		labels: [_]: string
+		namespace:        string
+		resource_version: string
+		self_link:        string
+		uid:              string
+	}, ...]
+	project?: string
+	status?: [{
+		conditions: [{
+			message: string
+			reason:  string
+			status:  string
+			type:    string
+		}, ...]
+		latest_created_revision_name: string
+		latest_ready_revision_name:   string
+		observed_generation:          number
+		url:                          string
+	}, ...]
+	template?: [{
+		metadata: [{
+			annotations: [_]: string
+			generation: number
+			labels: [_]: string
+			name:             string
+			namespace:        string
+			resource_version: string
+			self_link:        string
+			uid:              string
+		}, ...]
+		spec: [{
+			container_concurrency: number
+			containers: [{
+				args: [string, ...]
+				command: [string, ...]
+				env: [{
+					name:  string
+					value: string
+				}, ...]
+				env_from: [{
+					config_map_ref: [{
+						local_object_reference: [{
+							name: string
+						}, ...]
+						optional: bool
+					}, ...]
+					prefix: string
+					secret_ref: [{
+						local_object_reference: [{
+							name: string
+						}, ...]
+						optional: bool
+					}, ...]
+				}, ...]
+				image: string
+				ports: [{
+					container_port: number
+					name:           string
+					protocol:       string
+				}, ...]
+				resources: [{
+					limits: [_]:   string
+					requests: [_]: string
+				}, ...]
+				working_dir: string
+			}, ...]
+			service_account_name: string
+			serving_state:        string
+			timeout_seconds:      number
+		}, ...]
+	}, ...]
+	traffic?: [{
+		latest_revision: bool
+		percent:         number
+		revision_name:   string
+	}, ...]
+}
 #GoogleCloudfunctionsFunctionDataSource: {
-	name:     string
+	name:                 string
+	available_memory_mb?: number
+	build_environment_variables?: [_]: string
+	description?: string
+	entry_point?: string
+	environment_variables?: [_]: string
+	event_trigger?: [{
+		event_type: string
+		failure_policy: [{
+			retry: bool
+		}, ...]
+		resource: string
+	}, ...]
+	https_trigger_url?: string
+	id?:                string
+	ingress_settings?:  string
+	labels?: [_]: string
+	max_instances?:         number
+	project?:               string
+	region?:                string
+	runtime?:               string
+	service_account_email?: string
+	source_archive_bucket?: string
+	source_archive_object?: string
+	source_repository?: [{
+		deployed_url: string
+		url:          string
+	}, ...]
+	timeout?:                       number
+	trigger_http?:                  bool
+	vpc_connector?:                 string
+	vpc_connector_egress_settings?: string
+}
+#GoogleComposerEnvironmentDataSource: {
+	name: string
+	config?: [{
+		airflow_uri:    string
+		dag_gcs_prefix: string
+		gke_cluster:    string
+		node_config: [{
+			disk_size_gb: number
+			ip_allocation_policy: [{
+				cluster_ipv4_cidr_block:       string
+				cluster_secondary_range_name:  string
+				services_ipv4_cidr_block:      string
+				services_secondary_range_name: string
+				use_ip_aliases:                bool
+			}, ...]
+			machine_type: string
+			network:      string
+			oauth_scopes: [string, ...]
+			service_account: string
+			subnetwork:      string
+			tags: [string, ...]
+			zone: string
+		}, ...]
+		node_count: number
+		private_environment_config: [{
+			cloud_sql_ipv4_cidr_block:  string
+			enable_private_endpoint:    bool
+			master_ipv4_cidr_block:     string
+			web_server_ipv4_cidr_block: string
+		}, ...]
+		software_config: [{
+			airflow_config_overrides: [_]: string
+			env_variables: [_]:            string
+			image_version: string
+			pypi_packages: [_]: string
+			python_version: string
+		}, ...]
+	}, ...]
+	id?: string
+	labels?: [_]: string
 	project?: string
 	region?:  string
 }
-#GoogleComposerImageVersionsDataSource: {}
-#GoogleComputeAddressDataSource: name: string
-#GoogleComputeBackendBucketDataSource: {
-	name:     string
+#GoogleComposerImageVersionsDataSource: {
+	id?: string
+	image_versions?: [{
+		image_version_id: string
+		supported_python_versions: [string, ...]
+	}, ...]
 	project?: string
+	region?:  string
+}
+#GoogleComputeAddressDataSource: {
+	name:       string
+	address?:   string
+	id?:        string
+	project?:   string
+	region?:    string
+	self_link?: string
+	status?:    string
+}
+#GoogleComputeBackendBucketDataSource: {
+	name:         string
+	bucket_name?: string
+	cdn_policy?: [{
+		signed_url_cache_max_age_sec: number
+	}, ...]
+	creation_timestamp?: string
+	description?:        string
+	enable_cdn?:         bool
+	id?:                 string
+	project?:            string
+	self_link?:          string
 }
 #GoogleComputeBackendServiceDataSource: {
-	name:     string
-	project?: string
+	name:                     string
+	affinity_cookie_ttl_sec?: number
+	backend?: [{
+		balancing_mode:               string
+		capacity_scaler:              number
+		description:                  string
+		group:                        string
+		max_connections:              number
+		max_connections_per_endpoint: number
+		max_connections_per_instance: number
+		max_rate:                     number
+		max_rate_per_endpoint:        number
+		max_rate_per_instance:        number
+		max_utilization:              number
+	}, ...]
+	cdn_policy?: [{
+		cache_key_policy: [{
+			include_host:         bool
+			include_protocol:     bool
+			include_query_string: bool
+			query_string_blacklist: [string, ...]
+			query_string_whitelist: [string, ...]
+		}, ...]
+		signed_url_cache_max_age_sec: number
+	}, ...]
+	circuit_breakers?: [{
+		max_connections:             number
+		max_pending_requests:        number
+		max_requests:                number
+		max_requests_per_connection: number
+		max_retries:                 number
+	}, ...]
+	connection_draining_timeout_sec?: number
+	consistent_hash?: [{
+		http_cookie: [{
+			name: string
+			path: string
+			ttl: [{
+				nanos:   number
+				seconds: number
+			}, ...]
+		}, ...]
+		http_header_name:  string
+		minimum_ring_size: number
+	}, ...]
+	creation_timestamp?: string
+	custom_request_headers?: [string, ...]
+	description?: string
+	enable_cdn?:  bool
+	fingerprint?: string
+	health_checks?: [string, ...]
+	iap?: [{
+		oauth2_client_id:            string
+		oauth2_client_secret:        string
+		oauth2_client_secret_sha256: string
+	}, ...]
+	id?:                    string
+	load_balancing_scheme?: string
+	locality_lb_policy?:    string
+	log_config?: [{
+		enable:      bool
+		sample_rate: number
+	}, ...]
+	outlier_detection?: [{
+		base_ejection_time: [{
+			nanos:   number
+			seconds: number
+		}, ...]
+		consecutive_errors:                    number
+		consecutive_gateway_failure:           number
+		enforcing_consecutive_errors:          number
+		enforcing_consecutive_gateway_failure: number
+		enforcing_success_rate:                number
+		interval: [{
+			nanos:   number
+			seconds: number
+		}, ...]
+		max_ejection_percent:        number
+		success_rate_minimum_hosts:  number
+		success_rate_request_volume: number
+		success_rate_stdev_factor:   number
+	}, ...]
+	port_name?:        string
+	project?:          string
+	protocol?:         string
+	security_policy?:  string
+	self_link?:        string
+	session_affinity?: string
+	timeout_sec?:      number
 }
-#GoogleComputeDefaultServiceAccountDataSource: {}
-#GoogleComputeForwardingRuleDataSource: name: string
-#GoogleComputeGlobalAddressDataSource: name:  string
-#GoogleComputeImageDataSource: {}
-#GoogleComputeInstanceDataSource: {
-	name?:      string
+#GoogleComputeDefaultServiceAccountDataSource: {
+	display_name?: string
+	email?:        string
+	id?:           string
+	name?:         string
+	project?:      string
+	unique_id?:    string
+}
+#GoogleComputeForwardingRuleDataSource: {
+	name:                    string
+	all_ports?:              bool
+	allow_global_access?:    bool
+	backend_service?:        string
+	creation_timestamp?:     string
+	description?:            string
+	id?:                     string
+	ip_address?:             string
+	ip_protocol?:            string
+	is_mirroring_collector?: bool
+	load_balancing_scheme?:  string
+	network?:                string
+	network_tier?:           string
+	port_range?:             string
+	ports?: [string, ...]
+	project?:       string
+	region?:        string
+	self_link?:     string
+	service_label?: string
+	service_name?:  string
+	subnetwork?:    string
+	target?:        string
+}
+#GoogleComputeGlobalAddressDataSource: {
+	name:       string
+	address?:   string
+	id?:        string
 	project?:   string
 	self_link?: string
-	zone?:      string
+	status?:    string
 }
-#GoogleComputeInstanceGroupDataSource: name?: string
-#GoogleComputeInstanceSerialPortDataSource: {
-	instance: string
-	port:     number
+#GoogleComputeGlobalForwardingRuleDataSource: {
+	name:                   string
+	description?:           string
+	id?:                    string
+	ip_address?:            string
+	ip_protocol?:           string
+	ip_version?:            string
+	load_balancing_scheme?: string
+	metadata_filters?: [{
+		filter_labels: [{
+			name:  string
+			value: string
+		}, ...]
+		filter_match_criteria: string
+	}, ...]
+	port_range?: string
+	project?:    string
+	self_link?:  string
+	target?:     string
 }
-#GoogleComputeLbIpRangesDataSource: {}
-#GoogleComputeNetworkDataSource: {
-	name:     string
+#GoogleComputeImageDataSource: {
+	archive_size_bytes?:          number
+	creation_timestamp?:          string
+	description?:                 string
+	disk_size_gb?:                number
+	family?:                      string
+	filter?:                      string
+	id?:                          string
+	image_encryption_key_sha256?: string
+	image_id?:                    string
+	label_fingerprint?:           string
+	labels?: [_]: string
+	licenses?: [string, ...]
+	name?:                              string
+	project?:                           string
+	self_link?:                         string
+	source_disk?:                       string
+	source_disk_encryption_key_sha256?: string
+	source_disk_id?:                    string
+	source_image_id?:                   string
+	status?:                            string
+}
+#GoogleComputeInstanceDataSource: {
+	allow_stopping_for_update?: bool
+	attached_disk?: [{
+		device_name:                string
+		disk_encryption_key_raw:    string
+		disk_encryption_key_sha256: string
+		kms_key_self_link:          string
+		mode:                       string
+		source:                     string
+	}, ...]
+	boot_disk?: [{
+		auto_delete:                bool
+		device_name:                string
+		disk_encryption_key_raw:    string
+		disk_encryption_key_sha256: string
+		initialize_params: [{
+			image: string
+			labels: [_]: string
+			size: number
+			type: string
+		}, ...]
+		kms_key_self_link: string
+		mode:              string
+		source:            string
+	}, ...]
+	can_ip_forward?: bool
+	confidential_instance_config?: [{
+		enable_confidential_compute: bool
+	}, ...]
+	cpu_platform?:        string
+	current_status?:      string
+	deletion_protection?: bool
+	description?:         string
+	desired_status?:      string
+	enable_display?:      bool
+	guest_accelerator?: [{
+		count: number
+		type:  string
+	}, ...]
+	hostname?:          string
+	id?:                string
+	instance_id?:       string
+	label_fingerprint?: string
+	labels?: [_]: string
+	machine_type?: string
+	metadata?: [_]: string
+	metadata_fingerprint?:    string
+	metadata_startup_script?: string
+	min_cpu_platform?:        string
+	name?:                    string
+	network_interface?: [{
+		access_config: [{
+			nat_ip:                 string
+			network_tier:           string
+			public_ptr_domain_name: string
+		}, ...]
+		alias_ip_range: [{
+			ip_cidr_range:         string
+			subnetwork_range_name: string
+		}, ...]
+		name:               string
+		network:            string
+		network_ip:         string
+		subnetwork:         string
+		subnetwork_project: string
+	}, ...]
 	project?: string
-}
-#GoogleComputeNetworkEndpointGroupDataSource: {
-	name?:      string
+	resource_policies?: [string, ...]
+	scheduling?: [{
+		automatic_restart: bool
+		node_affinities: [{
+			key:      string
+			operator: string
+			values: [string, ...]
+		}, ...]
+		on_host_maintenance: string
+		preemptible:         bool
+	}, ...]
+	scratch_disk?: [{
+		interface: string
+	}, ...]
 	self_link?: string
+	service_account?: [{
+		email: string
+		scopes: [string, ...]
+	}, ...]
+	shielded_instance_config?: [{
+		enable_integrity_monitoring: bool
+		enable_secure_boot:          bool
+		enable_vtpm:                 bool
+	}, ...]
+	tags?: [string, ...]
+	tags_fingerprint?: string
+	zone?:             string
+}
+#GoogleComputeInstanceGroupDataSource: {
+	description?: string
+	id?:          string
+	instances?: [string, ...]
+	name?: string
+	named_port?: [{
+		name: string
+		port: number
+	}, ...]
+	network?:   string
+	project?:   string
+	self_link?: string
+	size?:      number
 	zone?:      string
 }
-#GoogleComputeNodeTypesDataSource: {}
-#GoogleComputeRegionInstanceGroupDataSource: {}
-#GoogleComputeRegionsDataSource: status?: string
-#GoogleComputeRouterDataSource: {
-	name:     string
-	network:  string
-	project?: string
-	region?:  string
-}
-#GoogleComputeSslCertificateDataSource: {
-	name:     string
-	project?: string
-}
-#GoogleComputeSslPolicyDataSource: {
-	name:     string
-	project?: string
-}
-#GoogleComputeSubnetworkDataSource: name?: string
-#GoogleComputeVpnGatewayDataSource: name:  string
-#GoogleComputeZonesDataSource: {
-	region?: string
-	status?: string
-}
-#GoogleContainerClusterDataSource: {
-	name:      string
-	location?: string
+#GoogleComputeInstanceSerialPortDataSource: {
+	instance:  string
+	port:      number
+	contents?: string
+	id?:       string
 	project?:  string
-	region?:   string
 	zone?:     string
 }
+#GoogleComputeInstanceTemplateDataSource: {
+	project:         string
+	can_ip_forward?: bool
+	confidential_instance_config?: [{
+		enable_confidential_compute: bool
+	}, ...]
+	description?: string
+	disk?: [{
+		auto_delete: bool
+		boot:        bool
+		device_name: string
+		disk_encryption_key: [{
+			kms_key_self_link: string
+		}, ...]
+		disk_name:    string
+		disk_size_gb: number
+		disk_type:    string
+		interface:    string
+		labels: [_]: string
+		mode:         string
+		source:       string
+		source_image: string
+		type:         string
+	}, ...]
+	enable_display?: bool
+	filter?:         string
+	guest_accelerator?: [{
+		count: number
+		type:  string
+	}, ...]
+	id?:                   string
+	instance_description?: string
+	labels?: [_]: string
+	machine_type?: string
+	metadata?: [_]: string
+	metadata_fingerprint?:    string
+	metadata_startup_script?: string
+	min_cpu_platform?:        string
+	most_recent?:             bool
+	name?:                    string
+	name_prefix?:             string
+	network_interface?: [{
+		access_config: [{
+			nat_ip:                 string
+			network_tier:           string
+			public_ptr_domain_name: string
+		}, ...]
+		alias_ip_range: [{
+			ip_cidr_range:         string
+			subnetwork_range_name: string
+		}, ...]
+		name:               string
+		network:            string
+		network_ip:         string
+		subnetwork:         string
+		subnetwork_project: string
+	}, ...]
+	region?: string
+	scheduling?: [{
+		automatic_restart: bool
+		node_affinities: [{
+			key:      string
+			operator: string
+			values: [string, ...]
+		}, ...]
+		on_host_maintenance: string
+		preemptible:         bool
+	}, ...]
+	self_link?: string
+	service_account?: [{
+		email: string
+		scopes: [string, ...]
+	}, ...]
+	shielded_instance_config?: [{
+		enable_integrity_monitoring: bool
+		enable_secure_boot:          bool
+		enable_vtpm:                 bool
+	}, ...]
+	tags?: [string, ...]
+	tags_fingerprint?: string
+}
+#GoogleComputeLbIpRangesDataSource: {
+	http_ssl_tcp_internal?: [string, ...]
+	id?: string
+	network?: [string, ...]
+}
+#GoogleComputeNetworkDataSource: {
+	name:          string
+	description?:  string
+	gateway_ipv4?: string
+	id?:           string
+	project?:      string
+	self_link?:    string
+	subnetworks_self_links?: [string, ...]
+}
+#GoogleComputeNetworkEndpointGroupDataSource: {
+	default_port?:          number
+	description?:           string
+	id?:                    string
+	name?:                  string
+	network?:               string
+	network_endpoint_type?: string
+	project?:               string
+	self_link?:             string
+	size?:                  number
+	subnetwork?:            string
+	zone?:                  string
+}
+#GoogleComputeNodeTypesDataSource: {
+	id?: string
+	names?: [string, ...]
+	project?: string
+	zone?:    string
+}
+#GoogleComputeRegionInstanceGroupDataSource: {
+	id?: string
+	instances?: [{
+		instance: string
+		named_ports: [{
+			name: string
+			port: number
+		}, ...]
+		status: string
+	}, ...]
+	name?:      string
+	project?:   string
+	region?:    string
+	self_link?: string
+	size?:      number
+}
+#GoogleComputeRegionSslCertificateDataSource: {
+	name:                string
+	certificate?:        string
+	certificate_id?:     number
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	name_prefix?:        string
+	private_key?:        string
+	project?:            string
+	region?:             string
+	self_link?:          string
+}
+#GoogleComputeRegionsDataSource: {
+	id?: string
+	names?: [string, ...]
+	project?: string
+	status?:  string
+}
+#GoogleComputeResourcePolicyDataSource: {
+	name: string
+	group_placement_policy?: [{
+		availability_domain_count: number
+		collocation:               string
+		vm_count:                  number
+	}, ...]
+	id?:        string
+	project?:   string
+	region?:    string
+	self_link?: string
+	snapshot_schedule_policy?: [{
+		retention_policy: [{
+			max_retention_days:    number
+			on_source_disk_delete: string
+		}, ...]
+		schedule: [{
+			daily_schedule: [{
+				days_in_cycle: number
+				start_time:    string
+			}, ...]
+			hourly_schedule: [{
+				hours_in_cycle: number
+				start_time:     string
+			}, ...]
+			weekly_schedule: [{
+				day_of_weeks: [{
+					day:        string
+					start_time: string
+				}, ...]
+			}, ...]
+		}, ...]
+		snapshot_properties: [{
+			guest_flush: bool
+			labels: [_]: string
+			storage_locations: [string, ...]
+		}, ...]
+	}, ...]
+}
+#GoogleComputeRouterDataSource: {
+	name:    string
+	network: string
+	bgp?: [{
+		advertise_mode: string
+		advertised_groups: [string, ...]
+		advertised_ip_ranges: [{
+			description: string
+			range:       string
+		}, ...]
+		asn: number
+	}, ...]
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	region?:             string
+	self_link?:          string
+}
+#GoogleComputeSslCertificateDataSource: {
+	name:                string
+	certificate?:        string
+	certificate_id?:     number
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	name_prefix?:        string
+	private_key?:        string
+	project?:            string
+	self_link?:          string
+}
+#GoogleComputeSslPolicyDataSource: {
+	name:                string
+	creation_timestamp?: string
+	custom_features?: [string, ...]
+	description?: string
+	enabled_features?: [string, ...]
+	fingerprint?:     string
+	id?:              string
+	min_tls_version?: string
+	profile?:         string
+	project?:         string
+	self_link?:       string
+}
+#GoogleComputeSubnetworkDataSource: {
+	description?:              string
+	gateway_address?:          string
+	id?:                       string
+	ip_cidr_range?:            string
+	name?:                     string
+	network?:                  string
+	private_ip_google_access?: bool
+	project?:                  string
+	region?:                   string
+	secondary_ip_range?: [{
+		ip_cidr_range: string
+		range_name:    string
+	}, ...]
+	self_link?: string
+}
+#GoogleComputeVpnGatewayDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	network?:     string
+	project?:     string
+	region?:      string
+	self_link?:   string
+}
+#GoogleComputeZonesDataSource: {
+	id?: string
+	names?: [string, ...]
+	project?: string
+	region?:  string
+	status?:  string
+}
+#GoogleContainerClusterDataSource: {
+	name: string
+	addons_config?: [{
+		cloudrun_config: [{
+			disabled:           bool
+			load_balancer_type: string
+		}, ...]
+		horizontal_pod_autoscaling: [{
+			disabled: bool
+		}, ...]
+		http_load_balancing: [{
+			disabled: bool
+		}, ...]
+		network_policy_config: [{
+			disabled: bool
+		}, ...]
+	}, ...]
+	authenticator_groups_config?: [{
+		security_group: string
+	}, ...]
+	cluster_autoscaling?: [{
+		auto_provisioning_defaults: [{
+			oauth_scopes: [string, ...]
+			service_account: string
+		}, ...]
+		enabled: bool
+		resource_limits: [{
+			maximum:       number
+			minimum:       number
+			resource_type: string
+		}, ...]
+	}, ...]
+	cluster_ipv4_cidr?: string
+	database_encryption?: [{
+		key_name: string
+		state:    string
+	}, ...]
+	datapath_provider?:         string
+	default_max_pods_per_node?: number
+	default_snat_status?: [{
+		disabled: bool
+	}, ...]
+	description?:                 string
+	enable_binary_authorization?: bool
+	enable_intranode_visibility?: bool
+	enable_kubernetes_alpha?:     bool
+	enable_legacy_abac?:          bool
+	enable_shielded_nodes?:       bool
+	enable_tpu?:                  bool
+	endpoint?:                    string
+	id?:                          string
+	initial_node_count?:          number
+	instance_group_urls?: [string, ...]
+	ip_allocation_policy?: [{
+		cluster_ipv4_cidr_block:       string
+		cluster_secondary_range_name:  string
+		services_ipv4_cidr_block:      string
+		services_secondary_range_name: string
+	}, ...]
+	label_fingerprint?: string
+	location?:          string
+	logging_service?:   string
+	maintenance_policy?: [{
+		daily_maintenance_window: [{
+			duration:   string
+			start_time: string
+		}, ...]
+		maintenance_exclusion: [{
+			end_time:       string
+			exclusion_name: string
+			start_time:     string
+		}, ...]
+		recurring_window: [{
+			end_time:   string
+			recurrence: string
+			start_time: string
+		}, ...]
+	}, ...]
+	master_auth?: [{
+		client_certificate: string
+		client_certificate_config: [{
+			issue_client_certificate: bool
+		}, ...]
+		client_key:             string
+		cluster_ca_certificate: string
+		password:               string
+		username:               string
+	}, ...]
+	master_authorized_networks_config?: [{
+		cidr_blocks: [{
+			cidr_block:   string
+			display_name: string
+		}, ...]
+	}, ...]
+	master_version?:     string
+	min_master_version?: string
+	monitoring_service?: string
+	network?:            string
+	network_policy?: [{
+		enabled:  bool
+		provider: string
+	}, ...]
+	node_config?: [{
+		disk_size_gb: number
+		disk_type:    string
+		guest_accelerator: [{
+			count: number
+			type:  string
+		}, ...]
+		image_type: string
+		labels: [_]: string
+		local_ssd_count: number
+		machine_type:    string
+		metadata: [_]: string
+		min_cpu_platform: string
+		oauth_scopes: [string, ...]
+		preemptible:     bool
+		service_account: string
+		shielded_instance_config: [{
+			enable_integrity_monitoring: bool
+			enable_secure_boot:          bool
+		}, ...]
+		tags: [string, ...]
+		taint: [{
+			effect: string
+			key:    string
+			value:  string
+		}, ...]
+		workload_metadata_config: [{
+			node_metadata: string
+		}, ...]
+	}, ...]
+	node_locations?: [string, ...]
+	node_pool?: [{
+		autoscaling: [{
+			max_node_count: number
+			min_node_count: number
+		}, ...]
+		initial_node_count: number
+		instance_group_urls: [string, ...]
+		management: [{
+			auto_repair:  bool
+			auto_upgrade: bool
+		}, ...]
+		max_pods_per_node: number
+		name:              string
+		name_prefix:       string
+		node_config: [{
+			disk_size_gb: number
+			disk_type:    string
+			guest_accelerator: [{
+				count: number
+				type:  string
+			}, ...]
+			image_type: string
+			labels: [_]: string
+			local_ssd_count: number
+			machine_type:    string
+			metadata: [_]: string
+			min_cpu_platform: string
+			oauth_scopes: [string, ...]
+			preemptible:     bool
+			service_account: string
+			shielded_instance_config: [{
+				enable_integrity_monitoring: bool
+				enable_secure_boot:          bool
+			}, ...]
+			tags: [string, ...]
+			taint: [{
+				effect: string
+				key:    string
+				value:  string
+			}, ...]
+			workload_metadata_config: [{
+				node_metadata: string
+			}, ...]
+		}, ...]
+		node_count: number
+		node_locations: [string, ...]
+		upgrade_settings: [{
+			max_surge:       number
+			max_unavailable: number
+		}, ...]
+		version: string
+	}, ...]
+	node_version?: string
+	operation?:    string
+	pod_security_policy_config?: [{
+		enabled: bool
+	}, ...]
+	private_cluster_config?: [{
+		enable_private_endpoint: bool
+		enable_private_nodes:    bool
+		master_global_access_config: [{
+			enabled: bool
+		}, ...]
+		master_ipv4_cidr_block: string
+		peering_name:           string
+		private_endpoint:       string
+		public_endpoint:        string
+	}, ...]
+	project?: string
+	release_channel?: [{
+		channel: string
+	}, ...]
+	remove_default_node_pool?: bool
+	resource_labels?: [_]: string
+	resource_usage_export_config?: [{
+		bigquery_destination: [{
+			dataset_id: string
+		}, ...]
+		enable_network_egress_metering:       bool
+		enable_resource_consumption_metering: bool
+	}, ...]
+	self_link?:           string
+	services_ipv4_cidr?:  string
+	subnetwork?:          string
+	tpu_ipv4_cidr_block?: string
+	vertical_pod_autoscaling?: [{
+		enabled: bool
+	}, ...]
+	workload_identity_config?: [{
+		identity_namespace: string
+	}, ...]
+}
 #GoogleContainerEngineVersionsDataSource: {
-	location?:       string
-	project?:        string
+	default_cluster_version?: string
+	id?:                      string
+	latest_master_version?:   string
+	latest_node_version?:     string
+	location?:                string
+	project?:                 string
+	release_channel_default_version?: [_]: string
+	valid_master_versions?: [string, ...]
+	valid_node_versions?: [string, ...]
 	version_prefix?: string
 }
 #GoogleContainerRegistryImageDataSource: {
-	name:    string
-	digest?: string
-	region?: string
-	tag?:    string
+	name:       string
+	digest?:    string
+	id?:        string
+	image_url?: string
+	project?:   string
+	region?:    string
+	tag?:       string
 }
-#GoogleContainerRegistryRepositoryDataSource: region?: string
-#GoogleDnsKeysDataSource: managed_zone:                string
-#GoogleDnsManagedZoneDataSource: {
-	name:     string
+#GoogleContainerRegistryRepositoryDataSource: {
+	id?:             string
+	project?:        string
+	region?:         string
+	repository_url?: string
+}
+#GoogleDnsKeysDataSource: {
+	managed_zone: string
+	id?:          string
+	key_signing_keys?: [{
+		algorithm:     string
+		creation_time: string
+		description:   string
+		digests: [{
+			digest: string
+			type:   string
+		}, ...]
+		ds_record:  string
+		id:         string
+		is_active:  bool
+		key_length: number
+		key_tag:    number
+		public_key: string
+	}, ...]
 	project?: string
+	zone_signing_keys?: [{
+		algorithm:     string
+		creation_time: string
+		description:   string
+		digests: [{
+			digest: string
+			type:   string
+		}, ...]
+		id:         string
+		is_active:  bool
+		key_length: number
+		key_tag:    number
+		public_key: string
+	}, ...]
+}
+#GoogleDnsManagedZoneDataSource: {
+	name:         string
+	description?: string
+	dns_name?:    string
+	id?:          string
+	name_servers?: [string, ...]
+	project?:    string
+	visibility?: string
 }
 #GoogleFolderDataSource: {
 	folder:               string
+	create_time?:         string
+	display_name?:        string
+	folder_id?:           string
+	id?:                  string
+	lifecycle_state?:     string
 	lookup_organization?: bool
+	name?:                string
+	organization?:        string
+	parent?:              string
 }
 #GoogleFolderOrganizationPolicyDataSource: {
 	constraint: string
 	folder:     string
+	boolean_policy?: [{
+		enforced: bool
+	}, ...]
+	etag?: string
+	id?:   string
+	list_policy?: [{
+		allow: [{
+			all: bool
+			values: [string, ...]
+		}, ...]
+		deny: [{
+			all: bool
+			values: [string, ...]
+		}, ...]
+		inherit_from_parent: bool
+		suggested_value:     string
+	}, ...]
+	restore_policy?: [{
+		default: bool
+	}, ...]
+	update_time?: string
+	version?:     number
+}
+#GoogleGameServicesGameServerDeploymentRolloutDataSource: {
+	deployment_id:               string
+	default_game_server_config?: string
+	game_server_config_overrides?: [{
+		config_version: string
+		realms_selector: [{
+			realms: [string, ...]
+		}, ...]
+	}, ...]
+	id?:      string
+	name?:    string
+	project?: string
 }
 #GoogleIamPolicyDataSource: {
+	id?:          string
+	policy_data?: string
 	audit_config?: [{
 		service: string
 		audit_log_configs?: [{
@@ -115,70 +1186,455 @@ package google
 	binding?: [{
 		members: [string, ...]
 		role: string
+		condition?: [{
+			expression:   string
+			title:        string
+			description?: string
+		}, ...]
 	}, ...]
 }
-#GoogleIamRoleDataSource: name: string
+#GoogleIamRoleDataSource: {
+	name: string
+	id?:  string
+	included_permissions?: [string, ...]
+	stage?: string
+	title?: string
+}
+#GoogleIamTestablePermissionsDataSource: {
+	full_resource_name:    string
+	custom_support_level?: string
+	id?:                   string
+	permissions?: [{
+		api_disabled:         bool
+		custom_support_level: string
+		name:                 string
+		stage:                string
+		title:                string
+	}, ...]
+	stages?: [string, ...]
+}
 #GoogleKmsCryptoKeyDataSource: {
 	key_ring: string
 	name:     string
+	id?:      string
+	labels?: [_]: string
+	purpose?:                       string
+	rotation_period?:               string
+	self_link?:                     string
+	skip_initial_version_creation?: bool
+	version_template?: [{
+		algorithm:        string
+		protection_level: string
+	}, ...]
 }
 #GoogleKmsCryptoKeyVersionDataSource: {
-	crypto_key: string
-	version?:   number
+	crypto_key:        string
+	algorithm?:        string
+	id?:               string
+	protection_level?: string
+	public_key?: [{
+		algorithm: string
+		pem:       string
+	}, ...]
+	state?:   string
+	version?: number
 }
 #GoogleKmsKeyRingDataSource: {
-	location: string
-	name:     string
-	project?: string
+	location:   string
+	name:       string
+	id?:        string
+	project?:   string
+	self_link?: string
 }
 #GoogleKmsSecretDataSource: {
 	ciphertext:                     string
 	crypto_key:                     string
 	additional_authenticated_data?: string
+	id?:                            string
+	plaintext?:                     string
 }
 #GoogleKmsSecretCiphertextDataSource: {
-	crypto_key: string
-	plaintext:  string
+	crypto_key:  string
+	plaintext:   string
+	ciphertext?: string
+	id?:         string
 }
 #GoogleMonitoringAppEngineServiceDataSource: {
-	module_id: string
-	project?:  string
+	module_id:     string
+	display_name?: string
+	id?:           string
+	name?:         string
+	project?:      string
+	service_id?:   string
+	telemetry?: [{
+		resource_name: string
+	}, ...]
+}
+#GoogleMonitoringClusterIstioServiceDataSource: {
+	cluster_name:      string
+	location:          string
+	service_name:      string
+	service_namespace: string
+	display_name?:     string
+	id?:               string
+	name?:             string
+	project?:          string
+	service_id?:       string
+	telemetry?: [{
+		resource_name: string
+	}, ...]
+}
+#GoogleMonitoringMeshIstioServiceDataSource: {
+	mesh_uid:          string
+	service_name:      string
+	service_namespace: string
+	display_name?:     string
+	id?:               string
+	name?:             string
+	project?:          string
+	service_id?:       string
+	telemetry?: [{
+		resource_name: string
+	}, ...]
 }
 #GoogleMonitoringNotificationChannelDataSource: {
+	description?:  string
 	display_name?: string
+	enabled?:      bool
+	id?:           string
 	labels?: [_]: string
+	name?:    string
 	project?: string
-	type?:    string
+	sensitive_labels?: [{
+		auth_token:  string
+		password:    string
+		service_key: string
+	}, ...]
+	type?: string
 	user_labels?: [_]: string
+	verification_status?: string
 }
-#GoogleMonitoringUptimeCheckIpsDataSource: {}
-#GoogleNetblockIpRangesDataSource: range_type?: string
-#GoogleOrganizationDataSource: organization?:   string
-#GoogleProjectDataSource: project_id?:          string
+#GoogleMonitoringUptimeCheckIpsDataSource: {
+	id?: string
+	uptime_check_ips?: [{
+		ip_address: string
+		location:   string
+		region:     string
+	}, ...]
+}
+#GoogleNetblockIpRangesDataSource: {
+	cidr_blocks?: [string, ...]
+	cidr_blocks_ipv4?: [string, ...]
+	cidr_blocks_ipv6?: [string, ...]
+	id?:         string
+	range_type?: string
+}
+#GoogleOrganizationDataSource: {
+	create_time?:           string
+	directory_customer_id?: string
+	domain?:                string
+	id?:                    string
+	lifecycle_state?:       string
+	name?:                  string
+	org_id?:                string
+	organization?:          string
+}
+#GoogleProjectDataSource: {
+	auto_create_network?: bool
+	billing_account?:     string
+	folder_id?:           string
+	id?:                  string
+	labels?: [_]: string
+	name?:        string
+	number?:      string
+	org_id?:      string
+	project_id?:  string
+	skip_delete?: bool
+}
 #GoogleProjectOrganizationPolicyDataSource: {
 	constraint: string
 	project:    string
+	boolean_policy?: [{
+		enforced: bool
+	}, ...]
+	etag?: string
+	id?:   string
+	list_policy?: [{
+		allow: [{
+			all: bool
+			values: [string, ...]
+		}, ...]
+		deny: [{
+			all: bool
+			values: [string, ...]
+		}, ...]
+		inherit_from_parent: bool
+		suggested_value:     string
+	}, ...]
+	restore_policy?: [{
+		default: bool
+	}, ...]
+	update_time?: string
+	version?:     number
 }
-#GoogleProjectsDataSource: filter: string
+#GoogleProjectsDataSource: {
+	filter: string
+	id?:    string
+	projects?: [{
+		create_time: string
+		labels: [_]: string
+		lifecycle_state: string
+		name:            string
+		number:          string
+		parent: [_]: string
+		project_id: string
+	}, ...]
+}
+#GooglePubsubTopicDataSource: {
+	name:          string
+	id?:           string
+	kms_key_name?: string
+	labels?: [_]: string
+	message_storage_policy?: [{
+		allowed_persistence_regions: [string, ...]
+	}, ...]
+	project?: string
+}
+#GoogleRedisInstanceDataSource: {
+	name:                     string
+	alternative_location_id?: string
+	auth_enabled?:            bool
+	auth_string?:             string
+	authorized_network?:      string
+	connect_mode?:            string
+	create_time?:             string
+	current_location_id?:     string
+	display_name?:            string
+	host?:                    string
+	id?:                      string
+	labels?: [_]: string
+	location_id?:              string
+	memory_size_gb?:           number
+	persistence_iam_identity?: string
+	port?:                     number
+	project?:                  string
+	redis_configs?: [_]: string
+	redis_version?:     string
+	region?:            string
+	reserved_ip_range?: string
+	tier?:              string
+}
+#GoogleRuntimeconfigConfigDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	project?:     string
+}
+#GoogleSecretManagerSecretVersionDataSource: {
+	secret:        string
+	create_time?:  string
+	destroy_time?: string
+	enabled?:      bool
+	id?:           string
+	name?:         string
+	project?:      string
+	secret_data?:  string
+	version?:      string
+}
 #GoogleServiceAccountDataSource: {
-	account_id: string
-	project?:   string
+	account_id:    string
+	display_name?: string
+	email?:        string
+	id?:           string
+	name?:         string
+	project?:      string
+	unique_id?:    string
 }
 #GoogleServiceAccountAccessTokenDataSource: {
 	scopes: [string, ...]
 	target_service_account: string
+	access_token?:          string
 	delegates?: [string, ...]
+	id?:       string
 	lifetime?: string
+}
+#GoogleServiceAccountIdTokenDataSource: {
+	target_audience: string
+	delegates?: [string, ...]
+	id?:                     string
+	id_token?:               string
+	include_email?:          bool
+	target_service_account?: string
 }
 #GoogleServiceAccountKeyDataSource: {
 	name:             string
+	id?:              string
+	key_algorithm?:   string
 	project?:         string
+	public_key?:      string
 	public_key_type?: string
 }
-#GoogleSqlCaCertsDataSource: instance: string
+#GoogleSpannerInstanceDataSource: {
+	name:          string
+	config?:       string
+	display_name?: string
+	id?:           string
+	labels?: [_]: string
+	num_nodes?: number
+	project?:   string
+	state?:     string
+}
+#GoogleSqlBackupRunDataSource: {
+	instance:     string
+	backup_id?:   number
+	id?:          string
+	location?:    string
+	most_recent?: bool
+	start_time?:  string
+	status?:      string
+}
+#GoogleSqlCaCertsDataSource: {
+	instance:        string
+	active_version?: string
+	certs?: [{
+		cert:             string
+		common_name:      string
+		create_time:      string
+		expiration_time:  string
+		sha1_fingerprint: string
+	}, ...]
+	id?:      string
+	project?: string
+}
+#GoogleSqlDatabaseInstanceDataSource: {
+	name:                 string
+	connection_name?:     string
+	database_version?:    string
+	deletion_protection?: bool
+	first_ip_address?:    string
+	id?:                  string
+	ip_address?: [{
+		ip_address:     string
+		time_to_retire: string
+		type:           string
+	}, ...]
+	master_instance_name?: string
+	private_ip_address?:   string
+	project?:              string
+	public_ip_address?:    string
+	region?:               string
+	replica_configuration?: [{
+		ca_certificate:            string
+		client_certificate:        string
+		client_key:                string
+		connect_retry_interval:    number
+		dump_file_path:            string
+		failover_target:           bool
+		master_heartbeat_period:   number
+		password:                  string
+		ssl_cipher:                string
+		username:                  string
+		verify_server_certificate: bool
+	}, ...]
+	restore_backup_context?: [{
+		backup_run_id: number
+		instance_id:   string
+		project:       string
+	}, ...]
+	root_password?: string
+	self_link?:     string
+	server_ca_cert?: [{
+		cert:             string
+		common_name:      string
+		create_time:      string
+		expiration_time:  string
+		sha1_fingerprint: string
+	}, ...]
+	service_account_email_address?: string
+	settings?: [{
+		activation_policy: string
+		authorized_gae_applications: [string, ...]
+		availability_type: string
+		backup_configuration: [{
+			binary_log_enabled:             bool
+			enabled:                        bool
+			location:                       string
+			point_in_time_recovery_enabled: bool
+			start_time:                     string
+		}, ...]
+		crash_safe_replication: bool
+		database_flags: [{
+			name:  string
+			value: string
+		}, ...]
+		disk_autoresize: bool
+		disk_size:       number
+		disk_type:       string
+		ip_configuration: [{
+			authorized_networks: [{
+				expiration_time: string
+				name:            string
+				value:           string
+			}, ...]
+			ipv4_enabled:    bool
+			private_network: string
+			require_ssl:     bool
+		}, ...]
+		location_preference: [{
+			follow_gae_application: string
+			zone:                   string
+		}, ...]
+		maintenance_window: [{
+			day:          number
+			hour:         number
+			update_track: string
+		}, ...]
+		pricing_plan:     string
+		replication_type: string
+		tier:             string
+		user_labels: [_]: string
+		version: number
+	}, ...]
+}
 #GoogleStorageBucketObjectDataSource: {
-	bucket?: string
-	name?:   string
+	bucket?:              string
+	cache_control?:       string
+	content?:             string
+	content_disposition?: string
+	content_encoding?:    string
+	content_language?:    string
+	content_type?:        string
+	crc32c?:              string
+	detect_md5hash?:      string
+	id?:                  string
+	md5hash?:             string
+	media_link?:          string
+	metadata?: [_]: string
+	name?:          string
+	output_name?:   string
+	self_link?:     string
+	source?:        string
+	storage_class?: string
+}
+#GoogleStorageBucketObjectContentDataSource: {
+	bucket:               string
+	name:                 string
+	cache_control?:       string
+	content?:             string
+	content_disposition?: string
+	content_encoding?:    string
+	content_language?:    string
+	content_type?:        string
+	crc32c?:              string
+	detect_md5hash?:      string
+	id?:                  string
+	md5hash?:             string
+	media_link?:          string
+	metadata?: [_]: string
+	output_name?:   string
+	self_link?:     string
+	source?:        string
+	storage_class?: string
 }
 #GoogleStorageObjectSignedUrlDataSource: {
 	bucket:        string
@@ -189,70 +1645,109 @@ package google
 	duration?:     string
 	extension_headers?: [_]: string
 	http_method?: string
+	id?:          string
+	signed_url?:  string
 }
-#GoogleStorageProjectServiceAccountDataSource: user_project?: string
-#GoogleStorageTransferProjectServiceAccountDataSource: {}
-#GoogleTpuTensorflowVersionsDataSource: {}
+#GoogleStorageProjectServiceAccountDataSource: {
+	email_address?: string
+	id?:            string
+	project?:       string
+	user_project?:  string
+}
+#GoogleStorageTransferProjectServiceAccountDataSource: {
+	email?:   string
+	id?:      string
+	project?: string
+}
+#GoogleTpuTensorflowVersionsDataSource: {
+	id?:      string
+	project?: string
+	versions?: [string, ...]
+	zone?: string
+}
 #DataSources: {
-	google_active_folder?: [_]:                            #GoogleActiveFolderDataSource
-	google_bigquery_default_service_account?: [_]:         #GoogleBigqueryDefaultServiceAccountDataSource
-	google_billing_account?: [_]:                          #GoogleBillingAccountDataSource
-	google_client_config?: [_]:                            #GoogleClientConfigDataSource
-	google_client_openid_userinfo?: [_]:                   #GoogleClientOpenidUserinfoDataSource
-	google_cloudfunctions_function?: [_]:                  #GoogleCloudfunctionsFunctionDataSource
-	google_composer_image_versions?: [_]:                  #GoogleComposerImageVersionsDataSource
-	google_compute_address?: [_]:                          #GoogleComputeAddressDataSource
-	google_compute_backend_bucket?: [_]:                   #GoogleComputeBackendBucketDataSource
-	google_compute_backend_service?: [_]:                  #GoogleComputeBackendServiceDataSource
-	google_compute_default_service_account?: [_]:          #GoogleComputeDefaultServiceAccountDataSource
-	google_compute_forwarding_rule?: [_]:                  #GoogleComputeForwardingRuleDataSource
-	google_compute_global_address?: [_]:                   #GoogleComputeGlobalAddressDataSource
-	google_compute_image?: [_]:                            #GoogleComputeImageDataSource
-	google_compute_instance?: [_]:                         #GoogleComputeInstanceDataSource
-	google_compute_instance_group?: [_]:                   #GoogleComputeInstanceGroupDataSource
-	google_compute_instance_serial_port?: [_]:             #GoogleComputeInstanceSerialPortDataSource
-	google_compute_lb_ip_ranges?: [_]:                     #GoogleComputeLbIpRangesDataSource
-	google_compute_network?: [_]:                          #GoogleComputeNetworkDataSource
-	google_compute_network_endpoint_group?: [_]:           #GoogleComputeNetworkEndpointGroupDataSource
-	google_compute_node_types?: [_]:                       #GoogleComputeNodeTypesDataSource
-	google_compute_region_instance_group?: [_]:            #GoogleComputeRegionInstanceGroupDataSource
-	google_compute_regions?: [_]:                          #GoogleComputeRegionsDataSource
-	google_compute_router?: [_]:                           #GoogleComputeRouterDataSource
-	google_compute_ssl_certificate?: [_]:                  #GoogleComputeSslCertificateDataSource
-	google_compute_ssl_policy?: [_]:                       #GoogleComputeSslPolicyDataSource
-	google_compute_subnetwork?: [_]:                       #GoogleComputeSubnetworkDataSource
-	google_compute_vpn_gateway?: [_]:                      #GoogleComputeVpnGatewayDataSource
-	google_compute_zones?: [_]:                            #GoogleComputeZonesDataSource
-	google_container_cluster?: [_]:                        #GoogleContainerClusterDataSource
-	google_container_engine_versions?: [_]:                #GoogleContainerEngineVersionsDataSource
-	google_container_registry_image?: [_]:                 #GoogleContainerRegistryImageDataSource
-	google_container_registry_repository?: [_]:            #GoogleContainerRegistryRepositoryDataSource
-	google_dns_keys?: [_]:                                 #GoogleDnsKeysDataSource
-	google_dns_managed_zone?: [_]:                         #GoogleDnsManagedZoneDataSource
-	google_folder?: [_]:                                   #GoogleFolderDataSource
-	google_folder_organization_policy?: [_]:               #GoogleFolderOrganizationPolicyDataSource
-	google_iam_policy?: [_]:                               #GoogleIamPolicyDataSource
-	google_iam_role?: [_]:                                 #GoogleIamRoleDataSource
-	google_kms_crypto_key?: [_]:                           #GoogleKmsCryptoKeyDataSource
-	google_kms_crypto_key_version?: [_]:                   #GoogleKmsCryptoKeyVersionDataSource
-	google_kms_key_ring?: [_]:                             #GoogleKmsKeyRingDataSource
-	google_kms_secret?: [_]:                               #GoogleKmsSecretDataSource
-	google_kms_secret_ciphertext?: [_]:                    #GoogleKmsSecretCiphertextDataSource
-	google_monitoring_app_engine_service?: [_]:            #GoogleMonitoringAppEngineServiceDataSource
-	google_monitoring_notification_channel?: [_]:          #GoogleMonitoringNotificationChannelDataSource
-	google_monitoring_uptime_check_ips?: [_]:              #GoogleMonitoringUptimeCheckIpsDataSource
-	google_netblock_ip_ranges?: [_]:                       #GoogleNetblockIpRangesDataSource
-	google_organization?: [_]:                             #GoogleOrganizationDataSource
-	google_project?: [_]:                                  #GoogleProjectDataSource
-	google_project_organization_policy?: [_]:              #GoogleProjectOrganizationPolicyDataSource
-	google_projects?: [_]:                                 #GoogleProjectsDataSource
-	google_service_account?: [_]:                          #GoogleServiceAccountDataSource
-	google_service_account_access_token?: [_]:             #GoogleServiceAccountAccessTokenDataSource
-	google_service_account_key?: [_]:                      #GoogleServiceAccountKeyDataSource
-	google_sql_ca_certs?: [_]:                             #GoogleSqlCaCertsDataSource
-	google_storage_bucket_object?: [_]:                    #GoogleStorageBucketObjectDataSource
-	google_storage_object_signed_url?: [_]:                #GoogleStorageObjectSignedUrlDataSource
-	google_storage_project_service_account?: [_]:          #GoogleStorageProjectServiceAccountDataSource
-	google_storage_transfer_project_service_account?: [_]: #GoogleStorageTransferProjectServiceAccountDataSource
-	google_tpu_tensorflow_versions?: [_]:                  #GoogleTpuTensorflowVersionsDataSource
+	google_active_folder?: [_]:                                #GoogleActiveFolderDataSource
+	google_app_engine_default_service_account?: [_]:           #GoogleAppEngineDefaultServiceAccountDataSource
+	google_bigquery_default_service_account?: [_]:             #GoogleBigqueryDefaultServiceAccountDataSource
+	google_billing_account?: [_]:                              #GoogleBillingAccountDataSource
+	google_client_config?: [_]:                                #GoogleClientConfigDataSource
+	google_client_openid_userinfo?: [_]:                       #GoogleClientOpenidUserinfoDataSource
+	google_cloud_identity_group_memberships?: [_]:             #GoogleCloudIdentityGroupMembershipsDataSource
+	google_cloud_identity_groups?: [_]:                        #GoogleCloudIdentityGroupsDataSource
+	google_cloud_run_locations?: [_]:                          #GoogleCloudRunLocationsDataSource
+	google_cloud_run_service?: [_]:                            #GoogleCloudRunServiceDataSource
+	google_cloudfunctions_function?: [_]:                      #GoogleCloudfunctionsFunctionDataSource
+	google_composer_environment?: [_]:                         #GoogleComposerEnvironmentDataSource
+	google_composer_image_versions?: [_]:                      #GoogleComposerImageVersionsDataSource
+	google_compute_address?: [_]:                              #GoogleComputeAddressDataSource
+	google_compute_backend_bucket?: [_]:                       #GoogleComputeBackendBucketDataSource
+	google_compute_backend_service?: [_]:                      #GoogleComputeBackendServiceDataSource
+	google_compute_default_service_account?: [_]:              #GoogleComputeDefaultServiceAccountDataSource
+	google_compute_forwarding_rule?: [_]:                      #GoogleComputeForwardingRuleDataSource
+	google_compute_global_address?: [_]:                       #GoogleComputeGlobalAddressDataSource
+	google_compute_global_forwarding_rule?: [_]:               #GoogleComputeGlobalForwardingRuleDataSource
+	google_compute_image?: [_]:                                #GoogleComputeImageDataSource
+	google_compute_instance?: [_]:                             #GoogleComputeInstanceDataSource
+	google_compute_instance_group?: [_]:                       #GoogleComputeInstanceGroupDataSource
+	google_compute_instance_serial_port?: [_]:                 #GoogleComputeInstanceSerialPortDataSource
+	google_compute_instance_template?: [_]:                    #GoogleComputeInstanceTemplateDataSource
+	google_compute_lb_ip_ranges?: [_]:                         #GoogleComputeLbIpRangesDataSource
+	google_compute_network?: [_]:                              #GoogleComputeNetworkDataSource
+	google_compute_network_endpoint_group?: [_]:               #GoogleComputeNetworkEndpointGroupDataSource
+	google_compute_node_types?: [_]:                           #GoogleComputeNodeTypesDataSource
+	google_compute_region_instance_group?: [_]:                #GoogleComputeRegionInstanceGroupDataSource
+	google_compute_region_ssl_certificate?: [_]:               #GoogleComputeRegionSslCertificateDataSource
+	google_compute_regions?: [_]:                              #GoogleComputeRegionsDataSource
+	google_compute_resource_policy?: [_]:                      #GoogleComputeResourcePolicyDataSource
+	google_compute_router?: [_]:                               #GoogleComputeRouterDataSource
+	google_compute_ssl_certificate?: [_]:                      #GoogleComputeSslCertificateDataSource
+	google_compute_ssl_policy?: [_]:                           #GoogleComputeSslPolicyDataSource
+	google_compute_subnetwork?: [_]:                           #GoogleComputeSubnetworkDataSource
+	google_compute_vpn_gateway?: [_]:                          #GoogleComputeVpnGatewayDataSource
+	google_compute_zones?: [_]:                                #GoogleComputeZonesDataSource
+	google_container_cluster?: [_]:                            #GoogleContainerClusterDataSource
+	google_container_engine_versions?: [_]:                    #GoogleContainerEngineVersionsDataSource
+	google_container_registry_image?: [_]:                     #GoogleContainerRegistryImageDataSource
+	google_container_registry_repository?: [_]:                #GoogleContainerRegistryRepositoryDataSource
+	google_dns_keys?: [_]:                                     #GoogleDnsKeysDataSource
+	google_dns_managed_zone?: [_]:                             #GoogleDnsManagedZoneDataSource
+	google_folder?: [_]:                                       #GoogleFolderDataSource
+	google_folder_organization_policy?: [_]:                   #GoogleFolderOrganizationPolicyDataSource
+	google_game_services_game_server_deployment_rollout?: [_]: #GoogleGameServicesGameServerDeploymentRolloutDataSource
+	google_iam_policy?: [_]:                                   #GoogleIamPolicyDataSource
+	google_iam_role?: [_]:                                     #GoogleIamRoleDataSource
+	google_iam_testable_permissions?: [_]:                     #GoogleIamTestablePermissionsDataSource
+	google_kms_crypto_key?: [_]:                               #GoogleKmsCryptoKeyDataSource
+	google_kms_crypto_key_version?: [_]:                       #GoogleKmsCryptoKeyVersionDataSource
+	google_kms_key_ring?: [_]:                                 #GoogleKmsKeyRingDataSource
+	google_kms_secret?: [_]:                                   #GoogleKmsSecretDataSource
+	google_kms_secret_ciphertext?: [_]:                        #GoogleKmsSecretCiphertextDataSource
+	google_monitoring_app_engine_service?: [_]:                #GoogleMonitoringAppEngineServiceDataSource
+	google_monitoring_cluster_istio_service?: [_]:             #GoogleMonitoringClusterIstioServiceDataSource
+	google_monitoring_mesh_istio_service?: [_]:                #GoogleMonitoringMeshIstioServiceDataSource
+	google_monitoring_notification_channel?: [_]:              #GoogleMonitoringNotificationChannelDataSource
+	google_monitoring_uptime_check_ips?: [_]:                  #GoogleMonitoringUptimeCheckIpsDataSource
+	google_netblock_ip_ranges?: [_]:                           #GoogleNetblockIpRangesDataSource
+	google_organization?: [_]:                                 #GoogleOrganizationDataSource
+	google_project?: [_]:                                      #GoogleProjectDataSource
+	google_project_organization_policy?: [_]:                  #GoogleProjectOrganizationPolicyDataSource
+	google_projects?: [_]:                                     #GoogleProjectsDataSource
+	google_pubsub_topic?: [_]:                                 #GooglePubsubTopicDataSource
+	google_redis_instance?: [_]:                               #GoogleRedisInstanceDataSource
+	google_runtimeconfig_config?: [_]:                         #GoogleRuntimeconfigConfigDataSource
+	google_secret_manager_secret_version?: [_]:                #GoogleSecretManagerSecretVersionDataSource
+	google_service_account?: [_]:                              #GoogleServiceAccountDataSource
+	google_service_account_access_token?: [_]:                 #GoogleServiceAccountAccessTokenDataSource
+	google_service_account_id_token?: [_]:                     #GoogleServiceAccountIdTokenDataSource
+	google_service_account_key?: [_]:                          #GoogleServiceAccountKeyDataSource
+	google_spanner_instance?: [_]:                             #GoogleSpannerInstanceDataSource
+	google_sql_backup_run?: [_]:                               #GoogleSqlBackupRunDataSource
+	google_sql_ca_certs?: [_]:                                 #GoogleSqlCaCertsDataSource
+	google_sql_database_instance?: [_]:                        #GoogleSqlDatabaseInstanceDataSource
+	google_storage_bucket_object?: [_]:                        #GoogleStorageBucketObjectDataSource
+	google_storage_bucket_object_content?: [_]:                #GoogleStorageBucketObjectContentDataSource
+	google_storage_object_signed_url?: [_]:                    #GoogleStorageObjectSignedUrlDataSource
+	google_storage_project_service_account?: [_]:              #GoogleStorageProjectServiceAccountDataSource
+	google_storage_transfer_project_service_account?: [_]:     #GoogleStorageTransferProjectServiceAccountDataSource
+	google_tpu_tensorflow_versions?: [_]:                      #GoogleTpuTensorflowVersionsDataSource
 }

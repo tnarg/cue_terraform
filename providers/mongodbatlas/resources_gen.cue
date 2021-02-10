@@ -2,9 +2,15 @@
 package mongodbatlas
 
 #MongodbatlasAlertConfigurationResource: {
-	event_type: string
-	project_id: string
+	event_type:              string
+	project_id:              string
+	alert_configuration_id?: string
+	created?:                string
+	enabled?:                bool
+	id?:                     string
 	metric_threshold?: [_]: string
+	threshold?: [_]:        string
+	updated?: string
 	matcher?: [{
 		field_name?: string
 		operator?:   string
@@ -35,16 +41,55 @@ package mongodbatlas
 		victor_ops_routing_key?: string
 	}, ...]
 }
-#MongodbatlasAuditingResource: project_id: string
+#MongodbatlasAuditingResource: {
+	project_id:                   string
+	audit_authorization_success?: bool
+	audit_filter?:                string
+	configuration_type?:          string
+	enabled?:                     bool
+	id?:                          string
+}
+#MongodbatlasCloudProviderAccessResource: {
+	project_id:                      string
+	provider_name:                   string
+	atlas_assumed_role_external_id?: string
+	atlas_aws_account_arn?:          string
+	authorized_date?:                string
+	created_date?:                   string
+	feature_usages?: [{
+		feature_id:   string
+		feature_type: string
+	}, ...]
+	iam_assumed_role_arn?: string
+	id?:                   string
+	role_id?:              string
+}
 #MongodbatlasCloudProviderSnapshotResource: {
-	cluster_name:      string
-	description:       string
-	project_id:        string
-	retention_in_days: number
+	cluster_name:        string
+	description:         string
+	project_id:          string
+	retention_in_days:   number
+	created_at?:         string
+	expires_at?:         string
+	id?:                 string
+	master_key_uuid?:    string
+	mongod_version?:     string
+	snapshot_id?:        string
+	snapshot_type?:      string
+	status?:             string
+	storage_size_bytes?: number
+	type?:               string
 }
 #MongodbatlasCloudProviderSnapshotBackupPolicyResource: {
-	cluster_name: string
-	project_id:   string
+	cluster_name:              string
+	project_id:                string
+	cluster_id?:               string
+	id?:                       string
+	next_snapshot?:            string
+	reference_hour_of_day?:    number
+	reference_minute_of_hour?: number
+	restore_window_days?:      number
+	update_snapshots?:         bool
 	policies?: [{
 		id: string
 		policy_item?: [{
@@ -61,28 +106,119 @@ package mongodbatlas
 	delivery_type: [_]: string
 	project_id:  string
 	snapshot_id: string
+	cancelled?:  bool
+	created_at?: string
+	delivery_url?: [string, ...]
+	expired?:                 bool
+	expires_at?:              string
+	finished_at?:             string
+	id?:                      string
+	snapshot_restore_job_id?: string
+	timestamp?:               string
 }
 #MongodbatlasClusterResource: {
-	name:                        string
-	project_id:                  string
-	provider_instance_size_name: string
-	provider_name:               string
-	backup_enabled?:             bool
-	num_shards?:                 number
-	provider_backup_enabled?:    bool
-	labels?: [{}, ...]
+	name:                                     string
+	project_id:                               string
+	provider_instance_size_name:              string
+	provider_name:                            string
+	auto_scaling_compute_enabled?:            bool
+	auto_scaling_compute_scale_down_enabled?: bool
+	auto_scaling_disk_gb_enabled?:            bool
+	backing_provider_name?:                   string
+	backup_enabled?:                          bool
+	bi_connector?: [_]: string
+	cluster_id?:   string
+	cluster_type?: string
+	connection_strings?: [{
+		aws_private_link: [_]:     string
+		aws_private_link_srv: [_]: string
+		private: string
+		private_endpoint: [{
+			connection_string: string
+			endpoints: [{
+				endpoint_id:   string
+				provider_name: string
+				region:        string
+			}, ...]
+			srv_connection_string: string
+			type:                  string
+		}, ...]
+		private_srv:  string
+		standard:     string
+		standard_srv: string
+	}, ...]
+	container_id?:                                    string
+	disk_size_gb?:                                    number
+	encryption_at_rest_provider?:                     string
+	id?:                                              string
+	mongo_db_major_version?:                          string
+	mongo_db_version?:                                string
+	mongo_uri?:                                       string
+	mongo_uri_updated?:                               string
+	mongo_uri_with_options?:                          string
+	num_shards?:                                      number
+	paused?:                                          bool
+	pit_enabled?:                                     bool
+	provider_auto_scaling_compute_max_instance_size?: string
+	provider_auto_scaling_compute_min_instance_size?: string
+	provider_backup_enabled?:                         bool
+	provider_disk_iops?:                              number
+	provider_disk_type_name?:                         string
+	provider_encrypt_ebs_volume?:                     bool
+	provider_region_name?:                            string
+	provider_volume_type?:                            string
+	replication_factor?:                              number
+	snapshot_backup_policy?: [{
+		cluster_id:    string
+		cluster_name:  string
+		next_snapshot: string
+		policies: [{
+			id: string
+			policy_item: [{
+				frequency_interval: number
+				frequency_type:     string
+				id:                 string
+				retention_unit:     string
+				retention_value:    number
+			}, ...]
+		}, ...]
+		reference_hour_of_day:    number
+		reference_minute_of_hour: number
+		restore_window_days:      number
+		update_snapshots:         bool
+	}, ...]
+	srv_address?: string
+	state_name?:  string
+	advanced_configuration?: [{
+		fail_index_key_too_long?:              bool
+		javascript_enabled?:                   bool
+		minimum_enabled_tls_protocol?:         string
+		no_table_scan?:                        bool
+		oplog_size_mb?:                        number
+		sample_refresh_interval_bi_connector?: number
+		sample_size_bi_connector?:             number
+	}, ...]
+	labels?: [{
+		key?:   string
+		value?: string
+	}, ...]
 	replication_specs?: [{
 		num_shards: number
+		id?:        string
 		zone_name?: string
 		regions_config?: [{
 			analytics_nodes?: number
+			electable_nodes?: number
+			priority?:        number
 			read_only_nodes?: number
+			region_name?:     string
 		}, ...]
 	}, ...]
 }
 #MongodbatlasCustomDbRoleResource: {
 	project_id: string
 	role_name:  string
+	id?:        string
 	actions?: [{
 		action: string
 		resources?: [{
@@ -100,63 +236,182 @@ package mongodbatlas
 	project_id:          string
 	username:            string
 	auth_database_name?: string
+	aws_iam_type?:       string
 	database_name?:      string
+	id?:                 string
 	password?:           string
 	x509_type?:          string
-	labels?: [{}, ...]
-	roles?: [{}, ...]
+	labels?: [{
+		key?:   string
+		value?: string
+	}, ...]
+	roles?: [{
+		collection_name?: string
+		database_name?:   string
+		role_name?:       string
+	}, ...]
+	scopes?: [{
+		name?: string
+		type?: string
+	}, ...]
 }
 #MongodbatlasEncryptionAtRestResource: {
 	project_id: string
 	aws_kms?: [_]:          string
 	azure_key_vault?: [_]:  string
 	google_cloud_kms?: [_]: string
+	id?: string
 }
 #MongodbatlasGlobalClusterConfigResource: {
 	cluster_name: string
 	project_id:   string
-	custom_zone_mappings?: [{}, ...]
+	custom_zone_mapping?: [_]: string
+	id?: string
+	custom_zone_mappings?: [{
+		location?: string
+		zone?:     string
+	}, ...]
 	managed_namespaces?: [{
 		collection:       string
 		custom_shard_key: string
 		db:               string
 	}, ...]
 }
-#MongodbatlasMaintenanceWindowResource: project_id: string
+#MongodbatlasMaintenanceWindowResource: {
+	project_id:           string
+	day_of_week?:         number
+	defer?:               bool
+	hour_of_day?:         number
+	id?:                  string
+	number_of_deferrals?: number
+	start_asap?:          bool
+}
 #MongodbatlasNetworkContainerResource: {
-	atlas_cidr_block: string
-	project_id:       string
-	provider_name?:   string
+	atlas_cidr_block:       string
+	project_id:             string
+	azure_subscription_id?: string
+	container_id?:          string
+	gcp_project_id?:        string
+	id?:                    string
+	network_name?:          string
+	provider_name?:         string
+	provisioned?:           bool
+	region?:                string
+	region_name?:           string
+	vnet_name?:             string
+	vpc_id?:                string
 }
 #MongodbatlasNetworkPeeringResource: {
-	container_id:  string
-	project_id:    string
-	provider_name: string
+	container_id:            string
+	project_id:              string
+	provider_name:           string
+	accepter_region_name?:   string
+	atlas_cidr_block?:       string
+	atlas_gcp_project_id?:   string
+	atlas_id?:               string
+	atlas_vpc_name?:         string
+	aws_account_id?:         string
+	azure_directory_id?:     string
+	azure_subscription_id?:  string
+	connection_id?:          string
+	error_message?:          string
+	error_state?:            string
+	error_state_name?:       string
+	gcp_project_id?:         string
+	id?:                     string
+	network_name?:           string
+	peer_id?:                string
+	resource_group_name?:    string
+	route_table_cidr_block?: string
+	status?:                 string
+	status_name?:            string
+	vnet_name?:              string
+	vpc_id?:                 string
 }
 #MongodbatlasPrivateEndpointResource: {
-	project_id:    string
-	provider_name: string
-	region:        string
+	project_id:             string
+	provider_name:          string
+	region:                 string
+	endpoint_service_name?: string
+	error_message?:         string
+	id?:                    string
+	interface_endpoints?: [string, ...]
+	private_link_id?: string
+	status?:          string
 }
 #MongodbatlasPrivateEndpointInterfaceLinkResource: {
 	interface_endpoint_id: string
 	private_link_id:       string
 	project_id:            string
+	connection_status?:    string
+	delete_requested?:     bool
+	error_message?:        string
+	id?:                   string
 }
 #MongodbatlasPrivateIpModeResource: {
 	enabled:    bool
 	project_id: string
+	id?:        string
+}
+#MongodbatlasPrivatelinkEndpointResource: {
+	project_id:             string
+	provider_name:          string
+	region:                 string
+	endpoint_service_name?: string
+	error_message?:         string
+	id?:                    string
+	interface_endpoints?: [string, ...]
+	private_endpoints?: [string, ...]
+	private_link_id?:                  string
+	private_link_service_name?:        string
+	private_link_service_resource_id?: string
+	status?:                           string
+}
+#MongodbatlasPrivatelinkEndpointServiceResource: {
+	endpoint_service_id:               string
+	private_link_id:                   string
+	project_id:                        string
+	provider_name:                     string
+	aws_connection_status?:            string
+	azure_status?:                     string
+	delete_requested?:                 bool
+	error_message?:                    string
+	id?:                               string
+	interface_endpoint_id?:            string
+	private_endpoint_connection_name?: string
+	private_endpoint_ip_address?:      string
+	private_endpoint_resource_id?:     string
 }
 #MongodbatlasProjectResource: {
-	name:   string
-	org_id: string
+	name:           string
+	org_id:         string
+	cluster_count?: number
+	created?:       string
+	id?:            string
 	teams?: [{
 		role_names: [string, ...]
 		team_id: string
 	}, ...]
 }
+#MongodbatlasProjectIpAccessListResource: {
+	project_id:          string
+	aws_security_group?: string
+	cidr_block?:         string
+	comment?:            string
+	id?:                 string
+	ip_address?:         string
+	timeouts?: {
+		delete?: string
+		read?:   string
+	}
+}
 #MongodbatlasProjectIpWhitelistResource: {
-	project_id: string
+	project_id:          string
+	aws_security_group?: string
+	cidr_block?:         string
+	comment?:            string
+	id?:                 string
+	ip_address?:         string
 	timeouts?: {
 		delete?: string
 		read?:   string
@@ -166,21 +421,55 @@ package mongodbatlas
 	name:   string
 	org_id: string
 	usernames: [string, ...]
+	id?:      string
+	team_id?: string
 }
 #MongodbatlasTeamsResource: {
 	name:   string
 	org_id: string
 	usernames: [string, ...]
+	id?:      string
+	team_id?: string
+}
+#MongodbatlasThirdPartyIntegrationResource: {
+	project_id:    string
+	type:          string
+	account_id?:   string
+	api_key?:      string
+	api_token?:    string
+	channel_name?: string
+	flow_name?:    string
+	id?:           string
+	license_key?:  string
+	org_name?:     string
+	read_token?:   string
+	region?:       string
+	routing_key?:  string
+	secret?:       string
+	service_key?:  string
+	team_name?:    string
+	url?:          string
+	write_token?:  string
 }
 #MongodbatlasX509AuthenticationDatabaseUserResource: {
-	project_id:               string
+	project_id: string
+	certificates?: [{
+		created_at: string
+		group_id:   string
+		id:         number
+		not_after:  string
+		subject:    string
+	}, ...]
+	current_certificate?:     string
 	customer_x509_cas?:       string
+	id?:                      string
 	months_until_expiration?: number
 	username?:                string
 }
 #Resources: {
 	mongodbatlas_alert_configuration?: [_]:                   #MongodbatlasAlertConfigurationResource
 	mongodbatlas_auditing?: [_]:                              #MongodbatlasAuditingResource
+	mongodbatlas_cloud_provider_access?: [_]:                 #MongodbatlasCloudProviderAccessResource
 	mongodbatlas_cloud_provider_snapshot?: [_]:               #MongodbatlasCloudProviderSnapshotResource
 	mongodbatlas_cloud_provider_snapshot_backup_policy?: [_]: #MongodbatlasCloudProviderSnapshotBackupPolicyResource
 	mongodbatlas_cloud_provider_snapshot_restore_job?: [_]:   #MongodbatlasCloudProviderSnapshotRestoreJobResource
@@ -195,9 +484,13 @@ package mongodbatlas
 	mongodbatlas_private_endpoint?: [_]:                      #MongodbatlasPrivateEndpointResource
 	mongodbatlas_private_endpoint_interface_link?: [_]:       #MongodbatlasPrivateEndpointInterfaceLinkResource
 	mongodbatlas_private_ip_mode?: [_]:                       #MongodbatlasPrivateIpModeResource
+	mongodbatlas_privatelink_endpoint?: [_]:                  #MongodbatlasPrivatelinkEndpointResource
+	mongodbatlas_privatelink_endpoint_service?: [_]:          #MongodbatlasPrivatelinkEndpointServiceResource
 	mongodbatlas_project?: [_]:                               #MongodbatlasProjectResource
+	mongodbatlas_project_ip_access_list?: [_]:                #MongodbatlasProjectIpAccessListResource
 	mongodbatlas_project_ip_whitelist?: [_]:                  #MongodbatlasProjectIpWhitelistResource
 	mongodbatlas_team?: [_]:                                  #MongodbatlasTeamResource
 	mongodbatlas_teams?: [_]:                                 #MongodbatlasTeamsResource
+	mongodbatlas_third_party_integration?: [_]:               #MongodbatlasThirdPartyIntegrationResource
 	mongodbatlas_x509_authentication_database_user?: [_]:     #MongodbatlasX509AuthenticationDatabaseUserResource
 }

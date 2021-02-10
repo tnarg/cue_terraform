@@ -3,6 +3,8 @@ package huaweicloudstack
 
 #HuaweicloudstackAsConfigurationV1Resource: {
 	scaling_configuration_name: string
+	id?:                        string
+	region?:                    string
 	instance_config?: [{
 		key_name:     string
 		flavor?:      string
@@ -36,17 +38,22 @@ package huaweicloudstack
 	vpc_id:             string
 	available_zones?: [string, ...]
 	cool_down_time?:               number
+	current_instance_number?:      number
 	delete_instances?:             string
 	delete_publicip?:              bool
 	desire_instance_number?:       number
 	health_periodic_audit_method?: string
 	health_periodic_audit_time?:   number
+	id?:                           string
 	instance_terminate_policy?:    string
 	instances?: [string, ...]
 	lb_listener_id?:      string
 	max_instance_number?: number
 	min_instance_number?: number
 	notifications?: [string, ...]
+	region?:                   string
+	scaling_configuration_id?: string
+	scaling_group_status?:     string
 	tags?: [_]: string
 	lbaas_listeners?: [{
 		listener_id:   string
@@ -70,6 +77,8 @@ package huaweicloudstack
 	scaling_policy_type: string
 	alarm_id?:           string
 	cool_down_time?:     number
+	id?:                 string
+	region?:             string
 	scaling_policy_action?: [{
 		instance_number?: number
 		operation?:       string
@@ -83,15 +92,25 @@ package huaweicloudstack
 	}, ...]
 }
 #HuaweicloudstackBlockstorageVolumeV2Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	cascade?:              bool
 	consistency_group_id?: string
 	description?:          string
+	id?:                   string
 	image_id?:             string
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
+	volume_type?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -101,14 +120,27 @@ package huaweicloudstack
 	floating_ip: string
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	region?:     string
 }
 #HuaweicloudstackComputeInstanceV2Resource: {
 	name:          string
+	access_ip_v4?: string
+	access_ip_v6?: string
 	admin_pass?:   string
-	config_drive?: bool
-	floating_ip?:  string
-	key_pair?:     string
+	all_metadata?: [_]: string
+	availability_zone?: string
+	config_drive?:      bool
+	flavor_id?:         string
+	flavor_name?:       string
+	floating_ip?:       string
+	id?:                string
+	image_id?:          string
+	image_name?:        string
+	key_pair?:          string
 	metadata?: [_]: string
+	region?: string
+	security_groups?: [string, ...]
 	stop_before_destroy?: bool
 	tags?: [string, ...]
 	user_data?: string
@@ -125,6 +157,13 @@ package huaweicloudstack
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		floating_ip?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	personality?: [{
 		content: string
@@ -145,11 +184,17 @@ package huaweicloudstack
 	}
 	volume?: [{
 		volume_id: string
+		device?:   string
+		id?:       string
 	}, ...]
 }
 #HuaweicloudstackComputeInterfaceAttachV2Resource: {
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	network_id?: string
+	port_id?:    string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -157,32 +202,52 @@ package huaweicloudstack
 }
 #HuaweicloudstackComputeKeypairV2Resource: {
 	name:        string
+	id?:         string
 	public_key?: string
+	region?:     string
 }
 #HuaweicloudstackComputeServergroupV2Resource: {
 	name: string
+	id?:  string
+	members?: [string, ...]
 	policies?: [string, ...]
+	region?: string
 }
 #HuaweicloudstackComputeVolumeAttachV2Resource: {
 	instance_id: string
 	volume_id:   string
+	device?:     string
+	id?:         string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudstackKmsKeyV1Resource: {
-	key_alias:        string
-	is_enabled?:      bool
-	key_description?: string
-	pending_days?:    string
+	key_alias:                string
+	creation_date?:           string
+	default_key_flag?:        string
+	domain_id?:               string
+	expiration_time?:         string
+	id?:                      string
+	is_enabled?:              bool
+	key_description?:         string
+	key_id?:                  string
+	pending_days?:            string
+	realm?:                   string
+	scheduled_deletion_date?: string
 }
 #HuaweicloudstackLbCertificateV2Resource: {
 	certificate:  string
 	private_key:  string
+	create_time?: string
 	description?: string
 	domain?:      string
+	id?:          string
 	name?:        string
+	region?:      string
+	update_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -192,9 +257,14 @@ package huaweicloudstack
 #HuaweicloudstackLbL7PolicyV2Resource: {
 	listener_id:      string
 	redirect_pool_id: string
+	action?:          string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	name?:            string
+	position?:        number
+	region?:          string
+	tenant_id?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -207,7 +277,11 @@ package huaweicloudstack
 	type:            string
 	value:           string
 	admin_state_up?: bool
+	id?:             string
 	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -219,8 +293,14 @@ package huaweicloudstack
 	protocol:                   string
 	protocol_port:              number
 	admin_state_up?:            bool
+	connection_limit?:          number
+	default_pool_id?:           string
 	default_tls_container_ref?: string
 	description?:               string
+	id?:                        string
+	name?:                      string
+	region?:                    string
+	tenant_id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -228,10 +308,16 @@ package huaweicloudstack
 	}
 }
 #HuaweicloudstackLbLoadbalancerV2Resource: {
-	vip_subnet_id:   string
-	admin_state_up?: bool
-	description?:    string
-	name?:           string
+	vip_subnet_id:          string
+	admin_state_up?:        bool
+	description?:           string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	tenant_id?:             string
+	vip_address?:           string
+	vip_port_id?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -244,7 +330,11 @@ package huaweicloudstack
 	protocol_port:   number
 	subnet_id:       string
 	admin_state_up?: bool
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -258,7 +348,13 @@ package huaweicloudstack
 	timeout:         number
 	type:            string
 	admin_state_up?: bool
+	expected_codes?: string
+	http_method?:    string
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	url_path?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -270,9 +366,12 @@ package huaweicloudstack
 	protocol:         string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	listener_id?:     string
 	loadbalancer_id?: string
 	name?:            string
+	region?:          string
+	tenant_id?:       string
 	persistence?: [{
 		type:         string
 		cookie_name?: string
@@ -286,6 +385,8 @@ package huaweicloudstack
 #HuaweicloudstackLbWhitelistV2Resource: {
 	listener_id:       string
 	enable_whitelist?: bool
+	id?:               string
+	tenant_id?:        string
 	whitelist?:        string
 	timeouts?: {
 		create?: string
@@ -296,16 +397,29 @@ package huaweicloudstack
 #HuaweicloudstackNetworkingFloatingipAssociateV2Resource: {
 	floating_ip: string
 	port_id:     string
+	id?:         string
+	region?:     string
 }
 #HuaweicloudstackNetworkingFloatingipV2Resource: {
-	pool: string
+	pool:       string
+	address?:   string
+	fixed_ip?:  string
+	id?:        string
+	port_id?:   string
+	region?:    string
+	tenant_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #HuaweicloudstackNetworkingNetworkV2Resource: {
-	name?: string
+	admin_state_up?: string
+	id?:             string
+	name?:           string
+	region?:         string
+	shared?:         string
+	tenant_id?:      string
 	segments?: [{
 		network_type?:     string
 		physical_network?: string
@@ -317,11 +431,22 @@ package huaweicloudstack
 	}
 }
 #HuaweicloudstackNetworkingPortV2Resource: {
-	network_id:          string
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	all_security_group_ids?: [string, ...]
+	device_id?:          string
+	device_owner?:       string
+	id?:                 string
+	mac_address?:        string
 	name?:               string
 	no_security_groups?: bool
+	region?:             string
+	security_group_ids?: [string, ...]
+	tenant_id?: string
 	allowed_address_pairs?: [{
-		ip_address: string
+		ip_address:   string
+		mac_address?: string
 	}, ...]
 	fixed_ip?: [{
 		subnet_id:   string
@@ -333,7 +458,11 @@ package huaweicloudstack
 	}
 }
 #HuaweicloudstackNetworkingRouterInterfaceV2Resource: {
-	router_id: string
+	router_id:  string
+	id?:        string
+	port_id?:   string
+	region?:    string
+	subnet_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -343,9 +472,18 @@ package huaweicloudstack
 	destination_cidr: string
 	next_hop:         string
 	router_id:        string
+	id?:              string
+	region?:          string
 }
 #HuaweicloudstackNetworkingRouterV2Resource: {
-	name?: string
+	admin_state_up?:      bool
+	distributed?:         bool
+	enable_snat?:         bool
+	external_network_id?: string
+	id?:                  string
+	name?:                string
+	region?:              string
+	tenant_id?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -355,11 +493,23 @@ package huaweicloudstack
 	direction:         string
 	ethertype:         string
 	security_group_id: string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
 	timeouts?: delete?: string
 }
 #HuaweicloudstackNetworkingSecgroupV2Resource: {
 	name:                  string
 	delete_default_rules?: bool
+	description?:          string
+	id?:                   string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: delete?: string
 }
 #HuaweicloudstackNetworkingSubnetV2Resource: {
@@ -367,9 +517,13 @@ package huaweicloudstack
 	network_id: string
 	dns_nameservers?: [string, ...]
 	enable_dhcp?: bool
+	gateway_ip?:  string
+	id?:          string
 	ip_version?:  number
 	name?:        string
 	no_gateway?:  bool
+	region?:      string
+	tenant_id?:   string
 	allocation_pools?: [{
 		end:   string
 		start: string
@@ -385,11 +539,20 @@ package huaweicloudstack
 }
 #HuaweicloudstackNetworkingVipAssociateV2Resource: {
 	port_ids: [string, ...]
-	vip_id: string
+	vip_id:          string
+	id?:             string
+	vip_ip_address?: string
+	vip_subnet_id?:  string
 }
 #HuaweicloudstackNetworkingVipV2Resource: {
-	network_id: string
-	subnet_id:  string
+	network_id:    string
+	subnet_id:     string
+	device_owner?: string
+	id?:           string
+	ip_address?:   string
+	name?:         string
+	status?:       string
+	tenant_id?:    string
 }
 #Resources: {
 	huaweicloudstack_as_configuration_v1?: [_]:                #HuaweicloudstackAsConfigurationV1Resource

@@ -4,6 +4,7 @@ package opsgenie
 #OpsgenieEscalationDataSource: {
 	name:           string
 	description?:   string
+	id?:            string
 	owner_team_id?: string
 	repeat?: [{
 		close_alert_after_all?:  bool
@@ -28,6 +29,7 @@ package opsgenie
 	alert_tags?: [string, ...]
 	description?:   string
 	enabled?:       bool
+	id?:            string
 	interval?:      number
 	interval_unit?: string
 	owner_team_id?: string
@@ -36,12 +38,20 @@ package opsgenie
 	name:           string
 	description?:   string
 	enabled?:       bool
+	id?:            string
 	owner_team_id?: string
 	timezone?:      string
+}
+#OpsgenieServiceDataSource: {
+	name:         string
+	description?: string
+	id?:          string
+	team_id?:     string
 }
 #OpsgenieTeamDataSource: {
 	name:         string
 	description?: string
+	id?:          string
 	member?: [{
 		id?:   string
 		role?: string
@@ -50,6 +60,7 @@ package opsgenie
 #OpsgenieUserDataSource: {
 	username:   string
 	full_name?: string
+	id?:        string
 	locale?:    string
 	role?:      string
 	timezone?:  string
@@ -58,6 +69,7 @@ package opsgenie
 	opsgenie_escalation?: [_]: #OpsgenieEscalationDataSource
 	opsgenie_heartbeat?: [_]:  #OpsgenieHeartbeatDataSource
 	opsgenie_schedule?: [_]:   #OpsgenieScheduleDataSource
+	opsgenie_service?: [_]:    #OpsgenieServiceDataSource
 	opsgenie_team?: [_]:       #OpsgenieTeamDataSource
 	opsgenie_user?: [_]:       #OpsgenieUserDataSource
 }

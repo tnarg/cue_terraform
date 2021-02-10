@@ -3,35 +3,41 @@ package ciscoasa
 
 #CiscoasaAccessInRulesResource: {
 	interface: string
+	id?:       string
 	managed?:  bool
 	rule?: [{
 		destination:         string
 		destination_service: string
 		source:              string
 		active?:             bool
+		id?:                 string
 		permit?:             bool
 		source_service?:     string
 	}, ...]
 }
 #CiscoasaAccessOutRulesResource: {
 	interface: string
+	id?:       string
 	managed?:  bool
 	rule?: [{
 		destination:         string
 		destination_service: string
 		source:              string
 		active?:             bool
+		id?:                 string
 		permit?:             bool
 		source_service?:     string
 	}, ...]
 }
 #CiscoasaAclResource: {
 	name: string
+	id?:  string
 	rule?: [{
 		destination:         string
 		destination_service: string
 		source:              string
 		active?:             bool
+		id?:                 string
 		log_interval?:       number
 		log_status?:         string
 		permit?:             bool
@@ -42,19 +48,23 @@ package ciscoasa
 #CiscoasaNetworkObjectResource: {
 	name:  string
 	value: string
+	id?:   string
 }
 #CiscoasaNetworkObjectGroupResource: {
 	members: [string, ...]
 	name: string
+	id?:  string
 }
 #CiscoasaNetworkServiceGroupResource: {
 	members: [string, ...]
 	name: string
+	id?:  string
 }
 #CiscoasaStaticRouteResource: {
 	gateway:   string
 	interface: string
 	network:   string
+	id?:       string
 	metric?:   number
 	tracked?:  bool
 	tunneled?: bool

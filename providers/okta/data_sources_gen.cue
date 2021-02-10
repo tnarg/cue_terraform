@@ -6,99 +6,303 @@ package okta
 	id?:           string
 	label?:        string
 	label_prefix?: string
+	name?:         string
+	status?:       string
 }
 #OktaAppMetadataSamlDataSource: {
-	app_id: string
-	key_id: string
+	app_id:                      string
+	certificate?:                string
+	entity_id?:                  string
+	http_post_binding?:          string
+	http_redirect_binding?:      string
+	id?:                         string
+	key_id?:                     string
+	metadata?:                   string
+	want_authn_requests_signed?: bool
+}
+#OktaAppOauthDataSource: {
+	active_only?:         bool
+	auto_submit_toolbar?: bool
+	client_id?:           string
+	client_uri?:          string
+	grant_types?: [string, ...]
+	hide_ios?:     bool
+	hide_web?:     bool
+	id?:           string
+	label?:        string
+	label_prefix?: string
+	login_mode?:   string
+	login_scopes?: [string, ...]
+	login_uri?:  string
+	logo_uri?:   string
+	name?:       string
+	policy_uri?: string
+	post_logout_redirect_uris?: [string, ...]
+	redirect_uris?: [string, ...]
+	response_types?: [string, ...]
+	status?: string
+	type?:   string
 }
 #OktaAppSamlDataSource: {
 	accessibility_error_redirect_url?: string
 	accessibility_login_redirect_url?: string
 	accessibility_self_service?:       bool
-	active_only?:                      bool
-	app_settings_json?:                string
-	assertion_signed?:                 bool
-	audience?:                         string
-	authn_context_class_ref?:          string
-	auto_submit_toolbar?:              bool
-	default_relay_state?:              string
-	destination?:                      string
-	digest_algorithm?:                 string
+	acs_endpoints?: [string, ...]
+	active_only?:             bool
+	app_settings_json?:       string
+	assertion_signed?:        bool
+	audience?:                string
+	authn_context_class_ref?: string
+	auto_submit_toolbar?:     bool
+	default_relay_state?:     string
+	destination?:             string
+	digest_algorithm?:        string
 	features?: [string, ...]
 	hide_ios?:                  bool
 	hide_web?:                  bool
 	honor_force_authn?:         bool
 	id?:                        string
 	idp_issuer?:                string
+	key_id?:                    string
 	label?:                     string
 	label_prefix?:              string
+	name?:                      string
 	recipient?:                 string
 	request_compressed?:        bool
 	response_signed?:           bool
 	signature_algorithm?:       string
+	single_logout_certificate?: string
+	single_logout_issuer?:      string
+	single_logout_url?:         string
 	sp_issuer?:                 string
 	sso_url?:                   string
+	status?:                    string
 	subject_name_id_format?:    string
 	subject_name_id_template?:  string
 	user_name_template?:        string
 	user_name_template_suffix?: string
 	user_name_template_type?:   string
 	attribute_statements?: [{
-		name:          string
 		filter_type?:  string
 		filter_value?: string
+		name?:         string
 		namespace?:    string
 		type?:         string
 		values?: [string, ...]
 	}, ...]
 }
-#OktaAuthServerDataSource: name:              string
-#OktaDefaultPoliciesDataSource: type:         string
-#OktaDefaultPolicyDataSource: type:           string
-#OktaEveryoneGroupDataSource: include_users?: bool
-#OktaGroupDataSource: {
+#OktaAuthServerDataSource: {
+	name: string
+	audiences?: [string, ...]
+	credentials_last_rotated?:  string
+	credentials_next_rotation?: string
+	credentials_rotation_mode?: string
+	description?:               string
+	id?:                        string
+	issuer?:                    string
+	issuer_mode?:               string
+	kid?:                       string
+	status?:                    string
+}
+#OktaAuthServerPolicyDataSource: {
+	auth_server_id: string
 	name:           string
+	assigned_clients?: [string, ...]
+	description?: string
+	id?:          string
+}
+#OktaDefaultPoliciesDataSource: {
+	type: string
+	id?:  string
+}
+#OktaDefaultPolicyDataSource: {
+	type: string
+	id?:  string
+}
+#OktaEveryoneGroupDataSource: {
+	description?:   string
+	id?:            string
 	include_users?: bool
 }
-#OktaIdpMetadataSamlDataSource: idp_id?: string
+#OktaGroupDataSource: {
+	name:           string
+	description?:   string
+	id?:            string
+	include_users?: bool
+	type?:          string
+	users?: [string, ...]
+}
+#OktaIdpMetadataSamlDataSource: {
+	assertions_signed?:      bool
+	authn_request_signed?:   bool
+	encryption_certificate?: string
+	entity_id?:              string
+	http_post_binding?:      string
+	http_redirect_binding?:  string
+	id?:                     string
+	idp_id?:                 string
+	metadata?:               string
+	signing_certificate?:    string
+}
+#OktaIdpOidcDataSource: {
+	authorization_binding?: string
+	authorization_url?:     string
+	client_id?:             string
+	client_secret?:         string
+	id?:                    string
+	issuer_mode?:           string
+	issuer_url?:            string
+	jwks_binding?:          string
+	jwks_url?:              string
+	max_clock_skew?:        number
+	name?:                  string
+	protocol_type?:         string
+	scopes?: [string, ...]
+	token_binding?:     string
+	token_url?:         string
+	type?:              string
+	user_info_binding?: string
+	user_info_url?:     string
+}
 #OktaIdpSamlDataSource: {
-	id?:   string
-	name?: string
+	acs_binding?:     string
+	acs_type?:        string
+	audience?:        string
+	id?:              string
+	issuer?:          string
+	issuer_mode?:     string
+	kid?:             string
+	name?:            string
+	sso_binding?:     string
+	sso_destination?: string
+	sso_url?:         string
+	subject_filter?:  string
+	subject_format?: [string, ...]
+	type?: string
 }
 #OktaPolicyDataSource: {
 	name: string
 	type: string
+	id?:  string
 }
 #OktaUserDataSource: {
-	user_id?: string
+	admin_roles?: [string, ...]
+	city?:                      string
+	cost_center?:               string
+	country_code?:              string
+	custom_profile_attributes?: string
+	department?:                string
+	display_name?:              string
+	division?:                  string
+	email?:                     string
+	employee_number?:           string
+	first_name?:                string
+	group_memberships?: [string, ...]
+	honorific_prefix?:   string
+	honorific_suffix?:   string
+	id?:                 string
+	last_name?:          string
+	locale?:             string
+	login?:              string
+	manager?:            string
+	manager_id?:         string
+	middle_name?:        string
+	mobile_phone?:       string
+	nick_name?:          string
+	organization?:       string
+	postal_address?:     string
+	preferred_language?: string
+	primary_phone?:      string
+	profile_url?:        string
+	second_email?:       string
+	state?:              string
+	status?:             string
+	street_address?:     string
+	timezone?:           string
+	title?:              string
+	user_id?:            string
+	user_type?:          string
+	zip_code?:           string
 	search?: [{
 		name:        string
 		value:       string
 		comparison?: string
 	}, ...]
 }
-#OktaUserProfileMappingSourceDataSource: {}
+#OktaUserProfileMappingSourceDataSource: {
+	id?:   string
+	name?: string
+	type?: string
+}
+#OktaUserTypeDataSource: {
+	name:          string
+	description?:  string
+	display_name?: string
+	id?:           string
+}
 #OktaUsersDataSource: {
+	id?: string
 	search?: [{
 		name:        string
 		value:       string
 		comparison?: string
 	}, ...]
-	users?: [{}, ...]
+	users?: [{
+		admin_roles?: [string, ...]
+		city?:                      string
+		cost_center?:               string
+		country_code?:              string
+		custom_profile_attributes?: string
+		department?:                string
+		display_name?:              string
+		division?:                  string
+		email?:                     string
+		employee_number?:           string
+		first_name?:                string
+		group_memberships?: [string, ...]
+		honorific_prefix?:   string
+		honorific_suffix?:   string
+		id?:                 string
+		last_name?:          string
+		locale?:             string
+		login?:              string
+		manager?:            string
+		manager_id?:         string
+		middle_name?:        string
+		mobile_phone?:       string
+		nick_name?:          string
+		organization?:       string
+		postal_address?:     string
+		preferred_language?: string
+		primary_phone?:      string
+		profile_url?:        string
+		second_email?:       string
+		state?:              string
+		status?:             string
+		street_address?:     string
+		timezone?:           string
+		title?:              string
+		user_type?:          string
+		zip_code?:           string
+	}, ...]
 }
 #DataSources: {
 	okta_app?: [_]:                         #OktaAppDataSource
 	okta_app_metadata_saml?: [_]:           #OktaAppMetadataSamlDataSource
+	okta_app_oauth?: [_]:                   #OktaAppOauthDataSource
 	okta_app_saml?: [_]:                    #OktaAppSamlDataSource
 	okta_auth_server?: [_]:                 #OktaAuthServerDataSource
+	okta_auth_server_policy?: [_]:          #OktaAuthServerPolicyDataSource
 	okta_default_policies?: [_]:            #OktaDefaultPoliciesDataSource
 	okta_default_policy?: [_]:              #OktaDefaultPolicyDataSource
 	okta_everyone_group?: [_]:              #OktaEveryoneGroupDataSource
 	okta_group?: [_]:                       #OktaGroupDataSource
 	okta_idp_metadata_saml?: [_]:           #OktaIdpMetadataSamlDataSource
+	okta_idp_oidc?: [_]:                    #OktaIdpOidcDataSource
 	okta_idp_saml?: [_]:                    #OktaIdpSamlDataSource
 	okta_policy?: [_]:                      #OktaPolicyDataSource
 	okta_user?: [_]:                        #OktaUserDataSource
 	okta_user_profile_mapping_source?: [_]: #OktaUserProfileMappingSourceDataSource
+	okta_user_type?: [_]:                   #OktaUserTypeDataSource
 	okta_users?: [_]:                       #OktaUsersDataSource
 }

@@ -8,33 +8,44 @@ package okta
 	auto_submit_toolbar?:              bool
 	credentials_scheme?:               string
 	groups?: [string, ...]
-	hide_ios?:             bool
-	hide_web?:             bool
-	preconfigured_app?:    string
-	reveal_password?:      bool
-	shared_password?:      string
-	shared_username?:      string
-	sign_on_redirect_url?: string
-	sign_on_url?:          string
-	status?:               string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	preconfigured_app?:         string
+	reveal_password?:           bool
+	shared_password?:           string
+	shared_username?:           string
+	sign_on_mode?:              string
+	sign_on_redirect_url?:      string
+	sign_on_url?:               string
+	status?:                    string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaAppBasicAuthResource: {
+	auth_url:             string
 	label:                string
-	auth_url?:            string
+	url:                  string
 	auto_submit_toolbar?: bool
 	groups?: [string, ...]
-	hide_ios?: bool
-	hide_web?: bool
-	status?:   string
-	url?:      string
+	hide_ios?:     bool
+	hide_web?:     bool
+	id?:           string
+	name?:         string
+	sign_on_mode?: string
+	status?:       string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -45,17 +56,22 @@ package okta
 	groups?: [string, ...]
 	hide_ios?:            bool
 	hide_web?:            bool
+	id?:                  string
+	name?:                string
 	request_integration?: bool
+	sign_on_mode?:        string
 	status?:              string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaAppGroupAssignmentResource: {
 	app_id:    string
 	group_id:  string
+	id?:       string
 	priority?: number
 	profile?:  string
 }
@@ -65,22 +81,30 @@ package okta
 	auto_key_rotation?:   bool
 	auto_submit_toolbar?: bool
 	client_basic_secret?: string
+	client_id?:           string
+	client_secret?:       string
 	client_uri?:          string
 	consent_method?:      string
 	custom_client_id?:    string
 	grant_types?: [string, ...]
 	groups?: [string, ...]
-	hide_ios?:    bool
-	hide_web?:    bool
-	issuer_mode?: string
+	hide_ios?:            bool
+	hide_web?:            bool
+	id?:                  string
+	implicit_assignment?: bool
+	issuer_mode?:         string
+	login_mode?:          string
+	login_scopes?: [string, ...]
 	login_uri?:   string
 	logo_uri?:    string
+	name?:        string
 	omit_secret?: bool
 	policy_uri?:  string
 	post_logout_redirect_uris?: [string, ...]
 	profile?: string
 	redirect_uris?: [string, ...]
 	response_types?: [string, ...]
+	sign_on_mode?:               string
 	status?:                     string
 	token_endpoint_auth_method?: string
 	tos_uri?:                    string
@@ -93,39 +117,56 @@ package okta
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaAppOauthRedirectUriResource: {
 	app_id: string
 	uri:    string
+	id?:    string
 }
 #OktaAppSamlResource: {
 	label:                             string
 	accessibility_error_redirect_url?: string
 	accessibility_login_redirect_url?: string
 	accessibility_self_service?:       bool
-	app_settings_json?:                string
-	assertion_signed?:                 bool
-	audience?:                         string
-	authn_context_class_ref?:          string
-	auto_submit_toolbar?:              bool
-	default_relay_state?:              string
-	destination?:                      string
-	digest_algorithm?:                 string
+	acs_endpoints?: [string, ...]
+	app_settings_json?:       string
+	assertion_signed?:        bool
+	audience?:                string
+	authn_context_class_ref?: string
+	auto_submit_toolbar?:     bool
+	certificate?:             string
+	default_relay_state?:     string
+	destination?:             string
+	digest_algorithm?:        string
+	entity_key?:              string
+	entity_url?:              string
 	features?: [string, ...]
 	groups?: [string, ...]
 	hide_ios?:                  bool
 	hide_web?:                  bool
 	honor_force_authn?:         bool
+	http_post_binding?:         string
+	http_redirect_binding?:     string
+	id?:                        string
 	idp_issuer?:                string
+	key_id?:                    string
 	key_name?:                  string
 	key_years_valid?:           number
+	metadata?:                  string
+	metadata_url?:              string
+	name?:                      string
 	preconfigured_app?:         string
 	recipient?:                 string
 	request_compressed?:        bool
 	response_signed?:           bool
+	sign_on_mode?:              string
 	signature_algorithm?:       string
+	single_logout_certificate?: string
+	single_logout_issuer?:      string
+	single_logout_url?:         string
 	sp_issuer?:                 string
 	sso_url?:                   string
 	status?:                    string
@@ -145,6 +186,7 @@ package okta
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -158,21 +200,28 @@ package okta
 	auto_submit_toolbar?:              bool
 	credentials_scheme?:               string
 	groups?: [string, ...]
-	hide_ios?:              bool
-	hide_web?:              bool
-	optional_field1?:       string
-	optional_field1_value?: string
-	optional_field2?:       string
-	optional_field2_value?: string
-	optional_field3?:       string
-	optional_field3_value?: string
-	reveal_password?:       bool
-	shared_password?:       string
-	shared_username?:       string
-	status?:                string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	optional_field1?:           string
+	optional_field1_value?:     string
+	optional_field2?:           string
+	optional_field2_value?:     string
+	optional_field3?:           string
+	optional_field3_value?:     string
+	reveal_password?:           bool
+	shared_password?:           string
+	shared_username?:           string
+	sign_on_mode?:              string
+	status?:                    string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -183,17 +232,24 @@ package okta
 	auto_submit_toolbar?:              bool
 	button_field?:                     string
 	groups?: [string, ...]
-	hide_ios?:          bool
-	hide_web?:          bool
-	password_field?:    string
-	preconfigured_app?: string
-	status?:            string
-	url?:               string
-	url_regex?:         string
-	username_field?:    string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	password_field?:            string
+	preconfigured_app?:         string
+	sign_on_mode?:              string
+	status?:                    string
+	url?:                       string
+	url_regex?:                 string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
+	username_field?:            string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -209,13 +265,20 @@ package okta
 	accessibility_self_service?:       bool
 	auto_submit_toolbar?:              bool
 	groups?: [string, ...]
-	hide_ios?:  bool
-	hide_web?:  bool
-	status?:    string
-	url_regex?: string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	sign_on_mode?:              string
+	status?:                    string
+	url_regex?:                 string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -223,6 +286,7 @@ package okta
 	app_id:    string
 	user_id:   string
 	username:  string
+	id?:       string
 	password?: string
 	profile?:  string
 }
@@ -231,9 +295,12 @@ package okta
 	index:        string
 	title:        string
 	type:         string
+	id?:          string
 	master?:      string
+	pattern?:     string
 	permissions?: string
 	required?:    bool
+	user_type?:   string
 }
 #OktaAppUserSchemaResource: {
 	app_id: string
@@ -244,14 +311,19 @@ package okta
 	array_type?:  string
 	description?: string
 	enum?: [string, ...]
-	external_name?: string
-	master?:        string
-	max_length?:    number
-	min_length?:    number
-	permissions?:   string
-	required?:      bool
-	scope?:         string
-	unique?:        string
+	external_name?:      string
+	external_namespace?: string
+	id?:                 string
+	master?:             string
+	max_length?:         number
+	min_length?:         number
+	pattern?:            string
+	permissions?:        string
+	required?:           bool
+	scope?:              string
+	union?:              bool
+	unique?:             string
+	user_type?:          string
 	array_one_of?: [{
 		const: string
 		title: string
@@ -264,9 +336,14 @@ package okta
 #OktaAuthServerResource: {
 	audiences: [string, ...]
 	name:                       string
+	credentials_last_rotated?:  string
+	credentials_next_rotation?: string
 	credentials_rotation_mode?: string
 	description?:               string
+	id?:                        string
+	issuer?:                    string
 	issuer_mode?:               string
+	kid?:                       string
 	status?:                    string
 }
 #OktaAuthServerClaimResource: {
@@ -276,6 +353,7 @@ package okta
 	value:                    string
 	always_include_in_token?: bool
 	group_filter_type?:       string
+	id?:                      string
 	scopes?: [string, ...]
 	status?:     string
 	value_type?: string
@@ -286,6 +364,7 @@ package okta
 	description: string
 	name:        string
 	priority:    number
+	id?:         string
 	status?:     string
 	type?:       string
 }
@@ -298,6 +377,7 @@ package okta
 	access_token_lifetime_minutes?: number
 	group_blacklist?: [string, ...]
 	group_whitelist?: [string, ...]
+	id?:                             string
 	inline_hook_id?:                 string
 	refresh_token_lifetime_minutes?: number
 	refresh_token_window_minutes?:   number
@@ -313,6 +393,7 @@ package okta
 	consent?:          string
 	default?:          bool
 	description?:      string
+	id?:               string
 	metadata_publish?: string
 }
 #OktaAutoLoginAppResource: {
@@ -322,18 +403,25 @@ package okta
 	auto_submit_toolbar?:              bool
 	credentials_scheme?:               string
 	groups?: [string, ...]
-	hide_ios?:             bool
-	hide_web?:             bool
-	preconfigured_app?:    string
-	reveal_password?:      bool
-	shared_password?:      string
-	shared_username?:      string
-	sign_on_redirect_url?: string
-	sign_on_url?:          string
-	status?:               string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	preconfigured_app?:         string
+	reveal_password?:           bool
+	shared_password?:           string
+	shared_username?:           string
+	sign_on_mode?:              string
+	sign_on_redirect_url?:      string
+	sign_on_url?:               string
+	status?:                    string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -344,36 +432,65 @@ package okta
 	groups?: [string, ...]
 	hide_ios?:            bool
 	hide_web?:            bool
+	id?:                  string
+	name?:                string
 	request_integration?: bool
+	sign_on_mode?:        string
 	status?:              string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
+	}, ...]
+}
+#OktaEventHookResource: {
+	channel: [_]: string
+	events: [string, ...]
+	name: string
+	auth?: [_]: string
+	id?:     string
+	status?: string
+	headers?: [{
+		key?:   string
+		value?: string
 	}, ...]
 }
 #OktaFactorResource: {
 	provider_id: string
 	active?:     bool
+	id?:         string
 }
 #OktaGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
 	users?: [string, ...]
+}
+#OktaGroupMembershipResource: {
+	group_id: string
+	user_id:  string
+	id?:      string
+}
+#OktaGroupRoleResource: {
+	group_id:  string
+	role_type: string
+	id?:       string
 }
 #OktaGroupRolesResource: {
 	group_id: string
 	admin_roles?: [string, ...]
+	id?: string
 }
 #OktaGroupRuleResource: {
 	expression_value: string
 	group_assignments: [string, ...]
 	name:             string
 	expression_type?: string
+	id?:              string
 	status?:          string
 }
 #OktaIdpResource: {
-	acs_binding:           string
 	authorization_binding: string
 	authorization_url:     string
 	client_id:             string
@@ -387,12 +504,12 @@ package okta
 	token_url:            string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
-	acs_type?:             string
 	deprovisioned_action?: string
 	groups_action?:        string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
 	max_clock_skew?:               number
 	profile_master?:               bool
@@ -406,12 +523,12 @@ package okta
 	subject_match_attribute?:      string
 	subject_match_type?:           string
 	suspended_action?:             string
+	type?:                         string
 	user_info_binding?:            string
 	user_info_url?:                string
 	username_template?:            string
 }
 #OktaIdpOidcResource: {
-	acs_binding:           string
 	authorization_binding: string
 	authorization_url:     string
 	client_id:             string
@@ -425,12 +542,12 @@ package okta
 	token_url:            string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
-	acs_type?:             string
 	deprovisioned_action?: string
 	groups_action?:        string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
 	max_clock_skew?:               number
 	profile_master?:               bool
@@ -444,25 +561,29 @@ package okta
 	subject_match_attribute?:      string
 	subject_match_type?:           string
 	suspended_action?:             string
+	type?:                         string
 	user_info_binding?:            string
 	user_info_url?:                string
 	username_template?:            string
 }
 #OktaIdpSamlResource: {
-	acs_binding:          string
 	issuer:               string
 	kid:                  string
 	name:                 string
 	sso_url:              string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
+	acs_binding?:          string
 	acs_type?:             string
+	audience?:             string
 	deprovisioned_action?: string
 	groups_action?:        string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
+	max_clock_skew?:               number
 	name_format?:                  string
 	profile_master?:               bool
 	provisioning_action?:          string
@@ -478,22 +599,35 @@ package okta
 	subject_match_attribute?: string
 	subject_match_type?:      string
 	suspended_action?:        string
+	type?:                    string
 	username_template?:       string
 }
-#OktaIdpSamlKeyResource: x5c: [string, ...]
+#OktaIdpSamlKeyResource: {
+	x5c: [string, ...]
+	created?:    string
+	expires_at?: string
+	id?:         string
+	kid?:        string
+	kty?:        string
+	use?:        string
+	x5t_s256?:   string
+}
 #OktaIdpSocialResource: {
 	name: string
 	scopes: [string, ...]
 	type:                 string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
-	client_id?:            string
-	client_secret?:        string
-	deprovisioned_action?: string
-	groups_action?:        string
+	authorization_binding?: string
+	authorization_url?:     string
+	client_id?:             string
+	client_secret?:         string
+	deprovisioned_action?:  string
+	groups_action?:         string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
 	match_attribute?:              string
 	match_type?:                   string
@@ -509,14 +643,17 @@ package okta
 	subject_match_attribute?:      string
 	subject_match_type?:           string
 	suspended_action?:             string
+	token_binding?:                string
+	token_url?:                    string
 	username_template?:            string
 }
 #OktaInlineHookResource: {
+	channel: [_]: string
 	name:    string
 	type:    string
 	version: string
-	auth?: [_]:    string
-	channel?: [_]: string
+	auth?: [_]: string
+	id?:     string
 	status?: string
 	headers?: [{
 		key?:   string
@@ -531,7 +668,9 @@ package okta
 	fido_webauthn?: [_]: string
 	google_otp?: [_]:    string
 	groups_included?: [string, ...]
+	id?: string
 	okta_call?: [_]:     string
+	okta_email?: [_]:    string
 	okta_otp?: [_]:      string
 	okta_password?: [_]: string
 	okta_push?: [_]:     string
@@ -547,6 +686,7 @@ package okta
 	name:                string
 	policyid:            string
 	enroll?:             string
+	id?:                 string
 	network_connection?: string
 	network_excludes?: [string, ...]
 	network_includes?: [string, ...]
@@ -559,7 +699,9 @@ package okta
 	type: string
 	dynamic_locations?: [string, ...]
 	gateways?: [string, ...]
+	id?: string
 	proxies?: [string, ...]
+	usage?: string
 }
 #OktaOauthAppResource: {
 	label:                string
@@ -567,22 +709,30 @@ package okta
 	auto_key_rotation?:   bool
 	auto_submit_toolbar?: bool
 	client_basic_secret?: string
+	client_id?:           string
+	client_secret?:       string
 	client_uri?:          string
 	consent_method?:      string
 	custom_client_id?:    string
 	grant_types?: [string, ...]
 	groups?: [string, ...]
-	hide_ios?:    bool
-	hide_web?:    bool
-	issuer_mode?: string
+	hide_ios?:            bool
+	hide_web?:            bool
+	id?:                  string
+	implicit_assignment?: bool
+	issuer_mode?:         string
+	login_mode?:          string
+	login_scopes?: [string, ...]
 	login_uri?:   string
 	logo_uri?:    string
+	name?:        string
 	omit_secret?: bool
 	policy_uri?:  string
 	post_logout_redirect_uris?: [string, ...]
 	profile?: string
 	redirect_uris?: [string, ...]
 	response_types?: [string, ...]
+	sign_on_mode?:               string
 	status?:                     string
 	token_endpoint_auth_method?: string
 	tos_uri?:                    string
@@ -595,26 +745,31 @@ package okta
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaOauthAppRedirectUriResource: {
 	app_id: string
 	uri:    string
+	id?:    string
 }
 #OktaPasswordPolicyResource: {
 	name:            string
 	auth_provider?:  string
+	call_recovery?:  string
 	description?:    string
 	email_recovery?: string
 	groups_included?: [string, ...]
-	password_auto_unlock_minutes?:   number
-	password_dictionary_lookup?:     bool
-	password_exclude_first_name?:    bool
-	password_exclude_last_name?:     bool
-	password_exclude_username?:      bool
-	password_expire_warn_days?:      number
-	password_history_count?:         number
+	id?:                           string
+	password_auto_unlock_minutes?: number
+	password_dictionary_lookup?:   bool
+	password_exclude_first_name?:  bool
+	password_exclude_last_name?:   bool
+	password_exclude_username?:    bool
+	password_expire_warn_days?:    number
+	password_history_count?:       number
+	password_lockout_notification_channels?: [string, ...]
 	password_max_age_days?:          number
 	password_max_lockout_attempts?:  number
 	password_min_age_minutes?:       number
@@ -635,6 +790,7 @@ package okta
 #OktaPasswordPolicyRuleResource: {
 	name:                string
 	policyid:            string
+	id?:                 string
 	network_connection?: string
 	network_excludes?: [string, ...]
 	network_includes?: [string, ...]
@@ -653,7 +809,9 @@ package okta
 	fido_webauthn?: [_]: string
 	google_otp?: [_]:    string
 	groups_included?: [string, ...]
+	id?: string
 	okta_call?: [_]:     string
+	okta_email?: [_]:    string
 	okta_otp?: [_]:      string
 	okta_password?: [_]: string
 	okta_push?: [_]:     string
@@ -668,16 +826,19 @@ package okta
 #OktaPolicyPasswordResource: {
 	name:            string
 	auth_provider?:  string
+	call_recovery?:  string
 	description?:    string
 	email_recovery?: string
 	groups_included?: [string, ...]
-	password_auto_unlock_minutes?:   number
-	password_dictionary_lookup?:     bool
-	password_exclude_first_name?:    bool
-	password_exclude_last_name?:     bool
-	password_exclude_username?:      bool
-	password_expire_warn_days?:      number
-	password_history_count?:         number
+	id?:                           string
+	password_auto_unlock_minutes?: number
+	password_dictionary_lookup?:   bool
+	password_exclude_first_name?:  bool
+	password_exclude_last_name?:   bool
+	password_exclude_username?:    bool
+	password_expire_warn_days?:    number
+	password_history_count?:       number
+	password_lockout_notification_channels?: [string, ...]
 	password_max_age_days?:          number
 	password_max_lockout_attempts?:  number
 	password_min_age_minutes?:       number
@@ -698,6 +859,7 @@ package okta
 #OktaPolicyRuleIdpDiscoveryResource: {
 	name:                string
 	policyid:            string
+	id?:                 string
 	idp_id?:             string
 	idp_type?:           string
 	network_connection?: string
@@ -731,6 +893,7 @@ package okta
 	name:                string
 	policyid:            string
 	enroll?:             string
+	id?:                 string
 	network_connection?: string
 	network_excludes?: [string, ...]
 	network_includes?: [string, ...]
@@ -741,6 +904,7 @@ package okta
 #OktaPolicyRulePasswordResource: {
 	name:                string
 	policyid:            string
+	id?:                 string
 	network_connection?: string
 	network_excludes?: [string, ...]
 	network_includes?: [string, ...]
@@ -756,6 +920,7 @@ package okta
 	policyid:             string
 	access?:              string
 	authtype?:            string
+	id?:                  string
 	mfa_lifetime?:        number
 	mfa_prompt?:          string
 	mfa_remember_device?: bool
@@ -774,6 +939,7 @@ package okta
 	name:         string
 	description?: string
 	groups_included?: [string, ...]
+	id?:       string
 	priority?: number
 	status?:   string
 }
@@ -781,6 +947,11 @@ package okta
 	source_id:           string
 	target_id:           string
 	delete_when_absent?: bool
+	id?:                 string
+	source_name?:        string
+	source_type?:        string
+	target_name?:        string
+	target_type?:        string
 	mappings?: [{
 		expression:   string
 		id:           string
@@ -792,27 +963,42 @@ package okta
 	accessibility_error_redirect_url?: string
 	accessibility_login_redirect_url?: string
 	accessibility_self_service?:       bool
-	app_settings_json?:                string
-	assertion_signed?:                 bool
-	audience?:                         string
-	authn_context_class_ref?:          string
-	auto_submit_toolbar?:              bool
-	default_relay_state?:              string
-	destination?:                      string
-	digest_algorithm?:                 string
+	acs_endpoints?: [string, ...]
+	app_settings_json?:       string
+	assertion_signed?:        bool
+	audience?:                string
+	authn_context_class_ref?: string
+	auto_submit_toolbar?:     bool
+	certificate?:             string
+	default_relay_state?:     string
+	destination?:             string
+	digest_algorithm?:        string
+	entity_key?:              string
+	entity_url?:              string
 	features?: [string, ...]
 	groups?: [string, ...]
 	hide_ios?:                  bool
 	hide_web?:                  bool
 	honor_force_authn?:         bool
+	http_post_binding?:         string
+	http_redirect_binding?:     string
+	id?:                        string
 	idp_issuer?:                string
+	key_id?:                    string
 	key_name?:                  string
 	key_years_valid?:           number
+	metadata?:                  string
+	metadata_url?:              string
+	name?:                      string
 	preconfigured_app?:         string
 	recipient?:                 string
 	request_compressed?:        bool
 	response_signed?:           bool
+	sign_on_mode?:              string
 	signature_algorithm?:       string
+	single_logout_certificate?: string
+	single_logout_issuer?:      string
+	single_logout_url?:         string
 	sp_issuer?:                 string
 	sso_url?:                   string
 	status?:                    string
@@ -832,24 +1018,28 @@ package okta
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaSamlIdpResource: {
-	acs_binding:          string
 	issuer:               string
 	kid:                  string
 	name:                 string
 	sso_url:              string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
+	acs_binding?:          string
 	acs_type?:             string
+	audience?:             string
 	deprovisioned_action?: string
 	groups_action?:        string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
+	max_clock_skew?:               number
 	name_format?:                  string
 	profile_master?:               bool
 	provisioning_action?:          string
@@ -865,9 +1055,19 @@ package okta
 	subject_match_attribute?: string
 	subject_match_type?:      string
 	suspended_action?:        string
+	type?:                    string
 	username_template?:       string
 }
-#OktaSamlIdpSigningKeyResource: x5c: [string, ...]
+#OktaSamlIdpSigningKeyResource: {
+	x5c: [string, ...]
+	created?:    string
+	expires_at?: string
+	id?:         string
+	kid?:        string
+	kty?:        string
+	use?:        string
+	x5t_s256?:   string
+}
 #OktaSecurePasswordStoreAppResource: {
 	label:                             string
 	password_field:                    string
@@ -878,21 +1078,28 @@ package okta
 	auto_submit_toolbar?:              bool
 	credentials_scheme?:               string
 	groups?: [string, ...]
-	hide_ios?:              bool
-	hide_web?:              bool
-	optional_field1?:       string
-	optional_field1_value?: string
-	optional_field2?:       string
-	optional_field2_value?: string
-	optional_field3?:       string
-	optional_field3_value?: string
-	reveal_password?:       bool
-	shared_password?:       string
-	shared_username?:       string
-	status?:                string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	optional_field1?:           string
+	optional_field1_value?:     string
+	optional_field2?:           string
+	optional_field2_value?:     string
+	optional_field3?:           string
+	optional_field3_value?:     string
+	reveal_password?:           bool
+	shared_password?:           string
+	shared_username?:           string
+	sign_on_mode?:              string
+	status?:                    string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -900,6 +1107,7 @@ package okta
 	name:         string
 	description?: string
 	groups_included?: [string, ...]
+	id?:       string
 	priority?: number
 	status?:   string
 }
@@ -908,6 +1116,7 @@ package okta
 	policyid:             string
 	access?:              string
 	authtype?:            string
+	id?:                  string
 	mfa_lifetime?:        number
 	mfa_prompt?:          string
 	mfa_remember_device?: bool
@@ -928,13 +1137,16 @@ package okta
 	type:                 string
 	account_link_action?: string
 	account_link_group_include?: [string, ...]
-	client_id?:            string
-	client_secret?:        string
-	deprovisioned_action?: string
-	groups_action?:        string
+	authorization_binding?: string
+	authorization_url?:     string
+	client_id?:             string
+	client_secret?:         string
+	deprovisioned_action?:  string
+	groups_action?:         string
 	groups_assignment?: [string, ...]
 	groups_attribute?: string
 	groups_filter?: [string, ...]
+	id?:                           string
 	issuer_mode?:                  string
 	match_attribute?:              string
 	match_type?:                   string
@@ -950,6 +1162,8 @@ package okta
 	subject_match_attribute?:      string
 	subject_match_type?:           string
 	suspended_action?:             string
+	token_binding?:                string
+	token_url?:                    string
 	username_template?:            string
 }
 #OktaSwaAppResource: {
@@ -959,26 +1173,43 @@ package okta
 	auto_submit_toolbar?:              bool
 	button_field?:                     string
 	groups?: [string, ...]
-	hide_ios?:          bool
-	hide_web?:          bool
-	password_field?:    string
-	preconfigured_app?: string
-	status?:            string
-	url?:               string
-	url_regex?:         string
-	username_field?:    string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	password_field?:            string
+	preconfigured_app?:         string
+	sign_on_mode?:              string
+	status?:                    string
+	url?:                       string
+	url_regex?:                 string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
+	username_field?:            string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
 #OktaTemplateEmailResource: {
 	type:              string
 	default_language?: string
+	id?:               string
 	translations?: [{
 		language: string
 		subject:  string
+		template: string
+	}, ...]
+}
+#OktaTemplateSmsResource: {
+	template: string
+	type:     string
+	id?:      string
+	translations?: [{
+		language: string
 		template: string
 	}, ...]
 }
@@ -994,13 +1225,20 @@ package okta
 	accessibility_self_service?:       bool
 	auto_submit_toolbar?:              bool
 	groups?: [string, ...]
-	hide_ios?:  bool
-	hide_web?:  bool
-	status?:    string
-	url_regex?: string
+	hide_ios?:                  bool
+	hide_web?:                  bool
+	id?:                        string
+	name?:                      string
+	sign_on_mode?:              string
+	status?:                    string
+	url_regex?:                 string
+	user_name_template?:        string
+	user_name_template_suffix?: string
+	user_name_template_type?:   string
 	users?: [{
 		id?:       string
 		password?: string
+		scope?:    string
 		username?: string
 	}, ...]
 }
@@ -1009,6 +1247,7 @@ package okta
 	origin: string
 	scopes: [string, ...]
 	active?: bool
+	id?:     string
 }
 #OktaUserResource: {
 	email:      string
@@ -1027,6 +1266,7 @@ package okta
 	group_memberships?: [string, ...]
 	honorific_prefix?:   string
 	honorific_suffix?:   string
+	id?:                 string
 	locale?:             string
 	manager?:            string
 	manager_id?:         string
@@ -1039,6 +1279,7 @@ package okta
 	preferred_language?: string
 	primary_phone?:      string
 	profile_url?:        string
+	raw_status?:         string
 	recovery_answer?:    string
 	recovery_question?:  string
 	second_email?:       string
@@ -1054,9 +1295,12 @@ package okta
 	index:        string
 	title:        string
 	type:         string
+	id?:          string
 	master?:      string
+	pattern?:     string
 	permissions?: string
 	required?:    bool
+	user_type?:   string
 }
 #OktaUserSchemaResource: {
 	index: string
@@ -1066,14 +1310,18 @@ package okta
 	array_type?:  string
 	description?: string
 	enum?: [string, ...]
-	external_name?: string
-	master?:        string
-	max_length?:    number
-	min_length?:    number
-	permissions?:   string
-	required?:      bool
-	scope?:         string
-	unique?:        string
+	external_name?:      string
+	external_namespace?: string
+	id?:                 string
+	master?:             string
+	max_length?:         number
+	min_length?:         number
+	pattern?:            string
+	permissions?:        string
+	required?:           bool
+	scope?:              string
+	unique?:             string
+	user_type?:          string
 	array_one_of?: [{
 		const: string
 		title: string
@@ -1082,6 +1330,12 @@ package okta
 		const: string
 		title: string
 	}, ...]
+}
+#OktaUserTypeResource: {
+	description:  string
+	display_name: string
+	name:         string
+	id?:          string
 }
 #Resources: {
 	okta_app_auto_login?: [_]:            #OktaAppAutoLoginResource
@@ -1104,8 +1358,11 @@ package okta
 	okta_auth_server_scope?: [_]:         #OktaAuthServerScopeResource
 	okta_auto_login_app?: [_]:            #OktaAutoLoginAppResource
 	okta_bookmark_app?: [_]:              #OktaBookmarkAppResource
+	okta_event_hook?: [_]:                #OktaEventHookResource
 	okta_factor?: [_]:                    #OktaFactorResource
 	okta_group?: [_]:                     #OktaGroupResource
+	okta_group_membership?: [_]:          #OktaGroupMembershipResource
+	okta_group_role?: [_]:                #OktaGroupRoleResource
 	okta_group_roles?: [_]:               #OktaGroupRolesResource
 	okta_group_rule?: [_]:                #OktaGroupRuleResource
 	okta_idp?: [_]:                       #OktaIdpResource
@@ -1138,9 +1395,11 @@ package okta
 	okta_social_idp?: [_]:                #OktaSocialIdpResource
 	okta_swa_app?: [_]:                   #OktaSwaAppResource
 	okta_template_email?: [_]:            #OktaTemplateEmailResource
+	okta_template_sms?: [_]:              #OktaTemplateSmsResource
 	okta_three_field_app?: [_]:           #OktaThreeFieldAppResource
 	okta_trusted_origin?: [_]:            #OktaTrustedOriginResource
 	okta_user?: [_]:                      #OktaUserResource
 	okta_user_base_schema?: [_]:          #OktaUserBaseSchemaResource
 	okta_user_schema?: [_]:               #OktaUserSchemaResource
+	okta_user_type?: [_]:                 #OktaUserTypeResource
 }

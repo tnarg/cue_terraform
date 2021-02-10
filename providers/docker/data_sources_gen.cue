@@ -2,10 +2,24 @@
 package docker
 
 #DockerNetworkDataSource: {
-	id?:   string
+	driver?:   string
+	id?:       string
+	internal?: bool
+	ipam_config?: [{
+		aux_address: [_]: string
+		gateway:  string
+		ip_range: string
+		subnet:   string
+	}, ...]
 	name?: string
+	options?: [_]: string
+	scope?: string
 }
-#DockerRegistryImageDataSource: name?: string
+#DockerRegistryImageDataSource: {
+	id?:            string
+	name?:          string
+	sha256_digest?: string
+}
 #DataSources: {
 	docker_network?: [_]:        #DockerNetworkDataSource
 	docker_registry_image?: [_]: #DockerRegistryImageDataSource

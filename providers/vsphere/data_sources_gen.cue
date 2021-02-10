@@ -2,61 +2,187 @@
 package vsphere
 
 #VsphereComputeClusterDataSource: {
-	name:           string
-	datacenter_id?: string
+	name:              string
+	datacenter_id?:    string
+	id?:               string
+	resource_pool_id?: string
 }
-#VsphereContentLibraryDataSource: name: string
+#VsphereContentLibraryDataSource: {
+	name: string
+	id?:  string
+}
 #VsphereContentLibraryItemDataSource: {
 	library_id: string
 	name:       string
+	type:       string
+	id?:        string
 }
-#VsphereCustomAttributeDataSource: name: string
-#VsphereDatacenterDataSource: name?:     string
+#VsphereCustomAttributeDataSource: {
+	name:                 string
+	id?:                  string
+	managed_object_type?: string
+}
+#VsphereDatacenterDataSource: {
+	id?:   string
+	name?: string
+}
 #VsphereDatastoreDataSource: {
 	name:           string
 	datacenter_id?: string
+	id?:            string
 }
 #VsphereDatastoreClusterDataSource: {
 	name:           string
 	datacenter_id?: string
+	id?:            string
 }
 #VsphereDistributedVirtualSwitchDataSource: {
 	name:           string
 	datacenter_id?: string
+	id?:            string
+	uplinks?: [string, ...]
 }
-#VsphereFolderDataSource: path: string
+#VsphereDynamicDataSource: {
+	filter: [string, ...]
+	id?:         string
+	name_regex?: string
+	type?:       string
+}
+#VsphereFolderDataSource: {
+	path: string
+	id?:  string
+}
 #VsphereHostDataSource: {
-	datacenter_id: string
-	name?:         string
+	datacenter_id:     string
+	id?:               string
+	name?:             string
+	resource_pool_id?: string
+}
+#VsphereHostPciDeviceDataSource: {
+	host_id:     string
+	class_id?:   string
+	id?:         string
+	name?:       string
+	name_regex?: string
+	vendor_id?:  string
+}
+#VsphereHostThumbprintDataSource: {
+	address:   string
+	id?:       string
+	insecure?: bool
+	port?:     string
 }
 #VsphereNetworkDataSource: {
 	name:                             string
 	datacenter_id?:                   string
 	distributed_virtual_switch_uuid?: string
+	id?:                              string
+	type?:                            string
 }
 #VsphereResourcePoolDataSource: {
 	datacenter_id?: string
+	id?:            string
 	name?:          string
 }
-#VsphereStoragePolicyDataSource: name: string
-#VsphereTagDataSource: {
-	category_id: string
-	name:        string
+#VsphereRoleDataSource: {
+	label:        string
+	description?: string
+	id?:          string
+	name?:        string
+	role_privileges?: [string, ...]
 }
-#VsphereTagCategoryDataSource: name: string
+#VsphereStoragePolicyDataSource: {
+	name: string
+	id?:  string
+}
+#VsphereTagDataSource: {
+	category_id:  string
+	name:         string
+	description?: string
+	id?:          string
+}
+#VsphereTagCategoryDataSource: {
+	name: string
+	associable_types?: [string, ...]
+	cardinality?: string
+	description?: string
+	id?:          string
+}
 #VsphereVappContainerDataSource: {
 	datacenter_id: string
 	name:          string
+	id?:           string
 }
 #VsphereVirtualMachineDataSource: {
-	name:                        string
-	datacenter_id?:              string
-	scsi_controller_scan_count?: number
+	name:                              string
+	alternate_guest_name?:             string
+	annotation?:                       string
+	boot_delay?:                       number
+	boot_retry_delay?:                 number
+	boot_retry_enabled?:               bool
+	change_version?:                   string
+	cpu_hot_add_enabled?:              bool
+	cpu_hot_remove_enabled?:           bool
+	cpu_limit?:                        number
+	cpu_performance_counters_enabled?: bool
+	cpu_reservation?:                  number
+	cpu_share_count?:                  number
+	cpu_share_level?:                  string
+	datacenter_id?:                    string
+	disks?: [{
+		eagerly_scrub:    bool
+		label:            string
+		size:             number
+		thin_provisioned: bool
+		unit_number:      number
+	}, ...]
+	efi_secure_boot_enabled?: bool
+	enable_disk_uuid?:        bool
+	enable_logging?:          bool
+	ept_rvi_mode?:            string
+	extra_config?: [_]: string
+	firmware?: string
+	guest_id?: string
+	guest_ip_addresses?: [string, ...]
+	hardware_version?:          number
+	hv_mode?:                   string
+	id?:                        string
+	ide_controller_scan_count?: number
+	latency_sensitivity?:       string
+	memory?:                    number
+	memory_hot_add_enabled?:    bool
+	memory_limit?:              number
+	memory_reservation?:        number
+	memory_share_count?:        number
+	memory_share_level?:        string
+	nested_hv_enabled?:         bool
+	network_interface_types?: [string, ...]
+	num_cores_per_socket?:                    number
+	num_cpus?:                                number
+	run_tools_scripts_after_power_on?:        bool
+	run_tools_scripts_after_resume?:          bool
+	run_tools_scripts_before_guest_reboot?:   bool
+	run_tools_scripts_before_guest_shutdown?: bool
+	run_tools_scripts_before_guest_standby?:  bool
+	sata_controller_scan_count?:              number
+	scsi_bus_sharing?:                        string
+	scsi_controller_scan_count?:              number
+	scsi_type?:                               string
+	storage_policy_id?:                       string
+	swap_placement_policy?:                   string
+	sync_time_with_host?:                     bool
+	uuid?:                                    string
+	vapp_transport?: [string, ...]
+	vapp?: [{
+		properties?: [_]: string
+	}, ...]
 }
 #VsphereVmfsDisksDataSource: {
 	host_system_id: string
-	filter?:        string
-	rescan?:        bool
+	disks?: [string, ...]
+	filter?: string
+	id?:     string
+	rescan?: bool
 }
 #DataSources: {
 	vsphere_compute_cluster?: [_]:            #VsphereComputeClusterDataSource
@@ -67,10 +193,14 @@ package vsphere
 	vsphere_datastore?: [_]:                  #VsphereDatastoreDataSource
 	vsphere_datastore_cluster?: [_]:          #VsphereDatastoreClusterDataSource
 	vsphere_distributed_virtual_switch?: [_]: #VsphereDistributedVirtualSwitchDataSource
+	vsphere_dynamic?: [_]:                    #VsphereDynamicDataSource
 	vsphere_folder?: [_]:                     #VsphereFolderDataSource
 	vsphere_host?: [_]:                       #VsphereHostDataSource
+	vsphere_host_pci_device?: [_]:            #VsphereHostPciDeviceDataSource
+	vsphere_host_thumbprint?: [_]:            #VsphereHostThumbprintDataSource
 	vsphere_network?: [_]:                    #VsphereNetworkDataSource
 	vsphere_resource_pool?: [_]:              #VsphereResourcePoolDataSource
+	vsphere_role?: [_]:                       #VsphereRoleDataSource
 	vsphere_storage_policy?: [_]:             #VsphereStoragePolicyDataSource
 	vsphere_tag?: [_]:                        #VsphereTagDataSource
 	vsphere_tag_category?: [_]:               #VsphereTagCategoryDataSource

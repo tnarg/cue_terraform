@@ -2,35 +2,69 @@
 package scaleway
 
 #ScalewayAccountSshKeyResource: {
-	public_key: string
-	name?:      string
+	public_key:       string
+	id?:              string
+	name?:            string
+	organization_id?: string
 }
 #ScalewayBaremetalServerResource: {
 	offer: string
 	os:    string
 	ssh_key_ids: [string, ...]
 	description?: string
+	domain?:      string
 	hostname?:    string
+	id?:          string
+	ips?: [{
+		address: string
+		id:      string
+		reverse: string
+		version: string
+	}, ...]
+	name?:            string
+	offer_id?:        string
+	organization_id?: string
+	os_id?:           string
 	tags?: [string, ...]
+	zone?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
-#ScalewayInstanceIpResource: server_id?: string
+#ScalewayInstanceIpResource: {
+	address?:         string
+	id?:              string
+	organization_id?: string
+	reverse?:         string
+	server_id?:       string
+	zone?:            string
+}
 #ScalewayInstanceIpReverseDnsResource: {
 	ip_id:   string
 	reverse: string
+	id?:     string
+	zone?:   string
 }
 #ScalewayInstancePlacementGroupResource: {
-	policy_mode?: string
-	policy_type?: string
+	id?:               string
+	name?:             string
+	organization_id?:  string
+	policy_mode?:      string
+	policy_respected?: bool
+	policy_type?:      string
+	zone?:             string
 }
 #ScalewayInstanceSecurityGroupResource: {
 	description?:             string
 	external_rules?:          bool
+	id?:                      string
 	inbound_default_policy?:  string
+	name?:                    string
+	organization_id?:         string
 	outbound_default_policy?: string
+	stateful?:                bool
+	zone?:                    string
 	inbound_rule?: [{
 		action:      string
 		ip?:         string
@@ -50,6 +84,7 @@ package scaleway
 }
 #ScalewayInstanceSecurityGroupRulesResource: {
 	security_group_id: string
+	id?:               string
 	inbound_rule?: [{
 		action:      string
 		ip?:         string
@@ -71,17 +106,31 @@ package scaleway
 	image: string
 	type:  string
 	additional_volume_ids?: [string, ...]
-	cloud_init?:         string
-	disable_dynamic_ip?: bool
-	disable_public_ip?:  bool
-	enable_dynamic_ip?:  bool
-	enable_ipv6?:        bool
-	ip_id?:              string
-	placement_group_id?: string
-	state?:              string
+	boot_type?:                        string
+	cloud_init?:                       string
+	disable_dynamic_ip?:               bool
+	disable_public_ip?:                bool
+	enable_dynamic_ip?:                bool
+	enable_ipv6?:                      bool
+	id?:                               string
+	ip_id?:                            string
+	ipv6_address?:                     string
+	ipv6_gateway?:                     string
+	ipv6_prefix_length?:               number
+	name?:                             string
+	organization_id?:                  string
+	placement_group_id?:               string
+	placement_group_policy_respected?: bool
+	private_ip?:                       string
+	public_ip?:                        string
+	security_group_id?:                string
+	state?:                            string
 	tags?: [string, ...]
+	zone?: string
 	root_volume?: [{
 		delete_on_termination?: bool
+		size_in_gb?:            number
+		volume_id?:             string
 	}, ...]
 	user_data?: [{
 		key:   string
@@ -92,22 +141,49 @@ package scaleway
 	type:              string
 	from_snapshot_id?: string
 	from_volume_id?:   string
+	id?:               string
+	name?:             string
+	organization_id?:  string
+	server_id?:        string
+	size_in_gb?:       number
+	zone?:             string
 }
-#ScalewayIpResource: {}
+#ScalewayIpResource: {
+	id?:      string
+	ip?:      string
+	reverse?: string
+	server?:  string
+}
 #ScalewayIpReverseDnsResource: {
 	ip:      string
 	reverse: string
+	id?:     string
 }
 #ScalewayK8SClusterBetaResource: {
 	cni:     string
 	name:    string
 	version: string
 	admission_plugins?: [string, ...]
+	apiserver_url?:    string
+	created_at?:       string
 	description?:      string
 	enable_dashboard?: bool
 	feature_gates?: [string, ...]
+	id?:      string
 	ingress?: string
+	kubeconfig?: [{
+		cluster_ca_certificate: string
+		config_file:            string
+		host:                   string
+		token:                  string
+	}, ...]
+	organization_id?: string
+	region?:          string
+	status?:          string
 	tags?: [string, ...]
+	updated_at?:        string
+	upgrade_available?: bool
+	wildcard_dns?:      string
 	auto_upgrade?: [{
 		enable:                        bool
 		maintenance_window_day:        string
@@ -124,27 +200,53 @@ package scaleway
 		scale_down_unneeded_time?:        string
 	}, ...]
 	default_pool?: [{
-		node_type:           string
-		size:                number
-		autohealing?:        bool
-		autoscaling?:        bool
-		container_runtime?:  string
+		node_type:          string
+		size:               number
+		autohealing?:       bool
+		autoscaling?:       bool
+		container_runtime?: string
+		created_at?:        string
+		max_size?:          number
+		min_size?:          number
+		nodes?: [{
+			name:         string
+			public_ip:    string
+			public_ip_v6: string
+			status:       string
+		}, ...]
 		placement_group_id?: string
+		pool_id?:            string
+		status?:             string
 		tags?: [string, ...]
+		updated_at?:          string
 		wait_for_pool_ready?: bool
 	}, ...]
 }
 #ScalewayK8SPoolBetaResource: {
-	cluster_id:          string
-	name:                string
-	node_type:           string
-	size:                number
-	autohealing?:        bool
-	autoscaling?:        bool
-	container_runtime?:  string
-	min_size?:           number
+	cluster_id:         string
+	name:               string
+	node_type:          string
+	size:               number
+	autohealing?:       bool
+	autoscaling?:       bool
+	container_runtime?: string
+	created_at?:        string
+	current_size?:      number
+	id?:                string
+	max_size?:          number
+	min_size?:          number
+	nodes?: [{
+		name:         string
+		public_ip:    string
+		public_ip_v6: string
+		status:       string
+	}, ...]
 	placement_group_id?: string
+	region?:             string
+	status?:             string
 	tags?: [string, ...]
+	updated_at?:          string
+	version?:             string
 	wait_for_pool_ready?: bool
 }
 #ScalewayLbBackendBetaResource: {
@@ -154,8 +256,12 @@ package scaleway
 	forward_port_algorithm?:   string
 	health_check_delay?:       string
 	health_check_max_retries?: number
+	health_check_port?:        number
 	health_check_timeout?:     string
+	id?:                       string
+	name?:                     string
 	on_marked_down_action?:    string
+	proxy_protocol?:           string
 	send_proxy_v2?:            bool
 	server_ips?: [string, ...]
 	sticky_sessions?:             string
@@ -176,12 +282,25 @@ package scaleway
 	health_check_tcp?: [{}, ...]
 }
 #ScalewayLbBetaResource: {
-	ip_id: string
-	type:  string
+	ip_id:            string
+	type:             string
+	id?:              string
+	ip_address?:      string
+	name?:            string
+	organization_id?: string
+	region?:          string
 	tags?: [string, ...]
 }
 #ScalewayLbCertificateBetaResource: {
-	lb_id: string
+	lb_id:                     string
+	common_name?:              string
+	fingerprint?:              string
+	id?:                       string
+	name?:                     string
+	not_valid_after?:          string
+	not_valid_before?:         string
+	status?:                   string
+	subject_alternative_name?: string
 	custom_certificate?: [{
 		certificate_chain: string
 	}, ...]
@@ -195,8 +314,13 @@ package scaleway
 	inbound_port:    number
 	lb_id:           string
 	certificate_id?: string
+	id?:             string
+	name?:           string
 	timeout_client?: string
 	acl?: [{
+		name?:            string
+		organization_id?: string
+		region?:          string
 		action?: [{
 			type: string
 		}, ...]
@@ -208,29 +332,63 @@ package scaleway
 		}, ...]
 	}, ...]
 }
-#ScalewayLbIpBetaResource: {}
+#ScalewayLbIpBetaResource: {
+	id?:              string
+	ip_address?:      string
+	lb_id?:           string
+	organization_id?: string
+	region?:          string
+	reverse?:         string
+}
 #ScalewayObjectBucketResource: {
-	name: string
-	acl?: string
+	name:    string
+	acl?:    string
+	id?:     string
+	region?: string
 }
 #ScalewayRdbInstanceBetaResource: {
-	engine:          string
-	node_type:       string
-	password:        string
-	user_name:       string
-	disable_backup?: bool
-	is_ha_cluster?:  bool
+	engine:           string
+	node_type:        string
+	certificate?:     string
+	disable_backup?:  bool
+	endpoint_ip?:     string
+	endpoint_port?:   number
+	id?:              string
+	is_ha_cluster?:   bool
+	name?:            string
+	organization_id?: string
+	password?:        string
+	read_replicas?: [{
+		ip:   string
+		name: string
+		port: number
+	}, ...]
+	region?: string
 	tags?: [string, ...]
+	user_name?: string
+}
+#ScalewayRdbUserBetaResource: {
+	instance_id: string
+	name:        string
+	password:    string
+	id?:         string
+	is_admin?:   bool
+	region?:     string
 }
 #ScalewayRegistryNamespaceBetaResource: {
-	name:         string
-	description?: string
-	is_public?:   bool
+	name:             string
+	description?:     string
+	endpoint?:        string
+	id?:              string
+	is_public?:       bool
+	organization_id?: string
+	region?:          string
 }
 #ScalewaySecurityGroupResource: {
 	description:              string
 	name:                     string
 	enable_default_security?: bool
+	id?:                      string
 	inbound_default_policy?:  string
 	outbound_default_policy?: string
 	stateful?:                bool
@@ -241,41 +399,65 @@ package scaleway
 	ip_range:       string
 	protocol:       string
 	security_group: string
+	id?:            string
 	port?:          number
 }
 #ScalewayServerResource: {
 	image:                string
 	name:                 string
 	type:                 string
+	boot_type?:           string
 	bootscript?:          string
+	cloudinit?:           string
 	dynamic_ip_required?: bool
 	enable_ipv6?:         bool
+	id?:                  string
+	private_ip?:          string
+	public_ip?:           string
+	public_ipv6?:         string
 	security_group?:      string
+	state?:               string
+	state_detail?:        string
 	tags?: [string, ...]
 	volume?: [{
 		size_in_gb: number
 		type:       string
+		volume_id?: string
 	}, ...]
 }
-#ScalewaySshKeyResource: key: string
+#ScalewaySshKeyResource: {
+	key: string
+	id?: string
+}
 #ScalewayTokenResource: {
-	description?: string
-	expires?:     bool
-	password?:    string
+	access_key?:      string
+	creation_ip?:     string
+	description?:     string
+	email?:           string
+	expiration_date?: string
+	expires?:         bool
+	id?:              string
+	password?:        string
+	secret_key?:      string
+	user_id?:         string
 }
 #ScalewayUserDataResource: {
 	key:    string
 	server: string
 	value:  string
+	id?:    string
 }
 #ScalewayVolumeResource: {
 	name:       string
 	size_in_gb: number
 	type:       string
+	id?:        string
+	server?:    string
 }
 #ScalewayVolumeAttachmentResource: {
 	server: string
 	volume: string
+	id?:    string
 }
 #Resources: {
 	scaleway_account_ssh_key?: [_]:               #ScalewayAccountSshKeyResource
@@ -298,6 +480,7 @@ package scaleway
 	scaleway_lb_ip_beta?: [_]:                    #ScalewayLbIpBetaResource
 	scaleway_object_bucket?: [_]:                 #ScalewayObjectBucketResource
 	scaleway_rdb_instance_beta?: [_]:             #ScalewayRdbInstanceBetaResource
+	scaleway_rdb_user_beta?: [_]:                 #ScalewayRdbUserBetaResource
 	scaleway_registry_namespace_beta?: [_]:       #ScalewayRegistryNamespaceBetaResource
 	scaleway_security_group?: [_]:                #ScalewaySecurityGroupResource
 	scaleway_security_group_rule?: [_]:           #ScalewaySecurityGroupRuleResource

@@ -5,6 +5,14 @@ package postgresql
 	name:               string
 	allow_connections?: bool
 	connection_limit?:  number
+	encoding?:          string
+	id?:                string
+	is_template?:       bool
+	lc_collate?:        string
+	lc_ctype?:          string
+	owner?:             string
+	tablespace_name?:   string
+	template?:          string
 }
 #PostgresqlDefaultPrivilegesResource: {
 	database:    string
@@ -13,13 +21,21 @@ package postgresql
 	privileges: [string, ...]
 	role:   string
 	schema: string
+	id?:    string
 }
-#PostgresqlExtensionResource: name: string
+#PostgresqlExtensionResource: {
+	name:      string
+	database?: string
+	id?:       string
+	schema?:   string
+	version?:  string
+}
 #PostgresqlGrantResource: {
 	database:    string
 	object_type: string
 	privileges: [string, ...]
 	role:               string
+	id?:                string
 	schema?:            string
 	with_grant_option?: bool
 }
@@ -31,6 +47,7 @@ package postgresql
 	create_role?:               bool
 	encrypted?:                 string
 	encrypted_password?:        bool
+	id?:                        string
 	inherit?:                   bool
 	login?:                     bool
 	password?:                  string
@@ -45,8 +62,11 @@ package postgresql
 }
 #PostgresqlSchemaResource: {
 	name:           string
+	database?:      string
 	drop_cascade?:  bool
+	id?:            string
 	if_not_exists?: bool
+	owner?:         string
 	policy?: [{
 		create?:            bool
 		create_with_grant?: bool

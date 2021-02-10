@@ -2,6 +2,7 @@
 package tfe
 
 #Provider: tfe: {
-	hostname?: string
-	token?:    string
+	hostname?:        string
+	ssl_skip_verify?: bool
+	token?:           string
 }

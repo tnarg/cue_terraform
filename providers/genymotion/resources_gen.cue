@@ -4,7 +4,10 @@ package genymotion
 #GenymotionCloudResource: {
 	name:             string
 	recipe_uuid:      string
+	adb_serial?:      string
 	adb_serial_port?: string
 	adbconnect?:      bool
+	id?:              string
+	instance_uuid?:   string
 }
 #Resources: genymotion_cloud?: [_]: #GenymotionCloudResource

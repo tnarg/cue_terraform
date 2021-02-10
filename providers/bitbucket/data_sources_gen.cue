@@ -4,6 +4,8 @@ package bitbucket
 #BitbucketUserDataSource: {
 	username:      string
 	display_name?: string
+	id?:           string
 	nickname?:     string
+	uuid?:         string
 }
 #DataSources: bitbucket_user?: [_]: #BitbucketUserDataSource

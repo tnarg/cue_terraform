@@ -5,37 +5,68 @@ package opc
 	name:         string
 	description?: string
 	enabled?:     bool
+	id?:          string
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeImageListResource: {
 	description: string
 	name:        string
 	default?:    number
+	id?:         string
 }
 #OpcComputeImageListEntryResource: {
 	machine_images: [string, ...]
 	name:        string
 	version:     number
 	attributes?: string
+	id?:         string
+	uri?:        string
 }
 #OpcComputeInstanceResource: {
-	name:  string
-	shape: string
+	name:                 string
+	shape:                string
+	attributes?:          string
+	availability_domain?: string
 	boot_order?: [number, ...]
 	desired_state?:       string
+	domain?:              string
+	entry?:               number
+	fingerprint?:         string
+	fqdn?:                string
+	hostname?:            string
+	id?:                  string
+	image_format?:        string
 	image_list?:          string
 	instance_attributes?: string
-	reverse_dns?:         bool
+	ip_address?:          string
+	label?:               string
+	placement_requirements?: [string, ...]
+	platform?:          string
+	priority?:          string
+	quota_reservation?: string
+	relationships?: [string, ...]
+	resolvers?: [string, ...]
+	reverse_dns?: bool
+	site?:        string
 	ssh_keys?: [string, ...]
+	start_time?: string
+	state?:      string
 	tags?: [string, ...]
+	vcable?:      string
+	virtio?:      bool
+	vnc_address?: string
 	networking_info?: [{
-		index:               number
+		index: number
+		dns?: [string, ...]
 		ip_address?:         string
 		ip_network?:         string
 		is_default_gateway?: bool
+		mac_address?:        string
 		name_servers?: [string, ...]
 		nat?: [string, ...]
 		search_domains?: [string, ...]
+		sec_lists?: [string, ...]
 		shared_network?: bool
 		vnic?:           string
 		vnic_sets?: [string, ...]
@@ -43,6 +74,7 @@ package opc
 	storage?: [{
 		index:  number
 		volume: string
+		name?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -53,73 +85,127 @@ package opc
 #OpcComputeIpAddressAssociationResource: {
 	name:                    string
 	description?:            string
+	id?:                     string
 	ip_address_reservation?: string
 	tags?: [string, ...]
+	uri?:  string
 	vnic?: string
 }
 #OpcComputeIpAddressPrefixSetResource: {
 	name:         string
 	description?: string
+	id?:          string
 	prefixes?: [string, ...]
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeIpAddressReservationResource: {
 	ip_address_pool: string
 	name:            string
 	description?:    string
+	id?:             string
+	ip_address?:     string
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeIpAssociationResource: {
 	parent_pool: string
 	vcable:      string
+	id?:         string
+	name?:       string
 }
 #OpcComputeIpNetworkResource: {
 	ip_address_prefix:    string
 	name:                 string
 	description?:         string
+	id?:                  string
 	ip_network_exchange?: string
 	public_napt_enabled?: bool
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeIpNetworkExchangeResource: {
 	name:         string
 	description?: string
+	id?:          string
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeIpReservationResource: {
 	permanent:    bool
+	id?:          string
+	ip?:          string
+	name?:        string
 	parent_pool?: string
 	tags?: [string, ...]
+	used?: bool
 }
 #OpcComputeMachineImageResource: {
-	account:      string
-	file:         string
-	name:         string
-	attributes?:  string
-	description?: string
+	account:       string
+	file:          string
+	name:          string
+	attributes?:   string
+	description?:  string
+	error_reason?: string
+	hypervisor?: [_]: string
+	id?:           string
+	image_format?: string
+	no_upload?:    bool
+	platform?:     string
+	state?:        string
+	uri?:          string
 }
 #OpcComputeOrchestratedInstanceResource: {
 	desired_state: string
 	name:          string
 	description?:  string
+	id?:           string
 	tags?: [string, ...]
+	version?: number
 	instance?: [{
-		name:  string
-		shape: string
+		name:                 string
+		shape:                string
+		attributes?:          string
+		availability_domain?: string
 		boot_order?: [number, ...]
-		image_list?:  string
-		persistent?:  bool
+		domain?:              string
+		entry?:               number
+		fingerprint?:         string
+		fqdn?:                string
+		hostname?:            string
+		id?:                  string
+		image_format?:        string
+		image_list?:          string
+		instance_attributes?: string
+		ip_address?:          string
+		label?:               string
+		persistent?:          bool
+		placement_requirements?: [string, ...]
+		platform?:          string
+		priority?:          string
+		quota_reservation?: string
+		relationships?: [string, ...]
+		resolvers?: [string, ...]
 		reverse_dns?: bool
+		site?:        string
 		ssh_keys?: [string, ...]
+		start_time?: string
+		state?:      string
 		tags?: [string, ...]
+		vcable?:      string
+		virtio?:      bool
+		vnc_address?: string
 		networking_info?: [{
-			index:               number
+			index: number
+			dns?: [string, ...]
 			ip_address?:         string
 			ip_network?:         string
 			is_default_gateway?: bool
+			mac_address?:        string
 			name_servers?: [string, ...]
 			nat?: [string, ...]
 			search_domains?: [string, ...]
+			sec_lists?: [string, ...]
 			shared_network?: bool
 			vnic?:           string
 			vnic_sets?: [string, ...]
@@ -127,6 +213,7 @@ package opc
 		storage?: [{
 			index:  number
 			volume: string
+			name?:  string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -141,6 +228,7 @@ package opc
 	next_hop_vnic_set: string
 	admin_distance?:   number
 	description?:      string
+	id?:               string
 	tags?: [string, ...]
 }
 #OpcComputeSecRuleResource: {
@@ -151,6 +239,7 @@ package opc
 	source_list:      string
 	description?:     string
 	disabled?:        bool
+	id?:              string
 }
 #OpcComputeSecurityApplicationResource: {
 	name:         string
@@ -159,19 +248,24 @@ package opc
 	dport?:       string
 	icmpcode?:    string
 	icmptype?:    string
+	id?:          string
 }
 #OpcComputeSecurityAssociationResource: {
 	seclist: string
 	vcable:  string
+	id?:     string
+	name?:   string
 }
 #OpcComputeSecurityIpListResource: {
 	ip_entries: [string, ...]
 	name:         string
 	description?: string
+	id?:          string
 }
 #OpcComputeSecurityListResource: {
 	name:                  string
 	description?:          string
+	id?:                   string
 	outbound_cidr_policy?: string
 	policy?:               string
 }
@@ -179,9 +273,11 @@ package opc
 	name:         string
 	description?: string
 	dst_ports?: [string, ...]
+	id?:          string
 	ip_protocol?: string
 	src_ports?: [string, ...]
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeSecurityRuleResource: {
 	flow_direction: string
@@ -191,13 +287,21 @@ package opc
 	dst_ip_address_prefixes?: [string, ...]
 	dst_vnic_set?: string
 	enabled?:      bool
+	id?:           string
 	security_protocols?: [string, ...]
 	src_ip_address_prefixes?: [string, ...]
 	src_vnic_set?: string
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcComputeSnapshotResource: {
-	instance: string
+	instance:       string
+	account?:       string
+	creation_time?: string
+	id?:            string
+	machine_image?: string
+	name?:          string
+	uri?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -207,11 +311,13 @@ package opc
 	key:      string
 	name:     string
 	enabled?: bool
+	id?:      string
 }
 #OpcComputeStorageAttachmentResource: {
 	index:          number
 	instance:       string
 	storage_volume: string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -222,10 +328,22 @@ package opc
 	size:              number
 	bootable?:         bool
 	description?:      string
+	hypervisor?:       string
+	id?:               string
 	image_list?:       string
 	image_list_entry?: number
+	machine_image?:    string
+	managed?:          bool
+	platform?:         string
+	readonly?:         bool
+	snapshot?:         string
+	snapshot_account?: string
+	snapshot_id?:      string
+	status?:           string
+	storage_pool?:     string
 	storage_type?:     string
 	tags?: [string, ...]
+	uri?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -234,10 +352,24 @@ package opc
 }
 #OpcComputeStorageVolumeSnapshotResource: {
 	volume_name:             string
+	account?:                string
 	collocated?:             bool
 	description?:            string
+	id?:                     string
+	machine_image_name?:     string
+	name?:                   string
 	parent_volume_bootable?: bool
+	platform?:               string
+	property?:               string
+	size?:                   string
+	snapshot_id?:            string
+	snapshot_timestamp?:     string
+	start_timestamp?:        string
+	status?:                 string
+	status_detail?:          string
+	status_timestamp?:       string
 	tags?: [string, ...]
+	uri?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -247,7 +379,9 @@ package opc
 	name: string
 	applied_acls?: [string, ...]
 	description?: string
+	id?:          string
 	tags?: [string, ...]
+	virtual_nics?: [string, ...]
 }
 #OpcComputeVpnEndpointV2Resource: {
 	customer_vpn_gateway: string
@@ -256,10 +390,16 @@ package opc
 	pre_shared_key:       string
 	reachable_routes: [string, ...]
 	vnic_sets: [string, ...]
-	description?:                     string
-	enabled?:                         bool
-	require_perfect_forward_secrecy?: bool
+	description?:                      string
+	enabled?:                          bool
+	id?:                               string
+	ike_identifier?:                   string
+	local_gateway_ip_address?:         string
+	local_gateway_private_ip_address?: string
+	require_perfect_forward_secrecy?:  bool
 	tags?: [string, ...]
+	tunnel_status?: string
+	uri?:           string
 	phase_one_settings?: [{
 		dh_group:   string
 		encryption: string
@@ -282,7 +422,10 @@ package opc
 	name:               string
 	type:               string
 	certificate_chain?: string
+	id?:                string
 	private_key?:       string
+	state?:             string
+	uri?:               string
 }
 #OpcLbaasListenerResource: {
 	balancer_protocol: string
@@ -291,29 +434,44 @@ package opc
 	port:              number
 	server_protocol:   string
 	certificates?: [string, ...]
-	enabled?: bool
+	enabled?:           bool
+	id?:                string
+	operation_details?: string
+	parent_listener?:   string
 	path_prefixes?: [string, ...]
 	policies?: [string, ...]
 	server_pool?: string
+	state?:       bool
 	tags?: [string, ...]
+	uri?: string
 	virtual_hosts?: [string, ...]
 }
 #OpcLbaasLoadBalancerResource: {
-	name:                  string
-	region:                string
-	scheme:                string
+	name:   string
+	region: string
+	scheme: string
+	balancer_vips?: [string, ...]
+	canonical_host_name?:  string
+	cloudgate_capable?:    bool
 	description?:          string
 	enabled?:              bool
+	id?:                   string
+	ip_network?:           string
 	parent_load_balancer?: string
 	permitted_clients?: [string, ...]
 	permitted_methods?: [string, ...]
 	policies?: [string, ...]
 	server_pool?: string
 	tags?: [string, ...]
+	uri?: string
 }
 #OpcLbaasPolicyResource: {
 	load_balancer: string
 	name:          string
+	id?:           string
+	state?:        bool
+	type?:         string
+	uri?:          string
 	application_cookie_stickiness_policy?: [{
 		cookie_name: string
 	}, ...]
@@ -369,10 +527,17 @@ package opc
 	load_balancer: string
 	name:          string
 	servers: [string, ...]
-	enabled?: bool
+	consumers?:         string
+	enabled?:           bool
+	id?:                string
+	operation_details?: bool
+	state?:             string
+	status?:            bool
 	tags?: [string, ...]
+	uri?:      string
 	vnic_set?: string
 	health_check?: [{
+		accepted_return_codes?: [string, ...]
 		enabled?:             bool
 		healthy_threshold?:   number
 		interval?:            number
@@ -383,23 +548,39 @@ package opc
 	}, ...]
 }
 #OpcStorageContainerResource: {
-	name:     string
+	name: string
+	allowed_origins?: [string, ...]
+	exposed_headers?: [string, ...]
+	id?:      string
 	max_age?: number
 	metadata?: [_]: string
-	primary_key?:   string
-	quota_bytes?:   number
-	quota_count?:   number
+	primary_key?: string
+	quota_bytes?: number
+	quota_count?: number
+	read_acls?: [string, ...]
 	secondary_key?: string
+	write_acls?: [string, ...]
 }
 #OpcStorageObjectResource: {
 	container:            string
 	name:                 string
+	accept_ranges?:       string
 	content?:             string
 	content_disposition?: string
 	content_encoding?:    string
+	content_length?:      number
+	content_type?:        string
 	copy_from?:           string
+	delete_at?:           number
+	etag?:                string
 	file?:                string
-	transfer_encoding?:   string
+	id?:                  string
+	last_modified?:       string
+	metadata?: [_]: string
+	object_manifest?:   string
+	timestamp?:         string
+	transaction_id?:    string
+	transfer_encoding?: string
 }
 #Resources: {
 	opc_compute_acl?: [_]:                     #OpcComputeAclResource

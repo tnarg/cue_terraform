@@ -6,20 +6,34 @@ package hedvig
 	host:    string
 	type:    string
 	vdisk:   string
+	id?:     string
 }
 #HedvigLunResource: {
 	controller: string
 	vdisk:      string
+	id?:        string
 }
 #HedvigMountResource: {
 	controller: string
 	vdisk:      string
+	id?:        string
 }
 #HedvigVdiskResource: {
-	name:       string
-	size:       number
-	type:       string
-	residence?: string
+	name:                 string
+	size:                 number
+	type:                 string
+	blocksize?:           string
+	cacheenabled?:        string
+	clusteredfilesystem?: string
+	compressed?:          string
+	deduplication?:       bool
+	description?:         string
+	encryption?:          string
+	id?:                  string
+	replicationfactor?:   number
+	replicationpolicy?:   string
+	residence?:           string
+	scsi3pr?:             string
 }
 #Resources: {
 	hedvig_access?: [_]: #HedvigAccessResource

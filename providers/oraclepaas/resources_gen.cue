@@ -3,6 +3,7 @@ package oraclepaas
 
 #OraclepaasApplicationContainerResource: {
 	name:         string
+	app_url?:     string
 	archive_url?: string
 	auth_type?:   string
 	availability_domain?: [string, ...]
@@ -10,6 +11,7 @@ package oraclepaas
 	git_password?:    string
 	git_repository?:  string
 	git_username?:    string
+	id?:              string
 	load_balancer_subnets?: [string, ...]
 	manifest_file?:      string
 	notes?:              string
@@ -18,6 +20,7 @@ package oraclepaas
 	runtime?:            string
 	subscription_type?:  string
 	tags?: [_]: string
+	web_url?: string
 	deployment?: [{
 		environment?: [_]: string
 		instances?: number
@@ -65,6 +68,7 @@ package oraclepaas
 	source:              string
 	destination?:        string
 	enabled?:            bool
+	id?:                 string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -79,16 +83,28 @@ package oraclepaas
 	version:                   string
 	availability_domain?:      string
 	bring_your_own_license?:   bool
+	cloud_storage_container?:  string
+	compute_site_name?:        string
+	dbaas_monitor_url?:        string
 	description?:              string
 	desired_state?:            string
+	em_url?:                   string
+	glassfish_url?:            string
 	high_performance_storage?: bool
+	id?:                       string
+	identity_domain?:          string
 	ip_network?:               string
 	ip_reservations?: [string, ...]
 	level?:              string
 	notification_email?: string
+	region?:             string
+	status?:             string
 	subnet?:             string
+	uri?:                string
 	backups?: [{
 		cloud_storage_container: string
+		cloud_storage_password?: string
+		cloud_storage_username?: string
 		create_if_missing?:      bool
 	}, ...]
 	database_configuration?: [{
@@ -96,19 +112,33 @@ package oraclepaas
 		usable_storage:              number
 		backup_destination?:         string
 		backup_storage_volume_size?: number
+		character_set?:              string
 		data_storage_volume_size?:   number
 		db_demo?:                    string
 		disaster_recovery?:          bool
 		failover_database?:          bool
 		golden_gate?:                bool
 		is_rac?:                     bool
+		national_character_set?:     string
+		pdb_name?:                   string
 		sid?:                        string
 		snapshot_name?:              string
 		source_service_name?:        string
 		timezone?:                   string
 		type?:                       string
 	}, ...]
-	default_access_rules?: [{}, ...]
+	default_access_rules?: [{
+		enable_db_console?:      bool
+		enable_db_express?:      bool
+		enable_db_listener?:     bool
+		enable_em_console?:      bool
+		enable_http?:            bool
+		enable_http_ssl?:        bool
+		enable_rac_db_listener?: bool
+		enable_rac_ons?:         bool
+		enable_scan_listener?:   bool
+		enable_ssh?:             bool
+	}, ...]
 	hybrid_disaster_recovery?: [{
 		cloud_storage_container: string
 		cloud_storage_password?: string
@@ -117,6 +147,8 @@ package oraclepaas
 	instantiate_from_backup?: [{
 		cloud_storage_container: string
 		database_id:             string
+		cloud_storage_password?: string
+		cloud_storage_username?: string
 		decryption_key?:         string
 		on_premise?:             bool
 		service_id?:             string
@@ -140,6 +172,7 @@ package oraclepaas
 	service_instance_id: string
 	source:              string
 	enabled?:            bool
+	id?:                 string
 	protocol?:           string
 	timeouts?: {
 		create?: string
@@ -154,39 +187,53 @@ package oraclepaas
 	availability_domain?:    string
 	backup_destination?:     string
 	bring_your_own_license?: bool
+	description?:            string
 	desired_state?:          string
 	enable_admin_console?:   bool
 	force_delete?:           bool
+	id?:                     string
 	ip_network?:             string
 	level?:                  string
 	metering_frequency?:     string
 	notification_email?:     string
+	region?:                 string
 	service_version?:        string
 	snapshot_name?:          string
 	source_service_name?:    string
+	status?:                 string
 	subnet?:                 string
 	use_identity_service?:   bool
 	backups?: [{
 		cloud_storage_container: string
 		auto_generate?:          bool
+		cloud_storage_password?: string
+		cloud_storage_username?: string
 		use_oauth_for_storage?:  bool
 	}, ...]
 	load_balancer?: [{
+		admin_url?:             string
+		console_url?:           string
 		load_balancing_policy?: string
 		subnets?: [string, ...]
+		url?: string
 	}, ...]
 	oracle_traffic_director?: [{
 		shape:              string
 		high_availability?: bool
 		ip_reservations?: [string, ...]
 		load_balancing_policy?: string
+		root_url?:              string
 		admin?: [{
-			password: string
-			username: string
-			port?:    number
+			password:  string
+			username:  string
+			hostname?: string
+			port?:     number
 		}, ...]
 		listener?: [{
-			port?: number
+			port?:                    number
+			privileged_port?:         number
+			privileged_secured_port?: number
+			secured_port?:            number
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -197,19 +244,24 @@ package oraclepaas
 	weblogic_server?: [{
 		shape:               string
 		backup_volume_size?: string
+		cluster_name?:       string
 		connect_string?:     string
 		ip_reservations?: [string, ...]
+		middleware_volume_size?:   string
+		root_url?:                 string
 		upper_stack_product_name?: string
 		admin?: [{
 			password:      string
 			username:      string
+			hostname?:     string
 			port?:         number
 			secured_port?: number
 		}, ...]
 		application_database?: [{
-			name:     string
-			password: string
-			username: string
+			name:      string
+			password:  string
+			username:  string
+			pdb_name?: string
 		}, ...]
 		cluster?: [{
 			name: string
@@ -217,15 +269,18 @@ package oraclepaas
 			path_prefixes?: [string, ...]
 			server_count?:     number
 			servers_per_node?: number
+			shape?:            string
 		}, ...]
 		database?: [{
 			password:  string
 			username:  string
+			hostname?: string
 			name?:     string
 			pdb_name?: string
 		}, ...]
 		domain?: [{
 			mode?:            string
+			name?:            string
 			partition_count?: number
 			volume_size?:     string
 		}, ...]
@@ -239,7 +294,9 @@ package oraclepaas
 			server_count?:                 number
 		}, ...]
 		node_manager?: [{
-			port?: number
+			password?: string
+			port?:     number
+			username?: string
 		}, ...]
 		ports?: [{
 			content_port?:                    number
@@ -257,40 +314,56 @@ package oraclepaas
 	source:              string
 	description?:        string
 	enabled?:            bool
+	id?:                 string
 	protocol?:           string
+	type?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #OraclepaasMysqlServiceInstanceResource: {
-	name:                 string
-	shape:                string
-	ssh_public_key:       string
-	availability_domain?: string
-	backup_destination?:  string
-	description?:         string
-	ip_network?:          string
-	metering_frequency?:  string
-	notification_email?:  string
-	subnet?:              string
-	vm_user?:             string
+	name:                  string
+	shape:                 string
+	ssh_public_key:        string
+	availability_domain?:  string
+	backup_destination?:   string
+	base_release_version?: string
+	description?:          string
+	em_url?:               string
+	id?:                   string
+	ip_network?:           string
+	metering_frequency?:   string
+	notification_email?:   string
+	region?:               string
+	release_version?:      string
+	service_version?:      string
+	subnet?:               string
+	vm_user?:              string
 	backups?: [{
 		cloud_storage_container: string
+		cloud_storage_password?: string
+		cloud_storage_username?: string
 		create_if_missing?:      bool
 	}, ...]
 	mysql_configuration?: [{
+		connect_string?:      string
 		db_name?:             string
 		db_storage?:          number
+		ip_address?:          string
+		mysql_charset?:       string
+		mysql_collation?:     string
 		mysql_password?:      string
 		mysql_port?:          number
 		mysql_username?:      string
+		public_ip_address?:   string
 		snapshot_name?:       string
 		source_service_name?: string
 		enterprise_monitor_configuration?: [{
 			em_agent_password?: string
 			em_agent_username?: string
 			em_password?:       string
+			em_port?:           number
 			em_username?:       string
 		}, ...]
 	}, ...]

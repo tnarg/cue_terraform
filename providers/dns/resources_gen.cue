@@ -4,12 +4,14 @@ package dns
 #DnsARecordSetResource: {
 	addresses: [string, ...]
 	zone:  string
+	id?:   string
 	name?: string
 	ttl?:  number
 }
 #DnsAaaaRecordSetResource: {
 	addresses: [string, ...]
 	zone:  string
+	id?:   string
 	name?: string
 	ttl?:  number
 }
@@ -17,10 +19,12 @@ package dns
 	cname: string
 	name:  string
 	zone:  string
+	id?:   string
 	ttl?:  number
 }
 #DnsMxRecordSetResource: {
 	zone:  string
+	id?:   string
 	name?: string
 	ttl?:  number
 	mx?: [{
@@ -32,17 +36,20 @@ package dns
 	name: string
 	nameservers: [string, ...]
 	zone: string
+	id?:  string
 	ttl?: number
 }
 #DnsPtrRecordResource: {
 	ptr:   string
 	zone:  string
+	id?:   string
 	name?: string
 	ttl?:  number
 }
 #DnsSrvRecordSetResource: {
 	name: string
 	zone: string
+	id?:  string
 	ttl?: number
 	srv?: [{
 		port:     number
@@ -54,6 +61,7 @@ package dns
 #DnsTxtRecordSetResource: {
 	txt: [string, ...]
 	zone:  string
+	id?:   string
 	name?: string
 	ttl?:  number
 }

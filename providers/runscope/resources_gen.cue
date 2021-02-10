@@ -4,10 +4,12 @@ package runscope
 #RunscopeBucketResource: {
 	name:      string
 	team_uuid: string
+	id?:       string
 }
 #RunscopeEnvironmentResource: {
 	bucket_id: string
 	name:      string
+	id?:       string
 	initial_variables?: [_]: string
 	integrations?: [string, ...]
 	preserve_cookies?: bool
@@ -36,6 +38,7 @@ package runscope
 	bucket_id:      string
 	environment_id: string
 	test_id:        string
+	id?:            string
 	interval?:      string
 	note?:          string
 }
@@ -45,6 +48,7 @@ package runscope
 	test_id:   string
 	before_scripts?: [string, ...]
 	body?:   string
+	id?:     string
 	method?: string
 	note?:   string
 	scripts?: [string, ...]
@@ -71,9 +75,11 @@ package runscope
 	}, ...]
 }
 #RunscopeTestResource: {
-	bucket_id:   string
-	description: string
-	name:        string
+	bucket_id:               string
+	description:             string
+	name:                    string
+	default_environment_id?: string
+	id?:                     string
 }
 #Resources: {
 	runscope_bucket?: [_]:      #RunscopeBucketResource

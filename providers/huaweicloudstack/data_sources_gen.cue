@@ -2,14 +2,27 @@
 package huaweicloudstack
 
 #HuaweicloudstackImagesImageV2DataSource: {
+	checksum?:         string
+	container_format?: string
+	disk_format?:      string
+	file?:             string
+	id?:               string
+	metadata?: [_]: string
+	min_disk_gb?:    number
+	min_ram_mb?:     number
 	most_recent?:    bool
 	name?:           string
 	owner?:          string
+	protected?:      bool
+	region?:         string
+	schema?:         string
+	size_bytes?:     number
 	size_max?:       number
 	size_min?:       number
 	sort_direction?: string
 	sort_key?:       string
 	tag?:            string
+	updated_at?:     string
 	visibility?:     string
 }
 #HuaweicloudstackKmsDataKeyV1DataSource: {
@@ -17,40 +30,80 @@ package huaweicloudstack
 	key_id:              string
 	cipher_text?:        string
 	encryption_context?: string
+	id?:                 string
+	plain_text?:         string
 }
 #HuaweicloudstackKmsKeyV1DataSource: {
-	key_alias?:       string
-	key_description?: string
-	key_id?:          string
+	creation_date?:           string
+	default_key_flag?:        string
+	domain_id?:               string
+	id?:                      string
+	key_alias?:               string
+	key_description?:         string
+	key_id?:                  string
+	key_state?:               string
+	realm?:                   string
+	scheduled_deletion_date?: string
 }
 #HuaweicloudstackNetworkingNetworkV2DataSource: {
+	admin_state_up?:       string
+	id?:                   string
 	matching_subnet_cidr?: string
 	name?:                 string
 	network_id?:           string
+	region?:               string
+	shared?:               string
 	tenant_id?:            string
 }
 #HuaweicloudstackNetworkingPortV2DataSource: {
 	admin_state_up?: bool
-	device_id?:      string
-	device_owner?:   string
-	fixed_ip?:       string
-	mac_address?:    string
-	name?:           string
-	network_id?:     string
-	port_id?:        string
-	project_id?:     string
-	region?:         string
+	all_fixed_ips?: [string, ...]
+	all_security_group_ids?: [string, ...]
+	device_id?:    string
+	device_owner?: string
+	fixed_ip?:     string
+	id?:           string
+	mac_address?:  string
+	name?:         string
+	network_id?:   string
+	port_id?:      string
+	project_id?:   string
+	region?:       string
 	security_group_ids?: [string, ...]
 	status?:    string
 	tenant_id?: string
 }
 #HuaweicloudstackNetworkingSecgroupV2DataSource: {
+	id?:          string
 	name?:        string
+	region?:      string
 	secgroup_id?: string
+	tenant_id?:   string
 }
 #HuaweicloudstackNetworkingSubnetV2DataSource: {
+	allocation_pools?: [{
+		end:   string
+		start: string
+	}, ...]
+	cidr?:          string
 	dhcp_disabled?: bool
 	dhcp_enabled?:  bool
+	dns_nameservers?: [string, ...]
+	enable_dhcp?: bool
+	gateway_ip?:  string
+	host_routes?: [{
+		destination_cidr: string
+		next_hop:         string
+	}, ...]
+	id?:                string
+	ip_version?:        number
+	ipv6_address_mode?: string
+	ipv6_ra_mode?:      string
+	name?:              string
+	network_id?:        string
+	region?:            string
+	subnet_id?:         string
+	tenant_id?:         string
 }
 #DataSources: {
 	huaweicloudstack_images_image_v2?: [_]:        #HuaweicloudstackImagesImageV2DataSource

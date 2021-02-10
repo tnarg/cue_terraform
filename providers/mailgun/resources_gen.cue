@@ -2,16 +2,32 @@
 package mailgun
 
 #MailgunDomainResource: {
-	name:         string
-	region?:      string
-	spam_action?: string
-	wildcard?:    bool
+	name: string
+	id?:  string
+	receiving_records?: [{
+		priority:    string
+		record_type: string
+		valid:       string
+		value:       string
+	}, ...]
+	region?: string
+	sending_records?: [{
+		name:        string
+		record_type: string
+		valid:       string
+		value:       string
+	}, ...]
+	smtp_login?:    string
+	smtp_password?: string
+	spam_action?:   string
+	wildcard?:      bool
 }
 #MailgunRouteResource: {
 	actions: [string, ...]
 	expression:   string
 	priority:     number
 	description?: string
+	id?:          string
 	region?:      string
 }
 #Resources: {

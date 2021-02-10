@@ -10,6 +10,8 @@ package azurerm
 	disable_correlation_request_id?: bool
 	disable_terraform_partner_id?:   bool
 	environment?:                    string
+	metadata_host?:                  string
+	metadata_url?:                   string
 	msi_endpoint?:                   string
 	partner_id?:                     string
 	skip_credentials_validation?:    bool
@@ -23,8 +25,15 @@ package azurerm
 			purge_soft_delete_on_destroy?:    bool
 			recover_soft_deleted_key_vaults?: bool
 		}, ...]
+		network?: [{
+			relaxed_locking: bool
+		}, ...]
+		template_deployment?: [{
+			delete_nested_items_during_deletion: bool
+		}, ...]
 		virtual_machine?: [{
-			delete_os_disk_on_deletion: bool
+			delete_os_disk_on_deletion?: bool
+			graceful_shutdown?:          bool
 		}, ...]
 		virtual_machine_scale_set?: [{
 			roll_instances_when_required: bool

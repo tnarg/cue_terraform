@@ -3,15 +3,17 @@ package vcd
 
 #Provider: vcd: {
 	org:                   string
-	password:              string
 	url:                   string
-	user:                  string
 	allow_unverified_ssl?: bool
+	auth_type?:            string
 	import_separator?:     string
 	logging?:              bool
 	logging_file?:         string
 	max_retry_timeout?:    number
+	password?:             string
+	saml_adfs_rpt_id?:     string
 	sysorg?:               string
 	token?:                string
+	user?:                 string
 	vdc?:                  string
 }

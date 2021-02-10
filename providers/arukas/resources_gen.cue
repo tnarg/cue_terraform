@@ -2,12 +2,24 @@
 package arukas
 
 #ArukasContainerResource: {
-	image:      string
-	name:       string
-	cmd?:       string
-	instances?: number
-	memory?:    number
-	plan?:      string
+	image:                   string
+	name:                    string
+	cmd?:                    string
+	endpoint?:               string
+	endpoint_full_hostname?: string
+	endpoint_full_url?:      string
+	id?:                     string
+	instances?:              number
+	memory?:                 number
+	plan?:                   string
+	port_mappings?: [{
+		container_port: number
+		host:           string
+		ipaddress:      string
+		service_port:   number
+	}, ...]
+	region?:     string
+	service_id?: string
 	environments?: [{
 		key:   string
 		value: string

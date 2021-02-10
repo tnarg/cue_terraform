@@ -6,6 +6,7 @@ package google
 	parent:       string
 	title:        string
 	description?: string
+	id?:          string
 	basic?: [{
 		combining_function?: string
 		conditions?: [{
@@ -27,6 +28,81 @@ package google
 			}, ...]
 		}, ...]
 	}, ...]
+	custom?: [{
+		expr?: [{
+			expression:   string
+			description?: string
+			location?:    string
+			title?:       string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleAccessContextManagerAccessLevelConditionResource: {
+	access_level: string
+	id?:          string
+	ip_subnetworks?: [string, ...]
+	members?: [string, ...]
+	negate?: bool
+	regions?: [string, ...]
+	required_access_levels?: [string, ...]
+	device_policy?: [{
+		allowed_device_management_levels?: [string, ...]
+		allowed_encryption_statuses?: [string, ...]
+		require_admin_approval?: bool
+		require_corp_owned?:     bool
+		require_screen_lock?:    bool
+		os_constraints?: [{
+			os_type:          string
+			minimum_version?: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#GoogleAccessContextManagerAccessLevelsResource: {
+	parent: string
+	id?:    string
+	access_levels?: [{
+		name:         string
+		title:        string
+		description?: string
+		basic?: [{
+			combining_function?: string
+			conditions?: [{
+				ip_subnetworks?: [string, ...]
+				members?: [string, ...]
+				negate?: bool
+				regions?: [string, ...]
+				required_access_levels?: [string, ...]
+				device_policy?: [{
+					allowed_device_management_levels?: [string, ...]
+					allowed_encryption_statuses?: [string, ...]
+					require_admin_approval?: bool
+					require_corp_owned?:     bool
+					require_screen_lock?:    bool
+					os_constraints?: [{
+						os_type:          string
+						minimum_version?: string
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+		custom?: [{
+			expr?: [{
+				expression:   string
+				description?: string
+				location?:    string
+				title?:       string
+			}, ...]
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -34,8 +110,24 @@ package google
 	}
 }
 #GoogleAccessContextManagerAccessPolicyResource: {
-	parent: string
-	title:  string
+	parent:       string
+	title:        string
+	create_time?: string
+	id?:          string
+	name?:        string
+	update_time?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleAccessContextManagerGcpUserAccessBindingResource: {
+	access_levels: [string, ...]
+	group_key:       string
+	organization_id: string
+	id?:             string
+	name?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -46,8 +138,11 @@ package google
 	name:                       string
 	parent:                     string
 	title:                      string
+	create_time?:               string
 	description?:               string
+	id?:                        string
 	perimeter_type?:            string
+	update_time?:               string
 	use_explicit_dry_run_spec?: bool
 	spec?: [{
 		access_levels?: [string, ...]
@@ -76,20 +171,125 @@ package google
 #GoogleAccessContextManagerServicePerimeterResourceResource: {
 	perimeter_name: string
 	resource:       string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#GoogleAccessContextManagerServicePerimetersResource: {
+	parent: string
+	id?:    string
+	service_perimeters?: [{
+		name:                       string
+		title:                      string
+		create_time?:               string
+		description?:               string
+		perimeter_type?:            string
+		update_time?:               string
+		use_explicit_dry_run_spec?: bool
+		spec?: [{
+			access_levels?: [string, ...]
+			resources?: [string, ...]
+			restricted_services?: [string, ...]
+			vpc_accessible_services?: [{
+				allowed_services?: [string, ...]
+				enable_restriction?: bool
+			}, ...]
+		}, ...]
+		status?: [{
+			access_levels?: [string, ...]
+			resources?: [string, ...]
+			restricted_services?: [string, ...]
+			vpc_accessible_services?: [{
+				allowed_services?: [string, ...]
+				enable_restriction?: bool
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleActiveDirectoryDomainResource: {
+	domain_name: string
+	locations: [string, ...]
+	reserved_ip_range: string
+	admin?:            string
+	authorized_networks?: [string, ...]
+	fqdn?: string
+	id?:   string
+	labels?: [_]: string
+	name?:    string
+	project?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleActiveDirectoryDomainTrustResource: {
+	domain: string
+	target_dns_ip_addresses: [string, ...]
+	target_domain_name:        string
+	trust_direction:           string
+	trust_handshake_secret:    string
+	trust_type:                string
+	id?:                       string
+	project?:                  string
+	selective_authentication?: bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleApigeeOrganizationResource: {
+	project_id:                            string
+	analytics_region?:                     string
+	authorized_network?:                   string
+	ca_certificate?:                       string
+	description?:                          string
+	display_name?:                         string
+	id?:                                   string
+	name?:                                 string
+	runtime_database_encryption_key_name?: string
+	runtime_type?:                         string
+	subscription_type?:                    string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleAppEngineApplicationResource: {
-	location_id: string
+	location_id:       string
+	app_id?:           string
+	auth_domain?:      string
+	code_bucket?:      string
+	database_type?:    string
+	default_bucket?:   string
+	default_hostname?: string
+	gcr_domain?:       string
+	id?:               string
+	name?:             string
+	project?:          string
+	serving_status?:   string
+	url_dispatch_rule?: [{
+		domain:  string
+		path:    string
+		service: string
+	}, ...]
 	feature_settings?: [{
 		split_health_checks: bool
 	}, ...]
 	iap?: [{
-		oauth2_client_id:     string
-		oauth2_client_secret: string
-		enabled?:             bool
+		oauth2_client_id:             string
+		oauth2_client_secret:         string
+		enabled?:                     bool
+		oauth2_client_secret_sha256?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -97,6 +297,8 @@ package google
 	}
 }
 #GoogleAppEngineApplicationUrlDispatchRulesResource: {
+	id?:      string
+	project?: string
 	dispatch_rules?: [{
 		path:    string
 		service: string
@@ -110,9 +312,19 @@ package google
 }
 #GoogleAppEngineDomainMappingResource: {
 	domain_name:        string
+	id?:                string
+	name?:              string
 	override_strategy?: string
+	project?:           string
+	resource_records?: [{
+		name:   string
+		rrdata: string
+		type:   string
+	}, ...]
 	ssl_settings?: [{
-		ssl_management_type: string
+		ssl_management_type:             string
+		certificate_id?:                 string
+		pending_managed_certificate_id?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -124,7 +336,9 @@ package google
 	action:       string
 	source_range: string
 	description?: string
+	id?:          string
 	priority?:    number
+	project?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -133,17 +347,21 @@ package google
 }
 #GoogleAppEngineFlexibleAppVersionResource: {
 	runtime: string
+	service: string
 	beta_settings?: [_]: string
 	default_expiration?:        string
 	delete_service_on_destroy?: bool
 	env_variables?: [_]: string
+	id?: string
 	inbound_services?: [string, ...]
 	instance_class?:               string
+	name?:                         string
 	nobuild_files_regex?:          string
 	noop_on_destroy?:              bool
+	project?:                      string
+	runtime_api_version?:          string
 	runtime_channel?:              string
 	runtime_main_executable_path?: string
-	service?:                      string
 	serving_status?:               string
 	version_id?:                   string
 	api_config?: [{
@@ -154,13 +372,14 @@ package google
 		url?:              string
 	}, ...]
 	automatic_scaling?: [{
-		cool_down_period?:    string
-		max_idle_instances?:  number
-		max_pending_latency?: string
-		max_total_instances?: number
-		min_idle_instances?:  number
-		min_pending_latency?: string
-		min_total_instances?: number
+		cool_down_period?:        string
+		max_concurrent_requests?: number
+		max_idle_instances?:      number
+		max_pending_latency?:     string
+		max_total_instances?:     number
+		min_idle_instances?:      number
+		min_pending_latency?:     string
+		min_total_instances?:     number
 		cpu_utilization?: [{
 			target_utilization:         number
 			aggregation_window_length?: string
@@ -208,6 +427,25 @@ package google
 	}, ...]
 	entrypoint?: [{
 		shell: string
+	}, ...]
+	handlers?: [{
+		auth_fail_action?:            string
+		login?:                       string
+		redirect_http_response_code?: string
+		security_level?:              string
+		url_regex?:                   string
+		script?: [{
+			script_path: string
+		}, ...]
+		static_files?: [{
+			application_readable?: bool
+			expiration?:           string
+			http_headers?: [_]: string
+			mime_type?:             string
+			path?:                  string
+			require_matching_file?: bool
+			upload_path_regex?:     string
+		}, ...]
 	}, ...]
 	liveness_check?: [{
 		path:               string
@@ -258,7 +496,9 @@ package google
 }
 #GoogleAppEngineServiceSplitTrafficResource: {
 	service:          string
+	id?:              string
 	migrate_traffic?: bool
+	project?:         string
 	split?: [{
 		allocations: [_]: string
 		shard_by?: string
@@ -271,11 +511,16 @@ package google
 }
 #GoogleAppEngineStandardAppVersionResource: {
 	runtime:                    string
+	service:                    string
 	delete_service_on_destroy?: bool
 	env_variables?: [_]: string
+	id?: string
+	inbound_services?: [string, ...]
+	instance_class?:      string
+	name?:                string
 	noop_on_destroy?:     bool
+	project?:             string
 	runtime_api_version?: string
-	service?:             string
 	threadsafe?:          bool
 	version_id?:          string
 	automatic_scaling?: [{
@@ -340,17 +585,35 @@ package google
 		delete?: string
 		update?: string
 	}
+	vpc_access_connector?: [{
+		name: string
+	}, ...]
 }
 #GoogleBigqueryDataTransferConfigResource: {
 	data_source_id:         string
 	destination_dataset_id: string
 	display_name:           string
 	params: [_]: string
-	data_refresh_window_days?: number
-	disabled?:                 bool
-	location?:                 string
-	schedule?:                 string
-	service_account_name?:     string
+	data_refresh_window_days?:  number
+	disabled?:                  bool
+	id?:                        string
+	location?:                  string
+	name?:                      string
+	notification_pubsub_topic?: string
+	project?:                   string
+	schedule?:                  string
+	service_account_name?:      string
+	email_preferences?: [{
+		enable_failure_email: bool
+	}, ...]
+	schedule_options?: [{
+		disable_auto_scheduling?: bool
+		end_time?:                string
+		start_time?:              string
+	}, ...]
+	sensitive_params?: [{
+		secret_access_key: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -359,13 +622,19 @@ package google
 }
 #GoogleBigqueryDatasetResource: {
 	dataset_id:                       string
+	creation_time?:                   number
 	default_partition_expiration_ms?: number
 	default_table_expiration_ms?:     number
 	delete_contents_on_destroy?:      bool
 	description?:                     string
+	etag?:                            string
 	friendly_name?:                   string
+	id?:                              string
 	labels?: [_]: string
-	location?: string
+	last_modified_time?: number
+	location?:           string
+	project?:            string
+	self_link?:          string
 	access?: [{
 		domain?:         string
 		group_by_email?: string
@@ -388,13 +657,16 @@ package google
 	}
 }
 #GoogleBigqueryDatasetAccessResource: {
-	dataset_id:      string
-	domain?:         string
-	group_by_email?: string
-	iam_member?:     string
-	role?:           string
-	special_group?:  string
-	user_by_email?:  string
+	dataset_id:          string
+	api_updated_member?: bool
+	domain?:             string
+	group_by_email?:     string
+	iam_member?:         string
+	id?:                 string
+	project?:            string
+	role?:               string
+	special_group?:      string
+	user_by_email?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -405,11 +677,48 @@ package google
 		table_id:   string
 	}, ...]
 }
+#GoogleBigqueryDatasetIamBindingResource: {
+	dataset_id: string
+	members: [string, ...]
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigqueryDatasetIamMemberResource: {
+	dataset_id: string
+	member:     string
+	role:       string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigqueryDatasetIamPolicyResource: {
+	dataset_id:  string
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleBigqueryJobResource: {
 	job_id:          string
+	id?:             string
 	job_timeout_ms?: string
+	job_type?:       string
 	labels?: [_]: string
-	location?: string
+	location?:   string
+	project?:    string
+	user_email?: string
 	copy?: [{
 		create_disposition?: string
 		write_disposition?:  string
@@ -417,19 +726,21 @@ package google
 			kms_key_name: string
 		}, ...]
 		destination_table?: [{
-			dataset_id: string
-			project_id: string
-			table_id:   string
+			table_id:    string
+			dataset_id?: string
+			project_id?: string
 		}, ...]
 		source_tables?: [{
-			dataset_id: string
-			project_id: string
-			table_id:   string
+			table_id:    string
+			dataset_id?: string
+			project_id?: string
 		}, ...]
 	}, ...]
 	extract?: [{
 		destination_uris: [string, ...]
 		compression?:            string
+		destination_format?:     string
+		field_delimiter?:        string
 		print_header?:           bool
 		use_avro_logical_types?: bool
 		source_model?: [{
@@ -438,9 +749,9 @@ package google
 			project_id: string
 		}, ...]
 		source_table?: [{
-			dataset_id: string
-			project_id: string
-			table_id:   string
+			table_id:    string
+			dataset_id?: string
+			project_id?: string
 		}, ...]
 	}, ...]
 	load?: [{
@@ -450,10 +761,12 @@ package google
 		autodetect?:            bool
 		create_disposition?:    string
 		encoding?:              string
+		field_delimiter?:       string
 		ignore_unknown_values?: bool
 		max_bad_records?:       number
 		null_marker?:           string
 		projection_fields?: [string, ...]
+		quote?: string
 		schema_update_options?: [string, ...]
 		skip_leading_rows?: number
 		source_format?:     string
@@ -462,9 +775,9 @@ package google
 			kms_key_name: string
 		}, ...]
 		destination_table?: [{
-			dataset_id: string
-			project_id: string
-			table_id:   string
+			table_id:    string
+			dataset_id?: string
+			project_id?: string
 		}, ...]
 		time_partitioning?: [{
 			type:           string
@@ -493,9 +806,9 @@ package google
 			kms_key_name: string
 		}, ...]
 		destination_table?: [{
-			dataset_id: string
-			project_id: string
-			table_id:   string
+			table_id:    string
+			dataset_id?: string
+			project_id?: string
 		}, ...]
 		script_options?: [{
 			key_result_statement?:  string
@@ -512,13 +825,65 @@ package google
 		delete?: string
 	}
 }
+#GoogleBigqueryReservationResource: {
+	name:               string
+	slot_capacity:      number
+	id?:                string
+	ignore_idle_slots?: bool
+	location?:          string
+	project?:           string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleBigqueryRoutineResource: {
+	dataset_id:         string
+	definition_body:    string
+	routine_id:         string
+	creation_time?:     number
+	description?:       string
+	determinism_level?: string
+	id?:                string
+	imported_libraries?: [string, ...]
+	language?:           string
+	last_modified_time?: number
+	project?:            string
+	return_type?:        string
+	routine_type?:       string
+	arguments?: [{
+		argument_kind?: string
+		data_type?:     string
+		mode?:          string
+		name?:          string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleBigqueryTableResource: {
 	dataset_id: string
 	table_id:   string
 	clustering?: [string, ...]
-	description?:   string
-	friendly_name?: string
+	creation_time?:   number
+	description?:     string
+	etag?:            string
+	expiration_time?: number
+	friendly_name?:   string
+	id?:              string
 	labels?: [_]: string
+	last_modified_time?:  number
+	location?:            string
+	num_bytes?:           number
+	num_long_term_bytes?: number
+	num_rows?:            number
+	project?:             string
+	schema?:              string
+	self_link?:           string
+	type?:                string
 	encryption_configuration?: [{
 		kms_key_name: string
 	}, ...]
@@ -529,6 +894,7 @@ package google
 		compression?:           string
 		ignore_unknown_values?: bool
 		max_bad_records?:       number
+		schema?:                string
 		csv_options?: [{
 			quote:                  string
 			allow_jagged_rows?:     bool
@@ -540,6 +906,23 @@ package google
 		google_sheets_options?: [{
 			range?:             string
 			skip_leading_rows?: number
+		}, ...]
+		hive_partitioning_options?: [{
+			mode?:              string
+			source_uri_prefix?: string
+		}, ...]
+	}, ...]
+	materialized_view?: [{
+		query:                string
+		enable_refresh?:      bool
+		refresh_interval_ms?: number
+	}, ...]
+	range_partitioning?: [{
+		field: string
+		range?: [{
+			end:      number
+			interval: number
+			start:    number
 		}, ...]
 	}, ...]
 	time_partitioning?: [{
@@ -553,12 +936,51 @@ package google
 		use_legacy_sql?: bool
 	}, ...]
 }
+#GoogleBigqueryTableIamBindingResource: {
+	dataset_id: string
+	members: [string, ...]
+	role:     string
+	table_id: string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigqueryTableIamMemberResource: {
+	dataset_id: string
+	member:     string
+	role:       string
+	table_id:   string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigqueryTableIamPolicyResource: {
+	dataset_id:  string
+	policy_data: string
+	table_id:    string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleBigtableAppProfileResource: {
 	app_profile_id:                 string
 	description?:                   string
+	id?:                            string
 	ignore_warnings?:               bool
 	instance?:                      string
 	multi_cluster_routing_use_any?: bool
+	name?:                          string
+	project?:                       string
 	single_cluster_routing?: [{
 		cluster_id:                  string
 		allow_transactional_writes?: bool
@@ -573,9 +995,12 @@ package google
 	column_family: string
 	instance_name: string
 	table:         string
+	id?:           string
 	mode?:         string
+	project?:      string
 	max_age?: [{
-		days: number
+		days?:     number
+		duration?: string
 	}, ...]
 	max_version?: [{
 		number: number
@@ -584,57 +1009,185 @@ package google
 #GoogleBigtableInstanceResource: {
 	name:                 string
 	deletion_protection?: bool
+	display_name?:        string
+	id?:                  string
 	instance_type?:       string
+	labels?: [_]: string
+	project?: string
 	cluster?: [{
 		cluster_id:    string
-		zone:          string
+		num_nodes?:    number
 		storage_type?: string
+		zone?:         string
 	}, ...]
 }
 #GoogleBigtableInstanceIamBindingResource: {
 	instance: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBigtableInstanceIamMemberResource: {
 	instance: string
 	member:   string
 	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBigtableInstanceIamPolicyResource: {
 	instance:    string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleBigtableTableResource: {
 	instance_name: string
 	name:          string
+	id?:           string
+	project?:      string
 	split_keys?: [string, ...]
 	column_family?: [{
 		family: string
 	}, ...]
 }
+#GoogleBigtableTableIamBindingResource: {
+	instance: string
+	members: [string, ...]
+	role:     string
+	table:    string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigtableTableIamMemberResource: {
+	instance: string
+	member:   string
+	role:     string
+	table:    string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleBigtableTableIamPolicyResource: {
+	instance:    string
+	policy_data: string
+	table:       string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleBillingAccountIamBindingResource: {
 	billing_account_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBillingAccountIamMemberResource: {
 	billing_account_id: string
 	member:             string
 	role:               string
+	etag?:              string
+	id?:                string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBillingAccountIamPolicyResource: {
 	billing_account_id: string
 	policy_data:        string
+	etag?:              string
+	id?:                string
+}
+#GoogleBillingBudgetResource: {
+	billing_account: string
+	display_name?:   string
+	id?:             string
+	name?:           string
+	all_updates_rule?: [{
+		disable_default_iam_recipients?: bool
+		monitoring_notification_channels?: [string, ...]
+		pubsub_topic?:   string
+		schema_version?: string
+	}, ...]
+	amount?: [{
+		last_period_amount?: bool
+		specified_amount?: [{
+			currency_code?: string
+			nanos?:         number
+			units?:         string
+		}, ...]
+	}, ...]
+	budget_filter?: [{
+		credit_types?: [string, ...]
+		credit_types_treatment?: string
+		labels?: [_]: string
+		projects?: [string, ...]
+		services?: [string, ...]
+		subaccounts?: [string, ...]
+	}, ...]
+	threshold_rules?: [{
+		threshold_percent: number
+		spend_basis?:      string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleBillingSubaccountResource: {
+	display_name:           string
+	master_billing_account: string
+	billing_account_id?:    string
+	deletion_policy?:       string
+	id?:                    string
+	name?:                  string
+	open?:                  bool
 }
 #GoogleBinaryAuthorizationAttestorResource: {
 	name:         string
 	description?: string
+	id?:          string
+	project?:     string
 	attestation_authority_note?: [{
-		note_reference: string
+		note_reference:                    string
+		delegation_service_account_email?: string
 		public_keys?: [{
 			ascii_armored_pgp_public_key?: string
 			comment?:                      string
+			id?:                           string
 			pkix_public_key?: [{
 				public_key_pem?:      string
 				signature_algorithm?: string
@@ -650,19 +1203,41 @@ package google
 #GoogleBinaryAuthorizationAttestorIamBindingResource: {
 	attestor: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBinaryAuthorizationAttestorIamMemberResource: {
 	attestor: string
 	member:   string
 	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleBinaryAuthorizationAttestorIamPolicyResource: {
 	attestor:    string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleBinaryAuthorizationPolicyResource: {
-	description?: string
+	description?:                   string
+	global_policy_evaluation_mode?: string
+	id?:                            string
+	project?:                       string
 	admission_whitelist_patterns?: [{
 		name_pattern: string
 	}, ...]
@@ -683,11 +1258,152 @@ package google
 		update?: string
 	}
 }
+#GoogleCloudAssetFolderFeedResource: {
+	billing_project: string
+	feed_id:         string
+	folder:          string
+	asset_names?: [string, ...]
+	asset_types?: [string, ...]
+	content_type?: string
+	folder_id?:    string
+	id?:           string
+	name?:         string
+	condition?: [{
+		expression:   string
+		description?: string
+		location?:    string
+		title?:       string
+	}, ...]
+	feed_output_config?: [{
+		pubsub_destination?: [{
+			topic: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleCloudAssetOrganizationFeedResource: {
+	billing_project: string
+	feed_id:         string
+	org_id:          string
+	asset_names?: [string, ...]
+	asset_types?: [string, ...]
+	content_type?: string
+	id?:           string
+	name?:         string
+	condition?: [{
+		expression:   string
+		description?: string
+		location?:    string
+		title?:       string
+	}, ...]
+	feed_output_config?: [{
+		pubsub_destination?: [{
+			topic: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleCloudAssetProjectFeedResource: {
+	feed_id: string
+	asset_names?: [string, ...]
+	asset_types?: [string, ...]
+	billing_project?: string
+	content_type?:    string
+	id?:              string
+	name?:            string
+	project?:         string
+	condition?: [{
+		expression:   string
+		description?: string
+		location?:    string
+		title?:       string
+	}, ...]
+	feed_output_config?: [{
+		pubsub_destination?: [{
+			topic: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleCloudIdentityGroupResource: {
+	labels: [_]: string
+	parent:        string
+	create_time?:  string
+	description?:  string
+	display_name?: string
+	id?:           string
+	name?:         string
+	update_time?:  string
+	group_key?: [{
+		id:         string
+		namespace?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleCloudIdentityGroupMembershipResource: {
+	group:        string
+	create_time?: string
+	id?:          string
+	name?:        string
+	type?:        string
+	update_time?: string
+	preferred_member_key?: [{
+		id:         string
+		namespace?: string
+	}, ...]
+	roles?: [{
+		name: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleCloudRunDomainMappingResource: {
 	location: string
 	name:     string
+	id?:      string
+	project?: string
+	status?: [{
+		conditions: [{
+			message: string
+			reason:  string
+			status:  string
+			type:    string
+		}, ...]
+		mapped_route_name:   string
+		observed_generation: number
+		resource_records: [{
+			name:   string
+			rrdata: string
+			type:   string
+		}, ...]
+	}, ...]
 	metadata?: [{
 		namespace: string
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		route_name:        string
@@ -703,13 +1419,45 @@ package google
 	location:                    string
 	name:                        string
 	autogenerate_revision_name?: bool
-	metadata?: [{}, ...]
+	id?:                         string
+	project?:                    string
+	status?: [{
+		conditions: [{
+			message: string
+			reason:  string
+			status:  string
+			type:    string
+		}, ...]
+		latest_created_revision_name: string
+		latest_ready_revision_name:   string
+		observed_generation:          number
+		url:                          string
+	}, ...]
+	metadata?: [{
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
 	template?: [{
 		metadata?: [{
+			annotations?: [_]: string
+			generation?: number
 			labels?: [_]: string
+			name?:             string
+			namespace?:        string
+			resource_version?: string
+			self_link?:        string
+			uid?:              string
 		}, ...]
 		spec?: [{
-			service_account_name?: string
+			container_concurrency?: number
+			service_account_name?:  string
+			serving_state?:         string
+			timeout_seconds?:       number
 			containers?: [{
 				image: string
 				args?: [string, ...]
@@ -734,7 +1482,13 @@ package google
 						}, ...]
 					}, ...]
 				}, ...]
+				ports?: [{
+					container_port: number
+					name?:          string
+					protocol?:      string
+				}, ...]
 				resources?: [{
+					limits?: [_]:   string
 					requests?: [_]: string
 				}, ...]
 			}, ...]
@@ -753,22 +1507,47 @@ package google
 }
 #GoogleCloudRunServiceIamBindingResource: {
 	members: [string, ...]
-	role:    string
-	service: string
+	role:      string
+	service:   string
+	etag?:     string
+	id?:       string
+	location?: string
+	project?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleCloudRunServiceIamMemberResource: {
-	member:  string
-	role:    string
-	service: string
+	member:    string
+	role:      string
+	service:   string
+	etag?:     string
+	id?:       string
+	location?: string
+	project?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleCloudRunServiceIamPolicyResource: {
 	policy_data: string
 	service:     string
+	etag?:       string
+	id?:         string
+	location?:   string
+	project?:    string
 }
 #GoogleCloudSchedulerJobResource: {
 	name:              string
 	attempt_deadline?: string
 	description?:      string
+	id?:               string
+	project?:          string
+	region?:           string
 	schedule?:         string
 	time_zone?:        string
 	app_engine_http_target?: [{
@@ -801,22 +1580,45 @@ package google
 		attributes?: [_]: string
 		data?: string
 	}, ...]
-	retry_config?: [{}, ...]
+	retry_config?: [{
+		max_backoff_duration?: string
+		max_doublings?:        number
+		max_retry_duration?:   string
+		min_backoff_duration?: string
+		retry_count?:          number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
+		update?: string
 	}
 }
 #GoogleCloudTasksQueueResource: {
 	location: string
+	id?:      string
 	name?:    string
+	project?: string
 	app_engine_routing_override?: [{
+		host?:     string
 		instance?: string
 		service?:  string
 		version?:  string
 	}, ...]
-	rate_limits?: [{}, ...]
-	retry_config?: [{}, ...]
+	rate_limits?: [{
+		max_burst_size?:            number
+		max_concurrent_dispatches?: number
+		max_dispatches_per_second?: number
+	}, ...]
+	retry_config?: [{
+		max_attempts?:       number
+		max_backoff?:        string
+		max_doublings?:      number
+		max_retry_duration?: string
+		min_backoff?:        string
+	}, ...]
+	stackdriver_logging_config?: [{
+		sampling_ratio: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -824,16 +1626,74 @@ package google
 	}
 }
 #GoogleCloudbuildTriggerResource: {
+	create_time?: string
 	description?: string
 	disabled?:    bool
 	filename?:    string
+	id?:          string
 	ignored_files?: [string, ...]
 	included_files?: [string, ...]
+	name?:    string
+	project?: string
 	substitutions?: [_]: string
+	tags?: [string, ...]
+	trigger_id?: string
 	build?: [{
 		images?: [string, ...]
+		logs_bucket?: string
+		queue_ttl?:   string
+		substitutions?: [_]: string
 		tags?: [string, ...]
 		timeout?: string
+		artifacts?: [{
+			images?: [string, ...]
+			objects?: [{
+				location?: string
+				paths?: [string, ...]
+				timing?: [{
+					end_time:   string
+					start_time: string
+				}, ...]
+			}, ...]
+		}, ...]
+		options?: [{
+			disk_size_gb?:          number
+			dynamic_substitutions?: bool
+			env?: [string, ...]
+			log_streaming_option?:    string
+			logging?:                 string
+			machine_type?:            string
+			requested_verify_option?: string
+			secret_env?: [string, ...]
+			source_provenance_hash?: [string, ...]
+			substitution_option?: string
+			worker_pool?:         string
+			volumes?: [{
+				name?: string
+				path?: string
+			}, ...]
+		}, ...]
+		secret?: [{
+			kms_key_name: string
+			secret_env?: [_]: string
+		}, ...]
+		source?: [{
+			repo_source?: [{
+				repo_name:     string
+				branch_name?:  string
+				commit_sha?:   string
+				dir?:          string
+				invert_regex?: bool
+				project_id?:   string
+				substitutions?: [_]: string
+				tag_name?: string
+			}, ...]
+			storage_source?: [{
+				bucket:      string
+				object:      string
+				generation?: string
+			}, ...]
+		}, ...]
 		step?: [{
 			name: string
 			args?: [string, ...]
@@ -851,34 +1711,57 @@ package google
 			}, ...]
 		}, ...]
 	}, ...]
+	github?: [{
+		name?:  string
+		owner?: string
+		pull_request?: [{
+			branch:           string
+			comment_control?: string
+			invert_regex?:    bool
+		}, ...]
+		push?: [{
+			branch?:       string
+			invert_regex?: bool
+			tag?:          string
+		}, ...]
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 	trigger_template?: [{
-		branch_name?: string
-		commit_sha?:  string
-		dir?:         string
-		repo_name?:   string
-		tag_name?:    string
+		branch_name?:  string
+		commit_sha?:   string
+		dir?:          string
+		invert_regex?: bool
+		project_id?:   string
+		repo_name?:    string
+		tag_name?:     string
 	}, ...]
 }
 #GoogleCloudfunctionsFunctionResource: {
 	name:                 string
 	runtime:              string
 	available_memory_mb?: number
-	description?:         string
-	entry_point?:         string
+	build_environment_variables?: [_]: string
+	description?: string
+	entry_point?: string
 	environment_variables?: [_]: string
-	ingress_settings?: string
+	https_trigger_url?: string
+	id?:                string
+	ingress_settings?:  string
 	labels?: [_]: string
-	max_instances?:         number
-	source_archive_bucket?: string
-	source_archive_object?: string
-	timeout?:               number
-	trigger_http?:          bool
-	vpc_connector?:         string
+	max_instances?:                 number
+	project?:                       string
+	region?:                        string
+	service_account_email?:         string
+	source_archive_bucket?:         string
+	source_archive_object?:         string
+	timeout?:                       number
+	trigger_http?:                  bool
+	vpc_connector?:                 string
+	vpc_connector_egress_settings?: string
 	event_trigger?: [{
 		event_type: string
 		resource:   string
@@ -887,7 +1770,8 @@ package google
 		}, ...]
 	}, ...]
 	source_repository?: [{
-		url: string
+		url:           string
+		deployed_url?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -899,20 +1783,97 @@ package google
 #GoogleCloudfunctionsFunctionIamBindingResource: {
 	cloud_function: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleCloudfunctionsFunctionIamMemberResource: {
 	cloud_function: string
 	member:         string
 	role:           string
+	etag?:          string
+	id?:            string
+	project?:       string
+	region?:        string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleCloudfunctionsFunctionIamPolicyResource: {
 	cloud_function: string
 	policy_data:    string
+	etag?:          string
+	id?:            string
+	project?:       string
+	region?:        string
+}
+#GoogleCloudiotDeviceResource: {
+	name:     string
+	registry: string
+	blocked?: bool
+	config?: [{
+		binary_data:       string
+		cloud_update_time: string
+		device_ack_time:   string
+		version:           string
+	}, ...]
+	id?:                    string
+	last_config_ack_time?:  string
+	last_config_send_time?: string
+	last_error_status?: [{
+		details: [{
+			[_]: string
+		}, ...]
+		message: string
+		number:  number
+	}, ...]
+	last_error_time?:     string
+	last_event_time?:     string
+	last_heartbeat_time?: string
+	last_state_time?:     string
+	log_level?:           string
+	metadata?: [_]: string
+	num_id?: string
+	state?: [{
+		binary_data: string
+		update_time: string
+	}, ...]
+	credentials?: [{
+		expiration_time?: string
+		public_key?: [{
+			format: string
+			key:    string
+		}, ...]
+	}, ...]
+	gateway_config?: [{
+		gateway_auth_method?:        string
+		gateway_type?:               string
+		last_accessed_gateway_id?:   string
+		last_accessed_gateway_time?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #GoogleCloudiotRegistryResource: {
-	name:       string
+	name: string
+	http_config?: [_]: string
+	id?:        string
 	log_level?: string
+	mqtt_config?: [_]: string
+	project?: string
+	region?:  string
 	state_notification_config?: [_]: string
 	credentials?: [{
 		public_key_certificate: [_]: string
@@ -921,25 +1882,52 @@ package google
 		pubsub_topic_name:  string
 		subfolder_matches?: string
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #GoogleComposerEnvironmentResource: {
 	name: string
+	id?:  string
 	labels?: [_]: string
-	region?: string
+	project?: string
+	region?:  string
 	config?: [{
+		airflow_uri?:    string
+		dag_gcs_prefix?: string
+		gke_cluster?:    string
+		node_count?:     number
 		node_config?: [{
-			zone:        string
-			subnetwork?: string
+			zone:          string
+			disk_size_gb?: number
+			ip_allocation_policy?: [{
+				cluster_ipv4_cidr_block:       string
+				cluster_secondary_range_name:  string
+				services_ipv4_cidr_block:      string
+				services_secondary_range_name: string
+				use_ip_aliases:                bool
+			}, ...]
+			machine_type?: string
+			network?:      string
+			oauth_scopes?: [string, ...]
+			service_account?: string
+			subnetwork?:      string
 			tags?: [string, ...]
 		}, ...]
 		private_environment_config?: [{
-			enable_private_endpoint?: bool
-			master_ipv4_cidr_block?:  string
+			cloud_sql_ipv4_cidr_block?:  string
+			enable_private_endpoint?:    bool
+			master_ipv4_cidr_block?:     string
+			web_server_ipv4_cidr_block?: string
 		}, ...]
 		software_config?: [{
 			airflow_config_overrides?: [_]: string
 			env_variables?: [_]:            string
-			pypi_packages?: [_]:            string
+			image_version?: string
+			pypi_packages?: [_]: string
+			python_version?: string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -949,31 +1937,51 @@ package google
 	}
 }
 #GoogleComputeAddressResource: {
-	name:          string
-	address_type?: string
-	description?:  string
+	name:                string
+	address?:            string
+	address_type?:       string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	network_tier?:       string
+	project?:            string
+	purpose?:            string
+	region?:             string
+	self_link?:          string
+	subnetwork?:         string
+	users?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeAttachedDiskResource: {
-	disk:     string
-	instance: string
-	mode?:    string
+	disk:         string
+	instance:     string
+	device_name?: string
+	id?:          string
+	mode?:        string
+	project?:     string
+	zone?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeAutoscalerResource: {
-	name:         string
-	target:       string
-	description?: string
+	name:                string
+	target:              string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	self_link?:          string
+	zone?:               string
 	autoscaling_policy?: [{
 		max_replicas:     number
 		min_replicas:     number
 		cooldown_period?: number
+		mode?:            string
 		cpu_utilization?: [{
 			target: number
 		}, ...]
@@ -985,6 +1993,13 @@ package google
 			target?: number
 			type?:   string
 		}, ...]
+		scale_in_control?: [{
+			time_window_sec?: number
+			max_scaled_in_replicas?: [{
+				fixed?:   number
+				percent?: number
+			}, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -993,12 +2008,16 @@ package google
 	}
 }
 #GoogleComputeBackendBucketResource: {
-	bucket_name:  string
-	name:         string
-	description?: string
-	enable_cdn?:  bool
+	bucket_name:         string
+	name:                string
+	creation_timestamp?: string
+	description?:        string
+	enable_cdn?:         bool
+	id?:                 string
+	project?:            string
+	self_link?:          string
 	cdn_policy?: [{
-		signed_url_cache_max_age_sec: number
+		signed_url_cache_max_age_sec?: number
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1010,22 +2029,33 @@ package google
 	backend_bucket: string
 	key_value:      string
 	name:           string
+	id?:            string
+	project?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeBackendServiceResource: {
-	health_checks: [string, ...]
 	name:                             string
 	affinity_cookie_ttl_sec?:         number
 	connection_draining_timeout_sec?: number
+	creation_timestamp?:              string
 	custom_request_headers?: [string, ...]
-	description?:           string
-	enable_cdn?:            bool
+	description?: string
+	enable_cdn?:  bool
+	fingerprint?: string
+	health_checks?: [string, ...]
+	id?:                    string
 	load_balancing_scheme?: string
 	locality_lb_policy?:    string
+	port_name?:             string
+	project?:               string
+	protocol?:              string
 	security_policy?:       string
+	self_link?:             string
+	session_affinity?:      string
+	timeout_sec?:           number
 	backend?: [{
 		group:                         string
 		balancing_mode?:               string
@@ -1069,8 +2099,9 @@ package google
 		}, ...]
 	}, ...]
 	iap?: [{
-		oauth2_client_id:     string
-		oauth2_client_secret: string
+		oauth2_client_id:             string
+		oauth2_client_secret:         string
+		oauth2_client_secret_sha256?: string
 	}, ...]
 	log_config?: [{
 		enable?:      bool
@@ -1105,29 +2136,50 @@ package google
 	backend_service: string
 	key_value:       string
 	name:            string
+	id?:             string
+	project?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeDiskResource: {
-	name:         string
-	description?: string
-	image?:       string
+	name:                string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	image?:              string
+	label_fingerprint?:  string
 	labels?: [_]: string
-	snapshot?: string
-	type?:     string
+	last_attach_timestamp?:     string
+	last_detach_timestamp?:     string
+	physical_block_size_bytes?: number
+	project?:                   string
+	self_link?:                 string
+	size?:                      number
+	snapshot?:                  string
+	source_image_id?:           string
+	source_snapshot_id?:        string
+	type?:                      string
+	users?: [string, ...]
+	zone?: string
 	disk_encryption_key?: [{
-		kms_key_self_link?: string
-		raw_key?:           string
+		kms_key_self_link?:       string
+		kms_key_service_account?: string
+		raw_key?:                 string
+		sha256?:                  string
 	}, ...]
 	source_image_encryption_key?: [{
-		kms_key_self_link?: string
-		raw_key?:           string
+		kms_key_self_link?:       string
+		kms_key_service_account?: string
+		raw_key?:                 string
+		sha256?:                  string
 	}, ...]
 	source_snapshot_encryption_key?: [{
-		kms_key_self_link?: string
-		raw_key?:           string
+		kms_key_self_link?:       string
+		kms_key_service_account?: string
+		raw_key?:                 string
+		sha256?:                  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1135,21 +2187,83 @@ package google
 		update?: string
 	}
 }
+#GoogleComputeDiskIamBindingResource: {
+	members: [string, ...]
+	name:     string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	zone?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeDiskIamMemberResource: {
+	member:   string
+	name:     string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	zone?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeDiskIamPolicyResource: {
+	name:        string
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	zone?:       string
+}
 #GoogleComputeDiskResourcePolicyAttachmentResource: {
-	disk: string
-	name: string
+	disk:     string
+	name:     string
+	id?:      string
+	project?: string
+	zone?:    string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#GoogleComputeExternalVpnGatewayResource: {
+	name:             string
+	description?:     string
+	id?:              string
+	project?:         string
+	redundancy_type?: string
+	self_link?:       string
+	interface?: [{
+		id?:         number
+		ip_address?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeFirewallResource: {
-	name:            string
-	network:         string
-	description?:    string
+	name:                string
+	network:             string
+	creation_timestamp?: string
+	description?:        string
+	destination_ranges?: [string, ...]
+	direction?:      string
 	disabled?:       bool
 	enable_logging?: bool
+	id?:             string
 	priority?:       number
+	project?:        string
+	self_link?:      string
+	source_ranges?: [string, ...]
 	source_service_accounts?: [string, ...]
 	source_tags?: [string, ...]
 	target_service_accounts?: [string, ...]
@@ -1162,6 +2276,9 @@ package google
 		protocol: string
 		ports?: [string, ...]
 	}, ...]
+	log_config?: [{
+		metadata: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1169,15 +2286,27 @@ package google
 	}
 }
 #GoogleComputeForwardingRuleResource: {
-	name:                   string
-	all_ports?:             bool
-	allow_global_access?:   bool
-	backend_service?:       string
-	description?:           string
-	load_balancing_scheme?: string
-	port_range?:            string
+	name:                    string
+	all_ports?:              bool
+	allow_global_access?:    bool
+	backend_service?:        string
+	creation_timestamp?:     string
+	description?:            string
+	id?:                     string
+	ip_address?:             string
+	ip_protocol?:            string
+	is_mirroring_collector?: bool
+	load_balancing_scheme?:  string
+	network?:                string
+	network_tier?:           string
+	port_range?:             string
 	ports?: [string, ...]
+	project?:       string
+	region?:        string
+	self_link?:     string
 	service_label?: string
+	service_name?:  string
+	subnetwork?:    string
 	target?:        string
 	timeouts?: {
 		create?: string
@@ -1186,13 +2315,18 @@ package google
 	}
 }
 #GoogleComputeGlobalAddressResource: {
-	name:           string
-	address_type?:  string
-	description?:   string
-	ip_version?:    string
-	network?:       string
-	prefix_length?: number
-	purpose?:       string
+	name:                string
+	address?:            string
+	address_type?:       string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	ip_version?:         string
+	network?:            string
+	prefix_length?:      number
+	project?:            string
+	purpose?:            string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1202,9 +2336,14 @@ package google
 	name:                   string
 	target:                 string
 	description?:           string
+	id?:                    string
+	ip_address?:            string
+	ip_protocol?:           string
 	ip_version?:            string
 	load_balancing_scheme?: string
 	port_range?:            string
+	project?:               string
+	self_link?:             string
 	metadata_filters?: [{
 		filter_match_criteria: string
 		filter_labels?: [{
@@ -1222,7 +2361,9 @@ package google
 	global_network_endpoint_group: string
 	port:                          number
 	fqdn?:                         string
+	id?:                           string
 	ip_address?:                   string
+	project?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1233,6 +2374,26 @@ package google
 	network_endpoint_type: string
 	default_port?:         number
 	description?:          string
+	id?:                   string
+	project?:              string
+	self_link?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#GoogleComputeHaVpnGatewayResource: {
+	name:         string
+	network:      string
+	description?: string
+	id?:          string
+	project?:     string
+	region?:      string
+	self_link?:   string
+	vpn_interfaces?: [{
+		id:         number
+		ip_address: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1241,10 +2402,21 @@ package google
 #GoogleComputeHealthCheckResource: {
 	name:                 string
 	check_interval_sec?:  number
+	creation_timestamp?:  string
 	description?:         string
 	healthy_threshold?:   number
+	id?:                  string
+	project?:             string
+	self_link?:           string
 	timeout_sec?:         number
+	type?:                string
 	unhealthy_threshold?: number
+	grpc_health_check?: [{
+		grpc_service_name?:  string
+		port?:               number
+		port_name?:          string
+		port_specification?: string
+	}, ...]
 	http2_health_check?: [{
 		host?:               string
 		port?:               number
@@ -1297,11 +2469,15 @@ package google
 #GoogleComputeHttpHealthCheckResource: {
 	name:                 string
 	check_interval_sec?:  number
+	creation_timestamp?:  string
 	description?:         string
 	healthy_threshold?:   number
 	host?:                string
+	id?:                  string
 	port?:                number
+	project?:             string
 	request_path?:        string
+	self_link?:           string
 	timeout_sec?:         number
 	unhealthy_threshold?: number
 	timeouts?: {
@@ -1313,11 +2489,15 @@ package google
 #GoogleComputeHttpsHealthCheckResource: {
 	name:                 string
 	check_interval_sec?:  number
+	creation_timestamp?:  string
 	description?:         string
 	healthy_threshold?:   number
 	host?:                string
+	id?:                  string
 	port?:                number
+	project?:             string
 	request_path?:        string
+	self_link?:           string
 	timeout_sec?:         number
 	unhealthy_threshold?: number
 	timeouts?: {
@@ -1327,11 +2507,21 @@ package google
 	}
 }
 #GoogleComputeImageResource: {
-	name:         string
-	description?: string
-	family?:      string
+	name:                string
+	archive_size_bytes?: number
+	creation_timestamp?: string
+	description?:        string
+	disk_size_gb?:       number
+	family?:             string
+	id?:                 string
+	label_fingerprint?:  string
 	labels?: [_]: string
-	source_disk?: string
+	licenses?: [string, ...]
+	project?:         string
+	self_link?:       string
+	source_disk?:     string
+	source_image?:    string
+	source_snapshot?: string
 	guest_os_features?: [{
 		type: string
 	}, ...]
@@ -1346,34 +2536,104 @@ package google
 		update?: string
 	}
 }
+#GoogleComputeImageIamBindingResource: {
+	image: string
+	members: [string, ...]
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeImageIamMemberResource: {
+	image:    string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeImageIamPolicyResource: {
+	image:       string
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleComputeInstanceResource: {
 	machine_type:               string
 	name:                       string
 	allow_stopping_for_update?: bool
 	can_ip_forward?:            bool
+	cpu_platform?:              string
+	current_status?:            string
 	deletion_protection?:       bool
 	description?:               string
 	desired_status?:            string
 	enable_display?:            bool
-	hostname?:                  string
+	guest_accelerator?: [{
+		count: number
+		type:  string
+	}, ...]
+	hostname?:          string
+	id?:                string
+	instance_id?:       string
+	label_fingerprint?: string
 	labels?: [_]:   string
 	metadata?: [_]: string
+	metadata_fingerprint?:    string
 	metadata_startup_script?: string
+	min_cpu_platform?:        string
+	project?:                 string
 	resource_policies?: [string, ...]
+	self_link?: string
 	tags?: [string, ...]
+	tags_fingerprint?: string
+	zone?:             string
 	attached_disk?: [{
-		source:                   string
-		disk_encryption_key_raw?: string
-		mode?:                    string
+		source:                      string
+		device_name?:                string
+		disk_encryption_key_raw?:    string
+		disk_encryption_key_sha256?: string
+		kms_key_self_link?:          string
+		mode?:                       string
 	}, ...]
 	boot_disk?: [{
-		auto_delete?:             bool
-		disk_encryption_key_raw?: string
-		mode?:                    string
-		initialize_params?: [{}, ...]
+		auto_delete?:                bool
+		device_name?:                string
+		disk_encryption_key_raw?:    string
+		disk_encryption_key_sha256?: string
+		kms_key_self_link?:          string
+		mode?:                       string
+		source?:                     string
+		initialize_params?: [{
+			image?: string
+			labels?: [_]: string
+			size?: number
+			type?: string
+		}, ...]
+	}, ...]
+	confidential_instance_config?: [{
+		enable_confidential_compute: bool
 	}, ...]
 	network_interface?: [{
+		name?:               string
+		network?:            string
+		network_ip?:         string
+		subnetwork?:         string
+		subnetwork_project?: string
 		access_config?: [{
+			nat_ip?:                 string
+			network_tier?:           string
 			public_ptr_domain_name?: string
 		}, ...]
 		alias_ip_range?: [{
@@ -1382,8 +2642,9 @@ package google
 		}, ...]
 	}, ...]
 	scheduling?: [{
-		automatic_restart?: bool
-		preemptible?:       bool
+		automatic_restart?:   bool
+		on_host_maintenance?: string
+		preemptible?:         bool
 		node_affinities?: [{
 			key:      string
 			operator: string
@@ -1395,6 +2656,7 @@ package google
 	}, ...]
 	service_account?: [{
 		scopes: [string, ...]
+		email?: string
 	}, ...]
 	shielded_instance_config?: [{
 		enable_integrity_monitoring?: bool
@@ -1408,20 +2670,100 @@ package google
 	}
 }
 #GoogleComputeInstanceFromTemplateResource: {
-	name:                     string
-	source_instance_template: string
-	boot_disk?: [{
-		initialize_params?: [{}, ...]
+	name:                       string
+	source_instance_template:   string
+	allow_stopping_for_update?: bool
+	attached_disk?: [{
+		device_name:                string
+		disk_encryption_key_raw:    string
+		disk_encryption_key_sha256: string
+		kms_key_self_link:          string
+		mode:                       string
+		source:                     string
 	}, ...]
-	network_interface?: [{}, ...]
+	can_ip_forward?:      bool
+	cpu_platform?:        string
+	current_status?:      string
+	deletion_protection?: bool
+	description?:         string
+	desired_status?:      string
+	enable_display?:      bool
+	guest_accelerator?: [{
+		count: number
+		type:  string
+	}, ...]
+	hostname?:          string
+	id?:                string
+	instance_id?:       string
+	label_fingerprint?: string
+	labels?: [_]: string
+	machine_type?: string
+	metadata?: [_]: string
+	metadata_fingerprint?:    string
+	metadata_startup_script?: string
+	min_cpu_platform?:        string
+	project?:                 string
+	resource_policies?: [string, ...]
+	scratch_disk?: [{
+		interface: string
+	}, ...]
+	self_link?: string
+	service_account?: [{
+		email: string
+		scopes: [string, ...]
+	}, ...]
+	tags?: [string, ...]
+	tags_fingerprint?: string
+	zone?:             string
+	boot_disk?: [{
+		auto_delete?:                bool
+		device_name?:                string
+		disk_encryption_key_raw?:    string
+		disk_encryption_key_sha256?: string
+		kms_key_self_link?:          string
+		mode?:                       string
+		source?:                     string
+		initialize_params?: [{
+			image?: string
+			labels?: [_]: string
+			size?: number
+			type?: string
+		}, ...]
+	}, ...]
+	confidential_instance_config?: [{
+		enable_confidential_compute: bool
+	}, ...]
+	network_interface?: [{
+		access_config?: [{
+			nat_ip:                 string
+			network_tier:           string
+			public_ptr_domain_name: string
+		}, ...]
+		alias_ip_range?: [{
+			ip_cidr_range:         string
+			subnetwork_range_name: string
+		}, ...]
+		name?:               string
+		network?:            string
+		network_ip?:         string
+		subnetwork?:         string
+		subnetwork_project?: string
+	}, ...]
 	scheduling?: [{
+		automatic_restart?:   bool
+		on_host_maintenance?: string
+		preemptible?:         bool
 		node_affinities?: [{
 			key:      string
 			operator: string
 			values: [string, ...]
 		}, ...]
 	}, ...]
-	shielded_instance_config?: [{}, ...]
+	shielded_instance_config?: [{
+		enable_integrity_monitoring?: bool
+		enable_secure_boot?:          bool
+		enable_vtpm?:                 bool
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1431,6 +2773,13 @@ package google
 #GoogleComputeInstanceGroupResource: {
 	name:         string
 	description?: string
+	id?:          string
+	instances?: [string, ...]
+	network?:   string
+	project?:   string
+	self_link?: string
+	size?:      number
+	zone?:      string
 	named_port?: [{
 		name: string
 		port: number
@@ -1445,8 +2794,16 @@ package google
 	base_instance_name: string
 	name:               string
 	description?:       string
+	fingerprint?:       string
+	id?:                string
+	instance_group?:    string
+	operation?:         string
+	project?:           string
+	self_link?:         string
 	target_pools?: [string, ...]
+	target_size?:        number
 	wait_for_instances?: bool
+	zone?:               string
 	auto_healing_policies?: [{
 		health_check:      string
 		initial_delay_sec: number
@@ -1454,6 +2811,10 @@ package google
 	named_port?: [{
 		name: string
 		port: number
+	}, ...]
+	stateful_disk?: [{
+		device_name:  string
+		delete_rule?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1463,9 +2824,12 @@ package google
 	update_policy?: [{
 		minimal_action:           string
 		type:                     string
+		max_surge_fixed?:         number
 		max_surge_percent?:       number
+		max_unavailable_fixed?:   number
 		max_unavailable_percent?: number
 		min_ready_sec?:           number
+		replacement_method?:      string
 	}, ...]
 	version?: [{
 		instance_template: string
@@ -1477,9 +2841,12 @@ package google
 	}, ...]
 }
 #GoogleComputeInstanceGroupNamedPortResource: {
-	group: string
-	name:  string
-	port:  number
+	group:    string
+	name:     string
+	port:     number
+	id?:      string
+	project?: string
+	zone?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1488,34 +2855,74 @@ package google
 #GoogleComputeInstanceIamBindingResource: {
 	instance_name: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	zone?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleComputeInstanceIamMemberResource: {
 	instance_name: string
 	member:        string
 	role:          string
+	etag?:         string
+	id?:           string
+	project?:      string
+	zone?:         string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleComputeInstanceIamPolicyResource: {
 	instance_name: string
 	policy_data:   string
+	etag?:         string
+	id?:           string
+	project?:      string
+	zone?:         string
 }
 #GoogleComputeInstanceTemplateResource: {
 	machine_type:          string
 	can_ip_forward?:       bool
 	description?:          string
 	enable_display?:       bool
+	id?:                   string
 	instance_description?: string
 	labels?: [_]:   string
 	metadata?: [_]: string
+	metadata_fingerprint?:    string
 	metadata_startup_script?: string
 	min_cpu_platform?:        string
+	name?:                    string
+	name_prefix?:             string
+	project?:                 string
+	region?:                  string
+	self_link?:               string
 	tags?: [string, ...]
+	tags_fingerprint?: string
+	confidential_instance_config?: [{
+		enable_confidential_compute: bool
+	}, ...]
 	disk?: [{
 		auto_delete?:  bool
+		boot?:         bool
+		device_name?:  string
 		disk_name?:    string
 		disk_size_gb?: number
+		disk_type?:    string
+		interface?:    string
 		labels?: [_]: string
-		source?: string
+		mode?:         string
+		source?:       string
+		source_image?: string
+		type?:         string
 		disk_encryption_key?: [{
 			kms_key_self_link: string
 		}, ...]
@@ -1525,16 +2932,25 @@ package google
 		type:  string
 	}, ...]
 	network_interface?: [{
-		network_ip?: string
-		access_config?: [{}, ...]
+		name?:               string
+		network?:            string
+		network_ip?:         string
+		subnetwork?:         string
+		subnetwork_project?: string
+		access_config?: [{
+			nat_ip?:                 string
+			network_tier?:           string
+			public_ptr_domain_name?: string
+		}, ...]
 		alias_ip_range?: [{
 			ip_cidr_range:          string
 			subnetwork_range_name?: string
 		}, ...]
 	}, ...]
 	scheduling?: [{
-		automatic_restart?: bool
-		preemptible?:       bool
+		automatic_restart?:   bool
+		on_host_maintenance?: string
+		preemptible?:         bool
 		node_affinities?: [{
 			key:      string
 			operator: string
@@ -1543,6 +2959,7 @@ package google
 	}, ...]
 	service_account?: [{
 		scopes: [string, ...]
+		email?: string
 	}, ...]
 	shielded_instance_config?: [{
 		enable_integrity_monitoring?: bool
@@ -1558,14 +2975,50 @@ package google
 	name:           string
 	router:         string
 	admin_enabled?: bool
+	bandwidth?:     string
 	candidate_subnets?: [string, ...]
-	description?:              string
-	edge_availability_domain?: string
-	interconnect?:             string
+	cloud_router_ip_address?:    string
+	creation_timestamp?:         string
+	customer_router_ip_address?: string
+	description?:                string
+	edge_availability_domain?:   string
+	google_reference_id?:        string
+	id?:                         string
+	interconnect?:               string
+	pairing_key?:                string
+	partner_asn?:                string
+	private_interconnect_info?: [{
+		tag8021q: number
+	}, ...]
+	project?:       string
+	region?:        string
+	self_link?:     string
+	state?:         string
+	type?:          string
+	vlan_tag8021q?: number
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
+	}
+}
+#GoogleComputeManagedSslCertificateResource: {
+	certificate_id?:     number
+	creation_timestamp?: string
+	description?:        string
+	expire_time?:        string
+	id?:                 string
+	name?:               string
+	project?:            string
+	self_link?:          string
+	subject_alternative_names?: [string, ...]
+	type?: string
+	managed?: [{
+		domains: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
 	}
 }
 #GoogleComputeNetworkResource: {
@@ -1573,6 +3026,12 @@ package google
 	auto_create_subnetworks?:         bool
 	delete_default_routes_on_create?: bool
 	description?:                     string
+	gateway_ipv4?:                    string
+	id?:                              string
+	mtu?:                             number
+	project?:                         string
+	routing_mode?:                    string
+	self_link?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1584,6 +3043,9 @@ package google
 	ip_address:             string
 	network_endpoint_group: string
 	port:                   number
+	id?:                    string
+	project?:               string
+	zone?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1594,22 +3056,33 @@ package google
 	network:                string
 	default_port?:          number
 	description?:           string
+	id?:                    string
 	network_endpoint_type?: string
+	project?:               string
+	self_link?:             string
+	size?:                  number
 	subnetwork?:            string
+	zone?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeNetworkPeeringResource: {
-	name:                  string
-	network:               string
-	peer_network:          string
-	export_custom_routes?: bool
-	import_custom_routes?: bool
+	name:                                 string
+	network:                              string
+	peer_network:                         string
+	export_custom_routes?:                bool
+	export_subnet_routes_with_public_ip?: bool
+	id?:                                  string
+	import_custom_routes?:                bool
+	import_subnet_routes_with_public_ip?: bool
+	state?:                               string
+	state_details?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
+		update?: string
 	}
 }
 #GoogleComputeNetworkPeeringRoutesConfigResource: {
@@ -1617,6 +3090,8 @@ package google
 	import_custom_routes: bool
 	network:              string
 	peering:              string
+	id?:                  string
+	project?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1624,10 +3099,21 @@ package google
 	}
 }
 #GoogleComputeNodeGroupResource: {
-	node_template: string
-	size:          number
-	description?:  string
-	name?:         string
+	node_template:       string
+	size:                number
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	maintenance_policy?: string
+	name?:               string
+	project?:            string
+	self_link?:          string
+	zone?:               string
+	autoscaling_policy?: [{
+		max_nodes?: number
+		min_nodes?: number
+		mode?:      string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1635,33 +3121,102 @@ package google
 	}
 }
 #GoogleComputeNodeTemplateResource: {
-	description?: string
-	name?:        string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	name?:               string
 	node_affinity_labels?: [_]: string
 	node_type?: string
+	project?:   string
+	region?:    string
+	self_link?: string
 	node_type_flexibility?: [{
-		cpus?:   string
-		memory?: string
+		cpus?:      string
+		local_ssd?: string
+		memory?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#GoogleComputePacketMirroringResource: {
+	name:         string
+	description?: string
+	id?:          string
+	priority?:    number
+	project?:     string
+	region?:      string
+	collector_ilb?: [{
+		url: string
+	}, ...]
+	filter?: [{
+		cidr_ranges?: [string, ...]
+		direction?: string
+		ip_protocols?: [string, ...]
+	}, ...]
+	mirrored_resources?: [{
+		tags?: [string, ...]
+		instances?: [{
+			url: string
+		}, ...]
+		subnetworks?: [{
+			url: string
+		}, ...]
+	}, ...]
+	network?: [{
+		url: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleComputePerInstanceConfigResource: {
+	instance_group_manager:            string
+	name:                              string
+	id?:                               string
+	minimal_action?:                   string
+	most_disruptive_allowed_action?:   string
+	project?:                          string
+	remove_instance_state_on_destroy?: bool
+	zone?:                             string
+	preserved_state?: [{
+		metadata?: [_]: string
+		disk?: [{
+			device_name:  string
+			source:       string
+			delete_rule?: string
+			mode?:        string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleComputeProjectDefaultNetworkTierResource: {
 	network_tier: string
+	id?:          string
+	project?:     string
 	timeouts?: create?: string
 }
 #GoogleComputeProjectMetadataResource: {
 	metadata: [_]: string
+	id?:      string
+	project?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeProjectMetadataItemResource: {
-	key:   string
-	value: string
+	key:      string
+	value:    string
+	id?:      string
+	project?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1669,13 +3224,19 @@ package google
 	}
 }
 #GoogleComputeRegionAutoscalerResource: {
-	name:         string
-	target:       string
-	description?: string
+	name:                string
+	target:              string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	region?:             string
+	self_link?:          string
 	autoscaling_policy?: [{
 		max_replicas:     number
 		min_replicas:     number
 		cooldown_period?: number
+		mode?:            string
 		cpu_utilization?: [{
 			target: number
 		}, ...]
@@ -1687,6 +3248,13 @@ package google
 			target?: number
 			type?:   string
 		}, ...]
+		scale_in_control?: [{
+			time_window_sec?: number
+			max_scaled_in_replicas?: [{
+				fixed?:   number
+				percent?: number
+			}, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1695,19 +3263,31 @@ package google
 	}
 }
 #GoogleComputeRegionBackendServiceResource: {
-	health_checks: [string, ...]
 	name:                             string
 	affinity_cookie_ttl_sec?:         number
 	connection_draining_timeout_sec?: number
+	creation_timestamp?:              string
 	description?:                     string
-	load_balancing_scheme?:           string
-	locality_lb_policy?:              string
-	network?:                         string
+	enable_cdn?:                      bool
+	fingerprint?:                     string
+	health_checks?: [string, ...]
+	id?:                    string
+	load_balancing_scheme?: string
+	locality_lb_policy?:    string
+	network?:               string
+	port_name?:             string
+	project?:               string
+	protocol?:              string
+	region?:                string
+	self_link?:             string
+	session_affinity?:      string
+	timeout_sec?:           number
 	backend?: [{
 		group:                         string
 		balancing_mode?:               string
 		capacity_scaler?:              number
 		description?:                  string
+		failover?:                     bool
 		max_connections?:              number
 		max_connections_per_endpoint?: number
 		max_connections_per_instance?: number
@@ -1715,6 +3295,16 @@ package google
 		max_rate_per_endpoint?:        number
 		max_rate_per_instance?:        number
 		max_utilization?:              number
+	}, ...]
+	cdn_policy?: [{
+		signed_url_cache_max_age_sec?: number
+		cache_key_policy?: [{
+			include_host?:         bool
+			include_protocol?:     bool
+			include_query_string?: bool
+			query_string_blacklist?: [string, ...]
+			query_string_whitelist?: [string, ...]
+		}, ...]
 	}, ...]
 	circuit_breakers?: [{
 		max_connections?:             number
@@ -1772,15 +3362,29 @@ package google
 #GoogleComputeRegionDiskResource: {
 	name: string
 	replica_zones: [string, ...]
-	description?: string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	label_fingerprint?:  string
 	labels?: [_]: string
-	snapshot?: string
-	type?:     string
+	last_attach_timestamp?:     string
+	last_detach_timestamp?:     string
+	physical_block_size_bytes?: number
+	project?:                   string
+	region?:                    string
+	self_link?:                 string
+	size?:                      number
+	snapshot?:                  string
+	source_snapshot_id?:        string
+	type?:                      string
+	users?: [string, ...]
 	disk_encryption_key?: [{
 		raw_key?: string
+		sha256?:  string
 	}, ...]
 	source_snapshot_encryption_key?: [{
 		raw_key?: string
+		sha256?:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1788,9 +3392,48 @@ package google
 		update?: string
 	}
 }
+#GoogleComputeRegionDiskIamBindingResource: {
+	members: [string, ...]
+	name:     string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeRegionDiskIamMemberResource: {
+	member:   string
+	name:     string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleComputeRegionDiskIamPolicyResource: {
+	name:        string
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
+}
 #GoogleComputeRegionDiskResourcePolicyAttachmentResource: {
-	disk: string
-	name: string
+	disk:     string
+	name:     string
+	id?:      string
+	project?: string
+	region?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1799,10 +3442,22 @@ package google
 #GoogleComputeRegionHealthCheckResource: {
 	name:                 string
 	check_interval_sec?:  number
+	creation_timestamp?:  string
 	description?:         string
 	healthy_threshold?:   number
+	id?:                  string
+	project?:             string
+	region?:              string
+	self_link?:           string
 	timeout_sec?:         number
+	type?:                string
 	unhealthy_threshold?: number
+	grpc_health_check?: [{
+		grpc_service_name?:  string
+		port?:               number
+		port_name?:          string
+		port_specification?: string
+	}, ...]
 	http2_health_check?: [{
 		host?:               string
 		port?:               number
@@ -1853,11 +3508,19 @@ package google
 	}
 }
 #GoogleComputeRegionInstanceGroupManagerResource: {
-	base_instance_name: string
-	name:               string
-	region:             string
-	description?:       string
+	base_instance_name:                string
+	name:                              string
+	description?:                      string
+	distribution_policy_target_shape?: string
+	distribution_policy_zones?: [string, ...]
+	fingerprint?:    string
+	id?:             string
+	instance_group?: string
+	project?:        string
+	region?:         string
+	self_link?:      string
 	target_pools?: [string, ...]
+	target_size?:        number
 	wait_for_instances?: bool
 	auto_healing_policies?: [{
 		health_check:      string
@@ -1866,6 +3529,10 @@ package google
 	named_port?: [{
 		name: string
 		port: number
+	}, ...]
+	stateful_disk?: [{
+		device_name:  string
+		delete_rule?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1876,9 +3543,12 @@ package google
 		minimal_action:                string
 		type:                          string
 		instance_redistribution_type?: string
+		max_surge_fixed?:              number
 		max_surge_percent?:            number
+		max_unavailable_fixed?:        number
 		max_unavailable_percent?:      number
 		min_ready_sec?:                number
+		replacement_method?:           string
 	}, ...]
 	version?: [{
 		instance_template: string
@@ -1889,19 +3559,84 @@ package google
 		}, ...]
 	}, ...]
 }
+#GoogleComputeRegionNetworkEndpointGroupResource: {
+	name:                   string
+	region:                 string
+	description?:           string
+	id?:                    string
+	network_endpoint_type?: string
+	project?:               string
+	self_link?:             string
+	app_engine?: [{
+		service?:  string
+		url_mask?: string
+		version?:  string
+	}, ...]
+	cloud_function?: [{
+		function?: string
+		url_mask?: string
+	}, ...]
+	cloud_run?: [{
+		service?:  string
+		tag?:      string
+		url_mask?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#GoogleComputeRegionPerInstanceConfigResource: {
+	name:                              string
+	region_instance_group_manager:     string
+	id?:                               string
+	minimal_action?:                   string
+	most_disruptive_allowed_action?:   string
+	project?:                          string
+	region?:                           string
+	remove_instance_state_on_destroy?: bool
+	preserved_state?: [{
+		metadata?: [_]: string
+		disk?: [{
+			device_name:  string
+			source:       string
+			delete_rule?: string
+			mode?:        string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleComputeRegionSslCertificateResource: {
-	certificate:  string
-	private_key:  string
-	description?: string
+	certificate:         string
+	private_key:         string
+	certificate_id?:     number
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	name?:               string
+	name_prefix?:        string
+	project?:            string
+	region?:             string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeRegionTargetHttpProxyResource: {
-	name:         string
-	url_map:      string
-	description?: string
+	name:                string
+	url_map:             string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_id?:           number
+	region?:             string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1911,8 +3646,14 @@ package google
 #GoogleComputeRegionTargetHttpsProxyResource: {
 	name: string
 	ssl_certificates: [string, ...]
-	url_map:      string
-	description?: string
+	url_map:             string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_id?:           number
+	region?:             string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1920,9 +3661,16 @@ package google
 	}
 }
 #GoogleComputeRegionUrlMapResource: {
-	name:             string
-	default_service?: string
-	description?:     string
+	name:                string
+	creation_timestamp?: string
+	default_service?:    string
+	description?:        string
+	fingerprint?:        string
+	id?:                 string
+	map_id?:             number
+	project?:            string
+	region?:             string
+	self_link?:          string
 	default_url_redirect?: [{
 		strip_query:             bool
 		host_redirect?:          string
@@ -1937,9 +3685,9 @@ package google
 		description?: string
 	}, ...]
 	path_matcher?: [{
-		default_service: string
-		name:            string
-		description?:    string
+		name:             string
+		default_service?: string
+		description?:     string
 		default_url_redirect?: [{
 			strip_query:             bool
 			host_redirect?:          string
@@ -2158,12 +3906,20 @@ package google
 #GoogleComputeReservationResource: {
 	name:                           string
 	zone:                           string
+	commitment?:                    string
+	creation_timestamp?:            string
 	description?:                   string
+	id?:                            string
+	project?:                       string
+	self_link?:                     string
 	specific_reservation_required?: bool
+	status?:                        string
 	specific_reservation?: [{
-		count: number
+		count:         number
+		in_use_count?: number
 		instance_properties?: [{
-			machine_type: string
+			machine_type:      string
+			min_cpu_platform?: string
 			guest_accelerators?: [{
 				accelerator_count: number
 				accelerator_type:  string
@@ -2181,7 +3937,11 @@ package google
 	}
 }
 #GoogleComputeResourcePolicyResource: {
-	name: string
+	name:       string
+	id?:        string
+	project?:   string
+	region?:    string
+	self_link?: string
 	group_placement_policy?: [{
 		availability_domain_count?: number
 		collocation?:               string
@@ -2224,12 +3984,17 @@ package google
 	name:                    string
 	network:                 string
 	description?:            string
+	id?:                     string
 	next_hop_gateway?:       string
 	next_hop_ilb?:           string
 	next_hop_instance?:      string
 	next_hop_instance_zone?: string
+	next_hop_ip?:            string
+	next_hop_network?:       string
 	next_hop_vpn_tunnel?:    string
 	priority?:               number
+	project?:                string
+	self_link?:              string
 	tags?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -2237,9 +4002,14 @@ package google
 	}
 }
 #GoogleComputeRouterResource: {
-	name:         string
-	network:      string
-	description?: string
+	name:                string
+	network:             string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	region?:             string
+	self_link?:          string
 	bgp?: [{
 		asn:             number
 		advertise_mode?: string
@@ -2258,8 +4028,11 @@ package google
 #GoogleComputeRouterInterfaceResource: {
 	name:                     string
 	router:                   string
+	id?:                      string
 	interconnect_attachment?: string
 	ip_range?:                string
+	project?:                 string
+	region?:                  string
 	vpn_tunnel?:              string
 	timeouts?: {
 		create?: string
@@ -2272,9 +4045,13 @@ package google
 	router:                             string
 	source_subnetwork_ip_ranges_to_nat: string
 	drain_nat_ips?: [string, ...]
-	icmp_idle_timeout_sec?: number
-	min_ports_per_vm?:      number
+	enable_endpoint_independent_mapping?: bool
+	icmp_idle_timeout_sec?:               number
+	id?:                                  string
+	min_ports_per_vm?:                    number
 	nat_ips?: [string, ...]
+	project?:                          string
+	region?:                           string
 	tcp_established_idle_timeout_sec?: number
 	tcp_transitory_idle_timeout_sec?:  number
 	udp_idle_timeout_sec?:             number
@@ -2302,6 +4079,11 @@ package google
 	advertise_mode?: string
 	advertised_groups?: [string, ...]
 	advertised_route_priority?: number
+	id?:                        string
+	ip_address?:                string
+	management_type?:           string
+	project?:                   string
+	region?:                    string
 	advertised_ip_ranges?: [{
 		range:        string
 		description?: string
@@ -2315,6 +4097,10 @@ package google
 #GoogleComputeSecurityPolicyResource: {
 	name:         string
 	description?: string
+	fingerprint?: string
+	id?:          string
+	project?:     string
+	self_link?:   string
 	rule?: [{
 		action:       string
 		priority:     number
@@ -2338,6 +4124,7 @@ package google
 }
 #GoogleComputeSharedVpcHostProjectResource: {
 	project: string
+	id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2346,21 +4133,38 @@ package google
 #GoogleComputeSharedVpcServiceProjectResource: {
 	host_project:    string
 	service_project: string
+	id?:             string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeSnapshotResource: {
-	name:         string
-	source_disk:  string
-	description?: string
+	name:                string
+	source_disk:         string
+	creation_timestamp?: string
+	description?:        string
+	disk_size_gb?:       number
+	id?:                 string
+	label_fingerprint?:  string
 	labels?: [_]: string
+	licenses?: [string, ...]
+	project?:          string
+	self_link?:        string
+	snapshot_id?:      number
+	source_disk_link?: string
+	storage_bytes?:    number
+	storage_locations?: [string, ...]
+	zone?: string
 	snapshot_encryption_key?: [{
-		raw_key: string
+		kms_key_self_link?:       string
+		kms_key_service_account?: string
+		raw_key?:                 string
+		sha256?:                  string
 	}, ...]
 	source_disk_encryption_key?: [{
-		raw_key?: string
+		kms_key_service_account?: string
+		raw_key?:                 string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2369,20 +4173,33 @@ package google
 	}
 }
 #GoogleComputeSslCertificateResource: {
-	certificate:  string
-	private_key:  string
-	description?: string
+	certificate:         string
+	private_key:         string
+	certificate_id?:     number
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	name?:               string
+	name_prefix?:        string
+	project?:            string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleComputeSslPolicyResource: {
-	name: string
+	name:                string
+	creation_timestamp?: string
 	custom_features?: [string, ...]
-	description?:     string
+	description?: string
+	enabled_features?: [string, ...]
+	fingerprint?:     string
+	id?:              string
 	min_tls_version?: string
 	profile?:         string
+	project?:         string
+	self_link?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2390,15 +4207,29 @@ package google
 	}
 }
 #GoogleComputeSubnetworkResource: {
-	ip_cidr_range:             string
-	name:                      string
-	network:                   string
-	description?:              string
-	private_ip_google_access?: bool
+	ip_cidr_range:               string
+	name:                        string
+	network:                     string
+	creation_timestamp?:         string
+	description?:                string
+	fingerprint?:                string
+	gateway_address?:            string
+	id?:                         string
+	private_ip_google_access?:   bool
+	private_ipv6_google_access?: string
+	project?:                    string
+	region?:                     string
+	secondary_ip_range?: [{
+		ip_cidr_range: string
+		range_name:    string
+	}, ...]
+	self_link?: string
 	log_config?: [{
 		aggregation_interval?: string
+		filter_expr?:          string
 		flow_sampling?:        number
 		metadata?:             string
+		metadata_fields?: [string, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -2410,20 +4241,64 @@ package google
 	members: [string, ...]
 	role:       string
 	subnetwork: string
+	etag?:      string
+	id?:        string
+	project?:   string
+	region?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleComputeSubnetworkIamMemberResource: {
 	member:     string
 	role:       string
 	subnetwork: string
+	etag?:      string
+	id?:        string
+	project?:   string
+	region?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleComputeSubnetworkIamPolicyResource: {
 	policy_data: string
 	subnetwork:  string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
+}
+#GoogleComputeTargetGrpcProxyResource: {
+	name:                    string
+	creation_timestamp?:     string
+	description?:            string
+	fingerprint?:            string
+	id?:                     string
+	project?:                string
+	self_link?:              string
+	self_link_with_id?:      string
+	url_map?:                string
+	validate_for_proxyless?: bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #GoogleComputeTargetHttpProxyResource: {
-	name:         string
-	url_map:      string
-	description?: string
+	name:                string
+	url_map:             string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_id?:           number
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2433,10 +4308,15 @@ package google
 #GoogleComputeTargetHttpsProxyResource: {
 	name: string
 	ssl_certificates: [string, ...]
-	url_map:        string
-	description?:   string
-	quic_override?: string
-	ssl_policy?:    string
+	url_map:             string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_id?:           number
+	quic_override?:      string
+	self_link?:          string
+	ssl_policy?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2444,10 +4324,15 @@ package google
 	}
 }
 #GoogleComputeTargetInstanceResource: {
-	instance:     string
-	name:         string
-	description?: string
-	nat_policy?:  string
+	instance:            string
+	name:                string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	nat_policy?:         string
+	project?:            string
+	self_link?:          string
+	zone?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2459,6 +4344,11 @@ package google
 	description?:    string
 	failover_ratio?: number
 	health_checks?: [string, ...]
+	id?: string
+	instances?: [string, ...]
+	project?:          string
+	region?:           string
+	self_link?:        string
 	session_affinity?: string
 	timeouts?: {
 		create?: string
@@ -2470,9 +4360,14 @@ package google
 	backend_service: string
 	name:            string
 	ssl_certificates: [string, ...]
-	description?:  string
-	proxy_header?: string
-	ssl_policy?:   string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_header?:       string
+	proxy_id?:           number
+	self_link?:          string
+	ssl_policy?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2480,10 +4375,15 @@ package google
 	}
 }
 #GoogleComputeTargetTcpProxyResource: {
-	backend_service: string
-	name:            string
-	description?:    string
-	proxy_header?:   string
+	backend_service:     string
+	name:                string
+	creation_timestamp?: string
+	description?:        string
+	id?:                 string
+	project?:            string
+	proxy_header?:       string
+	proxy_id?:           number
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2491,9 +4391,77 @@ package google
 	}
 }
 #GoogleComputeUrlMapResource: {
-	name:             string
-	default_service?: string
-	description?:     string
+	name:                string
+	creation_timestamp?: string
+	default_service?:    string
+	description?:        string
+	fingerprint?:        string
+	id?:                 string
+	map_id?:             number
+	project?:            string
+	self_link?:          string
+	default_route_action?: [{
+		cors_policy?: [{
+			allow_credentials?: bool
+			allow_headers?: [string, ...]
+			allow_methods?: [string, ...]
+			allow_origin_regexes?: [string, ...]
+			allow_origins?: [string, ...]
+			disabled?: bool
+			expose_headers?: [string, ...]
+			max_age?: number
+		}, ...]
+		fault_injection_policy?: [{
+			abort?: [{
+				http_status?: number
+				percentage?:  number
+			}, ...]
+			delay?: [{
+				percentage?: number
+				fixed_delay?: [{
+					nanos?:   number
+					seconds?: string
+				}, ...]
+			}, ...]
+		}, ...]
+		request_mirror_policy?: [{
+			backend_service: string
+		}, ...]
+		retry_policy?: [{
+			num_retries?: number
+			retry_conditions?: [string, ...]
+			per_try_timeout?: [{
+				nanos?:   number
+				seconds?: string
+			}, ...]
+		}, ...]
+		timeout?: [{
+			nanos?:   number
+			seconds?: string
+		}, ...]
+		url_rewrite?: [{
+			host_rewrite?:        string
+			path_prefix_rewrite?: string
+		}, ...]
+		weighted_backend_services?: [{
+			backend_service?: string
+			weight?:          number
+			header_action?: [{
+				request_headers_to_remove?: [string, ...]
+				response_headers_to_remove?: [string, ...]
+				request_headers_to_add?: [{
+					header_name?:  string
+					header_value?: string
+					replace?:      bool
+				}, ...]
+				response_headers_to_add?: [{
+					header_name?:  string
+					header_value?: string
+					replace?:      bool
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
 	default_url_redirect?: [{
 		strip_query:             bool
 		host_redirect?:          string
@@ -2525,6 +4493,68 @@ package google
 		name:             string
 		default_service?: string
 		description?:     string
+		default_route_action?: [{
+			cors_policy?: [{
+				allow_credentials?: bool
+				allow_headers?: [string, ...]
+				allow_methods?: [string, ...]
+				allow_origin_regexes?: [string, ...]
+				allow_origins?: [string, ...]
+				disabled?: bool
+				expose_headers?: [string, ...]
+				max_age?: number
+			}, ...]
+			fault_injection_policy?: [{
+				abort?: [{
+					http_status?: number
+					percentage?:  number
+				}, ...]
+				delay?: [{
+					percentage?: number
+					fixed_delay?: [{
+						nanos?:   number
+						seconds?: string
+					}, ...]
+				}, ...]
+			}, ...]
+			request_mirror_policy?: [{
+				backend_service: string
+			}, ...]
+			retry_policy?: [{
+				num_retries?: number
+				retry_conditions?: [string, ...]
+				per_try_timeout?: [{
+					nanos?:   number
+					seconds?: string
+				}, ...]
+			}, ...]
+			timeout?: [{
+				nanos?:   number
+				seconds?: string
+			}, ...]
+			url_rewrite?: [{
+				host_rewrite?:        string
+				path_prefix_rewrite?: string
+			}, ...]
+			weighted_backend_services?: [{
+				backend_service?: string
+				weight?:          number
+				header_action?: [{
+					request_headers_to_remove?: [string, ...]
+					response_headers_to_remove?: [string, ...]
+					request_headers_to_add?: [{
+						header_name?:  string
+						header_value?: string
+						replace?:      bool
+					}, ...]
+					response_headers_to_add?: [{
+						header_name?:  string
+						header_value?: string
+						replace?:      bool
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
 		default_url_redirect?: [{
 			strip_query:             bool
 			host_redirect?:          string
@@ -2755,9 +4785,15 @@ package google
 	}
 }
 #GoogleComputeVpnGatewayResource: {
-	name:         string
-	network:      string
-	description?: string
+	name:                string
+	network:             string
+	creation_timestamp?: string
+	description?:        string
+	gateway_id?:         number
+	id?:                 string
+	project?:            string
+	region?:             string
+	self_link?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -2766,20 +4802,72 @@ package google
 #GoogleComputeVpnTunnelResource: {
 	name:                string
 	shared_secret:       string
+	creation_timestamp?: string
 	description?:        string
+	detailed_status?:    string
+	id?:                 string
 	ike_version?:        number
-	router?:             string
-	target_vpn_gateway?: string
+	local_traffic_selector?: [string, ...]
+	peer_external_gateway?:           string
+	peer_external_gateway_interface?: number
+	peer_gcp_gateway?:                string
+	peer_ip?:                         string
+	project?:                         string
+	region?:                          string
+	remote_traffic_selector?: [string, ...]
+	router?:                string
+	self_link?:             string
+	shared_secret_hash?:    string
+	target_vpn_gateway?:    string
+	tunnel_id?:             string
+	vpn_gateway?:           string
+	vpn_gateway_interface?: number
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleContainerAnalysisNoteResource: {
-	name: string
+	name:              string
+	create_time?:      string
+	expiration_time?:  string
+	id?:               string
+	kind?:             string
+	long_description?: string
+	project?:          string
+	related_note_names?: [string, ...]
+	short_description?: string
+	update_time?:       string
 	attestation_authority?: [{
 		hint?: [{
 			human_readable_name: string
+		}, ...]
+	}, ...]
+	related_url?: [{
+		url:    string
+		label?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleContainerAnalysisOccurrenceResource: {
+	note_name:    string
+	resource_uri: string
+	create_time?: string
+	id?:          string
+	kind?:        string
+	name?:        string
+	project?:     string
+	remediation?: string
+	update_time?: string
+	attestation?: [{
+		serialized_payload: string
+		signatures?: [{
+			public_key_id: string
+			signature?:    string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -2790,30 +4878,47 @@ package google
 }
 #GoogleContainerClusterResource: {
 	name:                         string
+	cluster_ipv4_cidr?:           string
+	datapath_provider?:           string
+	default_max_pods_per_node?:   number
 	description?:                 string
 	enable_binary_authorization?: bool
+	enable_intranode_visibility?: bool
 	enable_kubernetes_alpha?:     bool
 	enable_legacy_abac?:          bool
 	enable_shielded_nodes?:       bool
+	enable_tpu?:                  bool
+	endpoint?:                    string
+	id?:                          string
 	initial_node_count?:          number
-	logging_service?:             string
-	min_master_version?:          string
-	monitoring_service?:          string
-	network?:                     string
-	remove_default_node_pool?:    bool
+	instance_group_urls?: [string, ...]
+	label_fingerprint?:  string
+	location?:           string
+	logging_service?:    string
+	master_version?:     string
+	min_master_version?: string
+	monitoring_service?: string
+	network?:            string
+	node_locations?: [string, ...]
+	node_version?:             string
+	operation?:                string
+	project?:                  string
+	remove_default_node_pool?: bool
 	resource_labels?: [_]: string
+	self_link?:           string
+	services_ipv4_cidr?:  string
+	subnetwork?:          string
+	tpu_ipv4_cidr_block?: string
 	addons_config?: [{
 		cloudrun_config?: [{
-			disabled: bool
+			disabled:            bool
+			load_balancer_type?: string
 		}, ...]
 		horizontal_pod_autoscaling?: [{
 			disabled: bool
 		}, ...]
 		http_load_balancing?: [{
 			disabled: bool
-		}, ...]
-		kubernetes_dashboard?: [{
-			disabled?: bool
 		}, ...]
 		network_policy_config?: [{
 			disabled: bool
@@ -2825,6 +4930,7 @@ package google
 	cluster_autoscaling?: [{
 		enabled: bool
 		auto_provisioning_defaults?: [{
+			oauth_scopes?: [string, ...]
 			service_account?: string
 		}, ...]
 		resource_limits?: [{
@@ -2833,10 +4939,28 @@ package google
 			minimum?:      number
 		}, ...]
 	}, ...]
-	ip_allocation_policy?: [{}, ...]
+	database_encryption?: [{
+		state:     string
+		key_name?: string
+	}, ...]
+	default_snat_status?: [{
+		disabled: bool
+	}, ...]
+	ip_allocation_policy?: [{
+		cluster_ipv4_cidr_block?:       string
+		cluster_secondary_range_name?:  string
+		services_ipv4_cidr_block?:      string
+		services_secondary_range_name?: string
+	}, ...]
 	maintenance_policy?: [{
 		daily_maintenance_window?: [{
 			start_time: string
+			duration?:  string
+		}, ...]
+		maintenance_exclusion?: [{
+			end_time:       string
+			exclusion_name: string
+			start_time:     string
 		}, ...]
 		recurring_window?: [{
 			end_time:   string
@@ -2845,8 +4969,11 @@ package google
 		}, ...]
 	}, ...]
 	master_auth?: [{
-		password?: string
-		username?: string
+		client_certificate?:     string
+		client_key?:             string
+		cluster_ca_certificate?: string
+		password?:               string
+		username?:               string
 		client_certificate_config?: [{
 			issue_client_certificate: bool
 		}, ...]
@@ -2862,11 +4989,26 @@ package google
 		provider?: string
 	}, ...]
 	node_config?: [{
+		disk_size_gb?: number
+		disk_type?:    string
+		guest_accelerator?: [{
+			count: number
+			type:  string
+		}, ...]
+		image_type?: string
+		labels?: [_]: string
+		local_ssd_count?: number
+		machine_type?:    string
+		metadata?: [_]: string
 		min_cpu_platform?: string
-		preemptible?:      bool
+		oauth_scopes?: [string, ...]
+		preemptible?:     bool
+		service_account?: string
 		tags?: [string, ...]
-		sandbox_config?: [{
-			sandbox_type: string
+		taint?: [{
+			effect: string
+			key:    string
+			value:  string
 		}, ...]
 		shielded_instance_config?: [{
 			enable_integrity_monitoring?: bool
@@ -2877,6 +5019,14 @@ package google
 		}, ...]
 	}, ...]
 	node_pool?: [{
+		initial_node_count?: number
+		instance_group_urls?: [string, ...]
+		max_pods_per_node?: number
+		name?:              string
+		name_prefix?:       string
+		node_count?:        number
+		node_locations?: [string, ...]
+		version?: string
 		autoscaling?: [{
 			max_node_count: number
 			min_node_count: number
@@ -2886,11 +5036,26 @@ package google
 			auto_upgrade?: bool
 		}, ...]
 		node_config?: [{
+			disk_size_gb?: number
+			disk_type?:    string
+			guest_accelerator?: [{
+				count: number
+				type:  string
+			}, ...]
+			image_type?: string
+			labels?: [_]: string
+			local_ssd_count?: number
+			machine_type?:    string
+			metadata?: [_]: string
 			min_cpu_platform?: string
-			preemptible?:      bool
+			oauth_scopes?: [string, ...]
+			preemptible?:     bool
+			service_account?: string
 			tags?: [string, ...]
-			sandbox_config?: [{
-				sandbox_type: string
+			taint?: [{
+				effect: string
+				key:    string
+				value:  string
 			}, ...]
 			shielded_instance_config?: [{
 				enable_integrity_monitoring?: bool
@@ -2912,6 +5077,15 @@ package google
 		enable_private_endpoint: bool
 		enable_private_nodes?:   bool
 		master_ipv4_cidr_block?: string
+		peering_name?:           string
+		private_endpoint?:       string
+		public_endpoint?:        string
+		master_global_access_config?: [{
+			enabled: bool
+		}, ...]
+	}, ...]
+	release_channel?: [{
+		channel: string
 	}, ...]
 	resource_usage_export_config?: [{
 		enable_network_egress_metering?:       bool
@@ -2929,9 +5103,23 @@ package google
 	vertical_pod_autoscaling?: [{
 		enabled: bool
 	}, ...]
+	workload_identity_config?: [{
+		identity_namespace: string
+	}, ...]
 }
 #GoogleContainerNodePoolResource: {
-	cluster: string
+	cluster:             string
+	id?:                 string
+	initial_node_count?: number
+	instance_group_urls?: [string, ...]
+	location?:          string
+	max_pods_per_node?: number
+	name?:              string
+	name_prefix?:       string
+	node_count?:        number
+	node_locations?: [string, ...]
+	project?: string
+	version?: string
 	autoscaling?: [{
 		max_node_count: number
 		min_node_count: number
@@ -2941,11 +5129,26 @@ package google
 		auto_upgrade?: bool
 	}, ...]
 	node_config?: [{
+		disk_size_gb?: number
+		disk_type?:    string
+		guest_accelerator?: [{
+			count: number
+			type:  string
+		}, ...]
+		image_type?: string
+		labels?: [_]: string
+		local_ssd_count?: number
+		machine_type?:    string
+		metadata?: [_]: string
 		min_cpu_platform?: string
-		preemptible?:      bool
+		oauth_scopes?: [string, ...]
+		preemptible?:     bool
+		service_account?: string
 		tags?: [string, ...]
-		sandbox_config?: [{
-			sandbox_type: string
+		taint?: [{
+			effect: string
+			key:    string
+			value:  string
 		}, ...]
 		shielded_instance_config?: [{
 			enable_integrity_monitoring?: bool
@@ -2965,27 +5168,449 @@ package google
 		max_unavailable: number
 	}, ...]
 }
-#GoogleContainerRegistryResource: location?: string
+#GoogleContainerRegistryResource: {
+	bucket_self_link?: string
+	id?:               string
+	location?:         string
+	project?:          string
+}
+#GoogleDataCatalogEntryResource: {
+	entry_group: string
+	entry_id:    string
+	bigquery_date_sharded_spec?: [{
+		dataset:      string
+		shard_count:  number
+		table_prefix: string
+	}, ...]
+	bigquery_table_spec?: [{
+		table_source_type: string
+		table_spec: [{
+			grouped_entry: string
+		}, ...]
+		view_spec: [{
+			view_query: string
+		}, ...]
+	}, ...]
+	description?:           string
+	display_name?:          string
+	id?:                    string
+	integrated_system?:     string
+	linked_resource?:       string
+	name?:                  string
+	schema?:                string
+	type?:                  string
+	user_specified_system?: string
+	user_specified_type?:   string
+	gcs_fileset_spec?: [{
+		file_patterns: [string, ...]
+		sample_gcs_file_specs?: [{
+			file_path:  string
+			size_bytes: number
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataCatalogEntryGroupResource: {
+	entry_group_id: string
+	description?:   string
+	display_name?:  string
+	id?:            string
+	name?:          string
+	project?:       string
+	region?:        string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataCatalogEntryGroupIamBindingResource: {
+	entry_group: string
+	members: [string, ...]
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleDataCatalogEntryGroupIamMemberResource: {
+	entry_group: string
+	member:      string
+	role:        string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleDataCatalogEntryGroupIamPolicyResource: {
+	entry_group: string
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
+}
+#GoogleDataCatalogTagResource: {
+	template:              string
+	column?:               string
+	id?:                   string
+	name?:                 string
+	parent?:               string
+	template_displayname?: string
+	fields?: [{
+		field_name:       string
+		bool_value?:      bool
+		display_name?:    string
+		double_value?:    number
+		enum_value?:      string
+		order?:           number
+		string_value?:    string
+		timestamp_value?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataCatalogTagTemplateResource: {
+	tag_template_id: string
+	display_name?:   string
+	force_delete?:   bool
+	id?:             string
+	name?:           string
+	project?:        string
+	region?:         string
+	fields?: [{
+		field_id:      string
+		display_name?: string
+		is_required?:  bool
+		name?:         string
+		order?:        number
+		type?: [{
+			primitive_type?: string
+			enum_type?: [{
+				allowed_values?: [{
+					display_name: string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataLossPreventionDeidentifyTemplateResource: {
+	parent:        string
+	description?:  string
+	display_name?: string
+	id?:           string
+	name?:         string
+	deidentify_config?: [{
+		info_type_transformations?: [{
+			transformations?: [{
+				info_types?: [{
+					name: string
+				}, ...]
+				primitive_transformation?: [{
+					character_mask_config?: [{
+						masking_character?: string
+						number_to_mask?:    number
+						reverse_order?:     bool
+						characters_to_ignore?: [{
+							character_to_skip?:           string
+							common_characters_to_ignore?: string
+						}, ...]
+					}, ...]
+					replace_config?: [{
+						new_value?: [{
+							boolean_value?:     bool
+							day_of_week_value?: string
+							float_value?:       number
+							integer_value?:     number
+							string_value?:      string
+							timestamp_value?:   string
+							date_value?: [{
+								day?:   number
+								month?: number
+								year?:  number
+							}, ...]
+							time_value?: [{
+								hours?:   number
+								minutes?: number
+								nanos?:   number
+								seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataLossPreventionInspectTemplateResource: {
+	parent:        string
+	description?:  string
+	display_name?: string
+	id?:           string
+	name?:         string
+	inspect_config?: [{
+		content_options?: [string, ...]
+		exclude_info_types?: bool
+		include_quote?:      bool
+		min_likelihood?:     string
+		custom_info_types?: [{
+			exclusion_type?: string
+			likelihood?:     string
+			dictionary?: [{
+				cloud_storage_path?: [{
+					path: string
+				}, ...]
+				word_list?: [{
+					words: [string, ...]
+				}, ...]
+			}, ...]
+			info_type?: [{
+				name: string
+			}, ...]
+			regex?: [{
+				pattern: string
+				group_indexes?: [number, ...]
+			}, ...]
+			stored_type?: [{
+				name: string
+			}, ...]
+		}, ...]
+		info_types?: [{
+			name: string
+		}, ...]
+		limits?: [{
+			max_findings_per_item:    number
+			max_findings_per_request: number
+			max_findings_per_info_type?: [{
+				max_findings: number
+				info_type?: [{
+					name: string
+				}, ...]
+			}, ...]
+		}, ...]
+		rule_set?: [{
+			info_types?: [{
+				name: string
+			}, ...]
+			rules?: [{
+				exclusion_rule?: [{
+					matching_type: string
+					dictionary?: [{
+						cloud_storage_path?: [{
+							path: string
+						}, ...]
+						word_list?: [{
+							words: [string, ...]
+						}, ...]
+					}, ...]
+					exclude_info_types?: [{
+						info_types?: [{
+							name: string
+						}, ...]
+					}, ...]
+					regex?: [{
+						pattern: string
+						group_indexes?: [number, ...]
+					}, ...]
+				}, ...]
+				hotword_rule?: [{
+					hotword_regex?: [{
+						pattern: string
+						group_indexes?: [number, ...]
+					}, ...]
+					likelihood_adjustment?: [{
+						fixed_likelihood?:    string
+						relative_likelihood?: number
+					}, ...]
+					proximity?: [{
+						window_after?:  number
+						window_before?: number
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleDataLossPreventionJobTriggerResource: {
+	parent:         string
+	description?:   string
+	display_name?:  string
+	id?:            string
+	last_run_time?: string
+	name?:          string
+	status?:        string
+	inspect_job?: [{
+		inspect_template_name: string
+		actions?: [{
+			save_findings?: [{
+				output_config?: [{
+					output_schema?: string
+					table?: [{
+						dataset_id: string
+						project_id: string
+						table_id?:  string
+					}, ...]
+				}, ...]
+			}, ...]
+		}, ...]
+		storage_config?: [{
+			big_query_options?: [{
+				table_reference?: [{
+					dataset_id: string
+					project_id: string
+					table_id:   string
+				}, ...]
+			}, ...]
+			cloud_storage_options?: [{
+				bytes_limit_per_file?:         number
+				bytes_limit_per_file_percent?: number
+				file_types?: [string, ...]
+				files_limit_percent?: number
+				sample_method?:       string
+				file_set?: [{
+					url?: string
+					regex_file_set?: [{
+						bucket_name: string
+						exclude_regex?: [string, ...]
+						include_regex?: [string, ...]
+					}, ...]
+				}, ...]
+			}, ...]
+			datastore_options?: [{
+				kind?: [{
+					name: string
+				}, ...]
+				partition_id?: [{
+					project_id:    string
+					namespace_id?: string
+				}, ...]
+			}, ...]
+			timespan_config?: [{
+				enable_auto_population_of_timespan_config?: bool
+				end_time?:                                  string
+				start_time?:                                string
+				timestamp_field?: [{
+					name: string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	triggers?: [{
+		schedule?: [{
+			recurrence_period_duration?: string
+		}, ...]
+	}, ...]
+}
+#GoogleDataLossPreventionStoredInfoTypeResource: {
+	parent:        string
+	description?:  string
+	display_name?: string
+	id?:           string
+	name?:         string
+	dictionary?: [{
+		cloud_storage_path?: [{
+			path: string
+		}, ...]
+		word_list?: [{
+			words: [string, ...]
+		}, ...]
+	}, ...]
+	large_custom_dictionary?: [{
+		big_query_field?: [{
+			field?: [{
+				name: string
+			}, ...]
+			table?: [{
+				dataset_id: string
+				project_id: string
+				table_id:   string
+			}, ...]
+		}, ...]
+		cloud_storage_file_set?: [{
+			url: string
+		}, ...]
+		output_path?: [{
+			path: string
+		}, ...]
+	}, ...]
+	regex?: [{
+		pattern: string
+		group_indexes?: [number, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleDataflowJobResource: {
 	name:              string
 	temp_gcs_location: string
 	template_gcs_path: string
 	additional_experiments?: [string, ...]
+	id?:               string
 	ip_configuration?: string
+	job_id?:           string
+	kms_key_name?:     string
 	labels?: [_]: string
 	machine_type?: string
 	max_workers?:  number
 	network?:      string
 	on_delete?:    string
 	parameters?: [_]: string
+	project?:               string
 	region?:                string
 	service_account_email?: string
+	state?:                 string
 	subnetwork?:            string
-	zone?:                  string
+	transform_name_mapping?: [_]: string
+	type?: string
+	zone?: string
+	timeouts?: update?: string
 }
 #GoogleDataprocAutoscalingPolicyResource: {
 	policy_id: string
+	id?:       string
 	location?: string
+	name?:     string
+	project?:  string
 	basic_algorithm?: [{
 		cooldown_period?: string
 		yarn_config?: [{
@@ -3013,10 +5638,16 @@ package google
 	}, ...]
 }
 #GoogleDataprocClusterResource: {
-	name:    string
-	region?: string
+	name:                           string
+	graceful_decommission_timeout?: string
+	id?:                            string
+	labels?: [_]: string
+	project?: string
+	region?:  string
 	cluster_config?: [{
+		bucket?:         string
 		staging_bucket?: string
+		temp_bucket?:    string
 		autoscaling_config?: [{
 			policy_uri: string
 		}, ...]
@@ -3026,26 +5657,40 @@ package google
 		gce_cluster_config?: [{
 			internal_ip_only?: bool
 			metadata?: [_]: string
+			network?:         string
 			service_account?: string
-			subnetwork?:      string
+			service_account_scopes?: [string, ...]
+			subnetwork?: string
 			tags?: [string, ...]
+			zone?: string
 		}, ...]
 		initialization_action?: [{
 			script:       string
 			timeout_sec?: number
 		}, ...]
 		master_config?: [{
+			image_uri?: string
+			instance_names?: [string, ...]
+			machine_type?:     string
+			min_cpu_platform?: string
+			num_instances?:    number
 			accelerators?: [{
 				accelerator_count: number
 				accelerator_type:  string
 			}, ...]
 			disk_config?: [{
-				boot_disk_type?: string
+				boot_disk_size_gb?: number
+				boot_disk_type?:    string
+				num_local_ssds?:    number
 			}, ...]
 		}, ...]
 		preemptible_worker_config?: [{
+			instance_names?: [string, ...]
+			num_instances?: number
 			disk_config?: [{
-				boot_disk_type?: string
+				boot_disk_size_gb?: number
+				boot_disk_type?:    string
+				num_local_ssds?:    number
 			}, ...]
 		}, ...]
 		security_config?: [{
@@ -3068,16 +5713,25 @@ package google
 			}, ...]
 		}, ...]
 		software_config?: [{
+			image_version?: string
 			optional_components?: [string, ...]
 			override_properties?: [_]: string
+			properties?: [_]:          string
 		}, ...]
 		worker_config?: [{
+			image_uri?: string
+			instance_names?: [string, ...]
+			machine_type?:     string
+			min_cpu_platform?: string
+			num_instances?:    number
 			accelerators?: [{
 				accelerator_count: number
 				accelerator_type:  string
 			}, ...]
 			disk_config?: [{
-				boot_disk_type?: string
+				boot_disk_size_gb?: number
+				boot_disk_type?:    string
+				num_local_ssds?:    number
 			}, ...]
 		}, ...]
 	}, ...]
@@ -3090,21 +5744,53 @@ package google
 #GoogleDataprocClusterIamBindingResource: {
 	cluster: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleDataprocClusterIamMemberResource: {
-	cluster: string
-	member:  string
-	role:    string
+	cluster:  string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleDataprocClusterIamPolicyResource: {
 	cluster:     string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
 }
 #GoogleDataprocJobResource: {
-	force_delete?: bool
+	driver_controls_files_uri?:  string
+	driver_output_resource_uri?: string
+	force_delete?:               bool
+	id?:                         string
 	labels?: [_]: string
-	region?: string
+	project?: string
+	region?:  string
+	status?: [{
+		details:          string
+		state:            string
+		state_start_time: string
+		substate:         string
+	}, ...]
 	hadoop_config?: [{
 		archive_uris?: [string, ...]
 		args?: [string, ...]
@@ -3137,7 +5823,8 @@ package google
 		}, ...]
 	}, ...]
 	placement?: [{
-		cluster_name: string
+		cluster_name:  string
+		cluster_uuid?: string
 	}, ...]
 	pyspark_config?: [{
 		main_python_file_uri: string
@@ -3151,7 +5838,9 @@ package google
 			driver_log_levels: [_]: string
 		}, ...]
 	}, ...]
-	reference?: [{}, ...]
+	reference?: [{
+		job_id?: string
+	}, ...]
 	scheduling?: [{
 		max_failures_per_hour: number
 	}, ...]
@@ -3185,20 +5874,45 @@ package google
 #GoogleDataprocJobIamBindingResource: {
 	job_id: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleDataprocJobIamMemberResource: {
-	job_id: string
-	member: string
-	role:   string
+	job_id:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	region?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleDataprocJobIamPolicyResource: {
 	job_id:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	region?:     string
 }
 #GoogleDatastoreIndexResource: {
 	kind:      string
 	ancestor?: string
+	id?:       string
+	index_id?: string
+	project?:  string
 	properties?: [{
 		direction: string
 		name:      string
@@ -3212,8 +5926,13 @@ package google
 	name:           string
 	create_policy?: string
 	delete_policy?: string
+	deployment_id?: string
 	description?:   string
+	id?:            string
+	manifest?:      string
 	preview?:       bool
+	project?:       string
+	self_link?:     string
 	labels?: [{
 		key?:   string
 		value?: string
@@ -3237,10 +5956,15 @@ package google
 	default_language_code:     string
 	display_name:              string
 	time_zone:                 string
+	api_version?:              string
 	avatar_uri?:               string
+	avatar_uri_backend?:       string
 	classification_threshold?: number
 	description?:              string
 	enable_logging?:           bool
+	id?:                       string
+	match_mode?:               string
+	project?:                  string
 	supported_language_codes?: [string, ...]
 	tier?: string
 	timeouts?: {
@@ -3253,6 +5977,9 @@ package google
 	display_name:             string
 	kind:                     string
 	enable_fuzzy_extraction?: bool
+	id?:                      string
+	name?:                    string
+	project?:                 string
 	entities?: [{
 		synonyms: [string, ...]
 		value: string
@@ -3265,9 +5992,24 @@ package google
 }
 #GoogleDialogflowIntentResource: {
 	display_name: string
+	action?:      string
 	default_response_platforms?: [string, ...]
 	events?: [string, ...]
+	followup_intent_info?: [{
+		followup_intent_name:        string
+		parent_followup_intent_name: string
+	}, ...]
+	id?: string
 	input_context_names?: [string, ...]
+	is_fallback?:                 bool
+	ml_disabled?:                 bool
+	name?:                        string
+	parent_followup_intent_name?: string
+	priority?:                    number
+	project?:                     string
+	reset_contexts?:              bool
+	root_followup_intent_name?:   string
+	webhook_state?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3275,19 +6017,35 @@ package google
 	}
 }
 #GoogleDnsManagedZoneResource: {
-	dns_name:     string
-	name:         string
-	description?: string
+	dns_name:       string
+	name:           string
+	description?:   string
+	force_destroy?: bool
+	id?:            string
 	labels?: [_]: string
+	name_servers?: [string, ...]
+	project?:    string
 	visibility?: string
 	dnssec_config?: [{
-		kind?:  string
-		state?: string
+		kind?:          string
+		non_existence?: string
+		state?:         string
 		default_key_specs?: [{
 			algorithm?:  string
 			key_length?: number
 			key_type?:   string
 			kind?:       string
+		}, ...]
+	}, ...]
+	forwarding_config?: [{
+		target_name_servers?: [{
+			ipv4_address:     string
+			forwarding_path?: string
+		}, ...]
+	}, ...]
+	peering_config?: [{
+		target_network?: [{
+			network_url: string
 		}, ...]
 	}, ...]
 	private_visibility_config?: [{
@@ -3301,17 +6059,60 @@ package google
 		update?: string
 	}
 }
+#GoogleDnsPolicyResource: {
+	name:                       string
+	description?:               string
+	enable_inbound_forwarding?: bool
+	enable_logging?:            bool
+	id?:                        string
+	project?:                   string
+	alternative_name_server_config?: [{
+		target_name_servers?: [{
+			ipv4_address:     string
+			forwarding_path?: string
+		}, ...]
+	}, ...]
+	networks?: [{
+		network_url: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleDnsRecordSetResource: {
 	managed_zone: string
 	name:         string
 	rrdatas: [string, ...]
-	ttl:  number
-	type: string
+	ttl:      number
+	type:     string
+	id?:      string
+	project?: string
 }
 #GoogleEndpointsServiceResource: {
-	service_name:          string
+	service_name: string
+	apis?: [{
+		methods: [{
+			name:          string
+			request_type:  string
+			response_type: string
+			syntax:        string
+		}, ...]
+		name:    string
+		syntax:  string
+		version: string
+	}, ...]
+	config_id?:   string
+	dns_address?: string
+	endpoints?: [{
+		address: string
+		name:    string
+	}, ...]
 	grpc_config?:          string
+	id?:                   string
 	openapi_config?:       string
+	project?:              string
 	protoc_output_base64?: string
 	timeouts?: {
 		create?: string
@@ -3323,22 +6124,42 @@ package google
 	members: [string, ...]
 	role:         string
 	service_name: string
+	etag?:        string
+	id?:          string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleEndpointsServiceIamMemberResource: {
 	member:       string
 	role:         string
 	service_name: string
+	etag?:        string
+	id?:          string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleEndpointsServiceIamPolicyResource: {
 	policy_data:  string
 	service_name: string
+	etag?:        string
+	id?:          string
 }
 #GoogleFilestoreInstanceResource: {
 	name:         string
 	tier:         string
 	zone:         string
+	create_time?: string
 	description?: string
+	etag?:        string
+	id?:          string
 	labels?: [_]: string
+	project?: string
 	file_shares?: [{
 		capacity_gb: number
 		name:        string
@@ -3346,7 +6167,26 @@ package google
 	networks?: [{
 		modes: [string, ...]
 		network: string
+		ip_addresses?: [string, ...]
+		reserved_ip_range?: string
 	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleFirestoreDocumentResource: {
+	collection:   string
+	document_id:  string
+	fields:       string
+	create_time?: string
+	database?:    string
+	id?:          string
+	name?:        string
+	path?:        string
+	project?:     string
+	update_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3356,6 +6196,9 @@ package google
 #GoogleFirestoreIndexResource: {
 	collection:   string
 	database?:    string
+	id?:          string
+	name?:        string
+	project?:     string
 	query_scope?: string
 	fields?: [{
 		array_config?: string
@@ -3368,8 +6211,13 @@ package google
 	}
 }
 #GoogleFolderResource: {
-	display_name: string
-	parent:       string
+	display_name:     string
+	parent:           string
+	create_time?:     string
+	folder_id?:       string
+	id?:              string
+	lifecycle_state?: string
+	name?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3377,28 +6225,75 @@ package google
 		update?: string
 	}
 }
+#GoogleFolderAccessApprovalSettingsResource: {
+	folder_id:          string
+	enrolled_ancestor?: bool
+	id?:                string
+	name?:              string
+	notification_emails?: [string, ...]
+	enrolled_services?: [{
+		cloud_product:     string
+		enrollment_level?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleFolderIamAuditConfigResource: {
+	folder:  string
+	service: string
+	etag?:   string
+	id?:     string
+	audit_log_config?: [{
+		log_type: string
+		exempted_members?: [string, ...]
+	}, ...]
+}
 #GoogleFolderIamBindingResource: {
 	folder: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleFolderIamMemberResource: {
 	folder: string
 	member: string
 	role:   string
+	etag?:  string
+	id?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleFolderIamPolicyResource: {
 	folder:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
 }
 #GoogleFolderOrganizationPolicyResource: {
-	constraint: string
-	folder:     string
+	constraint:   string
+	folder:       string
+	etag?:        string
+	id?:          string
+	update_time?: string
+	version?:     number
 	boolean_policy?: [{
 		enforced: bool
 	}, ...]
 	list_policy?: [{
 		inherit_from_parent?: bool
+		suggested_value?:     string
 		allow?: [{
 			all?: bool
 			values?: [string, ...]
@@ -3418,9 +6313,113 @@ package google
 		update?: string
 	}
 }
+#GoogleGameServicesGameServerClusterResource: {
+	cluster_id:   string
+	realm_id:     string
+	description?: string
+	id?:          string
+	labels?: [_]: string
+	location?: string
+	name?:     string
+	project?:  string
+	connection_info?: [{
+		namespace: string
+		gke_cluster_reference?: [{
+			cluster: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleGameServicesGameServerConfigResource: {
+	config_id:     string
+	deployment_id: string
+	description?:  string
+	id?:           string
+	labels?: [_]: string
+	location?: string
+	name?:     string
+	project?:  string
+	fleet_configs?: [{
+		fleet_spec: string
+		name?:      string
+	}, ...]
+	scaling_configs?: [{
+		fleet_autoscaler_spec: string
+		name:                  string
+		schedules?: [{
+			cron_job_duration?: string
+			cron_spec?:         string
+			end_time?:          string
+			start_time?:        string
+		}, ...]
+		selectors?: [{
+			labels?: [_]: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#GoogleGameServicesGameServerDeploymentResource: {
+	deployment_id: string
+	description?:  string
+	id?:           string
+	labels?: [_]: string
+	location?: string
+	name?:     string
+	project?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleGameServicesGameServerDeploymentRolloutResource: {
+	default_game_server_config: string
+	deployment_id:              string
+	id?:                        string
+	name?:                      string
+	project?:                   string
+	game_server_config_overrides?: [{
+		config_version?: string
+		realms_selector?: [{
+			realms?: [string, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleGameServicesRealmResource: {
+	realm_id:     string
+	time_zone:    string
+	description?: string
+	etag?:        string
+	id?:          string
+	labels?: [_]: string
+	location?: string
+	name?:     string
+	project?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleHealthcareDatasetResource: {
-	location: string
-	name:     string
+	location:   string
+	name:       string
+	id?:        string
+	project?:   string
+	self_link?: string
+	time_zone?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3430,21 +6429,39 @@ package google
 #GoogleHealthcareDatasetIamBindingResource: {
 	dataset_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareDatasetIamMemberResource: {
 	dataset_id: string
 	member:     string
 	role:       string
+	etag?:      string
+	id?:        string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareDatasetIamPolicyResource: {
 	dataset_id:  string
 	policy_data: string
+	etag?:       string
+	id?:         string
 }
 #GoogleHealthcareDicomStoreResource: {
 	dataset: string
 	name:    string
+	id?:     string
 	labels?: [_]: string
+	self_link?: string
 	notification_config?: [{
 		pubsub_topic: string
 	}, ...]
@@ -3457,16 +6474,32 @@ package google
 #GoogleHealthcareDicomStoreIamBindingResource: {
 	dicom_store_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareDicomStoreIamMemberResource: {
 	dicom_store_id: string
 	member:         string
 	role:           string
+	etag?:          string
+	id?:            string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareDicomStoreIamPolicyResource: {
 	dicom_store_id: string
 	policy_data:    string
+	etag?:          string
+	id?:            string
 }
 #GoogleHealthcareFhirStoreResource: {
 	dataset:                        string
@@ -3476,9 +6509,21 @@ package google
 	disable_resource_versioning?:   bool
 	enable_history_import?:         bool
 	enable_update_create?:          bool
+	id?:                            string
 	labels?: [_]: string
+	self_link?: string
 	notification_config?: [{
 		pubsub_topic: string
+	}, ...]
+	stream_configs?: [{
+		resource_types?: [string, ...]
+		bigquery_destination?: [{
+			dataset_uri: string
+			schema_config?: [{
+				recursive_structure_depth: number
+				schema_type?:              string
+			}, ...]
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3489,21 +6534,39 @@ package google
 #GoogleHealthcareFhirStoreIamBindingResource: {
 	fhir_store_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareFhirStoreIamMemberResource: {
 	fhir_store_id: string
 	member:        string
 	role:          string
+	etag?:         string
+	id?:           string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareFhirStoreIamPolicyResource: {
 	fhir_store_id: string
 	policy_data:   string
+	etag?:         string
+	id?:           string
 }
 #GoogleHealthcareHl7V2StoreResource: {
 	dataset: string
 	name:    string
+	id?:     string
 	labels?: [_]: string
+	self_link?: string
 	notification_config?: [{
 		pubsub_topic: string
 	}, ...]
@@ -3525,33 +6588,68 @@ package google
 #GoogleHealthcareHl7V2StoreIamBindingResource: {
 	hl7_v2_store_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareHl7V2StoreIamMemberResource: {
 	hl7_v2_store_id: string
 	member:          string
 	role:            string
+	etag?:           string
+	id?:             string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleHealthcareHl7V2StoreIamPolicyResource: {
 	hl7_v2_store_id: string
 	policy_data:     string
+	etag?:           string
+	id?:             string
 }
 #GoogleIapAppEngineServiceIamBindingResource: {
 	app_id: string
 	members: [string, ...]
-	role:    string
-	service: string
+	role:     string
+	service:  string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapAppEngineServiceIamMemberResource: {
-	app_id:  string
-	member:  string
-	role:    string
-	service: string
+	app_id:   string
+	member:   string
+	role:     string
+	service:  string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapAppEngineServiceIamPolicyResource: {
 	app_id:      string
 	policy_data: string
 	service:     string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleIapAppEngineVersionIamBindingResource: {
 	app_id: string
@@ -3559,6 +6657,14 @@ package google
 	role:       string
 	service:    string
 	version_id: string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapAppEngineVersionIamMemberResource: {
 	app_id:     string
@@ -3566,16 +6672,31 @@ package google
 	role:       string
 	service:    string
 	version_id: string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapAppEngineVersionIamPolicyResource: {
 	app_id:      string
 	policy_data: string
 	service:     string
 	version_id:  string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleIapBrandResource: {
-	application_title: string
-	support_email:     string
+	application_title:  string
+	support_email:      string
+	id?:                string
+	name?:              string
+	org_internal_only?: bool
+	project?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3584,76 +6705,214 @@ package google
 #GoogleIapClientResource: {
 	brand:        string
 	display_name: string
+	client_id?:   string
+	id?:          string
+	secret?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#GoogleIapTunnelIamBindingResource: {
+	members: [string, ...]
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleIapTunnelIamMemberResource: {
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleIapTunnelIamPolicyResource: {
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleIapTunnelInstanceIamBindingResource: {
 	instance: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	zone?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapTunnelInstanceIamMemberResource: {
 	instance: string
 	member:   string
 	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	zone?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapTunnelInstanceIamPolicyResource: {
 	instance:    string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+	zone?:       string
 }
 #GoogleIapWebBackendServiceIamBindingResource: {
 	members: [string, ...]
 	role:                string
 	web_backend_service: string
+	etag?:               string
+	id?:                 string
+	project?:            string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebBackendServiceIamMemberResource: {
 	member:              string
 	role:                string
 	web_backend_service: string
+	etag?:               string
+	id?:                 string
+	project?:            string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebBackendServiceIamPolicyResource: {
 	policy_data:         string
 	web_backend_service: string
+	etag?:               string
+	id?:                 string
+	project?:            string
 }
 #GoogleIapWebIamBindingResource: {
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebIamMemberResource: {
-	member: string
-	role:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
-#GoogleIapWebIamPolicyResource: policy_data: string
+#GoogleIapWebIamPolicyResource: {
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleIapWebTypeAppEngineIamBindingResource: {
 	app_id: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebTypeAppEngineIamMemberResource: {
-	app_id: string
-	member: string
-	role:   string
+	app_id:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebTypeAppEngineIamPolicyResource: {
 	app_id:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleIapWebTypeComputeIamBindingResource: {
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleIapWebTypeComputeIamMemberResource: {
-	member: string
-	role:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
-#GoogleIapWebTypeComputeIamPolicyResource: policy_data: string
+#GoogleIapWebTypeComputeIamPolicyResource: {
+	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
 #GoogleIdentityPlatformDefaultSupportedIdpConfigResource: {
 	client_id:     string
 	client_secret: string
 	idp_id:        string
 	enabled?:      bool
+	id?:           string
+	name?:         string
+	project?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3664,6 +6923,8 @@ package google
 	display_name: string
 	name:         string
 	enabled?:     bool
+	id?:          string
+	project?:     string
 	idp_config?: [{
 		idp_entity_id: string
 		sso_url:       string
@@ -3674,6 +6935,9 @@ package google
 	}, ...]
 	sp_config?: [{
 		callback_uri?: string
+		sp_certificates?: [{
+			x509_certificate: string
+		}, ...]
 		sp_entity_id?: string
 	}, ...]
 	timeouts?: {
@@ -3689,6 +6953,8 @@ package google
 	client_secret?: string
 	display_name?:  string
 	enabled?:       bool
+	id?:            string
+	project?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3700,6 +6966,9 @@ package google
 	allow_password_signup?:    bool
 	disable_auth?:             bool
 	enable_email_link_signin?: bool
+	id?:                       string
+	name?:                     string
+	project?:                  string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3712,6 +6981,9 @@ package google
 	idp_id:        string
 	tenant:        string
 	enabled?:      bool
+	id?:           string
+	name?:         string
+	project?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3723,6 +6995,8 @@ package google
 	name:         string
 	tenant:       string
 	enabled?:     bool
+	id?:          string
+	project?:     string
 	idp_config?: [{
 		idp_entity_id: string
 		sso_url:       string
@@ -3734,6 +7008,9 @@ package google
 	sp_config?: [{
 		callback_uri: string
 		sp_entity_id: string
+		sp_certificates?: [{
+			x509_certificate: string
+		}, ...]
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -3749,6 +7026,8 @@ package google
 	tenant:         string
 	client_secret?: string
 	enabled?:       bool
+	id?:            string
+	project?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3758,9 +7037,12 @@ package google
 #GoogleKmsCryptoKeyResource: {
 	key_ring: string
 	name:     string
+	id?:      string
 	labels?: [_]: string
-	purpose?:         string
-	rotation_period?: string
+	purpose?:                       string
+	rotation_period?:               string
+	self_link?:                     string
+	skip_initial_version_creation?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3774,20 +7056,39 @@ package google
 #GoogleKmsCryptoKeyIamBindingResource: {
 	crypto_key_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleKmsCryptoKeyIamMemberResource: {
 	crypto_key_id: string
 	member:        string
 	role:          string
+	etag?:         string
+	id?:           string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleKmsCryptoKeyIamPolicyResource: {
 	crypto_key_id: string
 	policy_data:   string
+	etag?:         string
+	id?:           string
 }
 #GoogleKmsKeyRingResource: {
-	location: string
-	name:     string
+	location:   string
+	name:       string
+	id?:        string
+	project?:   string
+	self_link?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -3796,31 +7097,74 @@ package google
 #GoogleKmsKeyRingIamBindingResource: {
 	key_ring_id: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleKmsKeyRingIamMemberResource: {
 	key_ring_id: string
 	member:      string
 	role:        string
+	etag?:       string
+	id?:         string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleKmsKeyRingIamPolicyResource: {
 	key_ring_id: string
 	policy_data: string
+	etag?:       string
+	id?:         string
+}
+#GoogleKmsKeyRingImportJobResource: {
+	import_job_id:    string
+	import_method:    string
+	key_ring:         string
+	protection_level: string
+	attestation?: [{
+		content: string
+		format:  string
+	}, ...]
+	expire_time?: string
+	id?:          string
+	name?:        string
+	public_key?: [{
+		pem: string
+	}, ...]
+	state?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
 }
 #GoogleKmsSecretCiphertextResource: {
 	crypto_key:                     string
 	plaintext:                      string
 	additional_authenticated_data?: string
+	ciphertext?:                    string
+	id?:                            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleLoggingBillingAccountBucketConfigResource: {
-	billing_account: string
-	bucket_id:       string
-	location:        string
-	retention_days?: number
+	billing_account:  string
+	bucket_id:        string
+	location:         string
+	description?:     string
+	id?:              string
+	lifecycle_state?: string
+	name?:            string
+	retention_days?:  number
 }
 #GoogleLoggingBillingAccountExclusionResource: {
 	billing_account: string
@@ -3828,21 +7172,36 @@ package google
 	name:            string
 	description?:    string
 	disabled?:       bool
+	id?:             string
 }
 #GoogleLoggingBillingAccountSinkResource: {
-	billing_account: string
-	destination:     string
-	name:            string
-	filter?:         string
+	billing_account:  string
+	destination:      string
+	name:             string
+	description?:     string
+	disabled?:        bool
+	filter?:          string
+	id?:              string
+	writer_identity?: string
 	bigquery_options?: [{
 		use_partitioned_tables: bool
 	}, ...]
+	exclusions?: [{
+		filter:       string
+		name:         string
+		description?: string
+		disabled?:    bool
+	}, ...]
 }
 #GoogleLoggingFolderBucketConfigResource: {
-	bucket_id:       string
-	folder:          string
-	location:        string
-	retention_days?: number
+	bucket_id:        string
+	folder:           string
+	location:         string
+	description?:     string
+	id?:              string
+	lifecycle_state?: string
+	name?:            string
+	retention_days?:  number
 }
 #GoogleLoggingFolderExclusionResource: {
 	filter:       string
@@ -3850,22 +7209,35 @@ package google
 	name:         string
 	description?: string
 	disabled?:    bool
+	id?:          string
 }
 #GoogleLoggingFolderSinkResource: {
 	destination:       string
 	folder:            string
 	name:              string
+	description?:      string
+	disabled?:         bool
 	filter?:           string
+	id?:               string
 	include_children?: bool
+	writer_identity?:  string
 	bigquery_options?: [{
 		use_partitioned_tables: bool
+	}, ...]
+	exclusions?: [{
+		filter:       string
+		name:         string
+		description?: string
+		disabled?:    bool
 	}, ...]
 }
 #GoogleLoggingMetricResource: {
 	filter:       string
 	name:         string
 	description?: string
+	id?:          string
 	label_extractors?: [_]: string
+	project?:         string
 	value_extractor?: string
 	bucket_options?: [{
 		explicit_buckets?: [{
@@ -3900,10 +7272,14 @@ package google
 	}
 }
 #GoogleLoggingOrganizationBucketConfigResource: {
-	bucket_id:       string
-	location:        string
-	organization:    string
-	retention_days?: number
+	bucket_id:        string
+	location:         string
+	organization:     string
+	description?:     string
+	id?:              string
+	lifecycle_state?: string
+	name?:            string
+	retention_days?:  number
 }
 #GoogleLoggingOrganizationExclusionResource: {
 	filter:       string
@@ -3911,44 +7287,74 @@ package google
 	org_id:       string
 	description?: string
 	disabled?:    bool
+	id?:          string
 }
 #GoogleLoggingOrganizationSinkResource: {
 	destination:       string
 	name:              string
 	org_id:            string
+	description?:      string
+	disabled?:         bool
 	filter?:           string
+	id?:               string
 	include_children?: bool
+	writer_identity?:  string
 	bigquery_options?: [{
 		use_partitioned_tables: bool
 	}, ...]
+	exclusions?: [{
+		filter:       string
+		name:         string
+		description?: string
+		disabled?:    bool
+	}, ...]
 }
 #GoogleLoggingProjectBucketConfigResource: {
-	bucket_id:       string
-	location:        string
-	project:         string
-	retention_days?: number
+	bucket_id:        string
+	location:         string
+	project:          string
+	description?:     string
+	id?:              string
+	lifecycle_state?: string
+	name?:            string
+	retention_days?:  number
 }
 #GoogleLoggingProjectExclusionResource: {
 	filter:       string
 	name:         string
 	description?: string
 	disabled?:    bool
+	id?:          string
+	project?:     string
 }
 #GoogleLoggingProjectSinkResource: {
 	destination:             string
 	name:                    string
+	description?:            string
+	disabled?:               bool
 	filter?:                 string
+	id?:                     string
+	project?:                string
 	unique_writer_identity?: bool
+	writer_identity?:        string
 	bigquery_options?: [{
 		use_partitioned_tables: bool
+	}, ...]
+	exclusions?: [{
+		filter:       string
+		name:         string
+		description?: string
+		disabled?:    bool
 	}, ...]
 }
 #GoogleMlEngineModelResource: {
 	name:         string
 	description?: string
+	id?:          string
 	labels?: [_]: string
 	online_prediction_console_logging?: bool
 	online_prediction_logging?:         bool
+	project?:                           string
 	regions?: [string, ...]
 	default_version?: [{
 		name: string
@@ -3961,11 +7367,19 @@ package google
 #GoogleMonitoringAlertPolicyResource: {
 	combiner:     string
 	display_name: string
-	enabled?:     bool
+	creation_record?: [{
+		mutate_time: string
+		mutated_by:  string
+	}, ...]
+	enabled?: bool
+	id?:      string
+	name?:    string
 	notification_channels?: [string, ...]
+	project?: string
 	user_labels?: [_]: string
 	conditions?: [{
 		display_name: string
+		name?:        string
 		condition_absent?: [{
 			duration: string
 			filter?:  string
@@ -3975,6 +7389,14 @@ package google
 				group_by_fields?: [string, ...]
 				per_series_aligner?: string
 			}, ...]
+			trigger?: [{
+				count?:   number
+				percent?: number
+			}, ...]
+		}, ...]
+		condition_monitoring_query_language?: [{
+			duration: string
+			query:    string
 			trigger?: [{
 				count?:   number
 				percent?: number
@@ -4016,6 +7438,10 @@ package google
 }
 #GoogleMonitoringCustomServiceResource: {
 	display_name?: string
+	id?:           string
+	name?:         string
+	project?:      string
+	service_id?:   string
 	telemetry?: [{
 		resource_name?: string
 	}, ...]
@@ -4025,11 +7451,51 @@ package google
 		update?: string
 	}
 }
+#GoogleMonitoringDashboardResource: {
+	dashboard_json: string
+	id?:            string
+	project?:       string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleMonitoringGroupResource: {
 	display_name: string
 	filter:       string
+	id?:          string
 	is_cluster?:  bool
+	name?:        string
 	parent_name?: string
+	project?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleMonitoringMetricDescriptorResource: {
+	description:   string
+	display_name:  string
+	metric_kind:   string
+	type:          string
+	value_type:    string
+	id?:           string
+	launch_stage?: string
+	monitored_resource_types?: [string, ...]
+	name?:    string
+	project?: string
+	unit?:    string
+	labels?: [{
+		key:          string
+		description?: string
+		value_type?:  string
+	}, ...]
+	metadata?: [{
+		ingest_delay?:  string
+		sample_period?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4041,8 +7507,12 @@ package google
 	description?:  string
 	display_name?: string
 	enabled?:      bool
-	labels?: [_]:      string
+	id?:           string
+	labels?: [_]: string
+	name?:    string
+	project?: string
 	user_labels?: [_]: string
+	verification_status?: string
 	sensitive_labels?: [{
 		auth_token?:  string
 		password?:    string
@@ -4059,7 +7529,11 @@ package google
 	service:              string
 	calendar_period?:     string
 	display_name?:        string
+	id?:                  string
+	name?:                string
+	project?:             string
 	rolling_period_days?: number
+	slo_id?:              string
 	basic_sli?: [{
 		location?: [string, ...]
 		method?: [string, ...]
@@ -4087,27 +7561,78 @@ package google
 		delete?: string
 		update?: string
 	}
+	windows_based_sli?: [{
+		good_bad_metric_filter?: string
+		window_period?:          string
+		good_total_ratio_threshold?: [{
+			threshold?: number
+			basic_sli_performance?: [{
+				location?: [string, ...]
+				method?: [string, ...]
+				version?: [string, ...]
+				latency?: [{
+					threshold: string
+				}, ...]
+			}, ...]
+			performance?: [{
+				distribution_cut?: [{
+					distribution_filter: string
+					range?: [{
+						max?: number
+						min?: number
+					}, ...]
+				}, ...]
+				good_total_ratio?: [{
+					bad_service_filter?:   string
+					good_service_filter?:  string
+					total_service_filter?: string
+				}, ...]
+			}, ...]
+		}, ...]
+		metric_mean_in_range?: [{
+			time_series: string
+			range?: [{
+				max?: number
+				min?: number
+			}, ...]
+		}, ...]
+		metric_sum_in_range?: [{
+			time_series: string
+			range?: [{
+				max?: number
+				min?: number
+			}, ...]
+		}, ...]
+	}, ...]
 }
 #GoogleMonitoringUptimeCheckConfigResource: {
 	display_name: string
 	timeout:      string
+	id?:          string
+	name?:        string
 	period?:      string
+	project?:     string
 	selected_regions?: [string, ...]
+	uptime_check_id?: string
 	content_matchers?: [{
-		content: string
+		content:  string
+		matcher?: string
 	}, ...]
 	http_check?: [{
+		body?:         string
+		content_type?: string
 		headers?: [_]: string
-		mask_headers?: bool
-		path?:         string
-		use_ssl?:      bool
-		validate_ssl?: bool
+		mask_headers?:   bool
+		path?:           string
+		port?:           number
+		request_method?: string
+		use_ssl?:        bool
+		validate_ssl?:   bool
 		auth_info?: [{
 			password: string
 			username: string
 		}, ...]
 	}, ...]
-	internal_checkers?: [{}, ...]
 	monitored_resource?: [{
 		labels: [_]: string
 		type: string
@@ -4125,9 +7650,181 @@ package google
 		update?: string
 	}
 }
+#GoogleNetworkManagementConnectivityTestResource: {
+	name:         string
+	description?: string
+	id?:          string
+	labels?: [_]: string
+	project?:  string
+	protocol?: string
+	related_projects?: [string, ...]
+	destination?: [{
+		instance?:   string
+		ip_address?: string
+		network?:    string
+		port?:       number
+		project_id?: string
+	}, ...]
+	source?: [{
+		instance?:     string
+		ip_address?:   string
+		network?:      string
+		network_type?: string
+		port?:         number
+		project_id?:   string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleNotebooksEnvironmentResource: {
+	location:             string
+	name:                 string
+	create_time?:         string
+	description?:         string
+	display_name?:        string
+	id?:                  string
+	post_startup_script?: string
+	project?:             string
+	container_image?: [{
+		repository: string
+		tag?:       string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	vm_image?: [{
+		project:       string
+		image_family?: string
+		image_name?:   string
+	}, ...]
+}
+#GoogleNotebooksInstanceResource: {
+	location:                string
+	machine_type:            string
+	name:                    string
+	boot_disk_size_gb?:      number
+	boot_disk_type?:         string
+	create_time?:            string
+	custom_gpu_driver_path?: string
+	data_disk_size_gb?:      number
+	data_disk_type?:         string
+	disk_encryption?:        string
+	id?:                     string
+	install_gpu_driver?:     bool
+	instance_owners?: [string, ...]
+	kms_key?: string
+	labels?: [_]:   string
+	metadata?: [_]: string
+	network?:             string
+	no_proxy_access?:     bool
+	no_public_ip?:        bool
+	no_remove_data_disk?: bool
+	post_startup_script?: string
+	project?:             string
+	proxy_uri?:           string
+	service_account?:     string
+	service_account_scopes?: [string, ...]
+	state?:  string
+	subnet?: string
+	tags?: [string, ...]
+	update_time?: string
+	accelerator_config?: [{
+		core_count: number
+		type:       string
+	}, ...]
+	container_image?: [{
+		repository: string
+		tag?:       string
+	}, ...]
+	shielded_instance_config?: [{
+		enable_integrity_monitoring?: bool
+		enable_secure_boot?:          bool
+		enable_vtpm?:                 bool
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+	vm_image?: [{
+		project:       string
+		image_family?: string
+		image_name?:   string
+	}, ...]
+}
+#GoogleNotebooksInstanceIamBindingResource: {
+	instance_name: string
+	members: [string, ...]
+	role:      string
+	etag?:     string
+	id?:       string
+	location?: string
+	project?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleNotebooksInstanceIamMemberResource: {
+	instance_name: string
+	member:        string
+	role:          string
+	etag?:         string
+	id?:           string
+	location?:     string
+	project?:      string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleNotebooksInstanceIamPolicyResource: {
+	instance_name: string
+	policy_data:   string
+	etag?:         string
+	id?:           string
+	location?:     string
+	project?:      string
+}
+#GoogleNotebooksLocationResource: {
+	id?:        string
+	name?:      string
+	project?:   string
+	self_link?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleOrganizationAccessApprovalSettingsResource: {
+	organization_id:    string
+	enrolled_ancestor?: bool
+	id?:                string
+	name?:              string
+	notification_emails?: [string, ...]
+	enrolled_services?: [{
+		cloud_product:     string
+		enrollment_level?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GoogleOrganizationIamAuditConfigResource: {
 	org_id:  string
 	service: string
+	etag?:   string
+	id?:     string
 	audit_log_config?: [{
 		log_type: string
 		exempted_members?: [string, ...]
@@ -4137,32 +7834,56 @@ package google
 	members: [string, ...]
 	org_id: string
 	role:   string
+	etag?:  string
+	id?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleOrganizationIamCustomRoleResource: {
 	org_id: string
 	permissions: [string, ...]
 	role_id:      string
 	title:        string
+	deleted?:     bool
 	description?: string
+	id?:          string
+	name?:        string
 	stage?:       string
 }
 #GoogleOrganizationIamMemberResource: {
 	member: string
 	org_id: string
 	role:   string
+	etag?:  string
+	id?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleOrganizationIamPolicyResource: {
 	org_id:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
 }
 #GoogleOrganizationPolicyResource: {
-	constraint: string
-	org_id:     string
+	constraint:   string
+	org_id:       string
+	etag?:        string
+	id?:          string
+	update_time?: string
+	version?:     number
 	boolean_policy?: [{
 		enforced: bool
 	}, ...]
 	list_policy?: [{
 		inherit_from_parent?: bool
+		suggested_value?:     string
 		allow?: [{
 			all?: bool
 			values?: [string, ...]
@@ -4182,10 +7903,147 @@ package google
 		update?: string
 	}
 }
+#GoogleOsConfigPatchDeploymentResource: {
+	patch_deployment_id: string
+	create_time?:        string
+	description?:        string
+	duration?:           string
+	id?:                 string
+	last_execute_time?:  string
+	name?:               string
+	project?:            string
+	update_time?:        string
+	instance_filter?: [{
+		all?: bool
+		instance_name_prefixes?: [string, ...]
+		instances?: [string, ...]
+		zones?: [string, ...]
+		group_labels?: [{
+			labels: [_]: string
+		}, ...]
+	}, ...]
+	one_time_schedule?: [{
+		execute_time: string
+	}, ...]
+	patch_config?: [{
+		reboot_config?: string
+		apt?: [{
+			excludes?: [string, ...]
+			exclusive_packages?: [string, ...]
+			type?: string
+		}, ...]
+		goo?: [{
+			enabled: bool
+		}, ...]
+		post_step?: [{
+			linux_exec_step_config?: [{
+				allowed_success_codes?: [number, ...]
+				interpreter?: string
+				local_path?:  string
+				gcs_object?: [{
+					bucket:            string
+					generation_number: string
+					object:            string
+				}, ...]
+			}, ...]
+			windows_exec_step_config?: [{
+				allowed_success_codes?: [number, ...]
+				interpreter?: string
+				local_path?:  string
+				gcs_object?: [{
+					bucket:            string
+					generation_number: string
+					object:            string
+				}, ...]
+			}, ...]
+		}, ...]
+		pre_step?: [{
+			linux_exec_step_config?: [{
+				allowed_success_codes?: [number, ...]
+				interpreter?: string
+				local_path?:  string
+				gcs_object?: [{
+					bucket:            string
+					generation_number: string
+					object:            string
+				}, ...]
+			}, ...]
+			windows_exec_step_config?: [{
+				allowed_success_codes?: [number, ...]
+				interpreter?: string
+				local_path?:  string
+				gcs_object?: [{
+					bucket:            string
+					generation_number: string
+					object:            string
+				}, ...]
+			}, ...]
+		}, ...]
+		windows_update?: [{
+			classifications?: [string, ...]
+			excludes?: [string, ...]
+			exclusive_patches?: [string, ...]
+		}, ...]
+		yum?: [{
+			excludes?: [string, ...]
+			exclusive_packages?: [string, ...]
+			minimal?:  bool
+			security?: bool
+		}, ...]
+		zypper?: [{
+			categories?: [string, ...]
+			excludes?: [string, ...]
+			exclusive_patches?: [string, ...]
+			severities?: [string, ...]
+			with_optional?: bool
+			with_update?:   bool
+		}, ...]
+	}, ...]
+	recurring_schedule?: [{
+		end_time?:          string
+		last_execute_time?: string
+		next_execute_time?: string
+		start_time?:        string
+		monthly?: [{
+			month_day?: number
+			week_day_of_month?: [{
+				day_of_week:  string
+				week_ordinal: number
+			}, ...]
+		}, ...]
+		time_of_day?: [{
+			hours?:   number
+			minutes?: number
+			nanos?:   number
+			seconds?: number
+		}, ...]
+		time_zone?: [{
+			id:       string
+			version?: string
+		}, ...]
+		weekly?: [{
+			day_of_week: string
+		}, ...]
+	}, ...]
+	rollout?: [{
+		mode: string
+		disruption_budget?: [{
+			fixed?:      number
+			percentage?: number
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
 #GoogleOsLoginSshPublicKeyResource: {
 	key:                   string
 	user:                  string
 	expiration_time_usec?: string
+	fingerprint?:          string
+	id?:                   string
+	project?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4197,7 +8055,12 @@ package google
 	project_id:           string
 	auto_create_network?: bool
 	billing_account?:     string
+	folder_id?:           string
+	id?:                  string
 	labels?: [_]: string
+	number?:      string
+	org_id?:      string
+	skip_delete?: bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4205,8 +8068,40 @@ package google
 		update?: string
 	}
 }
+#GoogleProjectAccessApprovalSettingsResource: {
+	project_id:         string
+	enrolled_ancestor?: bool
+	id?:                string
+	name?:              string
+	notification_emails?: [string, ...]
+	project?: string
+	enrolled_services?: [{
+		cloud_product:     string
+		enrollment_level?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleProjectDefaultServiceAccountsResource: {
+	action:          string
+	project:         string
+	id?:             string
+	restore_policy?: string
+	service_accounts?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		read?:   string
+	}
+}
 #GoogleProjectIamAuditConfigResource: {
-	service: string
+	service:  string
+	etag?:    string
+	id?:      string
+	project?: string
 	audit_log_config?: [{
 		log_type: string
 		exempted_members?: [string, ...]
@@ -4214,31 +8109,58 @@ package google
 }
 #GoogleProjectIamBindingResource: {
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleProjectIamCustomRoleResource: {
 	permissions: [string, ...]
 	role_id:      string
 	title:        string
+	deleted?:     bool
 	description?: string
+	id?:          string
+	name?:        string
+	project?:     string
 	stage?:       string
 }
 #GoogleProjectIamMemberResource: {
-	member: string
-	role:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleProjectIamPolicyResource: {
 	policy_data: string
 	project:     string
+	etag?:       string
+	id?:         string
 }
 #GoogleProjectOrganizationPolicyResource: {
-	constraint: string
-	project:    string
+	constraint:   string
+	project:      string
+	etag?:        string
+	id?:          string
+	update_time?: string
+	version?:     number
 	boolean_policy?: [{
 		enforced: bool
 	}, ...]
 	list_policy?: [{
 		inherit_from_parent?: bool
+		suggested_value?:     string
 		allow?: [{
 			all?: bool
 			values?: [string, ...]
@@ -4262,6 +8184,8 @@ package google
 	service:                     string
 	disable_dependent_services?: bool
 	disable_on_destroy?:         bool
+	id?:                         string
+	project?:                    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4271,17 +8195,64 @@ package google
 }
 #GoogleProjectUsageExportBucketResource: {
 	bucket_name: string
+	id?:         string
 	prefix?:     string
+	project?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#GooglePubsubLiteSubscriptionResource: {
+	name:     string
+	topic:    string
+	id?:      string
+	project?: string
+	region?:  string
+	zone?:    string
+	delivery_config?: [{
+		delivery_requirement: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GooglePubsubLiteTopicResource: {
+	name:     string
+	id?:      string
+	project?: string
+	region?:  string
+	zone?:    string
+	partition_config?: [{
+		count: number
+		capacity?: [{
+			publish_mib_per_sec:   number
+			subscribe_mib_per_sec: number
+		}, ...]
+	}, ...]
+	retention_config?: [{
+		per_partition_bytes: string
+		period?:             string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #GooglePubsubSubscriptionResource: {
-	name:  string
-	topic: string
+	name:                     string
+	topic:                    string
+	ack_deadline_seconds?:    number
+	enable_message_ordering?: bool
+	filter?:                  string
+	id?:                      string
 	labels?: [_]: string
 	message_retention_duration?: string
+	path?:                       string
+	project?:                    string
 	retain_acked_messages?:      bool
 	dead_letter_policy?: [{
 		dead_letter_topic?:     string
@@ -4298,6 +8269,10 @@ package google
 			audience?:             string
 		}, ...]
 	}, ...]
+	retry_policy?: [{
+		maximum_backoff?: string
+		minimum_backoff?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4308,20 +8283,41 @@ package google
 	members: [string, ...]
 	role:         string
 	subscription: string
+	etag?:        string
+	id?:          string
+	project?:     string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GooglePubsubSubscriptionIamMemberResource: {
 	member:       string
 	role:         string
 	subscription: string
+	etag?:        string
+	id?:          string
+	project?:     string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GooglePubsubSubscriptionIamPolicyResource: {
 	policy_data:  string
 	subscription: string
+	etag?:        string
+	id?:          string
+	project?:     string
 }
 #GooglePubsubTopicResource: {
 	name:          string
+	id?:           string
 	kms_key_name?: string
 	labels?: [_]: string
+	project?: string
 	message_storage_policy?: [{
 		allowed_persistence_regions: [string, ...]
 	}, ...]
@@ -4333,26 +8329,60 @@ package google
 }
 #GooglePubsubTopicIamBindingResource: {
 	members: [string, ...]
-	role:  string
-	topic: string
+	role:     string
+	topic:    string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GooglePubsubTopicIamMemberResource: {
-	member: string
-	role:   string
-	topic:  string
+	member:   string
+	role:     string
+	topic:    string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GooglePubsubTopicIamPolicyResource: {
 	policy_data: string
 	topic:       string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleRedisInstanceResource: {
-	memory_size_gb: number
-	name:           string
-	connect_mode?:  string
-	display_name?:  string
-	labels?: [_]:        string
+	memory_size_gb:           number
+	name:                     string
+	alternative_location_id?: string
+	auth_enabled?:            bool
+	auth_string?:             string
+	authorized_network?:      string
+	connect_mode?:            string
+	create_time?:             string
+	current_location_id?:     string
+	display_name?:            string
+	host?:                    string
+	id?:                      string
+	labels?: [_]: string
+	location_id?:              string
+	persistence_iam_identity?: string
+	port?:                     number
+	project?:                  string
 	redis_configs?: [_]: string
-	tier?: string
+	redis_version?:     string
+	region?:            string
+	reserved_ip_range?: string
+	tier?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4364,6 +8394,9 @@ package google
 	parent: string
 	reason: string
 	restrictions: [string, ...]
+	create_time?: string
+	id?:          string
+	name?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4372,66 +8405,191 @@ package google
 #GoogleRuntimeconfigConfigResource: {
 	name:         string
 	description?: string
+	id?:          string
+	project?:     string
 }
 #GoogleRuntimeconfigConfigIamBindingResource: {
 	config: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleRuntimeconfigConfigIamMemberResource: {
-	config: string
-	member: string
-	role:   string
+	config:   string
+	member:   string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleRuntimeconfigConfigIamPolicyResource: {
 	config:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleRuntimeconfigVariableResource: {
-	name:   string
-	parent: string
-	text?:  string
-	value?: string
+	name:         string
+	parent:       string
+	id?:          string
+	project?:     string
+	text?:        string
+	update_time?: string
+	value?:       string
 }
 #GoogleSccSourceResource: {
 	display_name: string
 	organization: string
 	description?: string
+	id?:          string
+	name?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
+#GoogleSecretManagerSecretResource: {
+	secret_id:    string
+	create_time?: string
+	id?:          string
+	labels?: [_]: string
+	name?:    string
+	project?: string
+	replication?: [{
+		automatic?: bool
+		user_managed?: [{
+			replicas?: [{
+				location: string
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#GoogleSecretManagerSecretIamBindingResource: {
+	members: [string, ...]
+	role:      string
+	secret_id: string
+	etag?:     string
+	id?:       string
+	project?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleSecretManagerSecretIamMemberResource: {
+	member:    string
+	role:      string
+	secret_id: string
+	etag?:     string
+	id?:       string
+	project?:  string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
+}
+#GoogleSecretManagerSecretIamPolicyResource: {
+	policy_data: string
+	secret_id:   string
+	etag?:       string
+	id?:         string
+	project?:    string
+}
+#GoogleSecretManagerSecretVersionResource: {
+	secret:        string
+	create_time?:  string
+	destroy_time?: string
+	enabled?:      bool
+	id?:           string
+	name?:         string
+	secret_data?:  string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
 #GoogleServiceAccountResource: {
 	account_id:    string
 	description?:  string
 	display_name?: string
+	email?:        string
+	id?:           string
+	name?:         string
+	project?:      string
+	unique_id?:    string
+	timeouts?: create?: string
 }
 #GoogleServiceAccountIamBindingResource: {
 	members: [string, ...]
 	role:               string
 	service_account_id: string
+	etag?:              string
+	id?:                string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleServiceAccountIamMemberResource: {
 	member:             string
 	role:               string
 	service_account_id: string
+	etag?:              string
+	id?:                string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleServiceAccountIamPolicyResource: {
 	policy_data:        string
 	service_account_id: string
+	etag?:              string
+	id?:                string
 }
 #GoogleServiceAccountKeyResource: {
 	service_account_id: string
-	key_algorithm?:     string
-	private_key_type?:  string
-	public_key_type?:   string
+	id?:                string
+	keepers?: [_]: string
+	key_algorithm?:    string
+	name?:             string
+	private_key?:      string
+	private_key_type?: string
+	public_key?:       string
+	public_key_data?:  string
+	public_key_type?:  string
+	valid_after?:      string
+	valid_before?:     string
 }
 #GoogleServiceNetworkingConnectionResource: {
 	network: string
 	reserved_peering_ranges: [string, ...]
-	service: string
+	service:  string
+	id?:      string
+	peering?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4439,10 +8597,15 @@ package google
 	}
 }
 #GoogleSourcerepoRepositoryResource: {
-	name: string
+	name:     string
+	id?:      string
+	project?: string
+	size?:    number
+	url?:     string
 	pubsub_configs?: [{
-		message_format: string
-		topic:          string
+		message_format:         string
+		topic:                  string
+		service_account_email?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -4454,47 +8617,94 @@ package google
 	members: [string, ...]
 	repository: string
 	role:       string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSourcerepoRepositoryIamMemberResource: {
 	member:     string
 	repository: string
 	role:       string
+	etag?:      string
+	id?:        string
+	project?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSourcerepoRepositoryIamPolicyResource: {
 	policy_data: string
 	repository:  string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleSpannerDatabaseResource: {
 	instance: string
 	name:     string
 	ddl?: [string, ...]
+	deletion_protection?: bool
+	id?:                  string
+	project?:             string
+	state?:               string
 	timeouts?: {
 		create?: string
 		delete?: string
+		update?: string
 	}
 }
 #GoogleSpannerDatabaseIamBindingResource: {
 	database: string
 	instance: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSpannerDatabaseIamMemberResource: {
 	database: string
 	instance: string
 	member:   string
 	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSpannerDatabaseIamPolicyResource: {
 	database:    string
 	instance:    string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleSpannerInstanceResource: {
 	config:       string
 	display_name: string
+	id?:          string
 	labels?: [_]: string
+	name?:      string
 	num_nodes?: number
+	project?:   string
+	state?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4504,20 +8714,44 @@ package google
 #GoogleSpannerInstanceIamBindingResource: {
 	instance: string
 	members: [string, ...]
-	role: string
+	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSpannerInstanceIamMemberResource: {
 	instance: string
 	member:   string
 	role:     string
+	etag?:    string
+	id?:      string
+	project?: string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleSpannerInstanceIamPolicyResource: {
 	instance:    string
 	policy_data: string
+	etag?:       string
+	id?:         string
+	project?:    string
 }
 #GoogleSqlDatabaseResource: {
-	instance: string
-	name:     string
+	instance:   string
+	name:       string
+	charset?:   string
+	collation?: string
+	id?:        string
+	project?:   string
+	self_link?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4525,7 +8759,32 @@ package google
 	}
 }
 #GoogleSqlDatabaseInstanceResource: {
-	database_version?: string
+	connection_name?:     string
+	database_version?:    string
+	deletion_protection?: bool
+	first_ip_address?:    string
+	id?:                  string
+	ip_address?: [{
+		ip_address:     string
+		time_to_retire: string
+		type:           string
+	}, ...]
+	master_instance_name?: string
+	name?:                 string
+	private_ip_address?:   string
+	project?:              string
+	public_ip_address?:    string
+	region?:               string
+	root_password?:        string
+	self_link?:            string
+	server_ca_cert?: [{
+		cert:             string
+		common_name:      string
+		create_time:      string
+		expiration_time:  string
+		sha1_fingerprint: string
+	}, ...]
+	service_account_email_address?: string
 	replica_configuration?: [{
 		ca_certificate?:            string
 		client_certificate?:        string
@@ -4539,17 +8798,30 @@ package google
 		username?:                  string
 		verify_server_certificate?: bool
 	}, ...]
+	restore_backup_context?: [{
+		backup_run_id: number
+		instance_id?:  string
+		project?:      string
+	}, ...]
 	settings?: [{
-		tier: string
+		tier:               string
+		activation_policy?: string
 		authorized_gae_applications?: [string, ...]
-		disk_autoresize?:  bool
-		pricing_plan?:     string
-		replication_type?: string
+		availability_type?:      string
+		crash_safe_replication?: bool
+		disk_autoresize?:        bool
+		disk_size?:              number
+		disk_type?:              string
+		pricing_plan?:           string
+		replication_type?:       string
 		user_labels?: [_]: string
+		version?: number
 		backup_configuration?: [{
-			binary_log_enabled?: bool
-			enabled?:            bool
-			location?:           string
+			binary_log_enabled?:             bool
+			enabled?:                        bool
+			location?:                       string
+			point_in_time_recovery_enabled?: bool
+			start_time?:                     string
 		}, ...]
 		database_flags?: [{
 			name:  string
@@ -4585,25 +8857,41 @@ package google
 	database_version: string
 	host:             string
 	name:             string
+	id?:              string
 	port?:            number
+	project?:         string
+	region?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleSqlSslCertResource: {
-	common_name: string
-	instance:    string
+	common_name:         string
+	instance:            string
+	cert?:               string
+	cert_serial_number?: string
+	create_time?:        string
+	expiration_time?:    string
+	id?:                 string
+	private_key?:        string
+	project?:            string
+	server_ca_cert?:     string
+	sha1_fingerprint?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #GoogleSqlUserResource: {
-	instance:  string
-	name:      string
-	host?:     string
-	password?: string
+	instance:         string
+	name:             string
+	deletion_policy?: string
+	host?:            string
+	id?:              string
+	password?:        string
+	project?:         string
+	type?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4612,12 +8900,18 @@ package google
 }
 #GoogleStorageBucketResource: {
 	name:                      string
+	bucket_policy_only?:       bool
 	default_event_based_hold?: bool
 	force_destroy?:            bool
+	id?:                       string
 	labels?: [_]: string
-	location?:       string
-	requester_pays?: bool
-	storage_class?:  string
+	location?:                    string
+	project?:                     string
+	requester_pays?:              bool
+	self_link?:                   string
+	storage_class?:               string
+	uniform_bucket_level_access?: bool
+	url?:                         string
 	cors?: [{
 		max_age_seconds?: number
 		method?: [string, ...]
@@ -4633,14 +8927,20 @@ package google
 			storage_class?: string
 		}, ...]
 		condition?: [{
-			age?:            number
-			created_before?: string
+			age?:                        number
+			created_before?:             string
+			custom_time_before?:         string
+			days_since_custom_time?:     number
+			days_since_noncurrent_time?: number
 			matches_storage_class?: [string, ...]
-			num_newer_versions?: number
+			noncurrent_time_before?: string
+			num_newer_versions?:     number
+			with_state?:             string
 		}, ...]
 	}, ...]
 	logging?: [{
-		log_bucket: string
+		log_bucket:         string
+		log_object_prefix?: string
 	}, ...]
 	retention_policy?: [{
 		retention_period: number
@@ -4655,9 +8955,12 @@ package google
 	}, ...]
 }
 #GoogleStorageBucketAccessControlResource: {
-	bucket: string
-	entity: string
-	role?:  string
+	bucket:  string
+	entity:  string
+	domain?: string
+	email?:  string
+	id?:     string
+	role?:   string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4667,21 +8970,39 @@ package google
 #GoogleStorageBucketAclResource: {
 	bucket:          string
 	default_acl?:    string
+	id?:             string
 	predefined_acl?: string
+	role_entity?: [string, ...]
 }
 #GoogleStorageBucketIamBindingResource: {
 	bucket: string
 	members: [string, ...]
-	role: string
+	role:  string
+	etag?: string
+	id?:   string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleStorageBucketIamMemberResource: {
 	bucket: string
 	member: string
 	role:   string
+	etag?:  string
+	id?:    string
+	condition?: [{
+		expression:   string
+		title:        string
+		description?: string
+	}, ...]
 }
 #GoogleStorageBucketIamPolicyResource: {
 	bucket:      string
 	policy_data: string
+	etag?:       string
+	id?:         string
 }
 #GoogleStorageBucketObjectResource: {
 	bucket:               string
@@ -4691,25 +9012,52 @@ package google
 	content_disposition?: string
 	content_encoding?:    string
 	content_language?:    string
+	content_type?:        string
+	crc32c?:              string
 	detect_md5hash?:      string
+	id?:                  string
+	md5hash?:             string
+	media_link?:          string
 	metadata?: [_]: string
-	source?: string
+	output_name?:   string
+	self_link?:     string
+	source?:        string
+	storage_class?: string
 }
 #GoogleStorageDefaultObjectAccessControlResource: {
-	bucket:  string
-	entity:  string
-	role:    string
-	object?: string
+	bucket:      string
+	entity:      string
+	role:        string
+	domain?:     string
+	email?:      string
+	entity_id?:  string
+	generation?: number
+	id?:         string
+	object?:     string
+	project_team?: [{
+		project_number: string
+		team:           string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 		update?: string
 	}
 }
-#GoogleStorageDefaultObjectAclResource: bucket: string
+#GoogleStorageDefaultObjectAclResource: {
+	bucket: string
+	id?:    string
+	role_entity?: [string, ...]
+}
 #GoogleStorageHmacKeyResource: {
 	service_account_email: string
+	access_id?:            string
+	id?:                   string
+	project?:              string
+	secret?:               string
 	state?:                string
+	time_created?:         string
+	updated?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4722,13 +9070,25 @@ package google
 	topic:          string
 	custom_attributes?: [_]: string
 	event_types?: [string, ...]
+	id?:                 string
+	notification_id?:    string
 	object_name_prefix?: string
+	self_link?:          string
 }
 #GoogleStorageObjectAccessControlResource: {
-	bucket: string
-	entity: string
-	object: string
-	role:   string
+	bucket:      string
+	entity:      string
+	object:      string
+	role:        string
+	domain?:     string
+	email?:      string
+	entity_id?:  string
+	generation?: number
+	id?:         string
+	project_team?: [{
+		project_number: string
+		team:           string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4738,11 +9098,19 @@ package google
 #GoogleStorageObjectAclResource: {
 	bucket:          string
 	object:          string
+	id?:             string
 	predefined_acl?: string
+	role_entity?: [string, ...]
 }
 #GoogleStorageTransferJobResource: {
-	description: string
-	status?:     string
+	description:             string
+	creation_time?:          string
+	deletion_time?:          string
+	id?:                     string
+	last_modification_time?: string
+	name?:                   string
+	project?:                string
+	status?:                 string
 	schedule?: [{
 		schedule_end_date?: [{
 			day:   number
@@ -4793,12 +9161,21 @@ package google
 }
 #GoogleTpuNodeResource: {
 	accelerator_type:   string
-	cidr_block:         string
 	name:               string
 	tensorflow_version: string
-	zone:               string
+	cidr_block?:        string
 	description?:       string
+	id?:                string
 	labels?: [_]: string
+	network?: string
+	network_endpoints?: [{
+		ip_address: string
+		port:       number
+	}, ...]
+	project?:                string
+	service_account?:        string
+	use_service_networking?: bool
+	zone?:                   string
 	scheduling_config?: [{
 		preemptible: bool
 	}, ...]
@@ -4812,9 +9189,13 @@ package google
 	ip_cidr_range:   string
 	name:            string
 	network:         string
-	region:          string
+	id?:             string
 	max_throughput?: number
 	min_throughput?: number
+	project?:        string
+	region?:         string
+	self_link?:      string
+	state?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -4822,9 +9203,16 @@ package google
 }
 #Resources: {
 	google_access_context_manager_access_level?: [_]:                   #GoogleAccessContextManagerAccessLevelResource
+	google_access_context_manager_access_level_condition?: [_]:         #GoogleAccessContextManagerAccessLevelConditionResource
+	google_access_context_manager_access_levels?: [_]:                  #GoogleAccessContextManagerAccessLevelsResource
 	google_access_context_manager_access_policy?: [_]:                  #GoogleAccessContextManagerAccessPolicyResource
+	google_access_context_manager_gcp_user_access_binding?: [_]:        #GoogleAccessContextManagerGcpUserAccessBindingResource
 	google_access_context_manager_service_perimeter?: [_]:              #GoogleAccessContextManagerServicePerimeterResource
 	google_access_context_manager_service_perimeter_resource?: [_]:     #GoogleAccessContextManagerServicePerimeterResourceResource
+	google_access_context_manager_service_perimeters?: [_]:             #GoogleAccessContextManagerServicePerimetersResource
+	google_active_directory_domain?: [_]:                               #GoogleActiveDirectoryDomainResource
+	google_active_directory_domain_trust?: [_]:                         #GoogleActiveDirectoryDomainTrustResource
+	google_apigee_organization?: [_]:                                   #GoogleApigeeOrganizationResource
 	google_app_engine_application?: [_]:                                #GoogleAppEngineApplicationResource
 	google_app_engine_application_url_dispatch_rules?: [_]:             #GoogleAppEngineApplicationUrlDispatchRulesResource
 	google_app_engine_domain_mapping?: [_]:                             #GoogleAppEngineDomainMappingResource
@@ -4835,8 +9223,16 @@ package google
 	google_bigquery_data_transfer_config?: [_]:                         #GoogleBigqueryDataTransferConfigResource
 	google_bigquery_dataset?: [_]:                                      #GoogleBigqueryDatasetResource
 	google_bigquery_dataset_access?: [_]:                               #GoogleBigqueryDatasetAccessResource
+	google_bigquery_dataset_iam_binding?: [_]:                          #GoogleBigqueryDatasetIamBindingResource
+	google_bigquery_dataset_iam_member?: [_]:                           #GoogleBigqueryDatasetIamMemberResource
+	google_bigquery_dataset_iam_policy?: [_]:                           #GoogleBigqueryDatasetIamPolicyResource
 	google_bigquery_job?: [_]:                                          #GoogleBigqueryJobResource
+	google_bigquery_reservation?: [_]:                                  #GoogleBigqueryReservationResource
+	google_bigquery_routine?: [_]:                                      #GoogleBigqueryRoutineResource
 	google_bigquery_table?: [_]:                                        #GoogleBigqueryTableResource
+	google_bigquery_table_iam_binding?: [_]:                            #GoogleBigqueryTableIamBindingResource
+	google_bigquery_table_iam_member?: [_]:                             #GoogleBigqueryTableIamMemberResource
+	google_bigquery_table_iam_policy?: [_]:                             #GoogleBigqueryTableIamPolicyResource
 	google_bigtable_app_profile?: [_]:                                  #GoogleBigtableAppProfileResource
 	google_bigtable_gc_policy?: [_]:                                    #GoogleBigtableGcPolicyResource
 	google_bigtable_instance?: [_]:                                     #GoogleBigtableInstanceResource
@@ -4844,14 +9240,24 @@ package google
 	google_bigtable_instance_iam_member?: [_]:                          #GoogleBigtableInstanceIamMemberResource
 	google_bigtable_instance_iam_policy?: [_]:                          #GoogleBigtableInstanceIamPolicyResource
 	google_bigtable_table?: [_]:                                        #GoogleBigtableTableResource
+	google_bigtable_table_iam_binding?: [_]:                            #GoogleBigtableTableIamBindingResource
+	google_bigtable_table_iam_member?: [_]:                             #GoogleBigtableTableIamMemberResource
+	google_bigtable_table_iam_policy?: [_]:                             #GoogleBigtableTableIamPolicyResource
 	google_billing_account_iam_binding?: [_]:                           #GoogleBillingAccountIamBindingResource
 	google_billing_account_iam_member?: [_]:                            #GoogleBillingAccountIamMemberResource
 	google_billing_account_iam_policy?: [_]:                            #GoogleBillingAccountIamPolicyResource
+	google_billing_budget?: [_]:                                        #GoogleBillingBudgetResource
+	google_billing_subaccount?: [_]:                                    #GoogleBillingSubaccountResource
 	google_binary_authorization_attestor?: [_]:                         #GoogleBinaryAuthorizationAttestorResource
 	google_binary_authorization_attestor_iam_binding?: [_]:             #GoogleBinaryAuthorizationAttestorIamBindingResource
 	google_binary_authorization_attestor_iam_member?: [_]:              #GoogleBinaryAuthorizationAttestorIamMemberResource
 	google_binary_authorization_attestor_iam_policy?: [_]:              #GoogleBinaryAuthorizationAttestorIamPolicyResource
 	google_binary_authorization_policy?: [_]:                           #GoogleBinaryAuthorizationPolicyResource
+	google_cloud_asset_folder_feed?: [_]:                               #GoogleCloudAssetFolderFeedResource
+	google_cloud_asset_organization_feed?: [_]:                         #GoogleCloudAssetOrganizationFeedResource
+	google_cloud_asset_project_feed?: [_]:                              #GoogleCloudAssetProjectFeedResource
+	google_cloud_identity_group?: [_]:                                  #GoogleCloudIdentityGroupResource
+	google_cloud_identity_group_membership?: [_]:                       #GoogleCloudIdentityGroupMembershipResource
 	google_cloud_run_domain_mapping?: [_]:                              #GoogleCloudRunDomainMappingResource
 	google_cloud_run_service?: [_]:                                     #GoogleCloudRunServiceResource
 	google_cloud_run_service_iam_binding?: [_]:                         #GoogleCloudRunServiceIamBindingResource
@@ -4864,6 +9270,7 @@ package google
 	google_cloudfunctions_function_iam_binding?: [_]:                   #GoogleCloudfunctionsFunctionIamBindingResource
 	google_cloudfunctions_function_iam_member?: [_]:                    #GoogleCloudfunctionsFunctionIamMemberResource
 	google_cloudfunctions_function_iam_policy?: [_]:                    #GoogleCloudfunctionsFunctionIamPolicyResource
+	google_cloudiot_device?: [_]:                                       #GoogleCloudiotDeviceResource
 	google_cloudiot_registry?: [_]:                                     #GoogleCloudiotRegistryResource
 	google_composer_environment?: [_]:                                  #GoogleComposerEnvironmentResource
 	google_compute_address?: [_]:                                       #GoogleComputeAddressResource
@@ -4874,17 +9281,25 @@ package google
 	google_compute_backend_service?: [_]:                               #GoogleComputeBackendServiceResource
 	google_compute_backend_service_signed_url_key?: [_]:                #GoogleComputeBackendServiceSignedUrlKeyResource
 	google_compute_disk?: [_]:                                          #GoogleComputeDiskResource
+	google_compute_disk_iam_binding?: [_]:                              #GoogleComputeDiskIamBindingResource
+	google_compute_disk_iam_member?: [_]:                               #GoogleComputeDiskIamMemberResource
+	google_compute_disk_iam_policy?: [_]:                               #GoogleComputeDiskIamPolicyResource
 	google_compute_disk_resource_policy_attachment?: [_]:               #GoogleComputeDiskResourcePolicyAttachmentResource
+	google_compute_external_vpn_gateway?: [_]:                          #GoogleComputeExternalVpnGatewayResource
 	google_compute_firewall?: [_]:                                      #GoogleComputeFirewallResource
 	google_compute_forwarding_rule?: [_]:                               #GoogleComputeForwardingRuleResource
 	google_compute_global_address?: [_]:                                #GoogleComputeGlobalAddressResource
 	google_compute_global_forwarding_rule?: [_]:                        #GoogleComputeGlobalForwardingRuleResource
 	google_compute_global_network_endpoint?: [_]:                       #GoogleComputeGlobalNetworkEndpointResource
 	google_compute_global_network_endpoint_group?: [_]:                 #GoogleComputeGlobalNetworkEndpointGroupResource
+	google_compute_ha_vpn_gateway?: [_]:                                #GoogleComputeHaVpnGatewayResource
 	google_compute_health_check?: [_]:                                  #GoogleComputeHealthCheckResource
 	google_compute_http_health_check?: [_]:                             #GoogleComputeHttpHealthCheckResource
 	google_compute_https_health_check?: [_]:                            #GoogleComputeHttpsHealthCheckResource
 	google_compute_image?: [_]:                                         #GoogleComputeImageResource
+	google_compute_image_iam_binding?: [_]:                             #GoogleComputeImageIamBindingResource
+	google_compute_image_iam_member?: [_]:                              #GoogleComputeImageIamMemberResource
+	google_compute_image_iam_policy?: [_]:                              #GoogleComputeImageIamPolicyResource
 	google_compute_instance?: [_]:                                      #GoogleComputeInstanceResource
 	google_compute_instance_from_template?: [_]:                        #GoogleComputeInstanceFromTemplateResource
 	google_compute_instance_group?: [_]:                                #GoogleComputeInstanceGroupResource
@@ -4895,6 +9310,7 @@ package google
 	google_compute_instance_iam_policy?: [_]:                           #GoogleComputeInstanceIamPolicyResource
 	google_compute_instance_template?: [_]:                             #GoogleComputeInstanceTemplateResource
 	google_compute_interconnect_attachment?: [_]:                       #GoogleComputeInterconnectAttachmentResource
+	google_compute_managed_ssl_certificate?: [_]:                       #GoogleComputeManagedSslCertificateResource
 	google_compute_network?: [_]:                                       #GoogleComputeNetworkResource
 	google_compute_network_endpoint?: [_]:                              #GoogleComputeNetworkEndpointResource
 	google_compute_network_endpoint_group?: [_]:                        #GoogleComputeNetworkEndpointGroupResource
@@ -4902,15 +9318,22 @@ package google
 	google_compute_network_peering_routes_config?: [_]:                 #GoogleComputeNetworkPeeringRoutesConfigResource
 	google_compute_node_group?: [_]:                                    #GoogleComputeNodeGroupResource
 	google_compute_node_template?: [_]:                                 #GoogleComputeNodeTemplateResource
+	google_compute_packet_mirroring?: [_]:                              #GoogleComputePacketMirroringResource
+	google_compute_per_instance_config?: [_]:                           #GoogleComputePerInstanceConfigResource
 	google_compute_project_default_network_tier?: [_]:                  #GoogleComputeProjectDefaultNetworkTierResource
 	google_compute_project_metadata?: [_]:                              #GoogleComputeProjectMetadataResource
 	google_compute_project_metadata_item?: [_]:                         #GoogleComputeProjectMetadataItemResource
 	google_compute_region_autoscaler?: [_]:                             #GoogleComputeRegionAutoscalerResource
 	google_compute_region_backend_service?: [_]:                        #GoogleComputeRegionBackendServiceResource
 	google_compute_region_disk?: [_]:                                   #GoogleComputeRegionDiskResource
+	google_compute_region_disk_iam_binding?: [_]:                       #GoogleComputeRegionDiskIamBindingResource
+	google_compute_region_disk_iam_member?: [_]:                        #GoogleComputeRegionDiskIamMemberResource
+	google_compute_region_disk_iam_policy?: [_]:                        #GoogleComputeRegionDiskIamPolicyResource
 	google_compute_region_disk_resource_policy_attachment?: [_]:        #GoogleComputeRegionDiskResourcePolicyAttachmentResource
 	google_compute_region_health_check?: [_]:                           #GoogleComputeRegionHealthCheckResource
 	google_compute_region_instance_group_manager?: [_]:                 #GoogleComputeRegionInstanceGroupManagerResource
+	google_compute_region_network_endpoint_group?: [_]:                 #GoogleComputeRegionNetworkEndpointGroupResource
+	google_compute_region_per_instance_config?: [_]:                    #GoogleComputeRegionPerInstanceConfigResource
 	google_compute_region_ssl_certificate?: [_]:                        #GoogleComputeRegionSslCertificateResource
 	google_compute_region_target_http_proxy?: [_]:                      #GoogleComputeRegionTargetHttpProxyResource
 	google_compute_region_target_https_proxy?: [_]:                     #GoogleComputeRegionTargetHttpsProxyResource
@@ -4932,6 +9355,7 @@ package google
 	google_compute_subnetwork_iam_binding?: [_]:                        #GoogleComputeSubnetworkIamBindingResource
 	google_compute_subnetwork_iam_member?: [_]:                         #GoogleComputeSubnetworkIamMemberResource
 	google_compute_subnetwork_iam_policy?: [_]:                         #GoogleComputeSubnetworkIamPolicyResource
+	google_compute_target_grpc_proxy?: [_]:                             #GoogleComputeTargetGrpcProxyResource
 	google_compute_target_http_proxy?: [_]:                             #GoogleComputeTargetHttpProxyResource
 	google_compute_target_https_proxy?: [_]:                            #GoogleComputeTargetHttpsProxyResource
 	google_compute_target_instance?: [_]:                               #GoogleComputeTargetInstanceResource
@@ -4942,9 +9366,21 @@ package google
 	google_compute_vpn_gateway?: [_]:                                   #GoogleComputeVpnGatewayResource
 	google_compute_vpn_tunnel?: [_]:                                    #GoogleComputeVpnTunnelResource
 	google_container_analysis_note?: [_]:                               #GoogleContainerAnalysisNoteResource
+	google_container_analysis_occurrence?: [_]:                         #GoogleContainerAnalysisOccurrenceResource
 	google_container_cluster?: [_]:                                     #GoogleContainerClusterResource
 	google_container_node_pool?: [_]:                                   #GoogleContainerNodePoolResource
 	google_container_registry?: [_]:                                    #GoogleContainerRegistryResource
+	google_data_catalog_entry?: [_]:                                    #GoogleDataCatalogEntryResource
+	google_data_catalog_entry_group?: [_]:                              #GoogleDataCatalogEntryGroupResource
+	google_data_catalog_entry_group_iam_binding?: [_]:                  #GoogleDataCatalogEntryGroupIamBindingResource
+	google_data_catalog_entry_group_iam_member?: [_]:                   #GoogleDataCatalogEntryGroupIamMemberResource
+	google_data_catalog_entry_group_iam_policy?: [_]:                   #GoogleDataCatalogEntryGroupIamPolicyResource
+	google_data_catalog_tag?: [_]:                                      #GoogleDataCatalogTagResource
+	google_data_catalog_tag_template?: [_]:                             #GoogleDataCatalogTagTemplateResource
+	google_data_loss_prevention_deidentify_template?: [_]:              #GoogleDataLossPreventionDeidentifyTemplateResource
+	google_data_loss_prevention_inspect_template?: [_]:                 #GoogleDataLossPreventionInspectTemplateResource
+	google_data_loss_prevention_job_trigger?: [_]:                      #GoogleDataLossPreventionJobTriggerResource
+	google_data_loss_prevention_stored_info_type?: [_]:                 #GoogleDataLossPreventionStoredInfoTypeResource
 	google_dataflow_job?: [_]:                                          #GoogleDataflowJobResource
 	google_dataproc_autoscaling_policy?: [_]:                           #GoogleDataprocAutoscalingPolicyResource
 	google_dataproc_cluster?: [_]:                                      #GoogleDataprocClusterResource
@@ -4961,18 +9397,27 @@ package google
 	google_dialogflow_entity_type?: [_]:                                #GoogleDialogflowEntityTypeResource
 	google_dialogflow_intent?: [_]:                                     #GoogleDialogflowIntentResource
 	google_dns_managed_zone?: [_]:                                      #GoogleDnsManagedZoneResource
+	google_dns_policy?: [_]:                                            #GoogleDnsPolicyResource
 	google_dns_record_set?: [_]:                                        #GoogleDnsRecordSetResource
 	google_endpoints_service?: [_]:                                     #GoogleEndpointsServiceResource
 	google_endpoints_service_iam_binding?: [_]:                         #GoogleEndpointsServiceIamBindingResource
 	google_endpoints_service_iam_member?: [_]:                          #GoogleEndpointsServiceIamMemberResource
 	google_endpoints_service_iam_policy?: [_]:                          #GoogleEndpointsServiceIamPolicyResource
 	google_filestore_instance?: [_]:                                    #GoogleFilestoreInstanceResource
+	google_firestore_document?: [_]:                                    #GoogleFirestoreDocumentResource
 	google_firestore_index?: [_]:                                       #GoogleFirestoreIndexResource
 	google_folder?: [_]:                                                #GoogleFolderResource
+	google_folder_access_approval_settings?: [_]:                       #GoogleFolderAccessApprovalSettingsResource
+	google_folder_iam_audit_config?: [_]:                               #GoogleFolderIamAuditConfigResource
 	google_folder_iam_binding?: [_]:                                    #GoogleFolderIamBindingResource
 	google_folder_iam_member?: [_]:                                     #GoogleFolderIamMemberResource
 	google_folder_iam_policy?: [_]:                                     #GoogleFolderIamPolicyResource
 	google_folder_organization_policy?: [_]:                            #GoogleFolderOrganizationPolicyResource
+	google_game_services_game_server_cluster?: [_]:                     #GoogleGameServicesGameServerClusterResource
+	google_game_services_game_server_config?: [_]:                      #GoogleGameServicesGameServerConfigResource
+	google_game_services_game_server_deployment?: [_]:                  #GoogleGameServicesGameServerDeploymentResource
+	google_game_services_game_server_deployment_rollout?: [_]:          #GoogleGameServicesGameServerDeploymentRolloutResource
+	google_game_services_realm?: [_]:                                   #GoogleGameServicesRealmResource
 	google_healthcare_dataset?: [_]:                                    #GoogleHealthcareDatasetResource
 	google_healthcare_dataset_iam_binding?: [_]:                        #GoogleHealthcareDatasetIamBindingResource
 	google_healthcare_dataset_iam_member?: [_]:                         #GoogleHealthcareDatasetIamMemberResource
@@ -4997,6 +9442,9 @@ package google
 	google_iap_app_engine_version_iam_policy?: [_]:                     #GoogleIapAppEngineVersionIamPolicyResource
 	google_iap_brand?: [_]:                                             #GoogleIapBrandResource
 	google_iap_client?: [_]:                                            #GoogleIapClientResource
+	google_iap_tunnel_iam_binding?: [_]:                                #GoogleIapTunnelIamBindingResource
+	google_iap_tunnel_iam_member?: [_]:                                 #GoogleIapTunnelIamMemberResource
+	google_iap_tunnel_iam_policy?: [_]:                                 #GoogleIapTunnelIamPolicyResource
 	google_iap_tunnel_instance_iam_binding?: [_]:                       #GoogleIapTunnelInstanceIamBindingResource
 	google_iap_tunnel_instance_iam_member?: [_]:                        #GoogleIapTunnelInstanceIamMemberResource
 	google_iap_tunnel_instance_iam_policy?: [_]:                        #GoogleIapTunnelInstanceIamPolicyResource
@@ -5027,6 +9475,7 @@ package google
 	google_kms_key_ring_iam_binding?: [_]:                              #GoogleKmsKeyRingIamBindingResource
 	google_kms_key_ring_iam_member?: [_]:                               #GoogleKmsKeyRingIamMemberResource
 	google_kms_key_ring_iam_policy?: [_]:                               #GoogleKmsKeyRingIamPolicyResource
+	google_kms_key_ring_import_job?: [_]:                               #GoogleKmsKeyRingImportJobResource
 	google_kms_secret_ciphertext?: [_]:                                 #GoogleKmsSecretCiphertextResource
 	google_logging_billing_account_bucket_config?: [_]:                 #GoogleLoggingBillingAccountBucketConfigResource
 	google_logging_billing_account_exclusion?: [_]:                     #GoogleLoggingBillingAccountExclusionResource
@@ -5044,18 +9493,31 @@ package google
 	google_ml_engine_model?: [_]:                                       #GoogleMlEngineModelResource
 	google_monitoring_alert_policy?: [_]:                               #GoogleMonitoringAlertPolicyResource
 	google_monitoring_custom_service?: [_]:                             #GoogleMonitoringCustomServiceResource
+	google_monitoring_dashboard?: [_]:                                  #GoogleMonitoringDashboardResource
 	google_monitoring_group?: [_]:                                      #GoogleMonitoringGroupResource
+	google_monitoring_metric_descriptor?: [_]:                          #GoogleMonitoringMetricDescriptorResource
 	google_monitoring_notification_channel?: [_]:                       #GoogleMonitoringNotificationChannelResource
 	google_monitoring_slo?: [_]:                                        #GoogleMonitoringSloResource
 	google_monitoring_uptime_check_config?: [_]:                        #GoogleMonitoringUptimeCheckConfigResource
+	google_network_management_connectivity_test?: [_]:                  #GoogleNetworkManagementConnectivityTestResource
+	google_notebooks_environment?: [_]:                                 #GoogleNotebooksEnvironmentResource
+	google_notebooks_instance?: [_]:                                    #GoogleNotebooksInstanceResource
+	google_notebooks_instance_iam_binding?: [_]:                        #GoogleNotebooksInstanceIamBindingResource
+	google_notebooks_instance_iam_member?: [_]:                         #GoogleNotebooksInstanceIamMemberResource
+	google_notebooks_instance_iam_policy?: [_]:                         #GoogleNotebooksInstanceIamPolicyResource
+	google_notebooks_location?: [_]:                                    #GoogleNotebooksLocationResource
+	google_organization_access_approval_settings?: [_]:                 #GoogleOrganizationAccessApprovalSettingsResource
 	google_organization_iam_audit_config?: [_]:                         #GoogleOrganizationIamAuditConfigResource
 	google_organization_iam_binding?: [_]:                              #GoogleOrganizationIamBindingResource
 	google_organization_iam_custom_role?: [_]:                          #GoogleOrganizationIamCustomRoleResource
 	google_organization_iam_member?: [_]:                               #GoogleOrganizationIamMemberResource
 	google_organization_iam_policy?: [_]:                               #GoogleOrganizationIamPolicyResource
 	google_organization_policy?: [_]:                                   #GoogleOrganizationPolicyResource
+	google_os_config_patch_deployment?: [_]:                            #GoogleOsConfigPatchDeploymentResource
 	google_os_login_ssh_public_key?: [_]:                               #GoogleOsLoginSshPublicKeyResource
 	google_project?: [_]:                                               #GoogleProjectResource
+	google_project_access_approval_settings?: [_]:                      #GoogleProjectAccessApprovalSettingsResource
+	google_project_default_service_accounts?: [_]:                      #GoogleProjectDefaultServiceAccountsResource
 	google_project_iam_audit_config?: [_]:                              #GoogleProjectIamAuditConfigResource
 	google_project_iam_binding?: [_]:                                   #GoogleProjectIamBindingResource
 	google_project_iam_custom_role?: [_]:                               #GoogleProjectIamCustomRoleResource
@@ -5064,6 +9526,8 @@ package google
 	google_project_organization_policy?: [_]:                           #GoogleProjectOrganizationPolicyResource
 	google_project_service?: [_]:                                       #GoogleProjectServiceResource
 	google_project_usage_export_bucket?: [_]:                           #GoogleProjectUsageExportBucketResource
+	google_pubsub_lite_subscription?: [_]:                              #GooglePubsubLiteSubscriptionResource
+	google_pubsub_lite_topic?: [_]:                                     #GooglePubsubLiteTopicResource
 	google_pubsub_subscription?: [_]:                                   #GooglePubsubSubscriptionResource
 	google_pubsub_subscription_iam_binding?: [_]:                       #GooglePubsubSubscriptionIamBindingResource
 	google_pubsub_subscription_iam_member?: [_]:                        #GooglePubsubSubscriptionIamMemberResource
@@ -5080,6 +9544,11 @@ package google
 	google_runtimeconfig_config_iam_policy?: [_]:                       #GoogleRuntimeconfigConfigIamPolicyResource
 	google_runtimeconfig_variable?: [_]:                                #GoogleRuntimeconfigVariableResource
 	google_scc_source?: [_]:                                            #GoogleSccSourceResource
+	google_secret_manager_secret?: [_]:                                 #GoogleSecretManagerSecretResource
+	google_secret_manager_secret_iam_binding?: [_]:                     #GoogleSecretManagerSecretIamBindingResource
+	google_secret_manager_secret_iam_member?: [_]:                      #GoogleSecretManagerSecretIamMemberResource
+	google_secret_manager_secret_iam_policy?: [_]:                      #GoogleSecretManagerSecretIamPolicyResource
+	google_secret_manager_secret_version?: [_]:                         #GoogleSecretManagerSecretVersionResource
 	google_service_account?: [_]:                                       #GoogleServiceAccountResource
 	google_service_account_iam_binding?: [_]:                           #GoogleServiceAccountIamBindingResource
 	google_service_account_iam_member?: [_]:                            #GoogleServiceAccountIamMemberResource

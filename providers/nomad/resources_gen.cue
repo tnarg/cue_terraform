@@ -5,29 +5,72 @@ package nomad
 	name:         string
 	rules_hcl:    string
 	description?: string
+	id?:          string
 }
 #NomadAclTokenResource: {
-	type:    string
-	global?: bool
-	name?:   string
+	type:         string
+	accessor_id?: string
+	create_time?: string
+	global?:      bool
+	id?:          string
+	name?:        string
 	policies?: [string, ...]
+	secret_id?: string
 }
 #NomadJobResource: {
-	jobspec:                  string
+	jobspec: string
+	allocation_ids?: [string, ...]
+	datacenters?: [string, ...]
+	deployment_id?:           string
+	deployment_status?:       string
 	deregister_on_destroy?:   bool
 	deregister_on_id_change?: bool
 	detach?:                  bool
+	id?:                      string
 	json?:                    bool
+	modify_index?:            string
+	name?:                    string
+	namespace?:               string
 	policy_override?:         bool
+	purge_on_destroy?:        bool
+	region?:                  string
+	task_groups?: [{
+		count: number
+		meta: [_]: string
+		name: string
+		task: [{
+			driver: string
+			meta: [_]: string
+			name: string
+			volume_mounts: [{
+				destination: string
+				read_only:   bool
+				volume:      string
+			}, ...]
+		}, ...]
+		volumes: [{
+			name:      string
+			read_only: bool
+			source:    string
+			type:      string
+		}, ...]
+	}, ...]
+	type?: string
+	hcl2?: [{
+		allow_fs?: bool
+		enabled?:  bool
+	}, ...]
 }
 #NomadNamespaceResource: {
 	name:         string
 	description?: string
+	id?:          string
 	quota?:       string
 }
 #NomadQuotaSpecificationResource: {
 	name:         string
 	description?: string
+	id?:          string
 	limits?: [{
 		region: string
 		region_limit?: [{
@@ -36,12 +79,45 @@ package nomad
 		}, ...]
 	}, ...]
 }
+#NomadSchedulerConfigResource: {
+	id?: string
+	preemption_config?: [_]: bool
+	scheduler_algorithm?: string
+}
 #NomadSentinelPolicyResource: {
 	enforcement_level: string
 	name:              string
 	policy:            string
 	scope:             string
 	description?:      string
+	id?:               string
+}
+#NomadVolumeResource: {
+	access_mode:     string
+	attachment_mode: string
+	external_id:     string
+	name:            string
+	plugin_id:       string
+	volume_id:       string
+	context?: [_]: string
+	controller_required?:   bool
+	controllers_expected?:  number
+	controllers_healthy?:   number
+	deregister_on_destroy?: bool
+	id?:                    string
+	namespace?:             string
+	nodes_expected?:        number
+	nodes_healthy?:         number
+	parameters?: [_]: string
+	plugin_provider?:         string
+	plugin_provider_version?: string
+	schedulable?:             bool
+	secrets?: [_]: string
+	type?: string
+	mount_options?: [{
+		fs_type?: string
+		mount_flags?: [string, ...]
+	}, ...]
 }
 #Resources: {
 	nomad_acl_policy?: [_]:          #NomadAclPolicyResource
@@ -49,5 +125,7 @@ package nomad
 	nomad_job?: [_]:                 #NomadJobResource
 	nomad_namespace?: [_]:           #NomadNamespaceResource
 	nomad_quota_specification?: [_]: #NomadQuotaSpecificationResource
+	nomad_scheduler_config?: [_]:    #NomadSchedulerConfigResource
 	nomad_sentinel_policy?: [_]:     #NomadSentinelPolicyResource
+	nomad_volume?: [_]:              #NomadVolumeResource
 }

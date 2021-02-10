@@ -6,6 +6,7 @@ package bitbucket
 	owner:      string
 	pattern:    string
 	repository: string
+	id?:        string
 	users?: [string, ...]
 	value?: number
 	groups?: [{
@@ -17,6 +18,7 @@ package bitbucket
 	owner:      string
 	repository: string
 	reviewers: [string, ...]
+	id?: string
 }
 #BitbucketHookResource: {
 	description: string
@@ -25,34 +27,43 @@ package bitbucket
 	repository:              string
 	url:                     string
 	active?:                 bool
+	id?:                     string
 	skip_cert_verification?: bool
+	uuid?:                   string
 }
 #BitbucketProjectResource: {
 	key:          string
 	name:         string
 	owner:        string
 	description?: string
+	id?:          string
 	is_private?:  bool
 }
 #BitbucketRepositoryResource: {
 	name:               string
 	owner:              string
+	clone_https?:       string
+	clone_ssh?:         string
 	description?:       string
 	fork_policy?:       string
 	has_issues?:        bool
 	has_wiki?:          bool
+	id?:                string
 	is_private?:        bool
 	language?:          string
 	pipelines_enabled?: bool
 	project_key?:       string
 	scm?:               string
+	slug?:              string
 	website?:           string
 }
 #BitbucketRepositoryVariableResource: {
 	key:        string
 	repository: string
 	value:      string
+	id?:        string
 	secured?:   bool
+	uuid?:      string
 }
 #Resources: {
 	bitbucket_branch_restriction?: [_]:  #BitbucketBranchRestrictionResource

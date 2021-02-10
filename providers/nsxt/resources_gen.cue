@@ -4,7 +4,11 @@ package nsxt
 #NsxtAlgorithmTypeNsServiceResource: {
 	algorithm:        string
 	destination_port: string
+	default_service?: bool
 	description?:     string
+	display_name?:    string
+	id?:              string
+	revision?:        number
 	source_ports?: [string, ...]
 	tag?: [{
 		scope?: string
@@ -13,7 +17,10 @@ package nsxt
 }
 #NsxtDhcpRelayProfileResource: {
 	server_addresses: [string, ...]
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -22,6 +29,9 @@ package nsxt
 #NsxtDhcpRelayServiceResource: {
 	dhcp_relay_profile_id: string
 	description?:          string
+	display_name?:         string
+	id?:                   string
+	revision?:             number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -30,9 +40,12 @@ package nsxt
 #NsxtDhcpServerIpPoolResource: {
 	logical_dhcp_server_id: string
 	description?:           string
+	display_name?:          string
 	error_threshold?:       number
 	gateway_ip?:            string
+	id?:                    string
 	lease_time?:            number
+	revision?:              number
 	warning_threshold?:     number
 	dhcp_generic_option?: [{
 		code: number
@@ -54,15 +67,22 @@ package nsxt
 #NsxtDhcpServerProfileResource: {
 	edge_cluster_id: string
 	description?:    string
+	display_name?:   string
 	edge_cluster_member_indexes?: [number, ...]
+	id?:       string
+	revision?: number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtEtherTypeNsServiceResource: {
-	ether_type:   number
-	description?: string
+	ether_type:       number
+	default_service?: bool
+	description?:     string
+	display_name?:    string
+	id?:              string
+	revision?:        number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -72,10 +92,16 @@ package nsxt
 	section_type:   string
 	stateful:       bool
 	description?:   string
+	display_name?:  string
+	id?:            string
 	insert_before?: string
+	is_default?:    bool
+	revision?:      number
 	applied_to?: [{
-		target_id?:   string
-		target_type?: string
+		is_valid?:            bool
+		target_display_name?: string
+		target_id?:           string
+		target_type?:         string
 	}, ...]
 	rule?: [{
 		action:                 string
@@ -84,26 +110,36 @@ package nsxt
 		direction?:             string
 		disabled?:              bool
 		display_name?:          string
+		id?:                    string
 		ip_protocol?:           string
 		logged?:                bool
 		notes?:                 string
+		revision?:              number
 		rule_tag?:              string
 		sources_excluded?:      bool
 		applied_to?: [{
-			target_id?:   string
-			target_type?: string
+			is_valid?:            bool
+			target_display_name?: string
+			target_id?:           string
+			target_type?:         string
 		}, ...]
 		destination?: [{
-			target_id?:   string
-			target_type?: string
+			is_valid?:            bool
+			target_display_name?: string
+			target_id?:           string
+			target_type?:         string
 		}, ...]
 		service?: [{
-			target_id?:   string
-			target_type?: string
+			is_valid?:            bool
+			target_display_name?: string
+			target_id?:           string
+			target_type?:         string
 		}, ...]
 		source?: [{
-			target_id?:   string
-			target_type?: string
+			is_valid?:            bool
+			target_display_name?: string
+			target_id?:           string
+			target_type?:         string
 		}, ...]
 	}, ...]
 	tag?: [{
@@ -112,34 +148,53 @@ package nsxt
 	}, ...]
 }
 #NsxtIcmpTypeNsServiceResource: {
-	protocol:     string
-	description?: string
-	icmp_code?:   number
-	icmp_type?:   number
+	protocol:         string
+	default_service?: bool
+	description?:     string
+	display_name?:    string
+	icmp_code?:       number
+	icmp_type?:       number
+	id?:              string
+	revision?:        number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtIgmpTypeNsServiceResource: {
-	description?: string
+	default_service?: bool
+	description?:     string
+	display_name?:    string
+	id?:              string
+	revision?:        number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtIpBlockResource: {
-	cidr:         string
-	description?: string
+	cidr:          string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtIpBlockSubnetResource: {
-	block_id:     string
-	size:         number
-	description?: string
+	block_id: string
+	size:     number
+	allocation_ranges?: [{
+		end:   string
+		start: string
+	}, ...]
+	cidr?:         string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -150,6 +205,9 @@ package nsxt
 	arp_snooping_enabled?:  bool
 	description?:           string
 	dhcp_snooping_enabled?: bool
+	display_name?:          string
+	id?:                    string
+	revision?:              number
 	vm_tools_enabled?:      bool
 	tag?: [{
 		scope?: string
@@ -157,7 +215,10 @@ package nsxt
 	}, ...]
 }
 #NsxtIpPoolResource: {
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	subnet?: [{
 		allocation_ranges: [string, ...]
 		cidr: string
@@ -170,27 +231,42 @@ package nsxt
 		tag?:   string
 	}, ...]
 }
-#NsxtIpPoolAllocationIpAddressResource: ip_pool_id: string
+#NsxtIpPoolAllocationIpAddressResource: {
+	ip_pool_id:     string
+	allocation_id?: string
+	id?:            string
+}
 #NsxtIpProtocolNsServiceResource: {
-	protocol:     number
-	description?: string
+	protocol:         number
+	default_service?: bool
+	description?:     string
+	display_name?:    string
+	id?:              string
+	revision?:        number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtIpSetResource: {
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
 	ip_addresses?: [string, ...]
+	revision?: number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtL4PortSetNsServiceResource: {
-	protocol:     string
-	description?: string
+	protocol:         string
+	default_service?: bool
+	description?:     string
 	destination_ports?: [string, ...]
+	display_name?: string
+	id?:           string
+	revision?:     number
 	source_ports?: [string, ...]
 	tag?: [{
 		scope?: string
@@ -198,8 +274,14 @@ package nsxt
 	}, ...]
 }
 #NsxtLbClientSslProfileResource: {
+	ciphers?: [string, ...]
 	description?:           string
+	display_name?:          string
+	id?:                    string
+	is_secure?:             bool
 	prefer_server_ciphers?: bool
+	protocols?: [string, ...]
+	revision?:              number
 	session_cache_enabled?: bool
 	session_cache_timeout?: number
 	tag?: [{
@@ -213,11 +295,16 @@ package nsxt
 	cookie_garble?:      bool
 	cookie_mode?:        string
 	description?:        string
+	display_name?:       string
+	id?:                 string
 	persistence_shared?: bool
+	revision?:           number
 	insert_mode_params?: [{
 		cookie_domain?:      string
 		cookie_expiry_type?: string
 		cookie_path?:        string
+		max_idle_time?:      number
+		max_life_time?:      number
 	}, ...]
 	tag?: [{
 		scope?: string
@@ -227,8 +314,11 @@ package nsxt
 #NsxtLbFastTcpApplicationProfileResource: {
 	close_timeout?:     number
 	description?:       string
+	display_name?:      string
 	ha_flow_mirroring?: bool
+	id?:                string
 	idle_timeout?:      number
+	revision?:          number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -236,8 +326,11 @@ package nsxt
 }
 #NsxtLbFastUdpApplicationProfileResource: {
 	description?:       string
+	display_name?:      string
 	ha_flow_mirroring?: bool
+	id?:                string
 	idle_timeout?:      number
+	revision?:          number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -245,13 +338,16 @@ package nsxt
 }
 #NsxtLbHttpApplicationProfileResource: {
 	description?:            string
+	display_name?:           string
 	http_redirect_to?:       string
 	http_redirect_to_https?: bool
+	id?:                     string
 	idle_timeout?:           number
 	ntlm?:                   bool
 	request_body_size?:      number
 	request_header_size?:    number
 	response_timeout?:       number
+	revision?:               number
 	x_forwarded_for?:        string
 	tag?: [{
 		scope?: string
@@ -260,7 +356,10 @@ package nsxt
 }
 #NsxtLbHttpForwardingRuleResource: {
 	description?:    string
+	display_name?:   string
+	id?:             string
 	match_strategy?: string
+	revision?:       number
 	body_condition?: [{
 		match_type:      string
 		value:           string
@@ -321,7 +420,9 @@ package nsxt
 }
 #NsxtLbHttpMonitorResource: {
 	description?:     string
+	display_name?:    string
 	fall_count?:      number
+	id?:              string
 	interval?:        number
 	monitor_port?:    string
 	request_body?:    string
@@ -329,8 +430,10 @@ package nsxt
 	request_url?:     string
 	request_version?: string
 	response_body?:   string
-	rise_count?:      number
-	timeout?:         number
+	response_status_codes?: [number, ...]
+	revision?:   number
+	rise_count?: number
+	timeout?:    number
 	request_header?: [{
 		name:  string
 		value: string
@@ -342,7 +445,10 @@ package nsxt
 }
 #NsxtLbHttpRequestRewriteRuleResource: {
 	description?:    string
+	display_name?:   string
+	id?:             string
 	match_strategy?: string
+	revision?:       number
 	body_condition?: [{
 		match_type:      string
 		value:           string
@@ -406,7 +512,10 @@ package nsxt
 }
 #NsxtLbHttpResponseRewriteRuleResource: {
 	description?:    string
+	display_name?:   string
+	id?:             string
 	match_strategy?: string
+	revision?:       number
 	cookie_condition?: [{
 		match_type:      string
 		name:            string
@@ -472,11 +581,14 @@ package nsxt
 	access_log_enabled?:         bool
 	default_pool_member_port?:   string
 	description?:                string
+	display_name?:               string
 	enabled?:                    bool
+	id?:                         string
 	max_concurrent_connections?: number
 	max_new_connection_rate?:    number
 	persistence_profile_id?:     string
 	pool_id?:                    string
+	revision?:                   number
 	rule_ids?: [string, ...]
 	sorry_pool_id?: string
 	client_ssl?: [{
@@ -503,18 +615,25 @@ package nsxt
 }
 #NsxtLbHttpsMonitorResource: {
 	certificate_chain_depth?: number
-	client_certificate_id?:   string
-	description?:             string
-	fall_count?:              number
-	interval?:                number
-	monitor_port?:            string
-	request_body?:            string
-	request_method?:          string
-	request_url?:             string
-	request_version?:         string
-	response_body?:           string
-	rise_count?:              number
-	server_auth?:             string
+	ciphers?: [string, ...]
+	client_certificate_id?: string
+	description?:           string
+	display_name?:          string
+	fall_count?:            number
+	id?:                    string
+	interval?:              number
+	is_secure?:             bool
+	monitor_port?:          string
+	protocols?: [string, ...]
+	request_body?:    string
+	request_method?:  string
+	request_url?:     string
+	request_version?: string
+	response_body?:   string
+	response_status_codes?: [number, ...]
+	revision?:    number
+	rise_count?:  number
+	server_auth?: string
 	server_auth_ca_ids?: [string, ...]
 	server_auth_crl_ids?: [string, ...]
 	timeout?: number
@@ -530,9 +649,12 @@ package nsxt
 #NsxtLbIcmpMonitorResource: {
 	data_length?:  number
 	description?:  string
+	display_name?: string
 	fall_count?:   number
+	id?:           string
 	interval?:     number
 	monitor_port?: string
+	revision?:     number
 	rise_count?:   number
 	timeout?:      number
 	tag?: [{
@@ -541,9 +663,12 @@ package nsxt
 	}, ...]
 }
 #NsxtLbPassiveMonitorResource: {
-	description?: string
-	max_fails?:   number
-	timeout?:     number
+	description?:  string
+	display_name?: string
+	id?:           string
+	max_fails?:    number
+	revision?:     number
+	timeout?:      number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -553,14 +678,18 @@ package nsxt
 	active_monitor_id?:        string
 	algorithm?:                string
 	description?:              string
+	display_name?:             string
+	id?:                       string
 	min_active_members?:       number
 	passive_monitor_id?:       string
+	revision?:                 number
 	tcp_multiplexing_enabled?: bool
 	tcp_multiplexing_number?:  number
 	member?: [{
 		ip_address:                  string
 		admin_state?:                string
 		backup_member?:              bool
+		display_name?:               string
 		max_concurrent_connections?: number
 		port?:                       string
 		weight?:                     number
@@ -571,8 +700,10 @@ package nsxt
 		max_ip_list_size?:   number
 		port?:               number
 		grouping_object?: [{
-			target_id?:   string
-			target_type?: string
+			is_valid?:            bool
+			target_display_name?: string
+			target_id?:           string
+			target_type?:         string
 		}, ...]
 	}, ...]
 	snat_translation?: [{
@@ -585,7 +716,13 @@ package nsxt
 	}, ...]
 }
 #NsxtLbServerSslProfileResource: {
-	description?:           string
+	ciphers?: [string, ...]
+	description?:  string
+	display_name?: string
+	id?:           string
+	is_secure?:    bool
+	protocols?: [string, ...]
+	revision?:              number
 	session_cache_enabled?: bool
 	tag?: [{
 		scope?: string
@@ -595,8 +732,11 @@ package nsxt
 #NsxtLbServiceResource: {
 	logical_router_id: string
 	description?:      string
+	display_name?:     string
 	enabled?:          bool
 	error_log_level?:  string
+	id?:               string
+	revision?:         number
 	size?:             string
 	virtual_server_ids?: [string, ...]
 	tag?: [{
@@ -606,9 +746,12 @@ package nsxt
 }
 #NsxtLbSourceIpPersistenceProfileResource: {
 	description?:              string
+	display_name?:             string
 	ha_persistence_mirroring?: bool
+	id?:                       string
 	persistence_shared?:       bool
 	purge_when_full?:          bool
+	revision?:                 number
 	timeout?:                  number
 	tag?: [{
 		scope?: string
@@ -617,10 +760,13 @@ package nsxt
 }
 #NsxtLbTcpMonitorResource: {
 	description?:  string
+	display_name?: string
 	fall_count?:   number
+	id?:           string
 	interval?:     number
 	monitor_port?: string
 	receive?:      string
+	revision?:     number
 	rise_count?:   number
 	send?:         string
 	timeout?:      number
@@ -636,11 +782,14 @@ package nsxt
 	access_log_enabled?: bool
 	default_pool_member_ports?: [string, ...]
 	description?:                string
+	display_name?:               string
 	enabled?:                    bool
+	id?:                         string
 	max_concurrent_connections?: number
 	max_new_connection_rate?:    number
 	persistence_profile_id?:     string
 	pool_id?:                    string
+	revision?:                   number
 	sorry_pool_id?:              string
 	tag?: [{
 		scope?: string
@@ -651,9 +800,12 @@ package nsxt
 	receive:       string
 	send:          string
 	description?:  string
+	display_name?: string
 	fall_count?:   number
+	id?:           string
 	interval?:     number
 	monitor_port?: string
+	revision?:     number
 	rise_count?:   number
 	timeout?:      number
 	tag?: [{
@@ -668,11 +820,14 @@ package nsxt
 	access_log_enabled?: bool
 	default_pool_member_ports?: [string, ...]
 	description?:                string
+	display_name?:               string
 	enabled?:                    bool
+	id?:                         string
 	max_concurrent_connections?: number
 	max_new_connection_rate?:    number
 	persistence_profile_id?:     string
 	pool_id?:                    string
+	revision?:                   number
 	sorry_pool_id?:              string
 	tag?: [{
 		scope?: string
@@ -684,18 +839,25 @@ package nsxt
 	logical_switch_id: string
 	admin_state?:      string
 	description?:      string
+	display_name?:     string
+	id?:               string
+	revision?:         number
 	tag?: [{
 		scope?: string
 		tag?:   string
 	}, ...]
 }
 #NsxtLogicalDhcpServerResource: {
-	dhcp_profile_id: string
-	dhcp_server_ip:  string
-	description?:    string
+	dhcp_profile_id:           string
+	dhcp_server_ip:            string
+	attached_logical_port_id?: string
+	description?:              string
+	display_name?:             string
 	dns_name_servers?: [string, ...]
 	domain_name?: string
 	gateway_ip?:  string
+	id?:          string
+	revision?:    number
 	dhcp_generic_option?: [{
 		code: number
 		values: [string, ...]
@@ -713,6 +875,9 @@ package nsxt
 	logical_switch_id: string
 	admin_state?:      string
 	description?:      string
+	display_name?:     string
+	id?:               string
+	revision?:         number
 	switching_profile_id?: [{
 		key:   string
 		value: string
@@ -727,6 +892,9 @@ package nsxt
 	linked_logical_switch_port_id: string
 	logical_router_id:             string
 	description?:                  string
+	display_name?:                 string
+	id?:                           string
+	revision?:                     number
 	urpf_mode?:                    string
 	tag?: [{
 		scope?: string
@@ -738,10 +906,16 @@ package nsxt
 	linked_logical_switch_port_id: string
 	logical_router_id:             string
 	description?:                  string
+	display_name?:                 string
+	id?:                           string
+	mac_address?:                  string
+	revision?:                     number
 	urpf_mode?:                    string
 	service_binding?: [{
-		target_id?:   string
-		target_type?: string
+		is_valid?:            bool
+		target_display_name?: string
+		target_id?:           string
+		target_type?:         string
 	}, ...]
 	tag?: [{
 		scope?: string
@@ -749,8 +923,12 @@ package nsxt
 	}, ...]
 }
 #NsxtLogicalRouterLinkPortOnTier0Resource: {
-	logical_router_id: string
-	description?:      string
+	logical_router_id:              string
+	description?:                   string
+	display_name?:                  string
+	id?:                            string
+	linked_logical_router_port_id?: string
+	revision?:                      number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -760,6 +938,9 @@ package nsxt
 	linked_logical_router_port_id: string
 	logical_router_id:             string
 	description?:                  string
+	display_name?:                 string
+	id?:                           string
+	revision?:                     number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -769,10 +950,14 @@ package nsxt
 	transport_zone_id: string
 	admin_state?:      string
 	description?:      string
+	display_name?:     string
+	id?:               string
 	ip_pool_id?:       string
 	mac_pool_id?:      string
 	replication_mode?: string
+	revision?:         number
 	vlan?:             number
+	vni?:              number
 	address_binding?: [{
 		ip_address?:  string
 		mac_address?: string
@@ -790,10 +975,16 @@ package nsxt
 #NsxtLogicalTier0RouterResource: {
 	edge_cluster_id:         string
 	description?:            string
+	display_name?:           string
+	failover_mode?:          string
 	high_availability_mode?: string
+	id?:                     string
+	revision?:               number
 	firewall_sections?: [{
-		target_id?:   string
-		target_type?: string
+		is_valid?:            bool
+		target_display_name?: string
+		target_id?:           string
+		target_type?:         string
 	}, ...]
 	tag?: [{
 		scope?: string
@@ -801,18 +992,24 @@ package nsxt
 	}, ...]
 }
 #NsxtLogicalTier1RouterResource: {
+	advertise_config_revision?:   number
 	advertise_connected_routes?:  bool
 	advertise_lb_snat_ip_routes?: bool
 	advertise_lb_vip_routes?:     bool
 	advertise_nat_routes?:        bool
 	advertise_static_routes?:     bool
 	description?:                 string
+	display_name?:                string
 	edge_cluster_id?:             string
 	enable_router_advertisement?: bool
 	failover_mode?:               string
+	id?:                          string
+	revision?:                    number
 	firewall_sections?: [{
-		target_id?:   string
-		target_type?: string
+		is_valid?:            bool
+		target_display_name?: string
+		target_id?:           string
+		target_type?:         string
 	}, ...]
 	tag?: [{
 		scope?: string
@@ -821,7 +1018,10 @@ package nsxt
 }
 #NsxtMacManagementSwitchingProfileResource: {
 	description?:        string
+	display_name?:       string
+	id?:                 string
 	mac_change_allowed?: bool
+	revision?:           number
 	mac_learning?: [{
 		enabled?:                  bool
 		limit?:                    number
@@ -837,11 +1037,15 @@ package nsxt
 	action:                     string
 	logical_router_id:          string
 	description?:               string
+	display_name?:              string
 	enabled?:                   bool
+	id?:                        string
 	logging?:                   bool
 	match_destination_network?: string
 	match_source_network?:      string
 	nat_pass?:                  bool
+	revision?:                  number
+	rule_priority?:             number
 	translated_network?:        string
 	translated_ports?:          string
 	tag?: [{
@@ -850,7 +1054,10 @@ package nsxt
 	}, ...]
 }
 #NsxtNsGroupResource: {
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	member?: [{
 		target_type: string
 		value:       string
@@ -869,7 +1076,10 @@ package nsxt
 }
 #NsxtNsServiceGroupResource: {
 	members: [string, ...]
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -884,9 +1094,13 @@ package nsxt
 	description?:           string
 	graceful_restart_mode?: string
 	hold_down_time?:        number
+	id?:                    string
 	keep_alive_time?:       number
 	maximum_hop_limit?:     number
+	nsx_id?:                string
 	password?:              string
+	path?:                  string
+	revision?:              number
 	source_addresses?: [string, ...]
 	bfd_config?: [{
 		enabled?:  bool
@@ -909,6 +1123,10 @@ package nsxt
 	display_name: string
 	server_addresses: [string, ...]
 	description?: string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -918,8 +1136,13 @@ package nsxt
 	display_name:       string
 	description?:       string
 	edge_cluster_path?: string
+	id?:                string
 	lease_time?:        number
+	nsx_id?:            string
+	path?:              string
 	preferred_edge_paths?: [string, ...]
+	revision?: number
+	server_addresses?: [string, ...]
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -931,9 +1154,14 @@ package nsxt
 	comments?:        string
 	description?:     string
 	domain?:          string
+	id?:              string
 	locked?:          bool
+	nsx_id?:          string
+	path?:            string
+	revision?:        number
 	sequence_number?: number
 	stateful?:        bool
+	tcp_strict?:      bool
 	rule?: [{
 		display_name: string
 		scope: [string, ...]
@@ -944,9 +1172,13 @@ package nsxt
 		direction?:             string
 		disabled?:              bool
 		ip_version?:            string
+		log_label?:             string
 		logged?:                bool
 		notes?:                 string
 		profiles?: [string, ...]
+		revision?:        number
+		rule_id?:         number
+		sequence_number?: number
 		services?: [string, ...]
 		source_groups?: [string, ...]
 		sources_excluded?: bool
@@ -964,6 +1196,10 @@ package nsxt
 	display_name: string
 	description?: string
 	domain?:      string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	conjunction?: [{
 		operator: string
 	}, ...]
@@ -987,9 +1223,14 @@ package nsxt
 	}, ...]
 }
 #NsxtPolicyIpAddressAllocationResource: {
-	display_name: string
-	pool_path:    string
-	description?: string
+	display_name:   string
+	pool_path:      string
+	allocation_ip?: string
+	description?:   string
+	id?:            string
+	nsx_id?:        string
+	path?:          string
+	revision?:      number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -999,6 +1240,10 @@ package nsxt
 	cidr:         string
 	display_name: string
 	description?: string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1007,6 +1252,10 @@ package nsxt
 #NsxtPolicyIpPoolResource: {
 	display_name: string
 	description?: string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1019,6 +1268,10 @@ package nsxt
 	size:                 number
 	auto_assign_gateway?: bool
 	description?:         string
+	id?:                  string
+	nsx_id?:              string
+	path?:                string
+	revision?:            number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1032,6 +1285,10 @@ package nsxt
 	dns_nameservers?: [string, ...]
 	dns_suffix?: string
 	gateway?:    string
+	id?:         string
+	nsx_id?:     string
+	path?:       string
+	revision?:   number
 	allocation_range?: [{
 		end:   string
 		start: string
@@ -1046,14 +1303,19 @@ package nsxt
 	active_monitor_path?:      string
 	algorithm?:                string
 	description?:              string
+	id?:                       string
 	min_active_members?:       number
+	nsx_id?:                   string
 	passive_monitor_path?:     string
+	path?:                     string
+	revision?:                 number
 	tcp_multiplexing_enabled?: bool
 	tcp_multiplexing_number?:  number
 	member?: [{
 		ip_address:                  string
 		admin_state?:                string
 		backup_member?:              bool
+		display_name?:               string
 		max_concurrent_connections?: number
 		port?:                       string
 		weight?:                     number
@@ -1080,6 +1342,10 @@ package nsxt
 	description?:       string
 	enabled?:           bool
 	error_log_level?:   string
+	id?:                string
+	nsx_id?:            string
+	path?:              string
+	revision?:          number
 	size?:              string
 	tag?: [{
 		scope?: string
@@ -1095,11 +1361,15 @@ package nsxt
 	default_pool_member_ports?: [string, ...]
 	description?:                string
 	enabled?:                    bool
+	id?:                         string
 	log_significant_event_only?: bool
 	max_concurrent_connections?: number
 	max_new_connection_rate?:    number
+	nsx_id?:                     string
+	path?:                       string
 	persistence_profile_path?:   string
 	pool_path?:                  string
+	revision?:                   number
 	service_path?:               string
 	sorry_pool_path?:            string
 	access_list_control?: [{
@@ -1133,15 +1403,20 @@ package nsxt
 	action:       string
 	display_name: string
 	gateway_path: string
-	source_networks: [string, ...]
 	translated_networks: [string, ...]
 	description?: string
 	destination_networks?: [string, ...]
-	enabled?:          bool
-	firewall_match?:   string
-	logging?:          bool
-	rule_priority?:    number
-	service?:          string
+	enabled?:        bool
+	firewall_match?: string
+	id?:             string
+	logging?:        bool
+	nsx_id?:         string
+	path?:           string
+	revision?:       number
+	rule_priority?:  number
+	scope?: [string, ...]
+	service?: string
+	source_networks?: [string, ...]
 	translated_ports?: string
 	tag?: [{
 		scope?: string
@@ -1154,10 +1429,15 @@ package nsxt
 	comments?:    string
 	description?: string
 	domain?:      string
+	id?:          string
 	locked?:      bool
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	scope?: [string, ...]
 	sequence_number?: number
 	stateful?:        bool
+	tcp_strict?:      bool
 	rule?: [{
 		display_name: string
 		action?:      string
@@ -1167,10 +1447,14 @@ package nsxt
 		direction?:             string
 		disabled?:              bool
 		ip_version?:            string
+		log_label?:             string
 		logged?:                bool
 		notes?:                 string
 		profiles?: [string, ...]
+		revision?: number
+		rule_id?:  number
 		scope?: [string, ...]
+		sequence_number?: number
 		services?: [string, ...]
 		source_groups?: [string, ...]
 		sources_excluded?: bool
@@ -1191,6 +1475,11 @@ package nsxt
 	description?:        string
 	dhcp_config_path?:   string
 	domain_name?:        string
+	id?:                 string
+	nsx_id?:             string
+	overlay_id?:         number
+	path?:               string
+	revision?:           number
 	advanced_config?: [{
 		address_pool_path?:     string
 		connectivity?:          string
@@ -1205,6 +1494,7 @@ package nsxt
 	subnet?: [{
 		cidr: string
 		dhcp_ranges?: [string, ...]
+		network?: string
 		dhcp_v4_config?: [{
 			dns_servers?: [string, ...]
 			lease_time?:     number
@@ -1239,6 +1529,10 @@ package nsxt
 #NsxtPolicyServiceResource: {
 	display_name: string
 	description?: string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	algorithm_entry?: [{
 		algorithm:        string
 		destination_port: string
@@ -1284,6 +1578,10 @@ package nsxt
 	gateway_path: string
 	network:      string
 	description?: string
+	id?:          string
+	nsx_id?:      string
+	path?:        string
+	revision?:    number
 	next_hop?: [{
 		ip_address:      string
 		admin_distance?: number
@@ -1304,6 +1602,14 @@ package nsxt
 	failover_mode?:        string
 	force_whitelisting?:   bool
 	ha_mode?:              string
+	id?:                   string
+	internal_transit_subnets?: [string, ...]
+	ipv6_dad_profile_path?:  string
+	ipv6_ndra_profile_path?: string
+	nsx_id?:                 string
+	path?:                   string
+	revision?:               number
+	transit_subnets?: [string, ...]
 	bgp_config?: [{
 		ecmp?:                               bool
 		enabled?:                            bool
@@ -1313,6 +1619,8 @@ package nsxt
 		inter_sr_ibgp?:                      bool
 		local_as_num?:                       string
 		multipath_relax?:                    bool
+		path?:                               string
+		revision?:                           number
 		route_aggregation?: [{
 			prefix?:       string
 			summary_only?: bool
@@ -1329,6 +1637,7 @@ package nsxt
 	vrf_config?: [{
 		gateway_path:         string
 		evpn_transit_vni?:    number
+		path?:                string
 		route_distinguisher?: string
 		route_target?: [{
 			address_family?: string
@@ -1350,10 +1659,17 @@ package nsxt
 	description?:    string
 	edge_node_path?: string
 	enable_pim?:     bool
-	mtu?:            number
-	segment_path?:   string
-	type?:           string
-	urpf_mode?:      string
+	id?:             string
+	ip_addresses?: [string, ...]
+	ipv6_ndra_profile_path?: string
+	locale_service_id?:      string
+	mtu?:                    number
+	nsx_id?:                 string
+	path?:                   string
+	revision?:               number
+	segment_path?:           string
+	type?:                   string
+	urpf_mode?:              string
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1370,8 +1686,14 @@ package nsxt
 	enable_standby_relocation?: bool
 	failover_mode?:             string
 	force_whitelisting?:        bool
+	id?:                        string
 	ingress_qos_profile_path?:  string
+	ipv6_dad_profile_path?:     string
+	ipv6_ndra_profile_path?:    string
+	nsx_id?:                    string
+	path?:                      string
 	pool_allocation?:           string
+	revision?:                  number
 	route_advertisement_types?: [string, ...]
 	tier0_path?: string
 	route_advertisement_rule?: [{
@@ -1391,9 +1713,15 @@ package nsxt
 	gateway_path: string
 	segment_path: string
 	subnets: [string, ...]
-	description?: string
-	mtu?:         number
-	urpf_mode?:   string
+	description?:            string
+	id?:                     string
+	ipv6_ndra_profile_path?: string
+	locale_service_id?:      string
+	mtu?:                    number
+	nsx_id?:                 string
+	path?:                   string
+	revision?:               number
+	urpf_mode?:              string
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1406,6 +1734,10 @@ package nsxt
 	description?:      string
 	dhcp_config_path?: string
 	domain_name?:      string
+	id?:               string
+	nsx_id?:           string
+	path?:             string
+	revision?:         number
 	advanced_config?: [{
 		address_pool_path?:     string
 		connectivity?:          string
@@ -1420,6 +1752,7 @@ package nsxt
 	subnet?: [{
 		cidr: string
 		dhcp_ranges?: [string, ...]
+		network?: string
 		dhcp_v4_config?: [{
 			dns_servers?: [string, ...]
 			lease_time?:     number
@@ -1453,6 +1786,7 @@ package nsxt
 }
 #NsxtPolicyVmTagsResource: {
 	instance_id: string
+	id?:         string
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1461,8 +1795,11 @@ package nsxt
 #NsxtQosSwitchingProfileResource: {
 	class_of_service?: number
 	description?:      string
+	display_name?:     string
 	dscp_priority?:    number
 	dscp_trusted?:     bool
+	id?:               string
+	revision?:         number
 	egress_rate_shaper?: [{
 		average_bw_mbps?: number
 		burst_size?:      number
@@ -1489,6 +1826,9 @@ package nsxt
 #NsxtSpoofguardSwitchingProfileResource: {
 	address_binding_whitelist_enabled?: bool
 	description?:                       string
+	display_name?:                      string
+	id?:                                string
+	revision?:                          number
 	tag?: [{
 		scope?: string
 		tag?:   string
@@ -1498,8 +1838,13 @@ package nsxt
 	logical_router_id: string
 	network:           string
 	description?:      string
+	display_name?:     string
+	id?:               string
+	revision?:         number
 	next_hop?: [{
 		administrative_distance?: number
+		bfd_enabled?:             bool
+		blackhole_action?:        string
 		ip_address?:              string
 		logical_router_port_id?:  string
 	}, ...]
@@ -1514,7 +1859,10 @@ package nsxt
 	block_server_dhcp?:   bool
 	bpdu_filter_enabled?: bool
 	bpdu_filter_whitelist?: [string, ...]
-	description?: string
+	description?:  string
+	display_name?: string
+	id?:           string
+	revision?:     number
 	rate_limits?: [{
 		enabled?:      bool
 		rx_broadcast?: number
@@ -1532,8 +1880,11 @@ package nsxt
 	vlan:              number
 	admin_state?:      string
 	description?:      string
+	display_name?:     string
+	id?:               string
 	ip_pool_id?:       string
 	mac_pool_id?:      string
+	revision?:         number
 	address_binding?: [{
 		ip_address?:  string
 		mac_address?: string
@@ -1550,6 +1901,7 @@ package nsxt
 }
 #NsxtVmTagsResource: {
 	instance_id: string
+	id?:         string
 	logical_port_tag?: [{
 		scope?: string
 		tag?:   string

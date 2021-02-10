@@ -39,9 +39,9 @@ gazelle_dependencies()
 http_archive(
     name = "com_github_tnarg_rules_cue",
     # Make sure to check for the latest version when you install
-    url = "https://github.com/tnarg/rules_cue/archive/9721e0aae5aa695f002531ebfa208d6503d416b0.zip",
-    strip_prefix = "rules_cue-9721e0aae5aa695f002531ebfa208d6503d416b0",
-    sha256 = "83f6344219bbd7a945507a03fba4eead5dfa8d0296db5b5c475e7c9b5710f37f",
+    url = "https://github.com/tnarg/rules_cue/archive/be98df2981025bf1389510797ea11e0e37aa761f.zip",
+    strip_prefix = "rules_cue-be98df2981025bf1389510797ea11e0e37aa761f",
+    sha256 = "ee6eea3de252ebc8fb05c23e8d370e32c4783b36cd1c6ec9ea72411a086ac35e",
 )
 
 load("@com_github_tnarg_rules_cue//:go.bzl", cue_go_modules = "go_modules")

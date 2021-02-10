@@ -2,6 +2,7 @@
 package logicmonitor
 
 #LogicmonitorCollectorsDataSource: {
+	id?:          string
 	most_recent?: bool
 	offset?:      number
 	size?:        number
@@ -14,6 +15,7 @@ package logicmonitor
 	}, ...]
 }
 #LogicmonitorDashboardDataSource: {
+	id?:     string
 	offset?: number
 	size?:   number
 	filters?: [{
@@ -25,6 +27,7 @@ package logicmonitor
 	}, ...]
 }
 #LogicmonitorDashboardGroupDataSource: {
+	id?:     string
 	offset?: number
 	size?:   number
 	filters?: [{
@@ -36,6 +39,7 @@ package logicmonitor
 	}, ...]
 }
 #LogicmonitorDeviceGroupDataSource: {
+	id?:     string
 	offset?: number
 	size?:   number
 	filters?: [{

@@ -2,13 +2,28 @@
 package bigip
 
 #BigipAs3Resource: {
-	as3_json:       string
-	tenant_filter?: string
-	tenant_name?:   string
+	as3_json:          string
+	application_list?: string
+	id?:               string
+	tenant_filter?:    string
+	tenant_list?:      string
+	tenant_name?:      string
+}
+#BigipBigiqAs3Resource: {
+	as3_json:          string
+	bigiq_address:     string
+	bigiq_password:    string
+	bigiq_user:        string
+	bigiq_login_ref?:  string
+	bigiq_port?:       string
+	bigiq_token_auth?: bool
+	id?:               string
+	tenant_list?:      string
 }
 #BigipCmDeviceResource: {
 	configsync_ip:        string
 	name:                 string
+	id?:                  string
 	mirror_ip?:           string
 	mirror_secondary_ip?: string
 }
@@ -16,6 +31,7 @@ package bigip
 	auto_sync?:          string
 	description?:        string
 	full_load_on_sync?:  string
+	id?:                 string
 	incremental_config?: number
 	name?:               string
 	network_failover?:   string
@@ -29,33 +45,48 @@ package bigip
 }
 #BigipCommandResource: {
 	commands: [string, ...]
+	command_result?: [string, ...]
+	id?:   string
 	when?: string
 }
 #BigipCommonLicenseManageBigiqResource: {
-	assignment_type:   string
-	bigiq_address:     string
-	bigiq_password:    string
-	bigiq_user:        string
-	license_poolname:  string
-	bigiq_login_ref?:  string
-	bigiq_port?:       string
-	bigiq_token_auth?: bool
-	hypervisor?:       string
-	key?:              string
-	mac_address?:      string
-	skukeyword1?:      string
-	skukeyword2?:      string
-	tenant?:           string
-	unit_of_measure?:  string
+	assignment_type:        string
+	bigiq_address:          string
+	bigiq_password:         string
+	bigiq_user:             string
+	license_poolname:       string
+	bigiq_login_ref?:       string
+	bigiq_port?:            string
+	bigiq_token_auth?:      bool
+	device_license_status?: string
+	hypervisor?:            string
+	id?:                    string
+	key?:                   string
+	mac_address?:           string
+	skukeyword1?:           string
+	skukeyword2?:           string
+	tenant?:                string
+	unit_of_measure?:       string
 }
 #BigipDoResource: {
 	do_json:      string
+	id?:          string
 	tenant_name?: string
 	timeout?:     number
+}
+#BigipEventServiceDiscoveryResource: {
+	taskid: string
+	id?:    string
+	node?: [{
+		id?:   string
+		ip?:   string
+		port?: number
+	}, ...]
 }
 #BigipLtmDatagroupResource: {
 	name: string
 	type: string
+	id?:  string
 	record?: [{
 		name:  string
 		data?: string
@@ -64,27 +95,49 @@ package bigip
 #BigipLtmIruleResource: {
 	irule: string
 	name:  string
+	id?:   string
 }
 #BigipLtmMonitorResource: {
 	name:             string
 	parent:           string
+	adaptive?:        string
+	adaptive_limit?:  number
+	compatibility?:   string
 	database?:        string
 	defaults_from?:   string
+	destination?:     string
 	filename?:        string
+	id?:              string
+	interval?:        number
+	ip_dscp?:         number
+	manual_resume?:   string
+	mode?:            string
 	password?:        string
 	receive?:         string
 	receive_disable?: string
+	reverse?:         string
 	send?:            string
+	time_until_up?:   number
+	timeout?:         number
+	transparent?:     string
 	username?:        string
 }
 #BigipLtmNodeResource: {
-	address:      string
-	name:         string
-	description?: string
-	monitor?:     string
-	state?:       string
+	address:           string
+	name:              string
+	connection_limit?: number
+	description?:      string
+	dynamic_ratio?:    number
+	id?:               string
+	monitor?:          string
+	rate_limit?:       string
+	ratio?:            number
+	state?:            string
 	fqdn?: [{
 		address_family?: string
+		autopopulate?:   string
+		downinterval?:   number
+		interval?:       string
 		name?:           string
 	}, ...]
 }
@@ -100,9 +153,11 @@ package bigip
 	hash_length?:                  number
 	hash_offset?:                  number
 	httponly?:                     string
+	id?:                           string
 	match_across_pools?:           string
 	match_across_services?:        string
 	match_across_virtuals?:        string
+	method?:                       string
 	mirror?:                       string
 	override_conn_limit?:          string
 	timeout?:                      number
@@ -112,6 +167,7 @@ package bigip
 	name:                   string
 	app_service?:           string
 	hash_algorithm?:        string
+	id?:                    string
 	mask?:                  string
 	match_across_pools?:    string
 	match_across_services?: string
@@ -125,6 +181,7 @@ package bigip
 	name:                   string
 	app_service?:           string
 	hash_algorithm?:        string
+	id?:                    string
 	map_proxies?:           string
 	mask?:                  string
 	match_across_pools?:    string
@@ -138,6 +195,7 @@ package bigip
 	defaults_from:          string
 	name:                   string
 	app_service?:           string
+	id?:                    string
 	match_across_pools?:    string
 	match_across_services?: string
 	match_across_virtuals?: string
@@ -148,28 +206,286 @@ package bigip
 #BigipLtmPolicyResource: {
 	name: string
 	controls?: [string, ...]
+	id?:             string
 	published_copy?: string
 	requires?: [string, ...]
 	strategy?: string
 	rule?: [{
 		name: string
 		action?: [{
-			http_host?: bool
+			app_service?:          string
+			application?:          string
+			asm?:                  bool
+			avr?:                  bool
+			cache?:                bool
+			carp?:                 bool
+			category?:             string
+			classify?:             bool
+			clone_pool?:           string
+			code?:                 number
+			compress?:             bool
+			content?:              string
+			cookie_hash?:          bool
+			cookie_insert?:        bool
+			cookie_passive?:       bool
+			cookie_rewrite?:       bool
+			decompress?:           bool
+			defer?:                bool
+			destination_address?:  bool
+			disable?:              bool
+			domain?:               string
+			enable?:               bool
+			expiry?:               string
+			expiry_secs?:          number
+			expression?:           string
+			extension?:            string
+			facility?:             string
+			forward?:              bool
+			from_profile?:         string
+			hash?:                 bool
+			host?:                 string
+			http?:                 bool
+			http_basic_auth?:      bool
+			http_cookie?:          bool
+			http_header?:          bool
+			http_host?:            bool
+			http_referer?:         bool
+			http_reply?:           bool
+			http_set_cookie?:      bool
+			http_uri?:             bool
+			ifile?:                string
+			insert?:               bool
+			internal_virtual?:     string
+			ip_address?:           string
+			key?:                  string
+			l7dos?:                bool
+			length?:               number
+			location?:             string
+			log?:                  bool
+			ltm_policy?:           bool
+			member?:               string
+			message?:              string
+			netmask?:              string
+			nexthop?:              string
+			node?:                 string
+			offset?:               number
+			path?:                 string
+			pem?:                  bool
+			persist?:              bool
+			pin?:                  bool
+			policy?:               string
+			pool?:                 string
+			port?:                 number
+			priority?:             string
+			profile?:              string
+			protocol?:             string
+			query_string?:         string
+			rateclass?:            string
+			redirect?:             bool
+			remove?:               bool
+			replace?:              bool
+			request?:              bool
+			request_adapt?:        bool
+			reset?:                bool
+			response?:             bool
+			response_adapt?:       bool
+			scheme?:               string
+			script?:               string
+			select?:               bool
+			server_ssl?:           bool
+			set_variable?:         bool
+			snat?:                 string
+			snatpool?:             string
+			source_address?:       bool
+			ssl_client_hello?:     bool
+			ssl_server_handshake?: bool
+			ssl_server_hello?:     bool
+			ssl_session_id?:       bool
+			status?:               number
+			tcl?:                  bool
+			tcp_nagle?:            bool
+			text?:                 string
+			timeout?:              number
+			tm_name?:              string
+			uie?:                  bool
+			universal?:            bool
+			value?:                string
+			virtual?:              string
+			vlan?:                 string
+			vlan_id?:              number
+			wam?:                  bool
+			write?:                bool
 		}, ...]
-		condition?: [{}, ...]
+		condition?: [{
+			address?:                 bool
+			all?:                     bool
+			app_service?:             string
+			browser_type?:            bool
+			browser_version?:         bool
+			case_insensitive?:        bool
+			case_sensitive?:          bool
+			cipher?:                  bool
+			cipher_bits?:             bool
+			client_ssl?:              bool
+			code?:                    bool
+			common_name?:             bool
+			contains?:                bool
+			continent?:               bool
+			country_code?:            bool
+			country_name?:            bool
+			cpu_usage?:               bool
+			device_make?:             bool
+			device_model?:            bool
+			domain?:                  bool
+			ends_with?:               bool
+			equals?:                  bool
+			expiry?:                  bool
+			extension?:               bool
+			external?:                bool
+			geoip?:                   bool
+			greater?:                 bool
+			greater_or_equal?:        bool
+			host?:                    bool
+			http_basic_auth?:         bool
+			http_cookie?:             bool
+			http_header?:             bool
+			http_host?:               bool
+			http_method?:             bool
+			http_referer?:            bool
+			http_set_cookie?:         bool
+			http_status?:             bool
+			http_uri?:                bool
+			http_user_agent?:         bool
+			http_version?:            bool
+			index?:                   number
+			internal?:                bool
+			isp?:                     bool
+			last_15secs?:             bool
+			last_1min?:               bool
+			last_5mins?:              bool
+			less?:                    bool
+			less_or_equal?:           bool
+			local?:                   bool
+			major?:                   bool
+			matches?:                 bool
+			minor?:                   bool
+			missing?:                 bool
+			mss?:                     bool
+			not?:                     bool
+			org?:                     bool
+			password?:                bool
+			path?:                    bool
+			path_segment?:            bool
+			port?:                    bool
+			present?:                 bool
+			protocol?:                bool
+			query_parameter?:         bool
+			query_string?:            bool
+			region_code?:             bool
+			region_name?:             bool
+			remote?:                  bool
+			request?:                 bool
+			response?:                bool
+			route_domain?:            bool
+			rtt?:                     bool
+			scheme?:                  bool
+			server_name?:             bool
+			ssl_cert?:                bool
+			ssl_client_hello?:        bool
+			ssl_extension?:           bool
+			ssl_server_handshake?:    bool
+			ssl_server_hello?:        bool
+			starts_with?:             bool
+			tcp?:                     bool
+			text?:                    bool
+			tm_name?:                 string
+			unnamed_query_parameter?: bool
+			user_agent_token?:        bool
+			username?:                bool
+			value?:                   bool
+			values?: [string, ...]
+			version?: bool
+			vlan?:    bool
+			vlan_id?: bool
+		}, ...]
 	}, ...]
 }
 #BigipLtmPoolResource: {
-	name:         string
-	description?: string
+	name:                    string
+	allow_nat?:              string
+	allow_snat?:             string
+	description?:            string
+	id?:                     string
+	load_balancing_mode?:    string
+	minimum_active_members?: number
+	monitors?: [string, ...]
+	reselect_tries?:      number
+	service_down_action?: string
+	slow_ramp_time?:      number
 }
 #BigipLtmPoolAttachmentResource: {
-	node: string
-	pool: string
+	node:                   string
+	pool:                   string
+	connection_limit?:      number
+	connection_rate_limit?: string
+	dynamic_ratio?:         number
+	fqdn_autopopulate?:     string
+	id?:                    string
+	priority_group?:        number
+	ratio?:                 number
 }
 #BigipLtmProfileClientSslResource: {
-	name:           string
-	defaults_from?: string
+	name:                string
+	alert_timeout?:      string
+	allow_non_ssl?:      string
+	authenticate?:       string
+	authenticate_depth?: number
+	ca_file?:            string
+	cache_size?:         number
+	cache_timeout?:      number
+	cert?:               string
+	cert_extension_includes?: [string, ...]
+	cert_life_span?:                      number
+	cert_lookup_by_ipaddr_port?:          string
+	chain?:                               string
+	ciphers?:                             string
+	client_cert_ca?:                      string
+	crl_file?:                            string
+	defaults_from?:                       string
+	forward_proxy_bypass_default_action?: string
+	full_path?:                           string
+	generation?:                          number
+	generic_alert?:                       string
+	handshake_timeout?:                   string
+	id?:                                  string
+	inherit_cert_keychain?:               string
+	key?:                                 string
+	mod_ssl_methods?:                     string
+	mode?:                                string
+	partition?:                           string
+	passphrase?:                          string
+	peer_cert_mode?:                      string
+	proxy_ca_cert?:                       string
+	proxy_ca_key?:                        string
+	proxy_ca_passphrase?:                 string
+	proxy_ssl?:                           string
+	proxy_ssl_passthrough?:               string
+	renegotiate_period?:                  string
+	renegotiate_size?:                    string
+	renegotiation?:                       string
+	retain_certificate?:                  string
+	secure_renegotiation?:                string
+	server_name?:                         string
+	session_mirroring?:                   string
+	session_ticket?:                      string
+	sni_default?:                         string
+	sni_require?:                         string
+	ssl_forward_proxy?:                   string
+	ssl_forward_proxy_bypass?:            string
+	ssl_sign_hash?:                       string
+	strict_resume?:                       string
+	tm_options?: [string, ...]
+	unclean_shutdown?: string
 	cert_key_chain?: [{
 		cert?:       string
 		chain?:      string
@@ -188,6 +504,7 @@ package bigip
 	connpoolidle_timeoutoverride?: number
 	defaults_from?:                string
 	forcehttp_10response?:         string
+	id?:                           string
 	idle_timeout?:                 number
 	maxheader_size?:               number
 }
@@ -197,6 +514,7 @@ package bigip
 	defaults_from?:          string
 	explicitflow_migration?: string
 	hardware_syncookie?:     string
+	id?:                     string
 	idle_timeout?:           string
 	iptos_toclient?:         string
 	iptos_toserver?:         string
@@ -204,11 +522,11 @@ package bigip
 	partition?:              string
 }
 #BigipLtmProfileHttpResource: {
-	defaults_from:          string
 	name:                   string
 	accept_xff?:            string
 	app_service?:           string
 	basic_auth_realm?:      string
+	defaults_from?:         string
 	description?:           string
 	encrypt_cookie_secret?: string
 	encrypt_cookies?: [string, ...]
@@ -216,6 +534,7 @@ package bigip
 	fallback_status_codes?: [string, ...]
 	head_erase?:                 string
 	head_insert?:                string
+	id?:                         string
 	insert_xforwarded_for?:      string
 	lws_separator?:              string
 	oneconnect_transformations?: string
@@ -237,20 +556,31 @@ package bigip
 	concurrent_streams_per_connection?: number
 	connection_idle_timeout?:           number
 	defaults_from?:                     string
+	enforce_tls_requirements?:          string
+	frame_size?:                        number
 	header_table_size?:                 number
+	id?:                                string
+	include_content_length?:            string
+	insert_header?:                     string
+	insert_header_name?:                string
+	receive_window?:                    number
+	write_size?:                        number
 }
 #BigipLtmProfileHttpcompressResource: {
 	name: string
 	content_type_exclude?: [string, ...]
 	content_type_include?: [string, ...]
 	defaults_from?: string
+	id?:            string
 	uri_exclude?: [string, ...]
 	uri_include?: [string, ...]
 }
 #BigipLtmProfileOneconnectResource: {
 	name:                   string
 	defaults_from?:         string
+	id?:                    string
 	idle_timeout_override?: string
+	limit_type?:            string
 	max_age?:               number
 	max_reuse?:             number
 	max_size?:              number
@@ -259,8 +589,49 @@ package bigip
 	source_mask?:           string
 }
 #BigipLtmProfileServerSslResource: {
-	name:           string
-	defaults_from?: string
+	name:                          string
+	alert_timeout?:                string
+	authenticate?:                 string
+	authenticate_depth?:           number
+	ca_file?:                      string
+	cache_size?:                   number
+	cache_timeout?:                number
+	cert?:                         string
+	chain?:                        string
+	ciphers?:                      string
+	defaults_from?:                string
+	expire_cert_response_control?: string
+	full_path?:                    string
+	generation?:                   number
+	generic_alert?:                string
+	handshake_timeout?:            string
+	id?:                           string
+	key?:                          string
+	mod_ssl_methods?:              string
+	mode?:                         string
+	partition?:                    string
+	passphrase?:                   string
+	peer_cert_mode?:               string
+	proxy_ca_cert?:                string
+	proxy_ca_key?:                 string
+	proxy_ssl?:                    string
+	renegotiate_period?:           string
+	renegotiate_size?:             string
+	renegotiation?:                string
+	retain_certificate?:           string
+	secure_renegotiation?:         string
+	server_name?:                  string
+	session_mirroring?:            string
+	session_ticket?:               string
+	sni_default?:                  string
+	sni_require?:                  string
+	ssl_forward_proxy?:            string
+	ssl_forward_proxy_bypass?:     string
+	ssl_sign_hash?:                string
+	strict_resume?:                string
+	tm_options?: [string, ...]
+	unclean_shutdown?:                string
+	untrusted_cert_response_control?: string
 }
 #BigipLtmProfileTcpResource: {
 	name:                string
@@ -270,6 +641,7 @@ package bigip
 	fast_open?:          string
 	finwait_2timeout?:   number
 	finwait_timeout?:    number
+	id?:                 string
 	idle_timeout?:       number
 	keepalive_interval?: number
 	partition?:          string
@@ -278,6 +650,7 @@ package bigip
 	name:         string
 	autolasthop?: string
 	full_path?:   string
+	id?:          string
 	mirror?:      string
 	partition?:   string
 	snatpool?:    string
@@ -293,42 +666,61 @@ package bigip
 #BigipLtmSnatpoolResource: {
 	members: [string, ...]
 	name: string
+	id?:  string
 }
 #BigipLtmVirtualAddressResource: {
 	name:             string
-	advertize_route?: bool
+	advertize_route?: string
 	arp?:             bool
 	auto_delete?:     bool
 	conn_limit?:      number
 	enabled?:         bool
 	icmp_echo?:       bool
+	id?:              string
 	traffic_group?:   string
 }
 #BigipLtmVirtualServerResource: {
-	destination:                  string
-	name:                         string
-	port:                         number
-	default_persistence_profile?: string
-	description?:                 string
+	destination: string
+	name:        string
+	port:        number
+	client_profiles?: [string, ...]
+	default_persistence_profile?:  string
+	description?:                  string
+	fallback_persistence_profile?: string
+	id?:                           string
+	ip_protocol?:                  string
 	irules?: [string, ...]
+	mask?: string
+	persistence_profiles?: [string, ...]
 	policies?: [string, ...]
-	pool?:  string
-	state?: string
+	pool?: string
+	profiles?: [string, ...]
+	server_profiles?: [string, ...]
+	snatpool?:                   string
+	source?:                     string
+	source_address_translation?: string
+	state?:                      string
+	translate_address?:          string
+	translate_port?:             string
 	vlans?: [string, ...]
+	vlans_enabled?: bool
 }
 #BigipNetRouteResource: {
 	name:    string
 	network: string
 	gw?:     string
+	id?:     string
 }
 #BigipNetSelfipResource: {
 	ip:             string
 	name:           string
 	vlan:           string
+	id?:            string
 	traffic_group?: string
 }
 #BigipNetVlanResource: {
 	name: string
+	id?:  string
 	tag?: number
 	interfaces?: [{
 		tagged?:   bool
@@ -338,19 +730,23 @@ package bigip
 #BigipSslCertificateResource: {
 	content:    string
 	name:       string
+	id?:        string
 	partition?: string
 }
 #BigipSslKeyResource: {
 	content:    string
 	name:       string
+	id?:        string
 	partition?: string
 }
 #BigipSysBigiplicenseResource: {
 	command:          string
 	registration_key: string
+	id?:              string
 }
 #BigipSysDnsResource: {
 	description: string
+	id?:         string
 	name_servers?: [string, ...]
 	number_of_dots?: number
 	search?: [string, ...]
@@ -359,6 +755,7 @@ package bigip
 	description?:                  string
 	devicegroup?:                  string
 	execute_action?:               string
+	id?:                           string
 	inherited_devicegroup?:        string
 	inherited_traffic_group?:      string
 	jsonfile?:                     string
@@ -393,6 +790,7 @@ package bigip
 }
 #BigipSysNtpResource: {
 	description: string
+	id?:         string
 	servers?: [string, ...]
 	timezone?: string
 }
@@ -400,11 +798,14 @@ package bigip
 	name:          string
 	cpu_ratio?:    number
 	disk_ratio?:   number
+	full_path?:    string
+	id?:           string
 	level?:        string
 	memory_ratio?: number
 }
 #BigipSysSnmpResource: {
 	allowedaddresses?: [string, ...]
+	id?:           string
 	sys_contact?:  string
 	sys_location?: string
 }
@@ -415,6 +816,7 @@ package bigip
 	description?:                string
 	engine_id?:                  string
 	host?:                       string
+	id?:                         string
 	name?:                       string
 	port?:                       number
 	privacy_password?:           string
@@ -426,11 +828,13 @@ package bigip
 }
 #Resources: {
 	bigip_as3?: [_]:                             #BigipAs3Resource
+	bigip_bigiq_as3?: [_]:                       #BigipBigiqAs3Resource
 	bigip_cm_device?: [_]:                       #BigipCmDeviceResource
 	bigip_cm_devicegroup?: [_]:                  #BigipCmDevicegroupResource
 	bigip_command?: [_]:                         #BigipCommandResource
 	bigip_common_license_manage_bigiq?: [_]:     #BigipCommonLicenseManageBigiqResource
 	bigip_do?: [_]:                              #BigipDoResource
+	bigip_event_service_discovery?: [_]:         #BigipEventServiceDiscoveryResource
 	bigip_ltm_datagroup?: [_]:                   #BigipLtmDatagroupResource
 	bigip_ltm_irule?: [_]:                       #BigipLtmIruleResource
 	bigip_ltm_monitor?: [_]:                     #BigipLtmMonitorResource

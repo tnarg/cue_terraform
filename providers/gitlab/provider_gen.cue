@@ -5,5 +5,7 @@ package gitlab
 	token:        string
 	base_url?:    string
 	cacert_file?: string
+	client_cert?: string
+	client_key?:  string
 	insecure?:    bool
 }

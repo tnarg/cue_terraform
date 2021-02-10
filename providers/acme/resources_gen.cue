@@ -2,13 +2,21 @@
 package acme
 
 #AcmeCertificateResource: {
-	account_key_pem:           string
-	certificate_p12_password?: string
-	certificate_request_pem?:  string
-	common_name?:              string
-	key_type?:                 string
-	min_days_remaining?:       number
-	must_staple?:              bool
+	account_key_pem:               string
+	certificate_domain?:           string
+	certificate_p12?:              string
+	certificate_p12_password?:     string
+	certificate_pem?:              string
+	certificate_request_pem?:      string
+	certificate_url?:              string
+	common_name?:                  string
+	disable_complete_propagation?: bool
+	id?:                           string
+	issuer_pem?:                   string
+	key_type?:                     string
+	min_days_remaining?:           number
+	must_staple?:                  bool
+	private_key_pem?:              string
 	recursive_nameservers?: [string, ...]
 	subject_alternative_names?: [string, ...]
 	dns_challenge?: [{
@@ -17,8 +25,14 @@ package acme
 	}, ...]
 }
 #AcmeRegistrationResource: {
-	account_key_pem: string
-	email_address:   string
+	account_key_pem:   string
+	email_address:     string
+	id?:               string
+	registration_url?: string
+	external_account_binding?: [{
+		hmac_base64: string
+		key_id:      string
+	}, ...]
 }
 #Resources: {
 	acme_certificate?: [_]:  #AcmeCertificateResource

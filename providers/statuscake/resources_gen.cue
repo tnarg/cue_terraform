@@ -18,6 +18,7 @@ package statuscake
 	final_endpoint?:   string
 	find_string?:      string
 	follow_redirect?:  bool
+	id?:               string
 	logo_image?:       string
 	node_locations?: [string, ...]
 	paused?:       bool
@@ -26,10 +27,13 @@ package statuscake
 	post_raw?:     string
 	public?:       number
 	real_browser?: number
+	status?:       string
 	status_codes?: string
+	test_id?:      string
 	test_tags?: [string, ...]
 	timeout?:      number
 	trigger_rate?: number
+	uptime?:       number
 	use_jar?:      number
 	user_agent?:   string
 	virus?:        number

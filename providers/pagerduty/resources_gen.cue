@@ -4,20 +4,28 @@ package pagerduty
 #PagerdutyAddonResource: {
 	name: string
 	src:  string
+	id?:  string
 }
 #PagerdutyBusinessServiceResource: {
 	name:              string
 	description?:      string
+	html_url?:         string
+	id?:               string
 	point_of_contact?: string
+	self?:             string
+	summary?:          string
+	team?:             string
 	type?:             string
 }
 #PagerdutyEscalationPolicyResource: {
 	name:         string
 	description?: string
+	id?:          string
 	num_loops?:   number
 	teams?: [string, ...]
 	rule?: [{
 		escalation_delay_in_minutes: number
+		id?:                         string
 		target?: [{
 			id:    string
 			type?: string
@@ -28,21 +36,72 @@ package pagerduty
 	action_json:              string
 	condition_json:           string
 	advanced_condition_json?: string
+	catch_all?:               bool
+	id?:                      string
 }
 #PagerdutyExtensionResource: {
 	extension_objects: [string, ...]
 	extension_schema: string
 	config?:          string
 	endpoint_url?:    string
+	html_url?:        string
+	id?:              string
+	name?:            string
+	type?:            string
 }
 #PagerdutyMaintenanceWindowResource: {
 	end_time: string
 	services: [string, ...]
 	start_time:   string
 	description?: string
+	id?:          string
+}
+#PagerdutyResponsePlayResource: {
+	from:                 string
+	name:                 string
+	conference_number?:   string
+	conference_url?:      string
+	description?:         string
+	id?:                  string
+	responders_message?:  string
+	runnability?:         string
+	subscribers_message?: string
+	team?:                string
+	type?:                string
+	responder?: [{
+		description?: string
+		escalation_rule?: [{
+			escalation_delay_in_minutes: number
+			id:                          string
+			target: [{
+				id:   string
+				type: string
+			}, ...]
+		}, ...]
+		id?:                            string
+		name?:                          string
+		num_loops?:                     number
+		on_call_handoff_notifications?: string
+		service?: [{
+			id:   string
+			type: string
+		}, ...]
+		team?: [{
+			id:   string
+			type: string
+		}, ...]
+		type?: string
+	}, ...]
+	subscriber?: [{
+		id?:   string
+		type?: string
+	}, ...]
 }
 #PagerdutyRulesetResource: {
 	name: string
+	id?:  string
+	routing_keys?: [string, ...]
+	type?: string
 	team?: [{
 		id: string
 	}, ...]
@@ -50,6 +109,7 @@ package pagerduty
 #PagerdutyRulesetRuleResource: {
 	ruleset:   string
 	disabled?: bool
+	id?:       string
 	position?: number
 	actions?: [{
 		annotate?: [{
@@ -105,6 +165,7 @@ package pagerduty
 #PagerdutyScheduleResource: {
 	time_zone:    string
 	description?: string
+	id?:          string
 	name?:        string
 	overflow?:    bool
 	layer?: [{
@@ -112,7 +173,9 @@ package pagerduty
 		rotation_virtual_start:       string
 		start:                        string
 		users: [string, ...]
-		end?: string
+		end?:  string
+		id?:   string
+		name?: string
 		restriction?: [{
 			duration_seconds:   number
 			start_time_of_day:  string
@@ -123,13 +186,18 @@ package pagerduty
 }
 #PagerdutyServiceResource: {
 	escalation_policy:        string
+	name:                     string
 	acknowledgement_timeout?: string
 	alert_creation?:          string
 	alert_grouping?:          string
 	alert_grouping_timeout?:  number
 	auto_resolve_timeout?:    string
+	created_at?:              string
 	description?:             string
-	name?:                    string
+	html_url?:                string
+	id?:                      string
+	last_incident_timestamp?: string
+	status?:                  string
 	incident_urgency_rule?: [{
 		type:     string
 		urgency?: string
@@ -158,43 +226,65 @@ package pagerduty
 		type?:       string
 	}, ...]
 }
-#PagerdutyServiceDependencyResource: dependency?: [{
-	type?: string
-	dependent_service?: [{
-		id:   string
-		type: string
+#PagerdutyServiceDependencyResource: {
+	id?: string
+	dependency?: [{
+		type?: string
+		dependent_service?: [{
+			id:   string
+			type: string
+		}, ...]
+		supporting_service?: [{
+			id:   string
+			type: string
+		}, ...]
 	}, ...]
-	supporting_service?: [{
-		id:   string
-		type: string
-	}, ...]
-}, ...]
+}
 #PagerdutyServiceIntegrationResource: {
-	service: string
-	name?:   string
+	service:            string
+	html_url?:          string
+	id?:                string
+	integration_email?: string
+	integration_key?:   string
+	name?:              string
+	type?:              string
+	vendor?:            string
 }
 #PagerdutyTeamResource: {
 	name:         string
 	description?: string
+	html_url?:    string
+	id?:          string
 }
 #PagerdutyTeamMembershipResource: {
 	team_id: string
 	user_id: string
+	id?:     string
 	role?:   string
 }
 #PagerdutyUserResource: {
-	email:        string
-	name:         string
-	description?: string
-	job_title?:   string
-	role?:        string
+	email:            string
+	name:             string
+	avatar_url?:      string
+	color?:           string
+	description?:     string
+	html_url?:        string
+	id?:              string
+	invitation_sent?: bool
+	job_title?:       string
+	role?:            string
+	teams?: [string, ...]
+	time_zone?: string
 }
 #PagerdutyUserContactMethodResource: {
 	address:           string
 	label:             string
 	type:              string
 	user_id:           string
+	blacklisted?:      bool
 	country_code?:     number
+	enabled?:          bool
+	id?:               string
 	send_short_email?: bool
 }
 #PagerdutyUserNotificationRuleResource: {
@@ -202,6 +292,7 @@ package pagerduty
 	start_delay_in_minutes: number
 	urgency:                string
 	user_id:                string
+	id?:                    string
 }
 #Resources: {
 	pagerduty_addon?: [_]:                  #PagerdutyAddonResource
@@ -210,6 +301,7 @@ package pagerduty
 	pagerduty_event_rule?: [_]:             #PagerdutyEventRuleResource
 	pagerduty_extension?: [_]:              #PagerdutyExtensionResource
 	pagerduty_maintenance_window?: [_]:     #PagerdutyMaintenanceWindowResource
+	pagerduty_response_play?: [_]:          #PagerdutyResponsePlayResource
 	pagerduty_ruleset?: [_]:                #PagerdutyRulesetResource
 	pagerduty_ruleset_rule?: [_]:           #PagerdutyRulesetRuleResource
 	pagerduty_schedule?: [_]:               #PagerdutyScheduleResource

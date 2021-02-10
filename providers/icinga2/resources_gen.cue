@@ -6,22 +6,26 @@ package icinga2
 	name:    string
 	templates: [string, ...]
 	arguments?: [_]: string
+	id?: string
 }
 #Icinga2HostResource: {
 	address:       string
 	check_command: string
 	hostname:      string
 	groups?: [string, ...]
+	id?: string
 	templates?: [string, ...]
 	vars?: [_]: string
 }
 #Icinga2HostgroupResource: {
 	display_name: string
 	name:         string
+	id?:          string
 }
 #Icinga2NotificationResource: {
 	command:      string
 	hostname:     string
+	id?:          string
 	interval?:    number
 	servicename?: string
 	templates?: [string, ...]
@@ -32,11 +36,14 @@ package icinga2
 	check_command: string
 	hostname:      string
 	name:          string
+	id?:           string
+	templates?: [string, ...]
 	vars?: [_]: string
 }
 #Icinga2UserResource: {
 	name:   string
 	email?: string
+	id?:    string
 }
 #Resources: {
 	icinga2_checkcommand?: [_]: #Icinga2CheckcommandResource

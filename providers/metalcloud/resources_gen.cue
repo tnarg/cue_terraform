@@ -9,6 +9,7 @@ package metalcloud
 	await_deploy_finished?:         bool
 	datacenter_name?:               string
 	hard_shutdown_after_timeout?:   bool
+	id?:                            string
 	keep_detaching_drives?:         bool
 	prevent_deploy?:                bool
 	skip_ansible?:                  bool
@@ -20,6 +21,7 @@ package metalcloud
 		instance_array_disk_count?:           number
 		instance_array_disk_size_mbytes?:     number
 		instance_array_firewall_managed?:     bool
+		instance_array_id?:                   number
 		instance_array_processor_core_count?: number
 		instance_array_processor_core_mhz?:   number
 		instance_array_processor_count?:      number
@@ -28,7 +30,9 @@ package metalcloud
 		drive_array?: [{
 			drive_array_label:          string
 			drive_array_storage_type:   string
+			drive_array_id?:            number
 			drive_size_mbytes_default?: number
+			instance_array_id?:         number
 			volume_template_id?:        number
 		}, ...]
 		firewall_rule?: [{
@@ -46,6 +50,7 @@ package metalcloud
 		interface?: [{
 			interface_index: number
 			network_label:   string
+			network_id?:     number
 		}, ...]
 	}, ...]
 	network?: [{

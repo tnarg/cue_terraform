@@ -3,6 +3,15 @@ package cloudstack
 
 #CloudstackTemplateDataSource: {
 	template_filter: string
+	account?:        string
+	created?:        string
+	display_text?:   string
+	format?:         string
+	hypervisor?:     string
+	id?:             string
+	name?:           string
+	size?:           string
+	template_id?:    string
 	filter?: [{
 		name:  string
 		value: string

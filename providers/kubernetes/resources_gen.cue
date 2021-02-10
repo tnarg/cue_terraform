@@ -2,10 +2,16 @@
 package kubernetes
 
 #KubernetesApiServiceResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		group:                     string
@@ -21,10 +27,47 @@ package kubernetes
 		}, ...]
 	}, ...]
 }
-#KubernetesClusterRoleResource: {
+#KubernetesCertificateSigningRequestResource: {
+	auto_approve?: bool
+	certificate?:  string
+	id?:           string
 	metadata?: [{
 		annotations?: [_]: string
-		labels?: [_]:      string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		request:      string
+		signer_name?: string
+		usages?: [string, ...]
+	}, ...]
+	timeouts?: create?: string
+}
+#KubernetesClusterRoleResource: {
+	id?: string
+	aggregation_rule?: [{
+		cluster_role_selectors?: [{
+			match_labels?: [_]: string
+			match_expressions?: [{
+				key?:      string
+				operator?: string
+				values?: [string, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	metadata?: [{
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	rule?: [{
 		verbs: [string, ...]
@@ -35,9 +78,15 @@ package kubernetes
 	}, ...]
 }
 #KubernetesClusterRoleBindingResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
-		labels?: [_]:      string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	role_ref?: [{
 		api_group: string
@@ -47,25 +96,38 @@ package kubernetes
 	subject?: [{
 		kind:       string
 		name:       string
+		api_group?: string
 		namespace?: string
 	}, ...]
 }
 #KubernetesConfigMapResource: {
 	binary_data?: [_]: string
 	data?: [_]:        string
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 }
 #KubernetesCronJobResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		schedule:                       string
@@ -78,7 +140,12 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
+				name?:             string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
 			}, ...]
 			spec?: [{
 				active_deadline_seconds?:    number
@@ -99,18 +166,27 @@ package kubernetes
 					metadata?: [{
 						annotations?: [_]: string
 						generate_name?: string
+						generation?:    number
 						labels?: [_]: string
+						name?:             string
+						resource_version?: string
+						self_link?:        string
+						uid?:              string
 					}, ...]
 					spec?: [{
 						active_deadline_seconds?:         number
 						automount_service_account_token?: bool
 						dns_policy?:                      string
+						enable_service_links?:            bool
 						host_ipc?:                        bool
 						host_network?:                    bool
 						host_pid?:                        bool
+						hostname?:                        string
+						node_name?:                       string
 						node_selector?: [_]: string
 						priority_class_name?:              string
 						restart_policy?:                   string
+						service_account_name?:             string
 						share_process_namespace?:          bool
 						subdomain?:                        string
 						termination_grace_period_seconds?: number
@@ -199,19 +275,22 @@ package kubernetes
 							name: string
 							args?: [string, ...]
 							command?: [string, ...]
-							image?:                    string
-							stdin?:                    bool
-							stdin_once?:               bool
-							termination_message_path?: string
-							tty?:                      bool
-							working_dir?:              string
+							image?:                      string
+							image_pull_policy?:          string
+							stdin?:                      bool
+							stdin_once?:                 bool
+							termination_message_path?:   string
+							termination_message_policy?: string
+							tty?:                        bool
+							working_dir?:                string
 							env?: [{
 								name:   string
 								value?: string
 								value_from?: [{
 									config_map_key_ref?: [{
-										key?:  string
-										name?: string
+										key?:      string
+										name?:     string
+										optional?: bool
 									}, ...]
 									field_ref?: [{
 										api_version?: string
@@ -222,8 +301,9 @@ package kubernetes
 										container_name?: string
 									}, ...]
 									secret_key_ref?: [{
-										key?:  string
-										name?: string
+										key?:      string
+										name?:     string
+										optional?: bool
 									}, ...]
 								}, ...]
 							}, ...]
@@ -330,8 +410,14 @@ package kubernetes
 								}, ...]
 							}, ...]
 							resources?: [{
-								limits?: [{}, ...]
-								requests?: [{}, ...]
+								limits?: [{
+									cpu?:    string
+									memory?: string
+								}, ...]
+								requests?: [{
+									cpu?:    string
+									memory?: string
+								}, ...]
 							}, ...]
 							security_context?: [{
 								allow_privilege_escalation?: bool
@@ -401,19 +487,22 @@ package kubernetes
 							name: string
 							args?: [string, ...]
 							command?: [string, ...]
-							image?:                    string
-							stdin?:                    bool
-							stdin_once?:               bool
-							termination_message_path?: string
-							tty?:                      bool
-							working_dir?:              string
+							image?:                      string
+							image_pull_policy?:          string
+							stdin?:                      bool
+							stdin_once?:                 bool
+							termination_message_path?:   string
+							termination_message_policy?: string
+							tty?:                        bool
+							working_dir?:                string
 							env?: [{
 								name:   string
 								value?: string
 								value_from?: [{
 									config_map_key_ref?: [{
-										key?:  string
-										name?: string
+										key?:      string
+										name?:     string
+										optional?: bool
 									}, ...]
 									field_ref?: [{
 										api_version?: string
@@ -424,8 +513,9 @@ package kubernetes
 										container_name?: string
 									}, ...]
 									secret_key_ref?: [{
-										key?:  string
-										name?: string
+										key?:      string
+										name?:     string
+										optional?: bool
 									}, ...]
 								}, ...]
 							}, ...]
@@ -532,8 +622,14 @@ package kubernetes
 								}, ...]
 							}, ...]
 							resources?: [{
-								limits?: [{}, ...]
-								requests?: [{}, ...]
+								limits?: [{
+									cpu?:    string
+									memory?: string
+								}, ...]
+								requests?: [{
+									cpu?:    string
+									memory?: string
+								}, ...]
 							}, ...]
 							security_context?: [{
 								allow_privilege_escalation?: bool
@@ -584,6 +680,9 @@ package kubernetes
 								sub_path?:          string
 							}, ...]
 						}, ...]
+						readiness_gate?: [{
+							condition_type: string
+						}, ...]
 						security_context?: [{
 							fs_group?:        number
 							run_as_group?:    number
@@ -595,6 +694,10 @@ package kubernetes
 								role?:  string
 								type?:  string
 								user?:  string
+							}, ...]
+							sysctl?: [{
+								name:  string
+								value: string
 							}, ...]
 						}, ...]
 						toleration?: [{
@@ -617,6 +720,7 @@ package kubernetes
 								data_disk_uri: string
 								disk_name:     string
 								fs_type?:      string
+								kind?:         string
 								read_only?:    bool
 							}, ...]
 							azure_file?: [{
@@ -631,7 +735,8 @@ package kubernetes
 								secret_file?: string
 								user?:        string
 								secret_ref?: [{
-									name?: string
+									name?:      string
+									namespace?: string
 								}, ...]
 							}, ...]
 							cinder?: [{
@@ -642,10 +747,34 @@ package kubernetes
 							config_map?: [{
 								default_mode?: string
 								name?:         string
+								optional?:     bool
 								items?: [{
 									key?:  string
 									mode?: string
 									path?: string
+								}, ...]
+							}, ...]
+							csi?: [{
+								driver:        string
+								volume_handle: string
+								fs_type?:      string
+								read_only?:    bool
+								volume_attributes?: [_]: string
+								controller_expand_secret_ref?: [{
+									name?:      string
+									namespace?: string
+								}, ...]
+								controller_publish_secret_ref?: [{
+									name?:      string
+									namespace?: string
+								}, ...]
+								node_publish_secret_ref?: [{
+									name?:      string
+									namespace?: string
+								}, ...]
+								node_stage_secret_ref?: [{
+									name?:      string
+									namespace?: string
 								}, ...]
 							}, ...]
 							downward_api?: [{
@@ -665,7 +794,8 @@ package kubernetes
 								}, ...]
 							}, ...]
 							empty_dir?: [{
-								medium?: string
+								medium?:     string
+								size_limit?: string
 							}, ...]
 							fc?: [{
 								lun: number
@@ -679,7 +809,8 @@ package kubernetes
 								options?: [_]: string
 								read_only?: bool
 								secret_ref?: [{
-									name?: string
+									name?:      string
+									namespace?: string
 								}, ...]
 							}, ...]
 							flocker?: [{
@@ -730,6 +861,49 @@ package kubernetes
 								pd_id:    string
 								fs_type?: string
 							}, ...]
+							projected?: [{
+								default_mode?: string
+								sources?: [{
+									config_map?: [{
+										name?:     string
+										optional?: bool
+										items?: [{
+											key?:  string
+											mode?: string
+											path?: string
+										}, ...]
+									}, ...]
+									downward_api?: [{
+										items?: [{
+											path:  string
+											mode?: string
+											field_ref?: [{
+												api_version?: string
+												field_path?:  string
+											}, ...]
+											resource_field_ref?: [{
+												container_name: string
+												resource:       string
+												quantity?:      string
+											}, ...]
+										}, ...]
+									}, ...]
+									secret?: [{
+										name?:     string
+										optional?: bool
+										items?: [{
+											key?:  string
+											mode?: string
+											path?: string
+										}, ...]
+									}, ...]
+									service_account_token?: [{
+										path:                string
+										audience?:           string
+										expiration_seconds?: number
+									}, ...]
+								}, ...]
+							}, ...]
 							quobyte?: [{
 								registry:   string
 								volume:     string
@@ -741,11 +915,13 @@ package kubernetes
 								ceph_monitors: [string, ...]
 								rbd_image:   string
 								fs_type?:    string
+								keyring?:    string
 								rados_user?: string
 								rbd_pool?:   string
 								read_only?:  bool
 								secret_ref?: [{
-									name?: string
+									name?:      string
+									namespace?: string
 								}, ...]
 							}, ...]
 							secret?: [{
@@ -770,12 +946,36 @@ package kubernetes
 	}, ...]
 	timeouts?: delete?: string
 }
-#KubernetesDaemonsetResource: {
+#KubernetesCsiDriverResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		attach_required:    bool
+		pod_info_on_mount?: bool
+		volume_lifecycle_modes?: [string, ...]
+	}, ...]
+}
+#KubernetesDaemonsetResource: {
+	id?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		min_ready_seconds?:      number
@@ -798,18 +998,27 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
+				name?:             string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
 			}, ...]
 			spec?: [{
 				active_deadline_seconds?:         number
 				automount_service_account_token?: bool
 				dns_policy?:                      string
+				enable_service_links?:            bool
 				host_ipc?:                        bool
 				host_network?:                    bool
 				host_pid?:                        bool
+				hostname?:                        string
+				node_name?:                       string
 				node_selector?: [_]: string
 				priority_class_name?:              string
 				restart_policy?:                   string
+				service_account_name?:             string
 				share_process_namespace?:          bool
 				subdomain?:                        string
 				termination_grace_period_seconds?: number
@@ -898,19 +1107,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -921,8 +1133,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -1029,8 +1242,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -1100,19 +1319,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -1123,8 +1345,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -1231,8 +1454,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -1283,6 +1512,9 @@ package kubernetes
 						sub_path?:          string
 					}, ...]
 				}, ...]
+				readiness_gate?: [{
+					condition_type: string
+				}, ...]
 				security_context?: [{
 					fs_group?:        number
 					run_as_group?:    number
@@ -1294,6 +1526,10 @@ package kubernetes
 						role?:  string
 						type?:  string
 						user?:  string
+					}, ...]
+					sysctl?: [{
+						name:  string
+						value: string
 					}, ...]
 				}, ...]
 				toleration?: [{
@@ -1316,6 +1552,7 @@ package kubernetes
 						data_disk_uri: string
 						disk_name:     string
 						fs_type?:      string
+						kind?:         string
 						read_only?:    bool
 					}, ...]
 					azure_file?: [{
@@ -1330,7 +1567,8 @@ package kubernetes
 						secret_file?: string
 						user?:        string
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					cinder?: [{
@@ -1341,10 +1579,34 @@ package kubernetes
 					config_map?: [{
 						default_mode?: string
 						name?:         string
+						optional?:     bool
 						items?: [{
 							key?:  string
 							mode?: string
 							path?: string
+						}, ...]
+					}, ...]
+					csi?: [{
+						driver:        string
+						volume_handle: string
+						fs_type?:      string
+						read_only?:    bool
+						volume_attributes?: [_]: string
+						controller_expand_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						controller_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_stage_secret_ref?: [{
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					downward_api?: [{
@@ -1364,7 +1626,8 @@ package kubernetes
 						}, ...]
 					}, ...]
 					empty_dir?: [{
-						medium?: string
+						medium?:     string
+						size_limit?: string
 					}, ...]
 					fc?: [{
 						lun: number
@@ -1378,7 +1641,8 @@ package kubernetes
 						options?: [_]: string
 						read_only?: bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					flocker?: [{
@@ -1429,6 +1693,49 @@ package kubernetes
 						pd_id:    string
 						fs_type?: string
 					}, ...]
+					projected?: [{
+						default_mode?: string
+						sources?: [{
+							config_map?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							downward_api?: [{
+								items?: [{
+									path:  string
+									mode?: string
+									field_ref?: [{
+										api_version?: string
+										field_path?:  string
+									}, ...]
+									resource_field_ref?: [{
+										container_name: string
+										resource:       string
+										quantity?:      string
+									}, ...]
+								}, ...]
+							}, ...]
+							secret?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							service_account_token?: [{
+								path:                string
+								audience?:           string
+								expiration_seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
 					quobyte?: [{
 						registry:   string
 						volume:     string
@@ -1440,11 +1747,13 @@ package kubernetes
 						ceph_monitors: [string, ...]
 						rbd_image:   string
 						fs_type?:    string
+						keyring?:    string
 						rados_user?: string
 						rbd_pool?:   string
 						read_only?:  bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					secret?: [{
@@ -1471,12 +1780,41 @@ package kubernetes
 		update?: string
 	}
 }
+#KubernetesDefaultServiceAccountResource: {
+	automount_service_account_token?: bool
+	default_secret_name?:             string
+	id?:                              string
+	image_pull_secret?: [{
+		name?: string
+	}, ...]
+	metadata?: [{
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	secret?: [{
+		name?: string
+	}, ...]
+	timeouts?: create?: string
+}
 #KubernetesDeploymentResource: {
+	id?:               string
+	wait_for_rollout?: bool
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		min_ready_seconds?:         number
@@ -1503,19 +1841,28 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
-				namespace?: string
+				name?:             string
+				namespace?:        string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
 			}, ...]
 			spec?: [{
 				active_deadline_seconds?:         number
 				automount_service_account_token?: bool
 				dns_policy?:                      string
+				enable_service_links?:            bool
 				host_ipc?:                        bool
 				host_network?:                    bool
 				host_pid?:                        bool
+				hostname?:                        string
+				node_name?:                       string
 				node_selector?: [_]: string
 				priority_class_name?:              string
 				restart_policy?:                   string
+				service_account_name?:             string
 				share_process_namespace?:          bool
 				subdomain?:                        string
 				termination_grace_period_seconds?: number
@@ -1604,19 +1951,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -1627,8 +1977,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -1735,8 +2086,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -1806,19 +2163,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -1829,8 +2189,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -1937,8 +2298,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -1989,6 +2356,9 @@ package kubernetes
 						sub_path?:          string
 					}, ...]
 				}, ...]
+				readiness_gate?: [{
+					condition_type: string
+				}, ...]
 				security_context?: [{
 					fs_group?:        number
 					run_as_group?:    number
@@ -2000,6 +2370,10 @@ package kubernetes
 						role?:  string
 						type?:  string
 						user?:  string
+					}, ...]
+					sysctl?: [{
+						name:  string
+						value: string
 					}, ...]
 				}, ...]
 				toleration?: [{
@@ -2022,6 +2396,7 @@ package kubernetes
 						data_disk_uri: string
 						disk_name:     string
 						fs_type?:      string
+						kind?:         string
 						read_only?:    bool
 					}, ...]
 					azure_file?: [{
@@ -2036,7 +2411,8 @@ package kubernetes
 						secret_file?: string
 						user?:        string
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					cinder?: [{
@@ -2047,10 +2423,34 @@ package kubernetes
 					config_map?: [{
 						default_mode?: string
 						name?:         string
+						optional?:     bool
 						items?: [{
 							key?:  string
 							mode?: string
 							path?: string
+						}, ...]
+					}, ...]
+					csi?: [{
+						driver:        string
+						volume_handle: string
+						fs_type?:      string
+						read_only?:    bool
+						volume_attributes?: [_]: string
+						controller_expand_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						controller_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_stage_secret_ref?: [{
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					downward_api?: [{
@@ -2070,7 +2470,8 @@ package kubernetes
 						}, ...]
 					}, ...]
 					empty_dir?: [{
-						medium?: string
+						medium?:     string
+						size_limit?: string
 					}, ...]
 					fc?: [{
 						lun: number
@@ -2084,7 +2485,8 @@ package kubernetes
 						options?: [_]: string
 						read_only?: bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					flocker?: [{
@@ -2135,6 +2537,49 @@ package kubernetes
 						pd_id:    string
 						fs_type?: string
 					}, ...]
+					projected?: [{
+						default_mode?: string
+						sources?: [{
+							config_map?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							downward_api?: [{
+								items?: [{
+									path:  string
+									mode?: string
+									field_ref?: [{
+										api_version?: string
+										field_path?:  string
+									}, ...]
+									resource_field_ref?: [{
+										container_name: string
+										resource:       string
+										quantity?:      string
+									}, ...]
+								}, ...]
+							}, ...]
+							secret?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							service_account_token?: [{
+								path:                string
+								audience?:           string
+								expiration_seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
 					quobyte?: [{
 						registry:   string
 						volume:     string
@@ -2146,11 +2591,13 @@ package kubernetes
 						ceph_monitors: [string, ...]
 						rbd_image:   string
 						fs_type?:    string
+						keyring?:    string
 						rados_user?: string
 						rbd_pool?:   string
 						read_only?:  bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					secret?: [{
@@ -2178,11 +2625,17 @@ package kubernetes
 	}
 }
 #KubernetesEndpointsResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	subset?: [{
 		address?: [{
@@ -2203,15 +2656,22 @@ package kubernetes
 	}, ...]
 }
 #KubernetesHorizontalPodAutoscalerResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
-		max_replicas:  number
-		min_replicas?: number
+		max_replicas:                       number
+		min_replicas?:                      number
+		target_cpu_utilization_percentage?: number
 		metric?: [{
 			type: string
 			external?: [{
@@ -2294,16 +2754,27 @@ package kubernetes
 	}, ...]
 }
 #KubernetesIngressResource: {
+	id?: string
+	load_balancer_ingress?: [{
+		hostname: string
+		ip:       string
+	}, ...]
 	wait_for_load_balancer?: bool
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		backend?: [{
 			service_name?: string
+			service_port?: string
 		}, ...]
 		rule?: [{
 			host?: string
@@ -2312,6 +2783,7 @@ package kubernetes
 					path?: string
 					backend?: [{
 						service_name?: string
+						service_port?: string
 					}, ...]
 				}, ...]
 			}, ...]
@@ -2323,10 +2795,18 @@ package kubernetes
 	}, ...]
 }
 #KubernetesJobResource: {
+	id?:                  string
+	wait_for_completion?: bool
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
-		namespace?:     string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		active_deadline_seconds?:    number
@@ -2347,18 +2827,27 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
+				name?:             string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
 			}, ...]
 			spec?: [{
 				active_deadline_seconds?:         number
 				automount_service_account_token?: bool
 				dns_policy?:                      string
+				enable_service_links?:            bool
 				host_ipc?:                        bool
 				host_network?:                    bool
 				host_pid?:                        bool
+				hostname?:                        string
+				node_name?:                       string
 				node_selector?: [_]: string
 				priority_class_name?:              string
 				restart_policy?:                   string
+				service_account_name?:             string
 				share_process_namespace?:          bool
 				subdomain?:                        string
 				termination_grace_period_seconds?: number
@@ -2447,19 +2936,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -2470,8 +2962,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -2578,8 +3071,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -2649,19 +3148,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -2672,8 +3174,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -2780,8 +3283,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -2832,6 +3341,9 @@ package kubernetes
 						sub_path?:          string
 					}, ...]
 				}, ...]
+				readiness_gate?: [{
+					condition_type: string
+				}, ...]
 				security_context?: [{
 					fs_group?:        number
 					run_as_group?:    number
@@ -2843,6 +3355,10 @@ package kubernetes
 						role?:  string
 						type?:  string
 						user?:  string
+					}, ...]
+					sysctl?: [{
+						name:  string
+						value: string
 					}, ...]
 				}, ...]
 				toleration?: [{
@@ -2865,6 +3381,7 @@ package kubernetes
 						data_disk_uri: string
 						disk_name:     string
 						fs_type?:      string
+						kind?:         string
 						read_only?:    bool
 					}, ...]
 					azure_file?: [{
@@ -2879,7 +3396,8 @@ package kubernetes
 						secret_file?: string
 						user?:        string
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					cinder?: [{
@@ -2890,10 +3408,34 @@ package kubernetes
 					config_map?: [{
 						default_mode?: string
 						name?:         string
+						optional?:     bool
 						items?: [{
 							key?:  string
 							mode?: string
 							path?: string
+						}, ...]
+					}, ...]
+					csi?: [{
+						driver:        string
+						volume_handle: string
+						fs_type?:      string
+						read_only?:    bool
+						volume_attributes?: [_]: string
+						controller_expand_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						controller_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_stage_secret_ref?: [{
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					downward_api?: [{
@@ -2913,7 +3455,8 @@ package kubernetes
 						}, ...]
 					}, ...]
 					empty_dir?: [{
-						medium?: string
+						medium?:     string
+						size_limit?: string
 					}, ...]
 					fc?: [{
 						lun: number
@@ -2927,7 +3470,8 @@ package kubernetes
 						options?: [_]: string
 						read_only?: bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					flocker?: [{
@@ -2978,6 +3522,49 @@ package kubernetes
 						pd_id:    string
 						fs_type?: string
 					}, ...]
+					projected?: [{
+						default_mode?: string
+						sources?: [{
+							config_map?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							downward_api?: [{
+								items?: [{
+									path:  string
+									mode?: string
+									field_ref?: [{
+										api_version?: string
+										field_path?:  string
+									}, ...]
+									resource_field_ref?: [{
+										container_name: string
+										resource:       string
+										quantity?:      string
+									}, ...]
+								}, ...]
+							}, ...]
+							secret?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							service_account_token?: [{
+								path:                string
+								audience?:           string
+								expiration_seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
 					quobyte?: [{
 						registry:   string
 						volume:     string
@@ -2989,11 +3576,13 @@ package kubernetes
 						ceph_monitors: [string, ...]
 						rbd_image:   string
 						fs_type?:    string
+						keyring?:    string
 						rados_user?: string
 						rbd_pool?:   string
 						read_only?:  bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					secret?: [{
@@ -3014,18 +3603,29 @@ package kubernetes
 			}, ...]
 		}, ...]
 	}, ...]
-	timeouts?: delete?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
 }
 #KubernetesLimitRangeResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		limit?: [{
 			default?: [_]:                 string
+			default_request?: [_]:         string
 			max?: [_]:                     string
 			max_limit_request_ratio?: [_]: string
 			min?: [_]:                     string
@@ -3034,10 +3634,16 @@ package kubernetes
 	}, ...]
 }
 #KubernetesMutatingWebhookConfigurationResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	webhook?: [{
 		name: string
@@ -3083,19 +3689,31 @@ package kubernetes
 	}, ...]
 }
 #KubernetesNamespaceResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	timeouts?: delete?: string
 }
 #KubernetesNetworkPolicyResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		policy_types: [string, ...]
@@ -3166,9 +3784,15 @@ package kubernetes
 	}, ...]
 }
 #KubernetesPersistentVolumeResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
-		labels?: [_]:      string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		access_modes: [string, ...]
@@ -3176,6 +3800,7 @@ package kubernetes
 		mount_options?: [string, ...]
 		persistent_volume_reclaim_policy?: string
 		storage_class_name?:               string
+		volume_mode?:                      string
 		node_affinity?: [{
 			required?: [{
 				node_selector_term?: [{
@@ -3204,6 +3829,7 @@ package kubernetes
 				data_disk_uri: string
 				disk_name:     string
 				fs_type?:      string
+				kind?:         string
 				read_only?:    bool
 			}, ...]
 			azure_file?: [{
@@ -3218,13 +3844,37 @@ package kubernetes
 				secret_file?: string
 				user?:        string
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			cinder?: [{
 				volume_id:  string
 				fs_type?:   string
 				read_only?: bool
+			}, ...]
+			csi?: [{
+				driver:        string
+				volume_handle: string
+				fs_type?:      string
+				read_only?:    bool
+				volume_attributes?: [_]: string
+				controller_expand_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				controller_publish_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				node_publish_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				node_stage_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
 			}, ...]
 			fc?: [{
 				lun: number
@@ -3238,7 +3888,8 @@ package kubernetes
 				options?: [_]: string
 				read_only?: bool
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			flocker?: [{
@@ -3291,11 +3942,13 @@ package kubernetes
 				ceph_monitors: [string, ...]
 				rbd_image:   string
 				fs_type?:    string
+				keyring?:    string
 				rados_user?: string
 				rbd_pool?:   string
 				read_only?:  bool
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			vsphere_volume?: [{
@@ -3307,15 +3960,23 @@ package kubernetes
 	timeouts?: create?: string
 }
 #KubernetesPersistentVolumeClaimResource: {
+	id?:               string
 	wait_until_bound?: bool
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		access_modes: [string, ...]
+		storage_class_name?: string
+		volume_name?:        string
 		resources?: [{
 			limits?: [_]:   string
 			requests?: [_]: string
@@ -3332,22 +3993,32 @@ package kubernetes
 	timeouts?: create?: string
 }
 #KubernetesPodResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		active_deadline_seconds?:         number
 		automount_service_account_token?: bool
 		dns_policy?:                      string
+		enable_service_links?:            bool
 		host_ipc?:                        bool
 		host_network?:                    bool
 		host_pid?:                        bool
+		hostname?:                        string
+		node_name?:                       string
 		node_selector?: [_]: string
 		priority_class_name?:              string
 		restart_policy?:                   string
+		service_account_name?:             string
 		share_process_namespace?:          bool
 		subdomain?:                        string
 		termination_grace_period_seconds?: number
@@ -3436,19 +4107,22 @@ package kubernetes
 			name: string
 			args?: [string, ...]
 			command?: [string, ...]
-			image?:                    string
-			stdin?:                    bool
-			stdin_once?:               bool
-			termination_message_path?: string
-			tty?:                      bool
-			working_dir?:              string
+			image?:                      string
+			image_pull_policy?:          string
+			stdin?:                      bool
+			stdin_once?:                 bool
+			termination_message_path?:   string
+			termination_message_policy?: string
+			tty?:                        bool
+			working_dir?:                string
 			env?: [{
 				name:   string
 				value?: string
 				value_from?: [{
 					config_map_key_ref?: [{
-						key?:  string
-						name?: string
+						key?:      string
+						name?:     string
+						optional?: bool
 					}, ...]
 					field_ref?: [{
 						api_version?: string
@@ -3459,8 +4133,9 @@ package kubernetes
 						container_name?: string
 					}, ...]
 					secret_key_ref?: [{
-						key?:  string
-						name?: string
+						key?:      string
+						name?:     string
+						optional?: bool
 					}, ...]
 				}, ...]
 			}, ...]
@@ -3567,8 +4242,14 @@ package kubernetes
 				}, ...]
 			}, ...]
 			resources?: [{
-				limits?: [{}, ...]
-				requests?: [{}, ...]
+				limits?: [{
+					cpu?:    string
+					memory?: string
+				}, ...]
+				requests?: [{
+					cpu?:    string
+					memory?: string
+				}, ...]
 			}, ...]
 			security_context?: [{
 				allow_privilege_escalation?: bool
@@ -3638,19 +4319,22 @@ package kubernetes
 			name: string
 			args?: [string, ...]
 			command?: [string, ...]
-			image?:                    string
-			stdin?:                    bool
-			stdin_once?:               bool
-			termination_message_path?: string
-			tty?:                      bool
-			working_dir?:              string
+			image?:                      string
+			image_pull_policy?:          string
+			stdin?:                      bool
+			stdin_once?:                 bool
+			termination_message_path?:   string
+			termination_message_policy?: string
+			tty?:                        bool
+			working_dir?:                string
 			env?: [{
 				name:   string
 				value?: string
 				value_from?: [{
 					config_map_key_ref?: [{
-						key?:  string
-						name?: string
+						key?:      string
+						name?:     string
+						optional?: bool
 					}, ...]
 					field_ref?: [{
 						api_version?: string
@@ -3661,8 +4345,9 @@ package kubernetes
 						container_name?: string
 					}, ...]
 					secret_key_ref?: [{
-						key?:  string
-						name?: string
+						key?:      string
+						name?:     string
+						optional?: bool
 					}, ...]
 				}, ...]
 			}, ...]
@@ -3769,8 +4454,14 @@ package kubernetes
 				}, ...]
 			}, ...]
 			resources?: [{
-				limits?: [{}, ...]
-				requests?: [{}, ...]
+				limits?: [{
+					cpu?:    string
+					memory?: string
+				}, ...]
+				requests?: [{
+					cpu?:    string
+					memory?: string
+				}, ...]
 			}, ...]
 			security_context?: [{
 				allow_privilege_escalation?: bool
@@ -3821,6 +4512,9 @@ package kubernetes
 				sub_path?:          string
 			}, ...]
 		}, ...]
+		readiness_gate?: [{
+			condition_type: string
+		}, ...]
 		security_context?: [{
 			fs_group?:        number
 			run_as_group?:    number
@@ -3832,6 +4526,10 @@ package kubernetes
 				role?:  string
 				type?:  string
 				user?:  string
+			}, ...]
+			sysctl?: [{
+				name:  string
+				value: string
 			}, ...]
 		}, ...]
 		toleration?: [{
@@ -3854,6 +4552,7 @@ package kubernetes
 				data_disk_uri: string
 				disk_name:     string
 				fs_type?:      string
+				kind?:         string
 				read_only?:    bool
 			}, ...]
 			azure_file?: [{
@@ -3868,7 +4567,8 @@ package kubernetes
 				secret_file?: string
 				user?:        string
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			cinder?: [{
@@ -3879,10 +4579,34 @@ package kubernetes
 			config_map?: [{
 				default_mode?: string
 				name?:         string
+				optional?:     bool
 				items?: [{
 					key?:  string
 					mode?: string
 					path?: string
+				}, ...]
+			}, ...]
+			csi?: [{
+				driver:        string
+				volume_handle: string
+				fs_type?:      string
+				read_only?:    bool
+				volume_attributes?: [_]: string
+				controller_expand_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				controller_publish_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				node_publish_secret_ref?: [{
+					name?:      string
+					namespace?: string
+				}, ...]
+				node_stage_secret_ref?: [{
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			downward_api?: [{
@@ -3902,7 +4626,8 @@ package kubernetes
 				}, ...]
 			}, ...]
 			empty_dir?: [{
-				medium?: string
+				medium?:     string
+				size_limit?: string
 			}, ...]
 			fc?: [{
 				lun: number
@@ -3916,7 +4641,8 @@ package kubernetes
 				options?: [_]: string
 				read_only?: bool
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			flocker?: [{
@@ -3967,6 +4693,49 @@ package kubernetes
 				pd_id:    string
 				fs_type?: string
 			}, ...]
+			projected?: [{
+				default_mode?: string
+				sources?: [{
+					config_map?: [{
+						name?:     string
+						optional?: bool
+						items?: [{
+							key?:  string
+							mode?: string
+							path?: string
+						}, ...]
+					}, ...]
+					downward_api?: [{
+						items?: [{
+							path:  string
+							mode?: string
+							field_ref?: [{
+								api_version?: string
+								field_path?:  string
+							}, ...]
+							resource_field_ref?: [{
+								container_name: string
+								resource:       string
+								quantity?:      string
+							}, ...]
+						}, ...]
+					}, ...]
+					secret?: [{
+						name?:     string
+						optional?: bool
+						items?: [{
+							key?:  string
+							mode?: string
+							path?: string
+						}, ...]
+					}, ...]
+					service_account_token?: [{
+						path:                string
+						audience?:           string
+						expiration_seconds?: number
+					}, ...]
+				}, ...]
+			}, ...]
 			quobyte?: [{
 				registry:   string
 				volume:     string
@@ -3978,11 +4747,13 @@ package kubernetes
 				ceph_monitors: [string, ...]
 				rbd_image:   string
 				fs_type?:    string
+				keyring?:    string
 				rados_user?: string
 				rbd_pool?:   string
 				read_only?:  bool
 				secret_ref?: [{
-					name?: string
+					name?:      string
+					namespace?: string
 				}, ...]
 			}, ...]
 			secret?: [{
@@ -4007,11 +4778,17 @@ package kubernetes
 	}
 }
 #KubernetesPodDisruptionBudgetResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		max_unavailable?: string
@@ -4026,30 +4803,132 @@ package kubernetes
 		}, ...]
 	}, ...]
 }
+#KubernetesPodSecurityPolicyResource: {
+	id?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		allow_privilege_escalation?: bool
+		allowed_capabilities?: [string, ...]
+		allowed_proc_mount_types?: [string, ...]
+		allowed_unsafe_sysctls?: [string, ...]
+		default_add_capabilities?: [string, ...]
+		default_allow_privilege_escalation?: bool
+		forbidden_sysctls?: [string, ...]
+		host_ipc?:                  bool
+		host_network?:              bool
+		host_pid?:                  bool
+		privileged?:                bool
+		read_only_root_filesystem?: bool
+		required_drop_capabilities?: [string, ...]
+		volumes?: [string, ...]
+		allowed_flex_volumes?: [{
+			driver: string
+		}, ...]
+		allowed_host_paths?: [{
+			path_prefix: string
+			read_only?:  bool
+		}, ...]
+		fs_group?: [{
+			rule: string
+			range?: [{
+				max: number
+				min: number
+			}, ...]
+		}, ...]
+		host_ports?: [{
+			max: number
+			min: number
+		}, ...]
+		run_as_group?: [{
+			rule: string
+			range?: [{
+				max: number
+				min: number
+			}, ...]
+		}, ...]
+		run_as_user?: [{
+			rule: string
+			range?: [{
+				max: number
+				min: number
+			}, ...]
+		}, ...]
+		se_linux?: [{
+			rule: string
+			se_linux_options?: [{
+				level: string
+				role:  string
+				type:  string
+				user:  string
+			}, ...]
+		}, ...]
+		supplemental_groups?: [{
+			rule: string
+			range?: [{
+				max: number
+				min: number
+			}, ...]
+		}, ...]
+	}, ...]
+}
 #KubernetesPriorityClassResource: {
 	value:           number
 	description?:    string
 	global_default?: bool
+	id?:             string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 }
 #KubernetesReplicationControllerResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
-		namespace?: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	spec?: [{
 		selector: [_]: string
 		min_ready_seconds?: number
 		replicas?:          number
 		template?: [{
+			active_deadline_seconds?:         number
 			automount_service_account_token?: bool
-			share_process_namespace?:         bool
+			dns_policy?:                      string
+			enable_service_links?:            bool
+			host_ipc?:                        bool
+			host_network?:                    bool
+			host_pid?:                        bool
+			hostname?:                        string
+			node_name?:                       string
+			node_selector?: [_]: string
+			priority_class_name?:              string
+			restart_policy?:                   string
+			service_account_name?:             string
+			share_process_namespace?:          bool
+			subdomain?:                        string
+			termination_grace_period_seconds?: number
 			affinity?: [{
 				node_affinity?: [{
 					preferred_during_scheduling_ignored_during_execution?: [{
@@ -4135,19 +5014,22 @@ package kubernetes
 				name: string
 				args?: [string, ...]
 				command?: [string, ...]
-				image?:                    string
-				stdin?:                    bool
-				stdin_once?:               bool
-				termination_message_path?: string
-				tty?:                      bool
-				working_dir?:              string
+				image?:                      string
+				image_pull_policy?:          string
+				stdin?:                      bool
+				stdin_once?:                 bool
+				termination_message_path?:   string
+				termination_message_policy?: string
+				tty?:                        bool
+				working_dir?:                string
 				env?: [{
 					name:   string
 					value?: string
 					value_from?: [{
 						config_map_key_ref?: [{
-							key?:  string
-							name?: string
+							key?:      string
+							name?:     string
+							optional?: bool
 						}, ...]
 						field_ref?: [{
 							api_version?: string
@@ -4158,8 +5040,9 @@ package kubernetes
 							container_name?: string
 						}, ...]
 						secret_key_ref?: [{
-							key?:  string
-							name?: string
+							key?:      string
+							name?:     string
+							optional?: bool
 						}, ...]
 					}, ...]
 				}, ...]
@@ -4266,8 +5149,14 @@ package kubernetes
 					}, ...]
 				}, ...]
 				resources?: [{
-					limits?: [{}, ...]
-					requests?: [{}, ...]
+					limits?: [{
+						cpu?:    string
+						memory?: string
+					}, ...]
+					requests?: [{
+						cpu?:    string
+						memory?: string
+					}, ...]
 				}, ...]
 				security_context?: [{
 					allow_privilege_escalation?: bool
@@ -4337,19 +5226,22 @@ package kubernetes
 				name: string
 				args?: [string, ...]
 				command?: [string, ...]
-				image?:                    string
-				stdin?:                    bool
-				stdin_once?:               bool
-				termination_message_path?: string
-				tty?:                      bool
-				working_dir?:              string
+				image?:                      string
+				image_pull_policy?:          string
+				stdin?:                      bool
+				stdin_once?:                 bool
+				termination_message_path?:   string
+				termination_message_policy?: string
+				tty?:                        bool
+				working_dir?:                string
 				env?: [{
 					name:   string
 					value?: string
 					value_from?: [{
 						config_map_key_ref?: [{
-							key?:  string
-							name?: string
+							key?:      string
+							name?:     string
+							optional?: bool
 						}, ...]
 						field_ref?: [{
 							api_version?: string
@@ -4360,8 +5252,9 @@ package kubernetes
 							container_name?: string
 						}, ...]
 						secret_key_ref?: [{
-							key?:  string
-							name?: string
+							key?:      string
+							name?:     string
+							optional?: bool
 						}, ...]
 					}, ...]
 				}, ...]
@@ -4468,8 +5361,14 @@ package kubernetes
 					}, ...]
 				}, ...]
 				resources?: [{
-					limits?: [{}, ...]
-					requests?: [{}, ...]
+					limits?: [{
+						cpu?:    string
+						memory?: string
+					}, ...]
+					requests?: [{
+						cpu?:    string
+						memory?: string
+					}, ...]
 				}, ...]
 				security_context?: [{
 					allow_privilege_escalation?: bool
@@ -4523,8 +5422,16 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
-				namespace?: string
+				name?:             string
+				namespace?:        string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
+			}, ...]
+			readiness_gate?: [{
+				condition_type: string
 			}, ...]
 			security_context?: [{
 				fs_group?:        number
@@ -4538,965 +5445,25 @@ package kubernetes
 					type?:  string
 					user?:  string
 				}, ...]
-			}, ...]
-			spec?: [{
-				automount_service_account_token?: bool
-				share_process_namespace?:         bool
-				affinity?: [{
-					node_affinity?: [{
-						preferred_during_scheduling_ignored_during_execution?: [{
-							weight: number
-							preference?: [{
-								match_expressions?: [{
-									key?:      string
-									operator?: string
-									values?: [string, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-						required_during_scheduling_ignored_during_execution?: [{
-							node_selector_term?: [{
-								match_expressions?: [{
-									key?:      string
-									operator?: string
-									values?: [string, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-					}, ...]
-					pod_affinity?: [{
-						preferred_during_scheduling_ignored_during_execution?: [{
-							weight: number
-							pod_affinity_term?: [{
-								namespaces?: [string, ...]
-								topology_key?: string
-								label_selector?: [{
-									match_labels?: [_]: string
-									match_expressions?: [{
-										key?:      string
-										operator?: string
-										values?: [string, ...]
-									}, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-						required_during_scheduling_ignored_during_execution?: [{
-							namespaces?: [string, ...]
-							topology_key?: string
-							label_selector?: [{
-								match_labels?: [_]: string
-								match_expressions?: [{
-									key?:      string
-									operator?: string
-									values?: [string, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-					}, ...]
-					pod_anti_affinity?: [{
-						preferred_during_scheduling_ignored_during_execution?: [{
-							weight: number
-							pod_affinity_term?: [{
-								namespaces?: [string, ...]
-								topology_key?: string
-								label_selector?: [{
-									match_labels?: [_]: string
-									match_expressions?: [{
-										key?:      string
-										operator?: string
-										values?: [string, ...]
-									}, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-						required_during_scheduling_ignored_during_execution?: [{
-							namespaces?: [string, ...]
-							topology_key?: string
-							label_selector?: [{
-								match_labels?: [_]: string
-								match_expressions?: [{
-									key?:      string
-									operator?: string
-									values?: [string, ...]
-								}, ...]
-							}, ...]
-						}, ...]
-					}, ...]
+				sysctl?: [{
+					name:  string
+					value: string
 				}, ...]
-				container?: [{
-					name: string
-					args?: [string, ...]
-					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
-					env?: [{
-						name:   string
-						value?: string
-						value_from?: [{
-							config_map_key_ref?: [{
-								key?:  string
-								name?: string
-							}, ...]
-							field_ref?: [{
-								api_version?: string
-								field_path?:  string
-							}, ...]
-							resource_field_ref?: [{
-								resource:        string
-								container_name?: string
-							}, ...]
-							secret_key_ref?: [{
-								key?:  string
-								name?: string
-							}, ...]
-						}, ...]
-					}, ...]
-					env_from?: [{
-						prefix?: string
-						config_map_ref?: [{
-							name:      string
-							optional?: bool
-						}, ...]
-						secret_ref?: [{
-							name:      string
-							optional?: bool
-						}, ...]
-					}, ...]
-					lifecycle?: [{
-						post_start?: [{
-							exec?: [{
-								command?: [string, ...]
-							}, ...]
-							http_get?: [{
-								host?:   string
-								path?:   string
-								port?:   string
-								scheme?: string
-								http_header?: [{
-									name?:  string
-									value?: string
-								}, ...]
-							}, ...]
-							tcp_socket?: [{
-								port: string
-							}, ...]
-						}, ...]
-						pre_stop?: [{
-							exec?: [{
-								command?: [string, ...]
-							}, ...]
-							http_get?: [{
-								host?:   string
-								path?:   string
-								port?:   string
-								scheme?: string
-								http_header?: [{
-									name?:  string
-									value?: string
-								}, ...]
-							}, ...]
-							tcp_socket?: [{
-								port: string
-							}, ...]
-						}, ...]
-					}, ...]
-					liveness_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					port?: [{
-						container_port: number
-						host_ip?:       string
-						host_port?:     number
-						name?:          string
-						protocol?:      string
-					}, ...]
-					readiness_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
-					}, ...]
-					security_context?: [{
-						allow_privilege_escalation?: bool
-						privileged?:                 bool
-						read_only_root_filesystem?:  bool
-						run_as_group?:               number
-						run_as_non_root?:            bool
-						run_as_user?:                number
-						capabilities?: [{
-							add?: [string, ...]
-							drop?: [string, ...]
-						}, ...]
-						se_linux_options?: [{
-							level?: string
-							role?:  string
-							type?:  string
-							user?:  string
-						}, ...]
-					}, ...]
-					startup_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					volume_mount?: [{
-						mount_path:         string
-						name:               string
-						mount_propagation?: string
-						read_only?:         bool
-						sub_path?:          string
-					}, ...]
-				}, ...]
-				dns_config?: [{
-					nameservers?: [string, ...]
-					searches?: [string, ...]
-					option?: [{
-						name:   string
-						value?: string
-					}, ...]
-				}, ...]
-				host_aliases?: [{
-					hostnames: [string, ...]
-					ip: string
-				}, ...]
-				image_pull_secrets?: [{
-					name: string
-				}, ...]
-				init_container?: [{
-					name: string
-					args?: [string, ...]
-					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
-					env?: [{
-						name:   string
-						value?: string
-						value_from?: [{
-							config_map_key_ref?: [{
-								key?:  string
-								name?: string
-							}, ...]
-							field_ref?: [{
-								api_version?: string
-								field_path?:  string
-							}, ...]
-							resource_field_ref?: [{
-								resource:        string
-								container_name?: string
-							}, ...]
-							secret_key_ref?: [{
-								key?:  string
-								name?: string
-							}, ...]
-						}, ...]
-					}, ...]
-					env_from?: [{
-						prefix?: string
-						config_map_ref?: [{
-							name:      string
-							optional?: bool
-						}, ...]
-						secret_ref?: [{
-							name:      string
-							optional?: bool
-						}, ...]
-					}, ...]
-					lifecycle?: [{
-						post_start?: [{
-							exec?: [{
-								command?: [string, ...]
-							}, ...]
-							http_get?: [{
-								host?:   string
-								path?:   string
-								port?:   string
-								scheme?: string
-								http_header?: [{
-									name?:  string
-									value?: string
-								}, ...]
-							}, ...]
-							tcp_socket?: [{
-								port: string
-							}, ...]
-						}, ...]
-						pre_stop?: [{
-							exec?: [{
-								command?: [string, ...]
-							}, ...]
-							http_get?: [{
-								host?:   string
-								path?:   string
-								port?:   string
-								scheme?: string
-								http_header?: [{
-									name?:  string
-									value?: string
-								}, ...]
-							}, ...]
-							tcp_socket?: [{
-								port: string
-							}, ...]
-						}, ...]
-					}, ...]
-					liveness_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					port?: [{
-						container_port: number
-						host_ip?:       string
-						host_port?:     number
-						name?:          string
-						protocol?:      string
-					}, ...]
-					readiness_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
-					}, ...]
-					security_context?: [{
-						allow_privilege_escalation?: bool
-						privileged?:                 bool
-						read_only_root_filesystem?:  bool
-						run_as_group?:               number
-						run_as_non_root?:            bool
-						run_as_user?:                number
-						capabilities?: [{
-							add?: [string, ...]
-							drop?: [string, ...]
-						}, ...]
-						se_linux_options?: [{
-							level?: string
-							role?:  string
-							type?:  string
-							user?:  string
-						}, ...]
-					}, ...]
-					startup_probe?: [{
-						failure_threshold?:     number
-						initial_delay_seconds?: number
-						period_seconds?:        number
-						success_threshold?:     number
-						timeout_seconds?:       number
-						exec?: [{
-							command?: [string, ...]
-						}, ...]
-						http_get?: [{
-							host?:   string
-							path?:   string
-							port?:   string
-							scheme?: string
-							http_header?: [{
-								name?:  string
-								value?: string
-							}, ...]
-						}, ...]
-						tcp_socket?: [{
-							port: string
-						}, ...]
-					}, ...]
-					volume_mount?: [{
-						mount_path:         string
-						name:               string
-						mount_propagation?: string
-						read_only?:         bool
-						sub_path?:          string
-					}, ...]
-				}, ...]
-				security_context?: [{
-					fs_group?:        number
-					run_as_group?:    number
-					run_as_non_root?: bool
-					run_as_user?:     number
-					supplemental_groups?: [number, ...]
-					se_linux_options?: [{
-						level?: string
-						role?:  string
-						type?:  string
-						user?:  string
-					}, ...]
-				}, ...]
-				toleration?: [{
-					effect?:             string
-					key?:                string
-					operator?:           string
-					toleration_seconds?: string
-					value?:              string
-				}, ...]
-				volume?: [{
-					name?: string
-					aws_elastic_block_store?: [{
-						volume_id:  string
-						fs_type?:   string
-						partition?: number
-						read_only?: bool
-					}, ...]
-					azure_disk?: [{
-						caching_mode:  string
-						data_disk_uri: string
-						disk_name:     string
-						fs_type?:      string
-						read_only?:    bool
-					}, ...]
-					azure_file?: [{
-						secret_name: string
-						share_name:  string
-						read_only?:  bool
-					}, ...]
-					ceph_fs?: [{
-						monitors: [string, ...]
-						path?:        string
-						read_only?:   bool
-						secret_file?: string
-						user?:        string
-						secret_ref?: [{
-							name?: string
-						}, ...]
-					}, ...]
-					cinder?: [{
-						volume_id:  string
-						fs_type?:   string
-						read_only?: bool
-					}, ...]
-					config_map?: [{
-						default_mode?: string
-						name?:         string
-						items?: [{
-							key?:  string
-							mode?: string
-							path?: string
-						}, ...]
-					}, ...]
-					downward_api?: [{
-						default_mode?: string
-						items?: [{
-							path:  string
-							mode?: string
-							field_ref?: [{
-								api_version?: string
-								field_path?:  string
-							}, ...]
-							resource_field_ref?: [{
-								container_name: string
-								resource:       string
-								quantity?:      string
-							}, ...]
-						}, ...]
-					}, ...]
-					empty_dir?: [{
-						medium?: string
-					}, ...]
-					fc?: [{
-						lun: number
-						target_ww_ns: [string, ...]
-						fs_type?:   string
-						read_only?: bool
-					}, ...]
-					flex_volume?: [{
-						driver:   string
-						fs_type?: string
-						options?: [_]: string
-						read_only?: bool
-						secret_ref?: [{
-							name?: string
-						}, ...]
-					}, ...]
-					flocker?: [{
-						dataset_name?: string
-						dataset_uuid?: string
-					}, ...]
-					gce_persistent_disk?: [{
-						pd_name:    string
-						fs_type?:   string
-						partition?: number
-						read_only?: bool
-					}, ...]
-					git_repo?: [{
-						directory?:  string
-						repository?: string
-						revision?:   string
-					}, ...]
-					glusterfs?: [{
-						endpoints_name: string
-						path:           string
-						read_only?:     bool
-					}, ...]
-					host_path?: [{
-						path?: string
-						type?: string
-					}, ...]
-					iscsi?: [{
-						iqn:              string
-						target_portal:    string
-						fs_type?:         string
-						iscsi_interface?: string
-						lun?:             number
-						read_only?:       bool
-					}, ...]
-					local?: [{
-						path?: string
-					}, ...]
-					nfs?: [{
-						path:       string
-						server:     string
-						read_only?: bool
-					}, ...]
-					persistent_volume_claim?: [{
-						claim_name?: string
-						read_only?:  bool
-					}, ...]
-					photon_persistent_disk?: [{
-						pd_id:    string
-						fs_type?: string
-					}, ...]
-					quobyte?: [{
-						registry:   string
-						volume:     string
-						group?:     string
-						read_only?: bool
-						user?:      string
-					}, ...]
-					rbd?: [{
-						ceph_monitors: [string, ...]
-						rbd_image:   string
-						fs_type?:    string
-						rados_user?: string
-						rbd_pool?:   string
-						read_only?:  bool
-						secret_ref?: [{
-							name?: string
-						}, ...]
-					}, ...]
-					secret?: [{
-						default_mode?: string
-						optional?:     bool
-						secret_name?:  string
-						items?: [{
-							key?:  string
-							mode?: string
-							path?: string
-						}, ...]
-					}, ...]
-					vsphere_volume?: [{
-						volume_path: string
-						fs_type?:    string
-					}, ...]
-				}, ...]
-			}, ...]
-			toleration?: [{
-				effect?:             string
-				key?:                string
-				operator?:           string
-				toleration_seconds?: string
-				value?:              string
-			}, ...]
-			volume?: [{
-				name?: string
-				aws_elastic_block_store?: [{
-					volume_id:  string
-					fs_type?:   string
-					partition?: number
-					read_only?: bool
-				}, ...]
-				azure_disk?: [{
-					caching_mode:  string
-					data_disk_uri: string
-					disk_name:     string
-					fs_type?:      string
-					read_only?:    bool
-				}, ...]
-				azure_file?: [{
-					secret_name: string
-					share_name:  string
-					read_only?:  bool
-				}, ...]
-				ceph_fs?: [{
-					monitors: [string, ...]
-					path?:        string
-					read_only?:   bool
-					secret_file?: string
-					user?:        string
-					secret_ref?: [{
-						name?: string
-					}, ...]
-				}, ...]
-				cinder?: [{
-					volume_id:  string
-					fs_type?:   string
-					read_only?: bool
-				}, ...]
-				config_map?: [{
-					default_mode?: string
-					name?:         string
-					items?: [{
-						key?:  string
-						mode?: string
-						path?: string
-					}, ...]
-				}, ...]
-				downward_api?: [{
-					default_mode?: string
-					items?: [{
-						path:  string
-						mode?: string
-						field_ref?: [{
-							api_version?: string
-							field_path?:  string
-						}, ...]
-						resource_field_ref?: [{
-							container_name: string
-							resource:       string
-							quantity?:      string
-						}, ...]
-					}, ...]
-				}, ...]
-				empty_dir?: [{
-					medium?: string
-				}, ...]
-				fc?: [{
-					lun: number
-					target_ww_ns: [string, ...]
-					fs_type?:   string
-					read_only?: bool
-				}, ...]
-				flex_volume?: [{
-					driver:   string
-					fs_type?: string
-					options?: [_]: string
-					read_only?: bool
-					secret_ref?: [{
-						name?: string
-					}, ...]
-				}, ...]
-				flocker?: [{
-					dataset_name?: string
-					dataset_uuid?: string
-				}, ...]
-				gce_persistent_disk?: [{
-					pd_name:    string
-					fs_type?:   string
-					partition?: number
-					read_only?: bool
-				}, ...]
-				git_repo?: [{
-					directory?:  string
-					repository?: string
-					revision?:   string
-				}, ...]
-				glusterfs?: [{
-					endpoints_name: string
-					path:           string
-					read_only?:     bool
-				}, ...]
-				host_path?: [{
-					path?: string
-					type?: string
-				}, ...]
-				iscsi?: [{
-					iqn:              string
-					target_portal:    string
-					fs_type?:         string
-					iscsi_interface?: string
-					lun?:             number
-					read_only?:       bool
-				}, ...]
-				local?: [{
-					path?: string
-				}, ...]
-				nfs?: [{
-					path:       string
-					server:     string
-					read_only?: bool
-				}, ...]
-				persistent_volume_claim?: [{
-					claim_name?: string
-					read_only?:  bool
-				}, ...]
-				photon_persistent_disk?: [{
-					pd_id:    string
-					fs_type?: string
-				}, ...]
-				quobyte?: [{
-					registry:   string
-					volume:     string
-					group?:     string
-					read_only?: bool
-					user?:      string
-				}, ...]
-				rbd?: [{
-					ceph_monitors: [string, ...]
-					rbd_image:   string
-					fs_type?:    string
-					rados_user?: string
-					rbd_pool?:   string
-					read_only?:  bool
-					secret_ref?: [{
-						name?: string
-					}, ...]
-				}, ...]
-				secret?: [{
-					default_mode?: string
-					optional?:     bool
-					secret_name?:  string
-					items?: [{
-						key?:  string
-						mode?: string
-						path?: string
-					}, ...]
-				}, ...]
-				vsphere_volume?: [{
-					volume_path: string
-					fs_type?:    string
-				}, ...]
-			}, ...]
-		}, ...]
-	}, ...]
-	timeouts?: {
-		create?: string
-		delete?: string
-		update?: string
-	}
-}
-#KubernetesResourceQuotaResource: {
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-	spec?: [{
-		hard?: [_]: string
-		scopes?: [string, ...]
-	}, ...]
-	timeouts?: {
-		create?: string
-		update?: string
-	}
-}
-#KubernetesRoleResource: {
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-	rule?: [{
-		api_groups: [string, ...]
-		resources: [string, ...]
-		verbs: [string, ...]
-		resource_names?: [string, ...]
-	}, ...]
-}
-#KubernetesRoleBindingResource: {
-	metadata?: [{
-		annotations?: [_]: string
-		labels?: [_]:      string
-		namespace?: string
-	}, ...]
-	role_ref?: [{
-		api_group: string
-		kind:      string
-		name:      string
-	}, ...]
-	subject?: [{
-		kind:       string
-		name:       string
-		namespace?: string
-	}, ...]
-}
-#KubernetesSecretResource: {
-	data?: [_]: string
-	type?: string
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-}
-#KubernetesServiceResource: {
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-	spec?: [{
-		external_ips?: [string, ...]
-		external_name?:    string
-		load_balancer_ip?: string
-		load_balancer_source_ranges?: [string, ...]
-		publish_not_ready_addresses?: bool
-		selector?: [_]: string
-		session_affinity?: string
-		type?:             string
-		port?: [{
-			port:      number
-			name?:     string
-			protocol?: string
-		}, ...]
-	}, ...]
-	timeouts?: create?: string
-}
-#KubernetesServiceAccountResource: {
-	automount_service_account_token?: bool
-	image_pull_secret?: [{
-		name?: string
-	}, ...]
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-	secret?: [{
-		name?: string
-	}, ...]
-	timeouts?: create?: string
-}
-#KubernetesStatefulSetResource: {
-	metadata?: [{
-		annotations?: [_]: string
-		generate_name?: string
-		labels?: [_]: string
-		namespace?: string
-	}, ...]
-	spec?: [{
-		service_name: string
-		replicas?:    number
-		selector?: [{
-			match_labels?: [_]: string
-			match_expressions?: [{
-				key?:      string
-				operator?: string
-				values?: [string, ...]
-			}, ...]
-		}, ...]
-		template?: [{
-			metadata?: [{
-				annotations?: [_]: string
-				generate_name?: string
-				labels?: [_]: string
 			}, ...]
 			spec?: [{
 				active_deadline_seconds?:         number
 				automount_service_account_token?: bool
 				dns_policy?:                      string
+				enable_service_links?:            bool
 				host_ipc?:                        bool
 				host_network?:                    bool
 				host_pid?:                        bool
+				hostname?:                        string
+				node_name?:                       string
 				node_selector?: [_]: string
 				priority_class_name?:              string
 				restart_policy?:                   string
+				service_account_name?:             string
 				share_process_namespace?:          bool
 				subdomain?:                        string
 				termination_grace_period_seconds?: number
@@ -5585,19 +5552,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -5608,8 +5578,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -5716,8 +5687,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -5787,19 +5764,22 @@ package kubernetes
 					name: string
 					args?: [string, ...]
 					command?: [string, ...]
-					image?:                    string
-					stdin?:                    bool
-					stdin_once?:               bool
-					termination_message_path?: string
-					tty?:                      bool
-					working_dir?:              string
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
 					env?: [{
 						name:   string
 						value?: string
 						value_from?: [{
 							config_map_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 							field_ref?: [{
 								api_version?: string
@@ -5810,8 +5790,9 @@ package kubernetes
 								container_name?: string
 							}, ...]
 							secret_key_ref?: [{
-								key?:  string
-								name?: string
+								key?:      string
+								name?:     string
+								optional?: bool
 							}, ...]
 						}, ...]
 					}, ...]
@@ -5918,8 +5899,14 @@ package kubernetes
 						}, ...]
 					}, ...]
 					resources?: [{
-						limits?: [{}, ...]
-						requests?: [{}, ...]
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
 					}, ...]
 					security_context?: [{
 						allow_privilege_escalation?: bool
@@ -5970,6 +5957,9 @@ package kubernetes
 						sub_path?:          string
 					}, ...]
 				}, ...]
+				readiness_gate?: [{
+					condition_type: string
+				}, ...]
 				security_context?: [{
 					fs_group?:        number
 					run_as_group?:    number
@@ -5981,6 +5971,10 @@ package kubernetes
 						role?:  string
 						type?:  string
 						user?:  string
+					}, ...]
+					sysctl?: [{
+						name:  string
+						value: string
 					}, ...]
 				}, ...]
 				toleration?: [{
@@ -6003,6 +5997,7 @@ package kubernetes
 						data_disk_uri: string
 						disk_name:     string
 						fs_type?:      string
+						kind?:         string
 						read_only?:    bool
 					}, ...]
 					azure_file?: [{
@@ -6017,7 +6012,8 @@ package kubernetes
 						secret_file?: string
 						user?:        string
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					cinder?: [{
@@ -6028,10 +6024,34 @@ package kubernetes
 					config_map?: [{
 						default_mode?: string
 						name?:         string
+						optional?:     bool
 						items?: [{
 							key?:  string
 							mode?: string
 							path?: string
+						}, ...]
+					}, ...]
+					csi?: [{
+						driver:        string
+						volume_handle: string
+						fs_type?:      string
+						read_only?:    bool
+						volume_attributes?: [_]: string
+						controller_expand_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						controller_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_stage_secret_ref?: [{
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					downward_api?: [{
@@ -6051,7 +6071,8 @@ package kubernetes
 						}, ...]
 					}, ...]
 					empty_dir?: [{
-						medium?: string
+						medium?:     string
+						size_limit?: string
 					}, ...]
 					fc?: [{
 						lun: number
@@ -6065,7 +6086,8 @@ package kubernetes
 						options?: [_]: string
 						read_only?: bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					flocker?: [{
@@ -6116,6 +6138,49 @@ package kubernetes
 						pd_id:    string
 						fs_type?: string
 					}, ...]
+					projected?: [{
+						default_mode?: string
+						sources?: [{
+							config_map?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							downward_api?: [{
+								items?: [{
+									path:  string
+									mode?: string
+									field_ref?: [{
+										api_version?: string
+										field_path?:  string
+									}, ...]
+									resource_field_ref?: [{
+										container_name: string
+										resource:       string
+										quantity?:      string
+									}, ...]
+								}, ...]
+							}, ...]
+							secret?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							service_account_token?: [{
+								path:                string
+								audience?:           string
+								expiration_seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
 					quobyte?: [{
 						registry:   string
 						volume:     string
@@ -6127,11 +6192,1209 @@ package kubernetes
 						ceph_monitors: [string, ...]
 						rbd_image:   string
 						fs_type?:    string
+						keyring?:    string
 						rados_user?: string
 						rbd_pool?:   string
 						read_only?:  bool
 						secret_ref?: [{
-							name?: string
+							name?:      string
+							namespace?: string
+						}, ...]
+					}, ...]
+					secret?: [{
+						default_mode?: string
+						optional?:     bool
+						secret_name?:  string
+						items?: [{
+							key?:  string
+							mode?: string
+							path?: string
+						}, ...]
+					}, ...]
+					vsphere_volume?: [{
+						volume_path: string
+						fs_type?:    string
+					}, ...]
+				}, ...]
+			}, ...]
+			toleration?: [{
+				effect?:             string
+				key?:                string
+				operator?:           string
+				toleration_seconds?: string
+				value?:              string
+			}, ...]
+			volume?: [{
+				name?: string
+				aws_elastic_block_store?: [{
+					volume_id:  string
+					fs_type?:   string
+					partition?: number
+					read_only?: bool
+				}, ...]
+				azure_disk?: [{
+					caching_mode:  string
+					data_disk_uri: string
+					disk_name:     string
+					fs_type?:      string
+					kind?:         string
+					read_only?:    bool
+				}, ...]
+				azure_file?: [{
+					secret_name: string
+					share_name:  string
+					read_only?:  bool
+				}, ...]
+				ceph_fs?: [{
+					monitors: [string, ...]
+					path?:        string
+					read_only?:   bool
+					secret_file?: string
+					user?:        string
+					secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+				}, ...]
+				cinder?: [{
+					volume_id:  string
+					fs_type?:   string
+					read_only?: bool
+				}, ...]
+				config_map?: [{
+					default_mode?: string
+					name?:         string
+					optional?:     bool
+					items?: [{
+						key?:  string
+						mode?: string
+						path?: string
+					}, ...]
+				}, ...]
+				csi?: [{
+					driver:        string
+					volume_handle: string
+					fs_type?:      string
+					read_only?:    bool
+					volume_attributes?: [_]: string
+					controller_expand_secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+					controller_publish_secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+					node_publish_secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+					node_stage_secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+				}, ...]
+				downward_api?: [{
+					default_mode?: string
+					items?: [{
+						path:  string
+						mode?: string
+						field_ref?: [{
+							api_version?: string
+							field_path?:  string
+						}, ...]
+						resource_field_ref?: [{
+							container_name: string
+							resource:       string
+							quantity?:      string
+						}, ...]
+					}, ...]
+				}, ...]
+				empty_dir?: [{
+					medium?:     string
+					size_limit?: string
+				}, ...]
+				fc?: [{
+					lun: number
+					target_ww_ns: [string, ...]
+					fs_type?:   string
+					read_only?: bool
+				}, ...]
+				flex_volume?: [{
+					driver:   string
+					fs_type?: string
+					options?: [_]: string
+					read_only?: bool
+					secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+				}, ...]
+				flocker?: [{
+					dataset_name?: string
+					dataset_uuid?: string
+				}, ...]
+				gce_persistent_disk?: [{
+					pd_name:    string
+					fs_type?:   string
+					partition?: number
+					read_only?: bool
+				}, ...]
+				git_repo?: [{
+					directory?:  string
+					repository?: string
+					revision?:   string
+				}, ...]
+				glusterfs?: [{
+					endpoints_name: string
+					path:           string
+					read_only?:     bool
+				}, ...]
+				host_path?: [{
+					path?: string
+					type?: string
+				}, ...]
+				iscsi?: [{
+					iqn:              string
+					target_portal:    string
+					fs_type?:         string
+					iscsi_interface?: string
+					lun?:             number
+					read_only?:       bool
+				}, ...]
+				local?: [{
+					path?: string
+				}, ...]
+				nfs?: [{
+					path:       string
+					server:     string
+					read_only?: bool
+				}, ...]
+				persistent_volume_claim?: [{
+					claim_name?: string
+					read_only?:  bool
+				}, ...]
+				photon_persistent_disk?: [{
+					pd_id:    string
+					fs_type?: string
+				}, ...]
+				projected?: [{
+					default_mode?: string
+					sources?: [{
+						config_map?: [{
+							name?:     string
+							optional?: bool
+							items?: [{
+								key?:  string
+								mode?: string
+								path?: string
+							}, ...]
+						}, ...]
+						downward_api?: [{
+							items?: [{
+								path:  string
+								mode?: string
+								field_ref?: [{
+									api_version?: string
+									field_path?:  string
+								}, ...]
+								resource_field_ref?: [{
+									container_name: string
+									resource:       string
+									quantity?:      string
+								}, ...]
+							}, ...]
+						}, ...]
+						secret?: [{
+							name?:     string
+							optional?: bool
+							items?: [{
+								key?:  string
+								mode?: string
+								path?: string
+							}, ...]
+						}, ...]
+						service_account_token?: [{
+							path:                string
+							audience?:           string
+							expiration_seconds?: number
+						}, ...]
+					}, ...]
+				}, ...]
+				quobyte?: [{
+					registry:   string
+					volume:     string
+					group?:     string
+					read_only?: bool
+					user?:      string
+				}, ...]
+				rbd?: [{
+					ceph_monitors: [string, ...]
+					rbd_image:   string
+					fs_type?:    string
+					keyring?:    string
+					rados_user?: string
+					rbd_pool?:   string
+					read_only?:  bool
+					secret_ref?: [{
+						name?:      string
+						namespace?: string
+					}, ...]
+				}, ...]
+				secret?: [{
+					default_mode?: string
+					optional?:     bool
+					secret_name?:  string
+					items?: [{
+						key?:  string
+						mode?: string
+						path?: string
+					}, ...]
+				}, ...]
+				vsphere_volume?: [{
+					volume_path: string
+					fs_type?:    string
+				}, ...]
+			}, ...]
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#KubernetesResourceQuotaResource: {
+	id?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		hard?: [_]: string
+		scopes?: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#KubernetesRoleResource: {
+	id?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	rule?: [{
+		api_groups: [string, ...]
+		resources: [string, ...]
+		verbs: [string, ...]
+		resource_names?: [string, ...]
+	}, ...]
+}
+#KubernetesRoleBindingResource: {
+	id?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generation?: number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	role_ref?: [{
+		api_group: string
+		kind:      string
+		name:      string
+	}, ...]
+	subject?: [{
+		kind:       string
+		name:       string
+		api_group?: string
+		namespace?: string
+	}, ...]
+}
+#KubernetesSecretResource: {
+	data?: [_]: string
+	id?:   string
+	type?: string
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+}
+#KubernetesServiceResource: {
+	id?: string
+	load_balancer_ingress?: [{
+		hostname: string
+		ip:       string
+	}, ...]
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		cluster_ip?: string
+		external_ips?: [string, ...]
+		external_name?:           string
+		external_traffic_policy?: string
+		health_check_node_port?:  number
+		load_balancer_ip?:        string
+		load_balancer_source_ranges?: [string, ...]
+		publish_not_ready_addresses?: bool
+		selector?: [_]: string
+		session_affinity?: string
+		type?:             string
+		port?: [{
+			port:         number
+			name?:        string
+			node_port?:   number
+			protocol?:    string
+			target_port?: string
+		}, ...]
+	}, ...]
+	timeouts?: create?: string
+}
+#KubernetesServiceAccountResource: {
+	automount_service_account_token?: bool
+	default_secret_name?:             string
+	id?:                              string
+	image_pull_secret?: [{
+		name?: string
+	}, ...]
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	secret?: [{
+		name?: string
+	}, ...]
+	timeouts?: create?: string
+}
+#KubernetesStatefulSetResource: {
+	id?:               string
+	wait_for_rollout?: bool
+	metadata?: [{
+		annotations?: [_]: string
+		generate_name?: string
+		generation?:    number
+		labels?: [_]: string
+		name?:             string
+		namespace?:        string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
+	}, ...]
+	spec?: [{
+		service_name:            string
+		pod_management_policy?:  string
+		replicas?:               number
+		revision_history_limit?: number
+		selector?: [{
+			match_labels?: [_]: string
+			match_expressions?: [{
+				key?:      string
+				operator?: string
+				values?: [string, ...]
+			}, ...]
+		}, ...]
+		template?: [{
+			metadata?: [{
+				annotations?: [_]: string
+				generate_name?: string
+				generation?:    number
+				labels?: [_]: string
+				name?:             string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
+			}, ...]
+			spec?: [{
+				active_deadline_seconds?:         number
+				automount_service_account_token?: bool
+				dns_policy?:                      string
+				enable_service_links?:            bool
+				host_ipc?:                        bool
+				host_network?:                    bool
+				host_pid?:                        bool
+				hostname?:                        string
+				node_name?:                       string
+				node_selector?: [_]: string
+				priority_class_name?:              string
+				restart_policy?:                   string
+				service_account_name?:             string
+				share_process_namespace?:          bool
+				subdomain?:                        string
+				termination_grace_period_seconds?: number
+				affinity?: [{
+					node_affinity?: [{
+						preferred_during_scheduling_ignored_during_execution?: [{
+							weight: number
+							preference?: [{
+								match_expressions?: [{
+									key?:      string
+									operator?: string
+									values?: [string, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+						required_during_scheduling_ignored_during_execution?: [{
+							node_selector_term?: [{
+								match_expressions?: [{
+									key?:      string
+									operator?: string
+									values?: [string, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					pod_affinity?: [{
+						preferred_during_scheduling_ignored_during_execution?: [{
+							weight: number
+							pod_affinity_term?: [{
+								namespaces?: [string, ...]
+								topology_key?: string
+								label_selector?: [{
+									match_labels?: [_]: string
+									match_expressions?: [{
+										key?:      string
+										operator?: string
+										values?: [string, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+						required_during_scheduling_ignored_during_execution?: [{
+							namespaces?: [string, ...]
+							topology_key?: string
+							label_selector?: [{
+								match_labels?: [_]: string
+								match_expressions?: [{
+									key?:      string
+									operator?: string
+									values?: [string, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+					pod_anti_affinity?: [{
+						preferred_during_scheduling_ignored_during_execution?: [{
+							weight: number
+							pod_affinity_term?: [{
+								namespaces?: [string, ...]
+								topology_key?: string
+								label_selector?: [{
+									match_labels?: [_]: string
+									match_expressions?: [{
+										key?:      string
+										operator?: string
+										values?: [string, ...]
+									}, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+						required_during_scheduling_ignored_during_execution?: [{
+							namespaces?: [string, ...]
+							topology_key?: string
+							label_selector?: [{
+								match_labels?: [_]: string
+								match_expressions?: [{
+									key?:      string
+									operator?: string
+									values?: [string, ...]
+								}, ...]
+							}, ...]
+						}, ...]
+					}, ...]
+				}, ...]
+				container?: [{
+					name: string
+					args?: [string, ...]
+					command?: [string, ...]
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
+					env?: [{
+						name:   string
+						value?: string
+						value_from?: [{
+							config_map_key_ref?: [{
+								key?:      string
+								name?:     string
+								optional?: bool
+							}, ...]
+							field_ref?: [{
+								api_version?: string
+								field_path?:  string
+							}, ...]
+							resource_field_ref?: [{
+								resource:        string
+								container_name?: string
+							}, ...]
+							secret_key_ref?: [{
+								key?:      string
+								name?:     string
+								optional?: bool
+							}, ...]
+						}, ...]
+					}, ...]
+					env_from?: [{
+						prefix?: string
+						config_map_ref?: [{
+							name:      string
+							optional?: bool
+						}, ...]
+						secret_ref?: [{
+							name:      string
+							optional?: bool
+						}, ...]
+					}, ...]
+					lifecycle?: [{
+						post_start?: [{
+							exec?: [{
+								command?: [string, ...]
+							}, ...]
+							http_get?: [{
+								host?:   string
+								path?:   string
+								port?:   string
+								scheme?: string
+								http_header?: [{
+									name?:  string
+									value?: string
+								}, ...]
+							}, ...]
+							tcp_socket?: [{
+								port: string
+							}, ...]
+						}, ...]
+						pre_stop?: [{
+							exec?: [{
+								command?: [string, ...]
+							}, ...]
+							http_get?: [{
+								host?:   string
+								path?:   string
+								port?:   string
+								scheme?: string
+								http_header?: [{
+									name?:  string
+									value?: string
+								}, ...]
+							}, ...]
+							tcp_socket?: [{
+								port: string
+							}, ...]
+						}, ...]
+					}, ...]
+					liveness_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					port?: [{
+						container_port: number
+						host_ip?:       string
+						host_port?:     number
+						name?:          string
+						protocol?:      string
+					}, ...]
+					readiness_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					resources?: [{
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+					}, ...]
+					security_context?: [{
+						allow_privilege_escalation?: bool
+						privileged?:                 bool
+						read_only_root_filesystem?:  bool
+						run_as_group?:               number
+						run_as_non_root?:            bool
+						run_as_user?:                number
+						capabilities?: [{
+							add?: [string, ...]
+							drop?: [string, ...]
+						}, ...]
+						se_linux_options?: [{
+							level?: string
+							role?:  string
+							type?:  string
+							user?:  string
+						}, ...]
+					}, ...]
+					startup_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					volume_mount?: [{
+						mount_path:         string
+						name:               string
+						mount_propagation?: string
+						read_only?:         bool
+						sub_path?:          string
+					}, ...]
+				}, ...]
+				dns_config?: [{
+					nameservers?: [string, ...]
+					searches?: [string, ...]
+					option?: [{
+						name:   string
+						value?: string
+					}, ...]
+				}, ...]
+				host_aliases?: [{
+					hostnames: [string, ...]
+					ip: string
+				}, ...]
+				image_pull_secrets?: [{
+					name: string
+				}, ...]
+				init_container?: [{
+					name: string
+					args?: [string, ...]
+					command?: [string, ...]
+					image?:                      string
+					image_pull_policy?:          string
+					stdin?:                      bool
+					stdin_once?:                 bool
+					termination_message_path?:   string
+					termination_message_policy?: string
+					tty?:                        bool
+					working_dir?:                string
+					env?: [{
+						name:   string
+						value?: string
+						value_from?: [{
+							config_map_key_ref?: [{
+								key?:      string
+								name?:     string
+								optional?: bool
+							}, ...]
+							field_ref?: [{
+								api_version?: string
+								field_path?:  string
+							}, ...]
+							resource_field_ref?: [{
+								resource:        string
+								container_name?: string
+							}, ...]
+							secret_key_ref?: [{
+								key?:      string
+								name?:     string
+								optional?: bool
+							}, ...]
+						}, ...]
+					}, ...]
+					env_from?: [{
+						prefix?: string
+						config_map_ref?: [{
+							name:      string
+							optional?: bool
+						}, ...]
+						secret_ref?: [{
+							name:      string
+							optional?: bool
+						}, ...]
+					}, ...]
+					lifecycle?: [{
+						post_start?: [{
+							exec?: [{
+								command?: [string, ...]
+							}, ...]
+							http_get?: [{
+								host?:   string
+								path?:   string
+								port?:   string
+								scheme?: string
+								http_header?: [{
+									name?:  string
+									value?: string
+								}, ...]
+							}, ...]
+							tcp_socket?: [{
+								port: string
+							}, ...]
+						}, ...]
+						pre_stop?: [{
+							exec?: [{
+								command?: [string, ...]
+							}, ...]
+							http_get?: [{
+								host?:   string
+								path?:   string
+								port?:   string
+								scheme?: string
+								http_header?: [{
+									name?:  string
+									value?: string
+								}, ...]
+							}, ...]
+							tcp_socket?: [{
+								port: string
+							}, ...]
+						}, ...]
+					}, ...]
+					liveness_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					port?: [{
+						container_port: number
+						host_ip?:       string
+						host_port?:     number
+						name?:          string
+						protocol?:      string
+					}, ...]
+					readiness_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					resources?: [{
+						limits?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+						requests?: [{
+							cpu?:    string
+							memory?: string
+						}, ...]
+					}, ...]
+					security_context?: [{
+						allow_privilege_escalation?: bool
+						privileged?:                 bool
+						read_only_root_filesystem?:  bool
+						run_as_group?:               number
+						run_as_non_root?:            bool
+						run_as_user?:                number
+						capabilities?: [{
+							add?: [string, ...]
+							drop?: [string, ...]
+						}, ...]
+						se_linux_options?: [{
+							level?: string
+							role?:  string
+							type?:  string
+							user?:  string
+						}, ...]
+					}, ...]
+					startup_probe?: [{
+						failure_threshold?:     number
+						initial_delay_seconds?: number
+						period_seconds?:        number
+						success_threshold?:     number
+						timeout_seconds?:       number
+						exec?: [{
+							command?: [string, ...]
+						}, ...]
+						http_get?: [{
+							host?:   string
+							path?:   string
+							port?:   string
+							scheme?: string
+							http_header?: [{
+								name?:  string
+								value?: string
+							}, ...]
+						}, ...]
+						tcp_socket?: [{
+							port: string
+						}, ...]
+					}, ...]
+					volume_mount?: [{
+						mount_path:         string
+						name:               string
+						mount_propagation?: string
+						read_only?:         bool
+						sub_path?:          string
+					}, ...]
+				}, ...]
+				readiness_gate?: [{
+					condition_type: string
+				}, ...]
+				security_context?: [{
+					fs_group?:        number
+					run_as_group?:    number
+					run_as_non_root?: bool
+					run_as_user?:     number
+					supplemental_groups?: [number, ...]
+					se_linux_options?: [{
+						level?: string
+						role?:  string
+						type?:  string
+						user?:  string
+					}, ...]
+					sysctl?: [{
+						name:  string
+						value: string
+					}, ...]
+				}, ...]
+				toleration?: [{
+					effect?:             string
+					key?:                string
+					operator?:           string
+					toleration_seconds?: string
+					value?:              string
+				}, ...]
+				volume?: [{
+					name?: string
+					aws_elastic_block_store?: [{
+						volume_id:  string
+						fs_type?:   string
+						partition?: number
+						read_only?: bool
+					}, ...]
+					azure_disk?: [{
+						caching_mode:  string
+						data_disk_uri: string
+						disk_name:     string
+						fs_type?:      string
+						kind?:         string
+						read_only?:    bool
+					}, ...]
+					azure_file?: [{
+						secret_name: string
+						share_name:  string
+						read_only?:  bool
+					}, ...]
+					ceph_fs?: [{
+						monitors: [string, ...]
+						path?:        string
+						read_only?:   bool
+						secret_file?: string
+						user?:        string
+						secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+					}, ...]
+					cinder?: [{
+						volume_id:  string
+						fs_type?:   string
+						read_only?: bool
+					}, ...]
+					config_map?: [{
+						default_mode?: string
+						name?:         string
+						optional?:     bool
+						items?: [{
+							key?:  string
+							mode?: string
+							path?: string
+						}, ...]
+					}, ...]
+					csi?: [{
+						driver:        string
+						volume_handle: string
+						fs_type?:      string
+						read_only?:    bool
+						volume_attributes?: [_]: string
+						controller_expand_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						controller_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_publish_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+						node_stage_secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+					}, ...]
+					downward_api?: [{
+						default_mode?: string
+						items?: [{
+							path:  string
+							mode?: string
+							field_ref?: [{
+								api_version?: string
+								field_path?:  string
+							}, ...]
+							resource_field_ref?: [{
+								container_name: string
+								resource:       string
+								quantity?:      string
+							}, ...]
+						}, ...]
+					}, ...]
+					empty_dir?: [{
+						medium?:     string
+						size_limit?: string
+					}, ...]
+					fc?: [{
+						lun: number
+						target_ww_ns: [string, ...]
+						fs_type?:   string
+						read_only?: bool
+					}, ...]
+					flex_volume?: [{
+						driver:   string
+						fs_type?: string
+						options?: [_]: string
+						read_only?: bool
+						secret_ref?: [{
+							name?:      string
+							namespace?: string
+						}, ...]
+					}, ...]
+					flocker?: [{
+						dataset_name?: string
+						dataset_uuid?: string
+					}, ...]
+					gce_persistent_disk?: [{
+						pd_name:    string
+						fs_type?:   string
+						partition?: number
+						read_only?: bool
+					}, ...]
+					git_repo?: [{
+						directory?:  string
+						repository?: string
+						revision?:   string
+					}, ...]
+					glusterfs?: [{
+						endpoints_name: string
+						path:           string
+						read_only?:     bool
+					}, ...]
+					host_path?: [{
+						path?: string
+						type?: string
+					}, ...]
+					iscsi?: [{
+						iqn:              string
+						target_portal:    string
+						fs_type?:         string
+						iscsi_interface?: string
+						lun?:             number
+						read_only?:       bool
+					}, ...]
+					local?: [{
+						path?: string
+					}, ...]
+					nfs?: [{
+						path:       string
+						server:     string
+						read_only?: bool
+					}, ...]
+					persistent_volume_claim?: [{
+						claim_name?: string
+						read_only?:  bool
+					}, ...]
+					photon_persistent_disk?: [{
+						pd_id:    string
+						fs_type?: string
+					}, ...]
+					projected?: [{
+						default_mode?: string
+						sources?: [{
+							config_map?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							downward_api?: [{
+								items?: [{
+									path:  string
+									mode?: string
+									field_ref?: [{
+										api_version?: string
+										field_path?:  string
+									}, ...]
+									resource_field_ref?: [{
+										container_name: string
+										resource:       string
+										quantity?:      string
+									}, ...]
+								}, ...]
+							}, ...]
+							secret?: [{
+								name?:     string
+								optional?: bool
+								items?: [{
+									key?:  string
+									mode?: string
+									path?: string
+								}, ...]
+							}, ...]
+							service_account_token?: [{
+								path:                string
+								audience?:           string
+								expiration_seconds?: number
+							}, ...]
+						}, ...]
+					}, ...]
+					quobyte?: [{
+						registry:   string
+						volume:     string
+						group?:     string
+						read_only?: bool
+						user?:      string
+					}, ...]
+					rbd?: [{
+						ceph_monitors: [string, ...]
+						rbd_image:   string
+						fs_type?:    string
+						keyring?:    string
+						rados_user?: string
+						rbd_pool?:   string
+						read_only?:  bool
+						secret_ref?: [{
+							name?:      string
+							namespace?: string
 						}, ...]
 					}, ...]
 					secret?: [{
@@ -6161,11 +7424,18 @@ package kubernetes
 			metadata?: [{
 				annotations?: [_]: string
 				generate_name?: string
+				generation?:    number
 				labels?: [_]: string
-				namespace?: string
+				name?:             string
+				namespace?:        string
+				resource_version?: string
+				self_link?:        string
+				uid?:              string
 			}, ...]
 			spec?: [{
 				access_modes: [string, ...]
+				storage_class_name?: string
+				volume_name?:        string
 				resources?: [{
 					limits?: [_]:   string
 					requests?: [_]: string
@@ -6185,6 +7455,7 @@ package kubernetes
 #KubernetesStorageClassResource: {
 	storage_provisioner:     string
 	allow_volume_expansion?: bool
+	id?:                     string
 	mount_options?: [string, ...]
 	parameters?: [_]: string
 	reclaim_policy?:      string
@@ -6192,14 +7463,25 @@ package kubernetes
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 }
 #KubernetesValidatingWebhookConfigurationResource: {
+	id?: string
 	metadata?: [{
 		annotations?: [_]: string
 		generate_name?: string
+		generation?:    number
 		labels?: [_]: string
+		name?:             string
+		resource_version?: string
+		self_link?:        string
+		uid?:              string
 	}, ...]
 	webhook?: [{
 		name: string
@@ -6245,11 +7527,14 @@ package kubernetes
 }
 #Resources: {
 	kubernetes_api_service?: [_]:                      #KubernetesApiServiceResource
+	kubernetes_certificate_signing_request?: [_]:      #KubernetesCertificateSigningRequestResource
 	kubernetes_cluster_role?: [_]:                     #KubernetesClusterRoleResource
 	kubernetes_cluster_role_binding?: [_]:             #KubernetesClusterRoleBindingResource
 	kubernetes_config_map?: [_]:                       #KubernetesConfigMapResource
 	kubernetes_cron_job?: [_]:                         #KubernetesCronJobResource
+	kubernetes_csi_driver?: [_]:                       #KubernetesCsiDriverResource
 	kubernetes_daemonset?: [_]:                        #KubernetesDaemonsetResource
+	kubernetes_default_service_account?: [_]:          #KubernetesDefaultServiceAccountResource
 	kubernetes_deployment?: [_]:                       #KubernetesDeploymentResource
 	kubernetes_endpoints?: [_]:                        #KubernetesEndpointsResource
 	kubernetes_horizontal_pod_autoscaler?: [_]:        #KubernetesHorizontalPodAutoscalerResource
@@ -6263,6 +7548,7 @@ package kubernetes
 	kubernetes_persistent_volume_claim?: [_]:          #KubernetesPersistentVolumeClaimResource
 	kubernetes_pod?: [_]:                              #KubernetesPodResource
 	kubernetes_pod_disruption_budget?: [_]:            #KubernetesPodDisruptionBudgetResource
+	kubernetes_pod_security_policy?: [_]:              #KubernetesPodSecurityPolicyResource
 	kubernetes_priority_class?: [_]:                   #KubernetesPriorityClassResource
 	kubernetes_replication_controller?: [_]:           #KubernetesReplicationControllerResource
 	kubernetes_resource_quota?: [_]:                   #KubernetesResourceQuotaResource

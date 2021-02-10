@@ -3,18 +3,27 @@ package vmc
 
 #VmcConnectedAccountsDataSource: {
 	account_number: string
+	id?:            string
 	provider_type?: string
 }
 #VmcCustomerSubnetsDataSource: {
 	region:                string
 	connected_account_id?: string
-	force_refresh?:        bool
-	instance_type?:        string
-	num_hosts?:            number
-	sddc_id?:              string
-	sddc_type?:            string
+	customer_available_zones?: [string, ...]
+	force_refresh?: bool
+	id?:            string
+	ids?: [string, ...]
+	instance_type?: string
+	num_hosts?:     number
+	sddc_id?:       string
+	sddc_type?:     string
+	vpc_map?: [_]: string
 }
-#VmcOrgDataSource: {}
+#VmcOrgDataSource: {
+	display_name?: string
+	id?:           string
+	name?:         string
+}
 #DataSources: {
 	vmc_connected_accounts?: [_]: #VmcConnectedAccountsDataSource
 	vmc_customer_subnets?: [_]:   #VmcCustomerSubnetsDataSource

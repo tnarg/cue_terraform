@@ -3,7 +3,9 @@ package external
 
 #ExternalDataSource: {
 	program: [string, ...]
-	query?: [_]: string
+	id?: string
+	query?: [_]:  string
+	result?: [_]: string
 	working_dir?: string
 }
 #DataSources: external?: [_]: #ExternalDataSource

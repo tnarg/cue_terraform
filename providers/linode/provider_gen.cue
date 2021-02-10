@@ -2,8 +2,11 @@
 package linode
 
 #Provider: linode: {
-	token:        string
-	api_version?: string
-	ua_prefix?:   string
-	url?:         string
+	token:                     string
+	api_version?:              string
+	max_retry_delay_ms?:       number
+	min_retry_delay_ms?:       number
+	skip_instance_ready_poll?: bool
+	ua_prefix?:                string
+	url?:                      string
 }

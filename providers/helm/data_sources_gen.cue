@@ -6,8 +6,13 @@ package helm
 	url:        string
 	ca_file?:   string
 	cert_file?: string
+	id?:        string
 	key_file?:  string
-	password?:  string
-	username?:  string
+	metadata?: [{
+		name: string
+		url:  string
+	}, ...]
+	password?: string
+	username?: string
 }
 #DataSources: helm_repository?: [_]: #HelmRepositoryDataSource

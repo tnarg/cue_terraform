@@ -2,49 +2,66 @@
 package google
 
 #Provider: google: {
-	access_context_manager_custom_endpoint?:   string
-	access_token?:                             string
-	app_engine_custom_endpoint?:               string
-	big_query_custom_endpoint?:                string
-	bigquery_data_transfer_custom_endpoint?:   string
-	bigtable_custom_endpoint?:                 string
-	binary_authorization_custom_endpoint?:     string
-	cloud_billing_custom_endpoint?:            string
-	cloud_build_custom_endpoint?:              string
-	cloud_functions_custom_endpoint?:          string
-	cloud_iot_custom_endpoint?:                string
-	cloud_run_custom_endpoint?:                string
-	cloud_scheduler_custom_endpoint?:          string
-	cloud_tasks_custom_endpoint?:              string
-	composer_custom_endpoint?:                 string
-	compute_beta_custom_endpoint?:             string
-	compute_custom_endpoint?:                  string
-	container_analysis_custom_endpoint?:       string
-	container_beta_custom_endpoint?:           string
-	container_custom_endpoint?:                string
-	credentials?:                              string
-	dataflow_custom_endpoint?:                 string
-	dataproc_beta_custom_endpoint?:            string
-	dataproc_custom_endpoint?:                 string
-	datastore_custom_endpoint?:                string
-	deployment_manager_custom_endpoint?:       string
-	dialogflow_custom_endpoint?:               string
-	dns_beta_custom_endpoint?:                 string
-	dns_custom_endpoint?:                      string
-	filestore_custom_endpoint?:                string
-	firestore_custom_endpoint?:                string
-	healthcare_custom_endpoint?:               string
-	iam_credentials_custom_endpoint?:          string
-	iam_custom_endpoint?:                      string
-	iap_custom_endpoint?:                      string
-	identity_platform_custom_endpoint?:        string
+	access_approval_custom_endpoint?:        string
+	access_context_manager_custom_endpoint?: string
+	access_token?:                           string
+	active_directory_custom_endpoint?:       string
+	apigee_custom_endpoint?:                 string
+	app_engine_custom_endpoint?:             string
+	big_query_custom_endpoint?:              string
+	bigquery_data_transfer_custom_endpoint?: string
+	bigquery_reservation_custom_endpoint?:   string
+	bigtable_custom_endpoint?:               string
+	billing_custom_endpoint?:                string
+	billing_project?:                        string
+	binary_authorization_custom_endpoint?:   string
+	cloud_asset_custom_endpoint?:            string
+	cloud_billing_custom_endpoint?:          string
+	cloud_build_custom_endpoint?:            string
+	cloud_functions_custom_endpoint?:        string
+	cloud_identity_custom_endpoint?:         string
+	cloud_iot_custom_endpoint?:              string
+	cloud_run_custom_endpoint?:              string
+	cloud_scheduler_custom_endpoint?:        string
+	cloud_tasks_custom_endpoint?:            string
+	composer_custom_endpoint?:               string
+	compute_beta_custom_endpoint?:           string
+	compute_custom_endpoint?:                string
+	container_analysis_custom_endpoint?:     string
+	container_beta_custom_endpoint?:         string
+	container_custom_endpoint?:              string
+	credentials?:                            string
+	data_catalog_custom_endpoint?:           string
+	data_loss_prevention_custom_endpoint?:   string
+	dataflow_custom_endpoint?:               string
+	dataproc_beta_custom_endpoint?:          string
+	dataproc_custom_endpoint?:               string
+	datastore_custom_endpoint?:              string
+	deployment_manager_custom_endpoint?:     string
+	dialogflow_custom_endpoint?:             string
+	dns_beta_custom_endpoint?:               string
+	dns_custom_endpoint?:                    string
+	filestore_custom_endpoint?:              string
+	firestore_custom_endpoint?:              string
+	game_services_custom_endpoint?:          string
+	healthcare_custom_endpoint?:             string
+	iam_credentials_custom_endpoint?:        string
+	iam_custom_endpoint?:                    string
+	iap_custom_endpoint?:                    string
+	identity_platform_custom_endpoint?:      string
+	impersonate_service_account?:            string
+	impersonate_service_account_delegates?: [string, ...]
 	kms_custom_endpoint?:                      string
 	logging_custom_endpoint?:                  string
 	ml_engine_custom_endpoint?:                string
 	monitoring_custom_endpoint?:               string
+	network_management_custom_endpoint?:       string
+	notebooks_custom_endpoint?:                string
+	os_config_custom_endpoint?:                string
 	os_login_custom_endpoint?:                 string
 	project?:                                  string
 	pubsub_custom_endpoint?:                   string
+	pubsub_lite_custom_endpoint?:              string
 	redis_custom_endpoint?:                    string
 	region?:                                   string
 	request_timeout?:                          string
@@ -53,6 +70,7 @@ package google
 	runtime_config_custom_endpoint?:           string
 	runtimeconfig_custom_endpoint?:            string
 	scopes?: [string, ...]
+	secret_manager_custom_endpoint?:     string
 	security_center_custom_endpoint?:    string
 	service_management_custom_endpoint?: string
 	service_networking_custom_endpoint?: string

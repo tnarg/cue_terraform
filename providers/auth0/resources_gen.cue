@@ -7,19 +7,28 @@ package auth0
 	allowed_origins?: [string, ...]
 	app_type?: string
 	callbacks?: [string, ...]
-	client_metadata?: [_]:                string
+	client_id?: string
+	client_metadata?: [_]: string
+	client_secret?: string
 	client_secret_rotation_trigger?: [_]: string
 	cross_origin_auth?:         bool
 	cross_origin_loc?:          string
 	custom_login_page?:         string
+	custom_login_page_on?:      bool
 	custom_login_page_preview?: string
 	description?:               string
 	encryption_key?: [_]: string
-	form_template?:      string
-	initiate_login_uri?: string
-	logo_uri?:           string
-	sso?:                bool
-	sso_disabled?:       bool
+	form_template?: string
+	grant_types?: [string, ...]
+	id?:                                  string
+	initiate_login_uri?:                  string
+	is_first_party?:                      bool
+	is_token_endpoint_ip_header_trusted?: bool
+	logo_uri?:                            string
+	oidc_conformant?:                     bool
+	sso?:                                 bool
+	sso_disabled?:                        bool
+	token_endpoint_auth_method?:          string
 	web_origins?: [string, ...]
 	addons?: [{
 		aws?: [_]:                    string
@@ -72,8 +81,10 @@ package auth0
 		}, ...]
 	}, ...]
 	jwt_configuration?: [{
-		alg?: string
+		alg?:                 string
+		lifetime_in_seconds?: number
 		scopes?: [_]: string
+		secret_encoded?: bool
 	}, ...]
 	mobile?: [{
 		android?: [{
@@ -85,16 +96,28 @@ package auth0
 			team_id?:               string
 		}, ...]
 	}, ...]
+	refresh_token?: [{
+		expiration_type: string
+		rotation_type:   string
+		leeway?:         number
+		token_lifetime?: number
+	}, ...]
 }
 #Auth0ClientGrantResource: {
 	audience:  string
 	client_id: string
 	scope: [string, ...]
+	id?: string
 }
 #Auth0ConnectionResource: {
 	name:          string
 	strategy:      string
 	display_name?: string
+	enabled_clients?: [string, ...]
+	id?:                   string
+	is_domain_connection?: bool
+	realms?: [string, ...]
+	strategy_version?: string
 	options?: [{
 		adfs_server?: string
 		allowed_audiences?: [string, ...]
@@ -108,16 +131,19 @@ package auth0
 		community_base_url?:     string
 		configuration?: [_]:  string
 		custom_scripts?: [_]: string
-		disable_cache?:  bool
-		disable_signup?: bool
-		discovery_url?:  string
-		domain?:         string
+		debug?:            bool
+		digest_algorithm?: string
+		disable_cache?:    bool
+		disable_signup?:   bool
+		discovery_url?:    string
+		domain?:           string
 		domain_aliases?: [string, ...]
 		enabled_database_customization?: bool
-		from?:                           string
-		icon_url?:                       string
-		identity_api?:                   string
-		import_mode?:                    bool
+		fields_map?: [_]: string
+		from?:         string
+		icon_url?:     string
+		identity_api?: string
+		import_mode?:  bool
 		ips?: [string, ...]
 		issuer?:                 string
 		jwks_uri?:               string
@@ -125,24 +151,37 @@ package auth0
 		max_groups_to_retrieve?: string
 		messaging_service_sid?:  string
 		name?:                   string
+		password_policy?:        string
+		protocol_binding?:       string
 		requires_username?:      bool
 		scopes?: [string, ...]
-		subject?:           string
-		syntax?:            string
-		team_id?:           string
-		template?:          string
-		tenant_domain?:     string
-		token_endpoint?:    string
-		twilio_sid?:        string
-		twilio_token?:      string
-		type?:              string
-		use_cert_auth?:     bool
-		use_kerberos?:      bool
-		use_wsfed?:         bool
-		userinfo_endpoint?: string
+		sign_in_endpoint?:    string
+		sign_out_endpoint?:   string
+		sign_saml_request?:   bool
+		signature_algorithm?: string
+		signing_cert?:        string
+		strategy_version?:    number
+		subject?:             string
+		syntax?:              string
+		team_id?:             string
+		template?:            string
+		tenant_domain?:       string
+		token_endpoint?:      string
+		twilio_sid?:          string
+		twilio_token?:        string
+		type?:                string
+		use_cert_auth?:       bool
+		use_kerberos?:        bool
+		use_wsfed?:           bool
+		userinfo_endpoint?:   string
 		validation?: [_]: string
 		waad_common_endpoint?: bool
 		waad_protocol?:        string
+		idp_initiated?: [{
+			client_authorize_query?: string
+			client_id?:              string
+			client_protocol?:        string
+		}, ...]
 		password_complexity_options?: [{
 			min_length?: number
 		}, ...]
@@ -167,11 +206,20 @@ package auth0
 	domain:              string
 	type:                string
 	verification_method: string
+	id?:                 string
+	primary?:            bool
+	status?:             string
+	verification?: [{
+		methods: [{
+			[_]: string
+		}, ...]
+	}, ...]
 }
 #Auth0EmailResource: {
 	default_from_address: string
 	name:                 string
 	enabled?:             bool
+	id?:                  string
 	credentials?: [{
 		access_key_id?:     string
 		api_key?:           string
@@ -192,6 +240,7 @@ package auth0
 	subject:                  string
 	syntax:                   string
 	template:                 string
+	id?:                      string
 	result_url?:              string
 	url_lifetime_in_seconds?: number
 }
@@ -200,19 +249,29 @@ package auth0
 	allowed_origins?: [string, ...]
 	app_type?: string
 	callbacks?: [string, ...]
-	client_metadata?: [_]:                string
+	client_id?: string
+	client_metadata?: [_]: string
+	client_secret?: string
 	client_secret_rotation_trigger?: [_]: string
 	cross_origin_auth?:         bool
 	cross_origin_loc?:          string
 	custom_login_page?:         string
+	custom_login_page_on?:      bool
 	custom_login_page_preview?: string
 	description?:               string
 	encryption_key?: [_]: string
-	form_template?:      string
-	initiate_login_uri?: string
-	logo_uri?:           string
-	sso?:                bool
-	sso_disabled?:       bool
+	form_template?: string
+	grant_types?: [string, ...]
+	id?:                                  string
+	initiate_login_uri?:                  string
+	is_first_party?:                      bool
+	is_token_endpoint_ip_header_trusted?: bool
+	logo_uri?:                            string
+	name?:                                string
+	oidc_conformant?:                     bool
+	sso?:                                 bool
+	sso_disabled?:                        bool
+	token_endpoint_auth_method?:          string
 	web_origins?: [string, ...]
 	addons?: [{
 		aws?: [_]:                    string
@@ -265,8 +324,10 @@ package auth0
 		}, ...]
 	}, ...]
 	jwt_configuration?: [{
-		alg?: string
+		alg?:                 string
+		lifetime_in_seconds?: number
 		scopes?: [_]: string
+		secret_encoded?: bool
 	}, ...]
 	mobile?: [{
 		android?: [{
@@ -278,22 +339,37 @@ package auth0
 			team_id?:               string
 		}, ...]
 	}, ...]
+	refresh_token?: [{
+		expiration_type: string
+		rotation_type:   string
+		leeway?:         number
+		token_lifetime?: number
+	}, ...]
 }
 #Auth0HookResource: {
 	name:       string
 	script:     string
 	trigger_id: string
 	enabled?:   bool
+	id?:        string
 }
-#Auth0PromptResource: universal_login_experience?: string
+#Auth0PromptResource: {
+	id?:                         string
+	universal_login_experience?: string
+}
 #Auth0ResourceServerResource: {
 	allow_offline_access?: bool
 	enforce_policies?:     bool
+	id?:                   string
 	identifier?:           string
 	name?:                 string
 	options?: [_]: string
+	signing_alg?:                                     string
+	signing_secret?:                                  string
 	skip_consent_for_verifiable_first_party_clients?: bool
 	token_dialect?:                                   string
+	token_lifetime?:                                  number
+	token_lifetime_for_web?:                          number
 	verification_location?:                           string
 	scopes?: [{
 		value:        string
@@ -303,6 +379,7 @@ package auth0
 #Auth0RoleResource: {
 	name:         string
 	description?: string
+	id?:          string
 	user_ids?: [string, ...]
 	permissions?: [{
 		name:                       string
@@ -313,12 +390,28 @@ package auth0
 	name:     string
 	script:   string
 	enabled?: bool
+	id?:      string
+	order?:   number
 }
 #Auth0RuleConfigResource: {
 	key:   string
 	value: string
+	id?:   string
 }
 #Auth0TenantResource: {
+	allowed_logout_urls?: [string, ...]
+	default_audience?:        string
+	default_directory?:       string
+	default_redirection_uri?: string
+	enabled_locales?: [string, ...]
+	friendly_name?:         string
+	id?:                    string
+	idle_session_lifetime?: number
+	picture_url?:           string
+	sandbox_version?:       string
+	session_lifetime?:      number
+	support_email?:         string
+	support_url?:           string
 	change_password?: [{
 		enabled: bool
 		html:    string
@@ -328,13 +421,28 @@ package auth0
 		show_log_link: bool
 		url:           string
 	}, ...]
-	flags?: [{}, ...]
+	flags?: [{
+		change_pwd_flow_v1?:                     bool
+		disable_clickjack_protection_headers?:   bool
+		enable_apis_section?:                    bool
+		enable_client_connections?:              bool
+		enable_custom_domain_in_emails?:         bool
+		enable_dynamic_client_registration?:     bool
+		enable_legacy_logs_search_v2?:           bool
+		enable_pipeline2?:                       bool
+		enable_public_signup_user_exists_error?: bool
+		universal_login?:                        bool
+		use_scope_descriptions_for_consent?:     bool
+	}, ...]
 	guardian_mfa_page?: [{
 		enabled: bool
 		html:    string
 	}, ...]
 	universal_login?: [{
-		colors?: [{}, ...]
+		colors?: [{
+			page_background?: string
+			primary?:         string
+		}, ...]
 	}, ...]
 }
 #Auth0UserResource: {
@@ -345,10 +453,15 @@ package auth0
 	email_verified?: bool
 	family_name?:    string
 	given_name?:     string
+	id?:             string
+	name?:           string
+	nickname?:       string
 	password?:       string
 	phone_number?:   string
 	phone_verified?: bool
+	picture?:        string
 	roles?: [string, ...]
+	user_id?:       string
 	user_metadata?: string
 	username?:      string
 	verify_email?:  bool

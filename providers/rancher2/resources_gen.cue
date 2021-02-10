@@ -7,9 +7,41 @@ package rancher2
 	project_id:       string
 	target_namespace: string
 	template_name:    string
-	answers?: [_]: string
+	annotations?: [_]: string
+	answers?: [_]:     string
+	description?:   string
+	external_id?:   string
 	force_upgrade?: bool
-	values_yaml?:   string
+	id?:            string
+	labels?: [_]: string
+	revision_id?:      string
+	template_version?: string
+	values_yaml?:      string
+	wait?:             bool
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#Rancher2AppV2Resource: {
+	chart_name: string
+	cluster_id: string
+	name:       string
+	namespace:  string
+	repo_name:  string
+	annotations?: [_]: string
+	chart_version?:               string
+	cleanup_on_fail?:             bool
+	cluster_name?:                string
+	disable_hooks?:               bool
+	disable_open_api_validation?: bool
+	force_upgrade?:               bool
+	id?:                          string
+	labels?: [_]: string
+	project_id?: string
+	values?:     string
+	wait?:       bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -20,15 +52,38 @@ package rancher2
 	servers: [string, ...]
 	service_account_password: string
 	service_account_username: string
+	test_password:            string
+	test_username:            string
 	user_search_base:         string
 	access_mode?:             string
 	allowed_principal_ids?: [string, ...]
-	certificate?:            string
-	connection_timeout?:     number
-	default_login_domain?:   string
-	enabled?:                bool
-	port?:                   number
-	user_disabled_bit_mask?: number
+	annotations?: [_]: string
+	certificate?:                    string
+	connection_timeout?:             number
+	default_login_domain?:           string
+	enabled?:                        bool
+	group_dn_attribute?:             string
+	group_member_mapping_attribute?: string
+	group_member_user_attribute?:    string
+	group_name_attribute?:           string
+	group_object_class?:             string
+	group_search_attribute?:         string
+	group_search_base?:              string
+	group_search_filter?:            string
+	id?:                             string
+	labels?: [_]: string
+	name?:                            string
+	nested_group_membership_enabled?: bool
+	port?:                            number
+	tls?:                             bool
+	type?:                            string
+	user_disabled_bit_mask?:          number
+	user_enabled_attribute?:          string
+	user_login_attribute?:            string
+	user_name_attribute?:             string
+	user_object_class?:               string
+	user_search_attribute?:           string
+	user_search_filter?:              string
 }
 #Rancher2AuthConfigAdfsResource: {
 	display_name_field:   string
@@ -41,7 +96,12 @@ package rancher2
 	user_name_field:      string
 	access_mode?:         string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?: bool
+	id?:      string
+	labels?: [_]: string
+	name?: string
+	type?: string
 }
 #Rancher2AuthConfigAzureadResource: {
 	application_id:     string
@@ -53,29 +113,62 @@ package rancher2
 	token_endpoint:     string
 	access_mode?:       string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?:  bool
 	endpoint?: string
+	id?:       string
+	labels?: [_]: string
+	name?: string
+	type?: string
 }
 #Rancher2AuthConfigFreeipaResource: {
 	servers: [string, ...]
 	service_account_distinguished_name: string
 	service_account_password:           string
+	test_password:                      string
+	test_username:                      string
 	user_search_base:                   string
 	access_mode?:                       string
 	allowed_principal_ids?: [string, ...]
-	certificate?:        string
-	connection_timeout?: number
-	enabled?:            bool
-	port?:               number
+	annotations?: [_]: string
+	certificate?:                    string
+	connection_timeout?:             number
+	enabled?:                        bool
+	group_dn_attribute?:             string
+	group_member_mapping_attribute?: string
+	group_member_user_attribute?:    string
+	group_name_attribute?:           string
+	group_object_class?:             string
+	group_search_attribute?:         string
+	group_search_base?:              string
+	id?:                             string
+	labels?: [_]: string
+	name?:                            string
+	nested_group_membership_enabled?: bool
+	port?:                            number
+	tls?:                             bool
+	type?:                            string
+	user_disabled_bit_mask?:          number
+	user_enabled_attribute?:          string
+	user_login_attribute?:            string
+	user_member_attribute?:           string
+	user_name_attribute?:             string
+	user_object_class?:               string
+	user_search_attribute?:           string
 }
 #Rancher2AuthConfigGithubResource: {
 	client_id:     string
 	client_secret: string
 	access_mode?:  string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?:  bool
 	hostname?: string
-	tls?:      bool
+	id?:       string
+	labels?: [_]: string
+	name?: string
+	tls?:  bool
+	type?: string
 }
 #Rancher2AuthConfigKeycloakResource: {
 	display_name_field:   string
@@ -88,7 +181,12 @@ package rancher2
 	user_name_field:      string
 	access_mode?:         string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?: bool
+	id?:      string
+	labels?: [_]: string
+	name?: string
+	type?: string
 }
 #Rancher2AuthConfigOktaResource: {
 	display_name_field:   string
@@ -101,19 +199,47 @@ package rancher2
 	user_name_field:      string
 	access_mode?:         string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?: bool
+	id?:      string
+	labels?: [_]: string
+	name?: string
+	type?: string
 }
 #Rancher2AuthConfigOpenldapResource: {
 	servers: [string, ...]
 	service_account_distinguished_name: string
 	service_account_password:           string
+	test_password:                      string
+	test_username:                      string
 	user_search_base:                   string
 	access_mode?:                       string
 	allowed_principal_ids?: [string, ...]
-	certificate?:        string
-	connection_timeout?: number
-	enabled?:            bool
-	port?:               number
+	annotations?: [_]: string
+	certificate?:                    string
+	connection_timeout?:             number
+	enabled?:                        bool
+	group_dn_attribute?:             string
+	group_member_mapping_attribute?: string
+	group_member_user_attribute?:    string
+	group_name_attribute?:           string
+	group_object_class?:             string
+	group_search_attribute?:         string
+	group_search_base?:              string
+	id?:                             string
+	labels?: [_]: string
+	name?:                            string
+	nested_group_membership_enabled?: bool
+	port?:                            number
+	tls?:                             bool
+	type?:                            string
+	user_disabled_bit_mask?:          number
+	user_enabled_attribute?:          string
+	user_login_attribute?:            string
+	user_member_attribute?:           string
+	user_name_attribute?:             string
+	user_object_class?:               string
+	user_search_attribute?:           string
 }
 #Rancher2AuthConfigPingResource: {
 	display_name_field:   string
@@ -126,25 +252,67 @@ package rancher2
 	user_name_field:      string
 	access_mode?:         string
 	allowed_principal_ids?: [string, ...]
+	annotations?: [_]: string
 	enabled?: bool
+	id?:      string
+	labels?: [_]: string
+	name?: string
+	type?: string
 }
 #Rancher2BootstrapResource: {
-	telemetry?:    bool
-	token_ttl?:    number
-	token_update?: bool
+	current_password?:   string
+	id?:                 string
+	password?:           string
+	telemetry?:          bool
+	temp_token?:         string
+	temp_token_id?:      string
+	token?:              string
+	token_id?:           string
+	token_ttl?:          number
+	token_update?:       bool
+	ui_default_landing?: string
+	url?:                string
+	user?:               string
 }
 #Rancher2CatalogResource: {
-	name:         string
-	url:          string
+	name: string
+	url:  string
+	annotations?: [_]: string
 	branch?:      string
 	cluster_id?:  string
 	description?: string
+	id?:          string
 	kind?:        string
-	password?:    string
-	project_id?:  string
-	refresh?:     bool
-	scope?:       string
-	username?:    string
+	labels?: [_]: string
+	password?:   string
+	project_id?: string
+	refresh?:    bool
+	scope?:      string
+	username?:   string
+	version?:    string
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#Rancher2CatalogV2Resource: {
+	cluster_id: string
+	name:       string
+	annotations?: [_]: string
+	ca_bundle?:  string
+	enabled?:    bool
+	git_branch?: string
+	git_repo?:   string
+	id?:         string
+	insecure?:   bool
+	labels?: [_]: string
+	resource_version?:          string
+	secret_name?:               string
+	secret_namespace?:          string
+	service_account?:           string
+	service_account_namespace?: string
+	url?:                       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -152,10 +320,13 @@ package rancher2
 	}
 }
 #Rancher2CertificateResource: {
-	certs:         string
-	key:           string
-	project_id:    string
-	description?:  string
+	certs:      string
+	key:        string
+	project_id: string
+	annotations?: [_]: string
+	description?: string
+	id?:          string
+	labels?: [_]: string
 	name?:         string
 	namespace_id?: string
 	timeouts?: {
@@ -168,6 +339,9 @@ package rancher2
 	name: string
 	annotations?: [_]: string
 	description?: string
+	driver?:      string
+	id?:          string
+	labels?: [_]: string
 	amazonec2_credential_config?: [{
 		access_key: string
 		secret_key: string
@@ -199,15 +373,41 @@ package rancher2
 	}, ...]
 }
 #Rancher2ClusterResource: {
-	name:                          string
-	cluster_template_id?:          string
-	cluster_template_revision_id?: string
-	description?:                  string
-	enable_cluster_alerting?:      bool
-	enable_cluster_istio?:         bool
-	enable_cluster_monitoring?:    bool
-	enable_network_policy?:        bool
-	windows_prefered_cluster?:     bool
+	name: string
+	annotations?: [_]: string
+	ca_cert?: string
+	cluster_registration_token?: [{
+		annotations: [_]: string
+		cluster_id:       string
+		command:          string
+		id:               string
+		insecure_command: string
+		labels: [_]: string
+		manifest_url:         string
+		name:                 string
+		node_command:         string
+		token:                string
+		windows_node_command: string
+	}, ...]
+	cluster_template_id?:                     string
+	cluster_template_revision_id?:            string
+	default_pod_security_policy_template_id?: string
+	default_project_id?:                      string
+	description?:                             string
+	desired_agent_image?:                     string
+	desired_auth_image?:                      string
+	docker_root_dir?:                         string
+	driver?:                                  string
+	enable_cluster_alerting?:                 bool
+	enable_cluster_istio?:                    bool
+	enable_cluster_monitoring?:               bool
+	enable_network_policy?:                   bool
+	id?:                                      string
+	istio_enabled?:                           bool
+	kube_config?:                             string
+	labels?: [_]: string
+	system_project_id?:        string
+	windows_prefered_cluster?: bool
 	aks_config?: [{
 		agent_dns_prefix:                        string
 		client_id:                               string
@@ -245,6 +445,7 @@ package rancher2
 		network_policy?:                         string
 		pod_cidr?:                               string
 		service_cidr?:                           string
+		tag?: [_]: string
 	}, ...]
 	cluster_auth_endpoint?: [{
 		ca_certs?: string
@@ -255,7 +456,11 @@ package rancher2
 		answers?: [_]: string
 		version?: string
 	}, ...]
-	cluster_template_answers?: [{}, ...]
+	cluster_template_answers?: [{
+		cluster_id?: string
+		project_id?: string
+		values?: [_]: string
+	}, ...]
 	cluster_template_questions?: [{
 		default:   string
 		variable:  string
@@ -269,6 +474,7 @@ package rancher2
 		ami?:                             string
 		associate_worker_node_public_ip?: bool
 		desired_nodes?:                   number
+		ebs_encryption?:                  bool
 		instance_type?:                   string
 		key_pair_name?:                   string
 		maximum_nodes?:                   number
@@ -279,7 +485,37 @@ package rancher2
 		service_role?:  string
 		session_token?: string
 		subnets?: [string, ...]
+		user_data?:       string
 		virtual_network?: string
+	}, ...]
+	eks_config_v2?: [{
+		cloud_credential_id: string
+		imported?:           bool
+		kms_key?:            string
+		kubernetes_version?: string
+		logging_types?: [string, ...]
+		name?:           string
+		private_access?: bool
+		public_access?:  bool
+		public_access_sources?: [string, ...]
+		region?:             string
+		secrets_encryption?: bool
+		security_groups?: [string, ...]
+		service_role?: string
+		subnets?: [string, ...]
+		tags?: [_]: string
+		node_groups?: [{
+			name:           string
+			desired_size?:  number
+			disk_size?:     number
+			ec2_ssh_key?:   string
+			gpu?:           bool
+			instance_type?: string
+			labels?: [_]: string
+			max_size?: number
+			min_size?: number
+			tags?: [_]: string
+		}, ...]
 	}, ...]
 	gke_config?: [{
 		cluster_ipv4_cidr:                       string
@@ -323,17 +559,21 @@ package rancher2
 		ip_policy_create_subnetwork?:       bool
 		issue_client_certificate?:          bool
 		kubernetes_dashboard?:              bool
-		local_ssd_count?:                   number
+		labels?: [_]: string
+		local_ssd_count?: number
 		master_authorized_network_cidr_blocks?: [string, ...]
 		max_node_count?: number
 		min_node_count?: number
 		node_count?:     number
 		preemptible?:    bool
+		region?:         string
+		resource_labels?: [_]: string
 		taints?: [string, ...]
 		use_ip_aliases?: bool
 		zone?:           string
 	}, ...]
 	k3s_config?: [{
+		version?: string
 		upgrade_strategy?: [{
 			drain_server_nodes?: bool
 			drain_worker_nodes?: bool
@@ -341,79 +581,242 @@ package rancher2
 			worker_concurrency?: number
 		}, ...]
 	}, ...]
+	oke_config?: [{
+		compartment_id:               string
+		fingerprint:                  string
+		kubernetes_version:           string
+		node_image:                   string
+		node_shape:                   string
+		private_key_contents:         string
+		region:                       string
+		tenancy_id:                   string
+		user_ocid:                    string
+		description?:                 string
+		enable_kubernetes_dashboard?: bool
+		enable_private_nodes?:        bool
+		load_balancer_subnet_name_1?: string
+		load_balancer_subnet_name_2?: string
+		node_pool_dns_domain_name?:   string
+		node_pool_subnet_name?:       string
+		node_public_key_contents?:    string
+		private_key_passphrase?:      string
+		quantity_of_node_subnets?:    number
+		quantity_per_subnet?:         number
+		service_dns_domain_name?:     string
+		skip_vcn_delete?:             bool
+		vcn_name?:                    string
+		worker_node_ingress_cidr?:    string
+	}, ...]
 	rke_config?: [{
-		addons?: string
+		addon_job_timeout?: number
+		addons?:            string
 		addons_include?: [string, ...]
 		ignore_docker_version?: bool
+		kubernetes_version?:    string
+		prefix_path?:           string
 		ssh_agent_auth?:        bool
-		authentication?: [{}, ...]
+		ssh_cert_path?:         string
+		ssh_key_path?:          string
+		authentication?: [{
+			sans?: [string, ...]
+			strategy?: string
+		}, ...]
 		authorization?: [{
 			mode?: string
+			options?: [_]: string
 		}, ...]
 		bastion_host?: [{
 			address:         string
 			user:            string
 			port?:           string
 			ssh_agent_auth?: bool
+			ssh_key?:        string
+			ssh_key_path?:   string
 		}, ...]
 		cloud_provider?: [{
+			custom_cloud_provider?: string
+			name?:                  string
 			aws_cloud_provider?: [{
 				global?: [{
 					disable_security_group_ingress?: bool
 					disable_strict_zone_check?:      bool
+					elb_security_group?:             string
+					kubernetes_cluster_id?:          string
+					kubernetes_cluster_tag?:         string
+					role_arn?:                       string
+					route_table_id?:                 string
+					subnet_id?:                      string
+					vpc?:                            string
+					zone?:                           string
 				}, ...]
 				service_override?: [{
-					service: string
+					service:         string
+					region?:         string
+					signing_method?: string
+					signing_name?:   string
+					signing_region?: string
+					url?:            string
 				}, ...]
 			}, ...]
 			azure_cloud_provider?: [{
-				aad_client_id:     string
-				aad_client_secret: string
-				subscription_id:   string
-				tenant_id:         string
+				aad_client_id:                     string
+				aad_client_secret:                 string
+				subscription_id:                   string
+				tenant_id:                         string
+				aad_client_cert_password?:         string
+				aad_client_cert_path?:             string
+				cloud?:                            string
+				cloud_provider_backoff?:           bool
+				cloud_provider_backoff_duration?:  number
+				cloud_provider_backoff_exponent?:  number
+				cloud_provider_backoff_jitter?:    number
+				cloud_provider_backoff_retries?:   number
+				cloud_provider_rate_limit?:        bool
+				cloud_provider_rate_limit_bucket?: number
+				cloud_provider_rate_limit_qps?:    number
+				load_balancer_sku?:                string
+				location?:                         string
+				maximum_load_balancer_rule_count?: number
+				primary_availability_set_name?:    string
+				primary_scale_set_name?:           string
+				resource_group?:                   string
+				route_table_name?:                 string
+				security_group_name?:              string
+				subnet_name?:                      string
+				use_instance_metadata?:            bool
+				use_managed_identity_extension?:   bool
+				vm_type?:                          string
+				vnet_name?:                        string
+				vnet_resource_group?:              string
 			}, ...]
 			openstack_cloud_provider?: [{
-				block_storage?: [{}, ...]
+				block_storage?: [{
+					bs_version?:        string
+					ignore_volume_az?:  bool
+					trust_device_path?: bool
+				}, ...]
 				global?: [{
-					auth_url: string
-					password: string
-					username: string
+					auth_url:     string
+					password:     string
+					username:     string
+					ca_file?:     string
+					domain_id?:   string
+					domain_name?: string
+					region?:      string
+					tenant_id?:   string
+					tenant_name?: string
+					trust_id?:    string
 				}, ...]
 				load_balancer?: [{
-					monitor_delay?:       string
-					monitor_max_retries?: number
-					monitor_timeout?:     string
+					create_monitor?:         bool
+					floating_network_id?:    string
+					lb_method?:              string
+					lb_provider?:            string
+					lb_version?:             string
+					manage_security_groups?: bool
+					monitor_delay?:          string
+					monitor_max_retries?:    number
+					monitor_timeout?:        string
+					subnet_id?:              string
+					use_octavia?:            bool
 				}, ...]
-				metadata?: [{}, ...]
-				route?: [{}, ...]
+				metadata?: [{
+					request_timeout?: number
+					search_order?:    string
+				}, ...]
+				route?: [{
+					router_id?: string
+				}, ...]
 			}, ...]
 			vsphere_cloud_provider?: [{
-				disk?: [{}, ...]
-				global?: [{}, ...]
-				network?: [{}, ...]
+				disk?: [{
+					scsi_controller_type?: string
+				}, ...]
+				global?: [{
+					datacenters?:          string
+					insecure_flag?:        bool
+					password?:             string
+					port?:                 string
+					soap_roundtrip_count?: number
+					user?:                 string
+				}, ...]
+				network?: [{
+					public_network?: string
+				}, ...]
 				virtual_center?: [{
-					datacenters: string
-					name:        string
-					password:    string
-					user:        string
+					datacenters:           string
+					name:                  string
+					password:              string
+					user:                  string
+					port?:                 string
+					soap_roundtrip_count?: number
 				}, ...]
 				workspace?: [{
-					datacenter: string
-					folder:     string
-					server:     string
+					datacenter:         string
+					folder:             string
+					server:             string
+					default_datastore?: string
+					resourcepool_path?: string
 				}, ...]
 			}, ...]
 		}, ...]
 		dns?: [{
+			node_selector?: [_]: string
+			provider?: string
+			reverse_cidrs?: [string, ...]
+			upstream_nameservers?: [string, ...]
+			linear_autoscaler_params?: [{
+				cores_per_replica?:            number
+				max?:                          number
+				min?:                          number
+				nodes_per_replica?:            number
+				prevent_single_point_failure?: bool
+			}, ...]
+			nodelocal?: [{
+				ip_address?: string
+				node_selector?: [_]: string
+			}, ...]
+			update_strategy?: [{
+				strategy?: string
+				rolling_update?: [{
+					max_surge?:       number
+					max_unavailable?: number
+				}, ...]
+			}, ...]
+		}, ...]
+		ingress?: [{
+			dns_policy?: string
+			extra_args?: [_]:    string
+			node_selector?: [_]: string
+			options?: [_]:       string
 			provider?: string
 		}, ...]
-		ingress?: [{}, ...]
-		monitoring?: [{}, ...]
+		monitoring?: [{
+			node_selector?: [_]: string
+			options?: [_]:       string
+			provider?: string
+			replicas?: number
+			update_strategy?: [{
+				strategy?: string
+				rolling_update?: [{
+					max_surge?:       number
+					max_unavailable?: number
+				}, ...]
+			}, ...]
+		}, ...]
 		network?: [{
 			mtu?: number
-			calico_network_provider?: [{}, ...]
-			canal_network_provider?: [{}, ...]
-			flannel_network_provider?: [{}, ...]
+			options?: [_]: string
+			plugin?: string
+			calico_network_provider?: [{
+				cloud_provider?: string
+			}, ...]
+			canal_network_provider?: [{
+				iface?: string
+			}, ...]
+			flannel_network_provider?: [{
+				iface?: string
+			}, ...]
 			weave_network_provider?: [{
 				password: string
 			}, ...]
@@ -422,12 +825,15 @@ package rancher2
 			address: string
 			role: [string, ...]
 			user:               string
+			docker_socket?:     string
 			hostname_override?: string
 			internal_address?:  string
 			labels?: [_]: string
 			node_id?:        string
 			port?:           string
 			ssh_agent_auth?: bool
+			ssh_key?:        string
+			ssh_key_path?:   string
 		}, ...]
 		private_registries?: [{
 			url:         string
@@ -437,11 +843,20 @@ package rancher2
 		}, ...]
 		services?: [{
 			etcd?: [{
+				ca_cert?:  string
+				cert?:     string
+				creation?: string
 				external_urls?: [string, ...]
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
-				gid?: number
-				uid?: number
+				gid?:       number
+				image?:     string
+				key?:       string
+				path?:      string
+				retention?: string
+				snapshot?:  bool
+				uid?:       number
 				backup_config?: [{
 					enabled?:        bool
 					interval_hours?: number
@@ -461,9 +876,13 @@ package rancher2
 			kube_api?: [{
 				admission_configuration?: [_]: string
 				always_pull_images?: bool
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
-				pod_security_policy?: bool
+				image?:                    string
+				pod_security_policy?:      bool
+				service_cluster_ip_range?: string
+				service_node_port_range?:  string
 				audit_log?: [{
 					enabled?: bool
 					configuration?: [{
@@ -472,33 +891,48 @@ package rancher2
 						max_backup?: number
 						max_size?:   number
 						path?:       string
+						policy?:     string
 					}, ...]
 				}, ...]
 				event_rate_limit?: [{
-					configuration?: [_]: string
-					enabled?: bool
+					configuration?: string
+					enabled?:       bool
 				}, ...]
 				secrets_encryption_config?: [{
-					custom_config?: [_]: string
-					enabled?: bool
+					custom_config?: string
+					enabled?:       bool
 				}, ...]
 			}, ...]
 			kube_controller?: [{
+				cluster_cidr?: string
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
+				image?:                    string
+				service_cluster_ip_range?: string
 			}, ...]
 			kubelet?: [{
+				cluster_dns_server?: string
+				cluster_domain?:     string
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
+				fail_swap_on?:                 bool
 				generate_serving_certificate?: bool
+				image?:                        string
+				infra_container_image?:        string
 			}, ...]
 			kubeproxy?: [{
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
+				image?: string
 			}, ...]
 			scheduler?: [{
+				extra_args?: [_]: string
 				extra_binds?: [string, ...]
 				extra_env?: [string, ...]
+				image?: string
 			}, ...]
 		}, ...]
 		upgrade_strategy?: [{
@@ -527,6 +961,7 @@ package rancher2
 		}, ...]
 		schedule_config?: [{
 			cron_schedule: string
+			retention?:    number
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -536,15 +971,20 @@ package rancher2
 	}
 }
 #Rancher2ClusterAlertGroupResource: {
-	cluster_id:               string
-	name:                     string
-	description?:             string
-	group_interval_seconds?:  number
-	group_wait_seconds?:      number
+	cluster_id: string
+	name:       string
+	annotations?: [_]: string
+	description?:            string
+	group_interval_seconds?: number
+	group_wait_seconds?:     number
+	id?:                     string
+	labels?: [_]: string
 	repeat_interval_seconds?: number
 	recipients?: [{
 		notifier_id:        string
 		default_recipient?: bool
+		notifier_type?:     string
+		recipient?:         string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -553,12 +993,15 @@ package rancher2
 	}
 }
 #Rancher2ClusterAlertRuleResource: {
-	cluster_id:               string
-	group_id:                 string
-	name:                     string
-	group_interval_seconds?:  number
-	group_wait_seconds?:      number
-	inherited?:               bool
+	cluster_id: string
+	group_id:   string
+	name:       string
+	annotations?: [_]: string
+	group_interval_seconds?: number
+	group_wait_seconds?:     number
+	id?:                     string
+	inherited?:              bool
+	labels?: [_]: string
 	repeat_interval_seconds?: number
 	severity?:                string
 	event_rule?: [{
@@ -594,8 +1037,11 @@ package rancher2
 	name:        string
 	url:         string
 	actual_url?: string
-	checksum?:   string
-	ui_url?:     string
+	annotations?: [_]: string
+	checksum?: string
+	id?:       string
+	labels?: [_]: string
+	ui_url?: string
 	whitelist_domains?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -604,12 +1050,16 @@ package rancher2
 	}
 }
 #Rancher2ClusterLoggingResource: {
-	cluster_id:             string
-	kind:                   string
-	name:                   string
-	enable_json_parsing?:   bool
+	cluster_id: string
+	kind:       string
+	name:       string
+	annotations?: [_]: string
+	enable_json_parsing?: bool
+	id?:                  string
+	labels?: [_]: string
 	namespace_id?:          string
 	output_flush_interval?: number
+	output_tags?: [_]: string
 	custom_target_config?: [{
 		content:      string
 		certificate?: string
@@ -626,6 +1076,7 @@ package rancher2
 		client_key_pass?: string
 		date_format?:     string
 		index_prefix?:    string
+		ssl_verify?:      bool
 		ssl_version?:     string
 	}, ...]
 	fluentd_config?: [{
@@ -659,15 +1110,18 @@ package rancher2
 		client_key_pass?: string
 		index?:           string
 		source?:          string
+		ssl_verify?:      bool
 	}, ...]
 	syslog_config?: [{
 		endpoint:     string
 		certificate?: string
 		client_cert?: string
 		client_key?:  string
+		enable_tls?:  bool
 		program?:     string
 		protocol?:    string
 		severity?:    string
+		ssl_verify?:  bool
 		token?:       string
 	}, ...]
 	timeouts?: {
@@ -680,8 +1134,13 @@ package rancher2
 	cluster_id:       string
 	name:             string
 	role_template_id: string
-	group_id?:        string
-	user_id?:         string
+	annotations?: [_]: string
+	group_id?:           string
+	group_principal_id?: string
+	id?:                 string
+	labels?: [_]: string
+	user_id?:           string
+	user_principal_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -689,10 +1148,15 @@ package rancher2
 	}
 }
 #Rancher2ClusterSyncResource: {
-	cluster_id: string
+	cluster_id:          string
+	default_project_id?: string
+	id?:                 string
+	kube_config?:        string
 	node_pool_ids?: [string, ...]
-	synced?:          bool
-	wait_monitoring?: bool
+	state_confirm?:     number
+	synced?:            bool
+	system_project_id?: string
+	wait_monitoring?:   bool
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -700,100 +1164,250 @@ package rancher2
 	}
 }
 #Rancher2ClusterTemplateResource: {
-	name:         string
-	description?: string
+	name: string
+	annotations?: [_]: string
+	default_revision_id?: string
+	description?:         string
+	id?:                  string
+	labels?: [_]: string
 	members?: [{
 		access_type?:        string
 		group_principal_id?: string
 		user_principal_id?:  string
 	}, ...]
 	template_revisions?: [{
-		name:     string
-		default?: bool
-		enabled?: bool
+		name: string
+		annotations?: [_]: string
+		cluster_template_id?: string
+		default?:             bool
+		enabled?:             bool
+		id?:                  string
+		labels?: [_]: string
 		cluster_config?: [{
-			enable_cluster_alerting?:   bool
-			enable_cluster_monitoring?: bool
-			enable_network_policy?:     bool
-			windows_prefered_cluster?:  bool
+			default_cluster_role_for_project_members?: string
+			default_pod_security_policy_template_id?:  string
+			desired_agent_image?:                      string
+			desired_auth_image?:                       string
+			docker_root_dir?:                          string
+			enable_cluster_alerting?:                  bool
+			enable_cluster_monitoring?:                bool
+			enable_network_policy?:                    bool
+			windows_prefered_cluster?:                 bool
 			cluster_auth_endpoint?: [{
 				ca_certs?: string
 				enabled?:  bool
 				fqdn?:     string
 			}, ...]
 			rke_config?: [{
-				addons?: string
+				addon_job_timeout?: number
+				addons?:            string
 				addons_include?: [string, ...]
 				ignore_docker_version?: bool
+				kubernetes_version?:    string
+				prefix_path?:           string
 				ssh_agent_auth?:        bool
-				authentication?: [{}, ...]
+				ssh_cert_path?:         string
+				ssh_key_path?:          string
+				authentication?: [{
+					sans?: [string, ...]
+					strategy?: string
+				}, ...]
 				authorization?: [{
 					mode?: string
+					options?: [_]: string
 				}, ...]
 				bastion_host?: [{
 					address:         string
 					user:            string
 					port?:           string
 					ssh_agent_auth?: bool
+					ssh_key?:        string
+					ssh_key_path?:   string
 				}, ...]
 				cloud_provider?: [{
+					custom_cloud_provider?: string
+					name?:                  string
 					aws_cloud_provider?: [{
 						global?: [{
 							disable_security_group_ingress?: bool
 							disable_strict_zone_check?:      bool
+							elb_security_group?:             string
+							kubernetes_cluster_id?:          string
+							kubernetes_cluster_tag?:         string
+							role_arn?:                       string
+							route_table_id?:                 string
+							subnet_id?:                      string
+							vpc?:                            string
+							zone?:                           string
 						}, ...]
 						service_override?: [{
-							service: string
+							service:         string
+							region?:         string
+							signing_method?: string
+							signing_name?:   string
+							signing_region?: string
+							url?:            string
 						}, ...]
 					}, ...]
 					azure_cloud_provider?: [{
-						aad_client_id:     string
-						aad_client_secret: string
-						subscription_id:   string
-						tenant_id:         string
+						aad_client_id:                     string
+						aad_client_secret:                 string
+						subscription_id:                   string
+						tenant_id:                         string
+						aad_client_cert_password?:         string
+						aad_client_cert_path?:             string
+						cloud?:                            string
+						cloud_provider_backoff?:           bool
+						cloud_provider_backoff_duration?:  number
+						cloud_provider_backoff_exponent?:  number
+						cloud_provider_backoff_jitter?:    number
+						cloud_provider_backoff_retries?:   number
+						cloud_provider_rate_limit?:        bool
+						cloud_provider_rate_limit_bucket?: number
+						cloud_provider_rate_limit_qps?:    number
+						load_balancer_sku?:                string
+						location?:                         string
+						maximum_load_balancer_rule_count?: number
+						primary_availability_set_name?:    string
+						primary_scale_set_name?:           string
+						resource_group?:                   string
+						route_table_name?:                 string
+						security_group_name?:              string
+						subnet_name?:                      string
+						use_instance_metadata?:            bool
+						use_managed_identity_extension?:   bool
+						vm_type?:                          string
+						vnet_name?:                        string
+						vnet_resource_group?:              string
 					}, ...]
 					openstack_cloud_provider?: [{
-						block_storage?: [{}, ...]
+						block_storage?: [{
+							bs_version?:        string
+							ignore_volume_az?:  bool
+							trust_device_path?: bool
+						}, ...]
 						global?: [{
-							auth_url: string
-							password: string
-							username: string
+							auth_url:     string
+							password:     string
+							username:     string
+							ca_file?:     string
+							domain_id?:   string
+							domain_name?: string
+							region?:      string
+							tenant_id?:   string
+							tenant_name?: string
+							trust_id?:    string
 						}, ...]
 						load_balancer?: [{
-							monitor_delay?:       string
-							monitor_max_retries?: number
-							monitor_timeout?:     string
+							create_monitor?:         bool
+							floating_network_id?:    string
+							lb_method?:              string
+							lb_provider?:            string
+							lb_version?:             string
+							manage_security_groups?: bool
+							monitor_delay?:          string
+							monitor_max_retries?:    number
+							monitor_timeout?:        string
+							subnet_id?:              string
+							use_octavia?:            bool
 						}, ...]
-						metadata?: [{}, ...]
-						route?: [{}, ...]
+						metadata?: [{
+							request_timeout?: number
+							search_order?:    string
+						}, ...]
+						route?: [{
+							router_id?: string
+						}, ...]
 					}, ...]
 					vsphere_cloud_provider?: [{
-						disk?: [{}, ...]
-						global?: [{}, ...]
-						network?: [{}, ...]
+						disk?: [{
+							scsi_controller_type?: string
+						}, ...]
+						global?: [{
+							datacenters?:          string
+							insecure_flag?:        bool
+							password?:             string
+							port?:                 string
+							soap_roundtrip_count?: number
+							user?:                 string
+						}, ...]
+						network?: [{
+							public_network?: string
+						}, ...]
 						virtual_center?: [{
-							datacenters: string
-							name:        string
-							password:    string
-							user:        string
+							datacenters:           string
+							name:                  string
+							password:              string
+							user:                  string
+							port?:                 string
+							soap_roundtrip_count?: number
 						}, ...]
 						workspace?: [{
-							datacenter: string
-							folder:     string
-							server:     string
+							datacenter:         string
+							folder:             string
+							server:             string
+							default_datastore?: string
+							resourcepool_path?: string
 						}, ...]
 					}, ...]
 				}, ...]
 				dns?: [{
+					node_selector?: [_]: string
+					provider?: string
+					reverse_cidrs?: [string, ...]
+					upstream_nameservers?: [string, ...]
+					linear_autoscaler_params?: [{
+						cores_per_replica?:            number
+						max?:                          number
+						min?:                          number
+						nodes_per_replica?:            number
+						prevent_single_point_failure?: bool
+					}, ...]
+					nodelocal?: [{
+						ip_address?: string
+						node_selector?: [_]: string
+					}, ...]
+					update_strategy?: [{
+						strategy?: string
+						rolling_update?: [{
+							max_surge?:       number
+							max_unavailable?: number
+						}, ...]
+					}, ...]
+				}, ...]
+				ingress?: [{
+					dns_policy?: string
+					extra_args?: [_]:    string
+					node_selector?: [_]: string
+					options?: [_]:       string
 					provider?: string
 				}, ...]
-				ingress?: [{}, ...]
-				monitoring?: [{}, ...]
+				monitoring?: [{
+					node_selector?: [_]: string
+					options?: [_]:       string
+					provider?: string
+					replicas?: number
+					update_strategy?: [{
+						strategy?: string
+						rolling_update?: [{
+							max_surge?:       number
+							max_unavailable?: number
+						}, ...]
+					}, ...]
+				}, ...]
 				network?: [{
 					mtu?: number
-					calico_network_provider?: [{}, ...]
-					canal_network_provider?: [{}, ...]
-					flannel_network_provider?: [{}, ...]
+					options?: [_]: string
+					plugin?: string
+					calico_network_provider?: [{
+						cloud_provider?: string
+					}, ...]
+					canal_network_provider?: [{
+						iface?: string
+					}, ...]
+					flannel_network_provider?: [{
+						iface?: string
+					}, ...]
 					weave_network_provider?: [{
 						password: string
 					}, ...]
@@ -802,12 +1416,15 @@ package rancher2
 					address: string
 					role: [string, ...]
 					user:               string
+					docker_socket?:     string
 					hostname_override?: string
 					internal_address?:  string
 					labels?: [_]: string
 					node_id?:        string
 					port?:           string
 					ssh_agent_auth?: bool
+					ssh_key?:        string
+					ssh_key_path?:   string
 				}, ...]
 				private_registries?: [{
 					url:         string
@@ -817,11 +1434,20 @@ package rancher2
 				}, ...]
 				services?: [{
 					etcd?: [{
+						ca_cert?:  string
+						cert?:     string
+						creation?: string
 						external_urls?: [string, ...]
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
-						gid?: number
-						uid?: number
+						gid?:       number
+						image?:     string
+						key?:       string
+						path?:      string
+						retention?: string
+						snapshot?:  bool
+						uid?:       number
 						backup_config?: [{
 							enabled?:        bool
 							interval_hours?: number
@@ -841,9 +1467,13 @@ package rancher2
 					kube_api?: [{
 						admission_configuration?: [_]: string
 						always_pull_images?: bool
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
-						pod_security_policy?: bool
+						image?:                    string
+						pod_security_policy?:      bool
+						service_cluster_ip_range?: string
+						service_node_port_range?:  string
 						audit_log?: [{
 							enabled?: bool
 							configuration?: [{
@@ -852,33 +1482,48 @@ package rancher2
 								max_backup?: number
 								max_size?:   number
 								path?:       string
+								policy?:     string
 							}, ...]
 						}, ...]
 						event_rate_limit?: [{
-							configuration?: [_]: string
-							enabled?: bool
+							configuration?: string
+							enabled?:       bool
 						}, ...]
 						secrets_encryption_config?: [{
-							custom_config?: [_]: string
-							enabled?: bool
+							custom_config?: string
+							enabled?:       bool
 						}, ...]
 					}, ...]
 					kube_controller?: [{
+						cluster_cidr?: string
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
+						image?:                    string
+						service_cluster_ip_range?: string
 					}, ...]
 					kubelet?: [{
+						cluster_dns_server?: string
+						cluster_domain?:     string
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
+						fail_swap_on?:                 bool
 						generate_serving_certificate?: bool
+						image?:                        string
+						infra_container_image?:        string
 					}, ...]
 					kubeproxy?: [{
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
+						image?: string
 					}, ...]
 					scheduler?: [{
+						extra_args?: [_]: string
 						extra_binds?: [string, ...]
 						extra_env?: [string, ...]
+						image?: string
 					}, ...]
 				}, ...]
 				upgrade_strategy?: [{
@@ -907,6 +1552,7 @@ package rancher2
 				}, ...]
 				schedule_config?: [{
 					cron_schedule: string
+					retention?:    number
 				}, ...]
 			}, ...]
 		}, ...]
@@ -925,7 +1571,13 @@ package rancher2
 }
 #Rancher2EtcdBackupResource: {
 	cluster_id: string
-	manual?:    bool
+	annotations?: [_]: string
+	filename?: string
+	id?:       string
+	labels?: [_]: string
+	manual?:       bool
+	name?:         string
+	namespace_id?: string
 	backup_config?: [{
 		enabled?:        bool
 		interval_hours?: number
@@ -947,8 +1599,60 @@ package rancher2
 		update?: string
 	}
 }
+#Rancher2GlobalDnsResource: {
+	fqdn:        string
+	provider_id: string
+	annotations?: [_]: string
+	id?: string
+	labels?: [_]: string
+	multi_cluster_app_id?: string
+	name?:                 string
+	project_ids?: [string, ...]
+	ttl?: number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#Rancher2GlobalDnsProviderResource: {
+	name:        string
+	root_domain: string
+	annotations?: [_]: string
+	dns_provider?: string
+	id?:           string
+	labels?: [_]: string
+	alidns_config?: [{
+		access_key: string
+		secret_key: string
+	}, ...]
+	cloudflare_config?: [{
+		api_email:      string
+		api_key:        string
+		proxy_setting?: bool
+	}, ...]
+	route53_config?: [{
+		access_key:        string
+		secret_key:        string
+		credentials_path?: string
+		region?:           string
+		role_arn?:         string
+		zone_type?:        string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #Rancher2GlobalRoleBindingResource: {
 	global_role_id: string
+	annotations?: [_]: string
+	group_principal_id?: string
+	id?:                 string
+	labels?: [_]: string
+	name?:    string
+	user_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -959,17 +1663,30 @@ package rancher2
 	catalog_name: string
 	name:         string
 	roles: [string, ...]
-	template_name:           string
+	template_name: string
+	annotations?: [_]: string
+	id?: string
+	labels?: [_]: string
 	revision_history_limit?: number
+	revision_id?:            string
+	template_version?:       string
+	template_version_id?:    string
 	wait?:                   bool
-	answers?: [{}, ...]
+	answers?: [{
+		cluster_id?: string
+		project_id?: string
+		values?: [_]: string
+	}, ...]
 	members?: [{
 		access_type?:        string
 		group_principal_id?: string
 		user_principal_id?:  string
 	}, ...]
 	targets?: [{
-		project_id: string
+		project_id:    string
+		app_id?:       string
+		health_state?: string
+		state?:        string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -984,9 +1701,12 @@ package rancher2
 	}, ...]
 }
 #Rancher2NamespaceResource: {
-	name:              string
-	project_id:        string
-	description?:      string
+	name:       string
+	project_id: string
+	annotations?: [_]: string
+	description?: string
+	id?:          string
+	labels?: [_]: string
 	wait_for_cluster?: bool
 	container_resource_limit?: [{
 		limits_cpu?:      string
@@ -1018,14 +1738,17 @@ package rancher2
 	}
 }
 #Rancher2NodeDriverResource: {
-	active:       bool
-	builtin:      bool
-	name:         string
-	url:          string
+	active:  bool
+	builtin: bool
+	name:    string
+	url:     string
+	annotations?: [_]: string
 	checksum?:    string
 	description?: string
 	external_id?: string
-	ui_url?:      string
+	id?:          string
+	labels?: [_]: string
+	ui_url?: string
 	whitelist_domains?: [string, ...]
 	timeouts?: {
 		create?: string
@@ -1034,19 +1757,23 @@ package rancher2
 	}
 }
 #Rancher2NodePoolResource: {
-	cluster_id:                   string
-	hostname_prefix:              string
-	name:                         string
-	node_template_id:             string
+	cluster_id:       string
+	hostname_prefix:  string
+	name:             string
+	node_template_id: string
+	annotations?: [_]: string
 	control_plane?:               bool
 	delete_not_ready_after_secs?: number
 	etcd?:                        bool
-	quantity?:                    number
-	worker?:                      bool
+	id?:                          string
+	labels?: [_]: string
+	quantity?: number
+	worker?:   bool
 	node_taints?: [{
-		key:     string
-		value:   string
-		effect?: string
+		key:         string
+		value:       string
+		effect?:     string
+		time_added?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1055,18 +1782,23 @@ package rancher2
 	}
 }
 #Rancher2NodeTemplateResource: {
-	name:                        string
+	name: string
+	annotations?: [_]: string
 	auth_certificate_authority?: string
 	auth_key?:                   string
 	cloud_credential_id?:        string
 	description?:                string
+	driver?:                     string
+	driver_id?:                  string
 	engine_env?: [_]: string
 	engine_insecure_registry?: [string, ...]
 	engine_install_url?: string
 	engine_label?: [_]: string
 	engine_opt?: [_]:   string
 	engine_registry_mirror?: [string, ...]
-	engine_storage_driver?:   string
+	engine_storage_driver?: string
+	id?:                    string
+	labels?: [_]: string
 	use_internal_ip_address?: bool
 	amazonec2_config?: [{
 		ami:    string
@@ -1078,11 +1810,13 @@ package rancher2
 		access_key?:             string
 		block_duration_minutes?: string
 		device_name?:            string
+		encrypt_ebs_volume?:     bool
 		endpoint?:               string
 		iam_instance_profile?:   string
 		insecure_transport?:     bool
 		instance_type?:          string
 		keypair_name?:           string
+		kms_key?:                string
 		monitoring?:             bool
 		open_port?: [string, ...]
 		private_address_only?:       bool
@@ -1115,6 +1849,7 @@ package rancher2
 		location?:           string
 		managed_disks?:      bool
 		no_public_ip?:       bool
+		nsg?:                string
 		open_port?: [string, ...]
 		private_ip_address?:  string
 		resource_group?:      string
@@ -1144,6 +1879,16 @@ package rancher2
 		ssh_user?:            string
 		tags?:                string
 		userdata?:            string
+	}, ...]
+	hetzner_config?: [{
+		api_token:             string
+		image?:                string
+		networks?:             string
+		server_location?:      string
+		server_type?:          string
+		use_private_networks?: bool
+		userdata?:             string
+		volumes?:              string
 	}, ...]
 	linode_config?: [{
 		authorized_users?:  string
@@ -1185,35 +1930,38 @@ package rancher2
 		vcpu?:          string
 	}, ...]
 	openstack_config?: [{
-		auth_url:          string
-		availability_zone: string
-		region:            string
-		username:          string
-		active_timeout?:   string
-		cacert?:           string
-		config_drive?:     bool
-		domain_id?:        string
-		domain_name?:      string
-		endpoint_type?:    string
-		flavor_id?:        string
-		flavor_name?:      string
-		floating_ip_pool?: string
-		image_id?:         string
-		image_name?:       string
-		insecure?:         bool
-		ip_version?:       string
-		keypair_name?:     string
-		net_id?:           string
-		net_name?:         string
-		nova_network?:     bool
-		password?:         string
-		private_key_file?: string
-		sec_groups?:       string
-		ssh_port?:         string
-		ssh_user?:         string
-		tenant_id?:        string
-		tenant_name?:      string
-		user_data_file?:   string
+		auth_url:                       string
+		availability_zone:              string
+		region:                         string
+		active_timeout?:                string
+		application_credential_id?:     string
+		application_credential_name?:   string
+		application_credential_secret?: string
+		cacert?:                        string
+		config_drive?:                  bool
+		domain_id?:                     string
+		domain_name?:                   string
+		endpoint_type?:                 string
+		flavor_id?:                     string
+		flavor_name?:                   string
+		floating_ip_pool?:              string
+		image_id?:                      string
+		image_name?:                    string
+		insecure?:                      bool
+		ip_version?:                    string
+		keypair_name?:                  string
+		net_id?:                        string
+		net_name?:                      string
+		nova_network?:                  bool
+		password?:                      string
+		private_key_file?:              string
+		sec_groups?:                    string
+		ssh_port?:                      string
+		ssh_user?:                      string
+		tenant_id?:                     string
+		tenant_name?:                   string
+		user_data_file?:                string
+		username?:                      string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1255,10 +2003,22 @@ package rancher2
 	}, ...]
 }
 #Rancher2NotifierResource: {
-	cluster_id:     string
-	name:           string
-	description?:   string
+	cluster_id: string
+	name:       string
+	annotations?: [_]: string
+	description?: string
+	id?:          string
+	labels?: [_]: string
 	send_resolved?: bool
+	dingtalk_config?: [{
+		url:        string
+		proxy_url?: string
+		secret?:    string
+	}, ...]
+	msteams_config?: [{
+		url:        string
+		proxy_url?: string
+	}, ...]
 	pagerduty_config?: [{
 		service_key: string
 		proxy_url?:  string
@@ -1296,14 +2056,25 @@ package rancher2
 	}, ...]
 }
 #Rancher2PodSecurityPolicyTemplateResource: {
-	name: string
+	name:                        string
+	allow_privilege_escalation?: bool
 	allowed_capabilities?: [string, ...]
 	allowed_proc_mount_types?: [string, ...]
 	allowed_unsafe_sysctls?: [string, ...]
+	annotations?: [_]: string
 	default_add_capabilities?: [string, ...]
 	default_allow_privilege_escalation?: bool
+	description?:                        string
 	forbidden_sysctls?: [string, ...]
+	host_ipc?:     bool
+	host_network?: bool
+	host_pid?:     bool
+	id?:           string
+	labels?: [_]: string
+	privileged?:                bool
+	read_only_root_filesystem?: bool
 	required_drop_capabilities?: [string, ...]
+	volumes?: [string, ...]
 	allowed_csi_driver?: [{
 		name: string
 	}, ...]
@@ -1366,10 +2137,13 @@ package rancher2
 	}
 }
 #Rancher2ProjectResource: {
-	cluster_id:                       string
-	name:                             string
-	description?:                     string
-	enable_project_monitoring?:       bool
+	cluster_id: string
+	name:       string
+	annotations?: [_]: string
+	description?:               string
+	enable_project_monitoring?: bool
+	id?:                        string
+	labels?: [_]: string
 	pod_security_policy_template_id?: string
 	wait_for_cluster?:                bool
 	container_resource_limit?: [{
@@ -1421,15 +2195,20 @@ package rancher2
 	}
 }
 #Rancher2ProjectAlertGroupResource: {
-	name:                     string
-	project_id:               string
-	description?:             string
-	group_interval_seconds?:  number
-	group_wait_seconds?:      number
+	name:       string
+	project_id: string
+	annotations?: [_]: string
+	description?:            string
+	group_interval_seconds?: number
+	group_wait_seconds?:     number
+	id?:                     string
+	labels?: [_]: string
 	repeat_interval_seconds?: number
 	recipients?: [{
 		notifier_id:        string
 		default_recipient?: bool
+		notifier_type?:     string
+		recipient?:         string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1438,12 +2217,15 @@ package rancher2
 	}
 }
 #Rancher2ProjectAlertRuleResource: {
-	group_id:                 string
-	name:                     string
-	project_id:               string
-	group_interval_seconds?:  number
-	group_wait_seconds?:      number
-	inherited?:               bool
+	group_id:   string
+	name:       string
+	project_id: string
+	annotations?: [_]: string
+	group_interval_seconds?: number
+	group_wait_seconds?:     number
+	id?:                     string
+	inherited?:              bool
+	labels?: [_]: string
 	repeat_interval_seconds?: number
 	severity?:                string
 	metric_rule?: [{
@@ -1471,12 +2253,16 @@ package rancher2
 	}, ...]
 }
 #Rancher2ProjectLoggingResource: {
-	kind:                   string
-	name:                   string
-	project_id:             string
-	enable_json_parsing?:   bool
+	kind:       string
+	name:       string
+	project_id: string
+	annotations?: [_]: string
+	enable_json_parsing?: bool
+	id?:                  string
+	labels?: [_]: string
 	namespace_id?:          string
 	output_flush_interval?: number
+	output_tags?: [_]: string
 	custom_target_config?: [{
 		content:      string
 		certificate?: string
@@ -1493,6 +2279,7 @@ package rancher2
 		client_key_pass?: string
 		date_format?:     string
 		index_prefix?:    string
+		ssl_verify?:      bool
 		ssl_version?:     string
 	}, ...]
 	fluentd_config?: [{
@@ -1526,15 +2313,18 @@ package rancher2
 		client_key_pass?: string
 		index?:           string
 		source?:          string
+		ssl_verify?:      bool
 	}, ...]
 	syslog_config?: [{
 		endpoint:     string
 		certificate?: string
 		client_cert?: string
 		client_key?:  string
+		enable_tls?:  bool
 		program?:     string
 		protocol?:    string
 		severity?:    string
+		ssl_verify?:  bool
 		token?:       string
 	}, ...]
 	timeouts?: {
@@ -1547,8 +2337,13 @@ package rancher2
 	name:             string
 	project_id:       string
 	role_template_id: string
-	group_id?:        string
-	user_id?:         string
+	annotations?: [_]: string
+	group_id?:           string
+	group_principal_id?: string
+	id?:                 string
+	labels?: [_]: string
+	user_id?:           string
+	user_principal_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1556,9 +2351,12 @@ package rancher2
 	}
 }
 #Rancher2RegistryResource: {
-	name:          string
-	project_id:    string
-	description?:  string
+	name:       string
+	project_id: string
+	annotations?: [_]: string
+	description?: string
+	id?:          string
+	labels?: [_]: string
 	namespace_id?: string
 	registries?: [{
 		address:   string
@@ -1574,11 +2372,17 @@ package rancher2
 #Rancher2RoleTemplateResource: {
 	name:            string
 	administrative?: bool
-	context?:        string
-	default_role?:   bool
-	external?:       bool
-	hidden?:         bool
-	locked?:         bool
+	annotations?: [_]: string
+	builtin?:      bool
+	context?:      string
+	default_role?: bool
+	description?:  string
+	external?:     bool
+	hidden?:       bool
+	id?:           string
+	labels?: [_]: string
+	locked?: bool
+	role_template_ids?: [string, ...]
 	rules?: [{
 		api_groups?: [string, ...]
 		non_resource_urls?: [string, ...]
@@ -1594,8 +2398,11 @@ package rancher2
 }
 #Rancher2SecretResource: {
 	data: [_]: string
-	project_id:    string
-	description?:  string
+	project_id: string
+	annotations?: [_]: string
+	description?: string
+	id?:          string
+	labels?: [_]: string
 	name?:         string
 	namespace_id?: string
 	timeouts?: {
@@ -1607,12 +2414,25 @@ package rancher2
 #Rancher2SettingResource: {
 	name:  string
 	value: string
+	annotations?: [_]: string
+	id?: string
+	labels?: [_]: string
 }
 #Rancher2TokenResource: {
+	access_key?: string
+	annotations?: [_]: string
 	cluster_id?:  string
 	description?: string
-	renew?:       bool
-	ttl?:         number
+	enabled?:     bool
+	expired?:     bool
+	id?:          string
+	labels?: [_]: string
+	name?:       string
+	renew?:      bool
+	secret_key?: string
+	token?:      string
+	ttl?:        number
+	user_id?:    string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1622,8 +2442,12 @@ package rancher2
 #Rancher2UserResource: {
 	password: string
 	username: string
+	annotations?: [_]: string
 	enabled?: bool
-	name?:    string
+	id?:      string
+	labels?: [_]: string
+	name?: string
+	principal_ids?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1632,6 +2456,7 @@ package rancher2
 }
 #Resources: {
 	rancher2_app?: [_]:                           #Rancher2AppResource
+	rancher2_app_v2?: [_]:                        #Rancher2AppV2Resource
 	rancher2_auth_config_activedirectory?: [_]:   #Rancher2AuthConfigActivedirectoryResource
 	rancher2_auth_config_adfs?: [_]:              #Rancher2AuthConfigAdfsResource
 	rancher2_auth_config_azuread?: [_]:           #Rancher2AuthConfigAzureadResource
@@ -1643,6 +2468,7 @@ package rancher2
 	rancher2_auth_config_ping?: [_]:              #Rancher2AuthConfigPingResource
 	rancher2_bootstrap?: [_]:                     #Rancher2BootstrapResource
 	rancher2_catalog?: [_]:                       #Rancher2CatalogResource
+	rancher2_catalog_v2?: [_]:                    #Rancher2CatalogV2Resource
 	rancher2_certificate?: [_]:                   #Rancher2CertificateResource
 	rancher2_cloud_credential?: [_]:              #Rancher2CloudCredentialResource
 	rancher2_cluster?: [_]:                       #Rancher2ClusterResource
@@ -1654,6 +2480,8 @@ package rancher2
 	rancher2_cluster_sync?: [_]:                  #Rancher2ClusterSyncResource
 	rancher2_cluster_template?: [_]:              #Rancher2ClusterTemplateResource
 	rancher2_etcd_backup?: [_]:                   #Rancher2EtcdBackupResource
+	rancher2_global_dns?: [_]:                    #Rancher2GlobalDnsResource
+	rancher2_global_dns_provider?: [_]:           #Rancher2GlobalDnsProviderResource
 	rancher2_global_role_binding?: [_]:           #Rancher2GlobalRoleBindingResource
 	rancher2_multi_cluster_app?: [_]:             #Rancher2MultiClusterAppResource
 	rancher2_namespace?: [_]:                     #Rancher2NamespaceResource

@@ -5,16 +5,23 @@ package oktaasa
 	group_name:           string
 	project_name:         string
 	create_server_group?: bool
+	id?:                  string
 	server_access?:       bool
 	server_admin?:        bool
 }
-#OktaasaCreateGroupResource: name: string
+#OktaasaCreateGroupResource: {
+	name: string
+	id?:  string
+}
 #OktaasaEnrollmentTokenResource: {
 	description:  string
 	project_name: string
+	id?:          string
+	token_value?: string
 }
 #OktaasaProjectResource: {
 	project_name:   string
+	id?:            string
 	next_unix_gid?: number
 	next_unix_uid?: number
 }

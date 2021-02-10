@@ -8,6 +8,8 @@ package flexibleengine
 	floating_ip_id:         string
 	http_request_pos_id:    number
 	traffic_pos_id:         number
+	id?:                    string
+	region?:                string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -16,6 +18,8 @@ package flexibleengine
 }
 #FlexibleengineAsConfigurationV1Resource: {
 	scaling_configuration_name: string
+	id?:                        string
+	region?:                    string
 	instance_config?: [{
 		key_name:     string
 		flavor?:      string
@@ -49,17 +53,23 @@ package flexibleengine
 	vpc_id:             string
 	available_zones?: [string, ...]
 	cool_down_time?:               number
+	current_instance_number?:      number
 	delete_instances?:             string
 	delete_publicip?:              bool
 	desire_instance_number?:       number
 	health_periodic_audit_method?: string
 	health_periodic_audit_time?:   number
+	id?:                           string
 	instance_terminate_policy?:    string
 	instances?: [string, ...]
 	lb_listener_id?:      string
 	max_instance_number?: number
 	min_instance_number?: number
 	notifications?: [string, ...]
+	region?:                   string
+	scaling_configuration_id?: string
+	status?:                   string
+	tags?: [_]: string
 	lbaas_listeners?: [{
 		pool_id:       string
 		protocol_port: number
@@ -82,6 +92,8 @@ package flexibleengine
 	scaling_policy_type: string
 	alarm_id?:           string
 	cool_down_time?:     number
+	id?:                 string
+	region?:             string
 	scaling_policy_action?: [{
 		instance_number?: number
 		operation?:       string
@@ -95,16 +107,27 @@ package flexibleengine
 	}, ...]
 }
 #FlexibleengineBlockstorageVolumeV2Resource: {
-	size:                  number
+	size: number
+	attachment?: [{
+		device:      string
+		id:          string
+		instance_id: string
+	}, ...]
+	availability_zone?:    string
 	cascade?:              bool
 	consistency_group_id?: string
 	description?:          string
+	id?:                   string
 	image_id?:             string
-	multiattach?:          bool
-	name?:                 string
-	snapshot_id?:          string
-	source_replica?:       string
-	source_vol_id?:        string
+	metadata?: [_]: string
+	multiattach?:    bool
+	name?:           string
+	region?:         string
+	snapshot_id?:    string
+	source_replica?: string
+	source_vol_id?:  string
+	tags?: [_]: string
+	volume_type?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -118,9 +141,75 @@ package flexibleengine
 	subnet_id:              string
 	vpc_id:                 string
 	annotations?: [_]: string
-	eip?: string
+	authentication_mode?: string
+	billing_mode?:        number
+	certificate_clusters?: [{
+		certificate_authority_data: string
+		name:                       string
+		server:                     string
+	}, ...]
+	certificate_users?: [{
+		client_certificate_data: string
+		client_key_data:         string
+		name:                    string
+	}, ...]
+	cluster_version?:        string
+	container_network_cidr?: string
+	description?:            string
+	eip?:                    string
 	extend_param?: [_]: string
-	labels?: [_]:       string
+	external_apig_endpoint?: string
+	external_endpoint?:      string
+	highway_subnet_id?:      string
+	id?:                     string
+	internal_endpoint?:      string
+	labels?: [_]: string
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineCceNodePoolV3Resource: {
+	cluster_id:         string
+	flavor_id:          string
+	initial_node_count: number
+	name:               string
+	availability_zone?: string
+	billing_mode?:      number
+	id?:                string
+	key_pair?:          string
+	labels?: [_]: string
+	max_node_count?:           number
+	min_node_count?:           number
+	os?:                       string
+	password?:                 string
+	postinstall?:              string
+	preinstall?:               string
+	priority?:                 number
+	region?:                   string
+	scale_down_cooldown_time?: number
+	scall_enable?:             bool
+	status?:                   string
+	subnet_id?:                string
+	type?:                     string
+	data_volumes?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	root_volume?: [{
+		size:          number
+		volumetype:    string
+		extend_param?: string
+	}, ...]
+	taints?: [{
+		effect: string
+		key:    string
+		value:  string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -131,8 +220,31 @@ package flexibleengine
 	cluster_id:        string
 	flavor_id:         string
 	key_pair:          string
-	postinstall?:      string
-	preinstall?:       string
+	annotations?: [_]: string
+	bandwidth_charge_mode?: string
+	bandwidth_size?:        number
+	billing_mode?:          number
+	ecs_performance_type?:  string
+	eip_count?:             number
+	eip_ids?: [string, ...]
+	extend_param_charging_mode?: number
+	id?:                         string
+	iptype?:                     string
+	labels?: [_]: string
+	max_pods?:    number
+	name?:        string
+	order_id?:    string
+	os?:          string
+	postinstall?: string
+	preinstall?:  string
+	private_ip?:  string
+	product_id?:  string
+	public_ip?:   string
+	public_key?:  string
+	region?:      string
+	server_id?:   string
+	sharetype?:   string
+	tags?: [_]: string
 	data_volumes?: [{
 		size:          number
 		volumetype:    string
@@ -142,6 +254,11 @@ package flexibleengine
 		size:          number
 		volumetype:    string
 		extend_param?: string
+	}, ...]
+	taints?: [{
+		effect: string
+		key:    string
+		value:  string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -153,6 +270,9 @@ package flexibleengine
 	alarm_action_enabled?: bool
 	alarm_description?:    string
 	alarm_enabled?:        bool
+	alarm_state?:          string
+	id?:                   string
+	update_time?:          number
 	alarm_actions?: [{
 		notification_list: [string, ...]
 		type: string
@@ -190,9 +310,26 @@ package flexibleengine
 #FlexibleengineComputeBmsServerV2Resource: {
 	availability_zone: string
 	name:              string
+	access_ip_v4?:     string
+	access_ip_v6?:     string
+	admin_pass?:       string
+	config_drive?:     bool
+	flavor_id?:        string
+	flavor_name?:      string
+	host_id?:          string
+	host_status?:      string
+	id?:               string
+	image_id?:         string
+	image_name?:       string
+	kernel_id?:        string
+	key_pair?:         string
 	metadata?: [_]: string
+	region?: string
+	security_groups?: [string, ...]
 	stop_before_destroy?: bool
+	tenant_id?:           string
 	user_data?:           string
+	user_id?:             string
 	block_device?: [{
 		source_type:            string
 		boot_index?:            number
@@ -206,6 +343,12 @@ package flexibleengine
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -217,17 +360,48 @@ package flexibleengine
 	floating_ip: string
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	region?:     string
 }
-#FlexibleengineComputeFloatingipV2Resource: pool?: string
+#FlexibleengineComputeFloatingipV2Resource: {
+	address?:     string
+	fixed_ip?:    string
+	id?:          string
+	instance_id?: string
+	pool?:        string
+	region?:      string
+}
 #FlexibleengineComputeInstanceV2Resource: {
 	name:          string
+	access_ip_v4?: string
+	access_ip_v6?: string
 	admin_pass?:   string
-	config_drive?: bool
-	floating_ip?:  string
-	key_pair?:     string
+	all_metadata?: [_]: string
+	auto_recovery?:     bool
+	availability_zone?: string
+	config_drive?:      bool
+	flavor_id?:         string
+	flavor_name?:       string
+	floating_ip?:       string
+	id?:                string
+	image_id?:          string
+	image_name?:        string
+	key_pair?:          string
 	metadata?: [_]: string
+	region?: string
+	security_groups?: [string, ...]
+	status?:              string
 	stop_before_destroy?: bool
-	user_data?:           string
+	system_disk_id?:      string
+	tags?: [_]: string
+	user_data?: string
+	volume_attached?: [{
+		boot_index:  number
+		pci_address: string
+		size:        number
+		type:        string
+		uuid:        string
+	}, ...]
 	block_device?: [{
 		source_type:            string
 		boot_index?:            number
@@ -241,6 +415,13 @@ package flexibleengine
 	}, ...]
 	network?: [{
 		access_network?: bool
+		fixed_ip_v4?:    string
+		fixed_ip_v6?:    string
+		floating_ip?:    string
+		mac?:            string
+		name?:           string
+		port?:           string
+		uuid?:           string
 	}, ...]
 	personality?: [{
 		content: string
@@ -261,11 +442,17 @@ package flexibleengine
 	}
 	volume?: [{
 		volume_id: string
+		device?:   string
+		id?:       string
 	}, ...]
 }
 #FlexibleengineComputeInterfaceAttachV2Resource: {
 	instance_id: string
 	fixed_ip?:   string
+	id?:         string
+	network_id?: string
+	port_id?:    string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -273,17 +460,25 @@ package flexibleengine
 }
 #FlexibleengineComputeKeypairV2Resource: {
 	name:        string
+	id?:         string
 	public_key?: string
+	region?:     string
 	value_specs?: [_]: string
 }
 #FlexibleengineComputeServergroupV2Resource: {
 	name: string
+	id?:  string
+	members?: [string, ...]
 	policies?: [string, ...]
+	region?: string
 	value_specs?: [_]: string
 }
 #FlexibleengineComputeVolumeAttachV2Resource: {
 	instance_id: string
 	volume_id:   string
+	device?:     string
+	id?:         string
+	region?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -293,7 +488,10 @@ package flexibleengine
 	name: string
 	common?: [_]: string
 	description?: string
+	id?:          string
 	provider_id?: string
+	region?:      string
+	status?:      string
 	resource?: [{
 		id:   string
 		name: string
@@ -304,9 +502,14 @@ package flexibleengine
 		trigger_pattern:          string
 		description?:             string
 		enabled?:                 bool
+		id?:                      string
 		max_backups?:             number
 		name?:                    string
+		permanent?:               bool
 		retention_duration_days?: number
+		trigger_id?:              string
+		trigger_name?:            string
+		trigger_type?:            string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -314,15 +517,104 @@ package flexibleengine
 	}
 }
 #FlexibleengineCsbsBackupV1Resource: {
-	resource_id:    string
-	resource_type?: string
+	resource_id:       string
+	backup_name?:      string
+	backup_record_id?: string
+	description?:      string
+	id?:               string
+	region?:           string
+	resource_type?:    string
+	status?:           string
+	vm_metadata?: [{
+		cloud_service_type: string
+		disk:               number
+		eip:                string
+		image_type:         string
+		name:               string
+		private_ip:         string
+		ram:                number
+		vcpus:              number
+	}, ...]
+	volume_backups?: [{
+		average_speed:      number
+		bootable:           bool
+		id:                 string
+		image_type:         string
+		incremental:        bool
+		name:               string
+		size:               number
+		snapshot_id:        string
+		source_volume_id:   string
+		source_volume_name: string
+		source_volume_size: number
+		space_saving_ratio: number
+		status:             string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineCssClusterV1Resource: {
+	engine_version: string
+	name:           string
+	created?:       string
+	endpoint?:      string
+	engine_type?:   string
+	id?:            string
+	node_number?:   number
+	nodes?: [{
+		id:   string
+		name: string
+		type: string
+	}, ...]
+	password?:      string
+	security_mode?: bool
+	tags?: [_]: string
+	backup_strategy?: [{
+		start_time: string
+		keep_days?: number
+		prefix?:    string
+	}, ...]
+	node_config?: [{
+		flavor:             string
+		availability_zone?: string
+		network_info?: [{
+			security_group_id: string
+			subnet_id:         string
+			vpc_id:            string
+		}, ...]
+		volume?: [{
+			size:        number
+			volume_type: string
+		}, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		update?: string
+	}
+}
+#FlexibleengineCssSnapshotV1Resource: {
+	cluster_id:    string
+	name:          string
+	backup_type?:  string
+	cluster_name?: string
+	description?:  string
+	id?:           string
+	indices?:      string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineCtsTrackerV1Resource: {
-	bucket_name: string
+	bucket_name:       string
+	file_prefix_name?: string
+	id?:               string
+	region?:           string
+	status?:           string
+	tracker_name?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -335,17 +627,33 @@ package flexibleengine
 	engine_version:    string
 	name:              string
 	password:          string
-	product_id:        string
 	security_group_id: string
 	vpc_id:            string
 	access_user?:      string
 	backup_at?: [number, ...]
-	backup_type?: string
-	begin_at?:    string
-	network_id?:  string
-	period_type?: string
-	save_days?:   number
-	subnet_id?:   string
+	backup_type?:         string
+	begin_at?:            string
+	description?:         string
+	id?:                  string
+	instance_type?:       string
+	internal_version?:    string
+	ip?:                  string
+	maintain_begin?:      string
+	maintain_end?:        string
+	max_memory?:          string
+	network_id?:          string
+	order_id?:            string
+	period_type?:         string
+	port?:                number
+	product_id?:          string
+	resource_spec_code?:  string
+	save_days?:           number
+	security_group_name?: string
+	subnet_id?:           string
+	subnet_name?:         string
+	used_memory?:         number
+	user_id?:             string
+	vpc_name?:            string
 }
 #FlexibleengineDdsInstanceV3Resource: {
 	availability_zone:   string
@@ -355,7 +663,20 @@ package flexibleengine
 	security_group_id:   string
 	subnet_id:           string
 	vpc_id:              string
+	db_username?:        string
 	disk_encryption_id?: string
+	id?:                 string
+	nodes?: [{
+		id:         string
+		name:       string
+		private_ip: string
+		public_ip:  string
+		role:       string
+		status:     string
+		type:       string
+	}, ...]
+	port?:   number
+	region?: string
 	backup_strategy?: [{
 		keep_days:  number
 		start_time: string
@@ -377,13 +698,31 @@ package flexibleengine
 		delete?: string
 	}
 }
+#FlexibleengineDnsPtrrecordV2Resource: {
+	floatingip_id: string
+	name:          string
+	address?:      string
+	description?:  string
+	id?:           string
+	region?:       string
+	tags?: [_]: string
+	ttl?: number
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
 #FlexibleengineDnsRecordsetV2Resource: {
 	name: string
 	records: [string, ...]
 	type:         string
 	zone_id:      string
 	description?: string
-	ttl?:         number
+	id?:          string
+	region?:      string
+	tags?: [_]: string
+	ttl?: number
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -395,12 +734,16 @@ package flexibleengine
 	name:         string
 	description?: string
 	email?:       string
-	ttl?:         number
+	id?:          string
+	masters?: [string, ...]
+	region?: string
+	tags?: [_]: string
+	ttl?: number
 	value_specs?: [_]: string
 	zone_type?: string
 	router?: [{
-		router_id:     string
-		router_region: string
+		router_id:      string
+		router_region?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -411,27 +754,65 @@ package flexibleengine
 #FlexibleengineDrsReplicationV2Resource: {
 	priority_station: string
 	volume_ids: [string, ...]
-	description?:       string
-	name?:              string
-	replication_model?: string
+	created_at?:                       string
+	description?:                      string
+	failure_detail?:                   string
+	fault_level?:                      string
+	id?:                               string
+	name?:                             string
+	progress?:                         string
+	record_metadata?:                  string
+	replication_consistency_group_id?: string
+	replication_model?:                string
+	replication_status?:               string
+	status?:                           string
+	updated_at?:                       string
 }
 #FlexibleengineDrsReplicationconsistencygroupV2Resource: {
 	priority_station: string
 	replication_ids: [string, ...]
-	description?:       string
-	name?:              string
-	replication_model?: string
+	created_at?:         string
+	description?:        string
+	failure_detail?:     string
+	fault_level?:        string
+	id?:                 string
+	name?:               string
+	replication_model?:  string
+	replication_status?: string
+	status?:             string
+	updated_at?:         string
 }
 #FlexibleengineDwsClusterV1Resource: {
-	name:              string
-	node_type:         string
-	number_of_node:    number
-	security_group_id: string
-	subnet_id:         string
-	user_name:         string
-	user_pwd:          string
-	vpc_id:            string
-	public_ip?: [{}, ...]
+	name:               string
+	node_type:          string
+	number_of_node:     number
+	security_group_id:  string
+	subnet_id:          string
+	user_name:          string
+	user_pwd:           string
+	vpc_id:             string
+	availability_zone?: string
+	created?:           string
+	endpoints?: [{
+		connect_info: string
+		jdbc_url:     string
+	}, ...]
+	id?:   string
+	port?: number
+	public_endpoints?: [{
+		jdbc_url:            string
+		public_connect_info: string
+	}, ...]
+	region?:      string
+	status?:      string
+	sub_status?:  string
+	task_status?: string
+	updated?:     string
+	version?:     string
+	public_ip?: [{
+		eip_id?:           string
+		public_bind_type?: string
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -441,6 +822,7 @@ package flexibleengine
 	address:     string
 	listener_id: string
 	server_id:   string
+	id?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -454,6 +836,9 @@ package flexibleengine
 	healthcheck_timeout?:      number
 	healthcheck_uri?:          string
 	healthy_threshold?:        number
+	id?:                       string
+	region?:                   string
+	unhealthy_threshold?:      number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -468,11 +853,18 @@ package flexibleengine
 	protocol:              string
 	protocol_port:         number
 	certificate_id?:       string
+	cookie_timeout?:       number
 	description?:          string
+	id?:                   string
+	name?:                 string
+	region?:               string
 	session_sticky?:       bool
 	session_sticky_type?:  string
+	ssl_ciphers?:          string
+	ssl_protocols?:        string
 	tcp_draining?:         bool
 	tcp_draining_timeout?: number
+	tcp_timeout?:          number
 	udp_timeout?:          number
 	timeouts?: {
 		create?: string
@@ -481,14 +873,19 @@ package flexibleengine
 	}
 }
 #FlexibleengineElbLoadbalancerResource: {
-	type:            string
-	vpc_id:          string
-	admin_state_up?: bool
-	az?:             string
-	bandwidth?:      number
-	description?:    string
-	name?:           string
-	vip_subnet_id?:  string
+	type:               string
+	vpc_id:             string
+	admin_state_up?:    bool
+	az?:                string
+	bandwidth?:         number
+	description?:       string
+	id?:                string
+	name?:              string
+	region?:            string
+	security_group_id?: string
+	tenantid?:          string
+	vip_address?:       string
+	vip_subnet_id?:     string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -499,8 +896,12 @@ package flexibleengine
 	admin_state_up?:    bool
 	description?:       string
 	egress_policy_id?:  string
+	id?:                string
 	ingress_policy_id?: string
 	name?:              string
+	ports?: [string, ...]
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -511,9 +912,12 @@ package flexibleengine
 #FlexibleengineFwPolicyV2Resource: {
 	audited?:     bool
 	description?: string
+	id?:          string
 	name?:        string
+	region?:      string
 	rules?: [string, ...]
-	shared?: bool
+	shared?:    bool
+	tenant_id?: string
 	value_specs?: [_]:  string
 	timeouts?: create?: string
 }
@@ -524,39 +928,117 @@ package flexibleengine
 	destination_ip_address?: string
 	destination_port?:       string
 	enabled?:                bool
+	id?:                     string
 	ip_version?:             number
 	name?:                   string
+	region?:                 string
 	source_ip_address?:      string
 	source_port?:            string
 	tenant_id?:              string
 	value_specs?: [_]: string
 }
+#FlexibleengineIdentityAgencyV3Resource: {
+	delegated_domain_name: string
+	name:                  string
+	create_time?:          string
+	description?:          string
+	domain_roles?: [string, ...]
+	duration?:    string
+	expire_time?: string
+	id?:          string
+	project_role?: [{
+		project: string
+		roles: [string, ...]
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#FlexibleengineIdentityGroupMembershipV3Resource: {
+	group: string
+	users: [string, ...]
+	id?: string
+}
+#FlexibleengineIdentityGroupV3Resource: {
+	name:         string
+	description?: string
+	domain_id?:   string
+	id?:          string
+}
+#FlexibleengineIdentityRoleAssignmentV3Resource: {
+	group_id:    string
+	role_id:     string
+	domain_id?:  string
+	id?:         string
+	project_id?: string
+}
+#FlexibleengineIdentityRoleV3Resource: {
+	description: string
+	name:        string
+	policy:      string
+	type:        string
+	domain_id?:  string
+	id?:         string
+	references?: number
+}
+#FlexibleengineIdentityUserV3Resource: {
+	name:                string
+	default_project_id?: string
+	description?:        string
+	domain_id?:          string
+	enabled?:            bool
+	id?:                 string
+	password?:           string
+}
 #FlexibleengineImagesImageV2Resource: {
 	container_format:  string
 	disk_format:       string
 	name:              string
+	checksum?:         string
+	created_at?:       string
+	file?:             string
+	id?:               string
 	image_cache_path?: string
 	image_source_url?: string
 	local_file_path?:  string
-	min_disk_gb?:      number
-	min_ram_mb?:       number
-	protected?:        bool
+	metadata?: [_]: string
+	min_disk_gb?: number
+	min_ram_mb?:  number
+	owner?:       string
+	protected?:   bool
+	region?:      string
+	schema?:      string
+	size_bytes?:  number
+	status?:      string
 	tags?: [string, ...]
+	update_at?:  string
 	visibility?: string
 	timeouts?: create?: string
 }
 #FlexibleengineKmsKeyV1Resource: {
-	key_alias:        string
-	is_enabled?:      bool
-	key_description?: string
-	pending_days?:    string
+	key_alias:         string
+	creation_date?:    string
+	default_key_flag?: string
+	domain_id?:        string
+	id?:               string
+	is_enabled?:       bool
+	key_description?:  string
+	origin?:           string
+	pending_days?:     string
+	realm?:            string
 }
 #FlexibleengineLbCertificateV2Resource: {
 	certificate:  string
 	private_key:  string
+	create_time?: string
 	description?: string
 	domain?:      string
+	id?:          string
 	name?:        string
+	region?:      string
+	update_time?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -568,9 +1050,13 @@ package flexibleengine
 	listener_id:           string
 	admin_state_up?:       bool
 	description?:          string
+	id?:                   string
 	name?:                 string
+	position?:             number
 	redirect_listener_id?: string
 	redirect_pool_id?:     string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -583,7 +1069,11 @@ package flexibleengine
 	type:            string
 	value:           string
 	admin_state_up?: bool
+	id?:             string
 	key?:            string
+	listener_id?:    string
+	region?:         string
+	tenant_id?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -595,9 +1085,15 @@ package flexibleengine
 	protocol:                   string
 	protocol_port:              number
 	admin_state_up?:            bool
+	default_pool_id?:           string
 	default_tls_container_ref?: string
 	description?:               string
+	id?:                        string
+	name?:                      string
+	region?:                    string
 	sni_container_refs?: [string, ...]
+	tags?: [_]: string
+	tenant_id?:          string
 	tls_ciphers_policy?: string
 	timeouts?: {
 		create?: string
@@ -606,11 +1102,19 @@ package flexibleengine
 	}
 }
 #FlexibleengineLbLoadbalancerV2Resource: {
-	vip_subnet_id:   string
-	admin_state_up?: bool
-	description?:    string
-	flavor?:         string
-	name?:           string
+	vip_subnet_id:          string
+	admin_state_up?:        bool
+	description?:           string
+	flavor?:                string
+	id?:                    string
+	loadbalancer_provider?: string
+	name?:                  string
+	region?:                string
+	security_group_ids?: [string, ...]
+	tags?: [_]: string
+	tenant_id?:   string
+	vip_address?: string
+	vip_port_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -623,7 +1127,11 @@ package flexibleengine
 	protocol_port:   number
 	subnet_id:       string
 	admin_state_up?: bool
+	id?:             string
 	name?:           string
+	region?:         string
+	tenant_id?:      string
+	weight?:         number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -637,8 +1145,14 @@ package flexibleengine
 	timeout:         number
 	type:            string
 	admin_state_up?: bool
+	expected_codes?: string
+	http_method?:    string
+	id?:             string
 	name?:           string
 	port?:           number
+	region?:         string
+	tenant_id?:      string
+	url_path?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -650,9 +1164,12 @@ package flexibleengine
 	protocol:         string
 	admin_state_up?:  bool
 	description?:     string
+	id?:              string
 	listener_id?:     string
 	loadbalancer_id?: string
 	name?:            string
+	region?:          string
+	tenant_id?:       string
 	persistence?: [{
 		type:         string
 		cookie_name?: string
@@ -666,6 +1183,8 @@ package flexibleengine
 #FlexibleengineLbWhitelistV2Resource: {
 	listener_id:       string
 	enable_whitelist?: bool
+	id?:               string
+	tenant_id?:        string
 	whitelist?:        string
 	timeouts?: {
 		create?: string
@@ -674,18 +1193,30 @@ package flexibleengine
 	}
 }
 #FlexibleengineMlsInstanceV1Resource: {
-	flavor:  string
-	name:    string
-	version: string
+	flavor:           string
+	name:             string
+	version:          string
+	agency?:          string
+	created?:         string
+	id?:              string
+	inner_endpoint?:  string
+	public_endpoint?: string
+	region?:          string
+	status?:          string
+	updated?:         string
 	mrs_cluster?: [{
-		id: string
+		id:             string
+		user_name?:     string
+		user_password?: string
 	}, ...]
 	network?: [{
-		available_zone: string
-		subnet_id:      string
-		vpc_id:         string
+		available_zone:  string
+		subnet_id:       string
+		vpc_id:          string
+		security_group?: string
 		public_ip?: [{
 			bind_type: string
+			eip_id?:   string
 		}, ...]
 	}, ...]
 	timeouts?: {
@@ -694,27 +1225,153 @@ package flexibleengine
 	}
 }
 #FlexibleengineMrsClusterV1Resource: {
-	available_zone_id:     string
-	billing_type:          number
-	cluster_name:          string
-	core_node_num:         number
-	core_node_size:        string
-	master_node_num:       number
-	master_node_size:      string
-	node_public_cert_name: string
-	safe_mode:             number
-	subnet_id:             string
-	volume_size:           number
-	volume_type:           string
-	vpc_id:                string
+	available_zone_id:         string
+	billing_type:              number
+	cluster_name:              string
+	core_node_num:             number
+	core_node_size:            string
+	master_node_num:           number
+	master_node_size:          string
+	node_public_cert_name:     string
+	safe_mode:                 number
+	subnet_id:                 string
+	volume_size:               number
+	volume_type:               string
+	vpc_id:                    string
+	available_zone_name?:      string
+	charging_start_time?:      string
+	cluster_admin_secret?:     string
+	cluster_id?:               string
+	cluster_state?:            string
+	cluster_type?:             number
+	cluster_version?:          string
+	core_node_product_id?:     string
+	core_node_spec_id?:        string
+	create_at?:                string
+	deployment_id?:            string
+	duration?:                 string
+	error_info?:               string
+	external_alternate_ip?:    string
+	external_ip?:              string
+	fee?:                      string
+	hadoop_version?:           string
+	id?:                       string
+	instance_id?:              string
+	internal_ip?:              string
+	log_collection?:           number
+	master_node_ip?:           string
+	master_node_product_id?:   string
+	master_node_spec_id?:      string
+	order_id?:                 string
+	private_ip_first?:         string
+	region?:                   string
+	remark?:                   string
+	security_groups_id?:       string
+	slave_security_groups_id?: string
+	tenant_id?:                string
+	update_at?:                string
+	vnc?:                      string
 	add_jobs?: [{
 		jar_path:                    string
 		job_name:                    string
 		job_type:                    number
 		submit_job_once_cluster_run: bool
+		arguments?:                  string
+		file_action?:                string
+		hive_script_path?:           string
+		hql?:                        string
+		input?:                      string
+		job_log?:                    string
+		output?:                     string
+		shutdown_cluster?:           bool
 	}, ...]
 	component_list?: [{
-		component_name: string
+		component_name:     string
+		component_desc?:    string
+		component_id?:      string
+		component_version?: string
+	}, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineMrsHybridClusterV1Resource: {
+	available_zone: string
+	cluster_name:   string
+	component_list: [string, ...]
+	master_node_key_pair:  string
+	subnet_id:             string
+	vpc_id:                string
+	billing_type?:         string
+	charging_start_time?:  string
+	cluster_admin_secret?: string
+	cluster_version?:      string
+	components?: [{
+		component_desc:    string
+		component_id:      string
+		component_name:    string
+		component_version: string
+	}, ...]
+	create_at?:             string
+	external_alternate_ip?: string
+	external_ip?:           string
+	id?:                    string
+	internal_ip?:           string
+	log_collection?:        number
+	master_node_ip?:        string
+	private_ip_first?:      string
+	region?:                string
+	safe_mode?:             number
+	security_group_id?:     string
+	state?:                 string
+	total_node_number?:     number
+	update_at?:             string
+	vnc?:                   string
+	analysis_core_nodes?: [{
+		data_volume_count: number
+		data_volume_size:  number
+		data_volume_type:  string
+		flavor:            string
+		node_number:       number
+		root_volume_size?: number
+		root_volume_type?: string
+	}, ...]
+	analysis_task_nodes?: [{
+		data_volume_count: number
+		data_volume_size:  number
+		data_volume_type:  string
+		flavor:            string
+		node_number:       number
+		root_volume_size?: number
+		root_volume_type?: string
+	}, ...]
+	master_nodes?: [{
+		data_volume_count: number
+		data_volume_size:  number
+		data_volume_type:  string
+		flavor:            string
+		node_number:       number
+		root_volume_size?: number
+		root_volume_type?: string
+	}, ...]
+	streaming_core_nodes?: [{
+		data_volume_count: number
+		data_volume_size:  number
+		data_volume_type:  string
+		flavor:            string
+		node_number:       number
+		root_volume_size?: number
+		root_volume_type?: string
+	}, ...]
+	streaming_task_nodes?: [{
+		data_volume_count: number
+		data_volume_size:  number
+		data_volume_type:  string
+		flavor:            string
+		node_number:       number
+		root_volume_size?: number
+		root_volume_type?: string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -722,10 +1379,20 @@ package flexibleengine
 	}
 }
 #FlexibleengineMrsJobV1Resource: {
-	cluster_id: string
-	jar_path:   string
-	job_name:   string
-	job_type:   number
+	cluster_id:        string
+	jar_path:          string
+	job_name:          string
+	job_type:          number
+	arguments?:        string
+	hive_script_path?: string
+	id?:               string
+	input?:            string
+	is_protected?:     bool
+	is_public?:        bool
+	job_log?:          string
+	job_state?:        string
+	output?:           string
+	region?:           string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -738,34 +1405,86 @@ package flexibleengine
 	internal_service_port: number
 	nat_gateway_id:        string
 	protocol:              string
+	created_at?:           string
+	id?:                   string
+	port_id?:              string
+	private_ip?:           string
+	status?:               string
+	tenant_id?:            string
 }
 #FlexibleengineNatGatewayV2Resource: {
 	internal_network_id: string
 	name:                string
 	router_id:           string
 	spec:                string
+	description?:        string
+	id?:                 string
+	region?:             string
+	tenant_id?:          string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineNatSnatRuleV2Resource: {
-	floating_ip_id: string
-	nat_gateway_id: string
-	cidr?:          string
-	network_id?:    string
-	source_type?:   number
+	floating_ip_id:       string
+	nat_gateway_id:       string
+	cidr?:                string
+	floating_ip_address?: string
+	id?:                  string
+	network_id?:          string
+	region?:              string
+	source_type?:         number
+	status?:              string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
+#FlexibleengineNetworkAclResource: {
+	name:               string
+	description?:       string
+	id?:                string
+	inbound_policy_id?: string
+	inbound_rules?: [string, ...]
+	outbound_policy_id?: string
+	outbound_rules?: [string, ...]
+	ports?: [string, ...]
+	status?: string
+	subnets?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+		update?: string
+	}
+}
+#FlexibleengineNetworkAclRuleResource: {
+	action:                  string
+	protocol:                string
+	description?:            string
+	destination_ip_address?: string
+	destination_port?:       string
+	enabled?:                bool
+	id?:                     string
+	ip_version?:             number
+	name?:                   string
+	source_ip_address?:      string
+	source_port?:            string
+}
 #FlexibleengineNetworkingFloatingipAssociateV2Resource: {
 	floating_ip: string
 	port_id:     string
+	id?:         string
+	region?:     string
 }
 #FlexibleengineNetworkingFloatingipV2Resource: {
-	pool?: string
+	address?:   string
+	fixed_ip?:  string
+	id?:        string
+	pool?:      string
+	port_id?:   string
+	region?:    string
+	tenant_id?: string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -773,7 +1492,12 @@ package flexibleengine
 	}
 }
 #FlexibleengineNetworkingNetworkV2Resource: {
-	name?: string
+	admin_state_up?: string
+	id?:             string
+	name?:           string
+	region?:         string
+	shared?:         string
+	tenant_id?:      string
 	value_specs?: [_]: string
 	segments?: [{
 		network_type?:     string
@@ -786,11 +1510,21 @@ package flexibleengine
 	}
 }
 #FlexibleengineNetworkingPortV2Resource: {
-	network_id: string
-	name?:      string
+	network_id:      string
+	admin_state_up?: bool
+	all_fixed_ips?: [string, ...]
+	device_id?:    string
+	device_owner?: string
+	id?:           string
+	mac_address?:  string
+	name?:         string
+	region?:       string
+	security_group_ids?: [string, ...]
+	tenant_id?: string
 	value_specs?: [_]: string
 	allowed_address_pairs?: [{
-		ip_address: string
+		ip_address:   string
+		mac_address?: string
 	}, ...]
 	fixed_ip?: [{
 		subnet_id:   string
@@ -802,7 +1536,11 @@ package flexibleengine
 	}
 }
 #FlexibleengineNetworkingRouterInterfaceV2Resource: {
-	router_id: string
+	router_id:  string
+	id?:        string
+	port_id?:   string
+	region?:    string
+	subnet_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -812,10 +1550,18 @@ package flexibleengine
 	destination_cidr: string
 	next_hop:         string
 	router_id:        string
+	id?:              string
+	region?:          string
 }
 #FlexibleengineNetworkingRouterV2Resource: {
+	admin_state_up?:   bool
+	distributed?:      bool
+	enable_snat?:      bool
 	external_gateway?: string
+	id?:               string
 	name?:             string
+	region?:           string
+	tenant_id?:        string
 	value_specs?: [_]: string
 	timeouts?: {
 		create?: string
@@ -826,11 +1572,23 @@ package flexibleengine
 	direction:         string
 	ethertype:         string
 	security_group_id: string
+	id?:               string
+	port_range_max?:   number
+	port_range_min?:   number
+	protocol?:         string
+	region?:           string
+	remote_group_id?:  string
+	remote_ip_prefix?: string
+	tenant_id?:        string
 	timeouts?: delete?: string
 }
 #FlexibleengineNetworkingSecgroupV2Resource: {
 	name:                  string
 	delete_default_rules?: bool
+	description?:          string
+	id?:                   string
+	region?:               string
+	tenant_id?:            string
 	timeouts?: delete?: string
 }
 #FlexibleengineNetworkingSubnetV2Resource: {
@@ -838,9 +1596,13 @@ package flexibleengine
 	network_id: string
 	dns_nameservers?: [string, ...]
 	enable_dhcp?: bool
+	gateway_ip?:  string
+	id?:          string
 	ip_version?:  number
 	name?:        string
 	no_gateway?:  bool
+	region?:      string
+	tenant_id?:   string
 	value_specs?: [_]: string
 	allocation_pools?: [{
 		end:   string
@@ -857,18 +1619,30 @@ package flexibleengine
 }
 #FlexibleengineNetworkingVipAssociateV2Resource: {
 	port_ids: [string, ...]
-	vip_id: string
+	vip_id:          string
+	id?:             string
+	vip_ip_address?: string
+	vip_subnet_id?:  string
 }
 #FlexibleengineNetworkingVipV2Resource: {
-	network_id: string
-	subnet_id:  string
+	network_id:    string
+	subnet_id:     string
+	device_owner?: string
+	id?:           string
+	ip_address?:   string
+	name?:         string
+	status?:       string
+	tenant_id?:    string
 }
 #FlexibleengineObsBucketResource: {
-	bucket:         string
-	acl?:           string
-	force_destroy?: bool
-	storage_class?: string
-	versioning?:    bool
+	bucket:              string
+	acl?:                string
+	bucket_domain_name?: string
+	force_destroy?:      bool
+	id?:                 string
+	region?:             string
+	storage_class?:      string
+	versioning?:         bool
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -907,21 +1681,34 @@ package flexibleengine
 	}, ...]
 }
 #FlexibleengineObsBucketObjectResource: {
-	bucket:        string
-	key:           string
-	acl?:          string
-	content?:      string
-	content_type?: string
-	encryption?:   bool
-	kms_key_id?:   string
-	source?:       string
+	bucket:         string
+	key:            string
+	acl?:           string
+	content?:       string
+	content_type?:  string
+	encryption?:    bool
+	etag?:          string
+	id?:            string
+	kms_key_id?:    string
+	size?:          number
+	source?:        string
+	storage_class?: string
+	version_id?:    string
 }
 #FlexibleengineRdsInstanceV1Resource: {
 	availabilityzone: string
 	dbrtpd:           string
 	flavorref:        string
 	vpc:              string
+	created?:         string
 	dbport?:          string
+	hostname?:        string
+	id?:              string
+	name?:            string
+	region?:          string
+	status?:          string
+	type?:            string
+	updated?:         string
 	backupstrategy?: [{
 		keepdays?:  number
 		starttime?: string
@@ -951,29 +1738,58 @@ package flexibleengine
 }
 #FlexibleengineRdsInstanceV3Resource: {
 	availability_zone: [string, ...]
-	flavor:            string
-	name:              string
-	security_group_id: string
-	subnet_id:         string
-	vpc_id:            string
-	param_group_id?:   string
+	flavor:               string
+	name:                 string
+	security_group_id:    string
+	subnet_id:            string
+	vpc_id:               string
+	created?:             string
+	ha_replication_mode?: string
+	id?:                  string
+	nodes?: [{
+		availability_zone: string
+		id:                string
+		name:              string
+		role:              string
+		status:            string
+	}, ...]
+	param_group_id?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	status?: string
+	tags?: [_]: string
+	time_zone?: string
 	backup_strategy?: [{
 		start_time: string
+		keep_days?: number
 	}, ...]
 	db?: [{
-		password: string
-		type:     string
-		version:  string
+		password:   string
+		type:       string
+		version:    string
+		port?:      number
+		user_name?: string
 	}, ...]
 	timeouts?: create?: string
 	volume?: [{
-		size: number
-		type: string
+		size:                number
+		type:                string
+		disk_encryption_id?: string
 	}, ...]
 }
 #FlexibleengineRdsParametergroupV3Resource: {
-	name:         string
+	name: string
+	configuration_parameters?: [{
+		description:      string
+		name:             string
+		readonly:         bool
+		restart_required: bool
+		type:             string
+		value:            string
+		value_range:      string
+	}, ...]
 	description?: string
+	id?:          string
 	values?: [_]: string
 	datastore?: [{
 		type:    string
@@ -989,6 +1805,22 @@ package flexibleengine
 	flavor:            string
 	name:              string
 	replica_of_id:     string
+	db?: [{
+		port:      number
+		type:      string
+		user_name: string
+		version:   string
+	}, ...]
+	id?: string
+	private_ips?: [string, ...]
+	public_ips?: [string, ...]
+	region?:            string
+	security_group_id?: string
+	status?:            string
+	subnet_id?:         string
+	tags?: [_]: string
+	type?:   string
+	vpc_id?: string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -996,12 +1828,14 @@ package flexibleengine
 	volume?: [{
 		type:                string
 		disk_encryption_id?: string
+		size?:               number
 	}, ...]
 }
 #FlexibleengineRtsSoftwareConfigV1Resource: {
 	name:    string
 	config?: string
 	group?:  string
+	id?:     string
 	input_values?: [{
 		[_]: string
 	}, ...]
@@ -1009,16 +1843,28 @@ package flexibleengine
 	output_values?: [{
 		[_]: string
 	}, ...]
+	region?: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineRtsStackV1Resource: {
-	name:         string
-	environment?: string
+	name: string
+	capabilities?: [string, ...]
+	disable_rollback?: bool
+	environment?:      string
 	files?: [_]: string
-	template_url?: string
+	id?: string
+	notification_topics?: [string, ...]
+	outputs?: [_]:    string
+	parameters?: [_]: string
+	region?:        string
+	status?:        string
+	status_reason?: string
+	template_body?: string
+	template_url?:  string
+	timeout_mins?:  number
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1026,10 +1872,18 @@ package flexibleengine
 	}
 }
 #FlexibleengineS3BucketResource: {
-	acl?:           string
-	bucket_prefix?: string
-	force_destroy?: bool
-	policy?:        string
+	acl?:                string
+	arn?:                string
+	bucket?:             string
+	bucket_domain_name?: string
+	bucket_prefix?:      string
+	force_destroy?:      bool
+	hosted_zone_id?:     string
+	id?:                 string
+	policy?:             string
+	region?:             string
+	website_domain?:     string
+	website_endpoint?:   string
 	cors_rule?: [{
 		allowed_methods: [string, ...]
 		allowed_origins: [string, ...]
@@ -1040,6 +1894,7 @@ package flexibleengine
 	lifecycle_rule?: [{
 		enabled:                                 bool
 		abort_incomplete_multipart_upload_days?: number
+		id?:                                     string
 		prefix?:                                 string
 		expiration?: [{
 			date?:                         string
@@ -1066,25 +1921,33 @@ package flexibleengine
 	}, ...]
 }
 #FlexibleengineS3BucketObjectResource: {
-	bucket:               string
-	key:                  string
-	acl?:                 string
-	cache_control?:       string
-	content?:             string
-	content_disposition?: string
-	content_encoding?:    string
-	content_language?:    string
-	source?:              string
-	website_redirect?:    string
+	bucket:                  string
+	key:                     string
+	acl?:                    string
+	cache_control?:          string
+	content?:                string
+	content_disposition?:    string
+	content_encoding?:       string
+	content_language?:       string
+	content_type?:           string
+	etag?:                   string
+	id?:                     string
+	server_side_encryption?: string
+	source?:                 string
+	version_id?:             string
+	website_redirect?:       string
 }
 #FlexibleengineS3BucketPolicyResource: {
 	bucket: string
 	policy: string
+	id?:    string
 }
 #FlexibleengineSdrsDrillV1Resource: {
 	drill_vpc_id: string
 	group_id:     string
 	name:         string
+	id?:          string
+	status?:      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1098,8 +1961,10 @@ package flexibleengine
 	delete_target_eip?:    bool
 	delete_target_server?: bool
 	description?:          string
+	id?:                   string
 	primary_ip_address?:   string
 	primary_subnet_id?:    string
+	target_server?:        string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1114,6 +1979,7 @@ package flexibleengine
 	description?:             string
 	dr_type?:                 string
 	enable?:                  bool
+	id?:                      string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1123,6 +1989,7 @@ package flexibleengine
 	device:         string
 	instance_id:    string
 	replication_id: string
+	id?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1134,65 +2001,148 @@ package flexibleengine
 	volume_id:             string
 	delete_target_volume?: bool
 	description?:          string
+	fault_level?:          string
+	id?:                   string
+	replication_model?:    string
+	status?:               string
+	target_volume_id?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineSfsAccessRuleV2Resource: {
+	access_to:     string
+	sfs_id:        string
+	access_level?: string
+	access_type?:  string
+	id?:           string
+	status?:       string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineSfsFileSystemV2Resource: {
-	access_level: string
-	access_to:    string
-	size:         number
-	access_type?: string
-	is_public?:   bool
+	size:                number
+	access_level?:       string
+	access_rule_status?: string
+	access_rules?: [{
+		access_level:   string
+		access_rule_id: string
+		access_to:      string
+		access_type:    string
+		status:         string
+	}, ...]
+	access_to?:         string
+	access_type?:       string
+	availability_zone?: string
+	description?:       string
+	export_location?:   string
+	host?:              string
+	id?:                string
+	is_public?:         bool
 	metadata?: [_]: string
-	name?:        string
-	share_proto?: string
+	name?:            string
+	region?:          string
+	share_access_id?: string
+	share_proto?:     string
+	status?:          string
+	volume_type?:     string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineSfsTurboResource: {
+	availability_zone:   string
+	name:                string
+	security_group_id:   string
+	size:                number
+	subnet_id:           string
+	vpc_id:              string
+	available_capacity?: string
+	crypt_key_id?:       string
+	export_location?:    string
+	id?:                 string
+	region?:             string
+	share_proto?:        string
+	share_type?:         string
+	status?:             string
+	version?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineSmnSubscriptionV2Resource: {
-	endpoint:  string
-	protocol:  string
-	topic_urn: string
-	remark?:   string
+	endpoint:          string
+	protocol:          string
+	topic_urn:         string
+	id?:               string
+	owner?:            string
+	remark?:           string
+	status?:           number
+	subscription_urn?: string
 }
 #FlexibleengineSmnTopicV2Resource: {
 	name:          string
+	create_time?:  string
 	display_name?: string
+	id?:           string
+	push_policy?:  number
+	topic_urn?:    string
+	update_time?:  string
 }
 #FlexibleengineVbsBackupPolicyV2Resource: {
-	frequency:           number
-	name:                string
-	rentention_num:      number
-	retain_first_backup: string
-	start_time:          string
-	status:              string
+	name:                   string
+	retain_first_backup:    string
+	start_time:             string
+	frequency?:             number
+	id?:                    string
+	policy_resource_count?: number
+	region?:                string
+	rentention_day?:        number
+	rentention_num?:        number
+	resources?: [string, ...]
+	status?: string
+	week_frequency?: [string, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineVbsBackupV2Resource: {
-	name:         string
-	volume_id:    string
-	description?: string
+	name:               string
+	volume_id:          string
+	availability_zone?: string
+	container?:         string
+	description?:       string
+	id?:                string
+	region?:            string
+	service_metadata?:  string
+	size?:              number
+	snapshot_id?:       string
+	status?:            string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineVpcEipV1Resource: {
+	id?:     string
+	region?: string
 	value_specs?: [_]: string
 	bandwidth?: [{
-		name:       string
-		share_type: string
-		size:       number
+		name:         string
+		share_type:   string
+		size:         number
+		charge_mode?: string
 	}, ...]
 	publicip?: [{
-		type: string
+		type:        string
+		ip_address?: string
+		port_id?:    string
 	}, ...]
 	timeouts?: {
 		create?: string
@@ -1202,15 +2152,26 @@ package flexibleengine
 #FlexibleengineVpcPeeringConnectionAccepterV2Resource: {
 	vpc_peering_connection_id: string
 	accept?:                   bool
+	id?:                       string
+	name?:                     string
+	peer_tenant_id?:           string
+	peer_vpc_id?:              string
+	region?:                   string
+	status?:                   string
+	vpc_id?:                   string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineVpcPeeringConnectionV2Resource: {
-	name:        string
-	peer_vpc_id: string
-	vpc_id:      string
+	name:            string
+	peer_vpc_id:     string
+	vpc_id:          string
+	id?:             string
+	peer_tenant_id?: string
+	region?:         string
+	status?:         string
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1221,25 +2182,107 @@ package flexibleengine
 	nexthop:     string
 	type:        string
 	vpc_id:      string
+	id?:         string
+	region?:     string
+	tenant_id?:  string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineVpcSubnetV1Resource: {
-	cidr:         string
-	gateway_ip:   string
-	name:         string
-	vpc_id:       string
-	dhcp_enable?: bool
+	cidr:               string
+	gateway_ip:         string
+	name:               string
+	vpc_id:             string
+	availability_zone?: string
+	dhcp_enable?:       bool
+	dns_list?: [string, ...]
+	id?:            string
+	primary_dns?:   string
+	region?:        string
+	secondary_dns?: string
+	subnet_id?:     string
+	tags?: [_]: string
 	timeouts?: {
 		create?: string
 		delete?: string
 	}
 }
 #FlexibleengineVpcV1Resource: {
-	cidr: string
-	name: string
+	cidr:    string
+	name:    string
+	id?:     string
+	region?: string
+	shared?: bool
+	status?: string
+	tags?: [_]: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineVpcepApprovalResource: {
+	endpoints: [string, ...]
+	service_id: string
+	connections?: [{
+		domain_id:   string
+		endpoint_id: string
+		packet_id:   number
+		status:      string
+	}, ...]
+	id?:     string
+	region?: string
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineVpcepEndpointResource: {
+	network_id:           string
+	service_id:           string
+	vpc_id:               string
+	enable_dns?:          bool
+	enable_whitelist?:    bool
+	id?:                  string
+	ip_address?:          string
+	packet_id?:           number
+	private_domain_name?: string
+	region?:              string
+	service_name?:        string
+	service_type?:        string
+	status?:              string
+	tags?: [_]: string
+	whitelist?: [string, ...]
+	timeouts?: {
+		create?: string
+		delete?: string
+	}
+}
+#FlexibleengineVpcepServiceResource: {
+	port_id:     string
+	server_type: string
+	vpc_id:      string
+	approval?:   bool
+	connections?: [{
+		domain_id:   string
+		endpoint_id: string
+		packet_id:   number
+		status:      string
+	}, ...]
+	id?:   string
+	name?: string
+	permissions?: [string, ...]
+	region?:       string
+	service_name?: string
+	service_type?: string
+	status?:       string
+	tags?: [_]: string
+	port_mapping?: [{
+		protocol?:      string
+		service_port?:  number
+		terminal_port?: number
+	}, ...]
 	timeouts?: {
 		create?: string
 		delete?: string
@@ -1252,6 +2295,7 @@ package flexibleengine
 	flexibleengine_as_policy_v1?: [_]:                       #FlexibleengineAsPolicyV1Resource
 	flexibleengine_blockstorage_volume_v2?: [_]:             #FlexibleengineBlockstorageVolumeV2Resource
 	flexibleengine_cce_cluster_v3?: [_]:                     #FlexibleengineCceClusterV3Resource
+	flexibleengine_cce_node_pool_v3?: [_]:                   #FlexibleengineCceNodePoolV3Resource
 	flexibleengine_cce_node_v3?: [_]:                        #FlexibleengineCceNodeV3Resource
 	flexibleengine_ces_alarmrule?: [_]:                      #FlexibleengineCesAlarmruleResource
 	flexibleengine_compute_bms_server_v2?: [_]:              #FlexibleengineComputeBmsServerV2Resource
@@ -1264,9 +2308,12 @@ package flexibleengine
 	flexibleengine_compute_volume_attach_v2?: [_]:           #FlexibleengineComputeVolumeAttachV2Resource
 	flexibleengine_csbs_backup_policy_v1?: [_]:              #FlexibleengineCsbsBackupPolicyV1Resource
 	flexibleengine_csbs_backup_v1?: [_]:                     #FlexibleengineCsbsBackupV1Resource
+	flexibleengine_css_cluster_v1?: [_]:                     #FlexibleengineCssClusterV1Resource
+	flexibleengine_css_snapshot_v1?: [_]:                    #FlexibleengineCssSnapshotV1Resource
 	flexibleengine_cts_tracker_v1?: [_]:                     #FlexibleengineCtsTrackerV1Resource
 	flexibleengine_dcs_instance_v1?: [_]:                    #FlexibleengineDcsInstanceV1Resource
 	flexibleengine_dds_instance_v3?: [_]:                    #FlexibleengineDdsInstanceV3Resource
+	flexibleengine_dns_ptrrecord_v2?: [_]:                   #FlexibleengineDnsPtrrecordV2Resource
 	flexibleengine_dns_recordset_v2?: [_]:                   #FlexibleengineDnsRecordsetV2Resource
 	flexibleengine_dns_zone_v2?: [_]:                        #FlexibleengineDnsZoneV2Resource
 	flexibleengine_drs_replication_v2?: [_]:                 #FlexibleengineDrsReplicationV2Resource
@@ -1279,6 +2326,12 @@ package flexibleengine
 	flexibleengine_fw_firewall_group_v2?: [_]:               #FlexibleengineFwFirewallGroupV2Resource
 	flexibleengine_fw_policy_v2?: [_]:                       #FlexibleengineFwPolicyV2Resource
 	flexibleengine_fw_rule_v2?: [_]:                         #FlexibleengineFwRuleV2Resource
+	flexibleengine_identity_agency_v3?: [_]:                 #FlexibleengineIdentityAgencyV3Resource
+	flexibleengine_identity_group_membership_v3?: [_]:       #FlexibleengineIdentityGroupMembershipV3Resource
+	flexibleengine_identity_group_v3?: [_]:                  #FlexibleengineIdentityGroupV3Resource
+	flexibleengine_identity_role_assignment_v3?: [_]:        #FlexibleengineIdentityRoleAssignmentV3Resource
+	flexibleengine_identity_role_v3?: [_]:                   #FlexibleengineIdentityRoleV3Resource
+	flexibleengine_identity_user_v3?: [_]:                   #FlexibleengineIdentityUserV3Resource
 	flexibleengine_images_image_v2?: [_]:                    #FlexibleengineImagesImageV2Resource
 	flexibleengine_kms_key_v1?: [_]:                         #FlexibleengineKmsKeyV1Resource
 	flexibleengine_lb_certificate_v2?: [_]:                  #FlexibleengineLbCertificateV2Resource
@@ -1292,10 +2345,13 @@ package flexibleengine
 	flexibleengine_lb_whitelist_v2?: [_]:                    #FlexibleengineLbWhitelistV2Resource
 	flexibleengine_mls_instance_v1?: [_]:                    #FlexibleengineMlsInstanceV1Resource
 	flexibleengine_mrs_cluster_v1?: [_]:                     #FlexibleengineMrsClusterV1Resource
+	flexibleengine_mrs_hybrid_cluster_v1?: [_]:              #FlexibleengineMrsHybridClusterV1Resource
 	flexibleengine_mrs_job_v1?: [_]:                         #FlexibleengineMrsJobV1Resource
 	flexibleengine_nat_dnat_rule_v2?: [_]:                   #FlexibleengineNatDnatRuleV2Resource
 	flexibleengine_nat_gateway_v2?: [_]:                     #FlexibleengineNatGatewayV2Resource
 	flexibleengine_nat_snat_rule_v2?: [_]:                   #FlexibleengineNatSnatRuleV2Resource
+	flexibleengine_network_acl?: [_]:                        #FlexibleengineNetworkAclResource
+	flexibleengine_network_acl_rule?: [_]:                   #FlexibleengineNetworkAclRuleResource
 	flexibleengine_networking_floatingip_associate_v2?: [_]: #FlexibleengineNetworkingFloatingipAssociateV2Resource
 	flexibleengine_networking_floatingip_v2?: [_]:           #FlexibleengineNetworkingFloatingipV2Resource
 	flexibleengine_networking_network_v2?: [_]:              #FlexibleengineNetworkingNetworkV2Resource
@@ -1324,7 +2380,9 @@ package flexibleengine
 	flexibleengine_sdrs_protectiongroup_v1?: [_]:            #FlexibleengineSdrsProtectiongroupV1Resource
 	flexibleengine_sdrs_replication_attach_v1?: [_]:         #FlexibleengineSdrsReplicationAttachV1Resource
 	flexibleengine_sdrs_replication_pair_v1?: [_]:           #FlexibleengineSdrsReplicationPairV1Resource
+	flexibleengine_sfs_access_rule_v2?: [_]:                 #FlexibleengineSfsAccessRuleV2Resource
 	flexibleengine_sfs_file_system_v2?: [_]:                 #FlexibleengineSfsFileSystemV2Resource
+	flexibleengine_sfs_turbo?: [_]:                          #FlexibleengineSfsTurboResource
 	flexibleengine_smn_subscription_v2?: [_]:                #FlexibleengineSmnSubscriptionV2Resource
 	flexibleengine_smn_topic_v2?: [_]:                       #FlexibleengineSmnTopicV2Resource
 	flexibleengine_vbs_backup_policy_v2?: [_]:               #FlexibleengineVbsBackupPolicyV2Resource
@@ -1335,4 +2393,7 @@ package flexibleengine
 	flexibleengine_vpc_route_v2?: [_]:                       #FlexibleengineVpcRouteV2Resource
 	flexibleengine_vpc_subnet_v1?: [_]:                      #FlexibleengineVpcSubnetV1Resource
 	flexibleengine_vpc_v1?: [_]:                             #FlexibleengineVpcV1Resource
+	flexibleengine_vpcep_approval?: [_]:                     #FlexibleengineVpcepApprovalResource
+	flexibleengine_vpcep_endpoint?: [_]:                     #FlexibleengineVpcepEndpointResource
+	flexibleengine_vpcep_service?: [_]:                      #FlexibleengineVpcepServiceResource
 }

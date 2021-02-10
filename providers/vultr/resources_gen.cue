@@ -2,72 +2,250 @@
 package vultr
 
 #VultrBareMetalServerResource: {
-	plan_id:          number
-	region_id:        number
-	enable_ipv6?:     bool
-	hostname?:        string
-	label?:           string
-	notify_activate?: bool
-	script_id?:       string
-	snapshot_id?:     string
+	plan_id:           number
+	region_id:         number
+	app_id?:           string
+	cpu_count?:        number
+	date_created?:     string
+	default_password?: string
+	disk?:             string
+	enable_ipv6?:      bool
+	gateway_v4?:       string
+	hostname?:         string
+	id?:               string
+	label?:            string
+	main_ip?:          string
+	netmask_v4?:       string
+	notify_activate?:  bool
+	os?:               string
+	os_id?:            string
+	ram?:              string
+	script_id?:        string
+	snapshot_id?:      string
 	ssh_key_ids?: [string, ...]
+	status?:    string
 	tag?:       string
 	user_data?: string
+	v6_networks?: [{
+		[_]: string
+	}, ...]
 }
 #VultrBlockStorageResource: {
-	region_id:    number
-	size_gb:      number
-	attached_id?: string
-	label?:       string
-	live?:        string
+	region_id:       number
+	size_gb:         number
+	attached_id?:    string
+	cost_per_month?: string
+	date_created?:   string
+	id?:             string
+	label?:          string
+	live?:           string
+	status?:         string
 }
 #VultrDnsDomainResource: {
-	domain:    string
-	server_ip: string
+	domain:     string
+	id?:        string
+	server_ip?: string
 }
 #VultrDnsRecordResource: {
 	data:      string
 	domain:    string
 	name:      string
 	type:      string
+	id?:       string
 	priority?: number
+	ttl?:      number
 }
-#VultrFirewallGroupResource: description?: string
+#VultrFirewallGroupResource: {
+	date_created?:   string
+	date_modified?:  string
+	description?:    string
+	id?:             string
+	instance_count?: number
+	max_rule_count?: number
+	rule_count?:     number
+}
 #VultrFirewallRuleResource: {
 	firewall_group_id: string
 	network:           string
 	protocol:          string
 	from_port?:        number
+	id?:               string
+	ip_type?:          string
 	notes?:            string
 	to_port?:          number
 }
-#VultrIsoPrivateResource: url: string
+#VultrIsoPrivateResource: {
+	url:           string
+	date_created?: string
+	filename?:     string
+	id?:           string
+	md5sum?:       string
+	sha512sum?:    string
+	size?:         number
+	status?:       string
+}
+#VultrLoadBalancerResource: {
+	region_id: number
+	attached_instances?: [number, ...]
+	balancing_algorithm?: string
+	cookie_name?:         string
+	has_ssl?:             bool
+	id?:                  string
+	ipv4?:                string
+	ipv6?:                string
+	label?:               string
+	proxy_protocol?:      bool
+	ssl_redirect?:        bool
+	status?:              string
+	forwarding_rules?: [{
+		backend_port:      number
+		backend_protocol:  string
+		frontend_port:     number
+		frontend_protocol: string
+		rule_id?:          string
+	}, ...]
+	health_check?: [{
+		check_interval:      number
+		healthy_threshold:   number
+		port:                number
+		protocol:            string
+		response_timeout:    number
+		unhealthy_threshold: number
+		path?:               string
+	}, ...]
+	ssl?: [{
+		certificate: string
+		private_key: string
+		chain?:      string
+	}, ...]
+}
 #VultrNetworkResource: {
-	region_id:    string
-	description?: string
+	region_id:     string
+	cidr_block?:   string
+	date_created?: string
+	description?:  string
+	id?:           string
+}
+#VultrObjectStorageResource: {
+	object_storage_cluster_id: number
+	date_created?:             string
+	id?:                       string
+	label?:                    string
+	location?:                 string
+	region_id?:                number
+	s3_access_key?:            string
+	s3_hostname?:              string
+	s3_secret_key?:            string
+	status?:                   string
 }
 #VultrReservedIpResource: {
-	ip_type:   string
-	region_id: number
-	label?:    string
+	ip_type:      string
+	region_id:    number
+	attached_id?: string
+	id?:          string
+	label?:       string
+	subnet?:      string
+	subnet_size?: number
+}
+#VultrReverseIpv4Resource: {
+	instance_id: string
+	ip:          string
+	reverse:     string
+	id?:         string
+}
+#VultrReverseIpv6Resource: {
+	instance_id: string
+	ip:          string
+	reverse:     string
+	id?:         string
 }
 #VultrServerResource: {
-	plan_id:   number
-	region_id: number
+	plan_id:                 number
+	region_id:               number
+	allowed_bandwidth?:      string
+	app_id?:                 number
+	auto_backup?:            bool
+	cost_per_month?:         string
+	current_bandwidth?:      number
+	date_created?:           string
+	ddos_protection?:        bool
+	default_password?:       string
+	disk?:                   string
+	enable_ipv6?:            bool
+	enable_private_network?: bool
+	firewall_group_id?:      string
+	gateway_v4?:             string
+	hostname?:               string
+	id?:                     string
+	internal_ip?:            string
+	iso_id?:                 number
+	kvm_url?:                string
+	label?:                  string
+	location?:               string
+	main_ip?:                string
+	netmask_v4?:             string
+	network_ids?: [string, ...]
+	network_ips?: [_]:  string
+	network_macs?: [_]: string
+	notify_activate?: bool
+	os?:              string
+	os_id?:           number
+	pending_charges?: string
+	power_status?:    string
+	ram?:             string
+	reserved_ip?:     string
+	script_id?:       string
+	server_state?:    string
+	snapshot_id?:     string
 	ssh_key_ids?: [string, ...]
+	status?:    string
+	tag?:       string
+	user_data?: string
+	v6_networks?: [{
+		[_]: string
+	}, ...]
+	vps_cpu_count?: string
+}
+#VultrServerIpv4Resource: {
+	instance_id: string
+	id?:         string
+	ip?:         string
+	reboot?:     bool
+	reverse?:    string
 }
 #VultrSnapshotResource: {
-	vps_id:       string
-	description?: string
+	vps_id:        string
+	app_id?:       string
+	date_created?: string
+	description?:  string
+	id?:           string
+	os_id?:        string
+	size?:         string
+	status?:       string
 }
-#VultrSnapshotFromUrlResource: url: string
+#VultrSnapshotFromUrlResource: {
+	url:           string
+	app_id?:       string
+	date_created?: string
+	description?:  string
+	id?:           string
+	os_id?:        string
+	size?:         string
+	status?:       string
+}
 #VultrSshKeyResource: {
-	name:    string
-	ssh_key: string
+	name:          string
+	ssh_key:       string
+	date_created?: string
+	id?:           string
 }
 #VultrStartupScriptResource: {
-	name:   string
-	script: string
+	name:           string
+	script:         string
+	date_created?:  string
+	date_modified?: string
+	id?:            string
+	type?:          string
 }
 #VultrUserResource: {
 	email:    string
@@ -75,6 +253,8 @@ package vultr
 	password: string
 	acl?: [string, ...]
 	api_enabled?: bool
+	api_key?:     string
+	id?:          string
 }
 #Resources: {
 	vultr_bare_metal_server?: [_]: #VultrBareMetalServerResource
@@ -84,9 +264,14 @@ package vultr
 	vultr_firewall_group?: [_]:    #VultrFirewallGroupResource
 	vultr_firewall_rule?: [_]:     #VultrFirewallRuleResource
 	vultr_iso_private?: [_]:       #VultrIsoPrivateResource
+	vultr_load_balancer?: [_]:     #VultrLoadBalancerResource
 	vultr_network?: [_]:           #VultrNetworkResource
+	vultr_object_storage?: [_]:    #VultrObjectStorageResource
 	vultr_reserved_ip?: [_]:       #VultrReservedIpResource
+	vultr_reverse_ipv4?: [_]:      #VultrReverseIpv4Resource
+	vultr_reverse_ipv6?: [_]:      #VultrReverseIpv6Resource
 	vultr_server?: [_]:            #VultrServerResource
+	vultr_server_ipv4?: [_]:       #VultrServerIpv4Resource
 	vultr_snapshot?: [_]:          #VultrSnapshotResource
 	vultr_snapshot_from_url?: [_]: #VultrSnapshotFromUrlResource
 	vultr_ssh_key?: [_]:           #VultrSshKeyResource

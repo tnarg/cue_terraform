@@ -3,8 +3,23 @@ package circonus
 
 #CirconusCheckResource: {
 	active?: bool
-	name?:   string
+	check_by_collector?: [_]: string
+	check_id?: string
+	checks?: [string, ...]
+	created?:          number
+	id?:               string
+	last_modified?:    number
+	last_modified_by?: string
+	metric_limit?:     number
+	name?:             string
+	notes?:            string
+	period?:           string
+	reverse_connect_urls?: [string, ...]
 	tags?: [string, ...]
+	target?:  string
+	timeout?: string
+	type?:    string
+	uuids?: [string, ...]
 	caql?: [{
 		query: string
 	}, ...]
@@ -56,6 +71,7 @@ package circonus
 		arg7?:          string
 		arg8?:          string
 		arg9?:          string
+		env?: [_]: string
 	}, ...]
 	http?: [{
 		url:               string
@@ -73,6 +89,7 @@ package circonus
 		method?:     string
 		payload?:    string
 		read_limit?: number
+		redirects?:  string
 		version?:    string
 	}, ...]
 	httptrap?: [{
@@ -120,8 +137,6 @@ package circonus
 		name:    string
 		type:    string
 		active?: bool
-		tags?: [string, ...]
-		unit?: string
 	}, ...]
 	metric_filter?: [{
 		regex:      string
@@ -132,6 +147,10 @@ package circonus
 	mysql?: [{
 		dsn:   string
 		query: string
+	}, ...]
+	ntp?: [{
+		port?:        number
+		use_control?: bool
 	}, ...]
 	postgresql?: [{
 		dsn:   string
@@ -146,6 +165,24 @@ package circonus
 		db_index?: number
 		password?: string
 		port?:     number
+	}, ...]
+	smtp?: [{
+		to:                    string
+		ehlo?:                 string
+		from?:                 string
+		payload?:              string
+		port?:                 number
+		proxy_dest_address?:   string
+		proxy_dest_port?:      number
+		proxy_family?:         string
+		proxy_protocol?:       bool
+		proxy_source_address?: string
+		proxy_source_port?:    number
+		sasl_auth_id?:         string
+		sasl_authentication?:  string
+		sasl_password?:        string
+		sasl_user?:            string
+		starttls?:             bool
 	}, ...]
 	snmp?: [{
 		community:           string
@@ -186,6 +223,9 @@ package circonus
 	aggregation_window?: string
 	always_send_clear?:  bool
 	group_type?:         string
+	id?:                 string
+	last_modified?:      number
+	last_modified_by?:   string
 	long_message?:       string
 	long_subject?:       string
 	long_summary?:       string
@@ -207,10 +247,8 @@ package circonus
 		format?: string
 		method?: string
 	}, ...]
-	irc?: [{
-		user: string
-	}, ...]
 	pager_duty?: [{
+		account:                 string
 		service_key:             string
 		webhook_url:             string
 		contact_group_fallback?: string
@@ -243,7 +281,9 @@ package circonus
 	grid_layout: [_]: number
 	title:            string
 	account_default?: bool
+	id?:              string
 	shared?:          bool
+	uuid?:            string
 	options?: [{
 		full_screen_hide_title?: bool
 		hide_grid?:              bool
@@ -334,10 +374,8 @@ package circonus
 				value:     string
 			}, ...]
 			datapoints?: [{
-				_check_id:    number
-				_metric_type: string
-				label:        string
-				metric:       string
+				label:  string
+				metric: string
 			}, ...]
 			thresholds?: [{
 				colors: [string, ...]
@@ -351,6 +389,7 @@ package circonus
 	name:         string
 	description?: string
 	graph_style?: string
+	id?:          string
 	left?: [_]: string
 	line_style?: string
 	notes?:      string
@@ -372,6 +411,7 @@ package circonus
 		check?:          string
 		color?:          string
 		formula?:        string
+		function?:       string
 		legend_formula?: string
 		metric_name?:    string
 		name?:           string
@@ -393,6 +433,7 @@ package circonus
 	stop:      string
 	account?:  string
 	check?:    string
+	id?:       string
 	notes?:    string
 	rule_set?: string
 	tags?: [string, ...]
@@ -402,20 +443,12 @@ package circonus
 	name:    string
 	type:    string
 	active?: bool
-	tags?: [string, ...]
-	unit?: string
-}
-#CirconusMetricClusterResource: {
-	name: string
-	tags?: [string, ...]
-	query?: [{
-		definition: string
-		type:       string
-	}, ...]
+	id?:     string
 }
 #CirconusOverlaySetResource: {
 	graph_cid: string
 	title:     string
+	id?:       string
 	overlays?: [{
 		id: string
 		data_opts?: [{
@@ -434,10 +467,16 @@ package circonus
 }
 #CirconusRuleSetResource: {
 	check:           string
+	id?:             string
+	link?:           string
 	metric_filter?:  string
 	metric_name?:    string
 	metric_pattern?: string
 	metric_type?:    string
+	name?:           string
+	notes?:          string
+	parent?:         string
+	rule_set_id?:    string
 	tags?: [string, ...]
 	if?: [{
 		then?: [{
@@ -455,14 +494,16 @@ package circonus
 			not_contain?: string
 			not_match?:   string
 			over?: [{
-				last?:  string
-				using?: string
+				atleast?: string
+				last?:    string
+				using?:   string
 			}, ...]
 		}, ...]
 	}, ...]
 }
 #CirconusRuleSetGroupResource: {
 	name: string
+	id?:  string
 	tags?: [string, ...]
 	condition?: [{
 		index: number
@@ -487,6 +528,7 @@ package circonus
 	description?: string
 	favourite?:   bool
 	graphs?: [string, ...]
+	id?:    string
 	notes?: string
 	tags?: [string, ...]
 	smart_queries?: [{
@@ -502,7 +544,6 @@ package circonus
 	circonus_graph?: [_]:          #CirconusGraphResource
 	circonus_maintenance?: [_]:    #CirconusMaintenanceResource
 	circonus_metric?: [_]:         #CirconusMetricResource
-	circonus_metric_cluster?: [_]: #CirconusMetricClusterResource
 	circonus_overlay_set?: [_]:    #CirconusOverlaySetResource
 	circonus_rule_set?: [_]:       #CirconusRuleSetResource
 	circonus_rule_set_group?: [_]: #CirconusRuleSetGroupResource

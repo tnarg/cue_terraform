@@ -21,10 +21,12 @@ package ns1
 	dns_zones_allow?: [string, ...]
 	dns_zones_allow_by_default?: bool
 	dns_zones_deny?: [string, ...]
+	id?: string
 	ip_whitelist?: [string, ...]
 	ip_whitelist_strict?:              bool
 	ipam_manage_ipam?:                 bool
 	ipam_view_ipam?:                   bool
+	key?:                              string
 	monitoring_manage_jobs?:           bool
 	monitoring_manage_lists?:          bool
 	monitoring_view_jobs?:             bool
@@ -36,11 +38,13 @@ package ns1
 	name:      string
 	source_id: string
 	config?: [_]: string
+	id?: string
 }
 #Ns1DatasourceResource: {
 	name:       string
 	sourcetype: string
 	config?: [_]: string
+	id?: string
 }
 #Ns1MonitoringjobResource: {
 	config: [_]: string
@@ -49,6 +53,7 @@ package ns1
 	name:      string
 	regions: [string, ...]
 	active?:          bool
+	id?:              string
 	notes?:           string
 	notify_delay?:    number
 	notify_failback?: bool
@@ -65,6 +70,7 @@ package ns1
 }
 #Ns1NotifylistResource: {
 	name: string
+	id?:  string
 	notifications?: [{
 		config: [_]: string
 		type: string
@@ -74,9 +80,11 @@ package ns1
 	domain: string
 	type:   string
 	zone:   string
+	id?:    string
 	link?:  string
 	meta?: [_]: string
 	short_answers?: [string, ...]
+	ttl?:               number
 	use_client_subnet?: bool
 	answers?: [{
 		answer?: string
@@ -113,6 +121,7 @@ package ns1
 	dns_zones_allow?: [string, ...]
 	dns_zones_allow_by_default?: bool
 	dns_zones_deny?: [string, ...]
+	id?:                               string
 	ipam_manage_ipam?:                 bool
 	ipam_view_ipam?:                   bool
 	monitoring_manage_jobs?:           bool
@@ -147,6 +156,7 @@ package ns1
 	dns_zones_allow?: [string, ...]
 	dns_zones_allow_by_default?: bool
 	dns_zones_deny?: [string, ...]
+	id?: string
 	ip_whitelist?: [string, ...]
 	ip_whitelist_strict?:     bool
 	ipam_manage_ipam?:        bool
@@ -163,10 +173,23 @@ package ns1
 	zone: string
 	additional_primaries?: [string, ...]
 	autogenerate_ns_record?: bool
+	dns_servers?:            string
+	dnssec?:                 bool
+	expiry?:                 number
+	hostmaster?:             string
+	id?:                     string
 	link?:                   string
-	primary?:                string
+	networks?: [number, ...]
+	nx_ttl?:  number
+	primary?: string
+	refresh?: number
+	retry?:   number
+	ttl?:     number
 	secondaries?: [{
 		ip: string
+		networks?: [number, ...]
+		notify?: bool
+		port?:   number
 	}, ...]
 }
 #Resources: {

@@ -2,11 +2,20 @@
 package akamai
 
 #Provider: akamai: {
+	appsec_section?:   string
+	config_section?:   string
 	dns_section?:      string
 	edgerc?:           string
 	gtm_section?:      string
 	papi_section?:     string
 	property_section?: string
+	appsec?: [{
+		access_token?:  string
+		client_secret?: string
+		client_token?:  string
+		host?:          string
+		max_body?:      number
+	}, ...]
 	dns?: [{
 		access_token?:  string
 		client_secret?: string
