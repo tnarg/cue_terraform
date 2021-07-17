@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"cuelang.org/go/cue/ast"
 	"cuelang.org/go/cue/format"
@@ -25,6 +26,7 @@ type Schemas struct {
 func (s *Schemas) ToCue() []*ast.File {
 	var files []*ast.File
 	for pname, pschema := range s.ProviderSchemas {
+		pname:= strings.Replace(pname, "registry.terraform.io/hashicorp/", "", -1)
 		pkg := cuePackage(pname)
 		pkg.AddComment(cueCommentGroupDoc(cueComment(codegenComment)))
 
