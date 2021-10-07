@@ -1,26 +1,26 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 _terraform_toolchains = {
-    "0.12.25": [
+    "1.0.2": [
         {
             "os": "darwin",
             "arch": "amd64",
-            "sha256": "179fc99ccea5ed3617e9e7026dcfa59a5916ea91162afd7a2acd8350906a0d68",
+            "sha256": "90e58796d84db0a16b5ad40140182061533c38210680980e099812c43b43ff7a",
         },
         {
             "os": "linux",
             "arch": "amd64",
-            "sha256": "e95daabd1985329f87e6d40ffe7b9b973ff0abc07a403f767e8658d64d733fb0",
+            "sha256": "7329f887cc5a5bda4bedaec59c439a4af7ea0465f83e3c1b0f4d04951e1181f4",
         },
         {
             "os": "windows",
             "arch": "amd64",
-            "sha256": "81356460648abc8e6b76974c518be7989c6fd6f497bb3c604988fd876b363321",
+            "sha256": "bb515146c49619f78cc141449765fe0290a9d5f955fef8ed59215e163495a3db",
         },
     ],
 }
 
-def terraform_toolchains(version = "0.12.25"):
+def terraform_toolchains(version = "1.0.2"):
     for platform in _terraform_toolchains[version]:
         http_archive(
             name = "terraform_toolchain_%s_%s" % (platform["os"].lower(), platform["arch"]),
