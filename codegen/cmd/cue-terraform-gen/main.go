@@ -47,7 +47,9 @@ func (s *Schemas) ToCue() []*ast.File {
 			if pschema.Provider == nil {
 				body = cueStruct(nil)
 			} else {
-				body = pschema.Provider.ToCue()
+				body = pschema.Provider.ToCue(
+					cueFieldOpt("alias", cueAnyString()),
+				)
 			}
 			decls = append(decls, cueField(
 				"#ProviderVersion",
