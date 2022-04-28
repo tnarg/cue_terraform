@@ -23,11 +23,11 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
-go_register_toolchains(version="1.15.7")
+go_register_toolchains(version = "1.15.7")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -38,10 +38,10 @@ gazelle_dependencies()
 #
 http_archive(
     name = "com_github_tnarg_rules_cue",
+    sha256 = "ee6eea3de252ebc8fb05c23e8d370e32c4783b36cd1c6ec9ea72411a086ac35e",
+    strip_prefix = "rules_cue-be98df2981025bf1389510797ea11e0e37aa761f",
     # Make sure to check for the latest version when you install
     url = "https://github.com/tnarg/rules_cue/archive/be98df2981025bf1389510797ea11e0e37aa761f.zip",
-    strip_prefix = "rules_cue-be98df2981025bf1389510797ea11e0e37aa761f",
-    sha256 = "ee6eea3de252ebc8fb05c23e8d370e32c4783b36cd1c6ec9ea72411a086ac35e",
 )
 
 load("@com_github_tnarg_rules_cue//:go.bzl", cue_go_modules = "go_modules")
@@ -57,4 +57,5 @@ load("//:go.bzl", "go_modules")
 go_modules()
 
 load("//codegen:tools.bzl", "terraform_toolchains")
+
 terraform_toolchains()
