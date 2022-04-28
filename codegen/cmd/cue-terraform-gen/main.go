@@ -339,10 +339,14 @@ type LockProvider struct {
 
 var lock Lock
 
-var schemaJsonPath string
+var (
+	schemaJsonPath string
+	terraformLockPath string
+)
 
 func init() {
-	flag.StringVar(&schemaJsonPath, "input", "schema.json", "schema json file")
+	flag.StringVar(&schemaJsonPath, "schema", "schema.json", "schema json file")
+	flag.StringVar(&terraformLockPath, "lock", ".terraform.lock.hcl", "terraform lock file")
 }
 
 func main() {
@@ -360,7 +364,7 @@ func main() {
 		}
 	}
 
-	if err := hclsimple.DecodeFile(".terraform.lock.hcl", nil, &lock); err != nil {
+	if err := hclsimple.DecodeFile(terraformLockPath, nil, &lock); err != nil {
 		log.Fatalf("Failed to load terraform lock: %s", err)
 	}
 
