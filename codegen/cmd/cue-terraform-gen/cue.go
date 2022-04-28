@@ -109,3 +109,32 @@ func cueCommentGroupDoc(comments ...*ast.Comment) *ast.CommentGroup {
 		List: comments,
 	}
 }
+
+func cueAnyString() *ast.Ident {
+	return &ast.Ident{Name: "string"}
+}
+
+func cueAnyStringList() *ast.ListLit {
+	return ast.NewList(
+		cueAnyString(),
+		&ast.UnaryExpr{
+			Op: token.ELLIPSIS,
+			X:  cueAnyString(),
+		},
+	)
+}
+
+func cueAnyBool() *ast.Ident {
+	return &ast.Ident{Name: "bool"}
+}
+
+func cueAnyNumber() *ast.Ident {
+	return &ast.Ident{Name: "number"}
+}
+
+func cueRegex(pat string) *ast.UnaryExpr {
+	return &ast.UnaryExpr{
+		Op: token.MAT,
+		X:  ast.NewString(pat),
+	}
+}

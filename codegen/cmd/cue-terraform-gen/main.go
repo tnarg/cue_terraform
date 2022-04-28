@@ -11,6 +11,8 @@ import (
 
 	"cuelang.org/go/cue/ast"
 	"cuelang.org/go/cue/format"
+	"cuelang.org/go/cue/token"
+	"github.com/hashicorp/hcl/v2/hclsimple"
 	"github.com/iancoleman/strcase"
 	"github.com/zclconf/go-cty/cty"
 )
@@ -24,7 +26,15 @@ type Schemas struct {
 
 func (s *Schemas) ToCue() []*ast.File {
 	var files []*ast.File
-	for pname, pschema := range s.ProviderSchemas {
+	for providerName, pschema := range s.ProviderSchemas {
+		var version string
+		for _, l := range lock.Provider {
+			if l.Name == providerName {
+				version = l.Version
+			}
+		}
+
+		pname := filepath.Base(providerName)
 		pkg := cuePackage(pname)
 		pkg.AddComment(cueCommentGroupDoc(cueComment(codegenComment)))
 
@@ -40,12 +50,24 @@ func (s *Schemas) ToCue() []*ast.File {
 				body = pschema.Provider.ToCue()
 			}
 			decls = append(decls, cueField(
-				"#Provider",
-				cueStruct(map[string]ast.Expr{pname: body}),
+				"#ProviderVersion",
+				ast.NewStruct(
+					cueField(pname, ast.NewStruct(
+						cueField("source", ast.NewString(providerName)),
+						cueField("version", ast.NewString(version)),
+					)),
+					&ast.Ellipsis{},
+				),
+			))
+			decls = append(decls, cueField(
+				"#Provider", ast.NewStruct(
+					cueField(pname, body),
+					&ast.Ellipsis{},
+				),
 			))
 
 			files = append(files, &ast.File{
-				Filename: fmt.Sprintf("providers/%s/provider_gen.cue", pname),
+				Filename: fmt.Sprintf("%s/provider_gen.cue", providerName),
 				Decls:    decls,
 			})
 		}
@@ -61,21 +83,36 @@ func (s *Schemas) ToCue() []*ast.File {
 			}
 			sort.Strings(rnames)
 
-			fields := make(map[string]ast.Expr)
+			var fields []interface{}
 			for _, rname := range rnames {
 				block := pschema.Resources[rname]
 				defName := "#" + strcase.ToCamel(rname) + "Resource"
-				decls = append(decls, cueField(defName, block.ToCue()))
-				fields[rname+"?"] = cueAnyStruct(cueIdent(defName))
+				decls = append(decls, cueField(defName, block.ToCue(
+					cueFieldOpt("provider", cueAnyString()),
+					cueFieldOpt("depends_on", cueAnyStringList()),
+					cueFieldOpt("count", cueAnyNumber()),
+					cueFieldOpt("lifecycle", ast.NewStruct(
+						cueFieldOpt("create_before_destroy", cueAnyBool()),
+						cueFieldOpt("prevent_destroy", cueAnyBool()),
+						cueFieldOpt("ignore_changes",
+							ast.NewBinExpr(token.OR,
+								ast.NewString("all"),
+								cueAnyStringList(),
+							),
+						),
+					)),
+				)))
+				fields = append(fields, cueField(rname+"?", cueAnyStruct(cueIdent(defName))))
 			}
+			fields = append(fields, &ast.Ellipsis{})
 
 			decls = append(decls, cueField(
 				"#Resources",
-				cueStruct(fields),
+				ast.NewStruct(fields...),
 			))
 
 			files = append(files, &ast.File{
-				Filename: fmt.Sprintf("providers/%s/resources_gen.cue", pname),
+				Filename: fmt.Sprintf("%s/resources_gen.cue", providerName),
 				Decls:    decls,
 			})
 		}
@@ -91,21 +128,22 @@ func (s *Schemas) ToCue() []*ast.File {
 			}
 			sort.Strings(dnames)
 
-			fields := make(map[string]ast.Expr)
+			var fields []interface{}
 			for _, dname := range dnames {
 				block := pschema.DataSources[dname]
 				defName := "#" + strcase.ToCamel(dname) + "DataSource"
 				decls = append(decls, cueField(defName, block.ToCue()))
-				fields[dname+"?"] = cueAnyStruct(cueIdent(defName))
+				fields = append(fields, cueField(dname+"?", cueAnyStruct(cueIdent(defName))))
 			}
+			fields = append(fields, &ast.Ellipsis{})
 
 			decls = append(decls, cueField(
 				"#DataSources",
-				cueStruct(fields),
+				ast.NewStruct(fields...),
 			))
 
 			files = append(files, &ast.File{
-				Filename: fmt.Sprintf("providers/%s/data_sources_gen.cue", pname),
+				Filename: fmt.Sprintf("%s/data_sources_gen.cue", providerName),
 				Decls:    decls,
 			})
 		}
@@ -124,8 +162,8 @@ type VersionedBlock struct {
 	Block   *Block `json:"block"`
 }
 
-func (vb *VersionedBlock) ToCue() ast.Expr {
-	return vb.Block.ToCue()
+func (vb *VersionedBlock) ToCue(metaFields ...ast.Decl) ast.Expr {
+	return vb.Block.ToCue(metaFields...)
 }
 
 type Block struct {
@@ -133,7 +171,7 @@ type Block struct {
 	BlockTypes map[string]*NestedBlock `json:"block_types"`
 }
 
-func (b *Block) ToCue() ast.Expr {
+func (b *Block) ToCue(metaFields ...ast.Decl) ast.Expr {
 	var required []string
 	var optional []string
 	for k, attr := range b.Attributes {
@@ -190,7 +228,7 @@ func (b *Block) ToCue() ast.Expr {
 	}
 
 	return &ast.StructLit{
-		Elts: elts,
+		Elts: append(elts, metaFields...),
 	}
 }
 
@@ -243,23 +281,26 @@ type Attribute struct {
 
 func typeExpr(t cty.Type) ast.Expr {
 	if t.IsPrimitiveType() {
-		return &ast.Ident{
-			Name: t.FriendlyName(),
+		ident := t.FriendlyName()
+		if ident == "string" {
+			return cueAnyString()
+		} else {
+			return ast.NewBinExpr(
+				token.OR,
+				ast.NewIdent(ident),
+				cueRegex("^[$][{].+[}]$"),
+			)
 		}
 	} else if t.IsListType() {
-		return &ast.ListLit{
-			Elts: []ast.Expr{
-				typeExpr(t.ElementType()),
-				&ast.Ellipsis{},
-			},
-		}
+		return ast.NewList(
+			typeExpr(t.ElementType()),
+			&ast.Ellipsis{},
+		)
 	} else if t.IsSetType() {
-		return &ast.ListLit{
-			Elts: []ast.Expr{
-				typeExpr(t.ElementType()),
-				&ast.Ellipsis{},
-			},
-		}
+		return ast.NewList(
+			typeExpr(t.ElementType()),
+			&ast.Ellipsis{},
+		)
 	} else if t.IsMapType() {
 		return cueAnyStruct(typeExpr(t.ElementType()))
 	} else if t.IsObjectType() {
@@ -270,28 +311,46 @@ func typeExpr(t cty.Type) ast.Expr {
 		}
 		sort.Strings(keys)
 
-		var elts []ast.Decl
+		var elts []interface{}
 		for _, k := range keys {
 			v := atypes[k]
 			elts = append(elts, cueField(k, typeExpr(v)))
 		}
-		return &ast.StructLit{
-			Elts: elts,
-		}
+
+		return ast.NewStruct(elts...)
 	} else {
-		return &ast.StructLit{}
+		return ast.NewStruct(&ast.Ellipsis{})
 	}
 }
 
+type Lock struct {
+	Provider []LockProvider `hcl:"provider,block"`
+}
+
+type LockProvider struct {
+	Name        string   `hcl:"name,label"`
+	Version     string   `hcl:"version"`
+	Constraints string   `hcl:"constraints"`
+	Hashes      []string `hcl:"hashes"`
+}
+
+var lock Lock
+
 func main() {
-	data, err := ioutil.ReadFile(os.Args[1])
-	if err != nil {
-		log.Fatal(err)
+	var schemas Schemas
+	{
+		data, err := ioutil.ReadFile("schema.json")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err := json.Unmarshal(data, &schemas); err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	var schemas Schemas
-	if err := json.Unmarshal(data, &schemas); err != nil {
-		log.Fatal(err)
+	if err := hclsimple.DecodeFile(".terraform.lock.hcl", nil, &lock); err != nil {
+		log.Fatalf("Failed to load terraform lock: %s", err)
 	}
 
 	files := schemas.ToCue()

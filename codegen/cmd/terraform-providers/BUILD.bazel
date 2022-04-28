@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "terraform-providers_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/tnarg/cue_terraform/codegen/cmd/terraform-providers",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "terraform-providers",
+    embed = [":terraform-providers_lib"],
+    visibility = ["//visibility:public"],
+)
