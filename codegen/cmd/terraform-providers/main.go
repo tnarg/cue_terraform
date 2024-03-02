@@ -47,9 +47,9 @@ func main() {
 	fmt.Println("terraform {")
 	fmt.Println("  required_providers {")
 
-	urlSuffix := urlStart
+	urlNext := urlBase + urlStart
 	for {
-		rsp, err := http.Get(urlBase + urlSuffix)
+		rsp, err := http.Get(urlNext)
 		if err != nil {
 			panic(err)
 		}
@@ -76,11 +76,11 @@ func main() {
 			seen[prov.Id] = struct{}{}
 		}
 
-		if msg.Meta.NextUrl == "" || msg.Meta.NextUrl == urlSuffix || len(msg.Providers) < 100 {
+		if msg.Meta.NextUrl == "" || msg.Meta.NextUrl == urlNext || len(msg.Providers) < 100 {
 			break
 		}
 
-		urlSuffix = msg.Meta.NextUrl
+		urlNext = msg.Meta.NextUrl
 	}
 
 	fmt.Println("  }")
