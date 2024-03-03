@@ -33,7 +33,7 @@ genrule(
         "//codegen:darwin_amd64": ["@terraform_toolchain_darwin_amd64//:terraform"],
         "//codegen:windows_amd64": ["@terraform_toolchain_windows_amd64//:terraform"],
     }),
-    outs = ["bin/cue"],
+    outs = ["bin/terraform"],
     cmd = "cp $(<) $(@)",
     executable = True,
     output_to_bindir = 1,
